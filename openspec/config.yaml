@@ -6,7 +6,7 @@ context: |
   Keep OpenSpec structural headings and SHALL/MUST keywords in English.
   Project: a ground-based Python mission-planning and navigation prototype for a Moon-to-Mars mission.
   This is ground engineering software, not onboard flight software.
-  Runtime: Python 3.11 in a reproducible Miniforge/Conda environment.
+  Runtime: Python 3.12.14 in a reproducible Miniforge/Conda environment; Conda owns TudatPy and native/scientific dependencies, while uv 0.12.9 is used only inside that environment for local pure-Python installs.
   The application will use TudatPy and its SPICE interface; it must not develop a production astrodynamics engine from scratch.
   Canonical internal conventions are SSB origin, J2000 orientation, TDB seconds since J2000, and SI units.
   Search-window start and end dates are always required and never receive defaults.

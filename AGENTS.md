@@ -25,6 +25,8 @@
 ## Implementation
 
 - Prefer the standard library and existing dependencies. Add a dependency only when the active milestone needs it, then pin and verify it.
+- Keep Conda authoritative for Python and all native or scientific dependencies. Use the Conda-installed `uv` only for editable installs or pure-Python package operations inside the active environment; do not use `uv lock`, `uv sync`, `uv run`, or `uv venv` in this repository because they cannot reproduce Conda-only TudatPy.
+- Install or refresh the editable package with `conda run -n space-nav uv pip install --no-deps --no-build-isolation --editable .` after environment creation or package-metadata changes.
 - Keep public APIs and CLI behavior backward compatible unless an accepted OpenSpec change explicitly revises them.
 - Keep `moon_to_mars.py` byte-for-byte unchanged and never import it from `space_nav`.
 - Keep changes scoped. Preserve unrelated user work and avoid speculative abstractions or future-milestone scaffolding.
@@ -32,7 +34,7 @@
 
 ## Python code requirements
 
-- Target Python 3.11 and the pinned Conda environment in `environment.yml`; keep production modules under `src/space_nav` and tests under `tests/test_*.py`.
+- Target Python 3.12.14 and the pinned Conda environment in `environment.yml`; keep production modules under `src/space_nav` and tests under `tests/test_*.py`.
 - Follow PEP 8 and the existing naming and import style. Do not reformat unrelated code. Give public APIs concise docstrings that state scientific conventions where relevant.
 - Give every new or changed function, method, and dataclass field explicit type annotations. Use `Any` only at untyped input, serialization, or third-party boundaries, validate it immediately, and keep each `# type: ignore[...]` narrow and justified.
 - Model public scientific values as immutable `@dataclass(frozen=True, slots=True)` records. Enforce invariants at construction, reject booleans where numbers are expected, and reject NaN or infinity before computation or serialization.

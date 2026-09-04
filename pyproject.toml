@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "space-nav"
 version = "0.2.0"
 description = "Ground-based Moon-to-Mars navigation prototype"
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.12,<3.13"
 # TudatPy is distributed through Conda rather than PyPI. Runtime versions are
 # therefore resolved and pinned together in environment.yml.
 dependencies = []
@@ -20,3 +20,6 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.uv]
+managed = false
