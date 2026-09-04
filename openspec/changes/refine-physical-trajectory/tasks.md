@@ -6,7 +6,7 @@
 
 ## 2. Physical boundary states and resources
 
-- [ ] 2.1 Convert the configured Moon and Mars osculating elements into body-relative J2000 Cartesian states at the candidate burn-boundary epochs using each harmonic field's gravitational parameter, then add SSB ephemeris states; verify direct-conversion, radius, non-body-centre, and circular argument-of-latitude equivalence tests meet the specified tolerances.
+- [x] 2.1 Convert the configured Moon and Mars osculating elements into body-relative J2000 Cartesian states at the candidate burn-boundary epochs using each harmonic field's gravitational parameter, then add SSB ephemeris states; verify direct-conversion, radius, non-body-centre, and circular argument-of-latitude equivalence tests meet the specified tolerances.
 - [ ] 2.2 Build the time-limited Tudat environment with the literal production model identifier, pinned SPICE resources, Moon `gggrx1200` 200x200 in `IAU_Moon`, Mars `jgmro120d` 120x120 in `IAU_Mars`, distinct shape/normalization radii, and exact required coefficient hashes; verify missing, altered, uncovered, or frame-inconsistent resources raise `TrajectoryRefinementError` without fallback.
 - [ ] 2.3 Assemble direct gravity from Sun, Mercury, Venus, Earth, Jupiter, and Saturn plus exactly one harmonic term each for Moon and Mars; verify inventory tests prevent double counting and independent fixed-state vector-sum tests meet the force tolerance.
 - [ ] 2.4 Add cannonball solar-radiation pressure using current mass, explicit `3.828e26 W` Sun luminosity, and Moon/Earth/Mars occultation; verify independent scaling plus clear, umbra, and penumbra tests meet the specified bounds.
