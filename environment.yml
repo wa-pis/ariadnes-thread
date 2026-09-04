@@ -1,0 +1,16 @@
+name: space-nav
+channels:
+  - tudat-team
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11.14
+  - tudatpy=1.0.0
+  - tudat-resources=2.4
+  - spiceypy=8.2.0
+  - numpy=1.26.4
+  - pytest=8.4.2
+  - pip=25.2
+  - setuptools=80.9.0
+  - pip:
+      - --editable .

@@ -1,0 +1,60 @@
+{
+  "kernel_source": "tudatpy-standard",
+  "loaded_kernel_count": 13,
+  "minimum_total_delta_v_m_s": 3583.210825639004,
+  "tudat_resources_version": "2.4",
+  "kernels": [
+    {
+      "name": "pck00010.tpc",
+      "sha256": "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2"
+    },
+    {
+      "name": "inpop19a_TDB_m100_p100_spice.tpc",
+      "sha256": "55798de268f64f43f5ccf71dae84e1d1603a99301f80251c4d74cb8f26a72eee"
+    },
+    {
+      "name": "NOE-4-2020.tpc",
+      "sha256": "0edbcf5f8a1265f2937594f55d7fe395526d610e14445c3d77448e0df1adcf21"
+    },
+    {
+      "name": "NOE-5-2021.tpc",
+      "sha256": "069cb44cef6809e84a618bbb3b8efde2fe42224ff0636b59808034a9c806cec6"
+    },
+    {
+      "name": "NOE-6-2018-MAIN-v2.tpc",
+      "sha256": "2f3084319850f92b2fc6adaaf7846b1362c7775b56c550c9b10615fc7fedc3cc"
+    },
+    {
+      "name": "codes_300ast_20100725.bsp",
+      "sha256": "7bb92faaadac29ec0b62aa96041a37c92ae24b9a5460de03d3fcaa2f63fe51f0"
+    },
+    {
+      "name": "codes_300ast_20100725.tf",
+      "sha256": "15ee3b1731817774672725ccc226b249eb9ca5aa5d0a6a7805c91e5f57497f40"
+    },
+    {
+      "name": "inpop19a_TDB_m100_p100_spice.bsp",
+      "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6"
+    },
+    {
+      "name": "NOE-4-2020.bsp",
+      "sha256": "bd05fc94f3f2c873b26bfc420759bc82df306593c1ed4173716b8472b115ab9b"
+    },
+    {
+      "name": "NOE-5-2021.bsp",
+      "sha256": "85063d326f068f4a6e5bd4f56c4c4bae330c0cea210d18d190451f33cb3add24"
+    },
+    {
+      "name": "NOE-6-2018-MAIN-v2.bsp",
+      "sha256": "ff2188d11c8cd31933e6757e81cd43e66644e218d041c72628ebf291754e7f39"
+    },
+    {
+      "name": "juice_mat_crema_4_0_20220601_20330626_v01.bsp",
+      "sha256": "79ea4e0483909305dcf40280e16b859f0c7050420517cb35a60b1b166d8edd76"
+    },
+    {
+      "name": "naif0012.tls",
+      "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b"
+    }
+  ]
+}

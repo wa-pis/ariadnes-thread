@@ -1,0 +1,42 @@
+schema: spec-driven
+
+context: |
+  Language: English
+  All artifacts must be written in English.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+  Project: a ground-based Python mission-planning and navigation prototype for a Moon-to-Mars mission.
+  This is ground engineering software, not onboard flight software.
+  Runtime: Python 3.11 in a reproducible Miniforge/Conda environment.
+  The application will use TudatPy and its SPICE interface; it must not develop a production astrodynamics engine from scratch.
+  Canonical internal conventions are SSB origin, J2000 orientation, TDB seconds since J2000, and SI units.
+  Search-window start and end dates are always required and never receive defaults.
+  All spacecraft physical parameters are required; none receive hidden defaults.
+  The current moon_to_mars.py file is an immutable legacy educational model and must remain untouched and unimported by the new package.
+  Work follows the linear milestones documented in openspec/ROADMAP.md; M1 is archived and M2 is the only active milestone.
+  M2 plans three-dimensional impulsive Moon-to-Mars transfers, evaluates no more than 2000 candidates, and exposes a flight-time/fuel Pareto front.
+
+rules:
+  proposal:
+    - Keep proposals concise and include an explicit Non-goals section.
+    - Identify the roadmap milestone implemented by the change.
+  specs:
+    - Give each requirement at least one concrete acceptance scenario.
+    - Every acceptance scenario must use measurable WHEN and THEN conditions.
+    - State units, time scale, frame origin, and frame orientation wherever state data crosses a public boundary.
+  design:
+    - Record public Python and CLI interfaces, error behavior, dependency boundaries, and rejected alternatives.
+    - Keep later roadmap milestones outside the active implementation scope.
+  tasks:
+    - Keep every implementation checkbox initially unchecked.
+    - Give every implementation task a corresponding verification in the same checkbox.
+    - Include the complete test suite and strict validation as explicit tasks.
+
+operations:
+  apply:
+    guidance:
+      - Run openspec validate <change> --strict before implementation is marked complete.
+      - Do not implement behavior assigned to a later roadmap milestone.
+  archive:
+    guidance:
+      - Run openspec validate <change> --strict immediately before archival.
+      - Do not create the next milestone change until archival succeeds.
