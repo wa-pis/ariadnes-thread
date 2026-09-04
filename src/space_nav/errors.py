@@ -21,3 +21,7 @@ class EphemerisError(Exception):
 
 class TransferSearchError(Exception):
     """Raised when a complete impulsive-transfer search cannot be returned."""
+
+
+class TrajectoryRefinementError(Exception):
+    """Raised when physical trajectory refinement cannot return a result."""
