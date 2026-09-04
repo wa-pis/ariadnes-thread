@@ -1,12 +1,12 @@
 # Space Navigation Roadmap
 
-Milestones are strictly linear: `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 and M2 are archived; M3 is the next milestone and does not yet have an active change. A later change may be created only after the current milestone passes its completion gate, passes strict OpenSpec validation, and is archived.
+Milestones are strictly linear: `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 and M2 are archived, and M3 is active as `refine-physical-trajectory`. A later change may be created only after the current milestone passes its completion gate, passes strict OpenSpec validation, and is archived.
 
 | Milestone / change | Status | Depends on | Verifiable result |
 |---|---|---|---|
 | **M1 — `establish-navigation-foundation`** | Archived 2026-09-04 | None | Reproducible Python environment, strict TOML scenario, canonical units/time/frame contract, real SPICE ephemerides, and diagnostic CLI. |
 | **M2 — `plan-impulsive-transfer`** | Archived 2026-09-04 | M1 archived | Three-dimensional impulsive Moon-to-Mars search evaluates at most 2,000 candidates and returns a flight-time/fuel Pareto front. |
-| **M3 — `refine-physical-trajectory`** | Planned | M2 archived | Selected trajectories include Moon/Mars gravity harmonics, solar-radiation pressure and shadows, relativistic correction, variable mass, and finite burns. |
+| **M3 — `refine-physical-trajectory`** | Active 2026-09-04 | M2 archived | One selected Pareto candidate is refined from the configured lunar orbit to the configured Martian orbit with declared gravity harmonics, radiation pressure and shadows, Sun Schwarzschild relativity, variable mass, finite burns, and honest physical status. |
 | **M4 — `estimate-navigation-state`** | Planned | M3 archived | Synthetic observations from three ground stations feed batch least squares and produce an estimated state and covariance. |
 | **M5 — `schedule-course-corrections`** | Planned | M4 archived | The planner selects zero to three TCMs using only measurements available before each maneuver. |
 | **M6 — `verify-and-report-mission`** | Planned | M5 archived | Twenty Monte Carlo cases produce standalone HTML, CSV, and JSON reports and an independent GMAT comparison. |
@@ -25,12 +25,25 @@ Milestones are strictly linear: `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 and M2 ar
 - The diagnostic manifest identifies the scenario, software, conventions, seed, and every loaded standard kernel available from TudatPy, including file hashes.
 - `moon_to_mars.py` remains byte-for-byte unchanged and is not imported by `space_nav`; no M2–M6 behavior is present.
 
-## Later milestone completion gates
+## M3 completion gate
 
-- **M2:** the bounded three-dimensional search and Pareto-front output pass their acceptance scenarios on fixed inputs.
-- **M3:** force-model and finite-burn refinements pass numerical regression and conservation/error-budget checks defined by its future change.
+- `openspec validate refine-physical-trajectory --strict` succeeds before implementation completion and immediately before archival.
+- The supplied candidate is reproduced from the same normalized scenario and deterministic M2 Pareto front before any physical propagation.
+- Production propagation uses Moon `gggrx1200` degree/order 200, Mars `jgmro120d` degree/order 120, declared point-mass perturbations, current-mass cannonball radiation pressure with Moon/Earth/Mars shadows, and Sun Schwarzschild relativity without gravity double counting.
+- Departure ignition and arrival cutoff are the configured physical lunar and Martian orbit states rather than M2 body-centre endpoints.
+- Separate departure-burn, coast, and arrival-burn arcs preserve state/mass continuity, follow the declared TNW guidance, obey the thrust mass-flow law, detect impacts, and never cross dry mass.
+- `examples/reference_mission.toml` remains unchanged and candidate `d0001-t0035` returns `mass-infeasible` without finite-burn targeting because its ideal M2 final mass is below dry mass.
+- The separate feasible M3 fixture changes only dry mass, preserves the M2 candidate, and refines `d0001-t0035` to no more than `1000 m` position error and `0.01 m/s` velocity error in at most eight correction iterations and 300 seconds.
+- The exact TNW corrector demonstrates that feasible-fixture gate in a prerequisite spike before production correction proceeds; until then, the iteration/runtime limit is an acceptance hypothesis rather than measured performance and is not weakened silently.
+- Frozen-command nominal/tighter propagation agrees within `10 m`, `0.0001 m/s`, and `0.000001 kg`; the isolated ten-orbit fixture keeps relative energy and angular-momentum drift within `1e-11`.
+- Moon degree-400 sensitivity stays within `500 m` and `0.0001 m/s`; the finite Mars degree-60-to-120 tail is reported without claiming knowledge beyond the degree-120 model ceiling.
+- Repeated canonical JSON results are byte-identical for the same scenario and resources, and the manifest records complete resource, force, numerical, targeting, and deferred-input provenance.
+- The complete pinned Python 3.12 test suite passes, existing M1/M2 behavior remains compatible apart from the planned `0.3.0` version, and `moon_to_mars.py` remains byte-for-byte unchanged and unimported.
+
+## Future milestone completion gates
+
 - **M4:** synthetic observation generation, batch estimation, and covariance output pass reproducible truth-recovery checks defined by its future change.
 - **M5:** maneuver count and measurement-causality rules pass tests that prevent use of future observations.
 - **M6:** all 20 seeded Monte Carlo cases complete, all three report formats agree, and the GMAT comparison satisfies the future change's documented tolerance.
 
-Completion criteria for M2–M6 are intentionally high-level until the preceding milestone is archived. Each future change must replace its high-level gate with measurable WHEN/THEN scenarios before implementation.
+Completion criteria for M4-M6 remain intentionally high-level until the preceding milestone is archived. Each future change must replace its high-level gate with measurable WHEN/THEN scenarios before implementation.
