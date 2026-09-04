@@ -75,6 +75,10 @@ SUN_LUMINOSITY_W = 3.828e26
 SOLAR_RADIATION_OCCULTING_BODY_NAMES = ("Moon", "Earth", "Mars")
 _SOLAR_RADIATION_SOURCE_BODY = "Sun"
 _SOLAR_RADIATION_PRESSURE_TYPE = "cannonball-radiation-pressure"
+_RELATIVITY_SOURCE_BODY = "Sun"
+_RELATIVISTIC_ACCELERATION_TYPE = "schwarzschild-relativistic-correction"
+_PPN_BETA = 1.0
+_PPN_GAMMA = 1.0
 
 Cartesian6 = tuple[float, float, float, float, float, float]
 StateQuery = Callable[[str, float], CartesianState]
@@ -144,6 +148,19 @@ class _SolarRadiationPressureSetup:
 
 
 @dataclass(frozen=True, slots=True)
+class _RelativityResource:
+    source_body: str
+    target_body: str
+    acceleration_type: str
+    ppn_beta: float
+    ppn_gamma: float
+    schwarzschild_enabled: bool
+    lense_thirring_enabled: bool
+    de_sitter_enabled: bool
+    einstein_infeld_hoffmann_enabled: bool
+
+
+@dataclass(frozen=True, slots=True)
 class _PhysicalEnvironment:
     model_id: str
     initial_epoch_tdb_s: float
@@ -158,6 +175,8 @@ class _PhysicalEnvironment:
         str, tuple[Any, ...]
     ]
     solar_radiation_pressure: _SolarRadiationPressureResource
+    relativistic_acceleration_settings: dict[str, tuple[Any, ...]]
+    relativity: _RelativityResource
 
 
 _HARMONIC_FIELD_SPECS = (
@@ -457,6 +476,16 @@ def _import_tudat_propagation_setup() -> Any:
             "TudatPy propagation setup is unavailable in the pinned environment"
         ) from exc
     return propagation_setup
+
+
+def _import_tudat_parameters_setup() -> Any:
+    try:
+        from tudatpy.dynamics import parameters_setup
+    except Exception as exc:
+        raise RuntimeError(
+            "TudatPy parameter setup is unavailable in the pinned environment"
+        ) from exc
+    return parameters_setup
 
 
 def _default_gravity_models_path() -> Path:
@@ -873,6 +902,91 @@ def _build_solar_radiation_pressure_setup(
     )
 
 
+def _build_relativistic_acceleration_settings(
+    candidate_id: object,
+) -> tuple[dict[str, tuple[Any, ...]], _RelativityResource]:
+    """Build the Sun Schwarzschild correction with all other terms disabled."""
+
+    try:
+        propagation_setup = _import_tudat_propagation_setup()
+    except RuntimeError as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            str(exc),
+            exc,
+        )
+
+    try:
+        setting = propagation_setup.acceleration.relativistic_correction(
+            use_schwarzschild=True,
+            use_lense_thirring=False,
+            use_de_sitter=False,
+            de_sitter_central_body="",
+        )
+    except Exception as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            f"Sun Schwarzschild relativistic correction setup failed: {exc}",
+            exc,
+        )
+
+    resource = _RelativityResource(
+        source_body=_RELATIVITY_SOURCE_BODY,
+        target_body=SPACECRAFT_BODY_NAME,
+        acceleration_type=_RELATIVISTIC_ACCELERATION_TYPE,
+        ppn_beta=_PPN_BETA,
+        ppn_gamma=_PPN_GAMMA,
+        schwarzschild_enabled=True,
+        lense_thirring_enabled=False,
+        de_sitter_enabled=False,
+        einstein_infeld_hoffmann_enabled=False,
+    )
+    return {_RELATIVITY_SOURCE_BODY: (setting,)}, resource
+
+
+def _set_general_relativity_ppn_parameters(
+    candidate_id: object,
+    bodies: Any,
+) -> None:
+    """Reset Tudat's mutable global PPN gamma and beta values to general relativity."""
+
+    try:
+        parameters_setup = _import_tudat_parameters_setup()
+    except RuntimeError as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            str(exc),
+            exc,
+        )
+
+    try:
+        parameter_set = parameters_setup.create_parameter_set(
+            [
+                parameters_setup.ppn_parameter_gamma(),
+                parameters_setup.ppn_parameter_beta(),
+            ],
+            bodies,
+        )
+        parameter_set.parameter_vector = (_PPN_GAMMA, _PPN_BETA)
+        ppn_gamma, ppn_beta = (
+            float(value) for value in parameter_set.parameter_vector
+        )
+        if (ppn_gamma, ppn_beta) != (_PPN_GAMMA, _PPN_BETA):
+            raise ValueError(
+                "Tudat PPN parameter readback must equal gamma=1 and beta=1"
+            )
+    except Exception as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            f"general-relativity PPN parameter setup failed: {exc}",
+            exc,
+        )
+
+
 def _assign_sun_radiation_source(
     candidate_id: object,
     body_settings: Any,
@@ -1169,9 +1283,13 @@ def _build_physical_environment(
         bodies,
         solar_radiation_pressure,
     )
+    _set_general_relativity_ppn_parameters(candidate.candidate_id, bodies)
     gravity_settings, gravity_inventory = _build_gravity_acceleration_settings(
         candidate.candidate_id,
         harmonic_fields,
+    )
+    relativity_settings, relativity = (
+        _build_relativistic_acceleration_settings(candidate.candidate_id)
     )
     return _PhysicalEnvironment(
         model_id=PHYSICAL_MODEL_IDENTIFIER,
@@ -1187,6 +1305,8 @@ def _build_physical_environment(
             solar_radiation_pressure.acceleration_settings_by_source
         ),
         solar_radiation_pressure=solar_radiation_pressure.resource,
+        relativistic_acceleration_settings=relativity_settings,
+        relativity=relativity,
     )
 
 
