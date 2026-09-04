@@ -19,6 +19,7 @@ from .models import (
     ImpulsiveTransferCandidate,
     OrbitSpec,
     Scenario,
+    SpacecraftSpec,
     TrajectoryBoundaryState,
 )
 from .transfer import (
@@ -69,6 +70,11 @@ _DIRECT_GRAVITY_BODY_NAMES = (
 _HARMONIC_GRAVITY_BODY_NAMES = ("Moon", "Mars")
 _POINT_MASS_GRAVITY_TYPE = "point-mass-gravity"
 _SPHERICAL_HARMONIC_GRAVITY_TYPE = "spherical-harmonic-gravity"
+SPACECRAFT_BODY_NAME = "Spacecraft"
+SUN_LUMINOSITY_W = 3.828e26
+SOLAR_RADIATION_OCCULTING_BODY_NAMES = ("Moon", "Earth", "Mars")
+_SOLAR_RADIATION_SOURCE_BODY = "Sun"
+_SOLAR_RADIATION_PRESSURE_TYPE = "cannonball-radiation-pressure"
 
 Cartesian6 = tuple[float, float, float, float, float, float]
 StateQuery = Callable[[str, float], CartesianState]
@@ -117,6 +123,27 @@ class _GravityAccelerationResource:
 
 
 @dataclass(frozen=True, slots=True)
+class _SolarRadiationPressureResource:
+    source_body: str
+    target_body: str
+    luminosity_w: float
+    reference_area_m2: float
+    reflectivity_coefficient: float
+    initial_mass_kg: float
+    occulting_bodies: tuple[str, ...]
+    acceleration_type: str
+    uses_current_body_mass: bool
+
+
+@dataclass(frozen=True, slots=True)
+class _SolarRadiationPressureSetup:
+    source_settings: Any
+    target_settings: Any
+    acceleration_settings_by_source: dict[str, tuple[Any, ...]]
+    resource: _SolarRadiationPressureResource
+
+
+@dataclass(frozen=True, slots=True)
 class _PhysicalEnvironment:
     model_id: str
     initial_epoch_tdb_s: float
@@ -127,6 +154,10 @@ class _PhysicalEnvironment:
     harmonic_fields: tuple[_HarmonicFieldResource, ...]
     gravity_acceleration_settings: dict[str, tuple[Any, ...]]
     gravity_acceleration_inventory: tuple[_GravityAccelerationResource, ...]
+    solar_radiation_pressure_acceleration_settings: dict[
+        str, tuple[Any, ...]
+    ]
+    solar_radiation_pressure: _SolarRadiationPressureResource
 
 
 _HARMONIC_FIELD_SPECS = (
@@ -753,6 +784,186 @@ def _build_gravity_acceleration_settings(
     return settings_by_source, frozen_inventory
 
 
+def _build_solar_radiation_pressure_setup(
+    candidate_id: object,
+    spacecraft: SpacecraftSpec,
+) -> _SolarRadiationPressureSetup:
+    """Build explicit Sun-source and cannonball-target Tudat settings."""
+
+    try:
+        if not isinstance(spacecraft, SpacecraftSpec):
+            raise TypeError("spacecraft must be a SpacecraftSpec")
+        initial_mass_kg = _positive_finite(
+            "spacecraft.initial_mass_kg",
+            spacecraft.initial_mass_kg,
+        )
+        reference_area_m2 = _positive_finite(
+            "spacecraft.srp_area_m2",
+            spacecraft.srp_area_m2,
+        )
+        reflectivity_coefficient = _positive_finite(
+            "spacecraft.reflectivity_coefficient",
+            spacecraft.reflectivity_coefficient,
+        )
+    except (TypeError, ValueError) as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            str(exc),
+            exc,
+        )
+
+    try:
+        environment_setup = _import_tudat_environment_setup()
+        propagation_setup = _import_tudat_propagation_setup()
+    except RuntimeError as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            str(exc),
+            exc,
+        )
+
+    try:
+        radiation_pressure = environment_setup.radiation_pressure
+        luminosity_settings = radiation_pressure.constant_luminosity(
+            SUN_LUMINOSITY_W
+        )
+        source_settings = radiation_pressure.isotropic_radiation_source(
+            luminosity_settings
+        )
+        target_settings = radiation_pressure.cannonball_radiation_target(
+            reference_area_m2,
+            reflectivity_coefficient,
+            {
+                _SOLAR_RADIATION_SOURCE_BODY: list(
+                    SOLAR_RADIATION_OCCULTING_BODY_NAMES
+                )
+            },
+        )
+        acceleration_setting = (
+            propagation_setup.acceleration.radiation_pressure()
+        )
+    except Exception as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            f"explicit Sun cannonball radiation-pressure setup failed: {exc}",
+            exc,
+        )
+
+    resource = _SolarRadiationPressureResource(
+        source_body=_SOLAR_RADIATION_SOURCE_BODY,
+        target_body=SPACECRAFT_BODY_NAME,
+        luminosity_w=SUN_LUMINOSITY_W,
+        reference_area_m2=reference_area_m2,
+        reflectivity_coefficient=reflectivity_coefficient,
+        initial_mass_kg=initial_mass_kg,
+        occulting_bodies=SOLAR_RADIATION_OCCULTING_BODY_NAMES,
+        acceleration_type=_SOLAR_RADIATION_PRESSURE_TYPE,
+        uses_current_body_mass=True,
+    )
+    return _SolarRadiationPressureSetup(
+        source_settings=source_settings,
+        target_settings=target_settings,
+        acceleration_settings_by_source={
+            _SOLAR_RADIATION_SOURCE_BODY: (acceleration_setting,)
+        },
+        resource=resource,
+    )
+
+
+def _assign_sun_radiation_source(
+    candidate_id: object,
+    body_settings: Any,
+    source_settings: Any,
+) -> None:
+    try:
+        body_settings.get(_SOLAR_RADIATION_SOURCE_BODY).radiation_source_settings = (
+            source_settings
+        )
+    except Exception as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            f"explicit Sun radiation source installation failed: {exc}",
+            exc,
+        )
+
+
+def _install_spacecraft_radiation_target(
+    candidate_id: object,
+    environment_setup: Any,
+    bodies: Any,
+    setup: _SolarRadiationPressureSetup,
+) -> None:
+    resource = setup.resource
+    try:
+        if bodies.does_body_exist(resource.target_body):
+            raise ValueError(f"{resource.target_body} already exists")
+        bodies.create_empty_body(resource.target_body)
+        mass_settings = environment_setup.rigid_body.constant_rigid_body_properties(
+            resource.initial_mass_kg
+        )
+        environment_setup.add_mass_properties_model(
+            bodies,
+            resource.target_body,
+            mass_settings,
+        )
+        environment_setup.add_radiation_pressure_target_model(
+            bodies,
+            resource.target_body,
+            setup.target_settings,
+        )
+    except Exception as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            f"{resource.target_body} radiation target installation failed: {exc}",
+            exc,
+        )
+
+    try:
+        expected_bodies = set(PHYSICAL_BODY_NAMES) | {resource.target_body}
+        if set(bodies.list_of_bodies()) != expected_bodies:
+            raise ValueError(
+                "radiation-pressure environment must contain exactly the eight "
+                "physical sources and Spacecraft"
+            )
+        source_model = bodies.get(resource.source_body).radiation_pressure_source_model
+        if source_model is None:
+            raise ValueError("Sun radiation source model is missing")
+        target_body = bodies.get(resource.target_body)
+        current_mass_kg = _positive_finite(
+            f"{resource.target_body}.current_mass_kg",
+            target_body.mass,
+        )
+        if current_mass_kg != resource.initial_mass_kg:
+            raise ValueError(
+                f"{resource.target_body} current mass does not match initial mass"
+            )
+        target_models = target_body.radiation_pressure_target_models
+        if len(target_models) != 1:
+            raise ValueError(
+                f"{resource.target_body} must have exactly one radiation target"
+            )
+        runtime_coefficient = _positive_finite(
+            f"{resource.target_body}.reflectivity_coefficient",
+            target_models[0].radiation_pressure_coefficient,
+        )
+        if runtime_coefficient != resource.reflectivity_coefficient:
+            raise ValueError(
+                f"{resource.target_body} radiation coefficient mismatch"
+            )
+    except (AttributeError, RuntimeError, TypeError, ValueError) as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            str(exc),
+            exc,
+        )
+
+
 def _create_system_of_bodies(environment_setup: Any, body_settings: Any) -> Any:
     try:
         return environment_setup.create_system_of_bodies(body_settings)
@@ -840,9 +1051,10 @@ def _validate_created_environment(
 
 def _build_physical_environment(
     candidate: ImpulsiveTransferCandidate,
+    spacecraft: SpacecraftSpec,
     gravity_models_path: Path | None = None,
 ) -> _PhysicalEnvironment:
-    """Build the verified, time-limited eight-body SSB/J2000 environment."""
+    """Build the verified, time-limited SSB/J2000 force environment."""
 
     try:
         environment_setup = _import_tudat_environment_setup()
@@ -858,6 +1070,11 @@ def _build_physical_environment(
             str(exc),
             exc,
         )
+
+    solar_radiation_pressure = _build_solar_radiation_pressure_setup(
+        candidate.candidate_id,
+        spacecraft,
+    )
 
     try:
         verified_files = _verified_coefficient_files(resource_root)
@@ -924,6 +1141,11 @@ def _build_physical_environment(
             )
 
     harmonic_fields = tuple(resources)
+    _assign_sun_radiation_source(
+        candidate.candidate_id,
+        body_settings,
+        solar_radiation_pressure.source_settings,
+    )
     try:
         bodies = _create_system_of_bodies(environment_setup, body_settings)
         _validate_created_environment(
@@ -941,6 +1163,12 @@ def _build_physical_environment(
             exc,
         )
 
+    _install_spacecraft_radiation_target(
+        candidate.candidate_id,
+        environment_setup,
+        bodies,
+        solar_radiation_pressure,
+    )
     gravity_settings, gravity_inventory = _build_gravity_acceleration_settings(
         candidate.candidate_id,
         harmonic_fields,
@@ -955,6 +1183,10 @@ def _build_physical_environment(
         harmonic_fields=harmonic_fields,
         gravity_acceleration_settings=gravity_settings,
         gravity_acceleration_inventory=gravity_inventory,
+        solar_radiation_pressure_acceleration_settings=(
+            solar_radiation_pressure.acceleration_settings_by_source
+        ),
+        solar_radiation_pressure=solar_radiation_pressure.resource,
     )
 
 

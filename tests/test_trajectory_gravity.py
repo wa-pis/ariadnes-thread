@@ -10,7 +10,7 @@ import pytest
 
 from space_nav import ephemeris, trajectory
 from space_nav.errors import TrajectoryRefinementError
-from space_nav.models import ImpulsiveTransferCandidate
+from space_nav.models import ImpulsiveTransferCandidate, SpacecraftSpec
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,6 +46,19 @@ def _candidate(**changes: object) -> ImpulsiveTransferCandidate:
     }
     values.update(changes)
     return ImpulsiveTransferCandidate(**values)  # type: ignore[arg-type]
+
+
+def _spacecraft() -> SpacecraftSpec:
+    return SpacecraftSpec(
+        initial_mass_kg=2_000.0,
+        dry_mass_kg=1_000.0,
+        max_thrust_n=1_000.0,
+        isp_s=450.0,
+        srp_area_m2=20.0,
+        reflectivity_coefficient=1.3,
+        maneuver_magnitude_sigma_fraction=0.001,
+        maneuver_pointing_sigma_rad=math.radians(0.05),
+    )
 
 
 def _real_candidate(monkeypatch: pytest.MonkeyPatch) -> ImpulsiveTransferCandidate:
@@ -277,12 +290,12 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
     candidate = _real_candidate(monkeypatch)
     environment = trajectory._build_physical_environment(
         candidate,
+        _spacecraft(),
         gravity_models_path=_gravity_models_path(),
     )
     assert environment.gravity_acceleration_inventory == _expected_inventory()
     assert tuple(environment.gravity_acceleration_settings) == _SOURCE_ORDER
     bodies = environment.bodies
-    bodies.create_empty_body("Spacecraft")
     bodies.create_empty_body("GravityOracle")
 
     production_models = propagation_setup.create_acceleration_models(
