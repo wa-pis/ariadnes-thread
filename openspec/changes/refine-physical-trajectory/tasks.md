@@ -11,7 +11,7 @@
 - [x] 2.3 Assemble direct gravity from Sun, Mercury, Venus, Earth, Jupiter, and Saturn plus exactly one harmonic term each for Moon and Mars; verify inventory tests prevent double counting and independent fixed-state vector-sum tests meet the force tolerance.
 - [x] 2.4 Add cannonball solar-radiation pressure using current mass, explicit `3.828e26 W` Sun luminosity, and Moon/Earth/Mars occultation; verify independent scaling plus clear, umbra, and penumbra tests meet the specified bounds.
 - [x] 2.5 Add only the Sun Schwarzschild relativistic acceleration with PPN beta/gamma equal to one; verify a fixed-state comparison meets the force tolerance and provenance/tests show Lense-Thirring, de Sitter, and EIH disabled.
-- [ ] 2.6 Verify the pinned PCK hash and exact eight SPICE radius vectors, build conservative collision spheres from each maximum component, and keep Moon/Mars orbit-altitude and harmonic radii separate; verify every expected value within `0.001 m`, the impact inequality, manifest output, and missing/invalid/drifted resource failures.
+- [x] 2.6 Verify the pinned PCK hash and exact eight SPICE radius vectors, build conservative collision spheres from each maximum component, and keep Moon/Mars orbit-altitude and harmonic radii separate; verify every expected value within `0.001 m`, the impact inequality, manifest output, and missing/invalid/drifted resource failures.
 
 ## 3. Segmented finite-burn propagation
 

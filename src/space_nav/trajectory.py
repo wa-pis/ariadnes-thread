@@ -79,6 +79,21 @@ _RELATIVITY_SOURCE_BODY = "Sun"
 _RELATIVISTIC_ACCELERATION_TYPE = "schwarzschild-relativistic-correction"
 _PPN_BETA = 1.0
 _PPN_GAMMA = 1.0
+_COLLISION_PCK_KERNEL_NAME = "pck00010.tpc"
+_COLLISION_PCK_EXPECTED_SHA256 = (
+    "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2"
+)
+_COLLISION_RADIUS_TOLERANCE_M = 0.001
+_PINNED_COLLISION_RADII_M = (
+    ("Sun", (696_000_000.0, 696_000_000.0, 696_000_000.0)),
+    ("Mercury", (2_439_700.0, 2_439_700.0, 2_439_700.0)),
+    ("Venus", (6_051_800.0, 6_051_800.0, 6_051_800.0)),
+    ("Earth", (6_378_136.6, 6_378_136.6, 6_356_751.9)),
+    ("Moon", (1_737_400.0, 1_737_400.0, 1_737_400.0)),
+    ("Mars", (3_396_190.0, 3_396_190.0, 3_376_200.0)),
+    ("Jupiter", (71_492_000.0, 71_492_000.0, 66_854_000.0)),
+    ("Saturn", (60_268_000.0, 60_268_000.0, 54_364_000.0)),
+)
 
 Cartesian6 = tuple[float, float, float, float, float, float]
 StateQuery = Callable[[str, float], CartesianState]
@@ -161,6 +176,23 @@ class _RelativityResource:
 
 
 @dataclass(frozen=True, slots=True)
+class _CollisionSurfaceResource:
+    body: str
+    expected_radius_vector_m: tuple[float, float, float]
+    actual_radius_vector_m: tuple[float, float, float]
+    guard_radius_m: float
+
+
+@dataclass(frozen=True, slots=True)
+class _CollisionResource:
+    kernel_name: str
+    expected_sha256: str
+    actual_sha256: str
+    radius_tolerance_m: float
+    surfaces: tuple[_CollisionSurfaceResource, ...]
+
+
+@dataclass(frozen=True, slots=True)
 class _PhysicalEnvironment:
     model_id: str
     initial_epoch_tdb_s: float
@@ -177,6 +209,7 @@ class _PhysicalEnvironment:
     solar_radiation_pressure: _SolarRadiationPressureResource
     relativistic_acceleration_settings: dict[str, tuple[Any, ...]]
     relativity: _RelativityResource
+    collision_resource: _CollisionResource
 
 
 _HARMONIC_FIELD_SPECS = (
@@ -283,6 +316,30 @@ def _finite_cartesian_values(raw_state: object, source: str) -> Cartesian6:
     if not all(math.isfinite(value) for value in values):
         raise ValueError(f"{source} must return six finite values")
     return cast(Cartesian6, values)
+
+
+def _finite_vector3_values(
+    raw_vector: object,
+    source: str,
+) -> tuple[float, float, float]:
+    try:
+        if not isinstance(raw_vector, Iterable):
+            raise TypeError("vector is not iterable")
+        raw_values = tuple(raw_vector)
+    except Exception as exc:
+        raise ValueError(f"{source} must contain three numeric values") from exc
+    if len(raw_values) != 3 or any(
+        not isinstance(value, Real) or isinstance(value, bool)
+        for value in raw_values
+    ):
+        raise ValueError(f"{source} must contain three numeric values")
+    try:
+        values = tuple(float(value) for value in raw_values)
+    except (OverflowError, ValueError) as exc:
+        raise ValueError(f"{source} must contain three numeric values") from exc
+    if not all(math.isfinite(value) for value in values):
+        raise ValueError(f"{source} must contain three finite values")
+    return cast(tuple[float, float, float], values)
 
 
 def _finite_float(name: str, value: object) -> float:
@@ -519,6 +576,183 @@ def _verified_coefficient_files(
             )
         verified.append((spec, path, actual_sha256))
     return tuple(verified)
+
+
+def _pinned_pck_sha256(kernel_metadata: object) -> str:
+    if not isinstance(kernel_metadata, dict):
+        raise ValueError("SPICE kernel manifest must be an object")
+    kernels = kernel_metadata.get("kernels")
+    if not isinstance(kernels, list):
+        raise ValueError("SPICE kernel manifest must contain a kernel list")
+    matches = [
+        entry
+        for entry in kernels
+        if isinstance(entry, dict)
+        and entry.get("name") == _COLLISION_PCK_KERNEL_NAME
+    ]
+    if not matches:
+        raise ValueError(
+            f"required SPICE kernel {_COLLISION_PCK_KERNEL_NAME!r} is missing"
+        )
+    hashes = tuple(entry.get("sha256") for entry in matches)
+    if any(digest != _COLLISION_PCK_EXPECTED_SHA256 for digest in hashes):
+        raise ValueError(
+            f"{_COLLISION_PCK_KERNEL_NAME} SHA-256 mismatch: expected "
+            f"{_COLLISION_PCK_EXPECTED_SHA256}, got {hashes!r}"
+        )
+    return _COLLISION_PCK_EXPECTED_SHA256
+
+
+def _build_collision_resource(candidate_id: object) -> _CollisionResource:
+    """Verify the pinned PCK and build exact conservative collision spheres."""
+
+    try:
+        metadata = ephemeris.kernel_metadata()
+    except EphemerisError as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "resource-validation",
+            f"SPICE kernel inventory failed: {exc}",
+            exc,
+        )
+    try:
+        actual_sha256 = _pinned_pck_sha256(metadata)
+    except (TypeError, ValueError) as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "resource-validation",
+            str(exc),
+            exc,
+        )
+
+    try:
+        spice = ephemeris._ensure_standard_kernels()
+    except EphemerisError as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "resource-validation",
+            f"SPICE radius lookup initialization failed: {exc}",
+            exc,
+        )
+
+    surfaces = []
+    for body, expected_radius_vector_m in _PINNED_COLLISION_RADII_M:
+        try:
+            has_radii = spice.check_body_property_in_kernel_pool(body, "RADII")
+        except Exception as exc:
+            _raise_refinement_error(
+                candidate_id,
+                "resource-validation",
+                f"{body} SPICE RADII availability check failed: {exc}",
+                exc,
+            )
+        if not has_radii:
+            cause = ValueError(f"SPICE RADII are missing for {body}")
+            _raise_refinement_error(
+                candidate_id,
+                "resource-validation",
+                str(cause),
+                cause,
+            )
+        try:
+            raw_radius_vector_km = spice.get_body_properties(body, "RADII", 3)
+        except Exception as exc:
+            _raise_refinement_error(
+                candidate_id,
+                "resource-validation",
+                f"{body} SPICE RADII read failed: {exc}",
+                exc,
+            )
+        try:
+            radius_vector_km = _finite_vector3_values(
+                raw_radius_vector_km,
+                f"{body} SPICE RADII",
+            )
+            actual_radius_vector_m = _finite_vector3_values(
+                tuple(value * 1_000.0 for value in radius_vector_km),
+                f"{body} SPICE RADII in meters",
+            )
+            if any(value <= 0.0 for value in actual_radius_vector_m):
+                raise ValueError(
+                    f"{body} SPICE RADII must contain three positive values"
+                )
+            for actual, expected in zip(
+                actual_radius_vector_m,
+                expected_radius_vector_m,
+                strict=True,
+            ):
+                if not math.isclose(
+                    actual,
+                    expected,
+                    rel_tol=0.0,
+                    abs_tol=_COLLISION_RADIUS_TOLERANCE_M,
+                ):
+                    raise ValueError(
+                        f"{body} SPICE RADII drift: expected "
+                        f"{expected_radius_vector_m}, got "
+                        f"{actual_radius_vector_m}"
+                    )
+        except (OverflowError, TypeError, ValueError) as exc:
+            _raise_refinement_error(
+                candidate_id,
+                "resource-validation",
+                str(exc),
+                exc,
+            )
+        surfaces.append(
+            _CollisionSurfaceResource(
+                body=body,
+                expected_radius_vector_m=expected_radius_vector_m,
+                actual_radius_vector_m=actual_radius_vector_m,
+                guard_radius_m=max(actual_radius_vector_m),
+            )
+        )
+
+    return _CollisionResource(
+        kernel_name=_COLLISION_PCK_KERNEL_NAME,
+        expected_sha256=_COLLISION_PCK_EXPECTED_SHA256,
+        actual_sha256=actual_sha256,
+        radius_tolerance_m=_COLLISION_RADIUS_TOLERANCE_M,
+        surfaces=tuple(surfaces),
+    )
+
+
+def _collision_resource_manifest(resource: _CollisionResource) -> dict[str, Any]:
+    return {
+        "pck_kernel": {
+            "name": resource.kernel_name,
+            "expected_sha256": resource.expected_sha256,
+            "actual_sha256": resource.actual_sha256,
+        },
+        "radius_tolerance_m": resource.radius_tolerance_m,
+        "radii_unit": "m",
+        "impact_condition": "distance_m <= guard_radius_m",
+        "surfaces": [
+            {
+                "body": surface.body,
+                "expected_radius_vector_m": list(
+                    surface.expected_radius_vector_m
+                ),
+                "actual_radius_vector_m": list(surface.actual_radius_vector_m),
+                "guard_radius_m": surface.guard_radius_m,
+            }
+            for surface in resource.surfaces
+        ],
+    }
+
+
+def _crosses_collision_surface(
+    spacecraft_position_m: object,
+    body_position_m: object,
+    guard_radius_m: object,
+) -> bool:
+    spacecraft_position = _finite_vector3_values(
+        spacecraft_position_m,
+        "spacecraft_position_m",
+    )
+    body_position = _finite_vector3_values(body_position_m, "body_position_m")
+    guard_radius = _positive_finite("guard_radius_m", guard_radius_m)
+    return math.dist(spacecraft_position, body_position) <= guard_radius
 
 
 def _create_time_limited_body_settings(
@@ -1209,6 +1443,7 @@ def _build_physical_environment(
             f"SPICE kernel initialization failed: {exc}",
             exc,
         )
+    collision_resource = _build_collision_resource(candidate.candidate_id)
 
     try:
         body_settings = _create_time_limited_body_settings(
@@ -1307,6 +1542,7 @@ def _build_physical_environment(
         solar_radiation_pressure=solar_radiation_pressure.resource,
         relativistic_acceleration_settings=relativity_settings,
         relativity=relativity,
+        collision_resource=collision_resource,
     )
 
 
