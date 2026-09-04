@@ -3,15 +3,19 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
+from dataclasses import dataclass
 from datetime import datetime
+from hashlib import file_digest
 import math
 from numbers import Real
-from typing import NoReturn, cast
+from pathlib import Path
+from typing import Any, NoReturn, cast
 
 from . import ephemeris
 from .ephemeris import CartesianState
 from .errors import EphemerisError, TrajectoryRefinementError, TransferSearchError
 from .models import (
+    _PHYSICAL_FORCE_MODEL_ID,
     ImpulsiveTransferCandidate,
     OrbitSpec,
     Scenario,
@@ -32,12 +36,108 @@ MOON_ORBIT_SHAPE_RADIUS_M = MOON_REFERENCE_RADIUS_M
 MARS_ORBIT_SHAPE_RADIUS_M = MARS_REFERENCE_RADIUS_M
 MOON_HARMONIC_GRAVITATIONAL_PARAMETER_M3_S2 = 4_902_800_121_846.8
 MARS_HARMONIC_GRAVITATIONAL_PARAMETER_M3_S2 = 42_828_375_815_756.1
+MOON_HARMONIC_NORMALIZATION_RADIUS_M = 1_738_000.0
+MARS_HARMONIC_NORMALIZATION_RADIUS_M = 3_396_000.0
+MOON_HARMONIC_COEFFICIENT_SHA256 = (
+    "3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d"
+)
+MARS_HARMONIC_COEFFICIENT_SHA256 = (
+    "d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980"
+)
+PHYSICAL_MODEL_IDENTIFIER = _PHYSICAL_FORCE_MODEL_ID
+PHYSICAL_BODY_NAMES = (
+    "Sun",
+    "Mercury",
+    "Venus",
+    "Earth",
+    "Moon",
+    "Mars",
+    "Jupiter",
+    "Saturn",
+)
+EPHEMERIS_TIME_STEP_S = 300.0
+
+_FIELD_GM_RELATIVE_TOLERANCE = 1e-15
 
 Cartesian6 = tuple[float, float, float, float, float, float]
 StateQuery = Callable[[str, float], CartesianState]
 ElementConverter = Callable[
     [float, float, float, float, float, float, float], object
 ]
+
+
+@dataclass(frozen=True, slots=True)
+class _HarmonicFieldSpec:
+    body: str
+    model: str
+    file_name: str
+    degree: int
+    order: int
+    expected_sha256: str
+    gravitational_parameter_m3_s2: float
+    normalization_radius_m: float
+    orbit_shape_radius_m: float
+    associated_frame: str
+
+
+@dataclass(frozen=True, slots=True)
+class _HarmonicFieldResource:
+    body: str
+    model: str
+    file_name: str
+    degree: int
+    order: int
+    expected_sha256: str
+    actual_sha256: str
+    associated_frame: str
+    rotation_base_frame: str
+    rotation_target_frame: str
+    gravitational_parameter_m3_s2: float
+    normalization_radius_m: float
+    orbit_shape_radius_m: float
+
+
+@dataclass(frozen=True, slots=True)
+class _PhysicalEnvironment:
+    model_id: str
+    initial_epoch_tdb_s: float
+    final_epoch_tdb_s: float
+    origin: str
+    orientation: str
+    bodies: Any
+    harmonic_fields: tuple[_HarmonicFieldResource, ...]
+
+
+_HARMONIC_FIELD_SPECS = (
+    _HarmonicFieldSpec(
+        body="Moon",
+        model="gggrx1200",
+        file_name="gggrx_1200l_sha.tab",
+        degree=200,
+        order=200,
+        expected_sha256=MOON_HARMONIC_COEFFICIENT_SHA256,
+        gravitational_parameter_m3_s2=(
+            MOON_HARMONIC_GRAVITATIONAL_PARAMETER_M3_S2
+        ),
+        normalization_radius_m=MOON_HARMONIC_NORMALIZATION_RADIUS_M,
+        orbit_shape_radius_m=MOON_ORBIT_SHAPE_RADIUS_M,
+        associated_frame="IAU_Moon",
+    ),
+    _HarmonicFieldSpec(
+        body="Mars",
+        model="jgmro120d",
+        file_name="jgmro120d.txt",
+        degree=120,
+        order=120,
+        expected_sha256=MARS_HARMONIC_COEFFICIENT_SHA256,
+        gravitational_parameter_m3_s2=(
+            MARS_HARMONIC_GRAVITATIONAL_PARAMETER_M3_S2
+        ),
+        normalization_radius_m=MARS_HARMONIC_NORMALIZATION_RADIUS_M,
+        orbit_shape_radius_m=MARS_ORBIT_SHAPE_RADIUS_M,
+        associated_frame="IAU_Mars",
+    ),
+)
 
 
 def _raise_refinement_error(
@@ -91,7 +191,7 @@ def _tudat_keplerian_to_cartesian(
         raise RuntimeError("TudatPy Keplerian conversion failed") from exc
 
 
-def _cartesian_values(raw_state: object) -> Cartesian6:
+def _finite_cartesian_values(raw_state: object, source: str) -> Cartesian6:
     try:
         flatten = getattr(raw_state, "reshape", None)
         flat_state = flatten(-1) if callable(flatten) else raw_state
@@ -99,29 +199,36 @@ def _cartesian_values(raw_state: object) -> Cartesian6:
             raise TypeError("state is not iterable")
         raw_values = tuple(flat_state)
     except Exception as exc:
-        raise ValueError("element conversion must return six numeric values") from exc
+        raise ValueError(f"{source} must return six numeric values") from exc
     if len(raw_values) != 6 or any(
         not isinstance(value, Real) or isinstance(value, bool)
         for value in raw_values
     ):
-        raise ValueError("element conversion must return six numeric values")
+        raise ValueError(f"{source} must return six numeric values")
     try:
         values = tuple(float(value) for value in raw_values)
     except (OverflowError, ValueError) as exc:
-        raise ValueError("element conversion must return six numeric values") from exc
+        raise ValueError(f"{source} must return six numeric values") from exc
     if not all(math.isfinite(value) for value in values):
-        raise ValueError("element conversion must return six finite values")
+        raise ValueError(f"{source} must return six finite values")
     return cast(Cartesian6, values)
 
 
-def _positive_finite(name: str, value: object) -> float:
+def _finite_float(name: str, value: object) -> float:
     if not isinstance(value, Real) or isinstance(value, bool):
-        raise ValueError(f"{name} must be a positive finite number")
+        raise ValueError(f"{name} must be a finite number")
     try:
         number = float(value)
     except (OverflowError, ValueError) as exc:
-        raise ValueError(f"{name} must be a positive finite number") from exc
-    if not math.isfinite(number) or number <= 0.0:
+        raise ValueError(f"{name} must be a finite number") from exc
+    if not math.isfinite(number):
+        raise ValueError(f"{name} must be a finite number")
+    return number
+
+
+def _positive_finite(name: str, value: object) -> float:
+    number = _finite_float(name, value)
+    if number <= 0.0:
         raise ValueError(f"{name} must be a positive finite number")
     return number
 
@@ -163,7 +270,7 @@ def _orbit_to_body_relative_state(
         )
     except Exception as exc:
         raise RuntimeError("Keplerian element conversion failed") from exc
-    state = _cartesian_values(raw_state)
+    state = _finite_cartesian_values(raw_state, "element conversion")
     if math.hypot(*state[:3]) == 0.0:
         raise ValueError("element conversion produced a body-centre position")
     return state
@@ -278,6 +385,399 @@ def _build_boundary_states(
                 exc,
             )
     return boundaries[0], boundaries[1]
+
+
+def _import_tudat_environment_setup() -> Any:
+    try:
+        from tudatpy.dynamics import environment_setup
+    except Exception as exc:
+        raise RuntimeError(
+            "TudatPy environment setup is unavailable in the pinned environment"
+        ) from exc
+    return environment_setup
+
+
+def _default_gravity_models_path() -> Path:
+    try:
+        from tudatpy import data
+
+        return Path(data.get_gravity_models_path())
+    except Exception as exc:
+        raise RuntimeError("Tudat gravity-resource path is unavailable") from exc
+
+
+def _coefficient_sha256(path: Path) -> str:
+    try:
+        with path.open("rb") as stream:
+            return file_digest(stream, "sha256").hexdigest()
+    except OSError as exc:
+        raise OSError(f"missing or unreadable coefficient file {path}") from exc
+
+
+def _verified_coefficient_files(
+    gravity_models_path: Path,
+) -> tuple[tuple[_HarmonicFieldSpec, Path, str], ...]:
+    verified = []
+    for spec in _HARMONIC_FIELD_SPECS:
+        path = gravity_models_path / spec.body / spec.file_name
+        actual_sha256 = _coefficient_sha256(path)
+        if actual_sha256 != spec.expected_sha256:
+            raise ValueError(
+                f"{spec.body} {spec.model} coefficient SHA-256 mismatch for "
+                f"{path}: expected {spec.expected_sha256}, got {actual_sha256}"
+            )
+        verified.append((spec, path, actual_sha256))
+    return tuple(verified)
+
+
+def _create_time_limited_body_settings(
+    environment_setup: Any,
+    initial_epoch_tdb_s: float,
+    final_epoch_tdb_s: float,
+) -> Any:
+    try:
+        return environment_setup.get_default_body_settings_time_limited(
+            PHYSICAL_BODY_NAMES,
+            initial_epoch_tdb_s,
+            final_epoch_tdb_s,
+            base_frame_origin="SSB",
+            base_frame_orientation="J2000",
+            time_step=EPHEMERIS_TIME_STEP_S,
+        )
+    except Exception as exc:
+        raise RuntimeError(
+            "Tudat could not configure the time-limited SSB/J2000 body settings "
+            f"for TDB interval [{initial_epoch_tdb_s}, {final_epoch_tdb_s}]"
+        ) from exc
+
+
+def _validate_time_limited_body_settings(
+    body_settings: Any,
+    initial_epoch_tdb_s: float,
+    final_epoch_tdb_s: float,
+) -> None:
+    if (
+        body_settings.frame_origin != "SSB"
+        or body_settings.frame_orientation != "J2000"
+    ):
+        raise ValueError("Tudat body settings must use global frame SSB/J2000")
+    for body_name in PHYSICAL_BODY_NAMES:
+        ephemeris_settings = body_settings.get(body_name).ephemeris_settings
+        if (
+            ephemeris_settings.frame_origin != "SSB"
+            or ephemeris_settings.frame_orientation != "J2000"
+        ):
+            raise ValueError(
+                f"{body_name} ephemeris settings must use frame SSB/J2000"
+            )
+        available_start_tdb_s = _finite_float(
+            f"{body_name} ephemeris initial_time",
+            ephemeris_settings.initial_time,
+        )
+        available_end_tdb_s = _finite_float(
+            f"{body_name} ephemeris final_time",
+            ephemeris_settings.final_time,
+        )
+        if (
+            available_start_tdb_s > initial_epoch_tdb_s
+            or available_end_tdb_s < final_epoch_tdb_s
+        ):
+            raise ValueError(
+                f"{body_name} ephemeris settings do not cover TDB interval "
+                f"[{initial_epoch_tdb_s}, {final_epoch_tdb_s}]"
+            )
+
+
+def _load_harmonic_field_settings(
+    environment_setup: Any,
+    spec: _HarmonicFieldSpec,
+    coefficient_path: Path,
+) -> Any:
+    try:
+        return environment_setup.gravity_field.from_file_spherical_harmonic(
+            str(coefficient_path),
+            spec.degree,
+            spec.order,
+            spec.associated_frame,
+        )
+    except Exception as exc:
+        raise RuntimeError(
+            f"Tudat could not load {spec.body} {spec.model} coefficients from "
+            f"{coefficient_path}"
+        ) from exc
+
+
+def _validate_harmonic_field_settings(
+    spec: _HarmonicFieldSpec,
+    gravity_settings: Any,
+    rotation_settings: Any,
+    actual_sha256: str,
+) -> _HarmonicFieldResource:
+    gravitational_parameter_m3_s2 = _positive_finite(
+        f"{spec.body} harmonic gravitational_parameter_m3_s2",
+        gravity_settings.gravitational_parameter,
+    )
+    if not math.isclose(
+        gravitational_parameter_m3_s2,
+        spec.gravitational_parameter_m3_s2,
+        rel_tol=_FIELD_GM_RELATIVE_TOLERANCE,
+        abs_tol=0.0,
+    ):
+        raise ValueError(
+            f"{spec.body} {spec.model} gravitational parameter mismatch: "
+            f"expected {spec.gravitational_parameter_m3_s2}, got "
+            f"{gravitational_parameter_m3_s2}"
+        )
+    normalization_radius_m = _positive_finite(
+        f"{spec.body} harmonic normalization_radius_m",
+        gravity_settings.reference_radius,
+    )
+    if normalization_radius_m != spec.normalization_radius_m:
+        raise ValueError(
+            f"{spec.body} {spec.model} normalization radius mismatch: expected "
+            f"{spec.normalization_radius_m}, got {normalization_radius_m}"
+        )
+
+    expected_shape = (spec.degree + 1, spec.order + 1)
+    cosine_shape = tuple(gravity_settings.normalized_cosine_coefficients.shape)
+    sine_shape = tuple(gravity_settings.normalized_sine_coefficients.shape)
+    if cosine_shape != expected_shape or sine_shape != expected_shape:
+        raise ValueError(
+            f"{spec.body} {spec.model} coefficient degree/order dimensions must be "
+            f"{expected_shape}, got cosine {cosine_shape} and sine {sine_shape}"
+        )
+
+    associated_frame = gravity_settings.associated_reference_frame
+    rotation_base_frame = rotation_settings.base_frame
+    rotation_target_frame = rotation_settings.target_frame
+    if associated_frame != spec.associated_frame:
+        raise ValueError(
+            f"{spec.body} {spec.model} associated frame must be "
+            f"{spec.associated_frame}, got {associated_frame}"
+        )
+    if rotation_base_frame != "J2000" or rotation_target_frame != associated_frame:
+        raise ValueError(
+            f"{spec.body} frame mismatch: gravity uses {associated_frame}, "
+            f"rotation uses {rotation_base_frame}->{rotation_target_frame}"
+        )
+    if spec.orbit_shape_radius_m == normalization_radius_m:
+        raise ValueError(
+            f"{spec.body} orbit shape and harmonic normalization radii must differ"
+        )
+    return _HarmonicFieldResource(
+        body=spec.body,
+        model=spec.model,
+        file_name=spec.file_name,
+        degree=spec.degree,
+        order=spec.order,
+        expected_sha256=spec.expected_sha256,
+        actual_sha256=actual_sha256,
+        associated_frame=associated_frame,
+        rotation_base_frame=rotation_base_frame,
+        rotation_target_frame=rotation_target_frame,
+        gravitational_parameter_m3_s2=gravitational_parameter_m3_s2,
+        normalization_radius_m=normalization_radius_m,
+        orbit_shape_radius_m=spec.orbit_shape_radius_m,
+    )
+
+
+def _create_system_of_bodies(environment_setup: Any, body_settings: Any) -> Any:
+    try:
+        return environment_setup.create_system_of_bodies(body_settings)
+    except Exception as exc:
+        raise RuntimeError(
+            "Tudat could not create the physical body system; verify SPICE "
+            "coverage for the requested TDB interval"
+        ) from exc
+
+
+def _validate_created_environment(
+    environment_setup: Any,
+    bodies: Any,
+    resources: tuple[_HarmonicFieldResource, ...],
+    initial_epoch_tdb_s: float,
+    final_epoch_tdb_s: float,
+) -> None:
+    if (
+        bodies.global_frame_origin() != "SSB"
+        or bodies.global_frame_orientation() != "J2000"
+    ):
+        raise ValueError("Tudat body system must use global frame SSB/J2000")
+    if set(bodies.list_of_bodies()) != set(PHYSICAL_BODY_NAMES):
+        raise ValueError(
+            "Tudat body system does not contain the exact physical body set"
+        )
+
+    for body_name in PHYSICAL_BODY_NAMES:
+        body = bodies.get(body_name)
+        if (
+            body.ephemeris.frame_origin != "SSB"
+            or body.ephemeris.frame_orientation != "J2000"
+        ):
+            raise ValueError(f"{body_name} runtime ephemeris must use SSB/J2000")
+        safe_start_tdb_s, safe_end_tdb_s = (
+            environment_setup.get_safe_interpolation_interval(body.ephemeris)
+        )
+        if (
+            safe_start_tdb_s > initial_epoch_tdb_s
+            or safe_end_tdb_s < final_epoch_tdb_s
+        ):
+            raise ValueError(
+                f"{body_name} runtime ephemeris does not cover TDB interval "
+                f"[{initial_epoch_tdb_s}, {final_epoch_tdb_s}]"
+            )
+        for epoch_tdb_s in (initial_epoch_tdb_s, final_epoch_tdb_s):
+            state = body.ephemeris.cartesian_state(epoch_tdb_s)
+            _finite_cartesian_values(
+                state,
+                f"{body_name} ephemeris at TDB epoch {epoch_tdb_s}",
+            )
+
+    for resource in resources:
+        body = bodies.get(resource.body)
+        gravity_model = body.gravity_field_model
+        rotation_model = body.rotation_model
+        if (
+            gravity_model.maximum_degree != resource.degree
+            or gravity_model.maximum_order != resource.order
+        ):
+            raise ValueError(
+                f"{resource.body} runtime harmonic degree/order mismatch"
+            )
+        gravitational_parameter_m3_s2 = _positive_finite(
+            f"{resource.body} runtime gravitational_parameter_m3_s2",
+            gravity_model.gravitational_parameter,
+        )
+        if not math.isclose(
+            gravitational_parameter_m3_s2,
+            resource.gravitational_parameter_m3_s2,
+            rel_tol=_FIELD_GM_RELATIVE_TOLERANCE,
+            abs_tol=0.0,
+        ):
+            raise ValueError(
+                f"{resource.body} runtime gravitational parameter mismatch"
+            )
+        if gravity_model.reference_radius != resource.normalization_radius_m:
+            raise ValueError(f"{resource.body} runtime normalization radius mismatch")
+        if (
+            rotation_model.inertial_frame_name != resource.rotation_base_frame
+            or rotation_model.body_fixed_frame_name != resource.rotation_target_frame
+        ):
+            raise ValueError(f"{resource.body} runtime rotation frame mismatch")
+
+
+def _build_physical_environment(
+    candidate: ImpulsiveTransferCandidate,
+    gravity_models_path: Path | None = None,
+) -> _PhysicalEnvironment:
+    """Build the verified, time-limited eight-body SSB/J2000 environment."""
+
+    try:
+        environment_setup = _import_tudat_environment_setup()
+        resource_root = (
+            _default_gravity_models_path()
+            if gravity_models_path is None
+            else Path(gravity_models_path)
+        )
+    except RuntimeError as exc:
+        _raise_refinement_error(
+            candidate.candidate_id,
+            "environment-construction",
+            str(exc),
+            exc,
+        )
+
+    try:
+        verified_files = _verified_coefficient_files(resource_root)
+    except (OSError, ValueError) as exc:
+        _raise_refinement_error(
+            candidate.candidate_id,
+            "resource-validation",
+            str(exc),
+            exc,
+        )
+
+    try:
+        ephemeris._ensure_standard_kernels()
+    except EphemerisError as exc:
+        _raise_refinement_error(
+            candidate.candidate_id,
+            "resource-validation",
+            f"SPICE kernel initialization failed: {exc}",
+            exc,
+        )
+
+    try:
+        body_settings = _create_time_limited_body_settings(
+            environment_setup,
+            candidate.departure_epoch_tdb_s,
+            candidate.arrival_epoch_tdb_s,
+        )
+        _validate_time_limited_body_settings(
+            body_settings,
+            candidate.departure_epoch_tdb_s,
+            candidate.arrival_epoch_tdb_s,
+        )
+    except (AttributeError, RuntimeError, TypeError, ValueError) as exc:
+        _raise_refinement_error(
+            candidate.candidate_id,
+            "environment-construction",
+            str(exc),
+            exc,
+        )
+
+    resources = []
+    for spec, coefficient_path, actual_sha256 in verified_files:
+        try:
+            gravity_settings = _load_harmonic_field_settings(
+                environment_setup,
+                spec,
+                coefficient_path,
+            )
+            body_setting = body_settings.get(spec.body)
+            resource = _validate_harmonic_field_settings(
+                spec,
+                gravity_settings,
+                body_setting.rotation_model_settings,
+                actual_sha256,
+            )
+            body_setting.gravity_field_settings = gravity_settings
+            resources.append(resource)
+        except (AttributeError, RuntimeError, TypeError, ValueError) as exc:
+            _raise_refinement_error(
+                candidate.candidate_id,
+                "resource-validation",
+                f"{spec.body} {spec.model}: {exc}",
+                exc,
+            )
+
+    harmonic_fields = tuple(resources)
+    try:
+        bodies = _create_system_of_bodies(environment_setup, body_settings)
+        _validate_created_environment(
+            environment_setup,
+            bodies,
+            harmonic_fields,
+            candidate.departure_epoch_tdb_s,
+            candidate.arrival_epoch_tdb_s,
+        )
+    except (AttributeError, RuntimeError, TypeError, ValueError) as exc:
+        _raise_refinement_error(
+            candidate.candidate_id,
+            "environment-construction",
+            str(exc),
+            exc,
+        )
+
+    return _PhysicalEnvironment(
+        model_id=PHYSICAL_MODEL_IDENTIFIER,
+        initial_epoch_tdb_s=candidate.departure_epoch_tdb_s,
+        final_epoch_tdb_s=candidate.arrival_epoch_tdb_s,
+        origin="SSB",
+        orientation="J2000",
+        bodies=bodies,
+        harmonic_fields=harmonic_fields,
+    )
 
 
 def _require_match(
