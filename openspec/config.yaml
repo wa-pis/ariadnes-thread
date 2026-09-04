@@ -12,8 +12,8 @@ context: |
   Search-window start and end dates are always required and never receive defaults.
   All spacecraft physical parameters are required; none receive hidden defaults.
   The current moon_to_mars.py file is an immutable legacy educational model and must remain untouched and unimported by the new package.
-  Work follows the linear milestones documented in openspec/ROADMAP.md; M1 is archived and M2 is the only active milestone.
-  M2 plans three-dimensional impulsive Moon-to-Mars transfers, evaluates no more than 2000 candidates, and exposes a flight-time/fuel Pareto front.
+  Work follows the linear milestones documented in openspec/ROADMAP.md; M1 and M2 are archived, M3 is next, and no change is currently active.
+  M3 will refine selected impulsive transfers with high-fidelity force models, variable mass, and finite burns; its measurable requirements must be defined before implementation.
 
 rules:
   proposal:
@@ -35,8 +35,12 @@ operations:
   apply:
     guidance:
       - Run openspec validate <change> --strict before implementation is marked complete.
+      - Run focused checks and the complete pinned test suite before marking implementation complete.
+      - Preserve moon_to_mars.py byte-for-byte and keep it unimported by space_nav.
       - Do not implement behavior assigned to a later roadmap milestone.
   archive:
     guidance:
+      - Sync delta specs to main specs before archival.
       - Run openspec validate <change> --strict immediately before archival.
       - Do not create the next milestone change until archival succeeds.
+      - Update openspec/ROADMAP.md after archival succeeds.
