@@ -1,11 +1,11 @@
 # Space Navigation Roadmap
 
-Milestones are strictly linear: `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 is archived and M2 is the current planning milestone. A later change may be created only after the current milestone passes its completion gate, passes strict OpenSpec validation, and is archived.
+Milestones are strictly linear: `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 and M2 are archived; M3 is the next milestone and does not yet have an active change. A later change may be created only after the current milestone passes its completion gate, passes strict OpenSpec validation, and is archived.
 
 | Milestone / change | Status | Depends on | Verifiable result |
 |---|---|---|---|
 | **M1 — `establish-navigation-foundation`** | Archived 2026-09-04 | None | Reproducible Python environment, strict TOML scenario, canonical units/time/frame contract, real SPICE ephemerides, and diagnostic CLI. |
-| **M2 — `plan-impulsive-transfer`** | Active; implementation complete, ready to archive | M1 archived | Three-dimensional impulsive Moon-to-Mars search evaluates at most 2,000 candidates and returns a flight-time/fuel Pareto front. |
+| **M2 — `plan-impulsive-transfer`** | Archived 2026-09-04 | M1 archived | Three-dimensional impulsive Moon-to-Mars search evaluates at most 2,000 candidates and returns a flight-time/fuel Pareto front. |
 | **M3 — `refine-physical-trajectory`** | Planned | M2 archived | Selected trajectories include Moon/Mars gravity harmonics, solar-radiation pressure and shadows, relativistic correction, variable mass, and finite burns. |
 | **M4 — `estimate-navigation-state`** | Planned | M3 archived | Synthetic observations from three ground stations feed batch least squares and produce an estimated state and covariance. |
 | **M5 — `schedule-course-corrections`** | Planned | M4 archived | The planner selects zero to three TCMs using only measurements available before each maneuver. |
