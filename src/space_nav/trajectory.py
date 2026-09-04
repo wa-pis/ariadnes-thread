@@ -58,6 +58,17 @@ PHYSICAL_BODY_NAMES = (
 EPHEMERIS_TIME_STEP_S = 300.0
 
 _FIELD_GM_RELATIVE_TOLERANCE = 1e-15
+_DIRECT_GRAVITY_BODY_NAMES = (
+    "Sun",
+    "Mercury",
+    "Venus",
+    "Earth",
+    "Jupiter",
+    "Saturn",
+)
+_HARMONIC_GRAVITY_BODY_NAMES = ("Moon", "Mars")
+_POINT_MASS_GRAVITY_TYPE = "point-mass-gravity"
+_SPHERICAL_HARMONIC_GRAVITY_TYPE = "spherical-harmonic-gravity"
 
 Cartesian6 = tuple[float, float, float, float, float, float]
 StateQuery = Callable[[str, float], CartesianState]
@@ -98,6 +109,14 @@ class _HarmonicFieldResource:
 
 
 @dataclass(frozen=True, slots=True)
+class _GravityAccelerationResource:
+    source_body: str
+    acceleration_type: str
+    degree: int | None
+    order: int | None
+
+
+@dataclass(frozen=True, slots=True)
 class _PhysicalEnvironment:
     model_id: str
     initial_epoch_tdb_s: float
@@ -106,6 +125,8 @@ class _PhysicalEnvironment:
     orientation: str
     bodies: Any
     harmonic_fields: tuple[_HarmonicFieldResource, ...]
+    gravity_acceleration_settings: dict[str, tuple[Any, ...]]
+    gravity_acceleration_inventory: tuple[_GravityAccelerationResource, ...]
 
 
 _HARMONIC_FIELD_SPECS = (
@@ -397,6 +418,16 @@ def _import_tudat_environment_setup() -> Any:
     return environment_setup
 
 
+def _import_tudat_propagation_setup() -> Any:
+    try:
+        from tudatpy.dynamics import propagation_setup
+    except Exception as exc:
+        raise RuntimeError(
+            "TudatPy propagation setup is unavailable in the pinned environment"
+        ) from exc
+    return propagation_setup
+
+
 def _default_gravity_models_path() -> Path:
     try:
         from tudatpy import data
@@ -579,6 +610,147 @@ def _validate_harmonic_field_settings(
         normalization_radius_m=normalization_radius_m,
         orbit_shape_radius_m=spec.orbit_shape_radius_m,
     )
+
+
+def _create_gravity_acceleration_setting(
+    propagation_setup: Any,
+    resource: _GravityAccelerationResource,
+) -> Any:
+    try:
+        if resource.acceleration_type == _POINT_MASS_GRAVITY_TYPE:
+            return propagation_setup.acceleration.point_mass_gravity()
+        if resource.acceleration_type == _SPHERICAL_HARMONIC_GRAVITY_TYPE:
+            return propagation_setup.acceleration.spherical_harmonic_gravity(
+                resource.degree,
+                resource.order,
+            )
+    except Exception as exc:
+        raise RuntimeError(
+            f"Tudat could not configure {resource.acceleration_type} from "
+            f"{resource.source_body}"
+        ) from exc
+    raise ValueError(
+        f"unsupported gravity acceleration type {resource.acceleration_type!r} "
+        f"for {resource.source_body}"
+    )
+
+
+def _validate_gravity_acceleration_inventory(
+    settings_by_source: dict[str, tuple[Any, ...]],
+    inventory: tuple[_GravityAccelerationResource, ...],
+    harmonic_fields: tuple[_HarmonicFieldResource, ...],
+) -> None:
+    expected_sources = PHYSICAL_BODY_NAMES
+    if tuple(settings_by_source) != expected_sources:
+        raise ValueError(
+            "gravity settings must contain the exact ordered physical body set"
+        )
+    if tuple(entry.source_body for entry in inventory) != expected_sources:
+        raise ValueError(
+            "gravity inventory must contain each physical body exactly once"
+        )
+    if any(len(settings_by_source[source]) != 1 for source in expected_sources):
+        raise ValueError("each gravity source must have exactly one acceleration")
+
+    harmonic_bodies = tuple(field.body for field in harmonic_fields)
+    if harmonic_bodies != _HARMONIC_GRAVITY_BODY_NAMES:
+        raise ValueError(
+            "harmonic resources must contain exactly Moon then Mars"
+        )
+    fields_by_body = {field.body: field for field in harmonic_fields}
+    entries_by_body = {entry.source_body: entry for entry in inventory}
+
+    for body in _DIRECT_GRAVITY_BODY_NAMES:
+        entry = entries_by_body[body]
+        if (
+            entry.acceleration_type != _POINT_MASS_GRAVITY_TYPE
+            or entry.degree is not None
+            or entry.order is not None
+        ):
+            raise ValueError(f"{body} must have one direct point-mass acceleration")
+    for body in _HARMONIC_GRAVITY_BODY_NAMES:
+        entry = entries_by_body[body]
+        field = fields_by_body[body]
+        if (
+            entry.acceleration_type != _SPHERICAL_HARMONIC_GRAVITY_TYPE
+            or entry.degree != field.degree
+            or entry.order != field.order
+        ):
+            raise ValueError(
+                f"{body} must have one {field.degree}x{field.order} "
+                "spherical-harmonic acceleration"
+            )
+
+
+def _build_gravity_acceleration_settings(
+    candidate_id: object,
+    harmonic_fields: tuple[_HarmonicFieldResource, ...],
+) -> tuple[
+    dict[str, tuple[Any, ...]],
+    tuple[_GravityAccelerationResource, ...],
+]:
+    """Build the exact direct SSB gravity inventory for one spacecraft."""
+
+    try:
+        propagation_setup = _import_tudat_propagation_setup()
+    except RuntimeError as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            str(exc),
+            exc,
+        )
+
+    try:
+        harmonic_by_body = {field.body: field for field in harmonic_fields}
+        if tuple(harmonic_by_body) != _HARMONIC_GRAVITY_BODY_NAMES:
+            raise ValueError(
+                "harmonic resources must contain exactly Moon then Mars"
+            )
+
+        settings_by_source: dict[str, tuple[Any, ...]] = {}
+        inventory = []
+        for source_body in PHYSICAL_BODY_NAMES:
+            field = harmonic_by_body.get(source_body)
+            if field is None:
+                if source_body not in _DIRECT_GRAVITY_BODY_NAMES:
+                    raise ValueError(
+                        f"no declared gravity model for {source_body}"
+                    )
+                resource = _GravityAccelerationResource(
+                    source_body=source_body,
+                    acceleration_type=_POINT_MASS_GRAVITY_TYPE,
+                    degree=None,
+                    order=None,
+                )
+            else:
+                resource = _GravityAccelerationResource(
+                    source_body=source_body,
+                    acceleration_type=_SPHERICAL_HARMONIC_GRAVITY_TYPE,
+                    degree=field.degree,
+                    order=field.order,
+                )
+            setting = _create_gravity_acceleration_setting(
+                propagation_setup,
+                resource,
+            )
+            settings_by_source[source_body] = (setting,)
+            inventory.append(resource)
+
+        frozen_inventory = tuple(inventory)
+        _validate_gravity_acceleration_inventory(
+            settings_by_source,
+            frozen_inventory,
+            harmonic_fields,
+        )
+    except (AttributeError, RuntimeError, TypeError, ValueError) as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "force-model-construction",
+            str(exc),
+            exc,
+        )
+    return settings_by_source, frozen_inventory
 
 
 def _create_system_of_bodies(environment_setup: Any, body_settings: Any) -> Any:
@@ -769,6 +941,10 @@ def _build_physical_environment(
             exc,
         )
 
+    gravity_settings, gravity_inventory = _build_gravity_acceleration_settings(
+        candidate.candidate_id,
+        harmonic_fields,
+    )
     return _PhysicalEnvironment(
         model_id=PHYSICAL_MODEL_IDENTIFIER,
         initial_epoch_tdb_s=candidate.departure_epoch_tdb_s,
@@ -777,6 +953,8 @@ def _build_physical_environment(
         orientation="J2000",
         bodies=bodies,
         harmonic_fields=harmonic_fields,
+        gravity_acceleration_settings=gravity_settings,
+        gravity_acceleration_inventory=gravity_inventory,
     )
 
 
