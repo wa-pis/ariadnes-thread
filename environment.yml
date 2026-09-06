@@ -12,3 +12,4 @@ dependencies:
   - pytest=8.4.2
   - uv=0.12.9
   - setuptools=80.9.0
+  - ruff=0.15.2

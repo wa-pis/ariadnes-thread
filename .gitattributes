@@ -1,0 +1,6 @@
+* text=auto eol=lf
+# This legacy file must remain byte-for-byte unchanged.
+moon_to_mars.py -text
+*.png binary
+*.jpg binary
+*.pdf binary

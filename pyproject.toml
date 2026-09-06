@@ -20,6 +20,16 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+addopts = ["--strict-config", "--strict-markers"]
 
 [tool.uv]
 managed = false
+
+[tool.ruff]
+target-version = "py312"
+# Preserve the immutable educational model, including explicit file arguments.
+force-exclude = true
+extend-exclude = ["moon_to_mars.py"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
