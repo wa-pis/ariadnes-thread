@@ -9,7 +9,7 @@ from hashlib import file_digest
 import math
 from numbers import Real
 from pathlib import Path
-from typing import Any, NoReturn, cast
+from typing import Any, Literal, NoReturn, cast
 
 from . import ephemeris
 from .ephemeris import CartesianState
@@ -84,6 +84,12 @@ _COLLISION_PCK_EXPECTED_SHA256 = (
     "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2"
 )
 _COLLISION_RADIUS_TOLERANCE_M = 0.001
+_TNW_DEGENERACY_THRESHOLD = 1e-12
+_VECTOR_TOLERANCE = 1e-12
+_BURN_CENTRAL_BODIES = {
+    "departure": "Moon",
+    "arrival": "Mars",
+}
 _PINNED_COLLISION_RADII_M = (
     ("Sun", (696_000_000.0, 696_000_000.0, 696_000_000.0)),
     ("Mercury", (2_439_700.0, 2_439_700.0, 2_439_700.0)),
@@ -96,6 +102,7 @@ _PINNED_COLLISION_RADII_M = (
 )
 
 Cartesian6 = tuple[float, float, float, float, float, float]
+Vector3 = tuple[float, float, float]
 StateQuery = Callable[[str, float], CartesianState]
 ElementConverter = Callable[
     [float, float, float, float, float, float, float], object
@@ -190,6 +197,20 @@ class _CollisionResource:
     actual_sha256: str
     radius_tolerance_m: float
     surfaces: tuple[_CollisionSurfaceResource, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class _TnwBasis:
+    t_hat: Vector3
+    n_hat: Vector3
+    w_hat: Vector3
+
+    def __post_init__(self) -> None:
+        for name in ("t_hat", "n_hat", "w_hat"):
+            object.__setattr__(
+                self, name, _finite_vector3_values(getattr(self, name), name),
+            )
+        _validate_tnw_basis(self)
 
 
 @dataclass(frozen=True, slots=True)
@@ -753,6 +774,225 @@ def _crosses_collision_surface(
     body_position = _finite_vector3_values(body_position_m, "body_position_m")
     guard_radius = _positive_finite("guard_radius_m", guard_radius_m)
     return math.dist(spacecraft_position, body_position) <= guard_radius
+
+
+def _dot_product(left: Vector3, right: Vector3) -> float:
+    return sum(left[index] * right[index] for index in range(3))
+
+
+def _cross_product(left: Vector3, right: Vector3) -> Vector3:
+    return (
+        left[1] * right[2] - left[2] * right[1],
+        left[2] * right[0] - left[0] * right[2],
+        left[0] * right[1] - left[1] * right[0],
+    )
+
+
+def _validate_tnw_basis(basis: _TnwBasis) -> None:
+    if not isinstance(basis, _TnwBasis):
+        raise ValueError("basis must be a _TnwBasis")
+    axes = (
+        _finite_vector3_values(basis.t_hat, "TNW T axis"),
+        _finite_vector3_values(basis.n_hat, "TNW N axis"),
+        _finite_vector3_values(basis.w_hat, "TNW W axis"),
+    )
+    if any(
+        not math.isclose(
+            math.hypot(*axis),
+            1.0,
+            rel_tol=0.0,
+            abs_tol=_VECTOR_TOLERANCE,
+        )
+        for axis in axes
+    ):
+        raise ValueError("TNW basis axes must be unit vectors")
+    if any(
+        abs(_dot_product(axes[left], axes[right])) > _VECTOR_TOLERANCE
+        for left, right in ((0, 1), (0, 2), (1, 2))
+    ):
+        raise ValueError("TNW basis axes must be mutually orthogonal")
+    if math.dist(_cross_product(axes[0], axes[1]), axes[2]) > _VECTOR_TOLERANCE:
+        raise ValueError("TNW basis must satisfy T cross N equals W")
+
+
+def _build_tnw_basis(
+    relative_position_m: object,
+    relative_velocity_m_s: object,
+) -> _TnwBasis:
+    """Build a right-handed central-body-relative TNW basis."""
+
+    position = _finite_vector3_values(
+        relative_position_m,
+        "relative_position_m",
+    )
+    velocity = _finite_vector3_values(
+        relative_velocity_m_s,
+        "relative_velocity_m_s",
+    )
+    position_norm = math.hypot(*position)
+    velocity_norm = math.hypot(*velocity)
+    if not math.isfinite(position_norm) or position_norm == 0.0:
+        raise ValueError("relative_position_m must have finite nonzero norm")
+    if not math.isfinite(velocity_norm) or velocity_norm == 0.0:
+        raise ValueError("relative_velocity_m_s must have finite nonzero norm")
+
+    position_hat = cast(
+        Vector3,
+        tuple(value / position_norm for value in position),
+    )
+    t_hat = cast(Vector3, tuple(value / velocity_norm for value in velocity))
+    radial_cross_track = _cross_product(position_hat, t_hat)
+    separation = math.hypot(*radial_cross_track)
+    if separation <= _TNW_DEGENERACY_THRESHOLD:
+        raise ValueError(
+            "TNW basis is degenerate: normalized cross-product norm must be "
+            f"greater than {_TNW_DEGENERACY_THRESHOLD}"
+        )
+    w_hat = cast(
+        Vector3,
+        tuple(value / separation for value in radial_cross_track),
+    )
+    n_axis = _cross_product(w_hat, t_hat)
+    n_norm = math.hypot(*n_axis)
+    n_hat = cast(Vector3, tuple(value / n_norm for value in n_axis))
+    return _TnwBasis(t_hat=t_hat, n_hat=n_hat, w_hat=w_hat)
+
+
+def _direction_tnw_from_angles(
+    azimuth_rad: object,
+    elevation_rad: object,
+) -> Vector3:
+    azimuth = _finite_float("azimuth_rad", azimuth_rad)
+    elevation = _finite_float("elevation_rad", elevation_rad)
+    cosine_elevation = math.cos(elevation)
+    return (
+        cosine_elevation * math.cos(azimuth),
+        cosine_elevation * math.sin(azimuth),
+        math.sin(elevation),
+    )
+
+
+def _map_tnw_direction_to_inertial(
+    basis: _TnwBasis,
+    direction_tnw: object,
+) -> Vector3:
+    _validate_tnw_basis(basis)
+    direction = _finite_vector3_values(direction_tnw, "direction_tnw")
+    if not math.isclose(
+        math.hypot(*direction),
+        1.0,
+        rel_tol=0.0,
+        abs_tol=_VECTOR_TOLERANCE,
+    ):
+        raise ValueError("direction_tnw must be a unit vector")
+    inertial = cast(
+        Vector3,
+        tuple(
+            direction[0] * basis.t_hat[index]
+            + direction[1] * basis.n_hat[index]
+            + direction[2] * basis.w_hat[index]
+            for index in range(3)
+        ),
+    )
+    inertial = _finite_vector3_values(inertial, "inertial thrust direction")
+    inertial_norm = math.hypot(*inertial)
+    if not math.isclose(
+        inertial_norm,
+        1.0,
+        rel_tol=0.0,
+        abs_tol=_VECTOR_TOLERANCE,
+    ):
+        raise ValueError("inertial thrust direction must be a unit vector")
+    return cast(Vector3, tuple(value / inertial_norm for value in inertial))
+
+
+def _build_tnw_direction_callback(
+    candidate_id: object,
+    bodies: Any,
+    burn_id: Literal["departure", "arrival"],
+    azimuth_rad: object,
+    elevation_rad: object,
+) -> Callable[[float], Vector3]:
+    """Return guidance that rebuilds the selected relative TNW frame per call."""
+
+    if not isinstance(burn_id, str) or burn_id not in _BURN_CENTRAL_BODIES:
+        cause = ValueError("burn_id must be departure or arrival")
+        _raise_refinement_error(
+            candidate_id,
+            "finite-burn-guidance",
+            str(cause),
+            cause,
+        )
+    central_body = _BURN_CENTRAL_BODIES[burn_id]
+    try:
+        direction_tnw = _direction_tnw_from_angles(
+            azimuth_rad,
+            elevation_rad,
+        )
+    except ValueError as exc:
+        _raise_refinement_error(
+            candidate_id,
+            "finite-burn-guidance",
+            f"{burn_id} burn relative to {central_body}: {exc}",
+            exc,
+        )
+
+    def direction_callback(epoch_tdb_s: float) -> Vector3:
+        context = (
+            f"{burn_id} burn relative to {central_body} at TDB epoch "
+            f"{epoch_tdb_s!r}"
+        )
+        try:
+            spacecraft_state_raw = bodies.get(SPACECRAFT_BODY_NAME).state
+            central_body_state_raw = bodies.get(central_body).state
+        except Exception as exc:
+            _raise_refinement_error(
+                candidate_id,
+                "finite-burn-guidance",
+                f"{context}: current body state is unavailable: {exc}",
+                exc,
+            )
+        try:
+            spacecraft_state = _finite_cartesian_values(
+                spacecraft_state_raw,
+                f"{SPACECRAFT_BODY_NAME} current state",
+            )
+            central_body_state = _finite_cartesian_values(
+                central_body_state_raw,
+                f"{central_body} current state",
+            )
+            relative_position_m = cast(
+                Vector3,
+                tuple(
+                    spacecraft_state[index] - central_body_state[index]
+                    for index in range(3)
+                ),
+            )
+            relative_velocity_m_s = cast(
+                Vector3,
+                tuple(
+                    spacecraft_state[index] - central_body_state[index]
+                    for index in range(3, 6)
+                ),
+            )
+            basis = _build_tnw_basis(
+                relative_position_m,
+                relative_velocity_m_s,
+            )
+            inertial_direction = _map_tnw_direction_to_inertial(
+                basis,
+                direction_tnw,
+            )
+        except ValueError as exc:
+            _raise_refinement_error(
+                candidate_id,
+                "finite-burn-guidance",
+                f"{context}: {exc}",
+                exc,
+            )
+        return inertial_direction
+
+    return direction_callback
 
 
 def _create_time_limited_body_settings(

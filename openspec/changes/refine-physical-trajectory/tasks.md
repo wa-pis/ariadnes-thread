@@ -16,7 +16,7 @@
 
 ## 3. Segmented finite-burn propagation
 
-- [ ] 3.1 Implement the specified Moon-relative and Mars-relative TNW basis, `(T,N,W)` azimuth/elevation mapping, rebuilt-frame guidance, and degeneracy guards; verify orthonormality, handedness, unit norm, central-body selection, exact formula, and deterministic failure tests.
+- [x] 3.1 Implement the specified Moon-relative and Mars-relative TNW basis, `(T,N,W)` azimuth/elevation mapping, rebuilt-frame guidance, and degeneracy guards; verify orthonormality, handedness, unit norm, central-body selection, exact formula, and deterministic failure tests.
 - [ ] 3.2 Configure maximum-thrust engines with fixed Isp and coupled translation/mass propagation using supported TudatPy 1.0 APIs; verify isolated-burn mass loss and rocket-equation characteristic velocity meet their analytic tolerances.
 - [ ] 3.3 Configure the exact nominal RKF78 and tighter RKDP87 elementwise tolerances and burn/coast initial/minimum/maximum steps using the non-deprecated interface; verify settings introspection, forced minimum-step, failed-completion, and final-epoch mismatch tests enforce the numerical contract and chained errors.
 - [ ] 3.4 Propagate exact departure-burn, coast, and arrival-burn arcs with state and mass handoff at fixed boundaries; verify a safely completed evaluation meets epoch, position, velocity, and mass continuity, preserves coast mass, and contains exactly two positive-duration burn records.
@@ -51,7 +51,7 @@ Task numbering is stable identification, not a mandate to defer cross-cutting ch
 
 ## 6. Completion gate
 
-Checked component tasks do not imply an operational M3 API, full-force propagation, public manifest integration, or proven feasibility. At the start of the 2026-09-06 review the authoritative repository `/Users/agrudin/dev/my/ariadna` was on `main` at `7823031` after an earlier branch rename. Continue work on `dev` as required by AGENTS.md. M3.3.1 source/tests in `/Users/agrudin/ariadna` are unfinished working-copy material. Review and verify them before transferring or marking 3.1 complete.
+Checked component tasks do not imply an operational M3 API, full-force propagation, public manifest integration, or proven feasibility. At the start of the 2026-09-06 review the authoritative repository `/Users/agrudin/dev/my/ariadna` was on `main` at `7823031` after an earlier branch rename. Continue work on `dev` as required by AGENTS.md. The earlier M3.3.1 working-copy material was subsequently reviewed, constructor and norm guards were strengthened, and only the verified guidance source/tests were transferred. `tests/test_trajectory_guidance.py` checks the independent vector oracle and direct TudatPy TNW rotation within `1e-12` dimensionless direction cosines, explicitly selecting inward N rather than Tudat's outward-N default. Callback frame rebuilding and errors use injected current body states; native engine/propagator integration remains task 3.2 onward.
 
 - [ ] 6.1 Run focused M3 unit, integration, CLI, scientific, resource-failure, determinism, feasible-reference, and infeasible-reference tests in the pinned Python 3.12 Conda/uv environment; verify every test passes and the feasible end-to-end run remains below 300 seconds.
 - [ ] 6.2 Run the complete project test suite and verify all M1/M2 regression, numerical, provenance, and lazy-import checks pass with no test exclusions introduced by M3.
