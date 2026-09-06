@@ -49,7 +49,7 @@ Task numbering is stable identification, not a mandate to defer cross-cutting ch
 
 ## 6. Completion gate
 
-Checked component tasks do not imply an operational M3 API, full-force propagation, public manifest integration, or proven feasibility. On 2026-09-06 the authoritative repository is `/Users/agrudin/dev/my/ariadna`, `dev` at `7823031`; M3.3.1 source/tests in `/Users/agrudin/ariadna` are unfinished working-copy material. Review and verify them before transferring or marking 3.1 complete.
+Checked component tasks do not imply an operational M3 API, full-force propagation, public manifest integration, or proven feasibility. At the start of the 2026-09-06 review the authoritative repository `/Users/agrudin/dev/my/ariadna` was on `main` at `7823031` after an earlier branch rename. Continue work on `dev` as required by AGENTS.md. M3.3.1 source/tests in `/Users/agrudin/ariadna` are unfinished working-copy material. Review and verify them before transferring or marking 3.1 complete.
 
 - [ ] 6.1 Run focused M3 unit, integration, CLI, scientific, resource-failure, determinism, feasible-reference, and infeasible-reference tests in the pinned Python 3.12 Conda/uv environment; verify every test passes and the feasible end-to-end run remains below 300 seconds.
 - [ ] 6.2 Run the complete project test suite and verify all M1/M2 regression, numerical, provenance, and lazy-import checks pass with no test exclusions introduced by M3.
