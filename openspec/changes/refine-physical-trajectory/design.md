@@ -2,7 +2,7 @@
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
-Two read-only spikes constrain this design. The best reference candidate, `d0001-t0035`, leaves about `887.966464 kg` against `1000 kg` dry mass and cannot complete two burns. A 291.36-day TudatPy propagation using Moon/Mars degree 20 ended about `1,018,599 m` and `0.1453 m/s` away from the degree 200/120 result, so degree 20 is not an acceptable production refinement. Degree 200/120 took about `1.6 s`; changing only the Moon to degree 400 took about `5.1 s` and changed the endpoint by about `208 m` and `0.0000297 m/s`. These measurements justify degree 200/120 production with an explicit degree-400 sensitivity diagnostic under the existing 300-second operation deadline.
+Earlier exploratory runs reported an ideal M2 final mass of about `887.966464 kg` for candidate `d0001-t0035`, below the reference `1000 kg` dry mass. This fails the selected M2 seed budget; it is not a proof that every physical transfer is impossible. Earlier harmonic comparisons reported about `1,018,599 m` and `0.1453 m/s` between degree 20 and 200/120, and about `208 m` and `0.0000297 m/s` between Moon 200 and 400. Their reported single-propagation times were about `1.6 s` and `5.1 s`. Until a reproducible script, exact initial state, commands, resources, machine, and output are checked in, these are exploratory context, not acceptance evidence for the orbit-to-orbit finite-burn problem or its 300-second budget.
 
 ## Goals / Non-Goals
 
@@ -134,6 +134,10 @@ Collision checks cover exactly Sun, Mercury, Venus, Earth, Moon, Mars, Jupiter, 
 
 ### 5. Parameterize credible minimal finite-burn guidance
 
+Before segmented propagation, concatenate the existing force settings by source: Sun has point gravity, SRP, and Schwarzschild; Moon and Mars each retain exactly one harmonic term; other sources retain one point term. Verify the combined acceleration independently at near-Moon, cruise, and near-Mars states under the existing force tolerance. Reset and read back TudatPy 1.0's mutable global PPN gamma/beta as `(1, 1)` immediately before each arc's acceleration-model construction; concurrent simulations that mutate the shared SPICE/PPN state are unsupported. A resource record alone does not freeze the native globals.
+
+The `300 s` time-limited ephemeris table is an approximation. Its agreement with direct SPICE must be measured at off-grid epochs, including near both interval ends, before targeting. Record maximum SI state errors and test a denser table. Before the targeting spike, choose and strictly validate a numerical allocation within the existing endpoint error budgets using those measurements. Both integrators using the same table does not test this source of error. See [Tudat's time-limited body documentation](https://docs.tudat.space/en/stable/user-guide/state-propagation/environment-setup/default-env-models/default-bodies-limited-time-range.html).
+
 Each burn has two constant steering angles expressed in its instantaneous central-body-relative TNW frame plus a duration. For relative position `r` and velocity `v`, define `T = v / ||v||`, `W = (r × v) / ||r × v||`, and `N = W × T`. Reject a non-finite basis, zero velocity, or `||r × v|| <= 1e-12 ||r|| ||v||`. With azimuth `a` and elevation `e`, the ordered `(T, N, W)` command is `(cos(e) cos(a), cos(e) sin(a), sin(e))`. TNW is rebuilt from the propagated state, so the direction follows the orbital frame during burns lasting a significant fraction of a low lunar orbit. This is more credible than holding the M2 asymptote direction inertially for roughly 40 percent of the reference lunar period, while remaining the smallest guidance law with three controls per burn.
 
 Both engines use scenario maximum thrust and Isp. Use the confirmed TudatPy 1.0 path: `rotation_model.custom_inertial_direction_based`, `thrust.custom_thrust_magnitude_fixed_isp`, `add_engine_model`, and `acceleration.thrust_from_engine`. Couple `mass_rate.from_thrust` through translation-plus-mass `multitype` propagation. Do not use the visible but disabled custom-thrust shortcuts that raise `no longer available` in TudatPy 1.0.0.
@@ -170,17 +174,23 @@ After constructing the physical environment and the two boundary states, return 
 
 Use the scenario monotonic runtime limit across M2 verification, every correction evaluation, nominal repropagation, and numerical/model diagnostics. Check before and after each native propagation call and include propagation-evaluation count in deadline errors. Tudat cannot be safely interrupted mid-call, so a single call may cross the wall-clock boundary; it is rejected immediately afterward and no result is returned.
 
+Create one deadline at API/CLI operation entry and pass it through M2 verification, resource construction/hashing, targeting, diagnostics, and manifest construction. Never restart a fresh 300-second clock for M2 or a later stage. This is a cooperative deadline, not a guarantee that a native call returns within 300 seconds. An expected impact/dry-mass early termination is a rejected trial; check this reason before treating a non-final epoch as an integration failure. Test both paths and initial states already on/inside a guard. Endpoint-only collision checks are insufficient: test an arc entering and leaving a guard between output epochs and verify that unsafe history is discarded.
+
 ### 10. Extend the CLI and provenance without new protocols
 
 `space-nav refine SCENARIO --candidate-id ID [--json]` follows the existing parser, canonical JSON, human rendering, and error envelope. Completed physical classifications exit zero; malformed inputs and operational failures exit two. Human output makes nonconvergence or infeasibility prominent and never renders absent data as zero.
 
 Extend the existing manifest rather than introduce a second provenance format. Include the M2 seed, force inventory, gravity models and hashes, field GMs/radii/frames, shape radii, SRP and occultors, relativity switches, burn law, integrators, corrector settings, thresholds, evaluation counts, and deferred scenario fields. Adaptive step histories remain private; M4 can request a stable sampling contract when observations actually need one.
 
-### 11. Preserve the infeasible baseline and add one feasible fixture
+### 11. Preserve the M2 budget baseline and qualify a trial fixture
 
-Keep `examples/reference_mission.toml` unchanged and assert its preflight `mass-infeasible` status. Add `examples/m3_feasible_mission.toml` identical except for `dry_mass_kg = 500.0`, which gives adequate test propellant without changing the M2 geometry, engine, Isp, radiation properties, or candidate identifier. The fixture is an engineering regression case, not a proposed flight design.
+Keep `examples/reference_mission.toml` unchanged and assert its preflight `mass-infeasible` status, explicitly labeled as rejection by the M2 seed-budget policy. Add `examples/m3_feasible_mission.toml` identical except for `dry_mass_kg = 500.0`. Preserve candidate identifier, geometry, epochs, excess velocities, delta-v, and ideal masses; `mass_feasible` changes from false to true and the aggregate feasible-candidate count may change. The filename is provisional: this is a propellant-admissible test case, not demonstrated physical feasibility. The fixture is an engineering regression case, not a proposed flight design.
 
 Dry-mass feasibility does not prove that the six-control corrector can meet closure. Before production corrector work, a focused spike must demonstrate candidate `d0001-t0035` under the exact seed, force model, bounds, and 76-evaluation budget. Until that task passes, the eight-iteration/300-second feasible-fixture gate is an acceptance hypothesis, not measured performance; failure requires revising and revalidating this change rather than silently loosening the gate.
+
+Retain the spike script and machine-readable evidence in the repository. First establish whether the exact seed completes safely; an unsafe seed is a failed prerequisite, not evidence of general mission infeasibility. Record trial controls, terminal residuals, safety reasons, counters, software/resources, machine, and elapsed time. Stop production corrector work if the gate fails. Revisit seed construction or the six-control formulation in this change before proceeding; do not merely reduce dry mass further or rename failure as convergence.
+
+The stable `mass-infeasible` / `preflight-m2-propellant-shortfall` pair denotes only the selected seed-budget policy. Public text must not call the M2 patched-conic estimate a proven lower bound on fuel for the higher-fidelity problem. Likewise `converged` means a nominal trajectory passed the declared numerical checks, not flight readiness.
 
 ## Risks / Trade-offs
 
@@ -190,7 +200,7 @@ Dry-mass feasibility does not prove that the six-control corrector can meet clos
 - **[Mars has no coefficient oracle above degree 120]** -> Report the 60-to-120 tail and label 120 as the pinned model ceiling rather than asserting unverified convergence.
 - **[Gravity GMs and radii differ from M2 values]** -> Use each model consistently inside its milestone and include both old seed constants and M3 field constants in provenance.
 - **[TNW guidance is not globally optimal]** -> State the fixed guidance law and leave optimized steering to a future accepted change.
-- **[Completed failure statuses can be mistaken for success]** -> Name status and reason in every result and print a prominent human warning; only `converged` is executable within M3's numerical contract.
+- **[Completed classifications can be overinterpreted]** -> Label preflight rejection as an M2 seed-budget policy and `converged` as nominal numerical validation; neither establishes general mission impossibility or flight readiness.
 - **[The feasible fixture changes spacecraft dry mass]** -> Keep it separate and clearly label it as a regression fixture; never rewrite the archived M2 reference.
 
 ## Migration Plan

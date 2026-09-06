@@ -11,7 +11,7 @@ Milestones are strictly linear: `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 and M2 ar
 | **M5 — `schedule-course-corrections`** | Planned | M4 archived | The planner selects zero to three TCMs using only measurements available before each maneuver. |
 | **M6 — `verify-and-report-mission`** | Planned | M5 archived | Twenty Monte Carlo cases produce standalone HTML, CSV, and JSON reports and an independent GMAT comparison. |
 
-## M1 completion gate
+## M1 completion gate (historical, at M1 archival)
 
 - `openspec validate establish-navigation-foundation --strict` succeeds.
 - A clean environment resolves and installs every pinned dependency and the local package.
@@ -33,11 +33,13 @@ Milestones are strictly linear: `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 and M2 ar
 - Departure ignition and arrival cutoff are the configured physical lunar and Martian orbit states rather than M2 body-centre endpoints.
 - Separate departure-burn, coast, and arrival-burn arcs preserve state/mass continuity, follow the declared TNW guidance, obey the thrust mass-flow law, detect impacts, and never cross dry mass.
 - `examples/reference_mission.toml` remains unchanged and candidate `d0001-t0035` returns `mass-infeasible` without finite-burn targeting because its ideal M2 final mass is below dry mass.
-- The separate feasible M3 fixture changes only dry mass, preserves the M2 candidate, and refines `d0001-t0035` to no more than `1000 m` position error and `0.01 m/s` velocity error in at most eight correction iterations and 300 seconds.
+- The provisional M3 fixture changes only dry mass; candidate geometry and ideal masses remain unchanged but the M2 feasibility flag changes. Physical convergence must be demonstrated for `d0001-t0035` within `1000 m`, `0.01 m/s`, eight iterations, and the shared 300-second cooperative deadline before the fixture is called feasible.
 - The exact TNW corrector demonstrates that feasible-fixture gate in a prerequisite spike before production correction proceeds; until then, the iteration/runtime limit is an acceptance hypothesis rather than measured performance and is not weakened silently.
 - Frozen-command nominal/tighter propagation agrees within `10 m`, `0.0001 m/s`, and `0.000001 kg`; the isolated ten-orbit fixture keeps relative energy and angular-momentum drift within `1e-11`.
 - Moon degree-400 sensitivity stays within `500 m` and `0.0001 m/s`; the finite Mars degree-60-to-120 tail is reported without claiming knowledge beyond the degree-120 model ceiling.
 - Repeated canonical JSON results are byte-identical for the same scenario and resources, and the manifest records complete resource, force, numerical, targeting, and deferred-input provenance.
+- Qualify ephemeris interpolation against direct SPICE and a denser table before the targeting spike; identical integrator results on the same interpolation table do not qualify ephemeris accuracy. Verify the combined forces and per-arc PPN reset independently.
+- Check in the prerequisite spike and its scientific/timing evidence. A failed safe-seed or closure gate requires revising the active change before production correction proceeds. Preserve all existing closure and sensitivity tolerances until evidence supports an explicitly reviewed change.
 - The complete pinned Python 3.12 test suite passes, existing M1/M2 behavior remains compatible apart from the planned `0.3.0` version, and `moon_to_mars.py` remains byte-for-byte unchanged and unimported.
 
 ## Future milestone completion gates
@@ -47,3 +49,5 @@ Milestones are strictly linear: `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 and M2 ar
 - **M6:** all 20 seeded Monte Carlo cases complete, all three report formats agree, and the GMAT comparison satisfies the future change's documented tolerance.
 
 Completion criteria for M4-M6 remain intentionally high-level until the preceding milestone is archived. Each future change must replace its high-level gate with measurable WHEN/THEN scenarios before implementation.
+
+Twenty M6 cases are a reproducible regression ensemble, not evidence of a rare-event failure probability. Define uncertainty assumptions and the statistical scope in M6 before interpreting success rates.

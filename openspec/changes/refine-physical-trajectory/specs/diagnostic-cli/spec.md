@@ -27,8 +27,14 @@ Every completed JSON refinement SHALL extend the existing manifest with the veri
 - **THEN** its manifest identifies every input, dependency, kernel, gravity resource, convention, model setting, threshold, and bounded algorithm setting needed to reproduce or interpret that status
 
 #### Scenario: Repeat canonical JSON
-- **WHEN** the same scenario, candidate, pinned environment, and scientific resource hashes are refined twice
+- **WHEN** the same scenario, candidate, pinned environment, and identical initial loaded-kernel inventory are refined twice without reaching the runtime deadline
 - **THEN** both invocations produce byte-identical canonical JSON
+
+The raw kernel manifest SHALL continue to report the actual loaded pool, including duplicate entries. A changed pool inventory is a changed provenance input even when effective dynamics agree. Deferred input changes SHALL preserve scientific results, but need not preserve the whole JSON because scenario hashes, seeds, and input provenance legitimately differ.
+
+#### Scenario: Render a seed-budget rejection accurately
+- **WHEN** the result is `mass-infeasible` with reason `preflight-m2-propellant-shortfall`
+- **THEN** human and JSON output identify the budget as the ideal M2 seed estimate and the rejection as preflight policy, without claiming a demonstrated lower bound on all physical transfer fuel costs
 
 ### Requirement: M1 and M2 command compatibility after refinement
 Adding physical refinement SHALL NOT remove, rename, or change the meaning of existing public Python names or the `validate`, `ephemeris`, and `plan` command schemas, scientific values, exit statuses, error behavior, and import-time kernel laziness. Version fields SHALL report `0.3.0` after M3 is complete, and `space_nav` SHALL continue not to import `moon_to_mars.py`.

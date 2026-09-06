@@ -157,7 +157,7 @@ Each trajectory evaluation SHALL propagate a seven-component translation/mass st
 - **THEN** the result uses reason `target-closure-and-validation-passed`, and every required state, burn, mass, residual, count, convention, and model field is finite, internally consistent, explicitly labeled by its public units/frame/time scale, and satisfies the status invariants
 
 #### Scenario: Return an honest infeasible result
-- **WHEN** preflight mass accounting proves the selected candidate cannot preserve dry mass
+- **WHEN** the verified M2 seed budget exceeds the available propellant under the declared preflight policy
 - **THEN** the immutable result contains status `mass-infeasible`, the ideal M2 final mass, required/available/shortfall propellant budget and reason, null actual final/consumed masses, null terminal state, zero burn records, and no fabricated propagated values
 
 ### Requirement: Fatal failure, deadline, and M3 fidelity boundary
@@ -174,3 +174,26 @@ A missing kernel or gravity file, hash or frame mismatch, uncovered epoch, inval
 #### Scenario: Change a deferred input
 - **WHEN** two otherwise identical nominal M3 inputs differ only in tracking settings, maneuver-error sigmas, or random seed
 - **THEN** their status, commands, boundary epochs, scientific values, and model diagnostics are identical
+
+### Requirement: Qualification of feasibility and shared numerical state
+The system SHALL describe `mass-infeasible` with reason `preflight-m2-propellant-shortfall` as rejection by the selected M2 seed-budget policy, not proof that no physical transfer exists. A scenario passing that filter SHALL NOT be described as a demonstrated finite-burn solution until the targeting gate passes. The implementation SHALL qualify interpolated ephemerides independently of integrator agreement, validate the combined force assembly, and reestablish the declared PPN values before every native arc. The single cooperative deadline SHALL include M2 verification, resource construction/hashing, and manifest construction; it SHALL NOT restart between stages.
+
+#### Scenario: Change only dry mass in the provisional fixture
+- **WHEN** reference dry mass changes from 1000 kg to 500 kg and all other scenario inputs remain fixed
+- **THEN** candidate `d0001-t0035` retains its geometry, epochs, excess velocities, delta-v, and ideal masses, its M2 `mass_feasible` flag changes from false to true, and no finite-burn convergence is inferred from that flag
+
+#### Scenario: Qualify interpolation before targeting
+- **WHEN** the time-limited ephemeris environment is prepared for the prerequisite targeting spike
+- **THEN** checked-in evidence reports per-body maximum position and velocity differences against direct SPICE at deterministic off-grid and interval-edge epochs and against a denser table, and an explicit measured error allocation within the existing endpoint budgets is strictly validated before the spike proceeds
+
+#### Scenario: Reestablish PPN at an arc boundary
+- **WHEN** native global PPN values have been changed before a new Ariadna arc is constructed
+- **THEN** arc setup restores and reads back beta=gamma=1 before constructing acceleration models, and the independent fixed-state force check meets the existing force-sum tolerance
+
+#### Scenario: Classify intentional safety termination
+- **WHEN** an arc terminates early on dry mass or a collision surface, including a test that enters and exits a guard between output epochs
+- **THEN** it is counted as a rejected trial with the corresponding safety reason, no unsafe history is retained, and its early epoch is not misclassified as an unexpected final-epoch integration failure
+
+#### Scenario: Preserve the operation deadline
+- **WHEN** M2 verification or resource setup consumes part of the runtime budget
+- **THEN** targeting, diagnostics, and manifest construction receive only the remaining time, and expiration after any native call produces a deadline error with no completed result; native-call wall-clock overrun is not represented as a hard real-time guarantee
