@@ -1,0 +1,48 @@
+# Provisional M3 regression fixture: M2 budget admissible only.
+# Finite-burn feasibility is unproven until the task 4.3 targeting gate passes.
+[search]
+departure_start_utc = "2031-01-01T00:00:00Z"
+departure_end_utc = "2031-12-31T00:00:00Z"
+time_of_flight_min_days = 180.0
+time_of_flight_max_days = 320.0
+
+[departure_orbit]
+central_body = "Moon"
+altitude_km = 100.0
+eccentricity = 0.0
+inclination_deg = 90.0
+raan_deg = 0.0
+argument_of_periapsis_deg = 0.0
+true_anomaly_deg = 0.0
+
+[target_orbit]
+central_body = "Mars"
+periapsis_altitude_km = 300.0
+apoapsis_altitude_km = 10000.0
+inclination_deg = 25.0
+raan_deg = 0.0
+argument_of_periapsis_deg = 0.0
+true_anomaly_deg = 0.0
+
+[spacecraft]
+initial_mass_kg = 2000.0
+dry_mass_kg = 500.0
+max_thrust_n = 1000.0
+isp_s = 450.0
+srp_area_m2 = 20.0
+reflectivity_coefficient = 1.3
+maneuver_magnitude_sigma_fraction = 0.001
+maneuver_pointing_sigma_deg = 0.05
+
+[tracking]
+stations = ["DSS-14", "DSS-43", "DSS-63"]
+cadence_hours = 6.0
+range_sigma_m = 10.0
+range_rate_sigma_m_s = 0.0001
+angular_sigma_arcsec = 1.0
+min_elevation_deg = 10.0
+
+[limits]
+runtime_seconds = 300.0
+random_seed = 42
+max_candidates = 2000
