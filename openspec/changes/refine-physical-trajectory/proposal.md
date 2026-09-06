@@ -1,5 +1,10 @@
 ## Why
 
+Status override, 2026-09-07: high-fidelity implementation is on hold by explicit
+user decision. The next priority is `../../PROTOTYPE.md`. Preserve this M3 plan
+as deferred reference when revising the sole open change for the prototype;
+do not implement more of the high-fidelity scope or claim this change complete.
+
 M2 finds useful time/propellant trade points, but its body-centre Lambert endpoints and scalar instantaneous burns are not executable trajectories. M3 must turn one explicitly selected M2 candidate into an honestly classified finite-burn propagation before navigation estimation can use it.
 
 ## What Changes

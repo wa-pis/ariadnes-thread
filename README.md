@@ -17,6 +17,10 @@ not features delivered by this documentation update.
 
 ## Development environment
 
+Current priority: a [small visual research prototype](openspec/PROTOTYPE.md)
+using the existing approximate transfer solver. High-fidelity M3 development
+and scheduled implementation are paused; existing components remain preserved.
+
 TudatPy is distributed through Conda, so Conda owns Python and the native and
 scientific dependencies. `uv` installs the local Python package inside that
 environment:
