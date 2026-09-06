@@ -14,6 +14,8 @@ def test_python_and_uv_pins_match_project_policy() -> None:
 
     assert "  - python=3.12.14\n" in environment
     assert "  - uv=0.12.9\n" in environment
+    assert "  - streamlit=1.49.1\n" in environment
+    assert "  - plotly=6.3.0\n" in environment
     assert "  - pip=" not in environment
     assert "  - pip:\n" not in environment
     assert project["project"]["requires-python"] == ">=3.12,<3.13"

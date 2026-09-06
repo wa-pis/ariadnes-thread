@@ -5,12 +5,11 @@
 The user has explicitly paused high-fidelity M3 development and approved a
 visible research prototype first. See [the short prototype plan](PROTOTYPE.md).
 This decision takes precedence over the historical linear execution order below.
-The existing `refine-physical-trajectory` change remains open but on hold, not
-completed or archived. Preserve all implemented components and their tests.
-Before prototype implementation, revise the sole open change's scope and delta
-specs to cover the prototype, preserving the deferred M3 plan as reference;
-validate that revision rather than creating a second concurrent change or
-pretending the M3 completion gates passed. Scheduled implementation is paused.
+The sole open change retains ID `refine-physical-trajectory` for continuity,
+but now specifies the local Streamlit prototype. Original M3 documents and
+task states are preserved in `openspec/deferred/refine-physical-trajectory`;
+they are not completed or archived as success. Existing components and tests
+remain intact. Scheduled implementation is paused.
 
 ## Deferred engineering roadmap
 

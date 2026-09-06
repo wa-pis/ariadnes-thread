@@ -412,6 +412,13 @@ def load_scenario(path: str | Path) -> Scenario:
             f"cannot read scenario file {scenario_path}: {exc}"
         ) from exc
 
+    return scenario_from_mapping(data)
+
+
+def scenario_from_mapping(data: Mapping[str, Any]) -> Scenario:
+    """Validate explicit input fields and normalize to SI without loading SPICE."""
+    if not isinstance(data, Mapping):
+        _fail(None, "scenario must be a mapping")
     _reject_unknown(data, set(_FIELDS))
     sections = {
         name: _section(data, name, required=name in _REQUIRED_SECTIONS)

@@ -13,8 +13,7 @@ context: |
   Search-window start and end dates are always required and never receive defaults.
   All spacecraft physical parameters are required; none receive hidden defaults.
   The current moon_to_mars.py file is an immutable legacy educational model and must remain untouched and unimported by the new package.
-  User priority override on 2026-09-07: follow openspec/PROTOTYPE.md first. High-fidelity M3 is on hold, not complete; revise and validate the sole open change before prototype implementation. Preserve prior work and do not create a second concurrent change.
-  M3 refines one explicitly selected impulsive-transfer candidate with pinned high-fidelity force models, variable mass, finite burns, bounded correction, and honest physical status; M4-M6 remain deferred.
+  User priority override on 2026-09-07: the sole open change retains ID refine-physical-trajectory but now specifies the local Streamlit prototype. The prior high-fidelity M3 plan and task states are preserved in openspec/deferred/refine-physical-trajectory, not completed. M4-M6 and exporters remain deferred.
 
 rules:
   proposal:

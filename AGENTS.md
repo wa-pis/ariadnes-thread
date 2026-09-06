@@ -39,7 +39,7 @@
 - Give every new or changed function, method, and dataclass field explicit type annotations. Use `Any` only at untyped input, serialization, or third-party boundaries, validate it immediately, and keep each `# type: ignore[...]` narrow and justified.
 - Model public scientific values as immutable `@dataclass(frozen=True, slots=True)` records. Enforce invariants at construction, reject booleans where numbers are expected, and reject NaN or infinity before computation or serialization.
 - Encode physical units in scientific names, such as `*_m`, `*_m_s`, `*_kg`, `*_rad`, and `*_tdb_s`. Convert once at input boundaries and never silently mix units, frames, origins, orientations, or time scales.
-- Keep domain modules free of printing and process exits; only `cli.py` renders output and maps expected user errors to exit codes. Raise project-specific errors with field, body, epoch, or candidate context and chain the original exception.
+- Keep domain modules free of printing and process exits. `cli.py` renders CLI output and maps expected user errors to exit codes; `explorer_ui.py` renders the explicitly requested Streamlit UI. Raise project-specific errors with field, body, epoch, or candidate context and chain the original exception.
 - Catch broad `Exception` only directly around untyped TudatPy/SPICE boundaries that must be translated into domain errors. Never use a bare `except` or silently substitute scientific data.
 - Keep TudatPy/SPICE imports and kernel loading lazy so `import space_nav`, CLI help, and scenario validation remain lightweight and deterministic.
 - Make results reproducible for identical normalized inputs and the pinned environment: use stable ordering and identifiers, explicit seeds, and injectable clocks or scientific adapters only when tests require them.
@@ -57,5 +57,5 @@
 - Work on `dev` unless the user specifies another branch.
 - Use small logical Conventional Commits. Commit completed units after checks pass.
 - Never commit secrets, caches, virtual environments, editable-install metadata, or generated build artifacts.
-- Do not push, rewrite history, delete branches, or change remotes unless the user explicitly asks.
+- The user authorized commits and pushes for the Streamlit prototype: push reviewed commits to the existing origin/dev. Do not rewrite history, delete branches, or change remotes without further explicit authorization.
 - Leave the working tree clean at handoff, or clearly identify remaining user-owned changes.
