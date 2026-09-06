@@ -1,6 +1,19 @@
-# Space Nav
+# Ariadna — Open Space Navigation Platform
 
-Ground-based Moon-to-Mars mission-planning and navigation prototype.
+Ariadna is being developed as an open, extensible ground-based space-navigation
+platform: an open specification, a reference implementation, and interoperability
+tests. Moon-to-Mars mission planning is the first reference use case, not the
+limit of the product's intended scope.
+
+The current implementation is an engineering prototype, not onboard or
+flight-qualified software, an adopted industry standard, or a certified CCSDS
+implementation. Python, TudatPy, and SPICE remain the implementation stack;
+`space_nav` and `space-nav` retain their existing names and interfaces.
+
+See the [product vision](openspec/VISION.md) for the contract and interoperability
+direction, and the [roadmap](openspec/ROADMAP.md) for implemented versus planned
+capabilities. CCSDS interchange and interchangeable numerical backends are goals,
+not features delivered by this documentation update.
 
 ## Development environment
 

@@ -2,7 +2,7 @@
 
 ## Mission and scope
 
-- Build a ground-based engineering planner for Moon-to-Mars missions. Do not represent it as onboard or flight-qualified software.
+- Build Ariadna, an open, extensible ground-based space-navigation platform with an open specification, reference implementation, and interoperability tests. Moon-to-Mars is the first reference use case; see `openspec/VISION.md`. Do not represent it as onboard or flight-qualified software, an adopted industry standard, or a certified CCSDS implementation.
 - Follow the linear milestones in `openspec/ROADMAP.md`. Keep at most one active OpenSpec change and do not implement later-milestone behavior early.
 - Explicit user instructions override this file. Otherwise, make reasonable reversible assumptions and continue until the active task is complete.
 

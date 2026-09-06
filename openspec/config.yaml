@@ -4,7 +4,8 @@ context: |
   Language: English
   All artifacts must be written in English.
   Keep OpenSpec structural headings and SHALL/MUST keywords in English.
-  Project: a ground-based Python mission-planning and navigation prototype for a Moon-to-Mars mission.
+  Project: Ariadna, an open, extensible ground-based space-navigation platform with an open specification, reference implementation, and interoperability tests; Moon-to-Mars is the first reference use case.
+  Product direction is recorded in openspec/VISION.md. CCSDS interchange is planned, not implemented or certified; this direction does not expand the active milestone automatically.
   This is ground engineering software, not onboard flight software.
   Runtime: Python 3.12.14 in a reproducible Miniforge/Conda environment; Conda owns TudatPy and native/scientific dependencies, while uv 0.12.9 is used only inside that environment for local pure-Python installs.
   The application will use TudatPy and its SPICE interface; it must not develop a production astrodynamics engine from scratch.

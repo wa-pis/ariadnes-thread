@@ -1,4 +1,16 @@
-# Space Navigation Roadmap
+# Ariadna Space Navigation Roadmap
+
+This roadmap delivers the first Moon-to-Mars reference use case for the
+[Ariadna product vision](VISION.md). The broader goal is an open specification,
+reference implementation, and interoperability tests, not a new universal or
+flight-qualified standard. Existing milestone gates remain unchanged.
+
+The first proposed interoperability slice is a declared trajectory contract,
+TudatPy calculation, CCSDS OEM export, and independent-reader verification.
+It is not yet scheduled or implemented. Before implementation, assign it to an
+accepted change with a pinned standard edition, supported profile, numerical
+tolerances, and measurable acceptance scenarios. Do not insert a second active
+change or silently extend M3. Reassess placement when reviewing the next change.
 
 Milestones are strictly linear: `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 and M2 are archived, and M3 is active as `refine-physical-trajectory`. A later change may be created only after the current milestone passes its completion gate, passes strict OpenSpec validation, and is archived.
 
