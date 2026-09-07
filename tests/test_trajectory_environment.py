@@ -9,6 +9,7 @@ import subprocess
 import sys
 from types import SimpleNamespace
 from typing import Any
+from unittest.mock import Mock
 
 import pytest
 
@@ -75,6 +76,57 @@ def _gravity_models_path() -> Path:
     from tudatpy import data
 
     return Path(data.get_gravity_models_path())
+
+
+def test_expired_environment_budget_starts_no_native_work(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    now_s = [0.0]
+    budget = trajectory._RefinementBudget("d0001-t0035", 300.0, lambda: now_s[0])
+    native_import = Mock()
+    monkeypatch.setattr(trajectory, "_import_tudat_environment_setup", native_import)
+    now_s[0] = 300.0
+    with pytest.raises(TrajectoryRefinementError, match="deadline.*runtime limit 300 s"):
+        trajectory._build_physical_environment(_candidate(), _spacecraft(), budget=budget)
+    native_import.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    ("stage", "next_stage"),
+    [
+        ("_verified_coefficient_files", "_build_collision_resource"),
+        ("_create_time_limited_body_settings", "_validate_time_limited_body_settings"),
+        ("_load_harmonic_field_settings", "_validate_harmonic_field_settings"),
+        ("_create_system_of_bodies", "_validate_created_environment"),
+        ("_build_relativistic_acceleration_settings", "_PhysicalEnvironment"),
+    ],
+)
+def test_environment_stage_expiry_discards_result_without_resetting_budget(
+    monkeypatch: pytest.MonkeyPatch, stage: str, next_stage: str,
+) -> None:
+    candidate = _real_candidate(monkeypatch)
+    now_s = [10.0]
+    budget = trajectory._RefinementBudget(candidate.candidate_id, 300.0, lambda: now_s[0])
+    original = getattr(trajectory, stage)
+
+    def delayed_stage(*args: Any, **kwargs: Any) -> Any:
+        result = original(*args, **kwargs)
+        now_s[0] = 310.0
+        return result
+
+    following = Mock()
+    monkeypatch.setattr(trajectory, stage, delayed_stage)
+    monkeypatch.setattr(trajectory, next_stage, following)
+    now_s[0] = 200.0  # Earlier handoff work has already consumed part of the budget.
+    with pytest.raises(TrajectoryRefinementError, match="deadline") as caught:
+        trajectory._build_physical_environment(candidate, _spacecraft(), budget=budget)
+    following.assert_not_called()
+    assert budget.deadline_monotonic_s == 310.0
+    for expected in ("runtime limit 300 s", "control_attempts=0",
+                     "propagation_evaluations=0", "native_arc_propagations=0",
+                     "no partial result"):
+        assert expected in str(caught.value)
+    assert isinstance(caught.value.__cause__, RuntimeError)
 
 
 def test_environment_import_remains_tudatpy_and_kernel_lazy() -> None:
@@ -144,11 +196,16 @@ def test_real_environment_uses_exact_time_limited_resources_and_frames(
         "get_default_body_settings_time_limited",
         record_limited_settings,
     )
+    budget = trajectory._RefinementBudget(candidate.candidate_id, 300.0, lambda: 100.0)
     environment = trajectory._build_physical_environment(
         candidate,
         _spacecraft(),
         gravity_models_path=_gravity_models_path(),
+        budget=budget,
     )
+    assert budget.deadline_monotonic_s == 400.0
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (0, 0, 0)
 
     assert trajectory.PHYSICAL_MODEL_IDENTIFIER == (
         "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-"

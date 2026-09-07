@@ -34,6 +34,23 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 4.10 environment-budget evidence (2026-09-08):
+`_build_physical_environment` accepts the existing budget without constructing
+or resetting it. Cooperative checks bracket resource hashing, kernel setup,
+coefficient loading, native body construction and force preparation. A call
+already in progress cannot be interrupted; its late result is discarded before
+the next stage or environment return. Preparation does not increment control,
+evaluation or native-arc counters. Existing component callers without a budget
+remain compatible; the future mission driver must supply the shared budget.
+Injected-clock expiry tests cover initial entry, hashing, ephemeris settings,
+harmonic loading, body creation and final force preparation; the real one-day
+environment check also verifies unchanged deadline and zero propagation counts.
+No scientific settings, tolerances, dependencies or UI changed. Task 4.10 stays
+open for end-to-end orchestration and final-output checks; this is not evidence
+that the full 291-day environment or a targeted mission meets 300 seconds.
+All 31 focused checks and 535 project tests pass, along with Ruff, strict
+OpenSpec validation and the unchanged legacy checksum.
+
 Task 4.10 native-runner evidence (2026-09-08): `_run_native_arc` now uses the
 existing budget before lazy simulator import, immediately before a counted
 native call, and after native completion. Import failure consumes no arc;

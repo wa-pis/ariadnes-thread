@@ -2236,9 +2236,17 @@ def _build_physical_environment(
     candidate: ImpulsiveTransferCandidate,
     spacecraft: SpacecraftSpec,
     gravity_models_path: Path | None = None,
+    *,
+    budget: _RefinementBudget | None = None,
 ) -> _PhysicalEnvironment:
-    """Build the verified, time-limited SSB/J2000 force environment."""
+    """Build the verified SSB/J2000 environment under an optional shared budget.
 
+    Checks are cooperative: native/resource calls are not interrupted, but
+    their late results cannot proceed to the next preparation stage.
+    """
+
+    if budget is not None:
+        budget.check()
     try:
         environment_setup = _import_tudat_environment_setup()
         resource_root = (
@@ -2254,10 +2262,14 @@ def _build_physical_environment(
             exc,
         )
 
+    if budget is not None:
+        budget.check()
     solar_radiation_pressure = _build_solar_radiation_pressure_setup(
         candidate.candidate_id,
         spacecraft,
     )
+    if budget is not None:
+        budget.check()
 
     try:
         verified_files = _verified_coefficient_files(resource_root)
@@ -2269,6 +2281,8 @@ def _build_physical_environment(
             exc,
         )
 
+    if budget is not None:
+        budget.check()
     try:
         ephemeris._ensure_standard_kernels()
     except EphemerisError as exc:
@@ -2278,7 +2292,11 @@ def _build_physical_environment(
             f"SPICE kernel initialization failed: {exc}",
             exc,
         )
+    if budget is not None:
+        budget.check()
     collision_resource = _build_collision_resource(candidate.candidate_id)
+    if budget is not None:
+        budget.check()
 
     try:
         body_settings = _create_time_limited_body_settings(
@@ -2286,6 +2304,8 @@ def _build_physical_environment(
             candidate.departure_epoch_tdb_s,
             candidate.arrival_epoch_tdb_s,
         )
+        if budget is not None:
+            budget.check()
         _validate_time_limited_body_settings(
             body_settings,
             candidate.departure_epoch_tdb_s,
@@ -2301,12 +2321,16 @@ def _build_physical_environment(
 
     resources = []
     for spec, coefficient_path, actual_sha256 in verified_files:
+        if budget is not None:
+            budget.check()
         try:
             gravity_settings = _load_harmonic_field_settings(
                 environment_setup,
                 spec,
                 coefficient_path,
             )
+            if budget is not None:
+                budget.check()
             body_setting = body_settings.get(spec.body)
             resource = _validate_harmonic_field_settings(
                 spec,
@@ -2324,14 +2348,20 @@ def _build_physical_environment(
                 exc,
             )
 
+    if budget is not None:
+        budget.check()
     harmonic_fields = tuple(resources)
     _assign_sun_radiation_source(
         candidate.candidate_id,
         body_settings,
         solar_radiation_pressure.source_settings,
     )
+    if budget is not None:
+        budget.check()
     try:
         bodies = _create_system_of_bodies(environment_setup, body_settings)
+        if budget is not None:
+            budget.check()
         _validate_created_environment(
             environment_setup,
             bodies,
@@ -2347,20 +2377,30 @@ def _build_physical_environment(
             exc,
         )
 
+    if budget is not None:
+        budget.check()
     _install_spacecraft_radiation_target(
         candidate.candidate_id,
         environment_setup,
         bodies,
         solar_radiation_pressure,
     )
+    if budget is not None:
+        budget.check()
     _set_general_relativity_ppn_parameters(candidate.candidate_id, bodies)
+    if budget is not None:
+        budget.check()
     gravity_settings, gravity_inventory = _build_gravity_acceleration_settings(
         candidate.candidate_id,
         harmonic_fields,
     )
+    if budget is not None:
+        budget.check()
     relativity_settings, relativity = (
         _build_relativistic_acceleration_settings(candidate.candidate_id)
     )
+    if budget is not None:
+        budget.check()
     return _PhysicalEnvironment(
         model_id=PHYSICAL_MODEL_IDENTIFIER,
         initial_epoch_tdb_s=candidate.departure_epoch_tdb_s,
