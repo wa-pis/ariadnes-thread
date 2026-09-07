@@ -51,6 +51,23 @@ settings and safety guards are not supplied by this prerequisite experiment.
 
 ## 4. Bounded trajectory correction and science diagnostics
 
+Task 3.3 settings evidence (2026-09-07): `_build_arc_integrator` uses the
+non-deprecated variable-step factory, seven-by-one elementwise SI tolerances,
+exact nominal RKF78/tighter RKDP87 burn/coast steps, and explicit rejection of
+below-minimum, NaN and infinite proposed steps. Native factory-call inspection
+checks all six configurations; invalid inputs/imports/setup failures are covered.
+The existing native engine oracles pass for RK4, nominal and tighter profiles,
+both TNW frames and both durations. All 31 focused checks, 341 full-suite tests,
+Ruff and strict validation passed; the legacy checksum remains unchanged.
+
+Keep `assess_termination_on_minor_steps=False` (the native default). An exploratory
+True setting left the last saved epoch at `97.00987294652838 s` instead of
+`100.25 s` in the tighter arrival fixture despite exact time termination. The
+default setting passes the original `1e-6 s` epoch gate. This is not evidence
+of collision safety between full steps; task 3.7 remains a prerequisite.
+Task 3.3 remains open: forced native minimum-step failure and production
+failed-completion/final-epoch error translation still need the arc executor.
+
 Task 3.2 adapter evidence (2026-09-07): `_install_tnw_engine` now installs the
 validated maximum-thrust/fixed-Isp engine and TNW rotation on a fresh SSB/J2000
 body system without resetting mass. Native departure and arrival fixtures use

@@ -11,9 +11,11 @@ import pytest
 
 @pytest.mark.parametrize("duration_s", [0.25, 100.25])
 @pytest.mark.parametrize("burn_id", ["inertial", "departure", "arrival"])
+@pytest.mark.parametrize("integration", ["rk4", "nominal", "tighter"])
 def test_native_engine_couples_translation_and_mass(
     duration_s: float, burn_id: Literal["inertial", "departure", "arrival"],
     monkeypatch: pytest.MonkeyPatch,
+    integration: Literal["rk4", "nominal", "tighter"],
 ) -> None:
     import numpy as np
     from tudatpy import dynamics
@@ -137,10 +139,16 @@ def test_native_engine_couples_translation_and_mass(
         {"Spacecraft": [propagation_setup.mass_rate.from_thrust(True)]},
         accelerations,
     )
-    # Fixed-step RK4 isolates the engine API; M3 adaptive settings are task 3.3.
-    integrator = propagation_setup.integrator.runge_kutta_fixed_step(
-        0.1, propagation_setup.integrator.CoefficientSets.rk_4,
-    )
+    if integration == "rk4":
+        integrator = propagation_setup.integrator.runge_kutta_fixed_step(
+            0.1, propagation_setup.integrator.CoefficientSets.rk_4,
+        )
+    else:
+        integrator = trajectory._build_arc_integrator(
+            "native-burn-control",
+            "arrival-burn" if burn_id == "arrival" else "departure-burn",
+            tighter=integration == "tighter",
+        )
     termination = propagation_setup.propagator.time_termination(
         duration_s, terminate_exactly_on_final_condition=True,
     )

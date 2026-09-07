@@ -1054,6 +1054,60 @@ def _install_tnw_engine(
     return engine_name
 
 
+def _build_arc_integrator(
+    candidate_id: object,
+    arc: Literal["departure-burn", "coast", "arrival-burn"],
+    *,
+    tighter: bool = False,
+) -> Any:
+    """Build pinned seven-state SI translation/mass integration settings."""
+    if not isinstance(arc, str) or arc not in {
+        "departure-burn", "coast", "arrival-burn",
+    } or not isinstance(tighter, bool):
+        cause = ValueError("arc must name a burn/coast and tighter must be boolean")
+        _raise_refinement_error(candidate_id, "integrator-construction", str(cause), cause)
+    coast = arc == "coast"
+    if tighter:
+        relative = 1e-13
+        absolute = (1e-5,) * 3 + (1e-8,) * 3 + (1e-11,)
+        initial_s, minimum_s, maximum_s = (
+            (75.0, 1e-5, 21600.0) if coast else (0.25, 1e-8, 7.5)
+        )
+    else:
+        relative = 1e-11
+        absolute = (1e-3,) * 3 + (1e-6,) * 3 + (1e-9,)
+        initial_s, minimum_s, maximum_s = (
+            (300.0, 1e-3, 86400.0) if coast else (1.0, 1e-6, 30.0)
+        )
+    try:
+        propagation_setup = _import_tudat_propagation_setup()
+    except RuntimeError as exc:
+        _raise_refinement_error(candidate_id, "integrator-construction", str(exc), exc)
+    try:
+        integrator = propagation_setup.integrator
+        coefficient = (
+            integrator.CoefficientSets.rkdp_87 if tighter
+            else integrator.CoefficientSets.rkf_78
+        )
+        control = integrator.step_size_control_elementwise_matrix_tolerance(
+            ((relative,),) * 7, tuple((value,) for value in absolute),
+        )
+        validation = integrator.step_size_validation(
+            minimum_s, maximum_s,
+            integrator.MinimumIntegrationTimeStepHandling.throw_exception_below_minimum,
+            accept_infinity_step=False, accept_nan_step=False,
+        )
+        return integrator.runge_kutta_variable_step(
+            initial_s, coefficient, control, validation,
+            assess_termination_on_minor_steps=False,
+        )
+    except Exception as exc:
+        _raise_refinement_error(
+            candidate_id, "integrator-construction",
+            f"{arc} integrator setup failed: {exc}", exc,
+        )
+
+
 def _create_time_limited_body_settings(
     environment_setup: Any,
     initial_epoch_tdb_s: float,
