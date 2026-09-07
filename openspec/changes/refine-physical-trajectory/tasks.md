@@ -34,6 +34,21 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.2 integration evidence (2026-09-07): the native engine fixture now
+exercises `_build_tnw_direction_callback` through Tudat rotation, thrust,
+translation, and mass propagation for both departure/Moon and arrival/Mars.
+Nonzero azimuth/elevation `(0.4, 0.2) rad` produces changing inertial directions
+over 0.25 s and 100.25 s burns. An independent cross-product oracle agrees at
+each callback within `1e-12`; mass retains the existing analytic tolerance and
+speed obeys `v1-v0=cos(e)*cos(a)*g0*Isp*ln(m0/m1)` within `1e-6 m/s`.
+Synthetic constant reference ephemerides and GM `1 m^3/s^2` are test-only;
+the latter requests native reference-state updates and contributes less than
+`4e-11 m/s` over these fixtures. They do not replace production resources.
+All 43 focused checks, 308 full-suite tests, Ruff and strict validation passed;
+the legacy checksum is unchanged. No production code or tolerance changed.
+Task 3.2 remains unchecked: production installation/arc composition, adaptive
+settings and safety guards are not supplied by this prerequisite experiment.
+
 ## 4. Bounded trajectory correction and science diagnostics
 
 Task 3.2 prerequisite evidence: `tests/test_native_burn.py` qualifies the pinned native engine/rotation/translation-plus-mass path with isolated 0.25 s and 100.25 s burns. It checks mass loss within `max(1e-8 kg, 1e-11 * consumed_mass)` and the directed rocket-equation velocity increment within `1e-6 m/s`, using a non-axis-aligned-with-engine inertial direction. The thrust factory is `propagation_setup.thrust.custom_thrust_magnitude_fixed_isp`, not an `environment_setup.thrust` module. Production engine installation, TNW coupling, safety guards, and the adaptive propagator are still pending; task 3.2 remains unchecked.

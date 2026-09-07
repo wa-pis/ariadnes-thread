@@ -3,15 +3,20 @@
 from __future__ import annotations
 
 import math
+from typing import Literal
 
 import pytest
 
 
 @pytest.mark.parametrize("duration_s", [0.25, 100.25])
-def test_native_engine_couples_translation_and_mass(duration_s: float) -> None:
+@pytest.mark.parametrize("burn_id", ["inertial", "departure", "arrival"])
+def test_native_engine_couples_translation_and_mass(
+    duration_s: float, burn_id: Literal["inertial", "departure", "arrival"],
+) -> None:
     import numpy as np
     from tudatpy import dynamics
     from tudatpy.dynamics import environment_setup, propagation_setup
+    from space_nav import trajectory
 
     initial_mass_kg = 2000.0
     thrust_n = 1000.0
@@ -27,22 +32,80 @@ def test_native_engine_couples_translation_and_mass(duration_s: float) -> None:
     settings = environment_setup.BodyListSettings("SSB", "J2000")
     settings.add_empty_settings("Spacecraft")
     settings.get("Spacecraft").constant_mass = initial_mass_kg
+    initial_state = np.zeros(6)
+    central_body = "Moon" if burn_id == "departure" else "Mars"
+    if burn_id != "inertial":
+        # Synthetic inertial reference, not a substitute for mission ephemerides.
+        # Tiny gravity forces native central-state updates; its integrated speed
+        # effect is below 4e-11 m/s for these <=101 s, >=1.8e6 m fixtures.
+        for name in ("Moon", "Mars"):
+            settings.add_empty_settings(name)
+            position_m = 4e7 if name == central_body else -8e7
+            settings.get(name).ephemeris_settings = (
+                environment_setup.ephemeris.constant(
+                    np.asarray([position_m, 0.0, 0.0, 0.0, 0.0, 0.0]),
+                    "SSB", "J2000",
+                )
+            )
+            settings.get(name).gravity_field_settings = (
+                environment_setup.gravity_field.central(1.0)
+            )
+        initial_state = np.asarray([4e7 + 1.8e6, 0.0, 0.0, 0.0, 1500.0, 0.0])
     settings.get("Spacecraft").rotation_model_settings = (
         environment_setup.rotation_model.custom_inertial_direction_based(
             direction, "J2000", "VehicleFixed",
         )
     )
     bodies = environment_setup.create_system_of_bodies(settings)
+    directions: list[tuple[float, float, float]] = []
+    direction_errors: list[float] = []
+    if burn_id != "inertial":
+        guidance = trajectory._build_tnw_direction_callback(
+            "native-burn-control", bodies, burn_id, 0.4, 0.2,
+        )
+
+        def record_direction(epoch_tdb_s: float) -> tuple[float, float, float]:
+            value = guidance(epoch_tdb_s)
+            directions.append(value)
+            relative = np.asarray(
+                bodies.get("Spacecraft").state - bodies.get(central_body).state,
+            ).reshape(6)
+            tangent = relative[3:] / np.linalg.norm(relative[3:])
+            normal_axis = np.cross(relative[:3], relative[3:])
+            normal_axis /= np.linalg.norm(normal_axis)
+            inward = np.cross(normal_axis, tangent)
+            expected = (
+                math.cos(0.2) * math.cos(0.4) * tangent
+                + math.cos(0.2) * math.sin(0.4) * inward
+                + math.sin(0.2) * normal_axis
+            )
+            direction_errors.append(float(np.linalg.norm(value - expected)))
+            return value
+
+        environment_setup.add_rotation_model(
+            bodies, "Spacecraft",
+            environment_setup.rotation_model.custom_inertial_direction_based(
+                record_direction, "J2000", "VehicleFixed",
+            ),
+        )
     environment_setup.add_engine_model(
         "Spacecraft", "main",
         propagation_setup.thrust.custom_thrust_magnitude_fixed_isp(thrust, isp_s),
         bodies, np.asarray([1.0, 0.0, 0.0]),
     )
+    acceleration_settings = {
+        "Spacecraft": {
+            "Spacecraft": [
+                propagation_setup.acceleration.thrust_from_engine("main"),
+            ],
+        },
+    }
+    if burn_id != "inertial":
+        acceleration_settings["Spacecraft"][central_body] = [
+            propagation_setup.acceleration.point_mass_gravity(),
+        ]
     accelerations = propagation_setup.create_acceleration_models(
-        bodies,
-        {"Spacecraft": {"Spacecraft": [
-            propagation_setup.acceleration.thrust_from_engine("main"),
-        ]}},
+        bodies, acceleration_settings,
         ["Spacecraft"], ["SSB"],
     )
     mass_rates = propagation_setup.create_mass_rate_models(
@@ -58,7 +121,7 @@ def test_native_engine_couples_translation_and_mass(duration_s: float) -> None:
         duration_s, terminate_exactly_on_final_condition=True,
     )
     translation = propagation_setup.propagator.translational(
-        ["SSB"], accelerations, ["Spacecraft"], np.zeros(6),
+        ["SSB"], accelerations, ["Spacecraft"], initial_state,
         0.0, integrator, termination,
     )
     mass = propagation_setup.propagator.mass(
@@ -85,8 +148,23 @@ def test_native_engine_couples_translation_and_mass(duration_s: float) -> None:
     expected_delta_v_m_s = g0_m_s2 * isp_s * math.log(
         initial_mass_kg / expected_mass_kg,
     )
-    assert np.linalg.norm(
-        final[3:6] - np.asarray([0.0, expected_delta_v_m_s, 0.0]),
-    ) <= 1e-6
+    if burn_id == "inertial":
+        assert np.linalg.norm(
+            final[3:6] - np.asarray([0.0, expected_delta_v_m_s, 0.0]),
+        ) <= 1e-6
+    else:
+        # Independent invariant: d|v|/dt = T/m * cos(e)cos(a).
+        expected_speed_m_s = (
+            1500.0 + math.cos(0.2) * math.cos(0.4) * expected_delta_v_m_s
+        )
+        assert abs(np.linalg.norm(final[3:6]) - expected_speed_m_s) <= 1e-6
+        assert directions and np.all(np.isfinite(directions))
+        assert np.linalg.norm(
+            np.asarray(directions[-1]) - directions[0],
+        ) > 1e-6
+        assert np.max(np.abs(
+            np.linalg.norm(directions, axis=1) - 1.0,
+        )) <= 1e-12
+        assert max(direction_errors) <= 1e-12
     assert all(float(np.asarray(state).reshape(-1)[6]) > 1000.0
                for state in history.values())
