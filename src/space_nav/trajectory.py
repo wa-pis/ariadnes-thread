@@ -1038,6 +1038,46 @@ def _build_tnw_direction_callback(
     return direction_callback
 
 
+def _build_initial_burn_controls(
+    scenario: Scenario,
+    candidate: ImpulsiveTransferCandidate,
+    moon_gravitational_parameter_m3_s2: float,
+    mars_gravitational_parameter_m3_s2: float,
+) -> tuple[float, ...] | str:
+    """Build initial controls from verified candidate and harmonic-field GMs.
+
+    Use the same body-relative J2000 orbit conversion as physical boundaries;
+    avoid subtracting large SSB positions to reconstruct a small local orbit.
+    No propagation, correction or public status is produced here.
+    """
+    durations_s = _seed_burn_durations_s(
+        candidate.candidate_id, scenario.spacecraft,
+        candidate.departure_delta_v_m_s, candidate.arrival_delta_v_m_s,
+    )
+    controls: list[float] = []
+    for burn_id, body, orbit, radius_m, gm_m3_s2, excess, duration_s in (
+        ("departure", "Moon", scenario.departure_orbit, MOON_ORBIT_SHAPE_RADIUS_M,
+         moon_gravitational_parameter_m3_s2, candidate.departure_v_infinity_m_s, durations_s[0]),
+        ("arrival", "Mars", scenario.target_orbit, MARS_ORBIT_SHAPE_RADIUS_M,
+         mars_gravitational_parameter_m3_s2, candidate.arrival_v_infinity_m_s, durations_s[1]),
+    ):
+        try:
+            if orbit.central_body != body:
+                raise ValueError(f"{burn_id} orbit central_body must be {body}")
+            relative_state = _orbit_to_body_relative_state(orbit, radius_m, gm_m3_s2)
+        except (TypeError, ValueError, RuntimeError) as exc:
+            _raise_refinement_error(candidate.candidate_id, "burn-seed", str(exc), exc)
+        angles_rad = _seed_burn_angles_rad(
+            candidate.candidate_id, cast(Literal["departure", "arrival"], burn_id),
+            excess, relative_state,
+        )
+        controls.extend((*angles_rad, duration_s))
+    return _prepare_burn_controls(
+        candidate.candidate_id, scenario.spacecraft,
+        candidate.departure_epoch_tdb_s, candidate.arrival_epoch_tdb_s, tuple(controls),
+    )
+
+
 def _prepare_burn_controls(
     candidate_id: object,
     spacecraft: SpacecraftSpec,

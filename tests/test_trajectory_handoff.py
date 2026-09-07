@@ -64,6 +64,20 @@ def _search_result(candidate: ImpulsiveTransferCandidate) -> TransferSearchResul
     )
 
 
+def test_initial_controls_chain_boundary_conversion_failure(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    failure = RuntimeError("native boundary conversion failed")
+
+    def fail_conversion(*args: object, **kwargs: object) -> object:
+        raise failure
+
+    monkeypatch.setattr(trajectory, "_orbit_to_body_relative_state", fail_conversion)
+    with pytest.raises(TrajectoryRefinementError, match="d0001-t0035.*burn-seed") as caught:
+        trajectory._build_initial_burn_controls(SCENARIO, _candidate(), 1.0, 1.0)
+    assert caught.value.__cause__ is failure
+
+
 def test_m3_contracts_are_public_package_exports() -> None:
     assert space_nav.TrajectoryBoundaryState is TrajectoryBoundaryState
     assert space_nav.FiniteBurnRecord is FiniteBurnRecord

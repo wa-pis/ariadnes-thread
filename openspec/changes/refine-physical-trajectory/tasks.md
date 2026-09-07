@@ -34,6 +34,24 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 4.2 completion evidence (2026-09-08, supersedes earlier pending notes):
+`_build_initial_burn_controls` composes the existing direction, sequential
+duration and analytic-domain helpers using the same local orbit conversion and
+explicit harmonic-field GMs as the physical boundary builder. Local states are
+computed directly rather than subtracting large SSB positions. The real M2
+candidate `d0001-t0035` produces repeatable controls for the 500 kg dry-mass
+fixture and an internal dry-mass rejection for the preserved 1000 kg fixture.
+Independent direct Tudat element conversion and cross-product reconstruction
+confirm both signed directions within `1e-12`. Conversion failures retain their
+original cause. Together with the existing 91 component checks, this completes
+the initial-control construction criterion, not the safety or convergence gate.
+Candidate verification and resource validation remain caller prerequisites;
+this helper neither searches again nor propagates a trajectory. Counter and
+deadline integration remain task 4.10; tasks 3.4-3.7 still prevent the targeting
+spike. No physical model, numerical tolerance, dependency or UI was changed.
+All 32 focused fixture/handoff checks and 500 project tests pass, as do Ruff,
+strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 4.2 analytic control-gate evidence (2026-09-08):
 `_prepare_burn_controls` validates all six finite inputs before rejection,
 canonicalizes azimuths with stdlib remainder, enforces elevation and strictly
@@ -228,7 +246,7 @@ alone does not expose a usable refinement API or satisfy the safety gates.
 Task 3.2 prerequisite evidence: `tests/test_native_burn.py` qualifies the pinned native engine/rotation/translation-plus-mass path with isolated 0.25 s and 100.25 s burns. It checks mass loss within `max(1e-8 kg, 1e-11 * consumed_mass)` and the directed rocket-equation velocity increment within `1e-6 m/s`, using a non-axis-aligned-with-engine inertial direction. The thrust factory is `propagation_setup.thrust.custom_thrust_magnitude_fixed_isp`, not an `environment_setup.thrust` module. Production engine installation, TNW coupling, safety guards, and the adaptive propagator are still pending; task 3.2 remains unchecked.
 
 - [x] 4.1 Add provisional `examples/m3_feasible_mission.toml` by changing only `dry_mass_kg` to `500.0`; verify all other normalized inputs and candidate geometry/epochs/delta-v/ideal masses are identical, while `mass_feasible` changes from false to true. Do not claim finite-burn feasibility before task 4.3 passes.
-- [ ] 4.2 Implement the exact signed excess-velocity TNW projections, canonical angle domains, strict positive burn/coast window, analytic dry-mass domain, and sequential rocket-equation duration seed; verify formulas, direction signs, boundary equality rejection, degeneracy errors, `0.000001 s` duration agreement, and repeatability.
+- [x] 4.2 Implement the exact signed excess-velocity TNW projections, canonical angle domains, strict positive burn/coast window, analytic dry-mass domain, and sequential rocket-equation duration seed; verify formulas, direction signs, boundary equality rejection, degeneracy errors, `0.000001 s` duration agreement, and repeatability.
 - [ ] 4.3 After tasks 2.7, 3.1-3.7, 4.1, 4.2, and shared-deadline plumbing in 4.10, run a reproducible targeting spike for provisional candidate `d0001-t0035` with the exact production force model, seed, corrector constants, eight-iteration/76-evaluation limits, and 300-second deadline; check in its script and machine-readable controls, residuals, resource/machine provenance, counters, safety and timing evidence. Verify a safe complete seed and the closure gate before production corrector work; if either fails, revise and strictly revalidate the formulation instead of silently weakening a bound.
 - [ ] 4.4 Implement the specified safe-seed prerequisite, scaled residual, forward-only difference increments, unavailable-column stop, trust scales, `numpy.linalg.lstsq` solve with `rcond=1e-12`, fixed damping/acceptance sequence, lexicographic safe-command tie-break, and eight-iteration/73-control-attempt cap; verify unsafe seed, unsafe probe with no backward/fictitious continuation, synthetic convergence, finite rank-loss classification, non-finite solve errors, probe exclusion, exact tie-break, cap exhaustion, and repeatability tests.
 - [ ] 4.5 Add exact status/reason invariants for `converged`, `mass-infeasible` with `preflight-m2-propellant-shortfall`, and `targeting-failed` with `nonconvergence` or `no-safe-complete-trial`; verify the preserved reference candidate is preflight mass-infeasible, no-safe exhaustion has null propagated-result values plus sorted rejection counts, and no status falsely claims target closure or an executable trajectory.
