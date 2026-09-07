@@ -136,10 +136,24 @@ Task 3.2 prerequisite evidence: `tests/test_native_burn.py` qualifies the pinned
 - [ ] 4.6 Refine the feasible fixture candidate through both finite burns within eight iterations, 73 control attempts, 76 propagation evaluations, 228 native arc calls, and the 300-second deadline; verify status `converged`, dry-mass and collision safety, and terminal errors no greater than `1000 m` and `0.01 m/s`.
 - [ ] 4.7 Repropagate tentatively closed frozen commands with the distinct tighter integrator at identical arc boundaries; verify all four structured boundary differences stay within `10 m`, `0.0001 m/s`, and `0.000001 kg`, and an exceeded bound raises `scientific-validation` without returning a status.
 - [ ] 4.8 Add frozen-command Moon 400/Mars 120 and Moon 200/Mars 60 sensitivity runs; verify both ordered four-boundary diagnostic tuples are returned only on convergence, the lunar differences meet `500 m` and `0.0001 m/s` or raise `scientific-validation`, the finite Martian tail is recorded, and degree 120 is labeled as the model ceiling rather than an error bound.
-- [ ] 4.9 Add the isolated ten-orbit point-mass conservation fixture; verify relative specific-energy and angular-momentum-norm drift are each no greater than `1e-11` without applying that invariant to the forced mission trajectory.
+- [x] 4.9 Add the isolated ten-orbit point-mass conservation fixture; verify relative specific-energy and angular-momentum-norm drift are each no greater than `1e-11` without applying that invariant to the forced mission trajectory.
 - [ ] 4.10 Apply one monotonic deadline and the exact control-attempt, propagation-evaluation, and native-arc increment rules across candidate verification, targeting, partial impacts, analytic rejections, and diagnostics; verify counter fixtures and forced deadline tests report the limit plus all completed counts and return no partial result.
 
 Task 4.1 evidence: `tests/test_m3_fixture.py` compares both raw TOML and normalized scenarios and runs both full M2 searches with real TudatPy/SPICE. Candidate `d0001-t0035` is exactly equal after changing only its budget flag, with ideal final mass between 500 and 1000 kg. This is not a finite-burn propagation test; task 4.3 remains unchecked.
+
+Task 4.9 evidence (2026-09-07): `tests/test_trajectory_conservation.py` uses
+the real SPICE Sun GM with a test-only stationary central source at SSB,
+semimajor axis `149597870700 m`, inclination `pi/6 rad`, and eccentricities
+`0` and `0.2`. Both unchanged production coast profiles (nominal RKF78 and
+tighter RKDP87) propagate a seven-component translation/constant-mass state
+for ten analytic orbital periods. At every saved state, specific energy and
+angular-momentum norm agree with the independent Kepler invariants within
+relative `1e-11`; mass remains exactly `2000 kg`. Successful native completion
+and the existing `1e-6 s` final-epoch gate are checked before reading history.
+All four controls and all 377 project tests pass, as do Ruff, strict OpenSpec
+validation and the unchanged legacy checksum. No production settings, tolerances, resources or UI
+were changed. This isolated conservative check does not establish conservation,
+target closure or accuracy for the time-dependent, forced Moon-to-Mars mission.
 
 Task numbering is stable identification, not a mandate to defer cross-cutting checks: implement the shared deadline before the spike and extend it through final manifest construction. Resource loading/hashing also consumes this budget; test that M2 and later stages never reset it.
 
