@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -249,6 +250,68 @@ def test_gravity_inventory_validator_rejects_double_counting() -> None:
         )
 
 
+@pytest.mark.parametrize(
+    "case", ["success", "gravity", "srp", "relativity", "import", "ppn", "factory"],
+)
+def test_arc_force_assembly_inventory_order_and_failures(
+    case: str, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    environment = MagicMock(spec=trajectory._PhysicalEnvironment)
+    gravity = {source: (object(),) for source in _SOURCE_ORDER}
+    environment.gravity_acceleration_settings = gravity
+    environment.gravity_acceleration_inventory = _expected_inventory()
+    environment.harmonic_fields = _harmonic_resources()
+    srp, relativity = object(), object()
+    environment.solar_radiation_pressure_acceleration_settings = {"Sun": (srp,)}
+    environment.relativistic_acceleration_settings = {"Sun": (relativity,)}
+    native = MagicMock()
+    importer = MagicMock(return_value=native)
+    reset = MagicMock()
+    failure = RuntimeError("injected native assembly failure")
+    if case == "gravity":
+        gravity["Moon"] += (object(),)
+    elif case == "srp":
+        environment.solar_radiation_pressure_acceleration_settings = {"Earth": (srp,)}
+    elif case == "relativity":
+        environment.relativistic_acceleration_settings = {"Sun": (relativity,) * 2}
+    elif case == "import":
+        importer.side_effect = failure
+    elif case == "ppn":
+        def fail_ppn(*args: object) -> None:
+            raise TrajectoryRefinementError("PPN readback failure") from failure
+
+        reset.side_effect = fail_ppn
+    elif case == "factory":
+        native.create_acceleration_models.side_effect = failure
+    calls = MagicMock()
+    calls.attach_mock(reset, "reset")
+    calls.attach_mock(native.create_acceleration_models, "factory")
+    monkeypatch.setattr(trajectory, "_import_tudat_propagation_setup", importer)
+    monkeypatch.setattr(trajectory, "_set_general_relativity_ppn_parameters", reset)
+    if case == "success":
+        result = trajectory._build_arc_force_models("assembly-control", environment)
+        assert result is native.create_acceleration_models.return_value
+        assert [call[0] for call in calls.mock_calls] == ["reset", "factory"]
+        reset.assert_called_once_with("assembly-control", environment.bodies)
+        expected = dict(gravity)
+        expected["Sun"] += (srp, relativity)
+        native.create_acceleration_models.assert_called_once_with(
+            environment.bodies, {"Spacecraft": expected}, ["Spacecraft"], ["SSB"],
+        )
+        assert all(len(value) == 1 for value in gravity.values())
+    else:
+        with pytest.raises(TrajectoryRefinementError) as caught:
+            trajectory._build_arc_force_models("assembly-control", environment)
+        if case in {"import", "ppn", "factory"}:
+            assert caught.value.__cause__ is failure
+        else:
+            assert isinstance(caught.value.__cause__, ValueError)
+        if case != "factory":
+            native.create_acceleration_models.assert_not_called()
+        if case != "ppn":
+            assert "assembly-control" in str(caught.value)
+
+
 def test_gravity_factory_failure_is_chained_with_candidate_context(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -279,13 +342,17 @@ def test_gravity_factory_failure_is_chained_with_candidate_context(
     assert caught.value.__cause__.__cause__ is failure
 
 
+@pytest.mark.parametrize("combined", [False, True])
 def test_real_gravity_matches_independent_fixed_state_component_sum(
     monkeypatch: pytest.MonkeyPatch,
+    combined: bool,
 ) -> None:
     pytest.importorskip("tudatpy")
     import numpy as np
     from tudatpy import dynamics
-    from tudatpy.dynamics import propagation_setup
+    from tudatpy.dynamics import (
+        environment_setup, parameters_setup, propagation_setup,
+    )
 
     candidate = _real_candidate(monkeypatch)
     environment = trajectory._build_physical_environment(
@@ -297,6 +364,18 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
     assert tuple(environment.gravity_acceleration_settings) == _SOURCE_ORDER
     bodies = environment.bodies
     bodies.create_empty_body("GravityOracle")
+    if combined:
+        bodies.get("GravityOracle").mass = _spacecraft().initial_mass_kg
+        environment_setup.add_radiation_pressure_target_model(
+            bodies, "GravityOracle",
+            environment_setup.radiation_pressure.cannonball_radiation_target(
+                20.0, 1.3, {"Sun": ["Moon", "Earth", "Mars"]},
+            ),
+        )
+    ppn = parameters_setup.create_parameter_set(
+        [parameters_setup.ppn_parameter_gamma(), parameters_setup.ppn_parameter_beta()],
+        bodies,
+    )
 
     production_models = propagation_setup.create_acceleration_models(
         bodies,
@@ -318,6 +397,16 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
         "Jupiter": [propagation_setup.acceleration.point_mass_gravity()],
         "Saturn": [propagation_setup.acceleration.point_mass_gravity()],
     }
+    if combined:
+        direct_settings["Sun"] += [
+            propagation_setup.acceleration.radiation_pressure(),
+            propagation_setup.acceleration.relativistic_correction(
+                use_schwarzschild=True,
+                use_lense_thirring=False,
+                use_de_sitter=False,
+                de_sitter_central_body="",
+            ),
+        ]
     oracle_models = propagation_setup.create_acceleration_models(
         bodies,
         {"GravityOracle": direct_settings},
@@ -362,8 +451,28 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
         propagation_setup.dependent_variable.total_acceleration("Spacecraft"),
         *component_variables,
     ]
+    if combined:
+        output_variables += [
+            propagation_setup.dependent_variable.single_acceleration(
+                kind, "GravityOracle", "Sun",
+            )
+            for kind in (
+                acceleration.radiation_pressure_type,
+                acceleration.relativistic_correction_acceleration_type,
+            )
+        ]
 
     for label, state in fixed_states.items():
+        if combined:
+            try:
+                ppn.parameter_vector = np.asarray([0.75, 1.25])
+                production_models = trajectory._build_arc_force_models(
+                    candidate.candidate_id, environment,
+                )
+                assert np.array_equal(ppn.parameter_vector, [1.0, 1.0]), label
+                acceleration_models = production_models | oracle_models
+            finally:
+                ppn.parameter_vector = np.asarray([1.0, 1.0])
         integrator_settings = (
             propagation_setup.integrator.runge_kutta_fixed_step(
                 0.01,
@@ -393,7 +502,7 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
         assert initial_epoch_tdb_s == epoch_tdb_s, label
         initial_values = np.asarray(history[initial_epoch_tdb_s], dtype=float)
         production_total_m_s2 = initial_values[:3]
-        direct_components_m_s2 = initial_values[3:].reshape(len(_SOURCE_ORDER), 3)
+        direct_components_m_s2 = initial_values[3:].reshape(-1, 3)
         direct_total_m_s2 = direct_components_m_s2.sum(axis=0)
         component_norm_sum_m_s2 = sum(
             float(np.linalg.norm(component))

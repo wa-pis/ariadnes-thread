@@ -34,6 +34,24 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.6 assembly evidence (2026-09-07): `_build_arc_force_models` concatenates
+the verified external-force settings without mutating them: three Sun terms,
+one Moon harmonic term, one Mars harmonic term, and five other point terms.
+It resets and reads back global PPN immediately before native model creation.
+The existing fixed-state gravity oracle now also tests the combined model at
+near-Moon, cruise and near-Mars states against separately configured native
+gravity/SRP/Schwarzschild components within the unchanged
+`max(1e-15 m/s^2, 1e-12 * sum(component norms))` tolerance. Each combined setup
+recovers from deliberately poisoned PPN values. Injected checks verify call
+ordering, immutable input mappings, duplicate/misplaced terms, and chained
+import/PPN/native-construction errors. All 28 focused and 373 full-suite tests,
+Ruff, strict validation and the unchanged legacy checksum pass. No dependencies
+or physical constants changed; existing component factories and the fixed-state
+oracle are reused without a new force abstraction.
+This bounded component excludes engine thrust; task 3.6 stays open
+until the segmented executor calls it at every arc boundary. The targeting
+spike remains blocked on the listed prerequisites.
+
 Task 3.2 integration evidence (2026-09-07): the native engine fixture now
 exercises `_build_tnw_direction_callback` through Tudat rotation, thrust,
 translation, and mass propagation for both departure/Moon and arrival/Mars.

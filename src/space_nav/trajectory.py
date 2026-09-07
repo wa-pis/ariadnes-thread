@@ -1054,6 +1054,47 @@ def _install_tnw_engine(
     return engine_name
 
 
+def _build_arc_force_models(
+    candidate_id: object,
+    environment: _PhysicalEnvironment,
+) -> Any:
+    """Assemble external SSB/J2000 forces, resetting global PPN for each arc.
+
+    This excludes engine thrust. Native SPICE/PPN mutation must be serialized
+    with other simulations; the returned models do not freeze global state.
+    """
+    try:
+        _validate_gravity_acceleration_inventory(
+            environment.gravity_acceleration_settings,
+            environment.gravity_acceleration_inventory,
+            environment.harmonic_fields,
+        )
+        settings = dict(environment.gravity_acceleration_settings)
+        for extra in (
+            environment.solar_radiation_pressure_acceleration_settings,
+            environment.relativistic_acceleration_settings,
+        ):
+            if tuple(extra) != ("Sun",) or len(extra["Sun"]) != 1:
+                raise ValueError("SRP and relativity must each contain one Sun term")
+            settings["Sun"] += extra["Sun"]
+        propagation_setup = _import_tudat_propagation_setup()
+    except (TypeError, ValueError, RuntimeError) as exc:
+        _raise_refinement_error(candidate_id, "force-model-construction", str(exc), exc)
+    _set_general_relativity_ppn_parameters(candidate_id, environment.bodies)
+    try:
+        return propagation_setup.create_acceleration_models(
+            environment.bodies,
+            {SPACECRAFT_BODY_NAME: settings},
+            [SPACECRAFT_BODY_NAME],
+            ["SSB"],
+        )
+    except Exception as exc:
+        _raise_refinement_error(
+            candidate_id, "force-model-construction",
+            f"arc external acceleration assembly failed: {exc}", exc,
+        )
+
+
 def _build_arc_integrator(
     candidate_id: object,
     arc: Literal["departure-burn", "coast", "arrival-burn"],
