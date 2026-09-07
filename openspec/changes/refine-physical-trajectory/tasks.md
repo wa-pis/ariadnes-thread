@@ -34,6 +34,21 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 4.2 duration-seed evidence (2026-09-08):
+`_seed_burn_durations_s` implements the declared sequential exponential mass
+loss and constant-thrust duration formulas using the existing standard-gravity
+constant and immutable spacecraft parameters. It returns an immutable pair in
+seconds, keeps zero seeds zero for later control-domain rejection, and rejects
+negative, boolean, nonnumeric or non-finite impulses with chained context.
+An independent 50-digit Decimal oracle agrees within `1e-6 s` for two burns
+and zero-departure/zero-arrival boundaries. Repeatability and the use of the
+post-departure mass for the arrival duration are checked. These seeds are not
+a dry-mass/window or finite-burn feasibility certificate. Steering projection,
+control-domain validation and integration remain pending, so 4.2 stays open.
+No dependencies, scientific constants or tolerances changed.
+All 13 focused checks and 458 project tests pass, as do Ruff, strict OpenSpec
+validation and the unchanged legacy checksum.
+
 Task 3.7 native sampling evidence (2026-09-08):
 `tests/test_native_safety_sampling.py` propagates a test-only zero-force line
 through the verified Moon collision sphere during `0.25..0.75 s`, using the

@@ -25,6 +25,7 @@ from .models import (
 from .transfer import (
     MARS_REFERENCE_RADIUS_M,
     MOON_REFERENCE_RADIUS_M,
+    STANDARD_GRAVITY_M_S2,
     search_impulsive_transfers,
 )
 
@@ -1035,6 +1036,41 @@ def _build_tnw_direction_callback(
         return inertial_direction
 
     return direction_callback
+
+
+def _seed_burn_durations_s(
+    candidate_id: object,
+    spacecraft: SpacecraftSpec,
+    departure_delta_v_m_s: object,
+    arrival_delta_v_m_s: object,
+) -> tuple[float, float]:
+    """Return sequential rocket-equation departure/arrival duration seeds in s.
+
+    This is an ideal seed, not proof of dry-mass, window or trajectory safety.
+    Zero durations remain zero for later control-domain rejection.
+    """
+    try:
+        if not isinstance(spacecraft, SpacecraftSpec):
+            raise TypeError("spacecraft must be a SpacecraftSpec")
+        departure_dv = _finite_float("departure_delta_v_m_s", departure_delta_v_m_s)
+        arrival_dv = _finite_float("arrival_delta_v_m_s", arrival_delta_v_m_s)
+        if departure_dv < 0.0 or arrival_dv < 0.0:
+            raise ValueError("burn delta_v_m_s must be nonnegative")
+        exhaust_m_s = _positive_finite(
+            "exhaust_velocity_m_s", STANDARD_GRAVITY_M_S2 * spacecraft.isp_s,
+        )
+        mass_rate_kg_s = _positive_finite(
+            "mass_rate_kg_s", spacecraft.max_thrust_n / exhaust_m_s,
+        )
+        initial_kg = spacecraft.initial_mass_kg
+        departure_kg = initial_kg * math.exp(-departure_dv / exhaust_m_s)
+        arrival_kg = departure_kg * math.exp(-arrival_dv / exhaust_m_s)
+        return (
+            _finite_float("departure_duration_s", (initial_kg - departure_kg) / mass_rate_kg_s),
+            _finite_float("arrival_duration_s", (departure_kg - arrival_kg) / mass_rate_kg_s),
+        )
+    except (TypeError, ValueError, OverflowError, ZeroDivisionError) as exc:
+        _raise_refinement_error(candidate_id, "burn-seed", str(exc), exc)
 
 
 def _install_tnw_engine(
