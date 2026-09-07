@@ -1038,6 +1038,63 @@ def _build_tnw_direction_callback(
     return direction_callback
 
 
+def _prepare_burn_controls(
+    candidate_id: object,
+    spacecraft: SpacecraftSpec,
+    departure_epoch_tdb_s: object,
+    arrival_epoch_tdb_s: object,
+    controls: tuple[object, ...],
+) -> tuple[float, ...] | str:
+    """Return canonical (a_d, e_d, tau_d, a_a, e_a, tau_a), or rejection reason.
+
+    Angles are radians, durations seconds. This analytic gate runs before
+    propagation; it does not select a public status or guarantee impact safety.
+    Malformed/non-finite inputs remain fatal rather than rejected trials.
+    """
+    try:
+        if not isinstance(spacecraft, SpacecraftSpec):
+            raise TypeError("spacecraft must be a SpacecraftSpec")
+        departure = _finite_float("departure_epoch_tdb_s", departure_epoch_tdb_s)
+        arrival = _finite_float("arrival_epoch_tdb_s", arrival_epoch_tdb_s)
+        if arrival <= departure:
+            raise ValueError("arrival_epoch_tdb_s must follow departure_epoch_tdb_s")
+        names = (
+            "departure_azimuth_rad", "departure_elevation_rad", "departure_duration_s",
+            "arrival_azimuth_rad", "arrival_elevation_rad", "arrival_duration_s",
+        )
+        if len(controls) != len(names):
+            raise ValueError("controls must contain exactly six values")
+        values = [_finite_float(name, value) for name, value in zip(names, controls)]
+        for index in (0, 3):
+            values[index] = math.remainder(values[index], math.tau)
+            if values[index] == math.pi:
+                values[index] = -math.pi
+        if (
+            abs(values[1]) > math.pi / 2 or abs(values[4]) > math.pi / 2
+            or values[2] <= 0.0 or values[5] <= 0.0
+        ):
+            return "rejected-control-bounds"
+        cutoff = _finite_float("departure_cutoff_tdb_s", departure + values[2])
+        ignition = _finite_float("arrival_ignition_tdb_s", arrival - values[5])
+        if cutoff <= departure or ignition >= arrival or cutoff >= ignition:
+            return "rejected-control-bounds"
+        exhaust_m_s = _positive_finite(
+            "exhaust_velocity_m_s", STANDARD_GRAVITY_M_S2 * spacecraft.isp_s,
+        )
+        mass_rate_kg_s = _positive_finite(
+            "mass_rate_kg_s", spacecraft.max_thrust_n / exhaust_m_s,
+        )
+        terminal_mass_kg = _finite_float(
+            "analytic_terminal_mass_kg",
+            spacecraft.initial_mass_kg - mass_rate_kg_s * (values[2] + values[5]),
+        )
+        if terminal_mass_kg < spacecraft.dry_mass_kg:
+            return "rejected-dry-mass"
+        return tuple(values)
+    except (TypeError, ValueError, OverflowError, ZeroDivisionError) as exc:
+        _raise_refinement_error(candidate_id, "control-validation", str(exc), exc)
+
+
 def _seed_burn_angles_rad(
     candidate_id: object,
     burn_id: Literal["departure", "arrival"],

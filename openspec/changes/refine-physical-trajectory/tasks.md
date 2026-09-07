@@ -34,6 +34,23 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 4.2 analytic control-gate evidence (2026-09-08):
+`_prepare_burn_controls` validates all six finite inputs before rejection,
+canonicalizes azimuths with stdlib remainder, enforces elevation and strictly
+positive burn/coast intervals, and checks the analytic constant-flow terminal
+mass against dry mass without clamping. A positive duration that rounds to
+the same floating-point epoch is rejected as a zero-length represented arc.
+Valid controls return an immutable canonical tuple; domain violations return
+internal `rejected-control-bounds` or `rejected-dry-mass`, never a public mission
+status. Malformed/non-finite inputs remain chained fatal errors. Tests cover
+both sides and equality of the coast and dry-mass boundaries, angle wrapping,
+repeatability, both sub-epoch-resolution burns, and invalid inputs. No native
+propagation or new dependency is involved. Seed assembly with the verified
+physical boundaries and wiring of attempt counters remain pending, so 4.2
+stays open and targeting is not enabled. No existing tolerance was relaxed.
+All 91 focused controls/seed/guidance checks and 499 project tests pass,
+as do Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 4.2 direction-seed evidence (2026-09-08): `_seed_burn_angles_rad`
 projects normalized departure excess velocity and negative arrival excess
 velocity into the supplied physical boundary TNW frame. It reuses the checked
