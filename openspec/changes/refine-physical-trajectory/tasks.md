@@ -34,6 +34,20 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 4.2 direction-seed evidence (2026-09-08): `_seed_burn_angles_rad`
+projects normalized departure excess velocity and negative arrival excess
+velocity into the supplied physical boundary TNW frame. It reuses the checked
+basis builder, applies the specified atan2 formulas, maps positive pi to
+negative pi, and rejects degenerate frames and non-finite or at-most-`1e-12 m/s`
+excess norms. Tests reconstruct the signed inertial unit direction through an
+independent cross-product oracle within `1e-12`, covering both burns, oblique
+frames, azimuth wrapping and polar directions. Outputs are repeatable and stay
+in the prescribed angle domains. Correct physical boundary selection and the
+remaining control/window/dry-mass validation still need composition; task 4.2
+stays open. No native setup, dependency or scientific tolerance changed.
+All 58 focused guidance checks and 479 project tests pass, as do Ruff, strict
+OpenSpec validation and the unchanged legacy checksum.
+
 Task 4.2 duration-seed evidence (2026-09-08):
 `_seed_burn_durations_s` implements the declared sequential exponential mass
 loss and constant-thrust duration formulas using the existing standard-gravity

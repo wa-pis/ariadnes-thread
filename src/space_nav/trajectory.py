@@ -1038,6 +1038,41 @@ def _build_tnw_direction_callback(
     return direction_callback
 
 
+def _seed_burn_angles_rad(
+    candidate_id: object,
+    burn_id: Literal["departure", "arrival"],
+    excess_velocity_m_s: object,
+    body_relative_state: object,
+) -> tuple[float, float]:
+    """Project signed excess velocity into boundary TNW; return azimuth/elevation.
+
+    Inputs use J2000 and SI. Supply Moon-relative ignition state for departure,
+    Mars-relative target-cutoff state for arrival. Angles are radians, with
+    azimuth in [-pi, pi); arrival uses the negative excess-velocity direction.
+    """
+    try:
+        if not isinstance(burn_id, str) or burn_id not in _BURN_CENTRAL_BODIES:
+            raise ValueError("burn_id must be departure or arrival")
+        state = _finite_cartesian_values(body_relative_state, "body_relative_state")
+        basis = _build_tnw_basis(state[:3], state[3:])
+        excess = _finite_vector3_values(excess_velocity_m_s, "excess_velocity_m_s")
+        norm_m_s = math.hypot(*excess)
+        if not math.isfinite(norm_m_s) or norm_m_s <= 1e-12:
+            raise ValueError("excess_velocity_m_s norm must be finite and above 1e-12 m/s")
+        sign = 1.0 if burn_id == "departure" else -1.0
+        direction = cast(Vector3, tuple(sign * value / norm_m_s for value in excess))
+        tangent, normal, cross_track = (
+            _dot_product(direction, axis)
+            for axis in (basis.t_hat, basis.n_hat, basis.w_hat)
+        )
+        azimuth_rad = math.atan2(normal, tangent)
+        if azimuth_rad == math.pi:
+            azimuth_rad = -math.pi
+        return azimuth_rad, math.atan2(cross_track, math.hypot(tangent, normal))
+    except (TypeError, ValueError) as exc:
+        _raise_refinement_error(candidate_id, "burn-seed", f"{burn_id}: {exc}", exc)
+
+
 def _seed_burn_durations_s(
     candidate_id: object,
     spacecraft: SpacecraftSpec,

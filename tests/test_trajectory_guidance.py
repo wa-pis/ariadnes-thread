@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
-from typing import Any
+from typing import Any, Literal
 
 import pytest
 
@@ -15,6 +15,48 @@ from space_nav.errors import TrajectoryRefinementError
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.mark.parametrize("burn_id", ["departure", "arrival"])
+@pytest.mark.parametrize("excess", [(-2.0, 3.0, 4.0), (0.0, -1.0, 0.0),
+                                    (0.0, 0.0, 1.0), (0.0, 0.0, -1.0)])
+@pytest.mark.parametrize("state", [(1.0, 0.0, 0.0, 0.0, 1.0, 0.0),
+                                   (2.0, 3.0, 4.0, -1.0, 2.0, 3.0)])
+def test_burn_angle_seed_reconstructs_signed_excess_direction(
+    burn_id: Literal["departure", "arrival"], excess: tuple[float, ...],
+    state: tuple[float, ...],
+) -> None:
+    import numpy as np
+
+    angles = trajectory._seed_burn_angles_rad("seed-control", burn_id, excess, state)
+    azimuth_rad, elevation_rad = angles
+    assert -math.pi <= azimuth_rad < math.pi
+    assert -math.pi / 2 <= elevation_rad <= math.pi / 2
+    actual = _oracle_direction(state, np.zeros(6), *angles)
+    expected = np.asarray(excess) / np.linalg.norm(excess)
+    if burn_id == "arrival":
+        expected = -expected
+    assert np.linalg.norm(actual - expected) <= 1e-12
+    assert angles == trajectory._seed_burn_angles_rad("seed-control", burn_id, excess, state)
+
+
+@pytest.mark.parametrize("excess", [(0.0, 0.0, 0.0), (1e-12, 0.0, 0.0),
+                                    (math.nan, 0.0, 0.0), (True, 0.0, 0.0)])
+def test_burn_angle_seed_rejects_undefined_excess(excess: tuple[object, ...]) -> None:
+    with pytest.raises(TrajectoryRefinementError, match="seed-control.*excess") as caught:
+        trajectory._seed_burn_angles_rad(
+            "seed-control", "departure", excess, (1.0, 0.0, 0.0, 0.0, 1.0, 0.0),
+        )
+    assert isinstance(caught.value.__cause__, ValueError)
+
+
+def test_burn_angle_seed_rejects_bad_burn_and_degenerate_frame() -> None:
+    for burn_id, state in (("coast", (1.0,) * 6), ("arrival", (0.0,) * 6)):
+        with pytest.raises(TrajectoryRefinementError, match="seed-control") as caught:
+            trajectory._seed_burn_angles_rad(
+                "seed-control", burn_id, (1.0, 2.0, 3.0), state,  # type: ignore[arg-type]
+            )
+        assert isinstance(caught.value.__cause__, ValueError)
 
 
 class _FakeBody:
