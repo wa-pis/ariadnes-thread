@@ -51,6 +51,18 @@ settings and safety guards are not supplied by this prerequisite experiment.
 
 ## 4. Bounded trajectory correction and science diagnostics
 
+Task 3.2 adapter evidence (2026-09-07): `_install_tnw_engine` now installs the
+validated maximum-thrust/fixed-Isp engine and TNW rotation on a fresh SSB/J2000
+body system without resetting mass. Native departure and arrival fixtures use
+this adapter and retain the independent direction, mass and speed oracles above.
+Invalid spacecraft/steering inputs fail before native setup; wrong frames,
+unavailable imports, rotation and engine failures produce contextual chained
+errors. Discard a failed body system because native installation is not atomic.
+The 51 focused checks, 316 full-suite tests, Ruff and strict OpenSpec validation
+passed; the legacy checksum and scientific tolerances are unchanged. Task 3.2
+remains open until production coupled arc composition is available; the adapter
+alone does not expose a usable refinement API or satisfy the safety gates.
+
 Task 3.2 prerequisite evidence: `tests/test_native_burn.py` qualifies the pinned native engine/rotation/translation-plus-mass path with isolated 0.25 s and 100.25 s burns. It checks mass loss within `max(1e-8 kg, 1e-11 * consumed_mass)` and the directed rocket-equation velocity increment within `1e-6 m/s`, using a non-axis-aligned-with-engine inertial direction. The thrust factory is `propagation_setup.thrust.custom_thrust_magnitude_fixed_isp`, not an `environment_setup.thrust` module. Production engine installation, TNW coupling, safety guards, and the adaptive propagator are still pending; task 3.2 remains unchecked.
 
 - [x] 4.1 Add provisional `examples/m3_feasible_mission.toml` by changing only `dry_mass_kg` to `500.0`; verify all other normalized inputs and candidate geometry/epochs/delta-v/ideal masses are identical, while `mass_feasible` changes from false to true. Do not claim finite-burn feasibility before task 4.3 passes.

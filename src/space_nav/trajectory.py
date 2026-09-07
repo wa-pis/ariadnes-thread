@@ -995,6 +995,65 @@ def _build_tnw_direction_callback(
     return direction_callback
 
 
+def _install_tnw_engine(
+    candidate_id: object,
+    bodies: Any,
+    spacecraft: SpacecraftSpec,
+    burn_id: Literal["departure", "arrival"],
+    azimuth_rad: object,
+    elevation_rad: object,
+) -> str:
+    """Install one maximum-thrust TNW engine on a fresh SSB/J2000 arc system.
+
+    Preserve current mass for arc handoff. Discard the body system on failure;
+    native setup can partially mutate it. Coast arcs must not use this engine.
+    """
+    try:
+        if not isinstance(spacecraft, SpacecraftSpec):
+            raise TypeError("spacecraft must be a SpacecraftSpec")
+        thrust_n = _positive_finite(
+            "spacecraft.max_thrust_n", spacecraft.max_thrust_n,
+        )
+        isp_s = _positive_finite("spacecraft.isp_s", spacecraft.isp_s)
+    except (TypeError, ValueError) as exc:
+        _raise_refinement_error(candidate_id, "engine-construction", str(exc), exc)
+    direction = _build_tnw_direction_callback(
+        candidate_id, bodies, burn_id, azimuth_rad, elevation_rad,
+    )
+
+    def thrust(epoch_tdb_s: float) -> float:
+        return thrust_n
+
+    try:
+        environment_setup = _import_tudat_environment_setup()
+        propagation_setup = _import_tudat_propagation_setup()
+    except RuntimeError as exc:
+        _raise_refinement_error(candidate_id, "engine-construction", str(exc), exc)
+    engine_name = f"{burn_id}-main"
+    try:
+        if (
+            bodies.global_frame_origin() != "SSB"
+            or bodies.global_frame_orientation() != "J2000"
+        ):
+            raise ValueError("engine body system must use SSB/J2000")
+        rotation = environment_setup.rotation_model.custom_inertial_direction_based(
+            direction, "J2000", "VehicleFixed",
+        )
+        magnitude = propagation_setup.thrust.custom_thrust_magnitude_fixed_isp(
+            thrust, isp_s,
+        )
+        environment_setup.add_rotation_model(bodies, SPACECRAFT_BODY_NAME, rotation)
+        environment_setup.add_engine_model(
+            SPACECRAFT_BODY_NAME, engine_name, magnitude, bodies, (1.0, 0.0, 0.0),
+        )
+    except Exception as exc:
+        _raise_refinement_error(
+            candidate_id, "engine-construction",
+            f"{burn_id} engine installation failed: {exc}", exc,
+        )
+    return engine_name
+
+
 def _create_time_limited_body_settings(
     environment_setup: Any,
     initial_epoch_tdb_s: float,

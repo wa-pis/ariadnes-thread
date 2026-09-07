@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import math
-from typing import Literal
+from collections.abc import Callable
+from typing import Any, Literal
 
 import pytest
 
@@ -12,6 +13,7 @@ import pytest
 @pytest.mark.parametrize("burn_id", ["inertial", "departure", "arrival"])
 def test_native_engine_couples_translation_and_mass(
     duration_s: float, burn_id: Literal["inertial", "departure", "arrival"],
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     import numpy as np
     from tudatpy import dynamics
@@ -82,21 +84,43 @@ def test_native_engine_couples_translation_and_mass(
             direction_errors.append(float(np.linalg.norm(value - expected)))
             return value
 
-        environment_setup.add_rotation_model(
-            bodies, "Spacecraft",
-            environment_setup.rotation_model.custom_inertial_direction_based(
-                record_direction, "J2000", "VehicleFixed",
-            ),
+        # Record the real guidance callback while exercising production setup.
+        def record_factory(
+            candidate_id: object, supplied_bodies: Any,
+            supplied_burn: Literal["departure", "arrival"],
+            azimuth_rad: object, elevation_rad: object,
+        ) -> Callable[[float], tuple[float, float, float]]:
+            assert candidate_id == "native-burn-control"
+            assert supplied_bodies is bodies and supplied_burn == burn_id
+            assert (azimuth_rad, elevation_rad) == (0.4, 0.2)
+            return record_direction
+
+        monkeypatch.setattr(
+            trajectory, "_build_tnw_direction_callback", record_factory,
         )
-    environment_setup.add_engine_model(
-        "Spacecraft", "main",
-        propagation_setup.thrust.custom_thrust_magnitude_fixed_isp(thrust, isp_s),
-        bodies, np.asarray([1.0, 0.0, 0.0]),
-    )
+        from space_nav.models import SpacecraftSpec
+
+        spacecraft = SpacecraftSpec(
+            initial_mass_kg=initial_mass_kg, dry_mass_kg=1000.0,
+            max_thrust_n=thrust_n, isp_s=isp_s, srp_area_m2=20.0,
+            reflectivity_coefficient=1.3, maneuver_magnitude_sigma_fraction=0.001,
+            maneuver_pointing_sigma_rad=0.001,
+        )
+        engine_name = trajectory._install_tnw_engine(
+            "native-burn-control", bodies, spacecraft, burn_id, 0.4, 0.2,
+        )
+        assert engine_name == f"{burn_id}-main"
+    else:
+        engine_name = "main"
+        environment_setup.add_engine_model(
+            "Spacecraft", engine_name,
+            propagation_setup.thrust.custom_thrust_magnitude_fixed_isp(thrust, isp_s),
+            bodies, np.asarray([1.0, 0.0, 0.0]),
+        )
     acceleration_settings = {
         "Spacecraft": {
             "Spacecraft": [
-                propagation_setup.acceleration.thrust_from_engine("main"),
+                propagation_setup.acceleration.thrust_from_engine(engine_name),
             ],
         },
     }
