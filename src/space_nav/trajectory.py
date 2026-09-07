@@ -1344,13 +1344,20 @@ def _install_tnw_engine(
 def _build_arc_force_models(
     candidate_id: object,
     environment: _PhysicalEnvironment,
+    *,
+    burn_id: Literal["departure", "arrival"] | None = None,
 ) -> Any:
-    """Assemble external SSB/J2000 forces, resetting global PPN for each arc.
+    """Assemble SSB/J2000 forces and optional installed-engine thrust per arc.
 
-    This excludes engine thrust. Native SPICE/PPN mutation must be serialized
+    None selects coast, even if engines remain installed. A burn requires its
+    TNW engine to be installed first. Native SPICE/PPN mutation must be serialized
     with other simulations; the returned models do not freeze global state.
     """
     try:
+        if burn_id is not None and (
+            not isinstance(burn_id, str) or burn_id not in {"departure", "arrival"}
+        ):
+            raise ValueError("burn_id must be departure, arrival or None for coast")
         _validate_gravity_acceleration_inventory(
             environment.gravity_acceleration_settings,
             environment.gravity_acceleration_inventory,
@@ -1369,6 +1376,10 @@ def _build_arc_force_models(
         _raise_refinement_error(candidate_id, "force-model-construction", str(exc), exc)
     _set_general_relativity_ppn_parameters(candidate_id, environment.bodies)
     try:
+        if burn_id is not None:
+            settings[SPACECRAFT_BODY_NAME] = (
+                propagation_setup.acceleration.thrust_from_engine(f"{burn_id}-main"),
+            )
         return propagation_setup.create_acceleration_models(
             environment.bodies,
             {SPACECRAFT_BODY_NAME: settings},
@@ -1378,7 +1389,7 @@ def _build_arc_force_models(
     except Exception as exc:
         _raise_refinement_error(
             candidate_id, "force-model-construction",
-            f"arc external acceleration assembly failed: {exc}", exc,
+            f"arc acceleration assembly failed (burn_id={burn_id!r}): {exc}", exc,
         )
 
 

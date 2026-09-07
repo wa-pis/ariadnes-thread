@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+from typing import Literal
 from unittest.mock import MagicMock
 
 import pytest
@@ -253,8 +254,10 @@ def test_gravity_inventory_validator_rejects_double_counting() -> None:
 @pytest.mark.parametrize(
     "case", ["success", "gravity", "srp", "relativity", "import", "ppn", "factory"],
 )
+@pytest.mark.parametrize("burn_id", [None, "departure", "arrival"])
 def test_arc_force_assembly_inventory_order_and_failures(
     case: str, monkeypatch: pytest.MonkeyPatch,
+    burn_id: Literal["departure", "arrival"] | None,
 ) -> None:
     environment = MagicMock(spec=trajectory._PhysicalEnvironment)
     gravity = {source: (object(),) for source in _SOURCE_ORDER}
@@ -289,19 +292,32 @@ def test_arc_force_assembly_inventory_order_and_failures(
     monkeypatch.setattr(trajectory, "_import_tudat_propagation_setup", importer)
     monkeypatch.setattr(trajectory, "_set_general_relativity_ppn_parameters", reset)
     if case == "success":
-        result = trajectory._build_arc_force_models("assembly-control", environment)
+        result = trajectory._build_arc_force_models(
+            "assembly-control", environment, burn_id=burn_id,
+        )
         assert result is native.create_acceleration_models.return_value
         assert [call[0] for call in calls.mock_calls] == ["reset", "factory"]
         reset.assert_called_once_with("assembly-control", environment.bodies)
         expected = dict(gravity)
         expected["Sun"] += (srp, relativity)
+        if burn_id is None:
+            native.acceleration.thrust_from_engine.assert_not_called()
+        else:
+            native.acceleration.thrust_from_engine.assert_called_once_with(
+                f"{burn_id}-main",
+            )
+            expected["Spacecraft"] = (
+                native.acceleration.thrust_from_engine.return_value,
+            )
         native.create_acceleration_models.assert_called_once_with(
             environment.bodies, {"Spacecraft": expected}, ["Spacecraft"], ["SSB"],
         )
         assert all(len(value) == 1 for value in gravity.values())
     else:
         with pytest.raises(TrajectoryRefinementError) as caught:
-            trajectory._build_arc_force_models("assembly-control", environment)
+            trajectory._build_arc_force_models(
+                "assembly-control", environment, burn_id=burn_id,
+            )
         if case in {"import", "ppn", "factory"}:
             assert caught.value.__cause__ is failure
         else:
@@ -310,6 +326,20 @@ def test_arc_force_assembly_inventory_order_and_failures(
             native.create_acceleration_models.assert_not_called()
         if case != "ppn":
             assert "assembly-control" in str(caught.value)
+
+
+@pytest.mark.parametrize("burn_id", ["coast", "", True, [], 1])
+def test_arc_force_invalid_burn_fails_before_native_import(
+    monkeypatch: pytest.MonkeyPatch, burn_id: object,
+) -> None:
+    importer = MagicMock()
+    monkeypatch.setattr(trajectory, "_import_tudat_propagation_setup", importer)
+    with pytest.raises(TrajectoryRefinementError, match="burn_id"):
+        trajectory._build_arc_force_models(
+            "invalid-burn", MagicMock(),
+            burn_id=burn_id,  # type: ignore[arg-type]  # Invalid boundary probe.
+        )
+    importer.assert_not_called()
 
 
 def test_gravity_factory_failure_is_chained_with_candidate_context(
@@ -342,10 +372,14 @@ def test_gravity_factory_failure_is_chained_with_candidate_context(
     assert caught.value.__cause__.__cause__ is failure
 
 
-@pytest.mark.parametrize("combined", [False, True])
+@pytest.mark.parametrize(
+    ("combined", "burn_id"),
+    [(False, None), (True, None), (True, "departure"), (True, "arrival")],
+)
 def test_real_gravity_matches_independent_fixed_state_component_sum(
     monkeypatch: pytest.MonkeyPatch,
     combined: bool,
+    burn_id: Literal["departure", "arrival"] | None,
 ) -> None:
     pytest.importorskip("tudatpy")
     import numpy as np
@@ -363,6 +397,11 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
     assert environment.gravity_acceleration_inventory == _expected_inventory()
     assert tuple(environment.gravity_acceleration_settings) == _SOURCE_ORDER
     bodies = environment.bodies
+    if combined:
+        trajectory._install_tnw_engine(
+            candidate.candidate_id, bodies, _spacecraft(),
+            burn_id or "departure", 0.4, 0.2,
+        )
     bodies.create_empty_body("GravityOracle")
     if combined:
         bodies.get("GravityOracle").mass = _spacecraft().initial_mass_kg
@@ -426,10 +465,10 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
     )
     fixed_states = {
         "near-Moon": moon_state
-        + np.asarray([1_837_400.0, 0.0, 0.0, 0.0, 0.0, 0.0]),
+        + np.asarray([1_837_400.0, 0.0, 0.0, 0.0, 1500.0, 0.0]),
         "cruise": (moon_state + mars_state) / 2.0,
         "near-Mars": mars_state
-        + np.asarray([3_689_500.0, 0.0, 0.0, 0.0, 0.0, 0.0]),
+        + np.asarray([3_689_500.0, 0.0, 0.0, 0.0, 1500.0, 0.0]),
     }
 
     acceleration = propagation_setup.acceleration
@@ -467,7 +506,7 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
             try:
                 ppn.parameter_vector = np.asarray([0.75, 1.25])
                 production_models = trajectory._build_arc_force_models(
-                    candidate.candidate_id, environment,
+                    candidate.candidate_id, environment, burn_id=burn_id,
                 )
                 assert np.array_equal(ppn.parameter_vector, [1.0, 1.0]), label
                 acceleration_models = production_models | oracle_models
@@ -508,6 +547,22 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
             float(np.linalg.norm(component))
             for component in direct_components_m_s2
         )
+        if burn_id is not None:
+            relative = state - (moon_state if burn_id == "departure" else mars_state)
+            tangent = relative[3:] / np.linalg.norm(relative[3:])
+            normal = np.cross(relative[:3], relative[3:])
+            normal /= np.linalg.norm(normal)
+            inward = np.cross(normal, tangent)
+            direction = (
+                math.cos(0.2) * math.cos(0.4) * tangent
+                + math.cos(0.2) * math.sin(0.4) * inward
+                + math.sin(0.2) * normal
+            )
+            thrust_acceleration_m_s2 = (
+                _spacecraft().max_thrust_n / _spacecraft().initial_mass_kg
+            )
+            direct_total_m_s2 += thrust_acceleration_m_s2 * direction
+            component_norm_sum_m_s2 += thrust_acceleration_m_s2
         tolerance_m_s2 = max(1e-15, 1e-12 * component_norm_sum_m_s2)
 
         assert all(math.isfinite(value) for value in production_total_m_s2), label
@@ -518,3 +573,13 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
             float(np.linalg.norm(production_total_m_s2 - direct_total_m_s2))
             <= tolerance_m_s2
         ), label
+
+    if combined and burn_id is None:
+        # Only departure-main was installed: never silently select another engine.
+        with pytest.raises(
+            TrajectoryRefinementError, match="force-model-construction.*arrival",
+        ) as caught:
+            trajectory._build_arc_force_models(
+                candidate.candidate_id, environment, burn_id="arrival",
+            )
+        assert caught.value.__cause__ is not None

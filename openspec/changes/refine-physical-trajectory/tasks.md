@@ -34,6 +34,26 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.6 burn-force assembly evidence (2026-09-08):
+`_build_arc_force_models` reuses the verified external-force mapping and adds
+exactly one Spacecraft self-source thrust term for the selected installed
+`departure-main` or `arrival-main` engine. Coast explicitly selects no thrust,
+even with an installed engine. Invalid burn identifiers fail before native
+imports, and a missing selected engine fails with its original native cause;
+there is no substitution of another engine. Existing callers default to coast.
+Native near-Moon, cruise and near-Mars checks compare total acceleration with
+independently assembled external forces plus analytic `thrust / current_mass`
+times the signed TNW direction, using the unchanged force tolerance
+`max(1e-15 m/s^2, 1e-12 * sum(component norms))`. They also verify a poisoned PPN
+state is reset for both burns and coast. No dependency or integration tolerance
+changed. Near-body test inputs now include transverse relative velocity of
+`1500 m/s` so the TNW frame is non-degenerate; production mission inputs and
+resources are unchanged. This supplies the complete force assembly but not the three-arc driver,
+continuous safety or target closure; task 3.6 remains open for driver wiring.
+All 70 focused force/burn checks and 556 project tests pass, as do Ruff, strict
+OpenSpec validation and the unchanged legacy checksum. The existing force
+assembler and installed-engine adapter were reused without new dependencies.
+
 Task 4.10 environment-budget evidence (2026-09-08):
 `_build_physical_environment` accepts the existing budget without constructing
 or resetting it. Cooperative checks bracket resource hashing, kernel setup,
