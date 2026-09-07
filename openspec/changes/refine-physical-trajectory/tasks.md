@@ -34,6 +34,25 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.7 native sampling evidence (2026-09-08):
+`tests/test_native_safety_sampling.py` propagates a test-only zero-force line
+through the verified Moon collision sphere during `0.25..0.75 s`, using the
+unchanged nominal burn integrator and production translation/mass composition.
+Both initial and saved step-end positions lie outside the sphere. A native
+custom termination that checks only the current full-step state misses the
+crossing and successfully reaches `2 s`. An experimental latch in the
+zero-acceleration callback observes internal stages and stops before `2 s`,
+despite the final saved position again being outside. The straight-line oracle
+matches saved positions within `1e-6 m`; both characterization tests pass.
+This records an inadequate approach, not a deployed safety algorithm. A stage
+latch alone can still miss crossings between stages and can reject tentative
+stages of adaptive steps that would later be discarded. Production safety
+requires a justified between-step strategy plus initially unsafe-state and
+termination-precedence handling; task 3.7 remains unchecked. No force,
+integrator setting or scientific tolerance was changed to hide this limitation.
+Both focused controls and all 445 project tests pass, as do Ruff, strict
+OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.5 sample-classification evidence (2026-09-08):
 `_classify_trial_state` reuses the verified collision spheres and finite-state
 validation to return an internal rejection reason or no rejection for one
