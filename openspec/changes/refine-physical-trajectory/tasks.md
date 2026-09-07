@@ -34,6 +34,23 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.5 sample-classification evidence (2026-09-08):
+`_classify_trial_state` reuses the verified collision spheres and finite-state
+validation to return an internal rejection reason or no rejection for one
+SI/SSB/J2000 sample. All eight positions and surfaces are required and validated
+before classifying; malformed/non-finite data remains a chained fatal error,
+even when mass is already unsafe. Mass strictly below dry mass is rejected;
+equality is allowed. Surface equality is impact. Simultaneous violations use
+dry-mass precedence, then the fixed physical-body order, independent of input
+dictionary order. Tests cover each sphere at radius minus one meter, radius,
+and radius plus one meter, dry-mass boundaries, simultaneous violations and
+invalid inputs. No state is clamped, mutated or retained by this pure helper.
+This is only a single-sample check: native safety termination, between-step
+impact detection, rejection counters and history disposal remain unfinished.
+Tasks 3.5 and 3.7 therefore remain unchecked; no mission safety is claimed.
+All 64 focused checks and 443 full-suite tests, Ruff, strict validation and
+the unchanged legacy checksum pass; no scientific tolerance was modified.
+
 Task 3.2 completion evidence (2026-09-07, supersedes earlier pending notes):
 `_build_coupled_arc_settings` now constructs the shared seven-state native
 translation/mass setup using thrust-derived mass loss or explicit zero coast

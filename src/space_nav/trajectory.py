@@ -776,6 +776,48 @@ def _crosses_collision_surface(
     return math.dist(spacecraft_position, body_position) <= guard_radius
 
 
+def _classify_trial_state(
+    candidate_id: object,
+    state: object,
+    mass_kg: object,
+    dry_mass_kg: object,
+    body_positions_m: dict[str, object],
+    collision_resource: _CollisionResource,
+) -> str | None:
+    """Classify one SI/SSB/J2000 sample, never retain or clamp its state.
+
+    Validate all inputs before rejection. Dry mass takes precedence, then the
+    first impact in physical-body order. None means this sample is safe only;
+    it does not establish safety between samples or select a public status.
+    """
+    try:
+        cartesian = _finite_cartesian_values(state, "trial_state")
+        mass = _finite_float("mass_kg", mass_kg)
+        dry_mass = _positive_finite("dry_mass_kg", dry_mass_kg)
+        if set(body_positions_m) != set(PHYSICAL_BODY_NAMES):
+            raise ValueError("body_positions_m must contain exactly eight physical bodies")
+        if tuple(surface.body for surface in collision_resource.surfaces) != (
+            PHYSICAL_BODY_NAMES
+        ):
+            raise ValueError("collision surfaces must follow exact physical-body order")
+        impacts = []
+        for surface in collision_resource.surfaces:
+            position = _finite_vector3_values(
+                body_positions_m[surface.body], f"{surface.body}.position_m",
+            )
+            if _crosses_collision_surface(
+                cartesian[:3], position, surface.guard_radius_m,
+            ):
+                impacts.append(surface.body)
+    except (TypeError, ValueError) as exc:
+        _raise_refinement_error(candidate_id, "trial-safety", str(exc), exc)
+    if mass < dry_mass:
+        return "rejected-dry-mass"
+    if impacts:
+        return f"rejected-impact:{impacts[0]}"
+    return None
+
+
 def _dot_product(left: Vector3, right: Vector3) -> float:
     return sum(left[index] * right[index] for index in range(3))
 

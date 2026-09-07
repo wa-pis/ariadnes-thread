@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import FrozenInstanceError
+from dataclasses import FrozenInstanceError, replace
 import math
 import os
 from pathlib import Path
@@ -489,3 +489,64 @@ def test_collision_rejects_invalid_inputs_with_field_context(
             body_position_m,
             guard_radius_m,
         )
+
+
+@pytest.mark.parametrize("body", tuple(body for body, _ in _EXPECTED_RADII_M))
+@pytest.mark.parametrize("offset_m", [-1.0, 0.0, 1.0])
+def test_trial_safety_checks_each_inclusive_surface(
+    body: str, offset_m: float, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _install_fake_collision_resources(monkeypatch, _FakeSpice(), _PCK_SHA256)
+    resource = trajectory._build_collision_resource("safety-control")
+    positions: dict[str, object] = {
+        name: (1e12, 0.0, 0.0) for name, _ in _EXPECTED_RADII_M
+    }
+    positions[body] = (max(dict(_EXPECTED_RADII_M)[body]) + offset_m, 0.0, 0.0)
+    original = dict(positions)
+    reason = trajectory._classify_trial_state(
+        "safety-control", (0.0,) * 6, 1000.0, 1000.0, positions, resource,
+    )
+    assert reason == (f"rejected-impact:{body}" if offset_m <= 0.0 else None)
+    assert positions == original
+
+
+@pytest.mark.parametrize(
+    "case", ["dry", "equal", "above", "negative", "both", "impacts", "nan",
+             "velocity", "body", "missing", "surfaces", "boolean", "dry-zero"],
+)
+def test_trial_safety_mass_precedence_and_fatal_data(
+    case: str, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _install_fake_collision_resources(monkeypatch, _FakeSpice(), _PCK_SHA256)
+    resource = trajectory._build_collision_resource("safety-control")
+    positions: dict[str, object] = {
+        name: (1e12, 0.0, 0.0) for name, _ in _EXPECTED_RADII_M
+    }
+    state = (0.0,) * 6
+    mass_kg = {"equal": 1000.0, "above": 1001.0, "impacts": 1001.0,
+               "negative": -1.0, "nan": math.nan, "boolean": True}.get(case, 999.0)
+    if case in {"both", "impacts"}:
+        positions["Mars"] = positions["Moon"] = (0.0, 0.0, 0.0)
+    elif case == "velocity":
+        state = (0.0,) * 5 + (math.inf,)
+    elif case == "body":
+        positions["Saturn"] = (math.nan, 0.0, 0.0)
+    elif case == "missing":
+        del positions["Mars"]
+    elif case == "surfaces":
+        resource = replace(resource, surfaces=resource.surfaces[:-1])
+    if case in {"nan", "velocity", "body", "missing", "surfaces", "boolean", "dry-zero"}:
+        with pytest.raises(TrajectoryRefinementError, match="safety-control") as caught:
+            trajectory._classify_trial_state(
+                "safety-control", state, mass_kg,
+                0.0 if case == "dry-zero" else 1000.0, positions, resource,
+            )
+        assert isinstance(caught.value.__cause__, ValueError)
+    else:
+        expected = (
+            None if case in {"equal", "above"} else
+            "rejected-impact:Moon" if case == "impacts" else "rejected-dry-mass"
+        )
+        assert trajectory._classify_trial_state(
+            "safety-control", state, mass_kg, 1000.0, positions, resource,
+        ) == expected
