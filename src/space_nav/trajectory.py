@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
-from dataclasses import dataclass
+from dataclasses import dataclass, field as dataclass_field
 from datetime import datetime
 from hashlib import file_digest
 import math
 from numbers import Real
 from pathlib import Path
+import time
 from typing import Any, Literal, NoReturn, cast
 
 from . import ephemeris
@@ -109,6 +110,81 @@ StateQuery = Callable[[str, float], CartesianState]
 ElementConverter = Callable[
     [float, float, float, float, float, float, float], object
 ]
+
+
+@dataclass(slots=True)
+class _RefinementBudget:
+    """Mutable internal work accounting, not a public scientific result.
+
+    Construct once before handoff/resources. Check around native work; this
+    cooperative deadline cannot interrupt a native call already in progress.
+    """
+
+    candidate_id: str
+    runtime_seconds: float
+    monotonic: Callable[[], float] = time.monotonic
+    deadline_monotonic_s: float = dataclass_field(init=False)
+    control_attempts: int = dataclass_field(default=0, init=False)
+    propagation_evaluations: int = dataclass_field(default=0, init=False)
+    native_arc_propagations: int = dataclass_field(default=0, init=False)
+    _arcs_in_evaluation: int = dataclass_field(default=0, init=False)
+    _last_monotonic_s: float = dataclass_field(init=False)
+
+    def __post_init__(self) -> None:
+        try:
+            self.runtime_seconds = _positive_finite("runtime_seconds", self.runtime_seconds)
+            self._last_monotonic_s = _finite_float("monotonic clock", self.monotonic())
+            self.deadline_monotonic_s = _finite_float(
+                "deadline_monotonic_s", self._last_monotonic_s + self.runtime_seconds,
+            )
+        except (TypeError, ValueError) as exc:
+            _raise_refinement_error(self.candidate_id, "budget-construction", str(exc), exc)
+
+    def _fail(self, operation: str, detail: str) -> NoReturn:
+        cause = RuntimeError(detail)
+        _raise_refinement_error(
+            self.candidate_id, operation,
+            f"{detail}; runtime limit {self.runtime_seconds:g} s; "
+            f"control_attempts={self.control_attempts}, "
+            f"propagation_evaluations={self.propagation_evaluations}, "
+            f"native_arc_propagations={self.native_arc_propagations}; "
+            "no partial result is returned", cause,
+        )
+
+    def check(self) -> None:
+        try:
+            now_s = _finite_float("monotonic clock", self.monotonic())
+        except (TypeError, ValueError) as exc:
+            _raise_refinement_error(self.candidate_id, "deadline", str(exc), exc)
+        if now_s < self._last_monotonic_s:
+            self._fail("deadline", "monotonic clock moved backward")
+        self._last_monotonic_s = now_s
+        if now_s >= self.deadline_monotonic_s:
+            self._fail("deadline", "shared deadline reached")
+
+    def begin_control(self) -> None:
+        """Count before analytic validation, even if the control is rejected."""
+        self.check()
+        if self.control_attempts >= 73:
+            self._fail("work-limit", "control-attempt limit 73 reached")
+        self.control_attempts += 1
+
+    def begin_arc(self, *, first_in_evaluation: bool) -> None:
+        """Count immediately before a native arc, including early-terminated arcs."""
+        self.check()
+        if not isinstance(first_in_evaluation, bool):
+            self._fail("work-limit", "first_in_evaluation must be boolean")
+        if self.native_arc_propagations >= 228:
+            self._fail("work-limit", "native-arc limit 228 reached")
+        if first_in_evaluation:
+            if self.propagation_evaluations >= 76:
+                self._fail("work-limit", "propagation-evaluation limit 76 reached")
+            self.propagation_evaluations += 1
+            self._arcs_in_evaluation = 0
+        elif self._arcs_in_evaluation not in (1, 2):
+            self._fail("work-limit", "continuation arc requires one or two previous arcs")
+        self._arcs_in_evaluation += 1
+        self.native_arc_propagations += 1
 
 
 @dataclass(frozen=True, slots=True)

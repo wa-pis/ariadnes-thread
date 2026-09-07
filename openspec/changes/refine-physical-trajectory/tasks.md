@@ -34,6 +34,22 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 4.10 budget-accounting evidence (2026-09-08): `_RefinementBudget` is an
+internal mutable work ledger with a single finite monotonic deadline. It counts
+controls before analytic validation and evaluations only with their first native
+arc. It enforces caps 73/76/228 without incrementing rejected over-limit calls,
+accepts early-terminated evaluations, and lets frozen diagnostics consume arcs
+without another control attempt. Continuation arcs require a started evaluation
+and cannot exceed three arcs in that evaluation. Deadline errors include the
+runtime limit and all three attempted-work counters, with no partial result.
+Injected-clock tests cover exact expiry, no deadline reset, non-finite/backward
+clock values, analytic rejection, partial impact, frozen diagnostics and every
+cap. This is cooperative accounting, not interruption of an active native call.
+Wiring the ledger around resource construction, native arcs and final output is
+still pending; task 4.10 remains unchecked. No dependencies or science changed.
+All 13 focused budget checks and 523 project tests pass, as do Ruff, strict
+OpenSpec validation and the unchanged legacy checksum.
+
 Task 4.10 handoff deadline evidence (2026-09-08): the private M2 search now
 accepts an inherited absolute monotonic deadline and uses the earlier of that
 deadline and its own scenario budget. `_verify_candidate_handoff` forwards the
