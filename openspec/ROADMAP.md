@@ -1,17 +1,21 @@
 # Ariadna Space Navigation Roadmap
 
-## Current priority — prototype first (2026-09-07)
+## Current priority — M3 resumed (2026-09-07)
 
-The user has explicitly paused high-fidelity M3 development and approved a
-visible research prototype first. See [the short prototype plan](PROTOTYPE.md).
-This decision takes precedence over the historical linear execution order below.
-The sole open change retains ID `refine-physical-trajectory` for continuity,
-but now specifies the local Streamlit prototype. Original M3 documents and
-task states are preserved in `openspec/deferred/refine-physical-trajectory`;
-they are not completed or archived as success. Existing components and tests
-remain intact. Scheduled implementation is paused.
+The user approved resuming M3 after prototype delivery. The prototype is archived
+as `2026-09-07-refine-physical-trajectory` and synced to `visual-transfer-explorer`.
+The sole active `refine-physical-trajectory` restores unfinished M3 requirements.
+Start with ephemeris qualification (2.7), then finite-burn prerequisites before
+the targeting spike. Preserve the UI. Scheduled automation remains paused.
 
-## Deferred engineering roadmap
+### Historical prototype priority (superseded by resumption above)
+
+The user temporarily paused M3 to deliver the [visible prototype](PROTOTYPE.md).
+The prototype reused the change ID for continuity. Original M3 documents and
+task states remain in `openspec/deferred/refine-physical-trajectory` as a snapshot;
+they were never archived as completed engineering work.
+
+## Engineering roadmap
 
 This roadmap delivers the first Moon-to-Mars reference use case for the
 [Ariadna product vision](VISION.md). The broader goal is an open specification,
@@ -25,13 +29,13 @@ accepted change with a pinned standard edition, supported profile, numerical
 tolerances, and measurable acceptance scenarios. Do not insert a second active
 change or silently extend M3. Reassess placement when reviewing the next change.
 
-The original engineering sequence is `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 and M2 are archived; M3 is on hold as `refine-physical-trajectory`. Resume this sequence only after reviewing the prototype outcome. Do not archive incomplete engineering work as completed.
+The engineering sequence is `M1 -> M2 -> M3 -> M4 -> M5 -> M6`. M1 and M2 are archived; M3 is resumed as `refine-physical-trajectory`. Do not archive incomplete engineering work as completed.
 
 | Milestone / change | Status | Depends on | Verifiable result |
 |---|---|---|---|
 | **M1 — `establish-navigation-foundation`** | Archived 2026-09-04 | None | Reproducible Python environment, strict TOML scenario, canonical units/time/frame contract, real SPICE ephemerides, and diagnostic CLI. |
 | **M2 — `plan-impulsive-transfer`** | Archived 2026-09-04 | M1 archived | Three-dimensional impulsive Moon-to-Mars search evaluates at most 2,000 candidates and returns a flight-time/fuel Pareto front. |
-| **M3 — `refine-physical-trajectory`** | On hold 2026-09-07 | M2 archived | One selected Pareto candidate is refined from the configured lunar orbit to the configured Martian orbit with declared gravity harmonics, radiation pressure and shadows, Sun Schwarzschild relativity, variable mass, finite burns, and honest physical status. |
+| **M3 — `refine-physical-trajectory`** | Resumed 2026-09-07 | M2 archived | One selected Pareto candidate is refined from the configured lunar orbit to the configured Martian orbit with declared gravity harmonics, radiation pressure and shadows, Sun Schwarzschild relativity, variable mass, finite burns, and honest physical status. |
 | **M4 — `estimate-navigation-state`** | Planned | M3 archived | Synthetic observations from three ground stations feed batch least squares and produce an estimated state and covariance. |
 | **M5 — `schedule-course-corrections`** | Planned | M4 archived | The planner selects zero to three TCMs using only measurements available before each maneuver. |
 | **M6 — `verify-and-report-mission`** | Planned | M5 archived | Twenty Monte Carlo cases produce standalone HTML, CSV, and JSON reports and an independent GMAT comparison. |

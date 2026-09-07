@@ -85,8 +85,10 @@ Sources checked on 2026-09-06:
 
 ## Execution boundary
 
-Keep one active change. The 2026-09-07 user priority override delivers a local
+Keep one active change. M3 was explicitly resumed on 2026-09-07 after prototype
+delivery and archival; retain the UI and resume the unfinished engineering gates.
+The earlier 2026-09-07 user priority override delivered a local
 Streamlit research prototype first; the original engineering sequence and M3
-plan are deferred, not completed. Assign the interoperability slice through explicit
+plan were deferred, not completed. Assign the interoperability slice through explicit
 OpenSpec acceptance before implementing it. Preserve existing APIs, numerical
 gates, dependency pins, and the educational `moon_to_mars.py` file.
