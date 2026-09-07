@@ -327,6 +327,33 @@ def test_deadline_never_returns_a_partial_result(
     assert solver_calls == expected_evaluated
 
 
+@pytest.mark.parametrize("inherited,stop_s", [(101.0, 101.0), (1000.0, 130.0)])
+def test_inherited_deadline_is_not_restarted_or_allowed_to_extend_budget(
+    inherited: float, stop_s: float,
+) -> None:
+    clock = iter([100.0, 100.0, stop_s])
+    with pytest.raises(TransferSearchError, match="1 candidate"):
+        transfer._search_impulsive_transfers(
+            _small_scenario(budget=1, runtime_seconds=30.0),
+            monotonic=lambda: next(clock), deadline_monotonic_s=inherited,
+            utc_to_tdb_fn=lambda epoch: 0.0 if "01-01" in epoch else 10.0,
+            state_query=_fake_state, gm_query=_fake_gm, lambert_solver=_fake_lambert,
+        )
+
+
+@pytest.mark.parametrize("deadline", [99.0, 100.0, math.nan, math.inf, True, "101"])
+def test_expired_or_invalid_shared_deadline_starts_no_science(deadline: object) -> None:
+    def unexpected_time_conversion(epoch: str) -> NoReturn:
+        raise AssertionError("scientific work started after deadline rejection")
+
+    with pytest.raises(TransferSearchError):
+        transfer._search_impulsive_transfers(
+            _small_scenario(), monotonic=lambda: 100.0,
+            deadline_monotonic_s=deadline,  # type: ignore[arg-type]
+            utc_to_tdb_fn=unexpected_time_conversion,
+        )
+
+
 def test_lambert_wrapper_matches_direct_tudatpy_in_three_dimensions() -> None:
     pytest.importorskip("tudatpy")
     from tudatpy.astro import two_body_dynamics

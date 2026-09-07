@@ -34,6 +34,22 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 4.10 handoff deadline evidence (2026-09-08): the private M2 search now
+accepts an inherited absolute monotonic deadline and uses the earlier of that
+deadline and its own scenario budget. `_verify_candidate_handoff` forwards the
+same deadline and optional injected clock without restarting the remaining
+budget. An expired or malformed inherited deadline fails before time conversion
+or resource loading. Deterministic tests verify expiration after one candidate,
+non-extension by a later inherited deadline, zero scientific work on initial
+expiry, exact handoff forwarding and chained M3 failure. Public M2 signatures,
+default behavior and scientific outputs remain unchanged. This is only handoff
+plumbing: the top-level shared budget, resource/native-call checks, complete
+attempt/evaluation/arc counters and final manifest checks are still pending.
+Task 4.10 remains unchecked; no targeting run is authorized by this step.
+All 55 focused M2/handoff checks and 510 project tests pass, as do Ruff,
+strict OpenSpec validation and the unchanged legacy checksum. Existing clock
+injection and search checks were reused; no new dependency was introduced.
+
 Task 4.2 completion evidence (2026-09-08, supersedes earlier pending notes):
 `_build_initial_burn_controls` composes the existing direction, sequential
 duration and analytic-domain helpers using the same local orbit conversion and

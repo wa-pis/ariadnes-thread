@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import replace
+from collections.abc import Callable
 import math
 import os
 from pathlib import Path
@@ -76,6 +77,37 @@ def test_initial_controls_chain_boundary_conversion_failure(
     with pytest.raises(TrajectoryRefinementError, match="d0001-t0035.*burn-seed") as caught:
         trajectory._build_initial_burn_controls(SCENARIO, _candidate(), 1.0, 1.0)
     assert caught.value.__cause__ is failure
+
+
+def test_handoff_passes_shared_deadline_and_clock_without_reset(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    candidate = _candidate()
+
+    def clock() -> float:
+        return 100.0
+
+    def search(
+        scenario: object, *, deadline_monotonic_s: float,
+        monotonic: Callable[[], float],
+    ) -> TransferSearchResult:
+        assert scenario is SCENARIO
+        assert deadline_monotonic_s == 101.0
+        assert monotonic is clock
+        return _search_result(candidate)
+
+    monkeypatch.setattr(trajectory, "_search_impulsive_transfers", search)
+    assert trajectory._verify_candidate_handoff(
+        SCENARIO, candidate, deadline_monotonic_s=101.0, monotonic=clock,
+    ) is candidate
+
+
+def test_handoff_expired_shared_deadline_is_chained() -> None:
+    with pytest.raises(TrajectoryRefinementError, match="0 candidate") as caught:
+        trajectory._verify_candidate_handoff(
+            SCENARIO, _candidate(), deadline_monotonic_s=99.0, monotonic=lambda: 100.0,
+        )
+    assert isinstance(caught.value.__cause__, TransferSearchError)
 
 
 def test_m3_contracts_are_public_package_exports() -> None:

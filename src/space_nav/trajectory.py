@@ -26,6 +26,7 @@ from .transfer import (
     MARS_REFERENCE_RADIUS_M,
     MOON_REFERENCE_RADIUS_M,
     STANDARD_GRAVITY_M_S2,
+    _search_impulsive_transfers,
     search_impulsive_transfers,
 )
 
@@ -2359,6 +2360,9 @@ def _verify_candidate_values(
 def _verify_candidate_handoff(
     scenario: Scenario,
     candidate: ImpulsiveTransferCandidate,
+    *,
+    deadline_monotonic_s: float | None = None,
+    monotonic: Callable[[], float] | None = None,
 ) -> ImpulsiveTransferCandidate:
     """Return the authoritative reproduced candidate after exact M2 comparison."""
 
@@ -2370,7 +2374,12 @@ def _verify_candidate_handoff(
             cause,
         )
     try:
-        result = search_impulsive_transfers(scenario)
+        if deadline_monotonic_s is None and monotonic is None:
+            result = search_impulsive_transfers(scenario)
+        else:
+            result = _search_impulsive_transfers(
+                scenario, deadline_monotonic_s=deadline_monotonic_s, monotonic=monotonic,
+            )
     except TransferSearchError as exc:
         _raise_handoff_error(candidate.candidate_id, str(exc), exc)
 

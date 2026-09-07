@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable, Iterator
 import json
 import math
+from numbers import Real
 from pathlib import Path
 import sys
 import time
@@ -415,12 +416,17 @@ def _search_impulsive_transfers(
     scenario: Scenario,
     *,
     monotonic: Callable[[], float] | None = None,
+    deadline_monotonic_s: float | None = None,
     utc_to_tdb_fn: Callable[[str], float] | None = None,
     state_query: StateQuery | None = None,
     gm_query: GmQuery | None = None,
     lambert_solver: LambertSolver | None = None,
 ) -> TransferSearchResult:
-    """Internal injectable implementation used by deterministic failure tests."""
+    """Internal search with injectable science and an optional shared deadline.
+
+    The inherited deadline uses the supplied monotonic clock and may shorten,
+    but never extend, the scenario runtime budget. Public M2 behavior is unchanged.
+    """
 
     monotonic = time.monotonic if monotonic is None else monotonic
     utc_to_tdb_fn = ephemeris.utc_to_tdb if utc_to_tdb_fn is None else utc_to_tdb_fn
@@ -436,6 +442,17 @@ def _search_impulsive_transfers(
 
     started = monotonic()
     deadline = started + scenario.limits.runtime_seconds
+    if deadline_monotonic_s is not None:
+        if (
+            isinstance(deadline_monotonic_s, bool)
+            or not isinstance(deadline_monotonic_s, Real)
+            or not math.isfinite(deadline_monotonic_s)
+        ):
+            cause = ValueError("deadline_monotonic_s must be a finite number")
+            raise TransferSearchError(str(cause)) from cause
+        deadline = min(deadline, float(deadline_monotonic_s))
+        if started >= deadline:
+            raise _deadline_error(scenario.limits.runtime_seconds, 0)
     try:
         departure_start = float(
             utc_to_tdb_fn(scenario.search.departure_start_utc)
