@@ -20,7 +20,6 @@ def test_native_engine_couples_translation_and_mass(
     initial_mass_kg: float,
 ) -> None:
     import numpy as np
-    from tudatpy import dynamics
     from tudatpy.dynamics import environment_setup, propagation_setup
     from space_nav import trajectory
 
@@ -153,7 +152,13 @@ def test_native_engine_couples_translation_and_mass(
         "native-burn-control", bodies, accelerations, initial_state,
         initial_mass_kg, 0.0, integrator, termination, thrust_enabled=True,
     )
-    simulator = dynamics.simulator.create_dynamics_simulator(bodies, coupled)
+    budget = trajectory._RefinementBudget("native-burn-control", 300.0)
+    budget.begin_control()
+    simulator = trajectory._run_native_arc(
+        budget, bodies, coupled, first_in_evaluation=True,
+    )
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (1, 1, 1)
     assert simulator.integration_completed_successfully
     history = simulator.state_history
     final_epoch_tdb_s = max(history)

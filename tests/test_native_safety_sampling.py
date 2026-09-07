@@ -13,7 +13,6 @@ from space_nav import trajectory
 def test_native_full_step_guard_can_miss_an_internal_crossing(
     latch_stages: bool,
 ) -> None:
-    from tudatpy import dynamics
     from tudatpy.dynamics import environment_setup, propagation_setup
 
     resource = trajectory._build_collision_resource("safety-sampling-control")
@@ -68,7 +67,11 @@ def test_native_full_step_guard_can_miss_an_internal_crossing(
         "safety-sampling-control", bodies, models, initial, 2000.0, 0.0,
         integrator, termination, thrust_enabled=False,
     )
-    simulator = dynamics.simulator.create_dynamics_simulator(bodies, coupled)
+    budget = trajectory._RefinementBudget("safety-sampling-control", 300.0)
+    simulator = trajectory._run_native_arc(
+        budget, bodies, coupled, first_in_evaluation=True,
+    )
+    assert budget.propagation_evaluations == budget.native_arc_propagations == 1
     assert simulator.integration_completed_successfully is True
     history = simulator.state_history
     assert stage_impacts

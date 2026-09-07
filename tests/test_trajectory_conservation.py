@@ -14,7 +14,6 @@ def test_ten_orbit_point_mass_conservation(
     tighter: bool, eccentricity: float,
 ) -> None:
     """Test-only fixed Sun at SSB; not a conservation claim for the mission."""
-    from tudatpy import dynamics
     from tudatpy.dynamics import environment_setup, propagation_setup
 
     mu_m3_s2 = ephemeris._get_body_gravitational_parameter("Sun")
@@ -56,7 +55,12 @@ def test_ten_orbit_point_mass_conservation(
         "conservative-control", bodies, accelerations, initial_state,
         2000.0, 0.0, integrator, termination, thrust_enabled=False,
     )
-    simulator = dynamics.simulator.create_dynamics_simulator(bodies, coupled)
+    budget = trajectory._RefinementBudget("conservative-control", 300.0)
+    simulator = trajectory._run_native_arc(
+        budget, bodies, coupled, first_in_evaluation=True,
+    )
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (0, 1, 1)
     trajectory._read_completed_arc_state(
         "conservative-control", "coast", simulator, final_epoch_tdb_s,
     )

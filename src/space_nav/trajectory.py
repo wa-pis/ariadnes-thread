@@ -1497,6 +1497,43 @@ def _build_coupled_arc_settings(
         )
 
 
+def _import_tudat_simulator() -> Any:
+    try:
+        from tudatpy.dynamics import simulator
+    except ImportError as exc:
+        raise RuntimeError("TudatPy simulator is unavailable") from exc
+    return simulator
+
+
+def _run_native_arc(
+    budget: _RefinementBudget,
+    bodies: Any,
+    propagator_settings: Any,
+    *,
+    first_in_evaluation: bool,
+) -> Any:
+    """Run one native arc under the existing cooperative budget.
+
+    Returned native output is unclassified: callers must reject safety stops
+    before completion/epoch checks and must discard failed or unsafe history.
+    """
+    budget.check()
+    try:
+        simulator_module = _import_tudat_simulator()
+    except RuntimeError as exc:
+        _raise_refinement_error(budget.candidate_id, "native-integration", str(exc), exc)
+    budget.begin_arc(first_in_evaluation=first_in_evaluation)
+    try:
+        simulator = simulator_module.create_dynamics_simulator(bodies, propagator_settings)
+    except Exception as exc:
+        _raise_refinement_error(
+            budget.candidate_id, "native-integration",
+            f"native_arc_propagations={budget.native_arc_propagations}: {exc}", exc,
+        )
+    budget.check()
+    return simulator
+
+
 def _read_completed_arc_state(
     candidate_id: object,
     arc: Literal["departure-burn", "coast", "arrival-burn"],

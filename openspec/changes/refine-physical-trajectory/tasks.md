@@ -34,6 +34,23 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 4.10 native-runner evidence (2026-09-08): `_run_native_arc` now uses the
+existing budget before lazy simulator import, immediately before a counted
+native call, and after native completion. Import failure consumes no arc;
+native failure or an early-terminated call consumes one. Deadline expiry after
+the native call raises without returning its result. All 36 burn controls,
+four conservative-orbit controls and both safety-sampling characterizations
+now execute through this runner with explicit counter assertions. Injected
+tests cover initial expiry, import-time expiry, native-time expiry and original
+exception chaining. The returned native object is deliberately unclassified:
+safety rejection must still precede the separate completion/epoch reader.
+This does not solve continuous collision safety or provide the three-arc
+executor. Resource/final-output budgeting and overall orchestration remain
+pending; 4.10 stays open. Existing components were reused without changing
+dependencies, force settings, integrator tolerances or the UI.
+All 48 focused runner/native-science checks and 529 project tests pass, as do
+Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 4.10 budget-accounting evidence (2026-09-08): `_RefinementBudget` is an
 internal mutable work ledger with a single finite monotonic deadline. It counts
 controls before analytic validation and evaluations only with their first native
