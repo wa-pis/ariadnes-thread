@@ -1149,6 +1149,67 @@ def _build_arc_integrator(
         )
 
 
+def _build_coupled_arc_settings(
+    candidate_id: object,
+    bodies: Any,
+    accelerations: Any,
+    initial_state: object,
+    initial_mass_kg: object,
+    initial_epoch_tdb_s: object,
+    integrator: Any,
+    termination: Any,
+    *,
+    thrust_enabled: bool,
+) -> Any:
+    """Couple SI/SSB/J2000 translation and mass without resetting handoff mass.
+
+    The caller supplies matching engine/force and safety-termination settings.
+    This constructs settings only; it neither runs nor certifies a safe arc.
+    """
+    try:
+        state = _finite_cartesian_values(initial_state, "initial_state")
+        mass_kg = _positive_finite("initial_mass_kg", initial_mass_kg)
+        epoch_tdb_s = _finite_float("initial_epoch_tdb_s", initial_epoch_tdb_s)
+        if not isinstance(thrust_enabled, bool):
+            raise ValueError("thrust_enabled must be boolean")
+        propagation_setup = _import_tudat_propagation_setup()
+    except (TypeError, ValueError, RuntimeError) as exc:
+        _raise_refinement_error(candidate_id, "arc-construction", str(exc), exc)
+
+    def coast_mass_rate(epoch_tdb_s: float) -> float:
+        return 0.0
+
+    try:
+        if (
+            bodies.global_frame_origin() != "SSB"
+            or bodies.global_frame_orientation() != "J2000"
+        ):
+            raise ValueError("arc body system must use SSB/J2000")
+        mass_rate = (
+            propagation_setup.mass_rate.from_thrust(True) if thrust_enabled
+            else propagation_setup.mass_rate.custom(coast_mass_rate)
+        )
+        mass_rates = propagation_setup.create_mass_rate_models(
+            bodies, {SPACECRAFT_BODY_NAME: [mass_rate]}, accelerations,
+        )
+        translation = propagation_setup.propagator.translational(
+            ["SSB"], accelerations, [SPACECRAFT_BODY_NAME], state,
+            epoch_tdb_s, integrator, termination,
+        )
+        mass = propagation_setup.propagator.mass(
+            [SPACECRAFT_BODY_NAME], mass_rates, (mass_kg,),
+            epoch_tdb_s, integrator, termination,
+        )
+        return propagation_setup.propagator.multitype(
+            [translation, mass], integrator, epoch_tdb_s, termination,
+        )
+    except Exception as exc:
+        _raise_refinement_error(
+            candidate_id, "arc-construction",
+            f"coupled arc at TDB epoch {epoch_tdb_s!r} failed: {exc}", exc,
+        )
+
+
 def _read_completed_arc_state(
     candidate_id: object,
     arc: Literal["departure-burn", "coast", "arrival-burn"],

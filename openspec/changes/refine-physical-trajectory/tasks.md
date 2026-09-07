@@ -27,12 +27,29 @@ production force, step size, closure tolerance, or dependency was changed.
 ## 3. Segmented finite-burn propagation
 
 - [x] 3.1 Implement the specified Moon-relative and Mars-relative TNW basis, `(T,N,W)` azimuth/elevation mapping, rebuilt-frame guidance, and degeneracy guards; verify orthonormality, handedness, unit norm, central-body selection, exact formula, and deterministic failure tests.
-- [ ] 3.2 Configure maximum-thrust engines with fixed Isp and coupled translation/mass propagation using supported TudatPy 1.0 APIs; verify isolated-burn mass loss and rocket-equation characteristic velocity meet their analytic tolerances.
+- [x] 3.2 Configure maximum-thrust engines with fixed Isp and coupled translation/mass propagation using supported TudatPy 1.0 APIs; verify isolated-burn mass loss and rocket-equation characteristic velocity meet their analytic tolerances.
 - [x] 3.3 Configure the exact nominal RKF78 and tighter RKDP87 elementwise tolerances and burn/coast initial/minimum/maximum steps using the non-deprecated interface; verify settings introspection, forced minimum-step, failed-completion, and final-epoch mismatch tests enforce the numerical contract and chained errors.
 - [ ] 3.4 Propagate exact departure-burn, coast, and arrival-burn arcs with state and mass handoff at fixed boundaries; verify a safely completed evaluation meets epoch, position, velocity, and mass continuity, preserves coast mass, and contains exactly two positive-duration burn records.
 - [ ] 3.5 Enforce analytic and propagated dry-mass guards plus all eight collision surfaces without clamping or retaining unsafe states; verify unsafe internal trials increment deterministic reason/body counters without directly selecting public status, no unsafe state is retained, and no-safe-complete-trial results contain no propagated-result values.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
+
+Task 3.2 completion evidence (2026-09-07, supersedes earlier pending notes):
+`_build_coupled_arc_settings` now constructs the shared seven-state native
+translation/mass setup using thrust-derived mass loss or explicit zero coast
+mass rate. It validates finite handoff state/mass/epoch and SSB/J2000, preserves
+the supplied integrator and termination settings, and chains native setup
+failures. All 36 native burn controls now use this production composition,
+including initial propagated masses of `2000 kg` and `1500 kg` while the native
+body starts configured at `2000 kg`. Existing mass, rocket-equation and TNW
+direction tolerances all pass; four ten-orbit coast controls use the same
+composition and preserve mass exactly. Eleven invalid-input/native-error
+checks pass. All 406 project tests, Ruff, strict validation and the unchanged
+legacy checksum pass. Existing Tudat factories and science fixtures were reused; no
+dependency, scientific constant or tolerance changed. This completes the
+engine/coupled-settings component, not the segmented executor: the caller must
+provide matching force/thrust and safety-termination settings. Tasks 3.4-3.7,
+the shared deadline and targeting prerequisites remain open.
 
 Task 3.6 assembly evidence (2026-09-07): `_build_arc_force_models` concatenates
 the verified external-force settings without mutating them: three Sun terms,

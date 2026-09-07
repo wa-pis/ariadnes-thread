@@ -41,17 +41,10 @@ def test_ten_orbit_point_mass_conservation(
     settings.get("Spacecraft").constant_mass = 2000.0
     bodies = environment_setup.create_system_of_bodies(settings)
 
-    def mass_rate(epoch_tdb_s: float) -> float:
-        return 0.0
-
     accelerations = propagation_setup.create_acceleration_models(
         bodies, {"Spacecraft": {"Sun": [
             propagation_setup.acceleration.point_mass_gravity(),
         ]}}, ["Spacecraft"], ["SSB"],
-    )
-    mass_rates = propagation_setup.create_mass_rate_models(
-        bodies, {"Spacecraft": [propagation_setup.mass_rate.custom(mass_rate)]},
-        accelerations,
     )
     integrator = trajectory._build_arc_integrator(
         "conservative-control", "coast", tighter=tighter,
@@ -59,16 +52,9 @@ def test_ten_orbit_point_mass_conservation(
     termination = propagation_setup.propagator.time_termination(
         final_epoch_tdb_s, terminate_exactly_on_final_condition=True,
     )
-    translation = propagation_setup.propagator.translational(
-        ["SSB"], accelerations, ["Spacecraft"], initial_state,
-        0.0, integrator, termination,
-    )
-    mass = propagation_setup.propagator.mass(
-        ["Spacecraft"], mass_rates, np.asarray([2000.0]),
-        0.0, integrator, termination,
-    )
-    coupled = propagation_setup.propagator.multitype(
-        [translation, mass], integrator, 0.0, termination,
+    coupled = trajectory._build_coupled_arc_settings(
+        "conservative-control", bodies, accelerations, initial_state,
+        2000.0, 0.0, integrator, termination, thrust_enabled=False,
     )
     simulator = dynamics.simulator.create_dynamics_simulator(bodies, coupled)
     trajectory._read_completed_arc_state(

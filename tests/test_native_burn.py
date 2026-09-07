@@ -12,17 +12,18 @@ import pytest
 @pytest.mark.parametrize("duration_s", [0.25, 100.25])
 @pytest.mark.parametrize("burn_id", ["inertial", "departure", "arrival"])
 @pytest.mark.parametrize("integration", ["rk4", "nominal", "tighter"])
+@pytest.mark.parametrize("initial_mass_kg", [2000.0, 1500.0])
 def test_native_engine_couples_translation_and_mass(
     duration_s: float, burn_id: Literal["inertial", "departure", "arrival"],
     monkeypatch: pytest.MonkeyPatch,
     integration: Literal["rk4", "nominal", "tighter"],
+    initial_mass_kg: float,
 ) -> None:
     import numpy as np
     from tudatpy import dynamics
     from tudatpy.dynamics import environment_setup, propagation_setup
     from space_nav import trajectory
 
-    initial_mass_kg = 2000.0
     thrust_n = 1000.0
     isp_s = 450.0
     g0_m_s2 = 9.80665
@@ -35,7 +36,8 @@ def test_native_engine_couples_translation_and_mass(
 
     settings = environment_setup.BodyListSettings("SSB", "J2000")
     settings.add_empty_settings("Spacecraft")
-    settings.get("Spacecraft").constant_mass = initial_mass_kg
+    # The propagated handoff mass must override the body's original mass.
+    settings.get("Spacecraft").constant_mass = 2000.0
     initial_state = np.zeros(6)
     central_body = "Moon" if burn_id == "departure" else "Mars"
     if burn_id != "inertial":
@@ -134,11 +136,6 @@ def test_native_engine_couples_translation_and_mass(
         bodies, acceleration_settings,
         ["Spacecraft"], ["SSB"],
     )
-    mass_rates = propagation_setup.create_mass_rate_models(
-        bodies,
-        {"Spacecraft": [propagation_setup.mass_rate.from_thrust(True)]},
-        accelerations,
-    )
     if integration == "rk4":
         integrator = propagation_setup.integrator.runge_kutta_fixed_step(
             0.1, propagation_setup.integrator.CoefficientSets.rk_4,
@@ -152,16 +149,9 @@ def test_native_engine_couples_translation_and_mass(
     termination = propagation_setup.propagator.time_termination(
         duration_s, terminate_exactly_on_final_condition=True,
     )
-    translation = propagation_setup.propagator.translational(
-        ["SSB"], accelerations, ["Spacecraft"], initial_state,
-        0.0, integrator, termination,
-    )
-    mass = propagation_setup.propagator.mass(
-        ["Spacecraft"], mass_rates, np.asarray([initial_mass_kg]),
-        0.0, integrator, termination,
-    )
-    coupled = propagation_setup.propagator.multitype(
-        [translation, mass], integrator, 0.0, termination,
+    coupled = trajectory._build_coupled_arc_settings(
+        "native-burn-control", bodies, accelerations, initial_state,
+        initial_mass_kg, 0.0, integrator, termination, thrust_enabled=True,
     )
     simulator = dynamics.simulator.create_dynamics_simulator(bodies, coupled)
     assert simulator.integration_completed_successfully
