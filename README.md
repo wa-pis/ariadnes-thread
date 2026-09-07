@@ -60,3 +60,17 @@ conda run -n space-nav python -m pytest -q
 
 Do not use `uv lock`, `uv sync`, `uv run`, or `uv venv` in this repository:
 they cannot describe the Conda-only TudatPy and native dependency graph.
+
+## Quality checks
+
+```sh
+make check
+```
+
+This runs Ruff and the complete test suite in `space-nav`. `make setup` refreshes
+the Conda environment and editable install. GitHub Actions runs the same checks,
+including a real TudatPy/SPICE runtime preflight, on pull requests and pushes to
+`main` and `dev`.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for review, dependency updates, and maintainer
+settings, and [AGENTS.md](AGENTS.md) for scientific and implementation contracts.

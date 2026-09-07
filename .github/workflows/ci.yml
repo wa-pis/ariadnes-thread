@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Python quality and scientific tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: conda-incubator/setup-miniconda@fc2d68f6413eb2d87b895e92f8584b5b94a10167 # v3
+        with:
+          miniforge-version: latest
+          environment-file: environment.yml
+          activate-environment: space-nav
+          auto-activate-base: false
+          channel-priority: strict
+      - name: Record resolved environment
+        run: |
+          mkdir -p test-results
+          conda list --explicit > test-results/conda-explicit.txt
+      - name: Install editable package
+        run: uv pip install --no-deps --no-build-isolation --editable .
+      - name: Lint
+        run: ruff check src tests
+      - name: Verify scientific runtime and installed CLI
+        run: |
+          python -c 'from tudatpy.interface import spice; import spiceypy; spice.load_standard_kernels()'
+          space-nav --help
+      - name: Test
+        run: python -m pytest -q -ra --junitxml=test-results/pytest.xml
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: validation-results
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14
