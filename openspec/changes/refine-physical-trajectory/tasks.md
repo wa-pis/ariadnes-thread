@@ -28,7 +28,7 @@ production force, step size, closure tolerance, or dependency was changed.
 
 - [x] 3.1 Implement the specified Moon-relative and Mars-relative TNW basis, `(T,N,W)` azimuth/elevation mapping, rebuilt-frame guidance, and degeneracy guards; verify orthonormality, handedness, unit norm, central-body selection, exact formula, and deterministic failure tests.
 - [ ] 3.2 Configure maximum-thrust engines with fixed Isp and coupled translation/mass propagation using supported TudatPy 1.0 APIs; verify isolated-burn mass loss and rocket-equation characteristic velocity meet their analytic tolerances.
-- [ ] 3.3 Configure the exact nominal RKF78 and tighter RKDP87 elementwise tolerances and burn/coast initial/minimum/maximum steps using the non-deprecated interface; verify settings introspection, forced minimum-step, failed-completion, and final-epoch mismatch tests enforce the numerical contract and chained errors.
+- [x] 3.3 Configure the exact nominal RKF78 and tighter RKDP87 elementwise tolerances and burn/coast initial/minimum/maximum steps using the non-deprecated interface; verify settings introspection, forced minimum-step, failed-completion, and final-epoch mismatch tests enforce the numerical contract and chained errors.
 - [ ] 3.4 Propagate exact departure-burn, coast, and arrival-burn arcs with state and mass handoff at fixed boundaries; verify a safely completed evaluation meets epoch, position, velocity, and mass continuity, preserves coast mass, and contains exactly two positive-duration burn records.
 - [ ] 3.5 Enforce analytic and propagated dry-mass guards plus all eight collision surfaces without clamping or retaining unsafe states; verify unsafe internal trials increment deterministic reason/body counters without directly selecting public status, no unsafe state is retained, and no-safe-complete-trial results contain no propagated-result values.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
@@ -50,6 +50,20 @@ Task 3.2 remains unchecked: production installation/arc composition, adaptive
 settings and safety guards are not supplied by this prerequisite experiment.
 
 ## 4. Bounded trajectory correction and science diagnostics
+
+Task 3.3 completion evidence (2026-09-07, supersedes earlier pending notes):
+`tests/test_native_minimum_step.py` uses the synthetic unstable ODE
+`dv_x/dt = (1e12 / s) * v_x`, coupled with constant mass, to force both unchanged
+production integrator profiles below their configured minimum step. Each native
+run reports a minimum-step error and unsuccessful integration; the completion
+reader raises a chained `TrajectoryRefinementError` instead of returning history.
+Together with the exact settings tests, 18 native burn controls, and the
+failed-completion/final-epoch rejection tests, this completes the component
+criteria of 3.3. Both new tests and all 365 project tests pass, as do Ruff and
+strict validation; the legacy checksum is unchanged. The full arc executor,
+dry-mass/impact precedence and shared deadline remain separate unfinished tasks;
+this check does not authorize the targeting spike. No physical model or
+scientific tolerance was changed.
 
 Task 3.3 completion-boundary evidence (2026-09-07):
 `_read_completed_arc_state` returns only immutable Cartesian SI values and a
