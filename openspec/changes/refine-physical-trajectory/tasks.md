@@ -51,6 +51,20 @@ settings and safety guards are not supplied by this prerequisite experiment.
 
 ## 4. Bounded trajectory correction and science diagnostics
 
+Task 3.3 completion-boundary evidence (2026-09-07):
+`_read_completed_arc_state` returns only immutable Cartesian SI values and a
+positive mass from a successful native simulation at the requested TDB epoch
+within the existing `1e-6 s` tolerance. Failed completion is rejected before
+reading partial history. Empty history, invalid epochs, wrong state dimensions,
+non-finite/boolean components and invalid mass fail with chained candidate/arc/
+expected-epoch context. Native RK4/RKF78/RKDP87 burn fixtures use this reader.
+All 40 focused checks, 363 full-suite tests, Ruff and strict validation passed;
+the legacy checksum is unchanged. Callers must classify safety terminations
+before this reader and discard failed simulator history; positivity alone is
+not the dry-mass guard. Task 3.3 remains open pending a forced native
+minimum-step failure and arc-executor integration; no public refinement run is
+enabled and no tolerance was relaxed.
+
 Task 3.3 settings evidence (2026-09-07): `_build_arc_integrator` uses the
 non-deprecated variable-step factory, seven-by-one elementwise SI tolerances,
 exact nominal RKF78/tighter RKDP87 burn/coast steps, and explicit rejection of

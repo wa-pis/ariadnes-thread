@@ -1108,6 +1108,62 @@ def _build_arc_integrator(
         )
 
 
+def _read_completed_arc_state(
+    candidate_id: object,
+    arc: Literal["departure-burn", "coast", "arrival-burn"],
+    simulator: Any,
+    expected_epoch_tdb_s: object,
+) -> tuple[Cartesian6, float]:
+    """Read completed SI/SSB/J2000 translation and mass, never a partial result.
+
+    Call only after classifying safety termination; impact/dry-mass trials must
+    be rejected before this completion check. Discard simulator history on error.
+    """
+    context = f"{arc} arc expected TDB epoch {expected_epoch_tdb_s!r}"
+    try:
+        if not isinstance(arc, str) or arc not in {
+            "departure-burn", "coast", "arrival-burn",
+        }:
+            raise ValueError("arc must name a burn or coast")
+        expected = _finite_float("expected_epoch_tdb_s", expected_epoch_tdb_s)
+    except ValueError as exc:
+        _raise_refinement_error(candidate_id, "arc-completion", f"{context}: {exc}", exc)
+    try:
+        completed = simulator.integration_completed_successfully
+    except Exception as exc:
+        _raise_refinement_error(candidate_id, "arc-completion", f"{context}: {exc}", exc)
+    if completed is not True:
+        cause = RuntimeError("native integration did not complete successfully")
+        _raise_refinement_error(candidate_id, "arc-completion", f"{context}: {cause}", cause)
+    try:
+        history = simulator.state_history
+        epochs = tuple(history.keys())
+    except Exception as exc:
+        _raise_refinement_error(candidate_id, "arc-completion", f"{context}: {exc}", exc)
+    try:
+        if not epochs:
+            raise ValueError("native history is empty")
+        terminal_epoch = max(_finite_float("history epoch", epoch) for epoch in epochs)
+        if abs(terminal_epoch - expected) > _TIME_TOLERANCE_S:
+            raise ValueError(f"final epoch mismatch: got {terminal_epoch} TDB s")
+    except ValueError as exc:
+        _raise_refinement_error(candidate_id, "arc-completion", f"{context}: {exc}", exc)
+    try:
+        raw_state = history[terminal_epoch]
+        flatten = getattr(raw_state, "reshape", None)
+        values = tuple(flatten(-1) if callable(flatten) else raw_state)
+    except Exception as exc:
+        _raise_refinement_error(candidate_id, "arc-completion", f"{context}: {exc}", exc)
+    try:
+        if len(values) != 7:
+            raise ValueError("terminal state must contain six SI components and mass_kg")
+        cartesian = _finite_cartesian_values(values[:6], "terminal state")
+        mass_kg = _positive_finite("terminal mass_kg", values[6])
+    except ValueError as exc:
+        _raise_refinement_error(candidate_id, "arc-completion", f"{context}: {exc}", exc)
+    return cartesian, mass_kg
+
+
 def _create_time_limited_body_settings(
     environment_setup: Any,
     initial_epoch_tdb_s: float,

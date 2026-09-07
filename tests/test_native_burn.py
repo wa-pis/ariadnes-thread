@@ -168,7 +168,12 @@ def test_native_engine_couples_translation_and_mass(
     history = simulator.state_history
     final_epoch_tdb_s = max(history)
     assert abs(float(final_epoch_tdb_s) - duration_s) <= 1e-6
-    final = np.asarray(history[final_epoch_tdb_s]).reshape(-1)
+    cartesian, mass_kg = trajectory._read_completed_arc_state(
+        "native-burn-control",
+        "arrival-burn" if burn_id == "arrival" else "departure-burn",
+        simulator, duration_s,
+    )
+    final = np.asarray((*cartesian, mass_kg))
     assert final.shape == (7,)
     assert np.all(np.isfinite(final))
 
