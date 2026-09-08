@@ -121,7 +121,7 @@ def test_native_ephemeris_grid_switch_does_not_guarantee_smooth_position(
 
 
 @pytest.mark.parametrize("phase", ["departure", "cruise", "arrival"])
-@pytest.mark.parametrize("duration_s", [30.0, 300.0, 86400.0])
+@pytest.mark.parametrize("duration_s", [30.0, 300.0, 1800.0, 86400.0])
 def test_moving_body_chord_deviation_is_not_interpolation_error(
     phase: str, duration_s: float,
 ) -> None:
@@ -129,6 +129,7 @@ def test_moving_body_chord_deviation_is_not_interpolation_error(
     from tudatpy.dynamics import environment_setup
 
     evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
+    bound_budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
     departure_s, arrival_s = evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1]
     fraction = {"departure": 0.0, "cruise": 0.5, "arrival": 1.0}[phase]
     start_s = departure_s + fraction * (arrival_s - departure_s - duration_s)
@@ -143,6 +144,7 @@ def test_moving_body_chord_deviation_is_not_interpolation_error(
     epochs_s = start_s + fractions * duration_s
     measurements: dict[str, dict[str, float]] = {}
     for body in trajectory.PHYSICAL_BODY_NAMES:
+        bound_budget.check()
         table = environment_setup.create_body_ephemeris(
             settings.get(body).ephemeris_settings, body,
         )
@@ -179,11 +181,56 @@ def test_moving_body_chord_deviation_is_not_interpolation_error(
             "sampled_position_error_m": position_error_m,
             "sampled_velocity_error_m_s": velocity_error_m_s,
         }
+        if body in {"Moon", "Mars"} and duration_s >= 1800.0:
+            cell_count = int(duration_s / trajectory.EPHEMERIS_TIME_STEP_S)
+            assert cell_count in {6, 288}
+            nodes_s = [start_s + index * trajectory.EPHEMERIS_TIME_STEP_S
+                       for index in range(-2, cell_count + 3)]
+            node_states_si = np.asarray([
+                spice.get_body_cartesian_state_at_epoch(body, "SSB", "J2000", "NONE", epoch)
+                for epoch in nodes_s
+            ]).reshape(-1, 6)
+            node_positions_m = tuple((float(row[0]), float(row[1]), float(row[2]))
+                                     for row in node_states_si)
+            helper_started_s = time.perf_counter()
+            local_bounds_m = tuple(trajectory._ephemeris_cell_chord_bound(
+                bound_budget, tuple(nodes_s[index:index + 6]), node_positions_m[index:index + 6],
+                nodes_s[index + 2], nodes_s[index + 3],
+            ) for index in range(cell_count))
+            composed_bound_m = trajectory._compose_ephemeris_chord_bounds(
+                bound_budget, tuple(nodes_s[2:cell_count + 3]),
+                node_positions_m[2:cell_count + 3], local_bounds_m,
+            )
+            helper_elapsed_s = time.perf_counter() - helper_started_s
+            polynomial_states_si = []
+            for epoch in epochs_s:
+                index = min(cell_count - 1, int((epoch - start_s) / trajectory.EPHEMERIS_TIME_STEP_S))
+                polynomial_states_si.append(_rational_lagrange_state(
+                    nodes_s[index:index + 6], node_states_si[index:index + 6], float(epoch),
+                ))
+            polynomial_errors_si = native - np.asarray(polynomial_states_si)
+            polynomial_position_error_m = float(np.max(np.linalg.norm(polynomial_errors_si[:, :3], axis=1)))
+            polynomial_velocity_error_m_s = float(np.max(np.linalg.norm(polynomial_errors_si[:, 3:], axis=1)))
+            assert polynomial_position_error_m <= 0.025, (phase, body, polynomial_position_error_m)
+            assert polynomial_velocity_error_m_s <= 2.5e-6, (phase, body, polynomial_velocity_error_m_s)
+            native_deviation_m = float(np.max(np.linalg.norm(native_defect, axis=1)))
+            assert native_deviation_m <= composed_bound_m + 2 * 0.025
+            measurements[body].update({
+                "cell_count": cell_count, "bound_helper_calls": cell_count + 1,
+                "composed_polynomial_chord_bound_m": composed_bound_m,
+                "sampled_polynomial_position_error_m": polynomial_position_error_m,
+                "sampled_polynomial_velocity_error_m_s": polynomial_velocity_error_m_s,
+                "bound_helpers_only_elapsed_s": helper_elapsed_s,
+            })
+    bound_budget.check()
+    assert (bound_budget.control_attempts, bound_budget.propagation_evaluations,
+            bound_budget.native_arc_propagations) == (0, 0, 0)
     print(json.dumps({
         "candidate_id": evidence["candidate_id"], "phase": phase,
         "start_tdb_s": start_s, "duration_s": duration_s, "sample_count": len(fractions),
         "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
-        "scope": "Sampled lower bounds on required body-motion allowance; not safety upper bounds",
+        "scope": "Sampled motion and conditional exact-polynomial enclosures; "
+                 "not uniform native/SPICE error or trajectory safety bounds",
         "measurements": measurements,
     }, sort_keys=True, allow_nan=False))
 

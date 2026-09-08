@@ -216,6 +216,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** ordered TDB knots with shared SI/SSB/J2000 endpoint positions and one valid nonnegative local-chord bound per cell are supplied under the shared budget
 - **THEN** the outward-rounded composed bound encloses Euclidean deviation from the global endpoint chord even at derivative jumps, invalid inputs or deadline expiration return no bound, and no native propagation or counter reset occurs
 
+#### Scenario: Qualify real multi-cell body motion
+- **WHEN** Moon/Mars motion is checked over 1800-second and 86400-second windows at departure, cruise and arrival
+- **THEN** six/288 cell enclosures compose without native spacecraft propagation, all 35 sampled native states satisfy the unchanged polynomial-parity allocation, their global chord deviations fit the composed bound plus `0.05 m`, and timing remains helper-only qualification rather than full-mission evidence
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

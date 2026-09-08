@@ -42,6 +42,38 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 real multi-cell composition evidence (2026-09-08):
+The moving-body control now includes 1800-second windows and qualifies Moon/
+Mars multi-cell enclosures at departure, cruise and arrival for both 1800 s
+and 86400 s. Tables use local-window defaults, not the full-mission table grid.
+Each body/window uses six or 288 adjacent 300-second cells, with
+SPICE nodes reused across cells, plus one composition call. Across the six
+qualified windows this is 1764 local bounds and 12 compositions, not spacecraft
+propagations. The shared 300-second qualification budget is preserved and all
+control/native propagation counters remain zero.
+
+At the same 35 samples per body/window, reconstructed local polynomial states
+agree with native states within the unchanged `0.025 m` / `2.5e-6 m/s` allocation.
+The new observed maxima were `0.000106812 m` and `1.324245e-11 m/s` (rounded
+upward). Sampled native global-chord deviations fit the composed enclosure plus
+`0.05 m` for midpoint/interior and endpoint-chord error contributions. Over the
+three one-day controls, Moon polynomial bounds were approximately 11.16-12.95
+million metres against sampled native deviations 7.84-8.06 million metres;
+Mars bounds were approximately 2.44-4.63 million metres against sampled
+deviations 2.01-2.89 million metres. These are curvature allowances, not
+ephemeris approximation errors or spacecraft misses.
+
+Local helper-only times were about `0.0018-0.0022 s` for six cells plus
+composition and `0.0868-0.0885 s` for 288 cells plus composition, excluding
+SPICE queries, native table construction and parity comparisons. They are not
+whole-mission timing evidence. Reproduce deterministic scientific data and
+machine-dependent timings with
+`conda run -n space-nav python -m pytest -q -s tests/test_trajectory_ephemeris.py -k moving_body`
+(12 tests, six with multi-cell Moon/Mars qualification). This supports the
+conditional exact-polynomial enclosure only. Uniform native/SPICE errors,
+endpoint roundoff in general adapters and spacecraft integration errors remain
+open; no scientific tolerance, force model, production limit or safety gate changed.
+
 Task 3.9 adjacent-cell composition evidence (2026-09-08):
 `_compose_ephemeris_chord_bounds` combines valid local Euclidean chord bounds
 without any derivative or smoothness premise. Exact Fraction arithmetic gives

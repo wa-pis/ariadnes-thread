@@ -173,6 +173,16 @@ inputs. Callers must establish that cells share the supplied endpoints and that
 their local bounds are valid; endpoint, native, SPICE and integration errors are
 not silently included. This mathematical composition does not certify safety.
 
+Qualify multi-cell composition on Moon/Mars motion at departure, cruise and
+arrival using 1800-second and 86400-second local windows with six and 288
+300-second cells respectively. Reuse each SPICE node across neighboring cells,
+compose all cell bounds, and compare the native global-chord deviations at the
+existing 35 off-grid/midpoint/endpoint samples against the bound plus the two
+sampled position-error allocations. Independently reconstruct each sampled
+local polynomial and retain the existing state tolerances. Record cell/helper
+counts and helper-only timings separately from native spacecraft work. Do not
+interpret this as full-force safety, uniform error or mission timing evidence.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
