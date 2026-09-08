@@ -42,6 +42,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 Saturn polynomial-record directory (2026-09-08):
+Read both candidate-overlapping type-3 segment trailers and all 200 record
+headers. Verify 100 records/segment, 122 words/record, degree 19, duration
+343872 s, exact midpoint/radius agreement, storage length and segment coverage.
+Verify 74 overlapping records and 73 sorted interior boundaries, including
+the known segment junction, with `tests/test_trajectory_spk.py -k segment_inventory`.
+Run the whole SPK file, full pytest, Ruff and strict OpenSpec validation.
+The focused directory check passed. This identifies where to test other
+record joins, not their accuracy; barycenter records and all-file precedence
+remain unqualified. No coefficient, kernel, force, tolerance or limit changes;
+task 3.9 and the interpolation counterexample remain open.
+
 Task 3.9 selected Saturn file segment inventory (2026-09-08):
 Exhaust the directory of the SPK file selected for Saturn at departure using
 read-only DAF calls. Verify 1,223 entries, 171 Saturn entries with center/frame/

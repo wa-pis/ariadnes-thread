@@ -1,5 +1,25 @@
 ## Context
 
+### Saturn polynomial-record directory (2026-09-08)
+
+Extend the selected-file inventory with read-only DAF data reads for the two
+candidate-overlapping type-3 segments. Following the documented
+[SPK type-2/type-3 layout](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/spk.html),
+read each four-word trailer `(INIT,INTLEN,RSIZE,N)` and all record `(MID,RADIUS)`
+headers. Both trailers have duration `343872 s`, record size 122 words and
+100 records, giving six degree-19 coefficient sets per record. All 200 headers
+exactly match their integer-valued directory midpoints and `171936 s` radii;
+record storage lengths and full segment coverage agree exactly too.
+
+There are 74 records intersecting the candidate and 73 distinct interior
+boundaries, from `979252416` through `1004011200 TDB seconds since J2000`,
+including the known `986817600` segment junction. The test reports every boundary
+in sorted order. These describe only the target-699/center-6 contribution:
+the Saturn-system barycenter's type-2 records and other loaded files remain
+outside this inventory. Coefficients, state jumps at the other 72 boundaries
+and uniform error bounds have not been verified. No production settings or
+tolerances change; the original interpolation counterexample remains open.
+
 ### Selected Saturn file segment inventory (2026-09-08)
 
 Select Saturn's SPK file at candidate departure through the existing loaded

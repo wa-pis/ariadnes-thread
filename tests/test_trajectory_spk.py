@@ -50,6 +50,8 @@ def cspice() -> ctypes.CDLL:
     native.daffna_c.restype = None
     native.dafgs_c.argtypes = [pointer(double)]
     native.dafgs_c.restype = None
+    native.dafgda_c.argtypes = [integer, integer, integer, pointer(double)]
+    native.dafgda_c.restype = None
     native.failed_c.argtypes = []
     native.failed_c.restype = integer
     assert native.failed_c() == 0
@@ -256,7 +258,7 @@ def test_saturn_junction_query_order_is_repeatable(cspice: ctypes.CDLL) -> None:
 
 
 def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
-    """Exhaust one selected file, not all kernel priorities or polynomial records."""
+    """Exhaust one file and its two relevant Saturn record directories, not all sources."""
     evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
     budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
     start_s, end_s = evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1]
@@ -301,14 +303,45 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
         (952430400.0, 986817600.0, 25969025, 25981228),
     ]
     assert overlaps[1][0] <= start_s < overlaps[1][1] == overlaps[0][0] < end_s <= overlaps[0][1]
+    record_boundaries_tdb_s: set[float] = set()
+    overlapping_record_count = 0
+    for segment_start_s, segment_end_s, begin, end in overlaps:
+        directory = (ctypes.c_double * 4)()
+        cspice.dafgda_c(handle, end - 3, end, directory)
+        assert cspice.failed_c() == 0
+        # Type 3: INIT, INTLEN, RSIZE, N; six polynomial coefficient sets.
+        assert list(directory) == [segment_start_s, 343872.0, 122.0, 100.0]
+        assert (122 - 2) // 6 - 1 == 19
+        assert end - begin + 1 == 100 * 122 + 4
+        assert segment_start_s + 100 * 343872 == segment_end_s
+        for index in range(100):
+            budget.check()
+            address = begin + index * 122
+            header = (ctypes.c_double * 2)()
+            cspice.dafgda_c(handle, address, address + 1, header)
+            assert cspice.failed_c() == 0
+            record_start_s = segment_start_s + index * 343872
+            record_end_s = record_start_s + 343872
+            assert list(header) == [record_start_s + 171936, 171936.0]
+            if record_start_s <= end_s and record_end_s >= start_s:
+                overlapping_record_count += 1
+                record_boundaries_tdb_s.update(
+                    epoch_s for epoch_s in (record_start_s, record_end_s)
+                    if start_s < epoch_s < end_s
+                )
+    assert overlapping_record_count == 74 and len(record_boundaries_tdb_s) == 73
+    assert 986817600.0 in record_boundaries_tdb_s
     budget.check()
     assert budget.native_arc_propagations == 0
     print(json.dumps({
         "candidate_id": evidence["candidate_id"], "file_segment_count": count,
         "saturn_segment_count": saturn_count, "overlaps_in_file_order": overlaps,
         "overlap_fields": ["start_tdb_s", "end_tdb_s", "first_daf_word", "last_daf_word"],
+        "record_duration_s": 343872, "polynomial_degree": 19,
+        "record_headers_checked": 200, "candidate_overlapping_records": overlapping_record_count,
+        "candidate_interior_record_boundaries_tdb_s": sorted(record_boundaries_tdb_s),
         "time": "TDB seconds since J2000", "target": 699, "center": 6, "frame": "J2000",
-        "scope": "All segments in the file selected at departure; not all loaded files or record boundaries",
+        "scope": "One file and two Saturn record directories; not all sources or coefficient error bounds",
     }, sort_keys=True, allow_nan=False))
 
 
