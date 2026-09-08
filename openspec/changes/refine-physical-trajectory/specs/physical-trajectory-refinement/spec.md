@@ -196,6 +196,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** candidate `d0001-t0035` from `examples/m3_feasible_mission.toml` is checked using the default six-point Lagrange ephemerides with 300 s and 150 s table spacing, no aberration, SSB origin and J2000 orientation
 - **THEN** all eight bodies satisfy the input-state allocation at the 38 TDB epochs recorded in `tests/data/m3_ephemeris_qualification.json`, including the two boundary epochs, four near-edge points, and 32 off-grid interior points; each runtime safe interval contains the complete candidate interval
 
+#### Scenario: Qualify local ephemeris polynomial reconstruction
+- **WHEN** an exact-rational six-node Lagrange oracle reconstructs the existing 300-second SPICE grid at the 38 qualification epochs
+- **THEN** all eight native body states agree within the unchanged sampled input-state allocation, analytic polynomials through degree five verify the oracle, and the comparisons do not count as uniform ephemeris or propagated-error bounds
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

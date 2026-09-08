@@ -42,6 +42,37 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 local ephemeris polynomial evidence (2026-09-08):
+The pinned headers `simulation/environment_setup/createEphemeris.h` and
+`math/interpolators/lagrangeInterpolator.h` specify six stages and the interior
+window from lower-knot index minus two through plus three. Six nodes define
+degree five (the documentation also uses the ambiguous phrase "6th order").
+The runtime factory exposes the base Python ephemeris without its interpolation
+nodes, so qualification reconstructs the existing grid from settings and direct
+SPICE; production still uses the unchanged native ephemeris.
+
+The test-only `_rational_lagrange_state` computes exact Fraction weights and
+weighted binary state sums before final float conversion. Six analytic controls
+verify degrees zero through five at knots and off-grid points within `1e-12`
+in each SI component. The existing full-candidate test checks all eight bodies
+at all 38 recorded epochs, with windows strictly inside the padded table.
+Maximum sampled native-minus-rational differences were `0.000258951 m`
+(Saturn) and `1.499978e-11 m/s` (Mercury), rounded upward here. They pass the
+unchanged sampled allocation `0.025 m` / `2.5e-6 m/s`; these maxima are not
+new tolerances or uniform bounds. Reproduce with
+`conda run -n space-nav python -m pytest -q -s tests/test_trajectory_ephemeris.py`
+(16 tests; output includes per-body `300s_rational_polynomial` measurements).
+
+This supports further interval work on the represented position polynomial,
+not an all-interval SPICE approximation or floating-point error certificate.
+Velocity is interpolated independently; it is not assumed to be the derivative
+of interpolated position. Boundary spline behavior, grid-switch behavior,
+native roundoff and numerical spacecraft error remain separate obligations.
+Task 3.9 stays open; no production forces, tolerances, call limits or deadlines
+changed. API context: https://py.api.tudat.space/en/latest/math/interpolators.html
+and https://py.api.tudat.space/en/latest/dynamics/environment_setup/ephemeris.html
+(the installed headers and native tests resolve the pinned implementation).
+
 Task 3.9 complete-force bound composition evidence (2026-09-08):
 `_sum_force_acceleration_bounds` combines all eight ordered gravity sources,
 phase-specific thrust, fully lit SRP and Sun Schwarzschild by the triangle

@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+from fractions import Fraction
 from importlib.metadata import version
+import math
 from pathlib import Path
 import platform
 
@@ -14,6 +16,40 @@ from space_nav.transfer import search_impulsive_transfers
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def _rational_lagrange_state(
+    epochs_tdb_s: list[float], states_si: np.ndarray, epoch_tdb_s: float,
+) -> np.ndarray:
+    """Exact polynomial of supplied binary SI states; not a SPICE error bound."""
+    nodes = [Fraction(epoch) for epoch in epochs_tdb_s]
+    target = Fraction(epoch_tdb_s)
+    weights = [
+        math.prod((target - other) / (node - other)
+                  for index, other in enumerate(nodes) if index != selected)
+        for selected, node in enumerate(nodes)
+    ]
+    return np.asarray([
+        float(sum((weight * Fraction(float(value)) for weight, value in zip(weights, column)),
+                  Fraction(0)))
+        for column in states_si.T
+    ])
+
+
+@pytest.mark.parametrize("degree", range(6))
+def test_rational_ephemeris_oracle_reproduces_polynomials(degree: int) -> None:
+    origin_tdb_s = 978995455.2304223
+    offsets_s = [-2.0, -1.0, 0.0, 1.0, 2.0, 3.0]
+    nodes_tdb_s = [origin_tdb_s + offset for offset in offsets_s]
+    states_si = np.asarray([
+        [(component + 1) * offset ** degree for component in range(6)]
+        for offset in offsets_s
+    ])
+    # Include knots and off-grid evaluations; each SI component is independent.
+    for offset_s in (0.0, 0.125, 0.5, 0.875, 1.0):
+        actual = _rational_lagrange_state(nodes_tdb_s, states_si, origin_tdb_s + offset_s)
+        expected = np.asarray([(component + 1) * offset_s ** degree for component in range(6)])
+        np.testing.assert_allclose(actual, expected, rtol=0.0, atol=1e-12)
 
 
 @pytest.mark.parametrize("phase", ["departure", "cruise", "arrival"])
@@ -140,7 +176,11 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
             "300s_direct": [],
             "150s_direct": [],
             "300s_150s": [],
+            "300s_rational_polynomial": [],
         }
+        body_settings = settings.get(body).ephemeris_settings
+        grid_start_s = body_settings.initial_time
+        step_s = body_settings.time_step
         for epoch in epochs:
             direct = np.asarray(
                 spice.get_body_cartesian_state_at_epoch(
@@ -149,10 +189,22 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
             ).reshape(6)
             coarse = np.asarray(nominal.cartesian_state(epoch)).reshape(6)
             fine = np.asarray(dense.cartesian_state(epoch)).reshape(6)
+            lower_index = math.floor((epoch - grid_start_s) / step_s)
+            # Native six-stage interior window: two knots before the lower knot,
+            # that knot, and three after it. Never reconstruct a boundary spline.
+            nodes_tdb_s = [grid_start_s + index * step_s
+                           for index in range(lower_index - 2, lower_index + 4)]
+            assert grid_start_s < nodes_tdb_s[0] < nodes_tdb_s[-1] < body_settings.final_time
+            node_states_si = np.asarray([
+                spice.get_body_cartesian_state_at_epoch(body, "SSB", "J2000", "NONE", node)
+                for node in nodes_tdb_s
+            ]).reshape(6, 6)
+            rational_state_si = _rational_lagrange_state(nodes_tdb_s, node_states_si, epoch)
             for label, difference in (
                 ("300s_direct", coarse - direct),
                 ("150s_direct", fine - direct),
                 ("300s_150s", coarse - fine),
+                ("300s_rational_polynomial", coarse - rational_state_si),
             ):
                 assert np.all(np.isfinite(difference))
                 differences[label].append(

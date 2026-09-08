@@ -108,6 +108,17 @@ prove the input distance/mass/speed bounds, include body motion or numerical
 errors, or certify a safe trajectory. Qualify the composition against the
 existing native complete-force fixed-state controls before any interval driver.
 
+Qualify the local ephemeris representation before deriving polynomial interval
+bounds: reconstruct the six-point, degree-five interior Lagrange polynomial from
+direct SPICE states on the existing 300-second grid. Use exact rational node
+weights and state sums as a test oracle, with only final float conversion.
+Compare all six components with the existing native table at the 38 qualification
+epochs using the unchanged sampled input-state allocation. Check the oracle
+against analytic polynomials through degree five. Do not replace the native
+ephemeris, infer unsampled SPICE error from these comparisons, or treat the
+separately interpolated velocity components as derivatives of the position
+polynomial. Boundary splines and all-interval roundoff remain separate obligations.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
