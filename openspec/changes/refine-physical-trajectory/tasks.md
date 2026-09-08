@@ -42,6 +42,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 all mapped Saturn record-join probes (2026-09-08):
+Compare the production 300 s table with direct SPICE at all 73 directory-derived
+interior boundaries and their adjacent binary64 epochs. Verify finite SI errors,
+retain per-boundary maxima and reproduce 73 position / 71 velocity allocation
+failures with `tests/test_trajectory_spk.py -k segment_inventory`; run the whole
+SPK file, full pytest, Ruff and strict OpenSpec validation. Worst errors are
+`0.1823327710720816 m` and `2.13863534474615e-5 m/s` near `997133760 TDB s`.
+These 219 comparisons show that a single-segment-junction remedy is insufficient;
+they do not certify unsampled epochs or same-epoch coefficient jumps. Preserve
+all scientific tolerances and production settings. The regression reproduces
+failure, and task 3.9 remains open.
+
 Task 3.9 Saturn polynomial-record directory (2026-09-08):
 Read both candidate-overlapping type-3 segment trailers and all 200 record
 headers. Verify 100 records/segment, 122 words/record, degree 19, duration

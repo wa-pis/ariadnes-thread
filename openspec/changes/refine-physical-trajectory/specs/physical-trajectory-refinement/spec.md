@@ -268,6 +268,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the existing hash-pinned native observation is extended to the six-state double-precision denominator initializer
 - **THEN** selected bytes confirm exact-one initialization, self-index exclusion and separate scalar difference/product/store instructions, the existing exact-rational grid controls still pass, and this static agreement is not called live cache or runtime-dispatch verification
 
+#### Scenario: Preserve failures at all mapped Saturn record joins
+- **WHEN** the unchanged 300 s table is compared with direct SPICE at the 73 mapped interior record boundaries and immediately adjacent binary64 epochs
+- **THEN** all 219 differences are finite, the report retains per-boundary SI maxima and reproduces 73 boundaries exceeding `0.025 m` and 71 exceeding `2.5e-6 m/s`, without accepting a single-junction remedy or claiming a uniform error bound
+
 #### Scenario: Verify the two Saturn polynomial-record directories
 - **WHEN** the selected-file inventory reads both candidate-overlapping type-3 segment trailers and all 200 record headers
 - **THEN** it verifies 100 degree-19 records per segment with 122 words and 343872 s duration each, exact midpoint/radius and segment-storage agreement, 74 candidate-overlapping records and 73 interior boundaries, without claiming coefficient accuracy or coverage of the separate barycenter contribution

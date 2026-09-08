@@ -1,5 +1,29 @@
 ## Context
 
+### All mapped Saturn record-join probes (2026-09-08)
+
+Compare the unchanged candidate-wide 300 s table to named direct TudatPy/SPICE
+in SSB/J2000 at each of the 73 directory-derived interior boundaries and their
+immediately adjacent binary64 epochs: 219 comparisons in the same qualification
+budget, with no spacecraft propagation. Report position/velocity Euclidean
+error maxima for each boundary in explicit SI units, not differences between
+two physically distinct epochs and not purported polynomial jump bounds.
+
+All 73 boundaries exceed the `0.025 m` position allocation; 71 exceed
+`2.5e-6 m/s` in velocity. Both largest errors occur near boundary
+`997133760 TDB seconds since J2000`: `0.1823327710720816 m` and
+`2.13863534474615e-5 m/s`. The two velocity-passing boundaries are
+`986129856` and `995414400`; their position checks still fail. Retain the full
+per-boundary error report and reproduce the 73/71 failure counts as a
+regression, not a successful scientific acceptance check.
+
+The issue is therefore not confined to the previously identified segment
+junction. A remedy confined to that single junction would miss observed
+failures at the other 72 record joins. These probes still do not bound errors
+away from joins, audit other bodies or establish coefficient discontinuities
+at the same epoch. Production sources, table spacing, tolerances and work
+limits remain unchanged; task 3.9 remains open.
+
 ### Saturn polynomial-record directory (2026-09-08)
 
 Extend the selected-file inventory with read-only DAF data reads for the two

@@ -259,6 +259,8 @@ def test_saturn_junction_query_order_is_repeatable(cspice: ctypes.CDLL) -> None:
 
 def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
     """Exhaust one file and its two relevant Saturn record directories, not all sources."""
+    from tudatpy.dynamics import environment_setup
+
     evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
     budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
     start_s, end_s = evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1]
@@ -331,6 +333,30 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
                 )
     assert overlapping_record_count == 74 and len(record_boundaries_tdb_s) == 73
     assert 986817600.0 in record_boundaries_tdb_s
+    settings = trajectory._create_time_limited_body_settings(environment_setup, start_s, end_s)
+    budget.check()
+    native = environment_setup.create_body_ephemeris(settings.get("Saturn").ephemeris_settings,
+                                                    "Saturn")
+    budget.check()
+    spice = ephemeris._ensure_standard_kernels()
+    boundary_errors_si: list[tuple[float, float, float]] = []
+    for boundary_s in sorted(record_boundaries_tdb_s):
+        errors_si: list[tuple[float, float]] = []
+        for epoch_s in (math.nextafter(boundary_s, -math.inf), boundary_s,
+                        math.nextafter(boundary_s, math.inf)):
+            budget.check()
+            direct_si = spice.get_body_cartesian_state_at_epoch("Saturn", "SSB", "J2000", "NONE",
+                                                               epoch_s)
+            difference_si = native.cartesian_state(epoch_s) - direct_si
+            assert np.all(np.isfinite(difference_si))
+            errors_si.append((float(np.linalg.norm(difference_si[:3])),
+                              float(np.linalg.norm(difference_si[3:]))))
+        boundary_errors_si.append((boundary_s, max(value[0] for value in errors_si),
+                                   max(value[1] for value in errors_si)))
+    position_failures = sum(value[1] > 0.025 for value in boundary_errors_si)
+    velocity_failures = sum(value[2] > 2.5e-6 for value in boundary_errors_si)
+    # Preserve the observed failure population, not a relaxed acceptance limit.
+    assert (position_failures, velocity_failures) == (73, 71)
     budget.check()
     assert budget.native_arc_propagations == 0
     print(json.dumps({
@@ -340,6 +366,13 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
         "record_duration_s": 343872, "polynomial_degree": 19,
         "record_headers_checked": 200, "candidate_overlapping_records": overlapping_record_count,
         "candidate_interior_record_boundaries_tdb_s": sorted(record_boundaries_tdb_s),
+        "boundary_error_fields": ["boundary_tdb_s", "max_position_error_m", "max_velocity_error_m_s"],
+        "boundary_errors": boundary_errors_si,
+        "position_failed_boundaries": position_failures, "velocity_failed_boundaries": velocity_failures,
+        "position_worst_boundary": max(boundary_errors_si, key=lambda row: row[1]),
+        "velocity_worst_boundary": max(boundary_errors_si, key=lambda row: row[2]),
+        "comparison_frame": "SSB/J2000", "comparison_query_count": 219,
+        "qualification_status": "failed-existing-interpolation-allocation",
         "time": "TDB seconds since J2000", "target": 699, "center": 6, "frame": "J2000",
         "scope": "One file and two Saturn record directories; not all sources or coefficient error bounds",
     }, sort_keys=True, allow_nan=False))

@@ -11,9 +11,11 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest 3.9 evidence: the Saturn SPK junction at `986817600 TDB seconds since
-J2000` fails the unchanged sampled interpolation allocation on new probes
-(up to `0.139444 m` and `1.659965e-5 m/s`, versus `0.025 m` and `2.5e-6 m/s`).
+Latest 3.9 evidence: new probes at all 73 mapped Saturn record boundaries
+fail the position allocation; 71 also fail the velocity allocation. Maximum
+errors are `0.182333 m` and `2.138636e-5 m/s` near `997133760 TDB seconds since
+J2000`, versus unchanged `0.025 m` and `2.5e-6 m/s` limits. The earlier single
+segment-junction counterexample is therefore not the only affected boundary.
 The counterexample is retained; task 2.7's original samples are not a uniform
 certificate. Investigate source boundaries and query-order behavior before a
 reviewed remedy. No tolerance, kernel or production-limit changes are approved
