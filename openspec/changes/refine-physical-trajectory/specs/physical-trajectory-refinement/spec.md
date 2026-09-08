@@ -244,6 +244,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the existing 304 real cell requests satisfy the declared node-magnitude gate and the pinned-grid weight enclosure
 - **THEN** exact rational product and six-addition bounds exclude overflow, the binary64 `2^-353` lattice excludes nonzero subnormal cancellation, all 720 cancellation-control orders preserve the lattice and relative rounding model, and invalid node ranges fail without claiming all-mission or compiled-native certification
 
+#### Scenario: Qualify the complete reconstructed source-node inventory
+- **WHEN** every timestamp on the pinned padded candidate grid is queried directly from TudatPy/SPICE for all eight bodies
+- **THEN** every SI component passes the existing arithmetic-range gate, per-body counts/extrema/state hashes and provenance are reported, the shared deadline is checked every 512 queries and after each body with zero spacecraft-propagation counters, and reconstructed source nodes are not described as native table readback or an ephemeris-accuracy certificate
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

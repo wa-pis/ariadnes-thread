@@ -42,6 +42,27 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 complete source-node range inventory (2026-09-08):
+Extend the exact-grid test to query all padded-grid nodes for all eight bodies
+through pinned TudatPy/SPICE, in timestamp order, and apply the existing
+zero-or-`[2^-100,2^100]` SI magnitude gate to every component. Record counts,
+component extrema excluding zeros, zero counts, state hashes in an explicit
+binary encoding, software/kernel provenance and inventory-only elapsed time.
+Verify with `tests/test_trajectory_ephemeris.py -k grid_binary64`, the full
+ephemeris file, full pytest, Ruff and strict OpenSpec. The shared 300-second
+budget is checked every 512 queries and after each body; propagation counters
+stay zero. This extends the node-range premise beyond the former 304 cell
+requests, but reconstructs source inputs rather than reading native storage.
+Native identity/compiler semantics, boundary splines, SPICE approximation and
+spacecraft numerical error remain open. No runtime force, tolerance or work
+limit changes; task 3.9 remains open.
+
+Observed inventory: 83,933 nodes per body, 671,464 states / 4,028,784 SI
+components total; every component passed. Inventory-only time was 1.0861 s
+(machine-specific observation, not a new performance limit). The focused test
+passed in 2.31 s. TudatPy version is read from its module, as in the existing
+qualification, because the Conda package has no importlib distribution metadata.
+
 Task 3.9 state-arithmetic range qualification (2026-09-08):
 Check every node component of the existing 304 cell requests is zero or within
 the test-only magnitude range `[2^-100, 2^100]` in m or m/s. The pinned-grid

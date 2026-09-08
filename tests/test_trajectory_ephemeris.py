@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from fractions import Fraction
+from hashlib import sha256
 from importlib.metadata import version
 from itertools import permutations
 import math
@@ -23,11 +24,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
     """Replay source arithmetic premises, not compiled native evaluation error."""
+    import tudatpy
     from tudatpy.dynamics import environment_setup
 
     evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
     budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
-    ephemeris._ensure_standard_kernels()
+    spice = ephemeris._ensure_standard_kernels()
     settings = trajectory._create_time_limited_body_settings(
         environment_setup, evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1],
     )
@@ -44,13 +46,40 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
     exact_start_s, exact_step_s = Fraction(start_s), Fraction(step_s)
     count = math.ceil((Fraction(end_s) - exact_start_s) / exact_step_s)
     epoch_s = start_s
+    node_epochs_s: list[float] = []
     # Source createStateInterpolatorFromSpice uses repeated addition, not multiplication.
     for index in range(count):
         budget.check()
         assert epoch_s < end_s
         assert Fraction(epoch_s) == exact_start_s + index * exact_step_s
+        node_epochs_s.append(epoch_s)
         epoch_s += step_s
     assert epoch_s >= end_s
+    # Inventory every source node, not the inaccessible native table storage.
+    source_node_ranges: dict[str, dict[str, object]] = {}
+    inventory_started_s = time.perf_counter()
+    for body in trajectory.PHYSICAL_BODY_NAMES:
+        states_si = np.empty((count, 6))
+        for node_index, node_epoch_s in enumerate(node_epochs_s):
+            if node_index % 512 == 0:
+                budget.check()
+            states_si[node_index] = np.asarray(
+                spice.get_body_cartesian_state_at_epoch(body, "SSB", "J2000", "NONE", node_epoch_s)
+            ).reshape(6)
+        _assert_pinned_state_range(states_si)
+        magnitudes_si = np.abs(states_si)
+        source_node_ranges[body] = {
+            "node_count": count,
+            "minimum_nonzero_component_magnitudes_si": [
+                float(np.min(column[column > 0])) if np.any(column > 0) else None
+                for column in magnitudes_si.T
+            ],
+            "maximum_component_magnitudes_si": np.max(magnitudes_si, axis=0).tolist(),
+            "zero_component_counts": np.count_nonzero(magnitudes_si == 0, axis=0).tolist(),
+            "state_sha256_big_endian_binary64_row_major": sha256(states_si.astype(">f8").tobytes()).hexdigest(),
+        }
+        budget.check()
+    inventory_elapsed_s = time.perf_counter() - inventory_started_s
     largest_denominator_s5 = 0
     for first_index in (0, count // 2, count - 6):
         nodes_s = [start_s + index * step_s for index in range(first_index, first_index + 6)]
@@ -129,6 +158,14 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
         "weight_magnitude_lower_exact": str(weight_lower),
         "weight_magnitude_upper_exact": str(weight_upper),
         "time_scale": "TDB seconds since J2000",
+        "origin": "SSB", "orientation": "J2000",
+        "component_units": ["m", "m", "m", "m/s", "m/s", "m/s"],
+        "source_node_ranges": source_node_ranges,
+        "source_node_inventory_elapsed_s": inventory_elapsed_s,
+        "source_node_scope": "all reconstructed direct-SPICE grid nodes; not native table readback or SPICE error bounds",
+        "python": platform.python_version(), "platform": platform.platform(),
+        "tudatpy": tudatpy.__version__, "numpy": version("numpy"),
+        "kernels": ephemeris.kernel_metadata(),
     }, sort_keys=True, allow_nan=False))
 
 

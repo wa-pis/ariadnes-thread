@@ -282,6 +282,22 @@ Floating-point Formats and Exactly Rounded Operations sections:
 https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html . It does not assert
 that the currently installed native compiler uses those operations on all paths.
 
+Extend the source-node range inventory to the complete padded candidate grid:
+retain every timestamp from the already-verified repeated-addition loop and query
+all eight bodies directly through the pinned TudatPy/SPICE interface in SI,
+SSB/J2000, without aberration corrections. Apply the same zero-or-`[2^-100,2^100]`
+gate to every component, not a sample. Report per-body counts, component minima
+excluding zeros, maxima, zero counts, and a SHA-256 of row-major big-endian
+binary64 states in timestamp order, with software/kernel provenance and measured
+inventory-only time. Check the existing shared budget every 512 requests and
+after each body; these are ephemeris queries, not spacecraft propagations, and
+native-arc/control/evaluation counters remain zero. This establishes the range
+premise for all reconstructed source nodes, not readback of native table storage.
+Together with the grid/weight/lattice derivations it covers the arithmetic range
+premises for their interior six-node polynomials. Compiler semantics, native-node
+identity, boundary splines, SPICE approximation and spacecraft error remain open;
+no uniform native safety claim or production budget revision follows.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
