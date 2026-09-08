@@ -208,6 +208,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** six ordered finite SI/SSB/J2000 position nodes and a positive-duration TDB interval within the middle node pair are supplied under the shared budget
 - **THEN** an outward-rounded Bernstein convex-hull bound encloses the exact degree-five polynomial's Euclidean deviation from its endpoint chord in metres, affine motion returns zero, invalid or cross-cell inputs fail clearly, and expiration returns no bound without native propagation
 
+#### Scenario: Qualify cell enclosures on real ephemeris nodes
+- **WHEN** all eight bodies' reconstructed 300-second cells at the existing 38 epoch requests are checked against native midpoint and knot states
+- **THEN** native state discrepancies satisfy the unchanged sampled allocation, midpoint chord deviation is at most the polynomial bound plus `0.05 m` for the two sampled position-error contributions, and evidence separates helper-only time from propagation counts and whole-mission runtime
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

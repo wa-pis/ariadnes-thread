@@ -147,6 +147,16 @@ native floating evaluation, uniform SPICE approximation, cross-cell composition
 and spacecraft integration error remain outside this helper. Bernstein basis
 properties: https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node9.html
 
+Qualify this cell enclosure on the reconstructed SPICE nodes already used by
+the 38-epoch, eight-body fixture. For each request, bound its full 300-second
+cell and compare native midpoint and knot states with the exact local polynomial
+using the unchanged sampled allocation. Check native midpoint chord deviation
+against the exact-polynomial bound plus twice that position allocation (one
+midpoint and one convex endpoint-chord error). This is sampled native-error
+qualification, not a uniform error certificate. Record bound maxima and
+helper-only wall time separately; do not equate these helper calls with native
+spacecraft runs or extrapolate them into a verified whole-mission runtime.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

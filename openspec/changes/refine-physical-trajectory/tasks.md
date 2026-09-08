@@ -42,6 +42,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 real-node cell enclosure evidence (2026-09-08):
+The existing full-candidate ephemeris control now evaluates the cell enclosure
+for all eight bodies at its 38 epoch requests (304 helper calls, including
+repeated cells). Every 300-second cell's native midpoint and endpoint states
+are compared with the exact local polynomial under the unchanged sampled
+`0.025 m` / `2.5e-6 m/s` allocation. Native midpoint chord deviation must fit
+the polynomial enclosure plus `0.05 m`, the sum of midpoint and convex
+endpoint-chord position allowances. This sampled comparison is not proof of
+native accuracy everywhere in a cell.
+
+Observed maximum Moon/Mars polynomial bounds were `184.070500 m` and
+`68.677088 m`; sampled native midpoint deviations were `99.317044 m` and
+`34.818350 m` respectively (rounded upward). Maximum new native-minus-polynomial
+discrepancies across all bodies were `0.000279699 m` and `8.185453e-12 m/s`.
+The 304 helper calls took approximately `0.094 s` in this local run, excluding
+SPICE node queries, table construction, comparisons and propagation. Timing is
+machine-dependent metadata, not a deterministic scientific result or a verified
+whole-mission runtime. The single shared 300-second qualification budget was
+preserved, with zero native spacecraft propagations/control evaluations.
+
+Reproduce with
+`conda run -n space-nav python -m pytest -q -s tests/test_trajectory_ephemeris.py -k full_candidate`
+(one test). Its JSON includes per-body cell counts, bound/deviation maxima,
+helper-only times, software/platform and kernel provenance. No full-force
+trajectory, subdivision count, uniform native/SPICE error or production safety
+claim follows; task 3.9 stays open with unchanged scientific tolerances and limits.
+
 Task 3.9 exact single-cell chord enclosure evidence (2026-09-08):
 `_ephemeris_cell_chord_bound` encloses the exact degree-five position polynomial
 of six finite ordered SI/SSB/J2000 nodes over a positive-duration TDB subinterval

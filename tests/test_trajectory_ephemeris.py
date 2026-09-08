@@ -6,6 +6,7 @@ from importlib.metadata import version
 import math
 from pathlib import Path
 import platform
+import time
 
 import numpy as np
 import pytest
@@ -200,6 +201,8 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
     )
     start = candidate.departure_epoch_tdb_s
     end = candidate.arrival_epoch_tdb_s
+    cell_budget = trajectory._RefinementBudget(candidate.candidate_id, 300.0)
+    cell_measurements: dict[str, dict[str, float | int]] = {}
     # Offset interior samples from both 300 s and 150 s grids; include arc edges.
     epochs = sorted(
         {start, start + 0.125, start + 75.25, end - 75.25, end - 0.125, end}
@@ -227,6 +230,7 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
     spice = ephemeris._ensure_standard_kernels()
     errors: dict[str, dict[str, list[float]]] = {}
     for body in trajectory.PHYSICAL_BODY_NAMES:
+        cell_budget.check()
         nominal = environment_setup.create_body_ephemeris(
             settings.get(body).ephemeris_settings, body
         )
@@ -244,7 +248,11 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
             "150s_direct": [],
             "300s_150s": [],
             "300s_rational_polynomial": [],
+            "300s_cell_rational": [],
         }
+        bounds_m: list[float] = []
+        midpoint_defects_m: list[float] = []
+        helper_elapsed_s = 0.0
         body_settings = settings.get(body).ephemeris_settings
         grid_start_s = body_settings.initial_time
         step_s = body_settings.time_step
@@ -267,6 +275,37 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
                 for node in nodes_tdb_s
             ]).reshape(6, 6)
             rational_state_si = _rational_lagrange_state(nodes_tdb_s, node_states_si, epoch)
+            cell_start_s, cell_end_s = nodes_tdb_s[2:4]
+            positions_m = tuple((float(row[0]), float(row[1]), float(row[2])) for row in node_states_si)
+            helper_started_s = time.perf_counter()
+            bound_m = trajectory._ephemeris_cell_chord_bound(
+                cell_budget, tuple(nodes_tdb_s), positions_m, cell_start_s, cell_end_s,
+            )
+            helper_elapsed_s += time.perf_counter() - helper_started_s
+            midpoint_s = cell_start_s + (cell_end_s - cell_start_s) / 2
+            native_cell_si = np.asarray([
+                nominal.cartesian_state(tdb_s) for tdb_s in (cell_start_s, midpoint_s, cell_end_s)
+            ]).reshape(3, 6)
+            rational_midpoint_si = _rational_lagrange_state(nodes_tdb_s, node_states_si, midpoint_s)
+            for native_si, polynomial_si in zip(
+                native_cell_si, (node_states_si[2], rational_midpoint_si, node_states_si[3]),
+            ):
+                difference_si = native_si - polynomial_si
+                assert np.all(np.isfinite(difference_si))
+                differences["300s_cell_rational"].append([
+                    float(np.linalg.norm(difference_si[:3])),
+                    float(np.linalg.norm(difference_si[3:])),
+                ])
+            # The two sampled errors are midpoint error and convex endpoint-chord
+            # error. Their allowance does not establish uniform native accuracy.
+            defect_m = float(np.linalg.norm(
+                (native_cell_si[1, :3] - native_cell_si[0, :3])
+                - 0.5 * (native_cell_si[2, :3] - native_cell_si[0, :3]),
+            ))
+            assert defect_m <= bound_m + 2 * 0.025, (body, midpoint_s, defect_m, bound_m)
+            bounds_m.append(bound_m)
+            midpoint_defects_m.append(defect_m)
+            cell_budget.check()
             for label, difference in (
                 ("300s_direct", coarse - direct),
                 ("150s_direct", fine - direct),
@@ -287,7 +326,17 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
         for position_m, velocity_m_s in errors[body].values():
             assert position_m <= 0.025, (body, errors[body])
             assert velocity_m_s <= 2.5e-6, (body, errors[body])
+        cell_measurements[body] = {
+            "cell_requests": len(bounds_m),
+            "max_polynomial_chord_bound_m": max(bounds_m),
+            "max_sampled_native_midpoint_chord_deviation_m": max(midpoint_defects_m),
+            "helper_only_elapsed_s": helper_elapsed_s,
+        }
         del nominal, dense
+    cell_budget.check()
+    assert sum(item["cell_requests"] for item in cell_measurements.values()) == 304
+    assert (cell_budget.control_attempts, cell_budget.propagation_evaluations,
+            cell_budget.native_arc_propagations) == (0, 0, 0)
     print(
         json.dumps(
             {
@@ -307,6 +356,9 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
                 "numpy": version("numpy"),
                 "kernels": ephemeris.kernel_metadata(),
                 "max_errors": errors,
+                "cell_bound_qualification": cell_measurements,
+                "cell_bound_scope": "304 requests include repeated cells; helper-only timings, "
+                                    "not native spacecraft counts or full-mission runtime",
             },
             sort_keys=True,
             allow_nan=False,
