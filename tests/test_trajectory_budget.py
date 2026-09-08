@@ -78,3 +78,30 @@ def test_budget_rejects_orphan_and_fourth_arcs() -> None:
     with pytest.raises(TrajectoryRefinementError, match="continuation"):
         budget.begin_arc(first_in_evaluation=False)
     assert budget.native_arc_propagations == 3
+
+
+def test_subdivision_budget_counts_parent_trials_without_resetting_deadline() -> None:
+    now_s = [10.0]
+    budget = trajectory._RefinementBudget(
+        "subdivision-control", 300.0, lambda: now_s[0], max_arcs_per_evaluation=32,
+    )
+    budget.begin_control()
+    for index in range(32):
+        budget.begin_arc(first_in_evaluation=index == 0)
+    with pytest.raises(TrajectoryRefinementError, match="limit 32"):
+        budget.begin_arc(first_in_evaluation=False)
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (1, 1, 32)
+    now_s[0] = 310.0
+    with pytest.raises(TrajectoryRefinementError, match="shared deadline"):
+        budget.check()
+    assert budget.deadline_monotonic_s == 310.0
+
+
+@pytest.mark.parametrize("limit", [0, -1, 33, True, 3.0, "3"])
+def test_subdivision_limit_is_explicit_and_bounded(limit: object) -> None:
+    with pytest.raises(TrajectoryRefinementError, match="max_arcs_per_evaluation"):
+        trajectory._RefinementBudget(
+            "subdivision-control", 300.0,
+            max_arcs_per_evaluation=limit,  # type: ignore[arg-type]  # Invalid probe.
+        )

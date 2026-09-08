@@ -26,6 +26,14 @@ production force, step size, closure tolerance, or dependency was changed.
 
 ## 3. Segmented finite-burn propagation
 
+User-approved revision (2026-09-08): investigate adaptive subdivision and revise
+native-call limits from measured evidence. Scientific tolerances and the shared
+300-second deadline remain unchanged. Production limits are not replaced by
+an arbitrary larger value; isolated qualification uses at most 32 subsegments.
+
+- [x] 3.8 Qualify bounded adaptive interval screening on straight and constant-acceleration controls; verify collision, clear passage and unresolved tangency against independent analytic motion within 0.001 m, count all native subsegments including discarded parents, and preserve deadline/limit failures with no safe result.
+- [ ] 3.9 Derive and verify full-force interval/ephemeris error bounds, measure representative full-force subdivision counts and wall time, and only then revise production native-call limits consistently in specs, design, result invariants and budget tests; verify all unchanged scientific tolerances and the shared 300-second deadline before the targeting spike.
+
 - [x] 3.1 Implement the specified Moon-relative and Mars-relative TNW basis, `(T,N,W)` azimuth/elevation mapping, rebuilt-frame guidance, and degeneracy guards; verify orthonormality, handedness, unit norm, central-body selection, exact formula, and deterministic failure tests.
 - [x] 3.2 Configure maximum-thrust engines with fixed Isp and coupled translation/mass propagation using supported TudatPy 1.0 APIs; verify isolated-burn mass loss and rocket-equation characteristic velocity meet their analytic tolerances.
 - [x] 3.3 Configure the exact nominal RKF78 and tighter RKDP87 elementwise tolerances and burn/coast initial/minimum/maximum steps using the non-deprecated interface; verify settings introspection, forced minimum-step, failed-completion, and final-epoch mismatch tests enforce the numerical contract and chained errors.
@@ -33,6 +41,24 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.5 Enforce analytic and propagated dry-mass guards plus all eight collision surfaces without clamping or retaining unsafe states; verify unsafe internal trials increment deterministic reason/body counters without directly selecting public status, no unsafe state is retained, and no-safe-complete-trial results contain no propagated-result values.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
+
+Task 3.8 analytic subdivision evidence (2026-09-08):
+`tests/test_native_adaptive_safety.py` reuses the native coast integrator and
+shared budget with a stationary lunar guard sphere and known constant relative
+acceleration, not the mission force model. Straight impact requires five native
+calls, curved impact two, and both clear controls one each. Tangency remains
+unresolved after eight calls at depth six and returns no trajectory. Every
+discarded parent counts. The measured maximum endpoint position error is
+`2.794e-9 m`, below the independent `0.001 m` allowance; velocity error is checked
+against `1e-6 m/s`. A local run takes approximately `0.34-0.37 s` per normal
+control including resource loading; these machine-dependent toy timings are not
+full-force performance evidence. Forced two-call exhaustion and injected
+300-second deadline expiry raise the existing domain error with no terminal
+result. Budget tests separately exercise the 32-call override and unchanged
+production limits. Reproduce with `conda run -n space-nav python -m pytest -q -s
+tests/test_native_adaptive_safety.py tests/test_trajectory_budget.py` (27 tests).
+Task 3.9 remains open: no full-force acceleration/ephemeris error bound or new
+production native-call limit has been established.
 
 Task 3.7 native-event qualification (2026-09-08):
 The same test module now qualifies native `relative_distance` termination with
@@ -434,7 +460,7 @@ Task 3.2 prerequisite evidence: `tests/test_native_burn.py` qualifies the pinned
 
 - [x] 4.1 Add provisional `examples/m3_feasible_mission.toml` by changing only `dry_mass_kg` to `500.0`; verify all other normalized inputs and candidate geometry/epochs/delta-v/ideal masses are identical, while `mass_feasible` changes from false to true. Do not claim finite-burn feasibility before task 4.3 passes.
 - [x] 4.2 Implement the exact signed excess-velocity TNW projections, canonical angle domains, strict positive burn/coast window, analytic dry-mass domain, and sequential rocket-equation duration seed; verify formulas, direction signs, boundary equality rejection, degeneracy errors, `0.000001 s` duration agreement, and repeatability.
-- [ ] 4.3 After tasks 2.7, 3.1-3.7, 4.1, 4.2, and shared-deadline plumbing in 4.10, run a reproducible targeting spike for provisional candidate `d0001-t0035` with the exact production force model, seed, corrector constants, eight-iteration/76-evaluation limits, and 300-second deadline; check in its script and machine-readable controls, residuals, resource/machine provenance, counters, safety and timing evidence. Verify a safe complete seed and the closure gate before production corrector work; if either fails, revise and strictly revalidate the formulation instead of silently weakening a bound.
+- [ ] 4.3 After tasks 2.7, 3.1-3.9, 4.1, 4.2, and shared-deadline plumbing in 4.10, run a reproducible targeting spike for provisional candidate `d0001-t0035` with the exact production force model, seed, corrector constants, eight-iteration/76-evaluation limits, and 300-second deadline; check in its script and machine-readable controls, residuals, resource/machine provenance, counters, safety and timing evidence. Verify a safe complete seed and the closure gate before production corrector work; if either fails, revise and strictly revalidate the formulation instead of silently weakening a bound.
 - [ ] 4.4 Implement the specified safe-seed prerequisite, scaled residual, forward-only difference increments, unavailable-column stop, trust scales, `numpy.linalg.lstsq` solve with `rcond=1e-12`, fixed damping/acceptance sequence, lexicographic safe-command tie-break, and eight-iteration/73-control-attempt cap; verify unsafe seed, unsafe probe with no backward/fictitious continuation, synthetic convergence, finite rank-loss classification, non-finite solve errors, probe exclusion, exact tie-break, cap exhaustion, and repeatability tests.
 - [ ] 4.5 Add exact status/reason invariants for `converged`, `mass-infeasible` with `preflight-m2-propellant-shortfall`, and `targeting-failed` with `nonconvergence` or `no-safe-complete-trial`; verify the preserved reference candidate is preflight mass-infeasible, no-safe exhaustion has null propagated-result values plus sorted rejection counts, and no status falsely claims target closure or an executable trajectory.
 - [ ] 4.6 Refine the feasible fixture candidate through both finite burns within eight iterations, 73 control attempts, 76 propagation evaluations, 228 native arc calls, and the 300-second deadline; verify status `converged`, dry-mass and collision safety, and terminal errors no greater than `1000 m` and `0.01 m/s`.

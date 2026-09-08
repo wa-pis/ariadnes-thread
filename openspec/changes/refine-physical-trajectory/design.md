@@ -1,5 +1,25 @@
 ## Context
 
+### Approved safety-limit investigation (2026-09-08)
+
+The user authorized revisiting native-call limits for adaptive safety subdivision,
+without relaxing numerical tolerances or the shared 300-second deadline. First
+qualify an isolated interval-screening experiment, capped at 32 native subsegments
+per evaluation and counting discarded parents. Existing production defaults stay
+three arcs per evaluation and 228 native calls until full-force measurements
+justify a replacement; the targeting spike remains gated on continuous safety.
+
+For analytic controls only, use a known bound A on relative acceleration. The
+distance between the trajectory and its endpoint chord is at most A*dt^2/8:
+the linear-interpolation error has a Green-kernel integral with this norm bound.
+Subtract that deviation and a verified 0.001 m endpoint error allowance from
+the chord's minimum distance before certifying clearance. Ambiguous intervals
+are bisected; an interior sample inside the sphere rejects the control, while
+depth/call/time exhaustion remains unresolved or an error, never safe. This is
+not a mission certificate: native full-force relative-acceleration bounds,
+ephemeris uncertainty, and endpoint error budgets must be justified separately.
+
+
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
 Earlier exploratory runs reported an ideal M2 final mass of about `887.966464 kg` for candidate `d0001-t0035`, below the reference `1000 kg` dry mass. This fails the selected M2 seed budget; it is not a proof that every physical transfer is impossible. Earlier harmonic comparisons reported about `1,018,599 m` and `0.1453 m/s` between degree 20 and 200/120, and about `208 m` and `0.0000297 m/s` between Moon 200 and 400. Their reported single-propagation times were about `1.6 s` and `5.1 s`. Until a reproducible script, exact initial state, commands, resources, machine, and output are checked in, these are exploratory context, not acceptance evidence for the orbit-to-orbit finite-burn problem or its 300-second budget.

@@ -211,3 +211,14 @@ replace the existing closure, integration, or model-sensitivity gates.
 #### Scenario: Preserve the operation deadline
 - **WHEN** M2 verification or resource setup consumes part of the runtime budget
 - **THEN** targeting, diagnostics, and manifest construction receive only the remaining time, and expiration after any native call produces a deadline error with no completed result; native-call wall-clock overrun is not represented as a hard real-time guarantee
+
+### Requirement: Qualify adaptive safety subdivision before selecting production limits
+Following user approval to revise native-call limits, private safety qualification SHALL allow an explicitly bounded number of subsegments per evaluation, initially at most 32, while retaining the existing 228 total native-call ceiling and shared 300-second cooperative deadline. Every attempted native subsegment, including discarded parent trials, SHALL count. Production defaults SHALL remain unchanged until full-force timing and safety evidence supports a replacement limit. Analytic controls alone SHALL NOT set that replacement limit.
+
+#### Scenario: Reject uncertainty rather than certify safety
+- **WHEN** an analytic safety control remains unresolved at its subdivision or runtime limit
+- **THEN** it returns no safe trajectory, reports unresolved or raises the existing deadline/work-limit error, and records every attempted native call without resetting the deadline
+
+#### Scenario: Validate interval screening against analytic motion
+- **WHEN** straight and constant-acceleration controls exercise collision, near miss, and tangency
+- **THEN** native endpoints agree with their analytic trajectories within 0.001 m, known collisions are not reported safe, known clear controls pass a conservative interval bound, and tangency without sufficient evidence is unresolved rather than safe

@@ -123,6 +123,8 @@ class _RefinementBudget:
     candidate_id: str
     runtime_seconds: float
     monotonic: Callable[[], float] = time.monotonic
+    # Explicit override for bounded safety qualification; production keeps 3.
+    max_arcs_per_evaluation: int = dataclass_field(default=3, kw_only=True)
     deadline_monotonic_s: float = dataclass_field(init=False)
     control_attempts: int = dataclass_field(default=0, init=False)
     propagation_evaluations: int = dataclass_field(default=0, init=False)
@@ -132,6 +134,10 @@ class _RefinementBudget:
 
     def __post_init__(self) -> None:
         try:
+            if (isinstance(self.max_arcs_per_evaluation, bool)
+                    or not isinstance(self.max_arcs_per_evaluation, int)
+                    or not 1 <= self.max_arcs_per_evaluation <= 32):
+                raise ValueError("max_arcs_per_evaluation must be an integer in [1, 32]")
             self.runtime_seconds = _positive_finite("runtime_seconds", self.runtime_seconds)
             self._last_monotonic_s = _finite_float("monotonic clock", self.monotonic())
             self.deadline_monotonic_s = _finite_float(
@@ -181,8 +187,9 @@ class _RefinementBudget:
                 self._fail("work-limit", "propagation-evaluation limit 76 reached")
             self.propagation_evaluations += 1
             self._arcs_in_evaluation = 0
-        elif self._arcs_in_evaluation not in (1, 2):
-            self._fail("work-limit", "continuation arc requires one or two previous arcs")
+        elif not 1 <= self._arcs_in_evaluation < self.max_arcs_per_evaluation:
+            self._fail("work-limit", "continuation requires a started evaluation below "
+                       f"its limit {self.max_arcs_per_evaluation}")
         self._arcs_in_evaluation += 1
         self.native_arc_propagations += 1
 
