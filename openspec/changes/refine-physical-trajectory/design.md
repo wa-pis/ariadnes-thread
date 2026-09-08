@@ -1,5 +1,35 @@
 ## Context
 
+### Saturn junction counterexample (2026-09-08)
+
+The sampled inventory led to a failing expanded interpolation control at
+`986817600 TDB seconds since J2000`. Read the selected Saturn descriptors at
+the immediately adjacent binary64 epochs and evaluate both segments at the
+same shared epoch with [SPKPVN](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkpvn_c.html).
+Both return target 699 relative to center 6 in J2000; their differences are
+`0.1628216982412309 m` and `1.940988845873698e-5 m/s`. These are discrepancies
+between native kernel representations, not evidence of a physical Saturn jump.
+Selection at the exact shared epoch after a left-side request returned the left
+descriptor; do not assume an unverified tie-breaking rule.
+
+With the unchanged candidate-wide 300 s table, SSB/J2000 interpolation errors
+at `[986817599.9999999,986817600,986817600.0000001]` are respectively
+`[0.1394431198762437,0.13939384782048214,0.027673705998418514] m` and
+`[1.659964579534151e-5,1.6599647370186684e-5,3.367634353876283e-6] m/s`.
+The existing `0.025 m` / `2.5e-6 m/s` allocation fails on these new probes.
+The original 38-epoch task 2.7 result remains historical sampled evidence only;
+it cannot qualify this junction or a uniform approximation. A single common
+position cannot be within `0.025 m` of both segment values: their separation
+exceeds twice that allowance by the triangle inequality.
+
+`test_saturn_spk_segment_junction` is a regression of this counterexample: it
+must reproduce allocation exceedance, not silently call it a passing scientific
+gate. Production kernels, interpolation, tolerances and limits stay unchanged.
+Task 3.9 and targeting remain gated. Before a remedy, investigate complete
+segment/record boundaries and exact-junction query-order behavior; any resource
+or approximation-policy change requires explicit scientific review. No uniform
+coefficient or trajectory-error certificate follows from the native samples.
+
 ### Sampled SPK source-chain inventory (2026-09-08)
 
 The read-only `tests/test_trajectory_spk.py` uses the installed Darwin/arm64

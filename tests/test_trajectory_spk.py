@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ctypes
 import json
+import math
 from pathlib import Path
 import platform
 import sys
@@ -38,6 +39,10 @@ def cspice() -> ctypes.CDLL:
     native.spkuds_c.restype = None
     native.spkssb_c.argtypes = [integer, double, ctypes.c_char_p, pointer(double)]
     native.spkssb_c.restype = None
+    native.spkpvn_c.argtypes = [
+        integer, pointer(double), double, pointer(integer), pointer(double), pointer(integer),
+    ]
+    native.spkpvn_c.restype = None
     native.failed_c.argtypes = []
     native.failed_c.restype = integer
     assert native.failed_c() == 0
@@ -110,6 +115,78 @@ def test_sampled_spk_chains_match_tudat_states(
         "time": "TDB seconds since J2000", "frame": "SSB/J2000",
         "segments": sorted(observations),
         "scope": "Sampled chain metadata and state parity, not full interval coverage",
+    }, sort_keys=True, allow_nan=False))
+
+
+def test_saturn_spk_segment_junction(cspice: ctypes.CDLL) -> None:
+    """Reproduce a failed allocation, not a passing interpolation qualification."""
+    from tudatpy.dynamics import environment_setup
+
+    evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
+    budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
+    spice = ephemeris._ensure_standard_kernels()
+    junction_tdb_s = 986817600.0
+    epochs_tdb_s = [math.nextafter(junction_tdb_s, -math.inf), junction_tdb_s,
+                    math.nextafter(junction_tdb_s, math.inf)]
+    junction_states_si: list[np.ndarray] = []
+    descriptors: list[bytes] = []
+    for epoch_tdb_s in epochs_tdb_s:
+        budget.check()
+        handle, found = ctypes.c_int(), ctypes.c_int()
+        descriptor = (ctypes.c_double * 5)()
+        identifier = ctypes.create_string_buffer(41)
+        cspice.spksfs_c(699, epoch_tdb_s, 41, ctypes.byref(handle), descriptor,
+                        identifier, ctypes.byref(found))
+        assert cspice.failed_c() == 0 and found.value == 1
+        descriptors.append(bytes(descriptor))
+        # The first two descriptor doubles are coverage endpoints (SPK ND=2).
+        assert descriptor[0] <= junction_tdb_s <= descriptor[1]
+        frame, center = ctypes.c_int(), ctypes.c_int()
+        state_km = (ctypes.c_double * 6)()
+        cspice.spkpvn_c(handle, descriptor, junction_tdb_s, ctypes.byref(frame),
+                        state_km, ctypes.byref(center))
+        assert cspice.failed_c() == 0 and (frame.value, center.value) == (1, 6)
+        state_si = np.asarray(state_km).copy() * 1000.0
+        assert np.all(np.isfinite(state_si))
+        junction_states_si.append(state_si)
+    assert descriptors[0] != descriptors[2]
+    assert descriptors[1] in (descriptors[0], descriptors[2])
+    difference_si = junction_states_si[2] - junction_states_si[0]
+    jump_m = float(np.linalg.norm(difference_si[:3]))
+    jump_m_s = float(np.linalg.norm(difference_si[3:]))
+    # Counterexample: one value cannot be within 0.025 m of both segment values.
+    assert jump_m > 2 * 0.025
+
+    settings = trajectory._create_time_limited_body_settings(
+        environment_setup, evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1],
+    )
+    budget.check()
+    native = environment_setup.create_body_ephemeris(settings.get("Saturn").ephemeris_settings,
+                                                    "Saturn")
+    budget.check()
+    errors_si: list[tuple[float, float]] = []
+    for epoch_tdb_s in epochs_tdb_s:
+        direct_si = spice.get_body_cartesian_state_at_epoch(
+            "Saturn", "SSB", "J2000", "NONE", epoch_tdb_s,
+        )
+        difference_si = native.cartesian_state(epoch_tdb_s) - direct_si
+        assert np.all(np.isfinite(difference_si))
+        error_m = float(np.linalg.norm(difference_si[:3]))
+        error_m_s = float(np.linalg.norm(difference_si[3:]))
+        errors_si.append((error_m, error_m_s))
+        budget.check()
+    assert max(value[0] for value in errors_si) > 0.025
+    assert max(value[1] for value in errors_si) > 2.5e-6
+    assert budget.native_arc_propagations == 0
+    print(json.dumps({
+        "junction_tdb_s": junction_tdb_s, "time": "TDB seconds since J2000",
+        "segment_state_frame": "Saturn barycenter/J2000", "units": ["m", "m/s"],
+        "same_epoch_segment_difference": [jump_m, jump_m_s],
+        "junction_selection_after_left_query": "left" if descriptors[1] == descriptors[0] else "right",
+        "query_epochs_tdb_s": epochs_tdb_s, "interpolation_state_frame": "SSB/J2000",
+        "interpolation_errors": errors_si,
+        "qualification_status": "failed-existing-interpolation-allocation",
+        "scope": "Regression of a counterexample, not a passing safety qualification",
     }, sort_keys=True, allow_nan=False))
 
 

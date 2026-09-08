@@ -42,6 +42,21 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 Saturn junction counterexample (2026-09-08):
+Evaluate both adjacent SPK segments at their shared epoch and compare the
+unchanged 300 s table to direct SPICE immediately before, at and after it.
+Verify the native center/frame, distinct descriptors and finite states, retain
+measured differences, and require reproduction of the existing position and
+velocity allocation failures in `tests/test_trajectory_spk.py -k junction`.
+Run the whole SPK file, full pytest, Ruff and strict OpenSpec validation.
+Observed same-epoch segment differences: `0.1628216982412309 m` and
+`1.940988845873698e-5 m/s`; maximum table/direct errors at the three probes:
+`0.1394431198762437 m` and `1.6599647370186684e-5 m/s`.
+This is a passing regression of a failed scientific allocation, not completion
+of 3.9. Preserve `0.025 m` / `2.5e-6 m/s`, all kernels/forces/limits and the
+targeting gate. Investigate source boundaries and query-order behavior before
+proposing a reviewed remedy; original task 2.7 samples do not cover this failure.
+
 Task 3.9 sampled SPK chain inventory (2026-09-08):
 Use read-only installed CSPICE descriptor/state calls through ctypes, preserving
 Tudat kernel loading. Verify eight body-to-SSB chains at the existing 38 epochs,
