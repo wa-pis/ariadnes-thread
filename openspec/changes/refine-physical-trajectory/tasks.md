@@ -34,6 +34,27 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.7 between-stage counterexample (2026-09-08):
+`tests/test_native_safety_sampling.py` now also uses the unchanged nominal coast
+integrator with its `300 s` first step. The test-only zero-force straight line
+starts at `x=-2350600 m`, `vx=204400 m/s` relative to a stationary sphere with
+the pinned Moon radius `1737400 m`. It enters at `3 s`, crosses the centre at
+`11.5 s`, and exits at `20 s`. Both endpoint-only and stage-latched guards miss
+this crossing: no evaluated acceleration-stage epoch lies in `[3,20] s`, no
+impact is latched, and native propagation reports successful completion at
+`600 s`. All saved positions agree with the independent straight-line solution
+within the existing `1e-6 m` test bound and lie outside the sphere. The earlier
+burn-step crossing remains a positive control for stage latching.
+This reproducible counterexample rules out stage latching alone, not the
+possibility of a continuous guard. It is not a physical Moon-to-Mars trajectory
+and changes no mission force, integrator, threshold or resource. Task 3.7 remains
+open and the targeting spike remains blocked by its existing safety prerequisite;
+do not interpret a null sampled rejection or successful integration as safety.
+All four sampling characterization cases and 596 project tests pass, as do
+Ruff, strict OpenSpec validation and the unchanged legacy checksum. Passing
+these regression tests reproduces the unsafe sampling behavior; it does not
+satisfy the continuous-safety acceptance criterion.
+
 Tasks 3.5/3.7 environment-sample prerequisite evidence (2026-09-08):
 `_classify_environment_trial_state` reads all eight native environment ephemerides
 at an explicit covered TDB epoch and delegates to the existing SI/SSB/J2000
