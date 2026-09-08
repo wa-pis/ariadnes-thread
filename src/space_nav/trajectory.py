@@ -1802,6 +1802,59 @@ def _ephemeris_cell_chord_bound(
     return result_m
 
 
+def _compose_ephemeris_chord_bounds(
+    budget: _RefinementBudget,
+    knot_epochs_tdb_s: tuple[float, ...],
+    knot_positions_m: tuple[tuple[float, float, float], ...],
+    cell_bounds_m: tuple[float, ...],
+) -> float:
+    """Compose local Euclidean chord bounds into a global bound in metres.
+
+    Cells must share the supplied SI/SSB/J2000 endpoints at ordered TDB epochs.
+    Validity of local bounds and all endpoint/native/SPICE errors remain external.
+    """
+    budget.check()
+    try:
+        count = len(knot_epochs_tdb_s)
+        if count < 2 or len(knot_positions_m) != count or len(cell_bounds_m) != count - 1:
+            raise ValueError("require at least two knots, matching positions and one bound per cell")
+        epochs: list[Fraction] = []
+        positions: list[tuple[Fraction, ...]] = []
+        local_bounds_m: list[Fraction] = []
+        for index, epoch in enumerate(knot_epochs_tdb_s):
+            budget.check()
+            epochs.append(Fraction(_finite_float(f"knot[{index}] epoch_tdb_s", epoch)))
+            if index and epochs[-1] <= epochs[-2]:
+                raise ValueError("knot epochs must be strictly increasing")
+            positions.append(tuple(Fraction(value) for value in _finite_vector3_values(
+                knot_positions_m[index], f"knot[{index}] position_m",
+            )))
+            if index:
+                local_m = _finite_float(f"cell[{index - 1}] bound_m", cell_bounds_m[index - 1])
+                if local_m < 0:
+                    raise ValueError(f"cell[{index - 1}] bound_m must be nonnegative")
+                local_bounds_m.append(Fraction(local_m))
+        residuals_m: list[Fraction] = []
+        for epoch, position in zip(epochs, positions):
+            budget.check()
+            fraction = (epoch - epochs[0]) / (epochs[-1] - epochs[0])
+            residuals_m.append(sum((abs(
+                position[axis] - positions[0][axis]
+                - fraction * (positions[-1][axis] - positions[0][axis])
+            ) for axis in range(3)), Fraction(0)))
+        bound_m = Fraction(0)
+        for index, local_m in enumerate(local_bounds_m):
+            budget.check()
+            bound_m = max(bound_m, local_m + max(residuals_m[index:index + 2]))
+        result_m = 0.0 if bound_m == 0 else _positive_finite(
+            "composed chord bound_m", math.nextafter(float(bound_m), math.inf),
+        )
+    except (ArithmeticError, TypeError, ValueError) as exc:
+        _raise_refinement_error(budget.candidate_id, "ephemeris-chord-composition", str(exc), exc)
+    budget.check()
+    return result_m
+
+
 def _create_time_limited_body_settings(
     environment_setup: Any,
     initial_epoch_tdb_s: float,

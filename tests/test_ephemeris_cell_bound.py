@@ -135,3 +135,124 @@ def test_cell_bound_checks_shared_deadline_without_propagation(expiry_check: int
         )
     assert (budget.control_attempts, budget.propagation_evaluations,
             budget.native_arc_propagations) == (0, 0, 0)
+
+
+@pytest.mark.parametrize("offset_m", [0.0, 2.0 ** 40])
+def test_chord_composition_handles_corner_and_unequal_durations(offset_m: float) -> None:
+    budget = trajectory._RefinementBudget("compose", 300.0, lambda: 0.0)
+    budget.begin_control()
+    budget.begin_arc(first_in_evaluation=True)
+    epochs_s = (0.0, 1.0, 4.0)
+    positions_m = ((offset_m, 0.0, 0.0), (offset_m + 2.0, 1.0, 0.0),
+                   (offset_m + 8.0, 0.0, 0.0))
+    actual_m = trajectory._compose_ephemeris_chord_bounds(budget, epochs_s, positions_m, (0.1, 0.2))
+    exact_m = Fraction(1) + Fraction(0.2)
+    assert actual_m == math.nextafter(float(exact_m), math.inf)
+    assert Fraction(actual_m) >= exact_m
+    # Zero cell curvature still leaves the one-metre corner, not zero deviation.
+    assert trajectory._compose_ephemeris_chord_bounds(
+        budget, epochs_s, positions_m, (0.0, 0.0),
+    ) == math.nextafter(1.0, math.inf)
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (1, 1, 1)
+    assert budget.deadline_monotonic_s == 300.0
+
+
+def test_chord_composition_handles_affine_single_cell_and_local_pairing() -> None:
+    budget = trajectory._RefinementBudget("compose", 300.0)
+    assert trajectory._compose_ephemeris_chord_bounds(
+        budget, (0.0, 1.0, 4.0), ((0.0, 0.0, 0.0), (2.0, 0.0, 0.0), (8.0, 0.0, 0.0)),
+        (0.0, 0.0),
+    ) == 0.0
+    assert trajectory._compose_ephemeris_chord_bounds(
+        budget, (0.0, 1.0), ((0.0, 0.0, 0.0), (2.0, 1.0, 0.0)), (0.25,),
+    ) == math.nextafter(0.25, math.inf)
+    # The largest local bound is away from the five-metre corner: max is 10, not 15.
+    assert trajectory._compose_ephemeris_chord_bounds(
+        budget, (0.0, 1.0, 2.0, 3.0),
+        ((0.0, 0.0, 0.0), (0.0, 5.0, 0.0), (0.0, 0.0, 0.0), (0.0, 0.0, 0.0)),
+        (0.0, 0.0, 10.0),
+    ) == math.nextafter(10.0, math.inf)
+
+
+def test_composed_cell_bounds_cover_polynomial_derivative_jump() -> None:
+    budget = trajectory._RefinementBudget("compose", 300.0)
+    local_bounds_m = []
+    for start_s in (0.0, 1.0):
+        nodes_s = tuple(t + start_s for t in NODES_TDB_S)
+        local_bounds_m.append(trajectory._ephemeris_cell_chord_bound(
+            budget, nodes_s, tuple((t ** 6, 0.0, 0.0) for t in nodes_s), start_s, start_s + 1.0,
+        ))
+    bound_m = trajectory._compose_ephemeris_chord_bounds(
+        budget, (0.0, 1.0, 2.0), ((0.0, 0.0, 0.0), (1.0, 0.0, 0.0), (64.0, 0.0, 0.0)),
+        tuple(local_bounds_m),
+    )
+    # Closed remainder oracle, including both sides of the derivative jump at t=1.
+    for index in range(65):
+        t = Fraction(index, 32)
+        nodes = range(-2, 4) if t <= 1 else range(-1, 5)
+        position_m = t ** 6 - math.prod(t - node for node in nodes)
+        assert abs(position_m - 32 * t) <= Fraction(bound_m)
+
+
+@pytest.mark.parametrize("case", [
+    "one_knot", "position_count", "bound_count", "duplicate", "reverse", "nan_time",
+    "bad_position", "boolean_position", "negative_bound", "boolean_bound", "infinite_bound",
+])
+def test_chord_composition_rejects_invalid_inputs(case: str) -> None:
+    epochs_s = (0.0, 1.0, 2.0)
+    positions_m = ((0.0, 0.0, 0.0),) * 3
+    bounds_m = (0.0, 0.0)
+    if case == "one_knot":
+        epochs_s, positions_m, bounds_m = epochs_s[:1], positions_m[:1], ()
+    elif case == "position_count":
+        positions_m = positions_m[:2]
+    elif case == "bound_count":
+        bounds_m = bounds_m[:1]
+    elif case == "duplicate":
+        epochs_s = (0.0, 0.0, 2.0)
+    elif case == "reverse":
+        epochs_s = tuple(reversed(epochs_s))
+    elif case == "nan_time":
+        epochs_s = (0.0, math.nan, 2.0)
+    elif case in {"bad_position", "boolean_position"}:
+        positions_m = ((math.inf if case == "bad_position" else True, 0.0, 0.0),) * 3
+    elif case == "negative_bound":
+        bounds_m = (-1.0, 0.0)
+    elif case == "boolean_bound":
+        bounds_m = (False, 0.0)
+    elif case == "infinite_bound":
+        bounds_m = (math.inf, 0.0)
+    with pytest.raises(TrajectoryRefinementError, match="ephemeris-chord-composition") as caught:
+        trajectory._compose_ephemeris_chord_bounds(
+            trajectory._RefinementBudget("compose", 300.0), epochs_s, positions_m, bounds_m,
+        )
+    assert caught.value.__cause__ is not None
+
+
+def test_chord_composition_preserves_subnormal_and_rejects_overflow() -> None:
+    budget = trajectory._RefinementBudget("compose", 300.0)
+    for amplitude_m in (math.ulp(0.0), 1e308):
+        positions_m = ((0.0, 0.0, 0.0), (amplitude_m,) * 3, (0.0, 0.0, 0.0))
+        if amplitude_m < 1.0:
+            actual_m = trajectory._compose_ephemeris_chord_bounds(
+                budget, (0.0, 1.0, 2.0), positions_m, (0.0, 0.0),
+            )
+            assert Fraction(actual_m) >= 3 * Fraction(amplitude_m) > 0
+        else:
+            with pytest.raises(TrajectoryRefinementError, match="ephemeris-chord-composition"):
+                trajectory._compose_ephemeris_chord_bounds(
+                    budget, (0.0, 1.0, 2.0), positions_m, (0.0, 0.0),
+                )
+
+
+@pytest.mark.parametrize("expiry_check", [1, 3, 6, 9, 10])
+def test_chord_composition_checks_deadline_throughout(expiry_check: int) -> None:
+    clock = iter([0.0] * expiry_check + [300.0])
+    budget = trajectory._RefinementBudget("compose", 300.0, lambda: next(clock))
+    with pytest.raises(TrajectoryRefinementError, match="shared deadline"):
+        trajectory._compose_ephemeris_chord_bounds(
+            budget, (0.0, 1.0, 2.0), ((0.0, 0.0, 0.0),) * 3, (0.0, 0.0),
+        )
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (0, 0, 0)

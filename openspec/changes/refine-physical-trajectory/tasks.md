@@ -42,6 +42,31 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 adjacent-cell composition evidence (2026-09-08):
+`_compose_ephemeris_chord_bounds` combines valid local Euclidean chord bounds
+without any derivative or smoothness premise. Exact Fraction arithmetic gives
+each knot's L1 residual from the global endpoint chord; each cell contributes
+its local bound plus the larger of its endpoint residuals. Their maximum,
+converted outward to float, encloses the piecewise curve's global Euclidean
+chord deviation. Zero remains exact. Callers must establish shared endpoint
+positions and valid local bounds; the helper does not infer those premises.
+
+Added controls verify unequal durations, a one-metre corner with zero local
+curvature, large SSB translation cancellation, affine and single-cell cases,
+and correct pairing of each local bound with its own endpoint residuals. The
+existing degree-six remainder control is composed across its derivative jump
+and checked at 65 rational epochs against the independent closed polynomial
+formula. Invalid counts/order, nonfinite/Boolean values and negative bounds
+fail clearly; subnormal results stay positive and overflowing L1 composition
+fails. Deadline expiration at entry, validation, residual construction,
+composition and exit returns no bound. Successful composition preserves already
+used control/native counters and the original deadline; it starts no propagation.
+Reproduce with
+`conda run -n space-nav python -m pytest -q tests/test_ephemeris_cell_bound.py`
+(53 tests, including 21 composition controls). No force, tolerance or work-limit
+changes. Native/endpoint/SPICE error qualification and actual multi-cell adapter
+integration remain separate work; task 3.9 is open and no safe trajectory is claimed.
+
 Task 3.9 real-node cell enclosure evidence (2026-09-08):
 The existing full-candidate ephemeris control now evaluates the cell enclosure
 for all eight bodies at its 38 epoch requests (304 helper calls, including

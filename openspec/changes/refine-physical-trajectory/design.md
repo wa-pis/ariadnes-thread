@@ -157,6 +157,22 @@ qualification, not a uniform error certificate. Record bound maxima and
 helper-only wall time separately; do not equate these helper calls with native
 spacecraft runs or extrapolate them into a verified whole-mission runtime.
 
+Compose adjacent cell enclosures using shared endpoint positions rather than
+position derivatives. For global endpoint chord `L`, define each knot residual
+`D_i=||p_i-L(t_i)||_1`. The difference between a local chord and `L` is affine,
+so on cell `i` its norm is at most `max(D_i,D_(i+1))`. The total Euclidean
+deviation is therefore bounded by `max_i(B_i+max(D_i,D_(i+1)))`, where `B_i`
+is a supplied nonnegative Euclidean local-chord enclosure. Compute knot
+residuals and composition exactly from binary inputs with Fraction arithmetic,
+then convert outward; an exact zero stays zero. Require ordered finite times,
+matching three-component SI/SSB/J2000 positions and exactly one finite
+nonnegative bound per adjacent pair. Check the same budget throughout and do
+not start/count native propagation. Verify corners, affine motion, unequal cell
+durations, large translations, local curved-cell composition and invalid/expired
+inputs. Callers must establish that cells share the supplied endpoints and that
+their local bounds are valid; endpoint, native, SPICE and integration errors are
+not silently included. This mathematical composition does not certify safety.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

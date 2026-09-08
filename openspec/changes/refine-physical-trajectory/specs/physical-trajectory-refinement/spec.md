@@ -212,6 +212,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** all eight bodies' reconstructed 300-second cells at the existing 38 epoch requests are checked against native midpoint and knot states
 - **THEN** native state discrepancies satisfy the unchanged sampled allocation, midpoint chord deviation is at most the polynomial bound plus `0.05 m` for the two sampled position-error contributions, and evidence separates helper-only time from propagation counts and whole-mission runtime
 
+#### Scenario: Compose adjacent chord enclosures without a smoothness assumption
+- **WHEN** ordered TDB knots with shared SI/SSB/J2000 endpoint positions and one valid nonnegative local-chord bound per cell are supplied under the shared budget
+- **THEN** the outward-rounded composed bound encloses Euclidean deviation from the global endpoint chord even at derivative jumps, invalid inputs or deadline expiration return no bound, and no native propagation or counter reset occurs
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states
