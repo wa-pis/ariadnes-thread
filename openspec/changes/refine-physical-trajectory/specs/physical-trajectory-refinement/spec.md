@@ -240,6 +240,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** exact rational magnitude enclosures are propagated through the inspected weight arithmetic for all represented non-knot middle-cell queries on the pinned 300 s grid
 - **THEN** every exact and rounded numerator, denominator and division enclosure is strictly normal and finite in binary64, nearest-interior affine controls agree within `1e-12` per SI component, and state arithmetic and compiled-native certification remain explicitly excluded
 
+#### Scenario: Qualify whole-cell state arithmetic range premises
+- **WHEN** the existing 304 real cell requests satisfy the declared node-magnitude gate and the pinned-grid weight enclosure
+- **THEN** exact rational product and six-addition bounds exclude overflow, the binary64 `2^-353` lattice excludes nonzero subnormal cancellation, all 720 cancellation-control orders preserve the lattice and relative rounding model, and invalid node ranges fail without claiming all-mission or compiled-native certification
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

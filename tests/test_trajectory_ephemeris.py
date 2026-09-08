@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from fractions import Fraction
 from importlib.metadata import version
+from itertools import permutations
 import math
 from pathlib import Path
 import platform
@@ -99,6 +100,8 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
     weight_lower *= 1 - unit
     weight_upper *= 1 + unit
     assert normal_min < weight_lower <= weight_upper < finite_max
+    # Coarse powers of two used by the separate state-range qualification.
+    assert Fraction(2) ** -200 < weight_lower <= weight_upper < 2 ** 40
     # Exercise the nearest represented interior queries as well as the knot shortcut.
     control_states_si = np.asarray([[float((i - 2) * (j + 1)) for j in range(6)] for i in range(6)])
     for first_index in (0, count // 2, count - 6):
@@ -127,6 +130,58 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
         "weight_magnitude_upper_exact": str(weight_upper),
         "time_scale": "TDB seconds since J2000",
     }, sort_keys=True, allow_nan=False))
+
+
+def _assert_pinned_state_range(states_si: np.ndarray) -> None:
+    """Test-only range premise in m and m/s, not a production scientific limit."""
+    assert np.all(np.isfinite(states_si))
+    magnitudes_si = np.abs(states_si)
+    assert np.all((magnitudes_si == 0.0) | ((magnitudes_si >= 2.0 ** -100) & (magnitudes_si <= 2.0 ** 100)))
+
+
+@pytest.mark.parametrize("value", [math.nan, math.inf, 2.0 ** -101, 2.0 ** 101])
+def test_pinned_state_range_rejects_unqualified_values(value: float) -> None:
+    with pytest.raises(AssertionError):
+        _assert_pinned_state_range(np.full((6, 6), value))
+
+
+def test_state_accumulation_range_handles_cancellation() -> None:
+    """Exact dyadic lattice prevents subnormal nonzero cancellation results."""
+    _assert_pinned_state_range(np.asarray([0.0, 2.0 ** -100, -(2.0 ** -100), 2.0 ** 100, -(2.0 ** 100)]))
+    unit = Fraction(1, 2 ** 53)
+    normal_min, finite_max = Fraction(sys.float_info.min), Fraction(sys.float_info.max)
+    exact_product_min = Fraction(2) ** (-200 - 100)
+    exact_product_max = Fraction(2) ** (40 + 100)
+    term_min, term_max = Fraction(2) ** -301, Fraction(2) ** 141
+    assert normal_min < exact_product_min <= exact_product_max < finite_max
+    assert term_min < exact_product_min * (1 - unit)
+    assert exact_product_max * (1 + unit) < term_max
+    lattice = term_min / 2 ** 52
+    assert lattice == Fraction(2) ** -353 > normal_min
+    upper = Fraction(0)
+    for _ in range(6):
+        exact_upper = upper + term_max
+        assert exact_upper < finite_max
+        upper = exact_upper * (1 + unit)
+        assert upper < finite_max
+    assert upper < 2 ** 145
+    # A smallest-binade ulp, exact zero, and loss of tiny terms beside a large
+    # term are exercised in every order. The range proof does not rely on this sample.
+    small = float(term_min)
+    neighbor = math.nextafter(small, math.inf)
+    seen_zero = seen_lattice = False
+    for terms in permutations((small, neighbor, -small, -neighbor, 0.0, 2.0 ** 140)):
+        total = 0.0
+        for term in terms:
+            exact_sum = Fraction(total) + Fraction(term)
+            assert (exact_sum / lattice).denominator == 1
+            assert exact_sum == 0 or abs(exact_sum) >= lattice
+            total += term
+            _assert_unit_roundoff(total, exact_sum)
+            assert (Fraction(total) / lattice).denominator == 1
+            seen_zero |= exact_sum == 0
+            seen_lattice |= abs(exact_sum) == lattice
+    assert seen_zero and seen_lattice
 
 
 def _rational_lagrange_state(
@@ -568,6 +623,7 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
                 spice.get_body_cartesian_state_at_epoch(body, "SSB", "J2000", "NONE", node)
                 for node in nodes_tdb_s
             ]).reshape(6, 6)
+            _assert_pinned_state_range(node_states_si)
             rational_state_si = _rational_lagrange_state(nodes_tdb_s, node_states_si, epoch)
             replay_state_si = _replay_lagrange_state(nodes_tdb_s, node_states_si, epoch)
             replay_exact_matches += int(np.array_equal(coarse, replay_state_si))
@@ -636,6 +692,7 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
         cell_measurements[body] = {
             "cell_requests": len(bounds_m),
             "source_replay_exact_state_matches": replay_exact_matches,
+            "state_arithmetic_range_cell_requests": len(bounds_m),
             "max_conditional_roundoff_envelope_position_m": max(row[0] for row in roundoff_envelopes_si),
             "max_conditional_roundoff_envelope_velocity_m_s": max(row[1] for row in roundoff_envelopes_si),
             "max_polynomial_chord_bound_m": max(bounds_m),

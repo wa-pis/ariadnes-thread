@@ -42,6 +42,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 state-arithmetic range qualification (2026-09-08):
+Check every node component of the existing 304 cell requests is zero or within
+the test-only magnitude range `[2^-100, 2^100]` in m or m/s. The pinned-grid
+weight enclosure fits `(2^-200, 2^40)`; exact and rounded product bounds and six
+addition bounds stay normal/finite or exact zero. A `2^-353` binary64 lattice
+argument handles cancellation uniformly within those cells. Verify the exact
+Fraction bounds, all 720 orders of a tiny/large/zero cancellation control, and
+rejection of nonfinite or out-of-range nodes in `tests/test_trajectory_ephemeris.py`;
+run the full suite, Ruff and strict OpenSpec validation. Per-body JSON records
+the count of qualified cell requests (including repeated cells). This is not
+all-mission node coverage, compiled-native certification, a general rational
+oracle-conversion guarantee, SPICE error control or integration safety. No
+production range restriction or tolerance is added; task 3.9 remains open.
+
 Task 3.9 weight-arithmetic range qualification (2026-09-08):
 Extend the pinned-grid exact-arithmetic test with an inductive Fraction enclosure
 for all represented non-knot middle-cell queries, not just sampled epochs.

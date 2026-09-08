@@ -257,6 +257,31 @@ at the first, middle and last stencil have affine replay/oracle controls within
 oracle conversion for arbitrary data, compiled paths and SPICE approximation
 remain separate obligations; this is not yet a uniform native state certificate.
 
+For the existing 304 real six-node cell requests, additionally check every stored
+SI component is zero or has magnitude in `[2^-100, 2^100]`. These deliberately
+loose bounds are test-only arithmetic premises, not new scientific input limits.
+The preceding weight enclosure fits `(2^-200, 2^40)`. Therefore each nonzero
+exact state product lies in `(2^-300, 2^140)`, and its correctly rounded value
+lies in `(2^-301, 2^141)`. Zero inputs yield exact zero. All such binary64 terms
+are multiples of `q=2^-353` (the spacing of the lowest permitted binade).
+By induction, every exact partial sum is a multiple of q. Below `2^-301`, that
+multiple has at most 53 significant bits and is exactly representable; at larger
+magnitudes binary64 rounding still preserves the q lattice. Thus a nonzero
+cancellation result is at least q, well above the smallest normal value; exact
+zero remains allowed. Six additions bounded by `U_next=(U+2^141)*(1+u)` from zero
+stay below `2^145`, so neither exact nor rounded partial sums overflow. Exact
+Fraction controls check the enclosures and all 720 permutations of a six-term
+zero/tiny/large cancellation fixture check lattice preservation and rounding.
+Out-of-range and nonfinite node controls fail qualification. This extends range
+premises over the whole middle cells of those supplied node sets, not every
+mission cell or all compiled paths; native-node provenance, arbitrary rational
+oracle conversion, SPICE approximation and spacecraft integration remain open.
+The lattice argument above is a project derivation from binary significand
+representation and correctly rounded operations, as described in Goldberg's
+Floating-point Formats and Exactly Rounded Operations sections:
+https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html . It does not assert
+that the currently installed native compiler uses those operations on all paths.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
