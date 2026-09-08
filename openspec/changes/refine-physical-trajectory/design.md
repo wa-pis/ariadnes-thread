@@ -1,5 +1,25 @@
 ## Context
 
+### Selected Saturn file segment inventory (2026-09-08)
+
+Select Saturn's SPK file at candidate departure through the existing loaded
+pool, then exhaust its segment directory using the documented
+[DAF forward search](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/dafbfs_c.html).
+The read-only qualification checks every native error flag and the shared
+deadline, allocates DAF's maximum 125-double summary buffer, and does not
+close/reload Tudat-owned files. It finds 1,223 total segments, including 171
+for target 699, all relative to center 6 in J2000 with SPK type 3.
+
+Exactly two Saturn segments intersect the candidate interval. In file order:
+`[986817600,1021204800]` at DAF words `25956465..25968668`, then
+`[952430400,986817600]` at words `25969025..25981228` (epochs in TDB seconds
+since J2000). Their union covers the candidate; their only common epoch is
+the known junction. This is a complete segment inventory for this selected
+file, not just the earlier 38 epoch samples. It is not a complete loaded-file
+priority audit and does not enumerate Chebyshev records inside segments.
+No further segment junction in this file was found on the candidate interval;
+the known interpolation failure remains unchanged and task 3.9 stays open.
+
 ### Junction table-density control (2026-09-08)
 
 Parameterize the existing Saturn junction counterexample with candidate-wide

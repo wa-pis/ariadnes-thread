@@ -44,6 +44,12 @@ def cspice() -> ctypes.CDLL:
         integer, pointer(double), double, pointer(integer), pointer(double), pointer(integer),
     ]
     native.spkpvn_c.restype = None
+    native.dafbfs_c.argtypes = [integer]
+    native.dafbfs_c.restype = None
+    native.daffna_c.argtypes = [pointer(integer)]
+    native.daffna_c.restype = None
+    native.dafgs_c.argtypes = [pointer(double)]
+    native.dafgs_c.restype = None
     native.failed_c.argtypes = []
     native.failed_c.restype = integer
     assert native.failed_c() == 0
@@ -246,6 +252,63 @@ def test_saturn_junction_query_order_is_repeatable(cspice: ctypes.CDLL) -> None:
         "comparison": "Exact binary64 component bit patterns",
         "exact_junction_selected_coverage_tdb_s": sorted(selection_coverage),
         "scope": "Local query-order repeatability, not continuity or interpolation accuracy",
+    }, sort_keys=True, allow_nan=False))
+
+
+def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
+    """Exhaust one selected file, not all kernel priorities or polynomial records."""
+    evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
+    budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
+    start_s, end_s = evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1]
+    handle, found = ctypes.c_int(), ctypes.c_int()
+    # DAF's maximum packed-summary size; SPK consumes its first five doubles.
+    summary = (ctypes.c_double * 125)()
+    identifier = ctypes.create_string_buffer(41)
+    cspice.spksfs_c(699, start_s, 41, ctypes.byref(handle), summary,
+                    identifier, ctypes.byref(found))
+    assert cspice.failed_c() == 0 and found.value == 1
+    cspice.dafbfs_c(handle)
+    assert cspice.failed_c() == 0
+    count = saturn_count = 0
+    overlaps: list[tuple[float, float, int, int]] = []
+    while True:
+        budget.check()
+        cspice.daffna_c(ctypes.byref(found))
+        assert cspice.failed_c() == 0 and found.value in (0, 1)
+        if not found.value:
+            break
+        count += 1
+        cspice.dafgs_c(summary)
+        assert cspice.failed_c() == 0
+        integers = [ctypes.c_int() for _ in range(6)]
+        first, last = ctypes.c_double(), ctypes.c_double()
+        cspice.spkuds_c(summary, *[ctypes.byref(value) for value in integers[:4]],
+                        ctypes.byref(first), ctypes.byref(last),
+                        *[ctypes.byref(value) for value in integers[4:]])
+        assert cspice.failed_c() == 0
+        body, center, frame, kind, begin, end = [value.value for value in integers]
+        if body == 699:
+            saturn_count += 1
+            assert (center, frame, kind) == (6, 1, 3)
+            assert math.isfinite(first.value) and math.isfinite(last.value)
+            assert first.value < last.value and 0 < begin <= end
+            if first.value <= end_s and last.value >= start_s:
+                overlaps.append((first.value, last.value, begin, end))
+    # Keep file order: the left interval is stored after the right interval.
+    assert (count, saturn_count) == (1223, 171)
+    assert overlaps == [
+        (986817600.0, 1021204800.0, 25956465, 25968668),
+        (952430400.0, 986817600.0, 25969025, 25981228),
+    ]
+    assert overlaps[1][0] <= start_s < overlaps[1][1] == overlaps[0][0] < end_s <= overlaps[0][1]
+    budget.check()
+    assert budget.native_arc_propagations == 0
+    print(json.dumps({
+        "candidate_id": evidence["candidate_id"], "file_segment_count": count,
+        "saturn_segment_count": saturn_count, "overlaps_in_file_order": overlaps,
+        "overlap_fields": ["start_tdb_s", "end_tdb_s", "first_daf_word", "last_daf_word"],
+        "time": "TDB seconds since J2000", "target": 699, "center": 6, "frame": "J2000",
+        "scope": "All segments in the file selected at departure; not all loaded files or record boundaries",
     }, sort_keys=True, allow_nan=False))
 
 

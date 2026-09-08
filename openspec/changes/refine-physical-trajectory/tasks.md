@@ -42,6 +42,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 selected Saturn file segment inventory (2026-09-08):
+Exhaust the directory of the SPK file selected for Saturn at departure using
+read-only DAF calls. Verify 1,223 entries, 171 Saturn entries with center/frame/
+type `(6,1,3)`, and exactly the two documented candidate-overlapping segments,
+including file order, word addresses and contiguous coverage. Verify EOF and
+native error flags with `tests/test_trajectory_spk.py -k segment_inventory`,
+then run the whole SPK file, full pytest, Ruff and strict OpenSpec validation.
+The focused inventory passed with no spacecraft propagation or kernel changes.
+This completes one file's segment inventory, not loaded-file precedence or
+internal polynomial-record boundaries. Preserve the known allocation failure,
+all tolerances and production settings; task 3.9 remains open.
+
 Task 3.9 junction table-density control (2026-09-08):
 Extend the existing junction regression to test-only 150 s and 75 s tables,
 retaining the production 300 s path, candidate coverage and SSB/J2000 frames.
