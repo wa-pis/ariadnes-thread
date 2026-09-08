@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from dataclasses import replace
+from decimal import Inexact, ROUND_FLOOR, localcontext
+from fractions import Fraction
 import math
 import os
 from pathlib import Path
@@ -563,6 +565,12 @@ def test_clear_solar_radiation_scales_with_area_coefficient_and_current_mass(
         / expected_acceleration_m_s2
         <= 1.0e-12
     )
+    assert constants.SPEED_OF_LIGHT == trajectory._SPEED_OF_LIGHT_M_S == 299792458.0
+    _, srp_bound_m_s2 = trajectory._thrust_and_srp_upper_bounds(
+        "srp-bound", spacecraft, distance_m * 0.999, thrust_enabled=False,
+    )
+    assert current_mass == spacecraft.dry_mass_kg
+    assert np.linalg.norm(mass_acceleration) <= srp_bound_m_s2
 
 
 def test_clear_umbra_and_penumbra_match_direct_tudat_shadow_function() -> None:
@@ -579,7 +587,13 @@ def test_clear_umbra_and_penumbra_match_direct_tudat_shadow_function() -> None:
     measured: dict[str, float] = {}
     for label, offset_m in offsets_m.items():
         state = np.asarray([2.0e9, offset_m, 0.0, 0.0, 0.0, 0.0])
-        _, shadow, _, _ = _evaluate_srp(bodies, acceleration_models, state)
+        acceleration_m_s2, shadow, _, _ = _evaluate_srp(bodies, acceleration_models, state)
+        thrust_bound_m_s2, srp_bound_m_s2 = trajectory._thrust_and_srp_upper_bounds(
+            "srp-bound", _spacecraft(), float(np.linalg.norm(state[:3])) * 0.999,
+            thrust_enabled=False,
+        )
+        assert thrust_bound_m_s2 == 0.0
+        assert np.linalg.norm(acceleration_m_s2) <= srp_bound_m_s2
         direct_by_body = {}
         for occulting_body in trajectory.SOLAR_RADIATION_OCCULTING_BODY_NAMES:
             occulting = bodies.get(occulting_body)
@@ -602,3 +616,83 @@ def test_clear_umbra_and_penumbra_match_direct_tudat_shadow_function() -> None:
     assert abs(measured["umbra"]) <= 1.0e-12
     assert 0.0 < measured["penumbra"] < 1.0
     assert abs(measured["clear"] - 1.0) <= 1.0e-12
+
+
+def test_thrust_srp_bounds_round_outward_against_exact_rational_oracles() -> None:
+    spacecraft = replace(_spacecraft(), dry_mass_kg=3.0)
+    distance_m = 149597870700.0
+    thrust_m_s2, srp_m_s2 = trajectory._thrust_and_srp_upper_bounds(
+        "bound", spacecraft, distance_m, thrust_enabled=True,
+    )
+    exact_thrust = Fraction(spacecraft.max_thrust_n) / Fraction(spacecraft.dry_mass_kg)
+    exact_srp_enclosure = (
+        Fraction(trajectory.SUN_LUMINOSITY_W) * Fraction(spacecraft.srp_area_m2)
+        * Fraction(spacecraft.reflectivity_coefficient)
+        / (12 * 299792458 * Fraction(spacecraft.dry_mass_kg) * Fraction(distance_m)**2)
+    )
+    for bound, exact in ((thrust_m_s2, exact_thrust), (srp_m_s2, exact_srp_enclosure)):
+        assert Fraction(bound) >= exact
+        assert math.isclose(bound, float(exact), rel_tol=1e-15)
+    physical_srp_m_s2 = float(exact_srp_enclosure) * 3 / math.pi
+    assert 1.047 < srp_m_s2 / physical_srp_m_s2 < 1.048
+    assert trajectory._thrust_and_srp_upper_bounds(
+        "bound", spacecraft, distance_m, thrust_enabled=False,
+    ) == (0.0, srp_m_s2)
+    distant = trajectory._thrust_and_srp_upper_bounds(
+        "bound", spacecraft, 2 * distance_m, thrust_enabled=True,
+    )
+    assert distant == (thrust_m_s2, srp_m_s2 / 4)
+    lighter = trajectory._thrust_and_srp_upper_bounds(
+        "bound", replace(spacecraft, dry_mass_kg=1.5), distance_m, thrust_enabled=True,
+    )
+    assert lighter == (2 * thrust_m_s2, 2 * srp_m_s2)
+    with localcontext() as context:
+        context.prec = 2
+        context.rounding = ROUND_FLOOR
+        context.traps[Inexact] = True
+        assert trajectory._thrust_and_srp_upper_bounds(
+            "bound", spacecraft, distance_m, thrust_enabled=True,
+        ) == (thrust_m_s2, srp_m_s2)
+
+
+@pytest.mark.parametrize("field", [
+    "dry_mass_kg", "max_thrust_n", "srp_area_m2", "reflectivity_coefficient", "distance",
+])
+@pytest.mark.parametrize("value", [True, 0.0, -1.0, math.nan, math.inf])
+def test_thrust_srp_bounds_reject_invalid_contributing_inputs(field: str, value: float) -> None:
+    spacecraft = _spacecraft() if field == "distance" else replace(_spacecraft(), **{field: value})
+    with pytest.raises(TrajectoryRefinementError, match="thrust-srp-bound") as caught:
+        trajectory._thrust_and_srp_upper_bounds(
+            "bound", spacecraft, value if field == "distance" else 1e11, thrust_enabled=False,
+        )
+    assert caught.value.__cause__ is not None
+
+
+@pytest.mark.parametrize("flag", [0, 1, "burn", None])
+def test_thrust_srp_bounds_require_explicit_boolean_phase(flag: object) -> None:
+    with pytest.raises(TrajectoryRefinementError, match="thrust_enabled"):
+        trajectory._thrust_and_srp_upper_bounds(
+            "bound", _spacecraft(), 1e11,
+            thrust_enabled=flag,  # type: ignore[arg-type]  # Invalid input probe.
+        )
+
+
+def test_thrust_srp_bounds_reject_wrong_record_and_overflow() -> None:
+    with pytest.raises(TrajectoryRefinementError, match="SpacecraftSpec"):
+        trajectory._thrust_and_srp_upper_bounds(
+            "bound", None, 1e11,  # type: ignore[arg-type]  # Invalid input probe.
+            thrust_enabled=False,
+        )
+    with pytest.raises(TrajectoryRefinementError, match="upper bound_m_s2"):
+        trajectory._thrust_and_srp_upper_bounds(
+            "bound", replace(_spacecraft(), max_thrust_n=1e308, dry_mass_kg=1e-308),
+            1.0, thrust_enabled=True,
+        )
+
+
+def test_thrust_srp_bounds_round_subnormal_srp_outward() -> None:
+    _, bound_m_s2 = trajectory._thrust_and_srp_upper_bounds(
+        "bound", replace(_spacecraft(), initial_mass_kg=1.1e300, dry_mass_kg=1e300),
+        1e200, thrust_enabled=False,
+    )
+    assert bound_m_s2 == math.nextafter(0.0, math.inf)

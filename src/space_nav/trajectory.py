@@ -76,6 +76,7 @@ _POINT_MASS_GRAVITY_TYPE = "point-mass-gravity"
 _SPHERICAL_HARMONIC_GRAVITY_TYPE = "spherical-harmonic-gravity"
 SPACECRAFT_BODY_NAME = "Spacecraft"
 SUN_LUMINOSITY_W = 3.828e26
+_SPEED_OF_LIGHT_M_S = 299_792_458.0
 SOLAR_RADIATION_OCCULTING_BODY_NAMES = ("Moon", "Earth", "Mars")
 _SOLAR_RADIATION_SOURCE_BODY = "Sun"
 _SOLAR_RADIATION_PRESSURE_TYPE = "cannonball-radiation-pressure"
@@ -2037,6 +2038,52 @@ def _build_gravity_acceleration_settings(
             exc,
         )
     return settings_by_source, frozen_inventory
+
+
+def _thrust_and_srp_upper_bounds(
+    candidate_id: object,
+    spacecraft: SpacecraftSpec,
+    minimum_sun_distance_m: float,
+    *,
+    thrust_enabled: bool,
+) -> tuple[float, float]:
+    """Return (thrust, fully lit SRP) norm bounds in m/s^2, in any orientation.
+
+    Requires mass >= dry_mass and Sun distance >= the supplied positive floor.
+    Other forces and native/numerical errors are excluded. Shadows cannot
+    increase the bound; the caller must establish the mass/distance floors.
+    """
+    try:
+        if not isinstance(spacecraft, SpacecraftSpec):
+            raise TypeError("spacecraft must be a SpacecraftSpec")
+        if not isinstance(thrust_enabled, bool):
+            raise ValueError("thrust_enabled must be boolean")
+        mass_kg, thrust_n, area_m2, cr = (
+            Decimal.from_float(_positive_finite(f"spacecraft.{name}", getattr(spacecraft, name)))
+            for name in ("dry_mass_kg", "max_thrust_n", "srp_area_m2", "reflectivity_coefficient")
+        )
+        distance_m = Decimal.from_float(_positive_finite(
+            "minimum_sun_distance_m", minimum_sun_distance_m,
+        ))
+        with localcontext(Context(prec=50, rounding=ROUND_CEILING)):
+            inverse_mass_kg_inv = Decimal(1) / mass_kg
+            inverse_distance_m_inv = Decimal(1) / distance_m
+            thrust_bound_m_s2 = thrust_n * inverse_mass_kg_inv if thrust_enabled else Decimal(0)
+            # ponytail: pi > 3 gives a 4.72% conservative SRP envelope; tighten
+            # this rational enclosure only if interval-guard cost requires it.
+            srp_bound_m_s2 = (
+                Decimal.from_float(SUN_LUMINOSITY_W) * area_m2 * cr * inverse_mass_kg_inv
+                * inverse_distance_m_inv * inverse_distance_m_inv
+                / Decimal(12 * int(_SPEED_OF_LIGHT_M_S))
+            )
+            bounds = tuple(
+                _finite_float(f"{name} upper bound_m_s2", 0.0 if not bound else
+                              math.nextafter(float(bound), math.inf))
+                for name, bound in (("thrust", thrust_bound_m_s2), ("srp", srp_bound_m_s2))
+            )
+            return bounds[0], bounds[1]
+    except (ArithmeticError, TypeError, ValueError) as exc:
+        _raise_refinement_error(candidate_id, "thrust-srp-bound", str(exc), exc)
 
 
 def _build_solar_radiation_pressure_setup(

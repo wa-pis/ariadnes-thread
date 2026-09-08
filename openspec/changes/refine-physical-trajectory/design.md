@@ -59,6 +59,24 @@ evaluation error, all other forces, ephemeris motion and numerical trajectory
 error before constructing a full safety enclosure. This helper alone does not
 authorize a safe result or a larger propagation limit.
 
+For unit-direction maximum-thrust burns and proven `mass >= dry_mass`, the
+thrust norm is at most `T_max/dry_mass`; the coast contribution is exactly zero.
+For the declared isotropic Sun and cannonball target, shadow fraction in [0,1]
+implies `a_srp <= L*A*Cr/(4*pi*c*dry_mass*d_sun_min^2)`. See the native
+[thrust definition](https://py.api.tudat.space/en/latest/dynamics/propagation_setup/thrust.html)
+and [radiation model](https://docs.tudat.space/en/latest/user-guide/state-propagation/propagation-setup/translational/radiation-pressure-acceleration.html).
+Use the simpler rational enclosure `L*A*Cr/(12*c*dry_mass*d_sun_min^2)` because
+`pi > 3`. This is about 4.72% more conservative than the fully lit SRP expression,
+not a change to the simulated force or a relaxed scientific tolerance. Use
+the existing explicit luminosity and SI `c=299792458 m/s`, checked against
+pinned Tudat. Evaluate positive products and reciprocal factors with the same
+isolated 50-digit upward-rounded Decimal arithmetic as the harmonic bound.
+Return separately labeled-by-contract thrust/SRP bounds in m/s^2, reject
+invalid contributing inputs and non-finite outputs, and require an explicit
+burn/coast flag. No current shadow sample may reduce the interval SRP bound.
+The caller must prove the mass/distance floors; this does not include native
+evaluation error, relativity, gravity, body motion or trajectory error.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

@@ -42,6 +42,28 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 thrust/SRP component enclosure evidence (2026-09-08):
+`_thrust_and_srp_upper_bounds` returns separate orientation-independent
+maximum-thrust and fully lit cannonball SRP bounds using dry mass and an
+explicit minimum Sun distance. Coast thrust is exactly zero. The rational
+`pi > 3` SRP enclosure is approximately 4.72% conservative relative to the
+fully lit model; only the bounding calculation uses it, not the native force.
+Like the harmonic helper, positive arithmetic is rounded upward in an isolated
+50-digit Decimal context and final float conversion is outward. The exact SI
+speed of light `299792458 m/s` is checked against the pinned Tudat constant.
+
+`tests/test_trajectory_radiation.py` compares both formulas against exact
+rational arithmetic, checks mass/distance scaling, explicit burn/coast flags,
+ambient-context isolation, subnormal rounding, invalid contributing fields,
+wrong record type and overflow. Existing native clear/umbra/penumbra controls
+and the clear control at dry mass verify their acceleration norms stay below
+the bound, retaining all original force-parity tolerances. Reproduce with
+`conda run -n space-nav python -m pytest -q tests/test_trajectory_radiation.py`
+(42 tests). Shadows at a sample cannot lower the interval allowance. The caller
+still must prove mass/distance floors and include gravity, relativity, body
+motion, native evaluation error and trajectory error. No native-call limit,
+mission force, integration tolerance or safety status changed; task 3.9 is open.
+
 Task 3.9 harmonic-component enclosure evidence (2026-09-08):
 `_harmonic_acceleration_upper_bound` implements the addition-theorem/Frobenius
 bound derived in the design for matching square 4pi-normalized C/S arrays.

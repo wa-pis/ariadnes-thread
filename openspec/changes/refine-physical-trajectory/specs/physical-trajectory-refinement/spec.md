@@ -226,3 +226,7 @@ Following user approval to revise native-call limits, private safety qualificati
 #### Scenario: Bound the declared finite harmonic gravity field
 - **WHEN** valid geodesy-normalized harmonic coefficients and a proven positive minimum source distance are supplied to the private qualification helper
 - **THEN** it computes an outward-rounded orientation-independent acceleration-norm upper bound in m/s^2 including degree zero once; invalid inputs or non-finite results raise a contextual refinement error, and this component bound alone does not certify a safe trajectory
+
+#### Scenario: Bound thrust and solar radiation without sampled-shadow assumptions
+- **WHEN** spacecraft physical inputs, an explicit burn/coast flag, a proven mass floor at dry mass and a positive minimum Sun distance are supplied to the private qualification helper
+- **THEN** it returns outward-rounded thrust and fully lit SRP norm bounds in m/s^2, returns exactly zero thrust for coast, never lowers the SRP bound using a sampled shadow, and rejects invalid contributing fields or non-finite results without certifying trajectory safety
