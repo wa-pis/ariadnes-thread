@@ -34,6 +34,25 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Tasks 3.5/3.7 environment-sample prerequisite evidence (2026-09-08):
+`_classify_environment_trial_state` reads all eight native environment ephemerides
+at an explicit covered TDB epoch and delegates to the existing SI/SSB/J2000
+sample classifier. It validates state/mass/frame/epoch before native reads,
+rejects missing or non-finite ephemerides with body context, and checks the same
+shared budget around native queries. It neither propagates nor increments work
+counters, making it suitable for an initial-state check before the first arc.
+Injected tests cover interval endpoints, uncovered epochs, invalid inputs,
+native failure, expiry, mass precedence and body ordering. Real off-grid checks
+use direct SPICE positions to place states 1 m inside/outside each of the eight
+pinned spherical surfaces and obtain the expected classification from the
+native time-limited environment. No resources or tolerances changed.
+This remains a single-sample adapter: the production driver must call it before
+launching an arc, and continuous collision guards are still required. Tasks
+3.5 and 3.7 remain open; no full-mission safety or target closure is claimed.
+All 79 focused checks and 594 project tests pass, as do Ruff, strict OpenSpec
+validation and the unchanged legacy checksum. Existing classification and
+budget components were reused without new dependencies.
+
 Task 3.7 outcome-precedence evidence (2026-09-08):
 `_read_trial_arc_outcome` consumes an independently established physical safety
 reason before the final-epoch/history reader. A successful native safety stop

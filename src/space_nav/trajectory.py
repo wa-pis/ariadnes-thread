@@ -896,6 +896,54 @@ def _classify_trial_state(
     return None
 
 
+def _classify_environment_trial_state(
+    budget: _RefinementBudget,
+    environment: _PhysicalEnvironment,
+    epoch_tdb_s: object,
+    state: object,
+    mass_kg: object,
+    dry_mass_kg: object,
+) -> str | None:
+    """Check one SI/SSB/J2000 state against the environment at its TDB epoch.
+
+    Suitable for pre-arc checks without starting/counting a native arc. None
+    establishes safety only at this sample, never between integration steps.
+    """
+    budget.check()
+    try:
+        epoch = _finite_float("epoch_tdb_s", epoch_tdb_s)
+        cartesian = _finite_cartesian_values(state, "trial_state")
+        mass = _finite_float("mass_kg", mass_kg)
+        dry_mass = _positive_finite("dry_mass_kg", dry_mass_kg)
+        if (environment.origin, environment.orientation) != ("SSB", "J2000"):
+            raise ValueError("physical environment must use SSB/J2000")
+        if not environment.initial_epoch_tdb_s <= epoch <= environment.final_epoch_tdb_s:
+            raise ValueError("epoch_tdb_s is outside the physical environment interval")
+    except (TypeError, ValueError) as exc:
+        _raise_refinement_error(budget.candidate_id, "trial-safety", str(exc), exc)
+    positions: dict[str, object] = {}
+    for body in PHYSICAL_BODY_NAMES:
+        budget.check()
+        try:
+            raw = environment.bodies.get(body).ephemeris.cartesian_state(epoch)
+        except Exception as exc:
+            _raise_refinement_error(
+                budget.candidate_id, "trial-safety",
+                f"{body} at {epoch} TDB s: environment ephemeris failed: {exc}", exc,
+            )
+        budget.check()
+        try:
+            positions[body] = _finite_cartesian_values(raw, f"{body} ephemeris")[:3]
+        except (TypeError, ValueError) as exc:
+            _raise_refinement_error(budget.candidate_id, "trial-safety", str(exc), exc)
+    result = _classify_trial_state(
+        budget.candidate_id, cartesian, mass, dry_mass, positions,
+        environment.collision_resource,
+    )
+    budget.check()
+    return result
+
+
 def _dot_product(left: Vector3, right: Vector3) -> float:
     return sum(left[index] * right[index] for index in range(3))
 

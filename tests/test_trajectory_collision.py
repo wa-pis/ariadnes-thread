@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -200,6 +201,23 @@ def test_real_environment_uses_exact_pinned_collision_surfaces(
         gravity_models_path=_gravity_models_path(),
     )
     resource = environment.collision_resource
+    budget = trajectory._RefinementBudget("initial-safety-control", 300.0)
+    epoch = environment.initial_epoch_tdb_s + 123.0
+    for surface in resource.surfaces:
+        direct = ephemeris._query_body_state_tdb(surface.body, epoch)
+        for offset_m in (-1.0, 1.0):
+            state = (
+                direct.position_m[0] + surface.guard_radius_m + offset_m,
+                *direct.position_m[1:], *direct.velocity_m_s,
+            )
+            reason = trajectory._classify_environment_trial_state(
+                budget, environment, epoch, state, 1000.0, 1000.0,
+            )
+            assert reason == (
+                f"rejected-impact:{surface.body}" if offset_m < 0.0 else None
+            )
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (0, 0, 0)
 
     assert trajectory._COLLISION_PCK_EXPECTED_SHA256 == _PCK_SHA256
     assert trajectory._PINNED_COLLISION_RADII_M == _EXPECTED_RADII_M
@@ -489,6 +507,67 @@ def test_collision_rejects_invalid_inputs_with_field_context(
             body_position_m,
             guard_radius_m,
         )
+
+
+@pytest.mark.parametrize(
+    "case", ["safe", "dry", "impact", "start", "end", "before", "after",
+             "frame", "epoch-nan", "state-nan", "mass-bool", "native",
+             "ephemeris-nan", "expired", "query-expired"],
+)
+def test_environment_safety_uses_epoch_and_budget_without_propagation(
+    case: str, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _install_fake_collision_resources(monkeypatch, _FakeSpice(), _PCK_SHA256)
+    environment = MagicMock(spec=trajectory._PhysicalEnvironment)
+    environment.origin, environment.orientation = "SSB", "J2000"
+    environment.initial_epoch_tdb_s, environment.final_epoch_tdb_s = 10.0, 20.0
+    environment.collision_resource = trajectory._build_collision_resource("env-safety")
+    query = environment.bodies.get.return_value.ephemeris.cartesian_state
+    query.return_value = (1e12, 0.0, 0.0, 0.0, 0.0, 0.0)
+    now_s = [0.0]
+    budget = trajectory._RefinementBudget("env-safety", 300.0, lambda: now_s[0])
+    epoch = {"start": 10.0, "end": 20.0, "before": 9.0, "after": 21.0,
+             "epoch-nan": math.nan}.get(case, 15.0)
+    state = (0.0,) * 6
+    mass_kg = 999.0 if case == "dry" else True if case == "mass-bool" else 1000.0
+    failure = RuntimeError("missing environment ephemeris")
+    if case == "frame":
+        environment.origin = "Moon"
+    elif case == "state-nan":
+        state = (math.nan,) + state[1:]
+    elif case == "impact":
+        query.return_value = (0.0,) * 6
+    elif case == "native":
+        query.side_effect = failure
+    elif case == "ephemeris-nan":
+        query.return_value = (1e12, 0.0, 0.0, 0.0, 0.0, math.nan)
+    elif case == "expired":
+        now_s[0] = 300.0
+    elif case == "query-expired":
+        def expire_query(epoch_tdb_s: float) -> tuple[float, ...]:
+            now_s[0] = 300.0
+            return (1e12, 0.0, 0.0, 0.0, 0.0, 0.0)
+
+        query.side_effect = expire_query
+    if case in {"safe", "dry", "impact", "start", "end"}:
+        assert trajectory._classify_environment_trial_state(
+            budget, environment, epoch, state, mass_kg, 1000.0,
+        ) == {"dry": "rejected-dry-mass", "impact": "rejected-impact:Sun"}.get(case)
+        assert query.call_count == 8
+        assert all(call.args == (epoch,) for call in query.call_args_list)
+        assert [call.args[0] for call in environment.bodies.get.call_args_list] == list(
+            trajectory.PHYSICAL_BODY_NAMES,
+        )
+    else:
+        with pytest.raises(TrajectoryRefinementError, match="env-safety") as caught:
+            trajectory._classify_environment_trial_state(
+                budget, environment, epoch, state, mass_kg, 1000.0,
+            )
+        if case == "native":
+            assert caught.value.__cause__ is failure
+        assert query.call_count == (1 if case in {"native", "ephemeris-nan", "query-expired"} else 0)
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (0, 0, 0)
 
 
 @pytest.mark.parametrize("body", tuple(body for body, _ in _EXPECTED_RADII_M))
