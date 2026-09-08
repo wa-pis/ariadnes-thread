@@ -36,5 +36,20 @@
     {"file_offset": "0x19ac94", "bytes": "a490c44f", "instruction": "fmul.2d v4, v5, v4[0]"},
     {"file_offset": "0x19ac98", "bytes": "63d4644e", "instruction": "fadd.2d v3, v3, v4"}
   ],
-  "scope": "Static inspection of this exact binary and symbol's interior loop only. Separate binary64 multiply/add and division are present; no fused multiply-add is present in the inspected loop. Does not establish runtime dispatch, cached-denominator construction, FPCR state, boundary splines, or spacecraft safety."
+  "denominator_initialization": {
+    "symbol": "__ZN5tudat13interpolators20LagrangeInterpolatorIdN5Eigen6MatrixIdLi6ELi1ELi0ELi6ELi1EEEdE22initializeDenominatorsEv",
+    "demangled_symbol": "tudat::interpolators::LagrangeInterpolator<double, Eigen::Matrix<double, 6, 1, 0, 6, 1>, double>::initializeDenominators()",
+    "loop_start": "0x19a348",
+    "loop_end_exclusive": "0x19a390",
+    "instruction_observations": [
+      {"file_offset": "0x19a358", "bytes": "00106e1e", "instruction": "fmov d0, #1.0"},
+      {"file_offset": "0x19a36c", "bytes": "3f010ceb", "instruction": "cmp x9, x12"},
+      {"file_offset": "0x19a370", "bytes": "80ffff54", "instruction": "b.eq 0x19a360"},
+      {"file_offset": "0x19a380", "bytes": "2138621e", "instruction": "fsub d1, d1, d2"},
+      {"file_offset": "0x19a384", "bytes": "0008611e", "instruction": "fmul d0, d0, d1"},
+      {"file_offset": "0x19a388", "bytes": "607929fc", "instruction": "str d0, [x11, x9, lsl #3]"}
+    ],
+    "scope": "Exact-one initialization, self-index exclusion and sequential scalar binary64 difference/product/store in this named symbol. Not live inspection of cached values or runtime dispatch."
+  },
+  "scope": "Static inspection of this exact binary's named interpolation and denominator-initialization loops only. Separate binary64 operations match the inspected arithmetic graph; no fused multiply-add is present in these loops. Does not establish runtime dispatch, continuous FPCR state, boundary splines, or spacecraft safety."
 }

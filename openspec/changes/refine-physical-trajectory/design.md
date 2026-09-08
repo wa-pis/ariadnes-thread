@@ -361,6 +361,18 @@ SDK to be installed when tests run. Other platforms skip this ABI-specific test.
 Before/after snapshots cannot exclude temporary changes within calls, other
 threads, or future calls; continuous runtime semantics and dispatch remain open.
 
+Extend the same hash-pinned static observation to initializeDenominators for the
+double-time/six-double-state/double-scalar specialization. At the inspected
+`[0x19a348,0x19a390)` loop, the accumulator is loaded with exactly 1.0, equal
+source/target indices skip the factor, and scalar FSUB/FMUL plus a store update
+each cached product in order. Record and verify these additional instruction
+bytes without changing the module hash. This agrees with the existing exact
+Fraction grid test and its `(-1)^(5-i)*i!*(5-i)!*300^5` denominators, whose
+intermediates are exactly representable on the pinned grid. It narrows the
+compiled-denominator premise for that symbol; it is not live cache readback or
+proof that all production construction paths select this specialization. Runtime
+dispatch and continuous rounding-state premises remain unqualified.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

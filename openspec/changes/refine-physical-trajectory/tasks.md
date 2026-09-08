@@ -42,6 +42,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 static denominator-initializer observation (2026-09-08):
+Inspect initializeDenominators for the same double/six-double/double native
+specialization. Its `[0x19a348,0x19a390)` inner loop loads exact 1.0, excludes
+the self-index, and uses sequential scalar binary64 FSUB/FMUL/store instructions.
+Record six additional instruction observations under the unchanged module hash;
+the existing byte check covers both named symbols. Verify
+`tests/test_trajectory_ephemeris.py -k 'static_observation or grid_binary64'`,
+the full ephemeris file, full pytest, Ruff and strict OpenSpec. The independently
+checked exact-grid factorial denominators remain unchanged. This is compiled
+code agreement with that arithmetic graph, not inspection of live caches or
+verification of runtime construction dispatch. Continuous rounding-state and
+dispatch premises remain open, as do SPICE/spacecraft error bounds. No binary,
+force, tolerance or work limit changes; task 3.9 stays open.
+
 Task 3.9 read-only rounding-environment observation (2026-09-08):
 Inspect Darwin arm64 fenv_t (16 bytes: FPSR, then FPCR at offset 8) and record
 the SDK header hash. Read fegetenv/fegetround with explicit ctypes signatures,

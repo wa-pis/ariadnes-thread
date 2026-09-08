@@ -264,6 +264,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the Darwin/arm64 caller-thread environment is read before and after setup, eight ephemeris constructions and 304 existing state requests
 - **THEN** all 626 snapshots show FPCR and fegetround equal to zero, synthetic unqualified modes fail the gate without CPU writes, no spacecraft propagations are counted, and these snapshots are not treated as continuous or cross-thread certification
 
+#### Scenario: Preserve compiled denominator-construction evidence
+- **WHEN** the existing hash-pinned native observation is extended to the six-state double-precision denominator initializer
+- **THEN** selected bytes confirm exact-one initialization, self-index exclusion and separate scalar difference/product/store instructions, the existing exact-rational grid controls still pass, and this static agreement is not called live cache or runtime-dispatch verification
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

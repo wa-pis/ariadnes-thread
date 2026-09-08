@@ -106,7 +106,8 @@ def test_native_arithmetic_binary_matches_static_observation() -> None:
     assert binary_path.stat().st_size == observation["kernel_size_bytes"]
     with binary_path.open("rb") as binary:
         assert file_digest(binary, "sha256").hexdigest() == observation["kernel_sha256"], "Native build changed; re-audit arithmetic observation"
-        for instruction in observation["instruction_observations"]:
+        instructions = observation["instruction_observations"] + observation["denominator_initialization"]["instruction_observations"]
+        for instruction in instructions:
             binary.seek(int(instruction["file_offset"], 16))
             assert binary.read(4) == bytes.fromhex(instruction["bytes"]), instruction["instruction"]
 
