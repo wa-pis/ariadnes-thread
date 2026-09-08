@@ -232,6 +232,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** a test-only binary64 replay follows the inspected six-node arithmetic order at all eight bodies' 38 qualification epochs
 - **THEN** native/replay state differences meet the unchanged allocation, exact state-match counts are reported separately, and analytic knot/affine/cancellation controls verify the replay without claiming a uniform native roundoff certificate
 
+#### Scenario: Qualify the conditional arithmetic error envelope
+- **WHEN** the inspected replay's exact-grid and relative-roundoff premises are checked operation by operation at the existing 304 native state requests
+- **THEN** each native/rounded-rational component difference fits the exact `gamma_16*(89/64)*M_j` envelope, deliberately invalid arithmetic fails its premise check, and this conditional model is not promoted into a uniform native or SPICE certificate
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

@@ -98,11 +98,41 @@ def _rational_lagrange_state(
                   for index, other in enumerate(nodes) if index != selected)
         for selected, node in enumerate(nodes)
     ]
-    return np.asarray([
-        float(sum((weight * Fraction(float(value)) for weight, value in zip(weights, column)),
-                  Fraction(0)))
+    exact_components = [
+        sum((weight * Fraction(float(value)) for weight, value in zip(weights, column)), Fraction(0))
         for column in states_si.T
-    ])
+    ]
+    rounded_si = np.asarray([float(value) for value in exact_components])
+    for rounded, exact in zip(rounded_si, exact_components):
+        _assert_unit_roundoff(float(rounded), exact)
+    return rounded_si
+
+
+def _assert_unit_roundoff(actual: float, exact: Fraction) -> None:
+    """Check the relative IEEE model at one operation, including an exact zero."""
+    assert math.isfinite(actual)
+    assert abs(Fraction(actual) - exact) <= Fraction(1, 2 ** 53) * abs(exact)
+
+
+@pytest.mark.parametrize("case", ["underflow", "nonfinite", "excess_error"])
+def test_unit_roundoff_check_rejects_invalid_model_premises(case: str) -> None:
+    actual, exact = {
+        "underflow": (0.0, Fraction(math.ulp(0.0)) / 2),
+        "nonfinite": (math.inf, Fraction(10) ** 400),
+        "excess_error": (math.nextafter(1.0, math.inf), Fraction(1)),
+    }[case]
+    with pytest.raises(AssertionError):
+        _assert_unit_roundoff(actual, exact)
+
+
+@pytest.mark.parametrize("count", [15, 16])
+def test_roundoff_factor_products_fit_exact_gamma_envelope(count: int) -> None:
+    unit = Fraction(1, 2 ** 53)
+    gamma = count * unit / (1 - count * unit)
+    assert (1 - unit) ** (-count) - 1 <= gamma
+    assert (1 + unit) ** count - 1 <= gamma
+    assert 1 - (1 - unit) ** count <= gamma
+    assert 15 * unit / (1 - 15 * unit) + unit <= 16 * unit / (1 - 16 * unit)
 
 
 def _replay_lagrange_state(
@@ -112,19 +142,31 @@ def _replay_lagrange_state(
     if epoch_tdb_s in epochs_tdb_s:
         return states_si[epochs_tdb_s.index(epoch_tdb_s)].copy()
     differences_s = [epoch_tdb_s - node for node in epochs_tdb_s]
+    assert all(Fraction(value) == Fraction(epoch_tdb_s) - Fraction(node)
+               for value, node in zip(differences_s, epochs_tdb_s))
     numerator_s6 = 1.0
     for difference_s in differences_s:
+        exact_product = Fraction(numerator_s6) * Fraction(difference_s)
         numerator_s6 *= difference_s
+        _assert_unit_roundoff(numerator_s6, exact_product)
     result_si = [0.0] * 6
     for index, node in enumerate(epochs_tdb_s):
         denominator_s5 = 1.0
         for other_index, other in enumerate(epochs_tdb_s):
             if other_index != index:
+                exact_product = Fraction(denominator_s5) * (Fraction(node) - Fraction(other))
                 denominator_s5 *= node - other
-        weight = numerator_s6 / (differences_s[index] * denominator_s5)
+                assert Fraction(denominator_s5) == exact_product
+        denominator_s6 = differences_s[index] * denominator_s5
+        _assert_unit_roundoff(denominator_s6, Fraction(differences_s[index]) * Fraction(denominator_s5))
+        weight = numerator_s6 / denominator_s6
+        _assert_unit_roundoff(weight, Fraction(numerator_s6) / Fraction(denominator_s6))
         for component in range(6):
             product_si = float(states_si[index, component]) * weight
+            _assert_unit_roundoff(product_si, Fraction(float(states_si[index, component])) * Fraction(weight))
+            exact_sum = Fraction(result_si[component]) + Fraction(product_si)
             result_si[component] += product_si
+            _assert_unit_roundoff(result_si[component], exact_sum)
     return np.asarray(result_si)
 
 
@@ -459,6 +501,7 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
             "300s_source_replay": [],
         }
         replay_exact_matches = 0
+        roundoff_envelopes_si: list[list[float]] = []
         bounds_m: list[float] = []
         midpoint_defects_m: list[float] = []
         helper_elapsed_s = 0.0
@@ -486,6 +529,16 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
             rational_state_si = _rational_lagrange_state(nodes_tdb_s, node_states_si, epoch)
             replay_state_si = _replay_lagrange_state(nodes_tdb_s, node_states_si, epoch)
             replay_exact_matches += int(np.array_equal(coarse, replay_state_si))
+            unit = Fraction(1, 2 ** 53)
+            envelope_si = [16 * unit / (1 - 16 * unit) * Fraction(89, 64)
+                           * max(abs(Fraction(float(value))) for value in column)
+                           for column in node_states_si.T]
+            for actual, oracle, envelope in zip(coarse, rational_state_si, envelope_si):
+                assert abs(Fraction(float(actual)) - Fraction(float(oracle))) <= envelope
+            roundoff_envelopes_si.append([
+                math.nextafter(float(sum(envelope_si[:3])), math.inf),
+                math.nextafter(float(sum(envelope_si[3:])), math.inf),
+            ])
             cell_start_s, cell_end_s = nodes_tdb_s[2:4]
             positions_m = tuple((float(row[0]), float(row[1]), float(row[2])) for row in node_states_si)
             helper_started_s = time.perf_counter()
@@ -541,6 +594,8 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
         cell_measurements[body] = {
             "cell_requests": len(bounds_m),
             "source_replay_exact_state_matches": replay_exact_matches,
+            "max_conditional_roundoff_envelope_position_m": max(row[0] for row in roundoff_envelopes_si),
+            "max_conditional_roundoff_envelope_velocity_m_s": max(row[1] for row in roundoff_envelopes_si),
             "max_polynomial_chord_bound_m": max(bounds_m),
             "max_sampled_native_midpoint_chord_deviation_m": max(midpoint_defects_m),
             "helper_only_elapsed_s": helper_elapsed_s,

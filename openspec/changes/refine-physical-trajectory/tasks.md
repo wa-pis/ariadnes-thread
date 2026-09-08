@@ -42,6 +42,35 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional roundoff-envelope evidence (2026-09-08):
+The design derives `gamma_15*(89/64)*M_j` for the inspected arithmetic graph
+under exact differences/denominators and the standard relative-roundoff model.
+Six numerator products, one denominator product (inverse error factor), division,
+state multiplication and six additions give at most 15 factors per source term.
+The once-rounded rational oracle adds at most `u*(89/64)*M_j`, covered by
+`gamma_16*(89/64)*M_j` since `gamma_15+u <= gamma_16`, with `u=2^-53`.
+The derivation uses Higham's product/inverse-factor lemma, not statistical error
+assumptions or a fitted multiplier.
+
+The replay now checks exact timestamp/denominator arithmetic and every remaining
+operation against its exact Fraction result and the unit-roundoff condition.
+The rational oracle checks its final float conversion too. Negative controls
+reject underflow-to-zero, nonfinite output and excessive relative error; exact
+factor-product controls check the 15/16-factor envelopes. All 304 native state
+requests satisfy the exact rational componentwise envelope, retaining 304 exact
+matches with the replay. Conservative L1 envelope maxima were `0.005314723 m`
+(Saturn) and `2.332407e-10 m/s` (Mercury), rounded upward here. These are
+conditional rounding allowances, not SPICE approximation or trajectory errors.
+
+Reproduce with
+`conda run -n space-nav python -m pytest -q tests/test_trajectory_ephemeris.py`
+(36 tests). The full-candidate JSON reports per-body conditional position/
+velocity envelopes separately from sampled errors. Native compiler/runtime
+premises and exceptional-arithmetic exclusion over unsampled epochs still need
+justification before any uniform native certificate. The test-only assessment
+adds no runtime safety fallback and changes no scientific tolerance, force model,
+work limit or deadline. Task 3.9 remains open.
+
 Task 3.9 native arithmetic-graph replay evidence (2026-09-08):
 Test-only `_replay_lagrange_state` follows the inspected header's denominator
 product order, repeated numerator, division and six sequential state multiply/

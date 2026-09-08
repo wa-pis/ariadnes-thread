@@ -221,6 +221,24 @@ additional evidence. Analytic affine and cancellation controls independently
 check the replay. Agreement at these inputs does not prove compiler flags,
 runtime rounding, underflow/overflow behavior or a uniform native error bound.
 
+Under the standard relative-roundoff model, exact time differences/denominators
+leave at most 15 error factors per source term: six numerator multiplications,
+one denominator multiplication (inverse factor), division, state multiplication
+and at most six ordered additions. With `u=2^-53`, `gamma_n=n*u/(1-n*u)`, the
+componentwise exact-polynomial error is bounded by `gamma_15*(89/64)*M_j`, where
+`M_j=max_i(abs(state_ij))`. Comparison with a once-rounded rational oracle adds
+at most `u*(89/64)*M_j`; `gamma_15+u <= gamma_16` therefore gives the test envelope
+`gamma_16*(89/64)*M_j`. This is an absolute bound, including cancellation.
+Check the replay's time/denominator exactness and each remaining operation's
+relative model directly with Fraction arithmetic at the test inputs; reject
+underflow/invalid examples rather than assuming the model universally. Compare
+native and once-rounded rational states componentwise with the exact envelope
+and report conservative position/velocity L1 summaries separately. These checks
+do not establish the premises across unsampled epochs or compiled native paths,
+and do not include SPICE approximation, boundary splines or integration error.
+Reference for the product/inverse-factor lemma: Higham, Lemma 2.1,
+https://nhigham.com/wp-content/uploads/2023/10/high99n.pdf .
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
