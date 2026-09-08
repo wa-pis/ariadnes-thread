@@ -42,6 +42,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 local junction query-order control (2026-09-08):
+Verify all six permutations of before/exact/after Saturn junction queries with
+two named requests per epoch, exact binary64 component equality across orders,
+and raw CSPICE/SI parity. Verify six exact-junction descriptors select the
+observed left segment. Run `tests/test_trajectory_spk.py -k query_order`, the
+whole SPK file, full pytest, Ruff and strict OpenSpec validation. The focused
+control passed: 36 named and 18 raw state queries, with no kernel/cache reset
+or spacecraft propagation. This rules out these local query orders as the
+explanation, not other runtime contexts; the interpolation allocation still
+fails. No scientific/production changes; task 3.9 remains open.
+
 Task 3.9 Saturn junction counterexample (2026-09-08):
 Evaluate both adjacent SPK segments at their shared epoch and compare the
 unchanged 300 s table to direct SPICE immediately before, at and after it.

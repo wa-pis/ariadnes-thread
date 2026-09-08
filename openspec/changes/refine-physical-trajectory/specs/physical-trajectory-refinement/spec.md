@@ -268,6 +268,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the existing hash-pinned native observation is extended to the six-state double-precision denominator initializer
 - **THEN** selected bytes confirm exact-one initialization, self-index exclusion and separate scalar difference/product/store instructions, the existing exact-rational grid controls still pass, and this static agreement is not called live cache or runtime-dispatch verification
 
+#### Scenario: Distinguish local query repeatability from junction accuracy
+- **WHEN** the three Saturn junction epochs are queried in all six orders with two named requests per epoch and one raw CSPICE request
+- **THEN** all 36 named states and 18 SI-converted raw states match the corresponding epoch's reference binary64 bits, every exact-junction descriptor selects the observed left coverage, and this local repeatability does not clear the failed interpolation allocation
+
 #### Scenario: Preserve the Saturn junction allocation counterexample
 - **WHEN** the unchanged 300 s candidate table is compared to direct SPICE at `986817600 TDB seconds since J2000` and its immediately adjacent binary64 epochs
 - **THEN** the qualification records position errors exceeding `0.025 m` and velocity errors exceeding `2.5e-6 m/s`, retains the same-epoch difference between both adjacent Saturn segments, and labels this as a failed scientific allocation rather than a safe result or reason to increase tolerances

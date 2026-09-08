@@ -1,5 +1,22 @@
 ## Context
 
+### Local junction query-order control (2026-09-08)
+
+The Saturn junction counterexample is not explained by the six permutations
+of the immediately-before/exact/immediately-after queries. In the existing
+loaded pool, repeat each request twice: all 36 named TudatPy states match the
+corresponding first-observed binary64 component bit patterns. Eighteen raw
+CSPICE SSB requests, converted from km/km/s to SI, match those bits too.
+All six exact-junction descriptor checks select coverage
+`[952430400,986817600]` TDB seconds since J2000, the left segment.
+
+`test_saturn_junction_query_order_is_repeatable` checks this local observation
+without kernel reloads, cache resets, native changes or extra dependencies.
+It is neither a universal SPICE tie-breaking rule nor a guarantee across
+processes, threads, other epochs or kernel sets. The 14 cm interpolation
+counterexample remains unresolved; complete source-boundary investigation and
+a reviewed remedy are still required before any uniform qualification.
+
 ### Saturn junction counterexample (2026-09-08)
 
 The sampled inventory led to a failing expanded interpolation control at

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ctypes
 import json
+from itertools import permutations
 import math
 from pathlib import Path
 import platform
@@ -187,6 +188,54 @@ def test_saturn_spk_segment_junction(cspice: ctypes.CDLL) -> None:
         "interpolation_errors": errors_si,
         "qualification_status": "failed-existing-interpolation-allocation",
         "scope": "Regression of a counterexample, not a passing safety qualification",
+    }, sort_keys=True, allow_nan=False))
+
+
+def test_saturn_junction_query_order_is_repeatable(cspice: ctypes.CDLL) -> None:
+    """Qualify all six local query orders without resetting the loaded kernel pool."""
+    spice = ephemeris._ensure_standard_kernels()
+    budget = trajectory._RefinementBudget("d0001-t0035", 300.0)
+    junction_tdb_s = 986817600.0
+    epochs_tdb_s = (math.nextafter(junction_tdb_s, -math.inf), junction_tdb_s,
+                    math.nextafter(junction_tdb_s, math.inf))
+    reference_bits: dict[float, np.ndarray] = {}
+    selection_coverage: set[tuple[float, float]] = set()
+    for order in permutations(epochs_tdb_s):
+        for epoch_tdb_s in order:
+            budget.check()
+            for _ in range(2):
+                state_si = spice.get_body_cartesian_state_at_epoch(
+                    "Saturn", "SSB", "J2000", "NONE", epoch_tdb_s,
+                )
+                assert np.all(np.isfinite(state_si))
+                bits = state_si.view(np.uint64)
+                if epoch_tdb_s not in reference_bits:
+                    reference_bits[epoch_tdb_s] = bits.copy()
+                np.testing.assert_array_equal(bits, reference_bits[epoch_tdb_s])
+            raw_state_km = (ctypes.c_double * 6)()
+            cspice.spkssb_c(699, epoch_tdb_s, b"J2000", raw_state_km)
+            assert cspice.failed_c() == 0
+            raw_state_si = np.asarray(raw_state_km) * 1000.0
+            np.testing.assert_array_equal(raw_state_si.view(np.uint64),
+                                          reference_bits[epoch_tdb_s])
+            if epoch_tdb_s == junction_tdb_s:
+                handle, found = ctypes.c_int(), ctypes.c_int()
+                descriptor = (ctypes.c_double * 5)()
+                identifier = ctypes.create_string_buffer(41)
+                cspice.spksfs_c(699, epoch_tdb_s, 41, ctypes.byref(handle), descriptor,
+                                identifier, ctypes.byref(found))
+                assert cspice.failed_c() == 0 and found.value == 1
+                selection_coverage.add((descriptor[0], descriptor[1]))
+            budget.check()
+    assert selection_coverage == {(952430400.0, junction_tdb_s)}
+    assert len(reference_bits) == 3 and budget.native_arc_propagations == 0
+    print(json.dumps({
+        "junction_tdb_s": junction_tdb_s, "time": "TDB seconds since J2000",
+        "state_frame": "SSB/J2000", "state_units": ["m", "m/s"],
+        "orders": 6, "named_queries": 36, "raw_cspice_queries": 18,
+        "comparison": "Exact binary64 component bit patterns",
+        "exact_junction_selected_coverage_tdb_s": sorted(selection_coverage),
+        "scope": "Local query-order repeatability, not continuity or interpolation accuracy",
     }, sort_keys=True, allow_nan=False))
 
 
