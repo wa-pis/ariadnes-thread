@@ -51,5 +51,25 @@
     ],
     "scope": "Exact-one initialization, self-index exclusion and sequential scalar binary64 difference/product/store in this named symbol. Not live inspection of cached values or runtime dispatch."
   },
-  "scope": "Static inspection of this exact binary's named interpolation and denominator-initialization loops only. Separate binary64 operations match the inspected arithmetic graph; no fused multiply-add is present in these loops. Does not establish runtime dispatch, continuous FPCR state, boundary splines, or spacecraft safety."
+  "factory_route": {
+    "symbol_lookup": "nm -C KERNEL_PATH identifies the named double specializations; nm without -C gives symbols for the disassembler command",
+    "functions": {
+      "createBodyEphemeris<double,double>": "0x27626c",
+      "createTabulatedEphemerisFromSpice<double,double>": "0x282b28",
+      "createStateInterpolatorFromSpice<double,double>": "0x282d60",
+      "createOneDimensionalInterpolator<double,Eigen::Matrix<double,6,1>>": "0x280dec"
+    },
+    "instruction_observations": [
+      {"file_offset": "0x277994", "bytes": "652c0094", "instruction": "bl createTabulatedEphemerisFromSpice<double,double> at 0x282b28"},
+      {"file_offset": "0x282b84", "bytes": "77000094", "instruction": "bl createStateInterpolatorFromSpice<double,double> at 0x282d60"},
+      {"file_offset": "0x282de8", "bytes": "4a29681e", "instruction": "fadd d10, d10, d8 (repeated grid increment)"},
+      {"file_offset": "0x282f54", "bytes": "a6f7ff97", "instruction": "bl createOneDimensionalInterpolator<double,six-double-state> at 0x280dec"},
+      {"file_offset": "0x280e60", "bytes": "1f0d0071", "instruction": "cmp w8, #3 (Lagrange enum)"},
+      {"file_offset": "0x280e64", "bytes": "a0080054", "instruction": "b.eq 0x280f78 (Lagrange settings dynamic cast)"},
+      {"file_offset": "0x280f98", "bytes": "401f00b4", "instruction": "cbz x0, 0x281380 (reject failed settings cast)"},
+      {"file_offset": "0x281048", "bytes": "42030094", "instruction": "bl LagrangeInterpolator<double,six-double-state,double> constructor at 0x281d50"}
+    ],
+    "scope": "Static direct-call and conditional-constructor route only. Public settings have InterpolatedSpiceEphemerisSettings type but do not expose nested interpolator_settings. Does not prove live nested settings, virtual dispatch or continuous FPCR state."
+  },
+  "scope": "Static inspection of this exact binary's named interpolation, denominator and factory paths. Separate binary64 operations match the inspected arithmetic graph; no fused multiply-add is present in the two inspected arithmetic loops. Does not establish live nested settings, virtual dispatch, continuous FPCR state, boundary splines, or spacecraft safety."
 }

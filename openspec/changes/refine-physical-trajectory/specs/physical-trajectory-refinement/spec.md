@@ -268,6 +268,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the existing hash-pinned native observation is extended to the six-state double-precision denominator initializer
 - **THEN** selected bytes confirm exact-one initialization, self-index exclusion and separate scalar difference/product/store instructions, the existing exact-rational grid controls still pass, and this static agreement is not called live cache or runtime-dispatch verification
 
+#### Scenario: Preserve the conditional compiled factory route
+- **WHEN** static double-precision factory calls and the Lagrange enum/dynamic-cast branch are recorded for the pinned native binary
+- **THEN** their instruction bytes match exactly and all eight public settings have the interpolated-SPICE class, while inaccessible nested settings and live virtual dispatch remain explicitly unverified
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

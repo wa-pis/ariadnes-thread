@@ -107,6 +107,7 @@ def test_native_arithmetic_binary_matches_static_observation() -> None:
     with binary_path.open("rb") as binary:
         assert file_digest(binary, "sha256").hexdigest() == observation["kernel_sha256"], "Native build changed; re-audit arithmetic observation"
         instructions = observation["instruction_observations"] + observation["denominator_initialization"]["instruction_observations"]
+        instructions += observation["factory_route"]["instruction_observations"]
         for instruction in instructions:
             binary.seek(int(instruction["file_offset"], 16))
             assert binary.read(4) == bytes.fromhex(instruction["bytes"]), instruction["instruction"]
@@ -130,6 +131,7 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
     assert 0 < start_s < end_s <= 2 * start_s  # Sterbenz domain for represented epochs.
     for body in trajectory.PHYSICAL_BODY_NAMES:
         body_settings = settings.get(body).ephemeris_settings
+        assert isinstance(body_settings, environment_setup.ephemeris.InterpolatedSpiceEphemerisSettings)
         assert (body_settings.initial_time, body_settings.final_time, body_settings.time_step) == (
             start_s, end_s, step_s,
         )

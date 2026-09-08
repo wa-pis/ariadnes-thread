@@ -42,6 +42,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional static factory-route observation (2026-09-08):
+Trace direct calls from the double/double body factory through tabulated SPICE,
+the SPICE node builder and the one-dimensional interpolator factory. The builder
+uses repeated binary64 FADD for its grid. Enum 3 selects the Lagrange branch;
+a successful settings dynamic cast precedes the direct call to the inspected
+double/six-double/double constructor. Record eight additional instruction
+observations under the unchanged binary hash. Verify them and all eight public
+InterpolatedSpiceEphemerisSettings objects with
+`tests/test_trajectory_ephemeris.py -k 'static_observation or grid_binary64'`,
+then the full ephemeris file, full pytest, Ruff and strict OpenSpec. The binding
+does not expose nested interpolator_settings, so this does not certify live
+nested settings or virtual dispatch. No object-memory probing, settings changes,
+new dependency, force/tolerance change or limit revision; task 3.9 remains open.
+
 Task 3.9 static denominator-initializer observation (2026-09-08):
 Inspect initializeDenominators for the same double/six-double/double native
 specialization. Its `[0x19a348,0x19a390)` inner loop loads exact 1.0, excludes

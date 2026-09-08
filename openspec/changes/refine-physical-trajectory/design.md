@@ -373,6 +373,19 @@ compiled-denominator premise for that symbol; it is not live cache readback or
 proof that all production construction paths select this specialization. Runtime
 dispatch and continuous rounding-state premises remain unqualified.
 
+Trace static construction in the same pinned binary: createBodyEphemeris<double,
+double> calls the corresponding tabulated-SPICE factory, which calls the
+double-time/six-double-state SPICE interpolator builder. The builder increments
+timestamps with scalar FADD and calls the matching one-dimensional factory.
+Its enum-3 (Lagrange) branch checks the settings dynamic cast before directly
+calling the double-time/six-double-state/double-scalar Lagrange constructor.
+Record direct calls, enum/cast branches and the grid increment in the existing
+byte-checked observation. Require all eight public settings objects to have the
+InterpolatedSpiceEphemerisSettings type. The Python binding does not expose its
+nested interpolator_settings; do not infer live nested settings or virtual-call
+dispatch merely from available static branches. This narrows the construction
+route evidence without changing settings or certifying runtime selection.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
