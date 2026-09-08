@@ -268,6 +268,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the existing hash-pinned native observation is extended to the six-state double-precision denominator initializer
 - **THEN** selected bytes confirm exact-one initialization, self-index exclusion and separate scalar difference/product/store instructions, the existing exact-rational grid controls still pass, and this static agreement is not called live cache or runtime-dispatch verification
 
+#### Scenario: Separate source-polynomial jumps from table error
+- **WHEN** both polynomial records at each of the 73 mapped Saturn boundaries are evaluated at the same epoch using exact rational Chebyshev endpoint sums
+- **THEN** all 146 endpoint states agree with the independent NumPy evaluator within `1e-8 m` and `1e-12 m/s`, exact squared jump comparisons identify 70 position and 68 velocity joins exceeding twice their unchanged allocations, and the report labels these as Saturn-barycenter-relative source-representation discontinuities rather than physical motion or a completed safety remedy
+
 #### Scenario: Preserve failures at all mapped Saturn record joins
 - **WHEN** the unchanged 300 s table is compared with direct SPICE at the 73 mapped interior record boundaries and immediately adjacent binary64 epochs
 - **THEN** all 219 differences are finite, the report retains per-boundary SI maxima and reproduces 73 boundaries exceeding `0.025 m` and 71 exceeding `2.5e-6 m/s`, without accepting a single-junction remedy or claiming a uniform error bound

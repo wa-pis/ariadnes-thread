@@ -1,5 +1,31 @@
 ## Context
 
+### Exact Saturn record-endpoint differences (2026-09-08)
+
+Read the full 122-word records rather than only headers, rejecting nonfinite
+coefficients. For each of the 73 candidate-interior boundaries, evaluate both
+neighboring degree-19 records at that same epoch with exact Fraction sums.
+The [Chebyshev identity](https://dlmf.nist.gov/18.5#E1) gives `T_k(1)=1` and
+`T_k(-1)=(-1)^k`, so endpoint evaluation needs no floating recurrence. Multiply
+by exactly 1000 to convert native km/km/s coefficients to SI. Independently
+compare all 146 endpoint states to NumPy's Chebyshev evaluator within
+`1e-8 m` and `1e-12 m/s`; these are oracle checks, not relaxed physical limits.
+
+Exact squared Euclidean differences exceed `(2*0.025 m)^2` at 70 boundaries
+and `(2*2.5e-6 m/s)^2` at 68. All 73 have nonzero position and velocity
+differences. The largest rounded reported norms are `0.21757621126693544 m`
+and `2.5019583702437535e-5 m/s`, both at `979596288 TDB seconds since J2000`.
+Threshold decisions use rational squares, not rounded reported square roots.
+These are target-699/center-6, J2000 representation discontinuities, not
+physical jumps or errors against a true Saturn orbit.
+
+By the triangle inequality, where the separation exceeds twice an allocation,
+one common endpoint value cannot approximate both record limits within that
+allocation. This supports investigating a boundary-aware treatment, not an
+unreviewed kernel change or increased allowance. It does not by itself prove
+the native evaluator's interval error, resolve all-file precedence, certify the
+separate barycenter contribution, or fix the production interpolation failure.
+
 ### All mapped Saturn record-join probes (2026-09-08)
 
 Compare the unchanged candidate-wide 300 s table to named direct TudatPy/SPICE

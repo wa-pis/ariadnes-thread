@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ctypes
+from fractions import Fraction
 import json
 from itertools import permutations
 import math
@@ -306,6 +307,7 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
     ]
     assert overlaps[1][0] <= start_s < overlaps[1][1] == overlaps[0][0] < end_s <= overlaps[0][1]
     record_boundaries_tdb_s: set[float] = set()
+    record_endpoints_si: dict[float, list[tuple[Fraction, ...]]] = {}
     overlapping_record_count = 0
     for segment_start_s, segment_end_s, begin, end in overlaps:
         directory = (ctypes.c_double * 4)()
@@ -319,20 +321,50 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
         for index in range(100):
             budget.check()
             address = begin + index * 122
-            header = (ctypes.c_double * 2)()
-            cspice.dafgda_c(handle, address, address + 1, header)
+            record = (ctypes.c_double * 122)()
+            cspice.dafgda_c(handle, address, address + 121, record)
             assert cspice.failed_c() == 0
             record_start_s = segment_start_s + index * 343872
             record_end_s = record_start_s + 343872
-            assert list(header) == [record_start_s + 171936, 171936.0]
+            assert list(record[:2]) == [record_start_s + 171936, 171936.0]
+            assert all(math.isfinite(value) for value in record)
             if record_start_s <= end_s and record_end_s >= start_s:
                 overlapping_record_count += 1
                 record_boundaries_tdb_s.update(
                     epoch_s for epoch_s in (record_start_s, record_end_s)
                     if start_s < epoch_s < end_s
                 )
+                for epoch_s, sign in ((record_start_s, -1), (record_end_s, 1)):
+                    if start_s < epoch_s < end_s:
+                        # T_k(+1)=1 and T_k(-1)=(-1)^k, evaluated exactly.
+                        endpoint_si = tuple(
+                            1000 * sum((Fraction(record[2 + component * 20 + degree]) * sign ** degree
+                                        for degree in range(20)), Fraction(0))
+                            for component in range(6)
+                        )
+                        coefficients = np.asarray(record)[2:].reshape(6, 20)
+                        clenshaw_si = np.polynomial.chebyshev.chebval(sign, coefficients.T) * 1000
+                        oracle_difference_si = clenshaw_si - np.asarray([float(value) for value in endpoint_si])
+                        assert np.linalg.norm(oracle_difference_si[:3]) <= 1e-8  # m
+                        assert np.linalg.norm(oracle_difference_si[3:]) <= 1e-12  # m/s
+                        record_endpoints_si.setdefault(epoch_s, []).append(endpoint_si)
     assert overlapping_record_count == 74 and len(record_boundaries_tdb_s) == 73
     assert 986817600.0 in record_boundaries_tdb_s
+    assert set(record_endpoints_si) == record_boundaries_tdb_s
+    coefficient_jumps_si: list[tuple[float, float, float]] = []
+    incompatible_position_joins = incompatible_velocity_joins = 0
+    for epoch_s, endpoints in sorted(record_endpoints_si.items()):
+        assert len(endpoints) == 2
+        difference_si = tuple(a - b for a, b in zip(*endpoints))
+        # Exact squared SI norms decide allocation exceedance; floats are reporting only.
+        position_squared_m2 = sum((value * value for value in difference_si[:3]), Fraction(0))
+        velocity_squared_m2_s2 = sum((value * value for value in difference_si[3:]), Fraction(0))
+        assert position_squared_m2 > 0 and velocity_squared_m2_s2 > 0
+        incompatible_position_joins += position_squared_m2 > (2 * Fraction("0.025")) ** 2
+        incompatible_velocity_joins += velocity_squared_m2_s2 > (2 * Fraction("0.0000025")) ** 2
+        coefficient_jumps_si.append((epoch_s, math.sqrt(float(position_squared_m2)),
+                                     math.sqrt(float(velocity_squared_m2_s2))))
+    assert (incompatible_position_joins, incompatible_velocity_joins) == (70, 68)
     settings = trajectory._create_time_limited_body_settings(environment_setup, start_s, end_s)
     budget.check()
     native = environment_setup.create_body_ephemeris(settings.get("Saturn").ephemeris_settings,
@@ -368,6 +400,11 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
         "candidate_interior_record_boundaries_tdb_s": sorted(record_boundaries_tdb_s),
         "boundary_error_fields": ["boundary_tdb_s", "max_position_error_m", "max_velocity_error_m_s"],
         "boundary_errors": boundary_errors_si,
+        "coefficient_jump_fields": ["boundary_tdb_s", "position_jump_m", "velocity_jump_m_s"],
+        "coefficient_jumps": coefficient_jumps_si,
+        "joins_exceeding_twice_position_allocation": incompatible_position_joins,
+        "joins_exceeding_twice_velocity_allocation": incompatible_velocity_joins,
+        "coefficient_frame": "Saturn barycenter/J2000",
         "position_failed_boundaries": position_failures, "velocity_failed_boundaries": velocity_failures,
         "position_worst_boundary": max(boundary_errors_si, key=lambda row: row[1]),
         "velocity_worst_boundary": max(boundary_errors_si, key=lambda row: row[2]),

@@ -42,6 +42,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 exact Saturn record-endpoint differences (2026-09-08):
+Read full records, verify finite coefficients and compute all 146 paired
+endpoints using exact Chebyshev endpoint identities and rational SI conversion.
+Verify NumPy Chebyshev parity within `1e-8 m` / `1e-12 m/s`, exact squared
+differences exceeding twice the existing allocations at 70 position / 68
+velocity joins, and nonzero differences at all 73 joins. Run
+`tests/test_trajectory_spk.py -k segment_inventory`, the whole SPK file, full
+pytest, Ruff and strict OpenSpec validation. The focused check passed; largest
+reported jumps are `0.21757621126693544 m` / `2.5019583702437535e-5 m/s`.
+These are source-representation discontinuities, not physical motion or a
+production remedy. Preserve every kernel, production tolerance and limit;
+task 3.9 remains open.
+
 Task 3.9 all mapped Saturn record-join probes (2026-09-08):
 Compare the production 300 s table with direct SPICE at all 73 directory-derived
 interior boundaries and their adjacent binary64 epochs. Verify finite SI errors,
