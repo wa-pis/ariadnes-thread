@@ -112,3 +112,80 @@ def test_native_full_step_guard_can_miss_an_internal_crossing(
         assert abs(max(history) - final_s) <= 1e-6
     # Stage latching alone is NOT a continuous safety proof: crossings can lie
     # between stages, and rejected adaptive trials may contain unsafe stages.
+
+
+@pytest.mark.parametrize("exact_event", [False, True])
+@pytest.mark.parametrize("crossing_gap", [False, True])
+def test_native_distance_event_localization_requires_detection(
+    exact_event: bool, crossing_gap: bool,
+) -> None:
+    """An exact root finder localizes a detected event; it cannot discover all events."""
+    from tudatpy.dynamics import environment_setup, propagation_setup
+    from tudatpy.math import root_finders
+
+    resource = trajectory._build_collision_resource("native-event-control")
+    radius_m = next(s.guard_radius_m for s in resource.surfaces if s.body == "Moon")
+    entry_s, exit_s = (3.0, 20.0) if crossing_gap else (100.0, 500.0)
+    speed_m_s = 2.0 * radius_m / (exit_s - entry_s)
+    initial_x_m = -radius_m - speed_m_s * entry_s
+    settings = environment_setup.BodyListSettings("SSB", "J2000")
+    settings.add_empty_settings("Moon")
+    settings.get("Moon").ephemeris_settings = environment_setup.ephemeris.constant(
+        np.zeros(6), "SSB", "J2000",
+    )
+    settings.add_empty_settings("Spacecraft")
+    settings.get("Spacecraft").constant_mass = 2000.0
+    bodies = environment_setup.create_system_of_bodies(settings)
+
+    def acceleration(epoch_tdb_s: float) -> NDArray[np.float64]:
+        return np.zeros(3)
+
+    models = propagation_setup.create_acceleration_models(
+        bodies, {"Spacecraft": {"Spacecraft": [
+            propagation_setup.acceleration.custom(acceleration),
+        ]}}, ["Spacecraft"], ["SSB"],
+    )
+    distance_guard = propagation_setup.propagator.dependent_variable_termination(
+        propagation_setup.dependent_variable.relative_distance("Spacecraft", "Moon"),
+        radius_m, use_as_lower_limit=True,
+        terminate_exactly_on_final_condition=exact_event,
+        termination_root_finder_settings=root_finders.bisection(
+            absolute_variable_tolerance=1e-12, maximum_iteration=100,
+            maximum_iteration_handling=root_finders.MaximumIterationHandling.throw_exception,
+        ),
+    )
+    termination = propagation_setup.propagator.hybrid_termination([
+        distance_guard,
+        propagation_setup.propagator.time_termination(
+            600.0, terminate_exactly_on_final_condition=True,
+        ),
+    ], fulfill_single_condition=True)
+    coupled = trajectory._build_coupled_arc_settings(
+        "native-event-control", bodies, models,
+        (initial_x_m, 0.0, 0.0, speed_m_s, 0.0, 0.0), 2000.0, 0.0,
+        trajectory._build_arc_integrator("native-event-control", "coast"),
+        termination, thrust_enabled=False,
+    )
+    budget = trajectory._RefinementBudget("native-event-control", 300.0)
+    simulator = trajectory._run_native_arc(
+        budget, bodies, coupled, first_in_evaluation=True,
+    )
+    assert simulator.integration_completed_successfully is True
+    history = simulator.state_history
+    final_s = max(history)
+    final_state = np.asarray(history[final_s]).reshape(7)
+    for epoch, raw in history.items():
+        state = np.asarray(raw).reshape(7)
+        assert abs(state[0] - (initial_x_m + speed_m_s * epoch)) <= 1e-6
+        assert state[6] == 2000.0
+    if crossing_gap:
+        assert abs(final_s - 600.0) <= 1e-6
+        assert all(np.linalg.norm(np.asarray(raw).reshape(7)[:3]) > radius_m
+                   for raw in history.values())
+    elif exact_event:
+        assert abs(final_s - entry_s) <= 1e-6
+        assert abs(np.linalg.norm(final_state[:3]) - radius_m) <= 1e-6
+    else:
+        assert final_s == 300.0
+        assert np.linalg.norm(final_state[:3]) < radius_m
+    assert budget.propagation_evaluations == budget.native_arc_propagations == 1

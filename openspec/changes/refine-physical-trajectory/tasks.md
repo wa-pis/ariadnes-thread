@@ -34,6 +34,28 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.7 native-event qualification (2026-09-08):
+The same test module now qualifies native `relative_distance` termination with
+and without exact event localization. On the unchanged nominal coast profile,
+a zero-force Moon-sphere crossing over `[100,500] s` is detected at the first
+`300 s` step; ordinary termination stops inside, while exact termination with
+bisection (`1e-12 s` root-time tolerance, 100-iteration throw-on-failure cap)
+locates entry at `100 s` within `1e-6 s` and the surface within `1e-6 m`.
+For the existing `[3,20] s` gap crossing, both settings miss the impact and
+finish at `600 s`. All saved states satisfy the same `1e-6 m` straight-line
+oracle. These root-finder settings are test-only, not a new production tolerance.
+This agrees with the documented ordering: event localization follows a detected
+termination condition, rather than continuously searching every step for roots
+([Tudat propagation architecture](https://docs.tudat.space/en/latest/user-guide/state-propagation/propagating-dynamics/propagation-architecture.html)).
+The pinned native interface confirms that custom blockwise step control chooses
+error-norm blocks, not an arbitrary state-dependent step-size policy. This
+investigation does not prove every possible Tudat extension inadequate, but
+rules out enabling exact distance termination alone as the fix. Task 3.7 and
+the spike prerequisites remain open; production behavior and resources are unchanged.
+All eight focused sampling/event controls and 600 project tests pass, as do
+Ruff, strict OpenSpec validation and the unchanged legacy checksum. Passing
+characterization tests is not completion of the continuous-collision gate.
+
 Task 3.7 between-stage counterexample (2026-09-08):
 `tests/test_native_safety_sampling.py` now also uses the unchanged nominal coast
 integrator with its `300 s` first step. The test-only zero-force straight line
