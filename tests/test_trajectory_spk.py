@@ -429,6 +429,41 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
     }, sort_keys=True, allow_nan=False))
 
 
+@pytest.mark.parametrize("body,epoch_tdb_s,error_code", [
+    ("ARIADNA_UNKNOWN_BODY", 986817600.0, r"SPICE\(IDCODENOTFOUND\)"),
+    ("Saturn", -1e12, r"SPICE\(SPKINSUFFDATA\)"),
+    ("Saturn", 1e12, r"SPICE\(SPKINSUFFDATA\)"),
+])
+def test_direct_spice_errors_do_not_poison_valid_queries(
+    body: str, epoch_tdb_s: float, error_code: str,
+) -> None:
+    """Native errors must raise and leave valid direct queries repeatable without reset."""
+    import spiceypy
+    from tudatpy.dynamics import environment_setup
+
+    budget = trajectory._RefinementBudget("d0001-t0035", 300.0)
+    spice = ephemeris._ensure_standard_kernels()
+    kernel_count = spice.get_total_count_of_kernels_loaded()
+    valid = environment_setup.create_body_ephemeris(
+        environment_setup.ephemeris.direct_spice("SSB", "J2000", "Saturn"), "Saturn",
+    )
+    baseline_si = valid.cartesian_state(986817600.0)
+    assert np.all(np.isfinite(baseline_si))
+    budget.check()
+    with pytest.raises(RuntimeError, match=error_code) as error:
+        invalid = environment_setup.create_body_ephemeris(
+            environment_setup.ephemeris.direct_spice("SSB", "J2000", body), body,
+        )
+        invalid.cartesian_state(epoch_tdb_s)
+    assert body.upper() in str(error.value).upper()
+    assert not spiceypy.failed()
+    recovered_si = valid.cartesian_state(986817600.0)
+    np.testing.assert_array_equal(recovered_si.view(np.uint64), baseline_si.view(np.uint64))
+    assert spice.get_total_count_of_kernels_loaded() == kernel_count
+    budget.check()
+    assert budget.native_arc_propagations == 0
+
+
 def test_unknown_spk_body_has_no_descriptor(cspice: ctypes.CDLL) -> None:
     """An unknown ID must not produce a fabricated usable segment."""
     handle, found = ctypes.c_int(), ctypes.c_int()

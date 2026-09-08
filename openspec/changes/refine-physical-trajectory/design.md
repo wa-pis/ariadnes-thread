@@ -1,5 +1,22 @@
 ## Context
 
+### Direct-SPICE native error controls (2026-09-08)
+
+The experimental direct path rejects `ARIADNA_UNKNOWN_BODY` with native
+`SPICE(IDCODENOTFOUND)` and Saturn requests at `-1e12` / `1e12` TDB seconds
+since J2000 with `SPICE(SPKINSUFFDATA)`. The pinned Tudat exceptions derive
+from RuntimeError and include body context. No state is returned on these
+paths. After each failure, a valid Saturn request at `986817600 TDB s` matches
+its pre-failure state in every binary64 component bit, the existing SpiceyPy
+pool inspection reports no pending error, and the loaded-kernel count is
+unchanged. The test performs no manual reset, kernel reload or unload.
+
+These controls qualify three native failure/recovery cases, not every coverage
+edge or missing-resource configuration. Project-level error translation,
+complete interval coverage validation and full-force performance remain
+unimplemented for the experimental alternative. Production behavior and all
+scientific tolerances remain unchanged; task 3.9 is not closed.
+
 ### Test-only direct-SPICE alternative (2026-09-08)
 
 Build TudatPy's existing `ephemeris.direct_spice("SSB", "J2000", "Saturn")`

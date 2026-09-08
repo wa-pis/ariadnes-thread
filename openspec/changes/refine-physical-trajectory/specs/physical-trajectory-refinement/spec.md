@@ -268,6 +268,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the existing hash-pinned native observation is extended to the six-state double-precision denominator initializer
 - **THEN** selected bytes confirm exact-one initialization, self-index exclusion and separate scalar difference/product/store instructions, the existing exact-rational grid controls still pass, and this static agreement is not called live cache or runtime-dispatch verification
 
+#### Scenario: Reject invalid native direct-SPICE requests without poisoning recovery
+- **WHEN** the experimental direct model receives an unknown body or a Saturn epoch of `-1e12` or `1e12` TDB seconds since J2000
+- **THEN** it raises a body-contextual native IDCODENOTFOUND or SPKINSUFFDATA error, leaves no pending SPICE error, and a subsequent valid query matches its pre-failure binary64 bits with unchanged kernel count and no manual reset or reload
+
 #### Scenario: Qualify a test-only direct-SPICE path at mapped boundaries
 - **WHEN** a separate built-in direct-SPICE Saturn ephemeris is evaluated at the 219 mapped boundary probes
 - **THEN** its SSB/J2000 state agrees with the named geometric SPICE query within `0.001 m` and `0.000001 m/s`, the production table and its failure counts remain unchanged, and the experimental result is not promoted to a production or trajectory-safety qualification

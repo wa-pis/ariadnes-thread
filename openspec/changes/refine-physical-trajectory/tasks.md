@@ -42,6 +42,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 direct-SPICE native error controls (2026-09-08):
+Verify unknown-body and both distant uncovered-epoch requests raise contextual
+native RuntimeError subclasses with IDCODENOTFOUND/SPKINSUFFDATA, not states.
+Verify a valid query recovers bit-for-bit without reset/reload, pending SPICE
+error or loaded-kernel count change. Run
+`tests/test_trajectory_spk.py -k direct_spice_errors` (three cases), the whole
+SPK file, full pytest, Ruff and strict OpenSpec validation. Focused cases passed.
+Use the already-pinned SpiceyPy pool inspection; no dependency changes.
+These checks do not establish all coverage edges, project error translation
+or full-force runtime. Production settings stay unchanged and 3.9 remains open.
+
 Task 3.9 test-only direct-SPICE alternative (2026-09-08):
 Construct a separate built-in direct-SPICE Saturn ephemeris in SSB/J2000 and
 compare all 219 mapped boundary probes with named geometric SPICE queries.
