@@ -200,6 +200,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** an exact-rational six-node Lagrange oracle reconstructs the existing 300-second SPICE grid at the 38 qualification epochs
 - **THEN** all eight native body states agree within the unchanged sampled input-state allocation, analytic polynomials through degree five verify the oracle, and the comparisons do not count as uniform ephemeris or propagated-error bounds
 
+#### Scenario: Qualify ephemeris grid-switch regularity
+- **WHEN** native six-point tabulation interpolates analytic degree-five and degree-six position with consistent sampled velocity on one-second and 300-second grids
+- **THEN** evaluations on both sides of an interior knot match the closed polynomial remainder within `1e-10 m` in position and `1e-10 m/s` in velocity, and derivative-jump evidence prevents assuming global smoothness or equating interpolated velocity with the derivative of interpolated position
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

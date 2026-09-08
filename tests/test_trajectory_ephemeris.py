@@ -52,6 +52,73 @@ def test_rational_ephemeris_oracle_reproduces_polynomials(degree: int) -> None:
         np.testing.assert_allclose(actual, expected, rtol=0.0, atol=1e-12)
 
 
+@pytest.mark.parametrize("degree", [5, 6])
+@pytest.mark.parametrize("step_s", [1.0, 300.0])
+def test_native_ephemeris_grid_switch_does_not_guarantee_smooth_position(
+    degree: int, step_s: float,
+) -> None:
+    """Analytic control, not a replacement ephemeris or a mission jump bound."""
+    from tudatpy.dynamics import environment_setup
+
+    # x = u**degree metres, u = t/step; sampled vx is its exact derivative.
+    history = {
+        index * step_s: np.asarray([
+            float(index ** degree), 0.0, 0.0,
+            degree * index ** (degree - 1) / step_s, 0.0, 0.0,
+        ])
+        for index in range(-8, 10)
+    }
+    table = environment_setup.create_body_ephemeris(
+        environment_setup.ephemeris.tabulated(history, "SSB", "J2000"), "Control",
+    )
+    assert table.frame_origin == "SSB" and table.frame_orientation == "J2000"
+    knot_tdb_s = step_s
+    knot_state_si = np.asarray(table.cartesian_state(knot_tdb_s)).reshape(6)
+    np.testing.assert_allclose(knot_state_si, [1.0, 0.0, 0.0, degree / step_s, 0.0, 0.0],
+                               rtol=0.0, atol=1e-10)
+    slopes_m_s: dict[str, float] = {}
+    for side, nodes, sign in (("left", range(-2, 4), -1), ("right", range(-1, 5), 1)):
+        # For degree six the interpolation remainder is the monic node product;
+        # for degree five interpolation is exact. No fitted or sampled oracle.
+        product_derivative_at_knot = math.prod(1 - node for node in nodes if node != 1)
+        expected_derivative_m_s = (
+            degree - (product_derivative_at_knot if degree == 6 else 0)
+        ) / step_s
+        for denominator in (4096, 8192):
+            delta_s = sign * step_s / denominator
+            epoch_tdb_s = knot_tdb_s + delta_s
+            u = Fraction(epoch_tdb_s) / Fraction(step_s)
+            expected_position_m = u ** degree
+            if degree == 6:
+                expected_position_m -= math.prod(u - node for node in nodes)
+            expected_velocity_m_s = degree * u ** (degree - 1) / Fraction(step_s)
+            state_si = np.asarray(table.cartesian_state(epoch_tdb_s)).reshape(6)
+            np.testing.assert_allclose(state_si[:3], [float(expected_position_m), 0.0, 0.0],
+                                       rtol=0.0, atol=1e-10)
+            np.testing.assert_allclose(state_si[3:], [float(expected_velocity_m_s), 0.0, 0.0],
+                                       rtol=0.0, atol=1e-10)
+            secant_m_s = (state_si[0] - knot_state_si[0]) / delta_s
+            rational_secant_m_s = float((expected_position_m - 1) / Fraction(delta_s))
+            assert abs(secant_m_s - rational_secant_m_s) <= 1e-6
+            # This is a finite-secant approximation allowance, not a native or
+            # mission velocity tolerance; the limiting derivatives are analytic.
+            assert abs(secant_m_s - expected_derivative_m_s) <= 0.05 / step_s
+        slopes_m_s[side] = expected_derivative_m_s
+    if degree == 5:
+        assert slopes_m_s["left"] == slopes_m_s["right"] == knot_state_si[3]
+    else:
+        assert slopes_m_s["left"] == -6.0 / step_s
+        assert slopes_m_s["right"] == 18.0 / step_s
+        assert slopes_m_s["left"] != knot_state_si[3] != slopes_m_s["right"]
+    print(json.dumps({
+        "scope": "Analytic native interpolation control; not mission derivative jumps",
+        "degree": degree, "step_s": step_s, "knot_tdb_s": knot_tdb_s,
+        "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+        "position_m": knot_state_si[0], "returned_velocity_m_s": knot_state_si[3],
+        "position_derivative_limits_m_s": slopes_m_s,
+    }, sort_keys=True, allow_nan=False))
+
+
 @pytest.mark.parametrize("phase", ["departure", "cruise", "arrival"])
 @pytest.mark.parametrize("duration_s", [30.0, 300.0, 86400.0])
 def test_moving_body_chord_deviation_is_not_interpolation_error(

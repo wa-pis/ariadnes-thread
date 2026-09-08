@@ -42,6 +42,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 grid-switch regularity evidence (2026-09-08):
+`test_native_ephemeris_grid_switch_does_not_guarantee_smooth_position` uses
+native six-point tabulation on analytic `x=u^d m`, `u=t/h`, with consistent
+sampled `vx=d*u^(d-1)/h m/s`, degrees five/six and `h=1 s` / `300 s`.
+At `u=1`, adjacent position polynomials share the same position. For degree
+six the exact local polynomial is `u^6-product(u-node)`; differentiating its
+node product gives left/right position derivatives `-6/h` and `18/h m/s`,
+while the independently interpolated velocity is `6/h m/s`. Thus the
+300-second control has a `0.08 m/s` derivative jump and returned velocity
+`0.02 m/s`. These are analytic control values, NOT measured mission jumps.
+The degree-five control has matching derivatives and velocity `5/h m/s`.
+
+Native evaluations on both sides at normalized offsets `1/4096` and `1/8192`
+agree with the exact rational remainder within `1e-10 m` and `1e-10 m/s`.
+Native secants agree with exact secants within `1e-6 m/s`; their analytic
+derivative-limit approximation allowance is `0.05/h m/s`, not a mission
+tolerance. Reproduce all four controls and their SI/SSB/J2000/TDB JSON evidence:
+`conda run -n space-nav python -m pytest -q -s tests/test_trajectory_ephemeris.py -k grid_switch`.
+
+This rules out assuming bounded classical second derivative across all knots
+or using the returned velocity as the position derivative. Future interval
+enclosures must work cellwise or include derivative jumps; splitting the
+mathematical enclosure need not restart native spacecraft propagation at each
+ephemeris knot. Real mission jump magnitudes, rounding and uniform SPICE error
+remain unqualified. Task 3.9 stays open with unchanged production limits,
+300-second budget, forces and scientific tolerances.
+
 Task 3.9 local ephemeris polynomial evidence (2026-09-08):
 The pinned headers `simulation/environment_setup/createEphemeris.h` and
 `math/interpolators/lagrangeInterpolator.h` specify six stages and the interior

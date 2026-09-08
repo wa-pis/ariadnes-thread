@@ -119,6 +119,15 @@ ephemeris, infer unsampled SPICE error from these comparisons, or treat the
 separately interpolated velocity components as derivatives of the position
 polynomial. Boundary splines and all-interval roundoff remain separate obligations.
 
+Do not assume a bounded classical second derivative across an interior grid
+switch. Qualify native six-point tabulation on analytic degree-five and
+degree-six motion with consistent sampled velocity, using explicit one-second
+and 300-second grids. Compare both sides with the closed polynomial remainder
+and distinguish the position derivative from the returned velocity channel.
+Any future chord enclosure spanning knots must split its mathematical analysis
+by interpolation cell or explicitly bound derivative jumps; this does not by
+itself require an additional native spacecraft propagation per ephemeris cell.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
