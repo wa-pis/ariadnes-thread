@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from decimal import Inexact, ROUND_FLOOR, localcontext
+from fractions import Fraction
 import math
 import os
 from pathlib import Path
@@ -293,7 +295,12 @@ def test_ppn_parameter_failure_is_chained_with_candidate_context(
     assert caught.value.__cause__ is failure
 
 
-def test_real_schwarzschild_acceleration_matches_independent_formula() -> None:
+@pytest.mark.parametrize("velocity", [
+    _VELOCITY_M_S, (12000.0, -7000.0, 2000.0), (7000.0, 12000.0, 0.0), (0.0, 0.0, 0.0),
+])
+def test_real_schwarzschild_acceleration_matches_independent_formula(
+    velocity: tuple[float, float, float],
+) -> None:
     pytest.importorskip("tudatpy")
     import numpy as np
     from tudatpy import dynamics
@@ -347,7 +354,7 @@ def test_real_schwarzschild_acceleration_matches_independent_formula() -> None:
             ["SSB"],
         )
 
-        initial_state = np.asarray((*_POSITION_M, *_VELOCITY_M_S), dtype=float)
+        initial_state = np.asarray((*_POSITION_M, *velocity), dtype=float)
         output_variables = [
             propagation_setup.dependent_variable.single_acceleration(
                 (
@@ -390,7 +397,7 @@ def test_real_schwarzschild_acceleration_matches_independent_formula() -> None:
         ppn_parameters.parameter_vector = np.asarray([1.0, 1.0])
 
     position_m = np.asarray(_POSITION_M, dtype=float)
-    velocity_m_s = np.asarray(_VELOCITY_M_S, dtype=float)
+    velocity_m_s = np.asarray(velocity, dtype=float)
     distance_m = float(np.linalg.norm(position_m))
     speed_squared_m2_s2 = float(np.dot(velocity_m_s, velocity_m_s))
     radial_velocity_m2_s = float(np.dot(position_m, velocity_m_s))
@@ -415,3 +422,79 @@ def test_real_schwarzschild_acceleration_matches_independent_formula() -> None:
     assert float(np.linalg.norm(actual_m_s2)) > 0.0
     assert expected_norm_m_s2 > 0.0
     assert float(np.linalg.norm(actual_m_s2 - expected_m_s2)) <= tolerance_m_s2
+    bound_m_s2 = trajectory._schwarzschild_acceleration_upper_bound(
+        "relativity-bound", _SUN_GRAVITATIONAL_PARAMETER_M3_S2, distance_m * 0.999,
+        math.sqrt(speed_squared_m2_s2) * 1.001,
+    )
+    assert float(np.linalg.norm(actual_m_s2)) <= bound_m_s2
+
+
+@pytest.mark.parametrize("speed_m_s", [0.0, 5.0, 50000.0])
+def test_schwarzschild_bound_rounds_outward_against_exact_rational_oracle(speed_m_s: float) -> None:
+    gm_m3_s2, distance_m = 7.0, 3.0
+    exact = Fraction(gm_m3_s2) / (299792458**2 * Fraction(distance_m)**2) * (
+        4 * Fraction(gm_m3_s2) / Fraction(distance_m) + 3 * Fraction(speed_m_s)**2
+    )
+    bound_m_s2 = trajectory._schwarzschild_acceleration_upper_bound(
+        "bound", gm_m3_s2, distance_m, speed_m_s,
+    )
+    assert Fraction(bound_m_s2) >= exact
+    assert math.isclose(bound_m_s2, float(exact), rel_tol=1e-15)
+    assert trajectory._schwarzschild_acceleration_upper_bound(
+        "bound", gm_m3_s2, 2 * distance_m, speed_m_s,
+    ) < bound_m_s2 / 4
+    assert trajectory._schwarzschild_acceleration_upper_bound(
+        "bound", gm_m3_s2, distance_m, speed_m_s + 1,
+    ) > bound_m_s2
+    with localcontext() as context:
+        context.prec = 2
+        context.rounding = ROUND_FLOOR
+        context.traps[Inexact] = True
+        assert trajectory._schwarzschild_acceleration_upper_bound(
+            "bound", gm_m3_s2, distance_m, speed_m_s,
+        ) == bound_m_s2
+
+
+def test_radial_velocity_attains_schwarzschild_orientation_maximum() -> None:
+    # Independent exact vector formula for r=(3,0,0), GM=7 and |v|<=5.
+    bound_m_s2 = trajectory._schwarzschild_acceleration_upper_bound("bound", 7.0, 3.0, 5.0)
+    norms_squared: list[Fraction] = []
+    for velocity in ((5, 0, 0), (-5, 0, 0), (0, 5, 0), (3, 4, 0), (0, 0, 0)):
+        speed_squared = sum(value**2 for value in velocity)
+        radial_product = 3 * velocity[0]
+        acceleration = tuple(
+            Fraction(7, 299792458**2 * 27) * (
+                (Fraction(28, 3) - speed_squared) * position + 4 * radial_product * value
+            ) for position, value in zip((3, 0, 0), velocity, strict=True)
+        )
+        norm_squared = sum((value**2 for value in acceleration), Fraction(0))
+        assert norm_squared <= Fraction(bound_m_s2)**2
+        norms_squared.append(norm_squared)
+    assert norms_squared[0] == norms_squared[1] == max(norms_squared)
+    assert all(value < norms_squared[0] for value in norms_squared[2:])
+
+
+@pytest.mark.parametrize("field", ["gm", "distance", "speed"])
+@pytest.mark.parametrize("value", [True, -1.0, math.nan, math.inf, "bad"])
+def test_schwarzschild_bound_rejects_invalid_inputs(field: str, value: object) -> None:
+    values = {"gm": 7.0, "distance": 3.0, "speed": 5.0}
+    values[field] = value  # type: ignore[assignment]  # Invalid input probe.
+    with pytest.raises(TrajectoryRefinementError, match="schwarzschild-bound") as caught:
+        trajectory._schwarzschild_acceleration_upper_bound(
+            "bound", values["gm"], values["distance"], values["speed"],
+        )
+    assert caught.value.__cause__ is not None
+
+
+@pytest.mark.parametrize(("gm_m3_s2", "distance_m"), [(0.0, 3.0), (7.0, 0.0)])
+def test_schwarzschild_bound_rejects_zero_gm_or_distance(gm_m3_s2: float, distance_m: float) -> None:
+    with pytest.raises(TrajectoryRefinementError, match="positive"):
+        trajectory._schwarzschild_acceleration_upper_bound("bound", gm_m3_s2, distance_m, 0.0)
+
+
+def test_schwarzschild_bound_handles_float_underflow_and_rejects_overflow() -> None:
+    assert trajectory._schwarzschild_acceleration_upper_bound(
+        "bound", 1e-300, 1e300, 0.0,
+    ) == math.nextafter(0.0, math.inf)
+    with pytest.raises(TrajectoryRefinementError, match="upper bound_m_s2"):
+        trajectory._schwarzschild_acceleration_upper_bound("bound", 1e300, 1e-300, 0.0)

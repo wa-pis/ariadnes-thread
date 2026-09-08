@@ -230,3 +230,7 @@ Following user approval to revise native-call limits, private safety qualificati
 #### Scenario: Bound thrust and solar radiation without sampled-shadow assumptions
 - **WHEN** spacecraft physical inputs, an explicit burn/coast flag, a proven mass floor at dry mass and a positive minimum Sun distance are supplied to the private qualification helper
 - **THEN** it returns outward-rounded thrust and fully lit SRP norm bounds in m/s^2, returns exactly zero thrust for coast, never lowers the SRP bound using a sampled shadow, and rejects invalid contributing fields or non-finite results without certifying trajectory safety
+
+#### Scenario: Bound the declared Sun Schwarzschild correction
+- **WHEN** the Sun-only PPN beta=gamma=1 model has an explicit positive minimum Sun distance and nonnegative maximum Sun-relative speed
+- **THEN** the private helper returns an outward-rounded acceleration-norm bound in m/s^2 that includes radial, transverse and zero-speed controls, rejects invalid or overflowing inputs, and leaves proof of those interval bounds and native-error control to the caller

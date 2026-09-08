@@ -42,6 +42,29 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 Schwarzschild-component enclosure evidence (2026-09-08):
+`_schwarzschild_acceleration_upper_bound` implements the derived orientation
+maximum `GM/(c^2*r_min^2)*(4*GM/r_min+3*V_max^2)` for the declared Sun-only
+PPN beta=gamma=1 model. It requires an explicit positive distance floor and
+nonnegative Sun-relative speed ceiling, uses the existing SI light speed and
+isolated upward-rounded 50-digit Decimal arithmetic, and rounds the returned
+float outward. It neither queries ephemerides nor changes native PPN globals.
+
+`tests/test_trajectory_relativity.py` compares the scalar expression with exact
+rational arithmetic at zero, 5 and 50000 m/s, verifies an independent rational
+vector expression attains the orientation maximum for radial motion, checks
+distance/speed monotonicity and caller-context isolation, and rejects invalid
+inputs and overflow while preserving positive subnormal bounds. The existing
+native fixed-state formula comparison now covers oblique, radial, transverse
+and zero relative velocities with its unchanged `max(1e-15 m/s^2, 1e-12*norm)`
+parity tolerance; all four native norms lie below the component bound. Reproduce
+with `conda run -n space-nav python -m pytest -q tests/test_trajectory_relativity.py`
+(30 tests). These are component controls, not a full-force propagated interval.
+The distance/speed floors/ceilings, native force error, body motion and numerical
+trajectory error still need independent interval justification. No force model,
+PPN setting, propagation budget or scientific tolerance changed; task 3.9 remains
+open and the targeting spike remains gated.
+
 Task 3.9 thrust/SRP component enclosure evidence (2026-09-08):
 `_thrust_and_srp_upper_bounds` returns separate orientation-independent
 maximum-thrust and fully lit cannonball SRP bounds using dry mass and an

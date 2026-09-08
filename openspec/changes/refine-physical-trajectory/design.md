@@ -77,6 +77,22 @@ burn/coast flag. No current shadow sample may reduce the interval SRP bound.
 The caller must prove the mass/distance floors; this does not include native
 evaluation error, relativity, gravity, body motion or trajectory error.
 
+For the declared Sun-only Schwarzschild correction with PPN beta=gamma=1,
+write its [native-model expression](https://py.api.tudat.space/en/latest/dynamics/propagation_setup/acceleration.html#tudatpy.dynamics.propagation_setup.acceleration.relativistic_correction)
+as `GM/(c^2*r^2) * [(A-s)*e_r + 4*v_r*v]`, where `A=4*GM/r`, `s=||v||^2`,
+and `v_r=e_r dot v`; v is spacecraft velocity relative to the Sun, not its
+absolute SSB velocity. The squared bracket norm is
+`(A-s)^2 + 8*(A+s)*v_r^2 <= (A+3*s)^2`. Thus the orientation-independent bound
+is `GM/(c^2*r_min^2) * (4*GM/r_min + 3*V_max^2)` for proven
+`r >= r_min > 0` and `||v|| <= V_max`. Radial motion attains the orientation
+maximum, and zero relative speed is valid. Use the existing exact SI light
+speed and isolated upward-rounded Decimal operations, with outward final float
+conversion. Reject invalid inputs and overflow. The caller must prove both
+interval bounds and enforce PPN beta=gamma=1 in the force factory; this helper
+does not load SPICE, change PPN globals, validate an interval, cover omitted
+relativistic effects, or claim physical validity outside the model's weak-field,
+slow-motion regime. Native evaluation and trajectory errors remain separate.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

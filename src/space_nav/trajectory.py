@@ -2175,6 +2175,41 @@ def _build_solar_radiation_pressure_setup(
     )
 
 
+def _schwarzschild_acceleration_upper_bound(
+    candidate_id: object,
+    gravitational_parameter_m3_s2: float,
+    minimum_distance_m: float,
+    maximum_relative_speed_m_s: float,
+) -> float:
+    """Bound the declared Sun Schwarzschild norm in m/s^2 for PPN beta=gamma=1.
+
+    The caller must prove distance >= its floor and Sun-relative speed <= its
+    ceiling throughout the interval. No native error or other force is included.
+    """
+    try:
+        gm_m3_s2 = Decimal.from_float(_positive_finite(
+            "gravitational_parameter_m3_s2", gravitational_parameter_m3_s2,
+        ))
+        distance_m = Decimal.from_float(_positive_finite("minimum_distance_m", minimum_distance_m))
+        speed_m_s = Decimal.from_float(_finite_float(
+            "maximum_relative_speed_m_s", maximum_relative_speed_m_s,
+        ))
+        if speed_m_s < 0:
+            raise ValueError("maximum_relative_speed_m_s must be nonnegative")
+        with localcontext(Context(prec=50, rounding=ROUND_CEILING)):
+            inverse_distance_m_inv = Decimal(1) / distance_m
+            # The exact orientation maximum is radial: 4*GM/r + 3*|v|^2.
+            bound_m_s2 = (
+                gm_m3_s2 * inverse_distance_m_inv * inverse_distance_m_inv
+                * (4 * gm_m3_s2 * inverse_distance_m_inv + 3 * speed_m_s * speed_m_s)
+                / Decimal(int(_SPEED_OF_LIGHT_M_S)**2)
+            )
+            result_m_s2 = math.nextafter(float(bound_m_s2), math.inf)
+        return _finite_float("Schwarzschild upper bound_m_s2", result_m_s2)
+    except (ArithmeticError, TypeError, ValueError) as exc:
+        _raise_refinement_error(candidate_id, "schwarzschild-bound", str(exc), exc)
+
+
 def _build_relativistic_acceleration_settings(
     candidate_id: object,
 ) -> tuple[dict[str, tuple[Any, ...]], _RelativityResource]:
