@@ -12,6 +12,65 @@ from space_nav.errors import TrajectoryRefinementError
 STATE = (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 1500.0)
 
 
+@pytest.mark.parametrize("reason", [
+    "rejected-dry-mass",
+    *(f"rejected-impact:{body}" for body in trajectory.PHYSICAL_BODY_NAMES),
+])
+def test_safety_rejection_precedes_history_and_final_epoch_checks(reason: str) -> None:
+    simulator = MagicMock()
+    simulator.integration_completed_successfully = True
+    history = PropertyMock(side_effect=AssertionError("unsafe history read"))
+    type(simulator).state_history = history
+    assert trajectory._read_trial_arc_outcome(
+        "safety-control", "coast", simulator, 10.0, reason,
+    ) == reason
+    history.assert_not_called()
+
+
+@pytest.mark.parametrize("flag", [False, None, 1, "True"])
+def test_safety_reason_cannot_mask_native_integration_failure(flag: object) -> None:
+    simulator = MagicMock()
+    simulator.integration_completed_successfully = flag
+    history = PropertyMock(side_effect=AssertionError("failed history read"))
+    type(simulator).state_history = history
+    with pytest.raises(TrajectoryRefinementError, match="arc-completion"):
+        trajectory._read_trial_arc_outcome(
+            "safety-control", "coast", simulator, 10.0, "rejected-impact:Moon",
+        )
+    history.assert_not_called()
+
+
+@pytest.mark.parametrize("reason", ["", "rejected-impact:Pluto", "rejected-control-bounds", True, []])
+def test_invalid_safety_reason_starts_no_native_read(reason: object) -> None:
+    simulator = MagicMock()
+    flag = PropertyMock(side_effect=AssertionError("native read"))
+    type(simulator).integration_completed_successfully = flag
+    with pytest.raises(TrajectoryRefinementError, match="arc-safety"):
+        trajectory._read_trial_arc_outcome(
+            "safety-control", "coast", simulator, 10.0,
+            reason,  # type: ignore[arg-type]  # Invalid boundary probe.
+        )
+    flag.assert_not_called()
+
+
+def test_trial_outcome_preserves_safe_completion_and_native_errors() -> None:
+    simulator = SimpleNamespace(integration_completed_successfully=True,
+                                state_history={10.0: STATE})
+    assert trajectory._read_trial_arc_outcome(
+        "safe-control", "coast", simulator, 10.0, None,
+    ) == (STATE[:6], STATE[6])
+    with pytest.raises(TrajectoryRefinementError, match="final epoch mismatch"):
+        trajectory._read_trial_arc_outcome("safe-control", "coast", simulator, 11.0, None)
+    native = MagicMock()
+    failure = RuntimeError("native completion flag unavailable")
+    type(native).integration_completed_successfully = PropertyMock(side_effect=failure)
+    with pytest.raises(TrajectoryRefinementError) as caught:
+        trajectory._read_trial_arc_outcome(
+            "safe-control", "coast", native, 10.0, "rejected-dry-mass",
+        )
+    assert caught.value.__cause__ is failure
+
+
 def test_completed_state_is_immutable_and_selects_latest_epoch() -> None:
     simulator = SimpleNamespace(
         integration_completed_successfully=True,

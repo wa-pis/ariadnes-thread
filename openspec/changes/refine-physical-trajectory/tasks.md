@@ -34,6 +34,24 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.7 outcome-precedence evidence (2026-09-08):
+`_read_trial_arc_outcome` consumes an independently established physical safety
+reason before the final-epoch/history reader. A successful native safety stop
+returns only its validated dry-mass or one-of-eight-body impact reason, never
+the unsafe state history. Invalid reasons are errors, and an unsuccessful or
+unreadable native completion flag remains fatal even with a safety reason.
+With no rejection, the existing strict completion reader is reused unchanged.
+Injected property traps prove rejected/failed histories are not read; the
+existing native stage-latch characterization verifies an actual early impact
+stop is rejected rather than mislabeled as a final-epoch mismatch. The caller
+must still discard its native simulator and establish safety independently:
+this gate does not detect collisions or certify that a null reason is safe.
+Continuous guards, initial-state guards, rejection counters and production
+driver wiring remain open; tasks 3.5 and 3.7 are not complete. No scientific
+constants, tolerances, dependencies or UI behavior changed.
+All 43 focused checks and 579 project tests pass, as do Ruff, strict OpenSpec
+validation and the unchanged legacy checksum.
+
 Task 3.4 native-handoff prerequisite evidence (2026-09-08):
 `tests/test_native_arc_handoff.py` chains the existing TNW engine installer,
 coupled seven-state settings, integrators, shared-budget runner and completion

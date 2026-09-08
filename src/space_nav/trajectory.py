@@ -1545,6 +1545,37 @@ def _run_native_arc(
     return simulator
 
 
+def _read_trial_arc_outcome(
+    candidate_id: object,
+    arc: Literal["departure-burn", "coast", "arrival-burn"],
+    simulator: Any,
+    expected_epoch_tdb_s: object,
+    safety_rejection: str | None,
+) -> tuple[Cartesian6, float] | str:
+    """Consume an independently classified arc, without exposing unsafe history.
+
+    The caller must establish safety (including between-step crossings) first
+    and discard the native simulator after a rejection/error. None is not a
+    safety certificate. Native failure remains fatal even with a safety reason.
+    """
+    if safety_rejection is None:
+        return _read_completed_arc_state(candidate_id, arc, simulator, expected_epoch_tdb_s)
+    allowed = {"rejected-dry-mass"} | {
+        f"rejected-impact:{body}" for body in PHYSICAL_BODY_NAMES
+    }
+    if not isinstance(safety_rejection, str) or safety_rejection not in allowed:
+        cause = ValueError(f"invalid physical safety rejection: {safety_rejection!r}")
+        _raise_refinement_error(candidate_id, "arc-safety", f"{arc}: {cause}", cause)
+    try:
+        completed = simulator.integration_completed_successfully
+    except Exception as exc:
+        _raise_refinement_error(candidate_id, "arc-completion", f"{arc}: {exc}", exc)
+    if completed is not True:
+        cause = RuntimeError("native integration failed despite a safety rejection")
+        _raise_refinement_error(candidate_id, "arc-completion", f"{arc}: {cause}", cause)
+    return safety_rejection
+
+
 def _read_completed_arc_state(
     candidate_id: object,
     arc: Literal["departure-burn", "coast", "arrival-burn"],

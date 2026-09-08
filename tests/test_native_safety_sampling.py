@@ -84,7 +84,10 @@ def test_native_full_step_guard_can_miss_an_internal_crossing(
     if latch_stages:
         assert rejection == "rejected-impact:Moon"
         assert max(history) < 2.0
-        # A safety rejection must discard this history before final-epoch checks.
+        # The outcome gate must not mistake the known early stop for epoch failure.
+        assert trajectory._read_trial_arc_outcome(
+            "safety-sampling-control", "departure-burn", simulator, 2.0, rejection,
+        ) == "rejected-impact:Moon"
     else:
         assert rejection is None
         assert abs(max(history) - 2.0) <= 1e-6
