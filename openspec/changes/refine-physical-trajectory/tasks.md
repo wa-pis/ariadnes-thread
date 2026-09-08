@@ -42,6 +42,29 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 native arithmetic-graph replay evidence (2026-09-08):
+Test-only `_replay_lagrange_state` follows the inspected header's denominator
+product order, repeated numerator, division and six sequential state multiply/
+add terms, with an exact-knot shortcut. Explicit Python float operations avoid
+compensated `sum` and implicit fused multiply/add. Affine and cancellation
+controls independently compare the replay with the rational oracle at knots
+and interior points within `1e-12` in each SI component; knot values are exact.
+
+The existing real eight-body fixture now records `300s_source_replay` errors
+and `source_replay_exact_state_matches`. All 38 states per body, 304 total,
+matched the native six-component values exactly in this run: maximum position
+and velocity discrepancies were zero. The unchanged sampled allocation remains
+the numerical acceptance gate; exact-match counts are reported as evidence,
+not silently promoted into a cross-platform contract. Reproduce with
+`conda run -n space-nav python -m pytest -q -s tests/test_trajectory_ephemeris.py -k 'replay or full_candidate'`
+(three tests). Existing output includes platform/software/kernel provenance.
+
+This connects the inspected arithmetic graph to representative pinned native
+outputs; it is not proof of all compiled paths, runtime rounding modes, absence
+of exceptional arithmetic, or a uniform forward-error bound. Those premises
+and SPICE approximation error remain separate work. No runtime ephemeris,
+scientific tolerance, force model or work limit changed; task 3.9 stays open.
+
 Task 3.9 six-node amplification evidence (2026-09-08):
 The uniform middle-cell basis has signs `(+,-,+,+,-,+)`. Using partition of
 unity and factoring its two negative weights gives the exact absolute-weight

@@ -228,6 +228,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the uniform six-node middle-cell Lagrange basis is checked with rational arithmetic and native constant-sign/worst-sign nodal position perturbations
 - **THEN** its absolute-weight sum follows `1+w*(6+w)/4`, `w=u*(1-u)`, attains `89/64` at the midpoint, and native controls agree within `1e-12 m` without treating this amplification factor as a complete interpolation-error bound
 
+#### Scenario: Qualify the native interpolation arithmetic replay
+- **WHEN** a test-only binary64 replay follows the inspected six-node arithmetic order at all eight bodies' 38 qualification epochs
+- **THEN** native/replay state differences meet the unchanged allocation, exact state-match counts are reported separately, and analytic knot/affine/cancellation controls verify the replay without claiming a uniform native roundoff certificate
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

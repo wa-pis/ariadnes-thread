@@ -105,6 +105,46 @@ def _rational_lagrange_state(
     ])
 
 
+def _replay_lagrange_state(
+    epochs_tdb_s: list[float], states_si: np.ndarray, epoch_tdb_s: float,
+) -> np.ndarray:
+    """Replay inspected scalar multiply/add order, not compiler or error certification."""
+    if epoch_tdb_s in epochs_tdb_s:
+        return states_si[epochs_tdb_s.index(epoch_tdb_s)].copy()
+    differences_s = [epoch_tdb_s - node for node in epochs_tdb_s]
+    numerator_s6 = 1.0
+    for difference_s in differences_s:
+        numerator_s6 *= difference_s
+    result_si = [0.0] * 6
+    for index, node in enumerate(epochs_tdb_s):
+        denominator_s5 = 1.0
+        for other_index, other in enumerate(epochs_tdb_s):
+            if other_index != index:
+                denominator_s5 *= node - other
+        weight = numerator_s6 / (differences_s[index] * denominator_s5)
+        for component in range(6):
+            product_si = float(states_si[index, component]) * weight
+            result_si[component] += product_si
+    return np.asarray(result_si)
+
+
+@pytest.mark.parametrize("case", ["affine", "cancellation"])
+def test_lagrange_arithmetic_replay_matches_exact_controls(case: str) -> None:
+    nodes_s = [-600.0, -300.0, 0.0, 300.0, 600.0, 900.0]
+    states_si = np.asarray([
+        [(axis + 1) * (index - 2) if case == "affine" else (-1) ** index * (axis + 1)
+         for axis in range(6)] for index in range(6)
+    ], dtype=float)
+    for epoch_s in (0.0, 37.5, 150.0, 262.5, 300.0):
+        replay_si = _replay_lagrange_state(nodes_s, states_si, epoch_s)
+        exact_si = _rational_lagrange_state(nodes_s, states_si, epoch_s)
+        np.testing.assert_allclose(replay_si, exact_si, rtol=0.0, atol=1e-12)
+        if epoch_s in nodes_s:
+            np.testing.assert_array_equal(replay_si, states_si[nodes_s.index(epoch_s)])
+        if case == "cancellation" and epoch_s == 150.0:
+            np.testing.assert_array_equal(exact_si, np.zeros(6))
+
+
 def test_six_node_amplification_identity_is_sharp() -> None:
     nodes = tuple(Fraction(index) for index in range(-2, 4))
     signs = (1, -1, 1, 1, -1, 1)
@@ -416,7 +456,9 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
             "300s_150s": [],
             "300s_rational_polynomial": [],
             "300s_cell_rational": [],
+            "300s_source_replay": [],
         }
+        replay_exact_matches = 0
         bounds_m: list[float] = []
         midpoint_defects_m: list[float] = []
         helper_elapsed_s = 0.0
@@ -442,6 +484,8 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
                 for node in nodes_tdb_s
             ]).reshape(6, 6)
             rational_state_si = _rational_lagrange_state(nodes_tdb_s, node_states_si, epoch)
+            replay_state_si = _replay_lagrange_state(nodes_tdb_s, node_states_si, epoch)
+            replay_exact_matches += int(np.array_equal(coarse, replay_state_si))
             cell_start_s, cell_end_s = nodes_tdb_s[2:4]
             positions_m = tuple((float(row[0]), float(row[1]), float(row[2])) for row in node_states_si)
             helper_started_s = time.perf_counter()
@@ -478,6 +522,7 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
                 ("150s_direct", fine - direct),
                 ("300s_150s", coarse - fine),
                 ("300s_rational_polynomial", coarse - rational_state_si),
+                ("300s_source_replay", coarse - replay_state_si),
             ):
                 assert np.all(np.isfinite(difference))
                 differences[label].append(
@@ -495,6 +540,7 @@ def test_full_candidate_interpolation_against_direct_spice() -> None:
             assert velocity_m_s <= 2.5e-6, (body, errors[body])
         cell_measurements[body] = {
             "cell_requests": len(bounds_m),
+            "source_replay_exact_state_matches": replay_exact_matches,
             "max_polynomial_chord_bound_m": max(bounds_m),
             "max_sampled_native_midpoint_chord_deviation_m": max(midpoint_defects_m),
             "helper_only_elapsed_s": helper_elapsed_s,

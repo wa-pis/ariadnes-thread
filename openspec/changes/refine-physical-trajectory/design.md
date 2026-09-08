@@ -211,6 +211,16 @@ approximation, and applies only to this uniform middle-cell stencil, not
 boundary splines or arbitrary grids. Keep it as a qualification result until
 the complete rounding argument is established; add no unused runtime machinery.
 
+Qualify the inspected arithmetic graph before attaching a roundoff bound to
+native results. A test-only binary64 replay uses the source's cached-denominator
+product order, repeated numerator and six ordered state multiply/add terms,
+with an exact-knot shortcut. Do not use Python's compensated `sum` or implicitly
+fuse multiply/add. Compare it with the existing native eight-body/38-epoch
+fixture under unchanged state tolerances, and report exact state matches as
+additional evidence. Analytic affine and cancellation controls independently
+check the replay. Agreement at these inputs does not prove compiler flags,
+runtime rounding, underflow/overflow behavior or a uniform native error bound.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
