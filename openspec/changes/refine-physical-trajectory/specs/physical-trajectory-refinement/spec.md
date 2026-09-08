@@ -248,6 +248,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** every timestamp on the pinned padded candidate grid is queried directly from TudatPy/SPICE for all eight bodies
 - **THEN** every SI component passes the existing arithmetic-range gate, per-body counts/extrema/state hashes and provenance are reported, the shared deadline is checked every 512 queries and after each body with zero spacecraft-propagation counters, and reconstructed source nodes are not described as native table readback or an ephemeris-accuracy certificate
 
+#### Scenario: Qualify every native knot required by the candidate
+- **WHEN** the exact-index union of all candidate six-node stencils is queried at every knot through each production body's ephemeris
+- **THEN** the safe interpolation interval contains the union, all six binary64 component bit patterns match direct SPICE exactly, per-body match counts/subset hashes/separate timings are reported under the existing shared deadline, and knot agreement is not promoted into between-knot or trajectory certification
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

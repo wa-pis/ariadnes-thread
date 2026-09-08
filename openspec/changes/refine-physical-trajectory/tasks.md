@@ -42,6 +42,27 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 exhaustive required-native-knot parity (2026-09-08):
+Derive the union of candidate six-node stencils with exact rational floor indices
+and query every required knot through each production native ephemeris. Require
+coverage of that full union and exact equality of all six binary64 bit patterns
+against the reconstructed SPICE nodes, not a relaxed physical tolerance. Report
+match counts and subset hashes separately from the larger padded source inventory,
+and measure native construction/query/check time separately. Verify using
+`tests/test_trajectory_ephemeris.py -k grid_binary64`, the full ephemeris file,
+full pytest, Ruff and strict OpenSpec. Preserve deadline checks around native
+construction, every 512 knot queries and after each body with zero spacecraft
+propagations. This checks public knot values, not internal storage or compiled
+between-knot arithmetic. SPICE accuracy and spacecraft numerical error remain
+open; no production tolerance, force or native-call limit changes; 3.9 stays open.
+
+Observed: 83,918 required knots per body (671,344 states total), from
+`978994855.2304223` through `1004169955.2304223` TDB seconds since J2000.
+All six binary64 component bit patterns matched at every requested knot.
+Per-body construction/query/check times were 0.1456--0.1755 s, about 1.262 s
+combined; the focused test passed in 3.64 s. These are qualification timings,
+not measurements of spacecraft propagation or a revised production budget.
+
 Task 3.9 complete source-node range inventory (2026-09-08):
 Extend the exact-grid test to query all padded-grid nodes for all eight bodies
 through pinned TudatPy/SPICE, in timestamp order, and apply the existing

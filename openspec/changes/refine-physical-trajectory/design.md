@@ -298,6 +298,21 @@ premises for their interior six-node polynomials. Compiler semantics, native-nod
 identity, boundary splines, SPICE approximation and spacecraft error remain open;
 no uniform native safety claim or production budget revision follows.
 
+Qualify node identity through the public native ephemeris interface, without
+claiming direct storage introspection: derive the union of six-node stencils for
+the closed candidate interval using exact rational floor indices, from the first
+lower knot minus two through the last lower knot plus three. Construct each
+production ephemeris, require its safe interpolation interval to contain this
+entire knot union, and query every required knot. Compare all six binary64 bit
+patterns against the corresponding reconstructed direct-SPICE state, including
+signed zeros. Report exact-match counts and hashes for this explicitly labelled
+subset, with construction/query/check time separate from the full source-node
+inventory. Check the original shared deadline before and after construction,
+every 512 knot queries, and after each body; propagation counters remain zero.
+This is exhaustive knot-value agreement for the candidate's required nodes in
+the pinned runtime. It does not establish compiled between-knot arithmetic,
+boundary-spline behavior, SPICE approximation accuracy or spacecraft safety.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

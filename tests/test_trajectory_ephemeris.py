@@ -55,10 +55,18 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
         node_epochs_s.append(epoch_s)
         epoch_s += step_s
     assert epoch_s >= end_s
+    # Union of all six-node windows used across the closed candidate interval.
+    first_required = math.floor((Fraction(evidence["epoch_tdb_s"][0]) - exact_start_s) / exact_step_s) - 2
+    last_required = math.floor((Fraction(evidence["epoch_tdb_s"][-1]) - exact_start_s) / exact_step_s) + 3
+    assert 0 <= first_required < last_required < count
+    assert node_epochs_s[first_required + 2] <= evidence["epoch_tdb_s"][0] < node_epochs_s[first_required + 3]
+    assert node_epochs_s[last_required - 3] <= evidence["epoch_tdb_s"][-1] < node_epochs_s[last_required - 2]
     # Inventory every source node, not the inaccessible native table storage.
     source_node_ranges: dict[str, dict[str, object]] = {}
-    inventory_started_s = time.perf_counter()
+    native_knot_parity: dict[str, dict[str, object]] = {}
+    inventory_elapsed_s = 0.0
     for body in trajectory.PHYSICAL_BODY_NAMES:
+        inventory_started_s = time.perf_counter()
         states_si = np.empty((count, 6))
         for node_index, node_epoch_s in enumerate(node_epochs_s):
             if node_index % 512 == 0:
@@ -78,8 +86,32 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
             "zero_component_counts": np.count_nonzero(magnitudes_si == 0, axis=0).tolist(),
             "state_sha256_big_endian_binary64_row_major": sha256(states_si.astype(">f8").tobytes()).hexdigest(),
         }
+        inventory_elapsed_s += time.perf_counter() - inventory_started_s
+        parity_started_s = time.perf_counter()
         budget.check()
-    inventory_elapsed_s = time.perf_counter() - inventory_started_s
+        native = environment_setup.create_body_ephemeris(settings.get(body).ephemeris_settings, body)
+        budget.check()
+        safe_start_s, safe_end_s = environment_setup.get_safe_interpolation_interval(native)
+        assert safe_start_s <= node_epochs_s[first_required] < node_epochs_s[last_required] <= safe_end_s
+        assert native.frame_origin == "SSB" and native.frame_orientation == "J2000"
+        native_states_si = np.empty((last_required - first_required + 1, 6))
+        for offset, node_index in enumerate(range(first_required, last_required + 1)):
+            if offset % 512 == 0:
+                budget.check()
+            native_states_si[offset] = np.asarray(native.cartesian_state(node_epochs_s[node_index])).reshape(6)
+        source_states_si = states_si[first_required:last_required + 1]
+        np.testing.assert_array_equal(
+            native_states_si.view(np.uint64), source_states_si.view(np.uint64),
+            err_msg=f"{body}: native knot bit patterns differ from reconstructed SPICE nodes",
+        )
+        native_knot_parity[body] = {
+            "required_knot_count": len(native_states_si),
+            "exact_binary64_state_matches": len(native_states_si),
+            "state_sha256_big_endian_binary64_row_major": sha256(native_states_si.astype(">f8").tobytes()).hexdigest(),
+            "construction_and_knot_check_elapsed_s": time.perf_counter() - parity_started_s,
+        }
+        del native
+        budget.check()
     largest_denominator_s5 = 0
     for first_index in (0, count // 2, count - 6):
         nodes_s = [start_s + index * step_s for index in range(first_index, first_index + 6)]
@@ -161,6 +193,10 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
         "origin": "SSB", "orientation": "J2000",
         "component_units": ["m", "m", "m", "m/s", "m/s", "m/s"],
         "source_node_ranges": source_node_ranges,
+        "native_required_knot_parity": native_knot_parity,
+        "required_knot_first_tdb_s": node_epochs_s[first_required],
+        "required_knot_last_tdb_s": node_epochs_s[last_required],
+        "native_knot_scope": "all nodes of candidate stencils via public queries; not storage introspection or between-knot certification",
         "source_node_inventory_elapsed_s": inventory_elapsed_s,
         "source_node_scope": "all reconstructed direct-SPICE grid nodes; not native table readback or SPICE error bounds",
         "python": platform.python_version(), "platform": platform.platform(),
