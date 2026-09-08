@@ -74,9 +74,16 @@ def test_sampled_spk_chains_match_tudat_states(
     expected_chain: list[tuple[int, int, int]],
 ) -> None:
     """Qualify IDs and segment types at the existing 38 TDB epochs in SSB/J2000."""
+    from tudatpy.dynamics import environment_setup
+
     evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
     budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
     spice = ephemeris._ensure_standard_kernels()
+    direct_native = environment_setup.create_body_ephemeris(
+        environment_setup.ephemeris.direct_spice("SSB", "J2000", body), body,
+    )
+    assert (direct_native.frame_origin, direct_native.frame_orientation) == ("SSB", "J2000")
+    direct_errors_si: list[tuple[float, float]] = []
     observations: set[tuple[int, int, int, float, float, str]] = set()
     for epoch_tdb_s in evidence["epoch_tdb_s"]:
         budget.check()
@@ -117,6 +124,12 @@ def test_sampled_spk_chains_match_tudat_states(
         assert np.all(np.isfinite(difference_si))
         assert np.linalg.norm(difference_si[:3]) <= 0.001  # m
         assert np.linalg.norm(difference_si[3:]) <= 0.000001  # m/s
+        difference_si = direct_native.cartesian_state(epoch_tdb_s) - native_state_si
+        assert np.all(np.isfinite(difference_si))
+        error_m = float(np.linalg.norm(difference_si[:3]))
+        error_m_s = float(np.linalg.norm(difference_si[3:]))
+        assert error_m <= 0.001 and error_m_s <= 0.000001
+        direct_errors_si.append((error_m, error_m_s))
         budget.check()
     assert budget.native_arc_propagations == 0
     print(json.dumps({
@@ -124,6 +137,8 @@ def test_sampled_spk_chains_match_tudat_states(
         "epoch_count": len(evidence["epoch_tdb_s"]),
         "time": "TDB seconds since J2000", "frame": "SSB/J2000",
         "segments": sorted(observations),
+        "experimental_direct_native_max_position_error_m": max(value[0] for value in direct_errors_si),
+        "experimental_direct_native_max_velocity_error_m_s": max(value[1] for value in direct_errors_si),
         "scope": "Sampled chain metadata and state parity, not full interval coverage",
     }, sort_keys=True, allow_nan=False))
 

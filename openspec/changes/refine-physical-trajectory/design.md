@@ -1,5 +1,21 @@
 ## Context
 
+### Eight-body direct-SPICE path parity (2026-09-08)
+
+Extend the existing sampled source-chain qualification with a separate built-in
+direct native ephemeris for each of the eight bodies. Explicitly set SSB/J2000
+and the body name, read back the native frame, and compare the six SI components
+to numeric-target CSPICE SSB states at all 38 qualification epochs. The existing
+chain checks retain effective Mercury/Venus targets 1/2, Moon/Earth chaining,
+and planet-center offsets for Mars/Jupiter/Saturn; no new name substitutions
+are introduced. All 304 direct-native comparisons pass `0.001 m` and
+`0.000001 m/s`, with measured maxima zero for every body.
+
+This extends API-path parity beyond the Saturn join experiment, not physical
+truth validation, whole-interval coverage or full-force performance. Both paths
+use the same authoritative kernels. Production tables and their known failures
+remain unchanged, and task 3.9 remains open.
+
 ### Direct-SPICE native error controls (2026-09-08)
 
 The experimental direct path rejects `ARIADNA_UNKNOWN_BODY` with native

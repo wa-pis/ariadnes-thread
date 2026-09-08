@@ -42,6 +42,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 eight-body direct-SPICE path parity (2026-09-08):
+Extend all eight sampled source-chain cases with explicit SSB/J2000 direct
+native models and numeric-target CSPICE state comparisons at 38 epochs each.
+Verify native frame readback, unchanged body-center chains, finite states and
+`0.001 m` / `0.000001 m/s` agreement with
+`tests/test_trajectory_spk.py -k sampled_spk_chains`, the whole SPK file, full
+pytest, Ruff and strict OpenSpec validation. All 304 focused comparisons passed
+with measured differences zero. No production setting, tolerance or dependency
+changes; interval coverage and full-force performance remain open under 3.9.
+
 Task 3.9 direct-SPICE native error controls (2026-09-08):
 Verify unknown-body and both distant uncovered-epoch requests raise contextual
 native RuntimeError subclasses with IDCODENOTFOUND/SPKINSUFFDATA, not states.
