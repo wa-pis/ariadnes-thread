@@ -1,5 +1,25 @@
 ## Context
 
+### Test-only direct-SPICE alternative (2026-09-08)
+
+Build TudatPy's existing `ephemeris.direct_spice("SSB", "J2000", "Saturn")`
+as a separate experimental native ephemeris. Keep the production table and
+its known failures unchanged. At all 219 mapped record-boundary probes,
+compare the direct native model with named geometric TudatPy/SPICE requests;
+require frame readback and agreement within `0.001 m` / `0.000001 m/s`.
+Observed maximum differences are `0 m` and `0 m/s` in the pinned environment.
+No custom ephemeris evaluator, added dependency, kernel reload or production
+configuration change is involved.
+
+This demonstrates a built-in alternative that avoids the additional table
+error at these probes. Both sides use SPICE, so it is API-path parity, not an
+independent physical truth oracle or a uniform accuracy certificate. Direct
+queries retain the source-record discontinuities. Full-force performance,
+resource/coverage failure behavior and integration through record boundaries
+remain unqualified for this alternative. Do not promote it to production or
+clear task 3.9 on this evidence alone; any accepted strategy revision must
+preserve the shared deadline, scientific tolerances and existing resource gates.
+
 ### Exact Saturn record-endpoint differences (2026-09-08)
 
 Read the full 122-word records rather than only headers, rejecting nonfinite

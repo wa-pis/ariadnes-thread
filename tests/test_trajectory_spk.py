@@ -372,6 +372,11 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
     budget.check()
     spice = ephemeris._ensure_standard_kernels()
     boundary_errors_si: list[tuple[float, float, float]] = []
+    direct_settings = environment_setup.ephemeris.direct_spice("SSB", "J2000", "Saturn")
+    direct_native = environment_setup.create_body_ephemeris(direct_settings, "Saturn")
+    assert (direct_native.frame_origin, direct_native.frame_orientation) == ("SSB", "J2000")
+    budget.check()
+    direct_native_errors_si: list[tuple[float, float]] = []
     for boundary_s in sorted(record_boundaries_tdb_s):
         errors_si: list[tuple[float, float]] = []
         for epoch_s in (math.nextafter(boundary_s, -math.inf), boundary_s,
@@ -379,6 +384,12 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
             budget.check()
             direct_si = spice.get_body_cartesian_state_at_epoch("Saturn", "SSB", "J2000", "NONE",
                                                                epoch_s)
+            native_difference_si = direct_native.cartesian_state(epoch_s) - direct_si
+            assert np.all(np.isfinite(native_difference_si))
+            native_error_m = float(np.linalg.norm(native_difference_si[:3]))
+            native_error_m_s = float(np.linalg.norm(native_difference_si[3:]))
+            assert native_error_m <= 0.001 and native_error_m_s <= 0.000001
+            direct_native_errors_si.append((native_error_m, native_error_m_s))
             difference_si = native.cartesian_state(epoch_s) - direct_si
             assert np.all(np.isfinite(difference_si))
             errors_si.append((float(np.linalg.norm(difference_si[:3])),
@@ -409,6 +420,9 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
         "position_worst_boundary": max(boundary_errors_si, key=lambda row: row[1]),
         "velocity_worst_boundary": max(boundary_errors_si, key=lambda row: row[2]),
         "comparison_frame": "SSB/J2000", "comparison_query_count": 219,
+        "experimental_direct_native_query_count": len(direct_native_errors_si),
+        "experimental_direct_native_max_position_error_m": max(value[0] for value in direct_native_errors_si),
+        "experimental_direct_native_max_velocity_error_m_s": max(value[1] for value in direct_native_errors_si),
         "qualification_status": "failed-existing-interpolation-allocation",
         "time": "TDB seconds since J2000", "target": 699, "center": 6, "frame": "J2000",
         "scope": "One file and two Saturn record directories; not all sources or coefficient error bounds",

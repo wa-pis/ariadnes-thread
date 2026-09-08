@@ -42,6 +42,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 test-only direct-SPICE alternative (2026-09-08):
+Construct a separate built-in direct-SPICE Saturn ephemeris in SSB/J2000 and
+compare all 219 mapped boundary probes with named geometric SPICE queries.
+Verify frame readback and `0.001 m` / `0.000001 m/s` parity using
+`tests/test_trajectory_spk.py -k segment_inventory`, then the whole SPK file,
+full pytest, Ruff and strict OpenSpec validation. Observed maxima are zero;
+the production table's 73/71 failures remain reproduced. This is test-only
+API parity, not a change to production or proof of source continuity, error
+handling, full-force performance or trajectory safety. Task 3.9 stays open.
+
 Task 3.9 exact Saturn record-endpoint differences (2026-09-08):
 Read full records, verify finite coefficients and compute all 146 paired
 endpoints using exact Chebyshev endpoint identities and rational SI conversion.

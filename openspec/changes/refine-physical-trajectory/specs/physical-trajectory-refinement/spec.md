@@ -268,6 +268,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the existing hash-pinned native observation is extended to the six-state double-precision denominator initializer
 - **THEN** selected bytes confirm exact-one initialization, self-index exclusion and separate scalar difference/product/store instructions, the existing exact-rational grid controls still pass, and this static agreement is not called live cache or runtime-dispatch verification
 
+#### Scenario: Qualify a test-only direct-SPICE path at mapped boundaries
+- **WHEN** a separate built-in direct-SPICE Saturn ephemeris is evaluated at the 219 mapped boundary probes
+- **THEN** its SSB/J2000 state agrees with the named geometric SPICE query within `0.001 m` and `0.000001 m/s`, the production table and its failure counts remain unchanged, and the experimental result is not promoted to a production or trajectory-safety qualification
+
 #### Scenario: Separate source-polynomial jumps from table error
 - **WHEN** both polynomial records at each of the 73 mapped Saturn boundaries are evaluated at the same epoch using exact rational Chebyshev endpoint sums
 - **THEN** all 146 endpoint states agree with the independent NumPy evaluator within `1e-8 m` and `1e-12 m/s`, exact squared jump comparisons identify 70 position and 68 velocity joins exceeding twice their unchanged allocations, and the report labels these as Saturn-barycenter-relative source-representation discontinuities rather than physical motion or a completed safety remedy
