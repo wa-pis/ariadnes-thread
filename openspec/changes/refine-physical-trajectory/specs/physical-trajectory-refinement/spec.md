@@ -268,6 +268,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the existing hash-pinned native observation is extended to the six-state double-precision denominator initializer
 - **THEN** selected bytes confirm exact-one initialization, self-index exclusion and separate scalar difference/product/store instructions, the existing exact-rational grid controls still pass, and this static agreement is not called live cache or runtime-dispatch verification
 
+#### Scenario: Retain failure under simple table densification
+- **WHEN** the same Saturn junction probes use experimental 150 s and 75 s candidate-wide tables in addition to the unchanged 300 s production table
+- **THEN** each table preserves candidate coverage and SSB/J2000 frames, the regression records maximum errors exceeding `0.025 m` and `2.5e-6 m/s` for each spacing, and neither denser table is accepted as a remedy or made the production default
+
 #### Scenario: Distinguish local query repeatability from junction accuracy
 - **WHEN** the three Saturn junction epochs are queried in all six orders with two named requests per epoch and one raw CSPICE request
 - **THEN** all 36 named states and 18 SI-converted raw states match the corresponding epoch's reference binary64 bits, every exact-junction descriptor selects the observed left coverage, and this local repeatability does not clear the failed interpolation allocation

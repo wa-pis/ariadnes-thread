@@ -1,5 +1,27 @@
 ## Context
 
+### Junction table-density control (2026-09-08)
+
+Parameterize the existing Saturn junction counterexample with candidate-wide
+300 s, 150 s and 75 s default Tudat tables. Keep the 300 s production path;
+the other spacings are test-only, as in the earlier 150 s qualification.
+Require unchanged candidate coverage and SSB/J2000 frames for every table.
+At the same three adjacent binary64 epochs, the maximum errors are:
+
+| Table step (s) | Position error (m) | Velocity error (m/s) |
+|---|---|---|
+| 300 | 0.1394431198762437 | 1.6599647370186684e-5 |
+| 150 | 0.10801370752951119 | 1.285373338685058e-5 |
+| 75 | 0.12190976075097239 | 1.4591343096708111e-5 |
+
+All three exceed the existing `0.025 m` / `2.5e-6 m/s` limits. The maximum
+does not decrease monotonically with these grid refinements. This rules out
+these two simple densifications as a remedy for the observed junction, not
+every possible spacing or a boundary-aware method. Each case retains the same
+300-second qualification budget and zero spacecraft propagations. No production
+spacing, kernel, force, tolerance or native-call limit changes. The regression
+passes by reproducing failure, and task 3.9 remains open.
+
 ### Local junction query-order control (2026-09-08)
 
 The Saturn junction counterexample is not explained by the six permutations

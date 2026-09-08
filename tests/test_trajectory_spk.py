@@ -119,7 +119,8 @@ def test_sampled_spk_chains_match_tudat_states(
     }, sort_keys=True, allow_nan=False))
 
 
-def test_saturn_spk_segment_junction(cspice: ctypes.CDLL) -> None:
+@pytest.mark.parametrize("step_s", [300.0, 150.0, 75.0])
+def test_saturn_spk_segment_junction(cspice: ctypes.CDLL, step_s: float) -> None:
     """Reproduce a failed allocation, not a passing interpolation qualification."""
     from tudatpy.dynamics import environment_setup
 
@@ -158,12 +159,20 @@ def test_saturn_spk_segment_junction(cspice: ctypes.CDLL) -> None:
     # Counterexample: one value cannot be within 0.025 m of both segment values.
     assert jump_m > 2 * 0.025
 
-    settings = trajectory._create_time_limited_body_settings(
-        environment_setup, evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1],
-    )
+    start_s, end_s = evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1]
+    if step_s == 300.0:
+        settings = trajectory._create_time_limited_body_settings(environment_setup, start_s, end_s)
+    else:
+        settings = environment_setup.get_default_body_settings_time_limited(
+            trajectory.PHYSICAL_BODY_NAMES, start_s, end_s, "SSB", "J2000", step_s,
+        )
+    assert settings.get("Saturn").ephemeris_settings.time_step == step_s
     budget.check()
     native = environment_setup.create_body_ephemeris(settings.get("Saturn").ephemeris_settings,
                                                     "Saturn")
+    safe_start_s, safe_end_s = environment_setup.get_safe_interpolation_interval(native)
+    assert safe_start_s <= start_s < end_s <= safe_end_s
+    assert (native.frame_origin, native.frame_orientation) == ("SSB", "J2000")
     budget.check()
     errors_si: list[tuple[float, float]] = []
     for epoch_tdb_s in epochs_tdb_s:
@@ -181,6 +190,7 @@ def test_saturn_spk_segment_junction(cspice: ctypes.CDLL) -> None:
     assert budget.native_arc_propagations == 0
     print(json.dumps({
         "junction_tdb_s": junction_tdb_s, "time": "TDB seconds since J2000",
+        "table_step_s": step_s,
         "segment_state_frame": "Saturn barycenter/J2000", "units": ["m", "m/s"],
         "same_epoch_segment_difference": [jump_m, jump_m_s],
         "junction_selection_after_left_query": "left" if descriptors[1] == descriptors[0] else "right",

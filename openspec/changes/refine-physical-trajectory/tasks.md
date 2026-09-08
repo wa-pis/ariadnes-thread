@@ -42,6 +42,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 junction table-density control (2026-09-08):
+Extend the existing junction regression to test-only 150 s and 75 s tables,
+retaining the production 300 s path, candidate coverage and SSB/J2000 frames.
+Verify both original allocations are exceeded at each spacing with
+`tests/test_trajectory_spk.py -k segment_junction`; run the whole SPK file,
+full pytest, Ruff and strict OpenSpec validation. All three focused cases
+reproduced failure. Maximum position errors at 150/75 s are
+`0.10801370752951119 m` / `0.12190976075097239 m`; velocity errors are
+`1.285373338685058e-5 m/s` / `1.4591343096708111e-5 m/s`.
+These denser tables are not a remedy; no production setting or tolerance is
+changed and task 3.9 remains open. Investigate source boundaries before a
+reviewed boundary-aware approximation policy.
+
 Task 3.9 local junction query-order control (2026-09-08):
 Verify all six permutations of before/exact/after Saturn junction queries with
 two named requests per epoch, exact binary64 component equality across orders,
