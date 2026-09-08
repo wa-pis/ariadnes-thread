@@ -19,6 +19,21 @@ depth/call/time exhaustion remains unresolved or an error, never safe. This is
 not a mission certificate: native full-force relative-acceleration bounds,
 ephemeris uncertainty, and endpoint error budgets must be justified separately.
 
+Body motion must not be confused with interpolation error. For a body's
+ephemeris b(t), its endpoint chord L_b(t), spacecraft trajectory x(t), and
+spacecraft chord L_x(t), the relative chord defect obeys
+`||(x-b)-(L_x-L_b)|| <= ||x-L_x|| + ||b-L_b||`. A uniform body-motion enclosure
+and the spacecraft enclosure are therefore separate inputs to this approach;
+the sampled `0.025 m` table/SPICE comparison cannot replace either enclosure.
+Any table-to-SPICE uncertainty must also be handled explicitly if the safety
+claim refers to SPICE rather than only the interpolated model. Shared orbital
+curvature can cancel in relative motion, so separate bounds may be conservative.
+The moving-body qualification uses actual Tudat/SPICE states at departure,
+cruise, and arrival over 30 s, 300 s, and 86400 s. Sampled chord deviations are
+lower bounds on the allowance needed to enclose body motion, not uniform upper
+bounds, and do not establish spacecraft safety. No new native-call limit follows
+from this measurement. See task 3.9 evidence for reproduction and numerical scope.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

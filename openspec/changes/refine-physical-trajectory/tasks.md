@@ -42,6 +42,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 moving-body prerequisite evidence (2026-09-08):
+`tests/test_trajectory_ephemeris.py::test_moving_body_chord_deviation_is_not_interpolation_error`
+compares actual eight-body Tudat tables with direct SPICE in nine windows:
+departure, midpoint cruise and arrival, each lasting 30 s, 300 s and 86400 s.
+Each window has 35 epochs including endpoints, midpoint and off-grid samples;
+the original qualification fixture supplies the candidate interval. Tables use
+the production 300 s factory and SI/SSB/J2000/TDB conventions, but are built for
+these local windows, not reused from the complete mission table. Coverage and
+the existing `0.025 m` / `2.5e-6 m/s` sampled input allowances are checked;
+maximum measured differences are `0.003881 m` and `9.038e-7 m/s` (rounded up).
+The defect of a chord built from tabulated positions differs from the direct
+SPICE defect by at most `0.05 m` at these samples, the triangle-inequality
+allocation of twice the unchanged input position allowance.
+
+Moon centre motion deviates from its SSB endpoint chord by approximately
+`0.958-0.973 m` over 30 s, `95.77-97.25 m` over 300 s and `7.84-8.06e6 m` over
+86400 s across these windows. Mars gives `0.242-0.348 m`, `24.19-34.82 m` and
+`2.01-2.89e6 m`, respectively. These are body-motion measurements, not spacecraft
+trajectory errors, and sampled maxima are lower bounds on a required enclosure,
+never certified upper bounds. Reproduce with `conda run -n space-nav python -m
+pytest -q -s tests/test_trajectory_ephemeris.py -k moving_body` (nine tests).
+The test adds no dynamics model, tolerance, kernel, interpolation or runtime-limit
+change. Next derive an all-epoch body-motion enclosure (including interpolation
+stencil/edge behavior) and a spacecraft enclosure with full-force and numerical
+error control; do not substitute these sample maxima for either. Task 3.9 and
+all existing continuous-safety/targeting gates remain open.
+
 Task 3.8 analytic subdivision evidence (2026-09-08):
 `tests/test_native_adaptive_safety.py` reuses the native coast integrator and
 shared budget with a stationary lunar guard sphere and known constant relative

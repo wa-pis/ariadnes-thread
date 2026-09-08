@@ -5,8 +5,11 @@
 The user approved resuming M3 after prototype delivery. The prototype is archived
 as `2026-09-07-refine-physical-trajectory` and synced to `visual-transfer-explorer`.
 The sole active `refine-physical-trajectory` restores unfinished M3 requirements.
-Start with ephemeris qualification (2.7), then finite-burn prerequisites before
-the targeting spike. Preserve the UI. Scheduled automation remains paused.
+Ephemeris qualification (2.7) and analytic subdivision controls (3.8) are complete.
+The current prerequisite is the full-force safety-envelope investigation (3.9),
+authorized on 2026-09-08 without weakening scientific tolerances or the shared
+300-second deadline. Other finite-burn prerequisites remain open before the
+targeting spike. Preserve the UI; scheduling state is managed in the app.
 
 ### Historical prototype priority (superseded by resumption above)
 
