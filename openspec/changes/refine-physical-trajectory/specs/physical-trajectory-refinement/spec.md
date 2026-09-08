@@ -268,6 +268,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the existing hash-pinned native observation is extended to the six-state double-precision denominator initializer
 - **THEN** selected bytes confirm exact-one initialization, self-index exclusion and separate scalar difference/product/store instructions, the existing exact-rational grid controls still pass, and this static agreement is not called live cache or runtime-dispatch verification
 
+#### Scenario: Identify sampled SPK source chains without certifying unsampled motion
+- **WHEN** the Darwin/arm64 qualification reads selected SPK descriptors at the existing 38 epochs for all eight bodies using Tudat-loaded kernels
+- **THEN** every chain reaches SSB in J2000 with the recorded target/center/type identities, every descriptor covers its requested epoch, numeric-target CSPICE states match named Tudat states within `0.001 m` and `0.000001 m/s`, an unknown target returns no descriptor, and the report distinguishes sampled metadata from a uniform SPICE approximation or trajectory-safety bound
+
 #### Scenario: Preserve the conditional compiled factory route
 - **WHEN** static double-precision factory calls and the Lagrange enum/dynamic-cast branch are recorded for the pinned native binary
 - **THEN** their instruction bytes match exactly and all eight public settings have the interpolated-SPICE class, while inaccessible nested settings and live virtual dispatch remain explicitly unverified

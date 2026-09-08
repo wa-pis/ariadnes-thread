@@ -1,5 +1,38 @@
 ## Context
 
+### Sampled SPK source-chain inventory (2026-09-08)
+
+The read-only `tests/test_trajectory_spk.py` uses the installed Darwin/arm64
+CSPICE ABI through standard-library ctypes, with TudatPy remaining the kernel
+loader. No kernels, error policy or production states are changed. At the 38
+qualification epochs it follows each selected segment's center to SSB and
+compares the numeric-target CSPICE state (km and km/s converted once to SI)
+with the named TudatPy state within `0.001 m` and `0.000001 m/s`.
+
+Observed chains (target -> center, SPK type): Sun `10 -> 0, 2`, Mercury
+`1 -> 0, 2`, Venus `2 -> 0, 2`, Earth `399 -> 0, 2`, Moon `301 -> 399, 2`
+then Earth, Mars `499 -> 4, 3` then `4 -> 0, 2`, Jupiter `599 -> 5, 3` then
+`5 -> 0, 2`, and Saturn `699 -> 6, 3` then `6 -> 0, 2`. All frames are
+J2000 (ID 1). Mercury/Venus named-state parity is observed for targets 1/2,
+not inferred from the separate name-to-ID function, which returns 199/299.
+This does not authorize substituting barycenters for other planet centers.
+
+Saturn's sampled type-3 descriptors change at `986817600 TDB seconds since
+J2000`; observed coverage is `[952430400,986817600]` and
+`[986817600,1021204800]`. A future uniform bound must account for segment and
+polynomial-record boundaries and every link in the chain. Descriptor coverage
+at samples alone does not prove highest-priority selection throughout the
+interval. No coefficient, derivative, native-roundoff or integration bound
+is established by this inventory; task 3.9 remains open.
+
+NAIF documents [highest-priority segment selection](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spksfs_c.html),
+[descriptor unpacking](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkuds_c.html),
+[SSB state units](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkssb_c.html)
+and [SPK types 2/3](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/spk.html):
+type 2 stores position Chebyshev polynomials, while type 3 stores separate
+position and velocity polynomials. The chains above are local observations,
+not claims about every kernel set or Tudat build.
+
 ### Approved safety-limit investigation (2026-09-08)
 
 The user authorized revisiting native-call limits for adaptive safety subdivision,

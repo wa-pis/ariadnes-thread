@@ -42,6 +42,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 sampled SPK chain inventory (2026-09-08):
+Use read-only installed CSPICE descriptor/state calls through ctypes, preserving
+Tudat kernel loading. Verify eight body-to-SSB chains at the existing 38 epochs,
+J2000 frame, type-2/type-3 selection and descriptor coverage; compare numeric
+CSPICE targets to named Tudat states within `0.001 m` and `0.000001 m/s`.
+Verify an unknown ID returns no descriptor without a SPICE error. Run
+`tests/test_trajectory_spk.py`, full pytest, Ruff and strict OpenSpec validation.
+All nine focused tests passed. Record Mercury/Venus targets 1/2 explicitly and
+Saturn's observed segment change at `986817600 TDB seconds since J2000`.
+These are sampled source identities, not complete interval selection, polynomial
+coefficient bounds or a safety certificate. No dependency, force, tolerance,
+production limit or deadline changes; task 3.9 remains open.
+
 Task 3.9 conditional static factory-route observation (2026-09-08):
 Trace direct calls from the double/double body factory through tabulated SPICE,
 the SPICE node builder and the one-dimensional interpolator factory. The builder
