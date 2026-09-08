@@ -220,6 +220,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** Moon/Mars motion is checked over 1800-second and 86400-second windows at departure, cruise and arrival
 - **THEN** six/288 cell enclosures compose without native spacecraft propagation, all 35 sampled native states satisfy the unchanged polynomial-parity allocation, their global chord deviations fit the composed bound plus `0.05 m`, and timing remains helper-only qualification rather than full-mission evidence
 
+#### Scenario: Qualify binary64 grid arithmetic before a roundoff bound
+- **WHEN** the pinned candidate's padded 300-second grid is replayed with the source's time-update and six-node denominator operations
+- **THEN** each grid epoch and denominator intermediate agrees exactly with a rational oracle, positive grid endpoints satisfy the factor-of-two exact-subtraction condition, and the evidence does not stand in for remaining native evaluation or SPICE error bounds
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

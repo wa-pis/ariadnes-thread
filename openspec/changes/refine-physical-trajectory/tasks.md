@@ -42,6 +42,38 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 binary64 arithmetic-premise evidence (2026-09-08):
+`test_pinned_grid_binary64_arithmetic_matches_exact_rationals` replays the
+installed source's repeated time addition for all 83933 nodes in the padded
+candidate grid `[978992455.2304223, 1004172273.4122404) TDB s`, step `300 s`.
+Every represented grid epoch equals its exact Fraction expression. All eight
+body settings share the grid. Positive interval endpoints satisfy the factor-
+of-two condition for exact binary64 subtraction of represented timestamps;
+the test additionally checks knots, midpoints and adjacent-representable query
+times in first/middle/last six-node windows.
+
+Every denominator product intermediate in those windows equals exact rational
+arithmetic. The independent factorial formula gives maximum absolute denominator
+`291600000000000 s^5`, below `2^53`. Counterexamples with a `0.1 s` increment
+and widely separated operands prevent generalizing exactness to arbitrary grids.
+The shared budget/counters are preserved. Reproduce with
+`conda run -n space-nav python -m pytest -q -s tests/test_trajectory_ephemeris.py -k binary64`
+(one test). The scope is Python binary64 replay of inspected source operations,
+not compiled native interpolation certification or a complete roundoff bound.
+
+Inspected installed Tudat headers and SHA-256:
+- `math/interpolators/lagrangeInterpolator.h`:
+  `a038876008ef917b817c88f754a4c4a35d1e03b43f176634d66fc32445a9de4b`
+- `simulation/environment_setup/createEphemeris.h`:
+  `c80a0dc0b491f615232437315a6737fb95ebe886fbdd482af9b10876feab3d1d`
+
+The source caches denominator products and evaluates a repeated numerator,
+division, state multiplication and summation; those remaining operations,
+compiler/runtime arithmetic, native-node provenance and uniform SPICE error
+still need qualification. Exact subtraction reference:
+https://flocq.gitlabpages.inria.fr/theos.html . Task 3.9 stays open; scientific
+tolerances, native-call limits, forces and the 300-second deadline are unchanged.
+
 Task 3.9 real multi-cell composition evidence (2026-09-08):
 The moving-body control now includes 1800-second windows and qualifies Moon/
 Mars multi-cell enclosures at departure, cruise and arrival for both 1800 s

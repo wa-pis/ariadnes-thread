@@ -6,6 +6,7 @@ from importlib.metadata import version
 import math
 from pathlib import Path
 import platform
+import sys
 import time
 
 import numpy as np
@@ -17,6 +18,73 @@ from space_nav.transfer import search_impulsive_transfers
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
+    """Replay source arithmetic premises, not compiled native evaluation error."""
+    from tudatpy.dynamics import environment_setup
+
+    evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
+    budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
+    ephemeris._ensure_standard_kernels()
+    settings = trajectory._create_time_limited_body_settings(
+        environment_setup, evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1],
+    )
+    first = settings.get("Sun").ephemeris_settings
+    start_s, end_s, step_s = first.initial_time, first.final_time, first.time_step
+    assert sys.float_info.radix == 2 and sys.float_info.mant_dig == 53
+    assert step_s == 300.0
+    assert 0 < start_s < end_s <= 2 * start_s  # Sterbenz domain for represented epochs.
+    for body in trajectory.PHYSICAL_BODY_NAMES:
+        body_settings = settings.get(body).ephemeris_settings
+        assert (body_settings.initial_time, body_settings.final_time, body_settings.time_step) == (
+            start_s, end_s, step_s,
+        )
+    exact_start_s, exact_step_s = Fraction(start_s), Fraction(step_s)
+    count = math.ceil((Fraction(end_s) - exact_start_s) / exact_step_s)
+    epoch_s = start_s
+    # Source createStateInterpolatorFromSpice uses repeated addition, not multiplication.
+    for index in range(count):
+        budget.check()
+        assert epoch_s < end_s
+        assert Fraction(epoch_s) == exact_start_s + index * exact_step_s
+        epoch_s += step_s
+    assert epoch_s >= end_s
+    largest_denominator_s5 = 0
+    for first_index in (0, count // 2, count - 6):
+        nodes_s = [start_s + index * step_s for index in range(first_index, first_index + 6)]
+        for selected, node_s in enumerate(nodes_s):
+            denominator_s5 = 1.0
+            exact_product = Fraction(1)
+            for other_index, other_s in enumerate(nodes_s):
+                if selected != other_index:
+                    difference_s = node_s - other_s
+                    assert Fraction(difference_s) == Fraction(node_s) - Fraction(other_s)
+                    denominator_s5 *= difference_s
+                    exact_product *= Fraction(node_s) - Fraction(other_s)
+                    assert Fraction(denominator_s5) == exact_product
+            factorial_denominator = (-1) ** (5 - selected) * math.factorial(selected) * math.factorial(5 - selected) * 300 ** 5
+            assert exact_product == factorial_denominator
+            largest_denominator_s5 = max(largest_denominator_s5, abs(factorial_denominator))
+        for query_s in (nodes_s[2], math.nextafter(nodes_s[2], nodes_s[3]),
+                        (nodes_s[2] + nodes_s[3]) / 2,
+                        math.nextafter(nodes_s[3], nodes_s[2]), nodes_s[3]):
+            for node_s in nodes_s:
+                assert Fraction(query_s - node_s) == Fraction(query_s) - Fraction(node_s)
+    assert largest_denominator_s5 < 2 ** 53
+    # Counterexamples keep exactness conditional on the checked grid/domain.
+    assert Fraction(start_s + 0.1) != Fraction(start_s) + Fraction(0.1)
+    assert Fraction(float(2 ** 54) - 1.0) != Fraction(2 ** 54) - 1
+    budget.check()
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (0, 0, 0)
+    print(json.dumps({
+        "scope": "Python binary64 replay of pinned source arithmetic; not native roundoff bound",
+        "candidate_id": evidence["candidate_id"], "grid_node_count": count,
+        "initial_tdb_s": start_s, "final_tdb_s": end_s, "step_s": step_s,
+        "largest_exact_denominator_s5": largest_denominator_s5,
+        "time_scale": "TDB seconds since J2000",
+    }, sort_keys=True, allow_nan=False))
 
 
 def _rational_lagrange_state(

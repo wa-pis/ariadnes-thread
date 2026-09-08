@@ -183,6 +183,19 @@ local polynomial and retain the existing state tolerances. Record cell/helper
 counts and helper-only timings separately from native spacecraft work. Do not
 interpret this as full-force safety, uniform error or mission timing evidence.
 
+Before deriving native evaluation roundoff, verify the pinned candidate grid's
+binary64 arithmetic premises separately. Replay the source's repeated 300-second
+time increments over the full padded interval against exact rational epochs.
+Check all body settings share that grid, and that its positive endpoints differ
+by at most a factor of two: Sterbenz's condition makes timestamp subtraction
+exact for represented times within that range. At representative six-node
+windows, compare every cached-denominator multiplication against exact integers
+and `(-1)^(5-i)*i!*(5-i)!*300^5`; also check adjacent-representable interior query
+times. This is an arithmetic-premise control, not a native rounding certificate.
+Numerator products, division, state multiplication/summation, compiler/runtime
+arithmetic and native node provenance still require separate error analysis.
+Exact-subtraction reference: https://flocq.gitlabpages.inria.fr/theos.html
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
