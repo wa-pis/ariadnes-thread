@@ -42,6 +42,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 loaded-SPK chain interval coverage (2026-09-08):
+Scan all loaded SPK descriptors and verify candidate-overlapping target centers,
+frames and types. Merge coverage by target and intersect all 11 required chain
+windows; verify whole-interval inclusion, rejection of missing targets and an
+interior gap, unchanged kernel records and the shared budget. Verification:
+`tests/test_trajectory_spk.py -k chain_coverage`, the whole SPK file, full pytest,
+Ruff and strict OpenSpec validation. The focused test passed across six files
+and 2,028 segments. Nominal coverage is not a uniform accuracy or safety bound;
+keep production settings and task 3.9 unchanged.
+
 Task 3.9 direct-ephemeris fixed-state force controls (2026-09-08):
 Extend the existing gravity/component-sum controls with test-only direct body
 ephemerides and endpoint parity checks. Verify gravity, combined coast and both

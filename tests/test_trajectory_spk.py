@@ -22,6 +22,90 @@ from space_nav import ephemeris, trajectory
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
+    """Verify nominal segment coverage, not record accuracy or trajectory safety."""
+    import spiceypy as spice
+    from spiceypy.utils.support_types import SPICEDOUBLE_CELL
+
+    evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
+    start_tdb_s, end_tdb_s = evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1]
+    budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
+    ephemeris._ensure_standard_kernels()
+    kernels_before = [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
+    registrations = [spice.kdata(i, "SPK") for i in range(spice.ktotal("SPK"))]
+    # Repeated kernel initialization registers the same physical file again.
+    files = list({str(Path(entry[0]).resolve()): entry for entry in registrations}.values())
+    assert files
+    # Effective targets already qualified against named Tudat states.
+    expected_centers = {10: 0, 1: 0, 2: 0, 399: 0, 301: 399,
+                        499: 4, 4: 0, 599: 5, 5: 0, 699: 6, 6: 0}
+    segment_counts = dict.fromkeys(expected_centers, 0)
+    total_segments = 0
+    # Complete DAF scans before calling other routines that start DAF searches.
+    for path, kind, _, handle in files:
+        assert kind == "SPK"
+        spice.dafbfs(handle)
+        while spice.daffna():
+            budget.check()
+            total_segments += 1
+            target, center, frame, data_type, first, last, begin, end = spice.spkuds(
+                spice.dafgs()[:5],
+            )
+            assert math.isfinite(first) and math.isfinite(last) and first <= last
+            assert 0 < begin <= end
+            if target in expected_centers and first <= end_tdb_s and last >= start_tdb_s:
+                assert center == expected_centers[target], (path, target, center)
+                assert frame == 1 and data_type in (2, 3), (path, target, frame, data_type)
+                segment_counts[target] += 1
+    assert len(files) == 6 and total_segments == 2028
+    assert segment_counts == {target: 2 if target == 699 else 1 for target in expected_centers}
+
+    common = SPICEDOUBLE_CELL(2)
+    spice.wninsd(start_tdb_s, end_tdb_s, common)
+    observations: dict[int, list[tuple[float, float]]] = {}
+    for target in expected_centers:
+        # spkcov merges into its supplied window across all loaded files.
+        coverage = SPICEDOUBLE_CELL(10000)
+        for path, _, _, _ in files:
+            budget.check()
+            spice.spkcov(path, target, coverage)
+        intervals = [spice.wnfetd(coverage, i) for i in range(spice.wncard(coverage))]
+        assert intervals and all(math.isfinite(value) for pair in intervals for value in pair)
+        assert spice.wnincd(start_tdb_s, end_tdb_s, coverage), (target, intervals)
+        common = spice.wnintd(common, coverage)
+        observations[target] = intervals
+    assert spice.wncard(common) == 1
+    assert spice.wnfetd(common, 0) == (start_tdb_s, end_tdb_s)
+
+    # Endpoint membership alone must not accept an interior gap.
+    gap = SPICEDOUBLE_CELL(4)
+    midpoint_tdb_s = (start_tdb_s + end_tdb_s) / 2
+    spice.wninsd(start_tdb_s, midpoint_tdb_s - 1.0, gap)
+    spice.wninsd(midpoint_tdb_s + 1.0, end_tdb_s, gap)
+    assert spice.wnincd(start_tdb_s, start_tdb_s, gap)
+    assert spice.wnincd(end_tdb_s, end_tdb_s, gap)
+    assert not spice.wnincd(start_tdb_s, end_tdb_s, gap)
+    missing = SPICEDOUBLE_CELL(10000)
+    for path, _, _, _ in files:
+        spice.spkcov(path, -2147483647, missing)
+    assert spice.wncard(missing) == 0
+    assert not spice.wnincd(start_tdb_s, end_tdb_s, missing)
+    assert not spice.failed()
+    assert kernels_before == [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
+    budget.check()
+    assert budget.native_arc_propagations == 0
+    print(json.dumps({
+        "candidate_id": evidence["candidate_id"], "time": "TDB seconds since J2000",
+        "candidate_interval_tdb_s": [start_tdb_s, end_tdb_s],
+        "spk_files": [Path(entry[0]).name for entry in files],
+        "spk_registration_count": len(registrations),
+        "total_segments": total_segments, "overlapping_chain_segments": segment_counts,
+        "coverage_intervals_tdb_s": observations, "chain_centers": expected_centers,
+        "frame": "J2000, each target relative to its listed center; chains end at SSB",
+        "scope": "Nominal segment coverage only, not polynomial continuity or accuracy",
+    }, sort_keys=True, allow_nan=False))
+
+
 def test_direct_and_tabulated_ephemeris_lookup_cost() -> None:
     """Measure warm Python-boundary lookup cost, not full-force propagation."""
     from tudatpy.dynamics import environment_setup

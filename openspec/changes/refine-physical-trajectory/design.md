@@ -1,5 +1,36 @@
 ## Context
 
+### Loaded-SPK chain interval coverage (2026-09-08)
+
+Use the already-pinned SpiceyPy bindings to inspect all six Tudat-loaded SPK
+files without loading/unloading kernels. Deduplicate resolved file paths for
+scanning only: the full suite repeatedly initializes kernels and exposes 120
+registrations of these six files. Preserve and compare the complete raw kernel
+registration list before/after, and report its count separately. Exhaust the
+unique files' 2,028 DAF segment
+descriptors before invoking coverage routines, which may start other DAF
+searches. For the candidate interval, verify every overlapping segment for the
+11 required target IDs has the expected center, J2000 frame and type 2 or 3.
+There is one overlapping segment per target except Saturn 699, which has two.
+The existing effective Mercury/Venus IDs 1/2 remain unchanged.
+
+Merge each target's file coverage with SPICE `spkcov`, then intersect the 11
+windows with the candidate interval using `wnintd`. Verify `wnincd` accepts
+the whole interval `[978995455.2304223, 1004169273.4122404]` TDB seconds since
+J2000 for every target and the intersection retains both exact endpoints.
+Negative controls reject an absent target and a two-second interior gap even
+when both requested endpoints are covered. All checks passed; kernel records
+and pending-error state remain unchanged, with zero native spacecraft arcs
+under one shared 300-second budget.
+
+This establishes nominal segment coverage for the required fixed-center chains,
+not polynomial-record integrity, source continuity, uniform approximation error,
+kernel physical accuracy or trajectory safety. It does not switch production
+ephemerides or complete task 3.9. The known Saturn representation jumps remain.
+API semantics: [NAIF SPK coverage](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/spkcov_c.html),
+[window intersection](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/wnintd_c.html)
+and [interval inclusion](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/wnincd_c.html).
+
 ### Direct ephemerides in fixed-state force controls (2026-09-08)
 
 Extend the existing independent force-component-sum test with test-only direct
