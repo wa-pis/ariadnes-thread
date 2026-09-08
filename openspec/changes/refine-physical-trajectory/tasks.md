@@ -34,6 +34,27 @@ production force, step size, closure tolerance, or dependency was changed.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.4 native-handoff prerequisite evidence (2026-09-08):
+`tests/test_native_arc_handoff.py` chains the existing TNW engine installer,
+coupled seven-state settings, integrators, shared-budget runner and completion
+reader across departure burn, coast and arrival burn. Each arc uses a fresh
+body system configured at `2000 kg`, while propagated mass begins at `1500 kg`
+and is passed on without reset. The isolated fixture uses test-only stationary
+Moon/Mars references with GM `1 m^3/s^2` to trigger native reference updates;
+their velocity perturbation is below `1e-9 m/s` over the less-than-1200-second
+fixture. These are not mission ephemerides or production force settings.
+Both nominal and tighter profiles pass with `0.25 s` and `1000.5 s` coasts,
+`100.25 s` departure and `50.25 s` retrograde arrival burns, starting at
+`1000000000 TDB s`. Initial arc state matches the preceding terminal state
+within `1e-6 s`, `0.001 m`, `1e-6 m/s` and `1e-9 kg`; coast mass is unchanged.
+An independent closed-form displacement integral and signed rocket equation
+check every endpoint to `0.001 m`, `1e-6 m/s` and `1e-8 kg`. Work accounting is
+one control, one evaluation and three native calls. Production code, resources,
+tolerances and UI are unchanged. Task 3.4 stays open: this test-only sequence
+does not provide the safe full-force executor, public burn records or closure.
+All four focused controls and 560 project tests pass, as do Ruff, strict
+OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.6 burn-force assembly evidence (2026-09-08):
 `_build_arc_force_models` reuses the verified external-force mapping and adds
 exactly one Spacecraft self-source thrust term for the selected installed
