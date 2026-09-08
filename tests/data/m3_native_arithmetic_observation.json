@@ -11,6 +11,17 @@
   "demangled_symbol": "tudat::interpolators::LagrangeInterpolator<double, Eigen::Matrix<double, 6, 1, 0, 6, 1>, double>::interpolate(double)",
   "text_segment_vmaddr": 0,
   "text_segment_fileoff": 0,
+  "fenv_observation": {
+    "sdk_header": "MacOSX.sdk/usr/include/fenv.h",
+    "sdk_header_sha256": "810c6384b279de3c3f49889bcec98dccec98062fc6757d4ab42b1e6e9aa61292",
+    "abi": "Darwin arm64: two unsigned long long fields, FPSR followed by FPCR",
+    "size_bytes": 16,
+    "fpcr_offset_bytes": 8,
+    "read_only_functions": ["fegetenv", "fegetround"],
+    "observed_fpcr": 0,
+    "observed_fegetround": 0,
+    "scope": "Caller-thread snapshots only; no mode setters or exception-flag clearing. Not continuous observation inside native calls."
+  },
   "interior_loop_start": "0x19abd8",
   "interior_loop_end_exclusive": "0x19acb0",
   "instruction_observations": [

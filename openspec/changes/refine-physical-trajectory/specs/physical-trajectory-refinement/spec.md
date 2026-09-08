@@ -260,6 +260,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the installed Darwin/arm64 TudatPy kernel is compared with the checked-in static arithmetic observation
 - **THEN** its full hash/size and selected instruction bytes match exactly or require renewed inspection, other platforms explicitly skip this evidence, and the observed separate operations are not treated as proof of runtime dispatch, FPCR mode or complete native safety
 
+#### Scenario: Observe native-call rounding state without changing it
+- **WHEN** the Darwin/arm64 caller-thread environment is read before and after setup, eight ephemeris constructions and 304 existing state requests
+- **THEN** all 626 snapshots show FPCR and fegetround equal to zero, synthetic unqualified modes fail the gate without CPU writes, no spacecraft propagations are counted, and these snapshots are not treated as continuous or cross-thread certification
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

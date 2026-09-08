@@ -22,6 +22,77 @@ from space_nav.transfer import search_impulsive_transfers
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def _assert_default_fpcr(fpcr: int, rounding_mode: int) -> None:
+    """Qualify only the observed all-zero control word, not other CPU modes."""
+    assert type(fpcr) is int and type(rounding_mode) is int
+    assert fpcr == 0 and rounding_mode == 0
+
+
+@pytest.mark.parametrize("fpcr,rounding_mode", [
+    (1, 0), (2, 0), (1 << 22, 0), (1 << 23, 0), (1 << 24, 0),
+    (1 << 8, 0), (0, -1), (True, 0), (0, True),
+])
+def test_fpcr_gate_rejects_unqualified_modes(fpcr: int, rounding_mode: int) -> None:
+    with pytest.raises(AssertionError):
+        _assert_default_fpcr(fpcr, rounding_mode)
+
+
+def test_native_queries_preserve_sampled_fpcr() -> None:
+    """Read caller-thread FPCR around native calls; never set the FP environment."""
+    if (platform.system(), platform.machine()) != ("Darwin", "arm64"):
+        pytest.skip("Only the Darwin/arm64 fenv ABI has been inspected")
+    import ctypes
+    from tudatpy.dynamics import environment_setup
+
+    libc = ctypes.CDLL(None)
+    libc.fegetenv.argtypes = [ctypes.c_void_p]
+    libc.fegetenv.restype = ctypes.c_int
+    libc.fegetround.argtypes = []
+    libc.fegetround.restype = ctypes.c_int
+    # Inspected Darwin arm64 fenv_t: unsigned long long fpsr, then fpcr.
+    environment = (ctypes.c_uint64 * 2)()
+    assert ctypes.sizeof(environment) == 16 and ctypes.alignment(environment) == 8
+
+    def snapshot() -> tuple[int, int]:
+        assert libc.fegetenv(ctypes.byref(environment)) == 0
+        fpcr, rounding_mode = int(environment[1]), int(libc.fegetround())
+        _assert_default_fpcr(fpcr, rounding_mode)
+        return fpcr, rounding_mode
+
+    evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
+    budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
+    snapshots = [snapshot()]
+    ephemeris._ensure_standard_kernels()
+    settings = trajectory._create_time_limited_body_settings(
+        environment_setup, evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1],
+    )
+    snapshots.append(snapshot())
+    for body in trajectory.PHYSICAL_BODY_NAMES:
+        budget.check()
+        snapshots.append(snapshot())
+        native = environment_setup.create_body_ephemeris(settings.get(body).ephemeris_settings, body)
+        snapshots.append(snapshot())
+        budget.check()
+        for epoch_s in evidence["epoch_tdb_s"]:
+            snapshots.append(snapshot())
+            state_si = native.cartesian_state(epoch_s)
+            snapshots.append(snapshot())
+            assert np.all(np.isfinite(state_si))
+            budget.check()
+        del native
+    assert len(snapshots) == 626 and set(snapshots) == {(0, 0)}
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (0, 0, 0)
+    print(json.dumps({
+        "scope": "Caller-thread before/after snapshots, not continuous FPCR or dispatch certification",
+        "candidate_id": evidence["candidate_id"], "snapshot_count": len(snapshots),
+        "fpcr_values": sorted({value[0] for value in snapshots}),
+        "rounding_mode_values": sorted({value[1] for value in snapshots}),
+        "system": platform.system(), "machine": platform.machine(),
+        "fenv_size_bytes": ctypes.sizeof(environment),
+    }, sort_keys=True, allow_nan=False))
+
+
 def test_native_arithmetic_binary_matches_static_observation() -> None:
     """Pin inspected bytes on their platform; never infer another build's semantics."""
     observation = json.loads((ROOT / "tests/data/m3_native_arithmetic_observation.json").read_text())

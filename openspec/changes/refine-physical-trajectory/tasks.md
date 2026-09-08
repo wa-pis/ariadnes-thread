@@ -42,6 +42,21 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 read-only rounding-environment observation (2026-09-08):
+Inspect Darwin arm64 fenv_t (16 bytes: FPSR, then FPCR at offset 8) and record
+the SDK header hash. Read fegetenv/fegetround with explicit ctypes signatures,
+checking return code and layout. Bracket setup, eight native table constructions
+and 304 state requests: require 626 caller-thread snapshots of FPCR=0 and
+FE_TONEAREST=0. Verify nine synthetic invalid/nondefault/bool cases fail without
+setting the CPU environment, using `tests/test_trajectory_ephemeris.py -k fpcr`,
+then the full ephemeris file, full pytest, Ruff and strict OpenSpec. Skip this
+ABI-specific observation on other platforms. Never set rounding modes or clear
+exception flags; FPSR history is not used as a control-mode certificate. Preserve
+the shared 300-second deadline and zero spacecraft-propagation counters. The
+snapshots do not exclude temporary internal mode changes or qualify other threads
+or future calls. Runtime dispatch and continuous arithmetic semantics remain
+open, with no scientific tolerance or production limit change; 3.9 stays open.
+
 Task 3.9 static native arithmetic observation (2026-09-08):
 Apple LLVM 21.0.0 disassembly of the installed 42,188,016-byte Darwin/arm64
 kernel identifies the double-time/six-double-state/double-scalar Lagrange symbol.

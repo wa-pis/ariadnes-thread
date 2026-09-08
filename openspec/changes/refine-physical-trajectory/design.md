@@ -345,6 +345,22 @@ is inferred from the instruction mnemonics:
 https://developer.arm.com/documentation/111108/2025-12/SIMD-FP-Instructions/FDIV--vector---Floating-point-divide--vector-- .
 The native safety certificate and task 3.9 remain incomplete.
 
+Read the caller-thread floating-point environment only on the inspected Darwin/
+arm64 ABI: `fenv_t` has two 64-bit unsigned fields, FPSR then FPCR. Use standard
+ctypes with explicitly declared C signatures for fegetenv and fegetround, check
+the return code and buffer size/alignment, and require both FPCR and the rounding
+mode to be zero. This deliberately qualifies only the observed default mode;
+synthetic nonzero/invalid/bool controls fail without modifying the actual CPU.
+Bracket kernel/settings setup, each of eight ephemeris constructions, and the
+304 existing state requests with read-only snapshots under one 300-second
+budget. Report 626 snapshots and their unique values; no setters, exception
+clearing or native spacecraft propagation are used. FPSR exception history is
+not a rounding-mode proof and is not required to be clear. Record the inspected
+SDK header hash/ABI in the native observation fixture, but do not require the
+SDK to be installed when tests run. Other platforms skip this ABI-specific test.
+Before/after snapshots cannot exclude temporary changes within calls, other
+threads, or future calls; continuous runtime semantics and dispatch remain open.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
