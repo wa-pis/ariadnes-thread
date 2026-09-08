@@ -34,6 +34,31 @@ lower bounds on the allowance needed to enclose body motion, not uniform upper
 bounds, and do not establish spacecraft safety. No new native-call limit follows
 from this measurement. See task 3.9 evidence for reproduction and numerical scope.
 
+For the finite, geodesy-4pi-normalized gravity expansion, let
+`q_n = sum_m(C_nm^2 + S_nm^2)` (with `S_n0=0`). The addition theorem gives
+`sum_k Y_nk^2 = 2n+1` for this real basis. Applying the spherical Laplacian and
+`Delta_S Y_nk = -n(n+1)Y_nk` gives
+`sum_k ||grad_S Y_nk||^2 = n(n+1)(2n+1)`. The radial and tangential gradients are
+orthogonal. The Frobenius norm of their coefficient-to-acceleration map is
+`(2n+1)*sqrt(n+1)`; multiplying by the coefficient norm `sqrt(q_n)` and
+summing degree contributions yields
+`B = GM/r_min^2 * sum_n (R/r_min)^n * (2n+1)*sqrt((n+1)*q_n)`.
+This derivation uses the [spherical-harmonic addition theorem](https://dlmf.nist.gov/14.30#E9)
+with the [real 4pi normalization](https://shtools.github.io/SHTOOLS/real-spherical-harmonics.html).
+For every `r >= r_min > 0`, B bounds the norm of the declared finite gravity
+field in any orientation; degree zero is included exactly once. It neither
+bounds omitted degrees nor proves the trajectory stays outside r_min.
+
+Compute this private component bound from validated coefficients using a fresh
+50-digit Decimal context with upward rounding of nonnegative operations.
+Round square roots upward explicitly (Decimal square root uses half-even),
+then round the final binary float outward. Reject invalid dimensions, non-finite
+or boolean inputs, nonzero unused coefficients and overflow. The caller must
+establish the distance lower bound and account separately for native force
+evaluation error, all other forces, ephemeris motion and numerical trajectory
+error before constructing a full safety enclosure. This helper alone does not
+authorize a safe result or a larger propagation limit.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

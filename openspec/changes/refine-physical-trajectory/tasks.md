@@ -42,6 +42,31 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 harmonic-component enclosure evidence (2026-09-08):
+`_harmonic_acceleration_upper_bound` implements the addition-theorem/Frobenius
+bound derived in the design for matching square 4pi-normalized C/S arrays.
+It validates all coefficients and scientific scalars, includes degree zero
+once, and uses outward-rounded nonnegative Decimal arithmetic before outward
+conversion to binary float. Its 50-digit arithmetic context is isolated from
+caller precision, rounding and traps; it does not alter integration tolerances.
+At the pinned guard radii the returned bounds are `1.9198975285390047 m/s^2`
+for Moon degree 200 at `1737400 m`, and `3.8745596511191156 m/s^2` for Mars degree
+120 at `3396190 m`. Local helper-only timings were approximately `0.046 s` and
+`0.016 s`, excluding file hashing/loading; these are not mission-runtime evidence.
+
+`tests/test_trajectory_gravity_bound.py` verifies a monopole against exact
+rational arithmetic (including subnormal output), the degree-0/2 expression
+against an independent 100-digit calculation, distance/GM scaling, zero fields,
+ambient-context isolation, malformed/non-finite/boolean inputs and overflow.
+The existing native fixed-state gravity test additionally checks Moon/Mars
+component norms near Moon, in cruise and near Mars against the bound without
+new propagation fixtures. Reproduce with `conda run -n space-nav python -m pytest
+-q -s tests/test_trajectory_gravity_bound.py tests/test_trajectory_gravity.py`
+(62 tests). This encloses only the declared finite mathematical gravity field;
+callers still need proven distance floors, native force-evaluation error,
+other forces, moving-body enclosures and trajectory integration error. No safe
+trial, production subdivision limit or complete task 3.9 is claimed.
+
 Task 3.9 moving-body prerequisite evidence (2026-09-08):
 `tests/test_trajectory_ephemeris.py::test_moving_body_chord_deviation_is_not_interpolation_error`
 compares actual eight-body Tudat tables with direct SPICE in nine windows:

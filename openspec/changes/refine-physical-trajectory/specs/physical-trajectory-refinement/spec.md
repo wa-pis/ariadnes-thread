@@ -222,3 +222,7 @@ Following user approval to revise native-call limits, private safety qualificati
 #### Scenario: Validate interval screening against analytic motion
 - **WHEN** straight and constant-acceleration controls exercise collision, near miss, and tangency
 - **THEN** native endpoints agree with their analytic trajectories within 0.001 m, known collisions are not reported safe, known clear controls pass a conservative interval bound, and tangency without sufficient evidence is unresolved rather than safe
+
+#### Scenario: Bound the declared finite harmonic gravity field
+- **WHEN** valid geodesy-normalized harmonic coefficients and a proven positive minimum source distance are supplied to the private qualification helper
+- **THEN** it computes an outward-rounded orientation-independent acceleration-norm upper bound in m/s^2 including degree zero once; invalid inputs or non-finite results raise a contextual refinement error, and this component bound alone does not certify a safe trajectory

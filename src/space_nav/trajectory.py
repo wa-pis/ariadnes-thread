@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field as dataclass_field
 from datetime import datetime
+from decimal import Context, Decimal, ROUND_CEILING, localcontext
 from hashlib import file_digest
 import math
 from numbers import Real
@@ -1762,6 +1763,65 @@ def _load_harmonic_field_settings(
             f"Tudat could not load {spec.body} {spec.model} coefficients from "
             f"{coefficient_path}"
         ) from exc
+
+
+def _harmonic_acceleration_upper_bound(
+    candidate_id: object,
+    gravitational_parameter_m3_s2: float,
+    normalization_radius_m: float,
+    minimum_distance_m: float,
+    normalized_cosine_coefficients: Iterable[Iterable[float]],
+    normalized_sine_coefficients: Iterable[Iterable[float]],
+) -> float:
+    """Bound finite 4pi-normalized gravity in m/s^2 for r >= minimum_distance_m.
+
+    Rotation invariant, including degree zero once. The caller must prove the
+    distance floor; native evaluation error and other forces are not included.
+    See the active M3 design for the addition-theorem/Frobenius derivation.
+    """
+    try:
+        gm_m3_s2 = Decimal.from_float(_positive_finite(
+            "gravitational_parameter_m3_s2", gravitational_parameter_m3_s2,
+        ))
+        radius_m = Decimal.from_float(_positive_finite(
+            "normalization_radius_m", normalization_radius_m,
+        ))
+        distance_m = Decimal.from_float(_positive_finite("minimum_distance_m", minimum_distance_m))
+        matrices = []
+        for name, values in (("cosine", normalized_cosine_coefficients),
+                             ("sine", normalized_sine_coefficients)):
+            matrix = tuple(tuple(Decimal.from_float(_finite_float(
+                f"{name}[{n}][{m}]", value,
+            )) for m, value in enumerate(row)) for n, row in enumerate(values))
+            if not matrix or any(len(row) != len(matrix) for row in matrix):
+                raise ValueError(f"{name} coefficients must be a nonempty square matrix")
+            for n, row in enumerate(matrix):
+                if any(row[n + 1:]) or (name == "sine" and row[0] != 0):
+                    raise ValueError(f"{name}[{n}] contains nonzero unused coefficients")
+            matrices.append(matrix)
+        cosine, sine = matrices
+        if len(cosine) != len(sine):
+            raise ValueError("cosine and sine coefficient dimensions must match")
+        # A fresh context prevents the caller's precision, rounding or traps
+        # from changing the enclosure. All rounded arithmetic is nonnegative.
+        with localcontext(Context(prec=50, rounding=ROUND_CEILING)):
+            inverse_distance_m_inv = Decimal(1) / distance_m
+            ratio = radius_m * inverse_distance_m_inv
+            radial_power = Decimal(1)
+            total = Decimal(0)
+            for n, (c_row, s_row) in enumerate(zip(cosine, sine, strict=True)):
+                power = sum((c * c + s * s for c, s in
+                             zip(c_row[:n + 1], s_row[:n + 1], strict=True)), Decimal(0))
+                if power:
+                    # sqrt is half-even regardless of the context rounding.
+                    root_upper = ((n + 1) * power).sqrt().next_plus()
+                    total += radial_power * (2 * n + 1) * root_upper
+                radial_power *= ratio
+            bound_m_s2 = gm_m3_s2 * inverse_distance_m_inv * inverse_distance_m_inv * total
+            result_m_s2 = 0.0 if not bound_m_s2 else math.nextafter(float(bound_m_s2), math.inf)
+        return _finite_float("harmonic acceleration upper bound_m_s2", result_m_s2)
+    except (ArithmeticError, TypeError, ValueError) as exc:
+        _raise_refinement_error(candidate_id, "gravity-bound", str(exc), exc)
 
 
 def _validate_harmonic_field_settings(

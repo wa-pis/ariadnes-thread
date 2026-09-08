@@ -542,6 +542,19 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
         initial_values = np.asarray(history[initial_epoch_tdb_s], dtype=float)
         production_total_m_s2 = initial_values[:3]
         direct_components_m_s2 = initial_values[3:].reshape(-1, 3)
+        if not combined:
+            for source, source_state in (("Moon", moon_state), ("Mars", mars_state)):
+                field = bodies.get(source).gravity_field_model
+                # A strictly smaller radius avoids treating a rounded norm as
+                # a proven lower distance. This is a fixed-state control only.
+                distance_floor_m = float(np.linalg.norm(state[:3] - source_state[:3])) * 0.999
+                bound_m_s2 = trajectory._harmonic_acceleration_upper_bound(
+                    candidate.candidate_id, field.gravitational_parameter,
+                    field.reference_radius, distance_floor_m,
+                    field.cosine_coefficients, field.sine_coefficients,
+                )
+                actual_m_s2 = float(np.linalg.norm(direct_components_m_s2[_SOURCE_ORDER.index(source)]))
+                assert actual_m_s2 <= bound_m_s2, (label, source, actual_m_s2, bound_m_s2)
         direct_total_m_s2 = direct_components_m_s2.sum(axis=0)
         component_norm_sum_m_s2 = sum(
             float(np.linalg.norm(component))
