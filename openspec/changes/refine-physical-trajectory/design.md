@@ -1,5 +1,31 @@
 ## Context
 
+### Direct ephemerides in fixed-state force controls (2026-09-08)
+
+Extend the existing independent force-component-sum test with test-only direct
+ephemerides for all eight bodies. Replace native body ephemerides after the
+normal physical resource validation and before constructing acceleration models;
+do not alter the production factory or its table-specific coverage checks.
+Read back SSB/J2000 and verify endpoint state parity within `0.001 m` and
+`0.000001 m/s` against named geometric SPICE queries.
+
+Run the original gravity-only, combined coast, departure-thrust and arrival-thrust
+cases with both ephemeris paths. Each case evaluates near-Moon, cruise and
+near-Mars fixed states at the existing one-day control's departure epoch.
+All eight cases passed (24 initial-state comparisons, 12 with direct ephemerides)
+using the unchanged `max(1e-15 m/s^2, 1e-12 * sum of component norms)` tolerance,
+the existing analytic thrust direction and fixed-state acceleration bounds.
+Combined cases retain deliberately poisoned PPN reset/readback controls.
+
+Use one 300-second budget per case for environment construction, all three
+short native runs and bound evaluation; route runs through the existing native
+runner and verify counters after each run. Do not create fresh timers for each
+fixed state. These 0.01-second controls only inspect initial forces, not nominal
+mission propagation, interval enclosure, closure, mass evolution or full-force
+subdivision performance. Both assemblies share the same body ephemerides, so
+component agreement is not an independent ephemeris-accuracy certificate.
+Task 3.9 and all production limits and scientific allocations remain unchanged.
+
 ### Direct versus tabulated lookup cost (2026-09-08)
 
 The bounded lookup experiment uses the existing 38 candidate epochs, eight

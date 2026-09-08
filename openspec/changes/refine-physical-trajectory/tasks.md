@@ -42,6 +42,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 direct-ephemeris fixed-state force controls (2026-09-08):
+Extend the existing gravity/component-sum controls with test-only direct body
+ephemerides and endpoint parity checks. Verify gravity, combined coast and both
+thrust phases at all three existing fixed states, unchanged force tolerance,
+PPN recovery, bounds and shared-budget accounting for every native run. Run
+`tests/test_trajectory_gravity.py -k real_gravity`, the whole gravity file,
+full pytest, Ruff and strict OpenSpec validation. All eight focused cases
+passed, including 12 direct-path initial-state comparisons. No production
+strategy switch or full-trajectory accuracy/performance conclusion; 3.9 stays open.
+
 Task 3.9 bounded lookup-cost experiment (2026-09-08):
 Compare the existing 300 s table and test-only direct ephemerides for eight
 bodies using six alternating batches of 3,800 warm queries per path. Verify

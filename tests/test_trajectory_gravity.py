@@ -376,27 +376,47 @@ def test_gravity_factory_failure_is_chained_with_candidate_context(
     ("combined", "burn_id"),
     [(False, None), (True, None), (True, "departure"), (True, "arrival")],
 )
+@pytest.mark.parametrize("direct_ephemerides", [False, True], ids=["table", "direct"])
 def test_real_gravity_matches_independent_fixed_state_component_sum(
     monkeypatch: pytest.MonkeyPatch,
     combined: bool,
     burn_id: Literal["departure", "arrival"] | None,
+    direct_ephemerides: bool,
 ) -> None:
     pytest.importorskip("tudatpy")
     import numpy as np
-    from tudatpy import dynamics
     from tudatpy.dynamics import (
         environment_setup, parameters_setup, propagation_setup,
     )
 
     candidate = _real_candidate(monkeypatch)
+    budget = trajectory._RefinementBudget(candidate.candidate_id, 300.0)
     environment = trajectory._build_physical_environment(
         candidate,
         _spacecraft(),
         gravity_models_path=_gravity_models_path(),
+        budget=budget,
     )
     assert environment.gravity_acceleration_inventory == _expected_inventory()
     assert tuple(environment.gravity_acceleration_settings) == _SOURCE_ORDER
     bodies = environment.bodies
+    if direct_ephemerides:
+        # Test-only replacement after normal resource validation, before forces.
+        for body in _SOURCE_ORDER:
+            budget.check()
+            bodies.get(body).ephemeris = environment_setup.create_body_ephemeris(
+                environment_setup.ephemeris.direct_spice("SSB", "J2000", body), body,
+            )
+            model = bodies.get(body).ephemeris
+            assert (model.frame_origin, model.frame_orientation) == ("SSB", "J2000")
+            for epoch_tdb_s in (candidate.departure_epoch_tdb_s, candidate.arrival_epoch_tdb_s):
+                actual_si = np.asarray(model.cartesian_state(epoch_tdb_s)).reshape(6)
+                expected_si = ephemeris._ensure_standard_kernels().get_body_cartesian_state_at_epoch(
+                    body, "SSB", "J2000", "NONE", epoch_tdb_s,
+                )
+                assert np.all(np.isfinite(actual_si))
+                assert np.linalg.norm((actual_si - expected_si)[:3]) <= 0.001
+                assert np.linalg.norm((actual_si - expected_si)[3:]) <= 0.000001
     if combined:
         trajectory._install_tnw_engine(
             candidate.candidate_id, bodies, _spacecraft(),
@@ -501,7 +521,8 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
             )
         ]
 
-    for label, state in fixed_states.items():
+    for arc_count, (label, state) in enumerate(fixed_states.items(), start=1):
+        budget.check()
         if combined:
             try:
                 ppn.parameter_vector = np.asarray([0.75, 1.25])
@@ -532,9 +553,8 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
             termination_settings,
             output_variables=output_variables,
         )
-        simulator = dynamics.simulator.create_dynamics_simulator(
-            bodies,
-            propagator_settings,
+        simulator = trajectory._run_native_arc(
+            budget, bodies, propagator_settings, first_in_evaluation=True,
         )
         history = simulator.dependent_variable_history
         initial_epoch_tdb_s = min(history)
@@ -556,7 +576,6 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
                 actual_m_s2 = float(np.linalg.norm(direct_components_m_s2[_SOURCE_ORDER.index(source)]))
                 assert actual_m_s2 <= bound_m_s2, (label, source, actual_m_s2, bound_m_s2)
         else:
-            bound_budget = trajectory._RefinementBudget("complete-force-bound", 300.0)
             gravity_bounds_m_s2: dict[str, float] = {}
             distance_floors_m: dict[str, float] = {}
             source_states = {
@@ -564,7 +583,7 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
                 for source in _SOURCE_ORDER
             }
             for source, source_state in source_states.items():
-                bound_budget.check()
+                budget.check()
                 field = bodies.get(source).gravity_field_model
                 distance_floors_m[source] = float(np.linalg.norm(state[:3] - source_state[:3])) * 0.999
                 harmonic = source in {"Moon", "Mars"}
@@ -586,13 +605,14 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
                 float(np.linalg.norm(state[3:] - source_states["Sun"][3:])) * 1.001,
             )
             total_bound_m_s2 = trajectory._sum_force_acceleration_bounds(
-                bound_budget, gravity_bounds_m_s2, thrust_bound_m_s2, srp_bound_m_s2,
+                budget, gravity_bounds_m_s2, thrust_bound_m_s2, srp_bound_m_s2,
                 relativity_bound_m_s2,
                 thrust_enabled=burn_id is not None,
             )
             assert np.linalg.norm(production_total_m_s2) <= total_bound_m_s2, label
-            assert (bound_budget.control_attempts, bound_budget.propagation_evaluations,
-                    bound_budget.native_arc_propagations) == (0, 0, 0)
+        budget.check()
+        assert (budget.control_attempts, budget.propagation_evaluations,
+                budget.native_arc_propagations) == (0, arc_count, arc_count)
         direct_total_m_s2 = direct_components_m_s2.sum(axis=0)
         component_norm_sum_m_s2 = sum(
             float(np.linalg.norm(component))
