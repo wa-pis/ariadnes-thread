@@ -93,6 +93,21 @@ does not load SPICE, change PPN globals, validate an interval, cover omitted
 relativistic effects, or claim physical validity outside the model's weak-field,
 slow-motion regime. Native evaluation and trajectory errors remain separate.
 
+Combine component bounds by the triangle inequality in the exact existing body
+order: eight gravity norms (Moon/Mars already include degree zero), followed
+by thrust, fully lit SRP and Sun Schwarzschild. Require every named gravity
+entry exactly once, positive finite gravity/SRP/Schwarzschild values and an
+explicit phase flag; coast thrust must be exactly zero and burn thrust positive.
+Reject omitted/extra sources rather than treating them as zero. Convert the supplied
+binary bounds exactly to Decimal, sum in the isolated upward-rounded context and
+round the resulting float outward. Check the caller's shared budget during collection
+and after summation; this pure calculation starts no propagation or new deadline.
+The result bounds the declared spacecraft acceleration only conditional on all
+component enclosures being valid. It does not audit mutable native engine state,
+prove the input distance/mass/speed bounds, include body motion or numerical
+errors, or certify a safe trajectory. Qualify the composition against the
+existing native complete-force fixed-state controls before any interval driver.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

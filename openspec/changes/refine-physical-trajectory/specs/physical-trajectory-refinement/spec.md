@@ -234,3 +234,7 @@ Following user approval to revise native-call limits, private safety qualificati
 #### Scenario: Bound the declared Sun Schwarzschild correction
 - **WHEN** the Sun-only PPN beta=gamma=1 model has an explicit positive minimum Sun distance and nonnegative maximum Sun-relative speed
 - **THEN** the private helper returns an outward-rounded acceleration-norm bound in m/s^2 that includes radial, transverse and zero-speed controls, rejects invalid or overflowing inputs, and leaves proof of those interval bounds and native-error control to the caller
+
+#### Scenario: Compose every declared force bound without resetting work
+- **WHEN** valid component enclosures are supplied for all eight ordered gravity sources, thrust for an explicit phase, fully lit SRP and Sun Schwarzschild
+- **THEN** their outward-rounded sum bounds the declared acceleration norm in m/s^2, missing/extra sources or invalid phase contributions fail clearly, and shared-deadline expiration returns no bound without starting or counting any propagation

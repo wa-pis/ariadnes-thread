@@ -112,3 +112,92 @@ def test_harmonic_bound_rejects_float_overflow() -> None:
         trajectory._harmonic_acceleration_upper_bound(
             "bound", 1e300, 1.0, 1e-100, [[1.0]], [[0.0]],
         )
+
+
+@pytest.mark.parametrize("thrust_enabled", [False, True])
+def test_complete_force_bound_sum_is_outward_and_preserves_work(thrust_enabled: bool) -> None:
+    gravity = dict.fromkeys(trajectory.PHYSICAL_BODY_NAMES, 1.0)
+    gravity["Sun"] = 1e16
+    thrust, srp, relativity = (0.1 if thrust_enabled else 0.0), 0.2, 1e-9
+    exact = sum((Fraction(value) for value in (*gravity.values(), thrust, srp, relativity)), Fraction(0))
+    budget = trajectory._RefinementBudget("sum-bound", 300.0, lambda: 0.0)
+    budget.begin_control()
+    budget.begin_arc(first_in_evaluation=True)
+    result = trajectory._sum_force_acceleration_bounds(
+        budget, gravity, thrust, srp, relativity, thrust_enabled=thrust_enabled,
+    )
+    assert Fraction(result) >= exact
+    assert math.isclose(result, float(exact), rel_tol=1e-15)
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (1, 1, 1)
+    assert budget.deadline_monotonic_s == 300.0
+    with localcontext() as context:
+        context.prec = 2
+        context.rounding = ROUND_FLOOR
+        context.traps[Inexact] = True
+        assert trajectory._sum_force_acceleration_bounds(
+            budget, gravity, thrust, srp, relativity, thrust_enabled=thrust_enabled,
+        ) == result
+
+
+@pytest.mark.parametrize("case", ["missing", "extra", "order"])
+def test_complete_force_bound_sum_requires_exact_sources(case: str) -> None:
+    gravity = dict.fromkeys(trajectory.PHYSICAL_BODY_NAMES, 1.0)
+    if case == "missing":
+        del gravity["Moon"]
+    elif case == "extra":
+        gravity["Moon-monopole"] = 1.0
+    else:
+        gravity = dict(reversed(tuple(gravity.items())))
+    with pytest.raises(TrajectoryRefinementError, match="ordered eight bodies"):
+        trajectory._sum_force_acceleration_bounds(
+            trajectory._RefinementBudget("sum-bound", 300.0), gravity, 1.0, 1.0, 1.0,
+            thrust_enabled=True,
+        )
+
+
+@pytest.mark.parametrize("field", ["gravity", "thrust", "srp", "relativity"])
+@pytest.mark.parametrize("value", [0.0, -1.0, True, math.nan, math.inf])
+def test_complete_force_bound_sum_rejects_invalid_component(field: str, value: float) -> None:
+    gravity = dict.fromkeys(trajectory.PHYSICAL_BODY_NAMES, 1.0)
+    parts = {"thrust": 1.0, "srp": 1.0, "relativity": 1.0}
+    if field == "gravity":
+        gravity["Sun"] = value
+    else:
+        parts[field] = value
+    with pytest.raises(TrajectoryRefinementError, match="force-bound-sum") as caught:
+        trajectory._sum_force_acceleration_bounds(
+            trajectory._RefinementBudget("sum-bound", 300.0), gravity,
+            parts["thrust"], parts["srp"], parts["relativity"], thrust_enabled=True,
+        )
+    assert caught.value.__cause__ is not None
+
+
+def test_complete_force_bound_sum_rejects_coast_thrust_bad_flag_and_overflow() -> None:
+    gravity = dict.fromkeys(trajectory.PHYSICAL_BODY_NAMES, 1.0)
+    budget = trajectory._RefinementBudget("sum-bound", 300.0)
+    with pytest.raises(TrajectoryRefinementError, match="zero for coast"):
+        trajectory._sum_force_acceleration_bounds(budget, gravity, 1.0, 1.0, 1.0, thrust_enabled=False)
+    with pytest.raises(TrajectoryRefinementError, match="boolean"):
+        trajectory._sum_force_acceleration_bounds(
+            budget, gravity, 1.0, 1.0, 1.0,
+            thrust_enabled=1,  # type: ignore[arg-type]  # Invalid input probe.
+        )
+    with pytest.raises(TrajectoryRefinementError, match="total force bound_m_s2"):
+        trajectory._sum_force_acceleration_bounds(
+            budget, dict.fromkeys(trajectory.PHYSICAL_BODY_NAMES, 1e308), 1.0, 1.0, 1.0,
+            thrust_enabled=True,
+        )
+
+
+@pytest.mark.parametrize("expiry_check", [3, 11])
+def test_complete_force_bound_sum_rejects_midcollection_and_final_expiry(expiry_check: int) -> None:
+    clock = iter([0.0] * expiry_check + [300.0])
+    budget = trajectory._RefinementBudget("sum-bound", 300.0, lambda: next(clock))
+    with pytest.raises(TrajectoryRefinementError, match="shared deadline"):
+        trajectory._sum_force_acceleration_bounds(
+            budget, dict.fromkeys(trajectory.PHYSICAL_BODY_NAMES, 1.0), 0.0, 1.0, 1.0,
+            thrust_enabled=False,
+        )
+    assert (budget.control_attempts, budget.propagation_evaluations,
+            budget.native_arc_propagations) == (0, 0, 0)

@@ -1398,6 +1398,49 @@ def _install_tnw_engine(
     return engine_name
 
 
+def _sum_force_acceleration_bounds(
+    budget: _RefinementBudget,
+    gravity_bounds_m_s2: dict[str, float],
+    thrust_bound_m_s2: float,
+    srp_bound_m_s2: float,
+    schwarzschild_bound_m_s2: float,
+    *,
+    thrust_enabled: bool,
+) -> float:
+    """Sum all declared force-norm enclosures in m/s^2 under the shared budget.
+
+    Inputs must already bound their components over the requested interval.
+    This neither proves those premises nor accounts for body/numerical errors.
+    """
+    budget.check()
+    try:
+        if not isinstance(gravity_bounds_m_s2, dict) or tuple(gravity_bounds_m_s2) != PHYSICAL_BODY_NAMES:
+            raise ValueError("gravity bounds must contain exactly the ordered eight bodies")
+        if not isinstance(thrust_enabled, bool):
+            raise ValueError("thrust_enabled must be boolean")
+        values_m_s2 = []
+        for body, value in gravity_bounds_m_s2.items():
+            budget.check()
+            values_m_s2.append(_positive_finite(f"{body} gravity bound_m_s2", value))
+        thrust_m_s2 = _finite_float("thrust bound_m_s2", thrust_bound_m_s2)
+        if (thrust_enabled and thrust_m_s2 <= 0) or (not thrust_enabled and thrust_m_s2 != 0):
+            raise ValueError("thrust bound must be positive for burn and exactly zero for coast")
+        values_m_s2.extend((
+            thrust_m_s2, _positive_finite("srp bound_m_s2", srp_bound_m_s2),
+            _positive_finite("Schwarzschild bound_m_s2", schwarzschild_bound_m_s2),
+        ))
+        budget.check()
+        with localcontext(Context(prec=50, rounding=ROUND_CEILING)):
+            total_m_s2 = sum((Decimal.from_float(value) for value in values_m_s2), Decimal(0))
+            result_m_s2 = _positive_finite(
+                "total force bound_m_s2", math.nextafter(float(total_m_s2), math.inf),
+            )
+    except (ArithmeticError, TypeError, ValueError) as exc:
+        _raise_refinement_error(budget.candidate_id, "force-bound-sum", str(exc), exc)
+    budget.check()
+    return result_m_s2
+
+
 def _build_arc_force_models(
     candidate_id: object,
     environment: _PhysicalEnvironment,

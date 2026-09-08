@@ -555,6 +555,44 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
                 )
                 actual_m_s2 = float(np.linalg.norm(direct_components_m_s2[_SOURCE_ORDER.index(source)]))
                 assert actual_m_s2 <= bound_m_s2, (label, source, actual_m_s2, bound_m_s2)
+        else:
+            bound_budget = trajectory._RefinementBudget("complete-force-bound", 300.0)
+            gravity_bounds_m_s2: dict[str, float] = {}
+            distance_floors_m: dict[str, float] = {}
+            source_states = {
+                source: np.asarray(bodies.get(source).ephemeris.cartesian_state(epoch_tdb_s)).reshape(6)
+                for source in _SOURCE_ORDER
+            }
+            for source, source_state in source_states.items():
+                bound_budget.check()
+                field = bodies.get(source).gravity_field_model
+                distance_floors_m[source] = float(np.linalg.norm(state[:3] - source_state[:3])) * 0.999
+                harmonic = source in {"Moon", "Mars"}
+                gravity_bounds_m_s2[source] = trajectory._harmonic_acceleration_upper_bound(
+                    candidate.candidate_id, field.gravitational_parameter,
+                    # The normalization radius is irrelevant for degree zero.
+                    field.reference_radius if harmonic else distance_floors_m[source],
+                    distance_floors_m[source],
+                    field.cosine_coefficients if harmonic else ((1.0,),),
+                    field.sine_coefficients if harmonic else ((0.0,),),
+                )
+            thrust_bound_m_s2, srp_bound_m_s2 = trajectory._thrust_and_srp_upper_bounds(
+                candidate.candidate_id, _spacecraft(), distance_floors_m["Sun"],
+                thrust_enabled=burn_id is not None,
+            )
+            relativity_bound_m_s2 = trajectory._schwarzschild_acceleration_upper_bound(
+                candidate.candidate_id, bodies.get("Sun").gravity_field_model.gravitational_parameter,
+                distance_floors_m["Sun"],
+                float(np.linalg.norm(state[3:] - source_states["Sun"][3:])) * 1.001,
+            )
+            total_bound_m_s2 = trajectory._sum_force_acceleration_bounds(
+                bound_budget, gravity_bounds_m_s2, thrust_bound_m_s2, srp_bound_m_s2,
+                relativity_bound_m_s2,
+                thrust_enabled=burn_id is not None,
+            )
+            assert np.linalg.norm(production_total_m_s2) <= total_bound_m_s2, label
+            assert (bound_budget.control_attempts, bound_budget.propagation_evaluations,
+                    bound_budget.native_arc_propagations) == (0, 0, 0)
         direct_total_m_s2 = direct_components_m_s2.sum(axis=0)
         component_norm_sum_m_s2 = sum(
             float(np.linalg.norm(component))

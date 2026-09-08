@@ -42,6 +42,25 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 complete-force bound composition evidence (2026-09-08):
+`_sum_force_acceleration_bounds` combines all eight ordered gravity sources,
+phase-specific thrust, fully lit SRP and Sun Schwarzschild by the triangle
+inequality. Exact binary-to-Decimal conversion, upward-rounded summation and
+outward float conversion prevent a rounded-down total. Missing, extra or
+reordered sources, invalid component values, inconsistent coast/burn thrust
+and overflow fail clearly. Checks during collection and after summation reuse
+the caller's shared deadline without starting propagation or changing counters.
+
+Exact rational sum tests cover disparate magnitudes and caller Decimal-context
+isolation. Existing native complete-force near-Moon/cruise/near-Mars controls
+check the composition for coast and both burn phases, retaining their original
+independent force-parity tolerances. Reproduce with
+`conda run -n space-nav python -m pytest -q tests/test_trajectory_gravity_bound.py tests/test_trajectory_gravity.py`
+(90 tests). Fixed-state distance/speed margins are test premises, not interval
+proofs. This conditional sum neither audits native model configuration nor
+encloses body motion or numerical trajectory error. Task 3.9 remains open;
+no full-force safe interval, subdivision timing or targeting readiness is claimed.
+
 Task 3.9 Schwarzschild-component enclosure evidence (2026-09-08):
 `_schwarzschild_acceleration_upper_bound` implements the derived orientation
 maximum `GM/(c^2*r_min^2)*(4*GM/r_min+3*V_max^2)` for the declared Sun-only
