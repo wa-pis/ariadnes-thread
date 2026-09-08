@@ -105,6 +105,58 @@ def _rational_lagrange_state(
     ])
 
 
+def test_six_node_amplification_identity_is_sharp() -> None:
+    nodes = tuple(Fraction(index) for index in range(-2, 4))
+    signs = (1, -1, 1, 1, -1, 1)
+    for index in range(33):
+        u = Fraction(index, 32)
+        weights = [math.prod((u - other) / (node - other)
+                             for j, other in enumerate(nodes) if i != j)
+                   for i, node in enumerate(nodes)]
+        assert sum(weights) == 1
+        assert all(sign * weight >= 0 for sign, weight in zip(signs, weights))
+        w = u * (1 - u)
+        amplification = sum(abs(weight) for weight in weights)
+        assert weights[1] + weights[4] == -w * (6 + w) / 8
+        assert amplification == 1 + w * (6 + w) / 4
+        assert amplification <= Fraction(89, 64)
+        if u == Fraction(1, 2):
+            assert amplification == Fraction(89, 64) > 1
+
+
+@pytest.mark.parametrize("step_s", [1.0, 300.0])
+@pytest.mark.parametrize("worst_signs", [False, True])
+def test_native_six_node_amplification_matches_exact_control(step_s: float, worst_signs: bool) -> None:
+    """Attaining nodal perturbations are synthetic controls, not SPICE errors."""
+    from tudatpy.dynamics import environment_setup
+
+    node_error_m = 0.125  # Exactly representable; perturbation along the X axis.
+    signs = dict(zip(range(-2, 4), (1, -1, 1, 1, -1, 1))) if worst_signs else {}
+    table = environment_setup.create_body_ephemeris(environment_setup.ephemeris.tabulated({
+        index * step_s: np.asarray([signs.get(index, 1) * node_error_m, 0.0, 0.0, 0.0, 0.0, 0.0])
+        for index in range(-8, 10)
+    }, "SSB", "J2000"), "AmplificationControl")
+    assert table.frame_origin == "SSB" and table.frame_orientation == "J2000"
+    for offset in (0.0, 0.125, 0.25, 0.5, 0.75, 0.875, 1.0):
+        u = Fraction(offset)
+        w = u * (1 - u)
+        expected_factor = 1 + w * (6 + w) / 4 if worst_signs else Fraction(1)
+        expected_m = float(Fraction(node_error_m) * expected_factor)
+        native_si = np.asarray(table.cartesian_state(offset * step_s)).reshape(6)
+        np.testing.assert_allclose(native_si, [expected_m, 0.0, 0.0, 0.0, 0.0, 0.0],
+                                   rtol=0.0, atol=1e-12)
+    midpoint_error_m = float(table.cartesian_position(0.5 * step_s)[0])
+    if worst_signs:
+        assert midpoint_error_m > node_error_m
+    print(json.dumps({
+        "scope": "Synthetic nodal-error amplification, not native/SPICE error bound",
+        "step_s": step_s, "worst_signs": worst_signs, "node_error_m": node_error_m,
+        "native_midpoint_error_m": midpoint_error_m,
+        "exact_midpoint_amplification": 89 / 64 if worst_signs else 1.0,
+        "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+    }, sort_keys=True, allow_nan=False))
+
+
 @pytest.mark.parametrize("degree", range(6))
 def test_rational_ephemeris_oracle_reproduces_polynomials(degree: int) -> None:
     origin_tdb_s = 978995455.2304223

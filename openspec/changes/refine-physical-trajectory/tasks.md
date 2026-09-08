@@ -42,6 +42,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 six-node amplification evidence (2026-09-08):
+The uniform middle-cell basis has signs `(+,-,+,+,-,+)`. Using partition of
+unity and factoring its two negative weights gives the exact absolute-weight
+sum `Lambda(u)=1+w*(6+w)/4`, `w=u*(1-u)`. Since `0<=w<=1/4`, its sharp maximum
+is `89/64=1.390625` at the midpoint. The design records the algebraic proof;
+exact rational evaluations at 33 points check the identity, signs, partition
+of unity and attaining case (the grid alone is not the proof of uniformity).
+
+Four native controls use one-second/300-second grids and constant-sign or
+worst-sign position perturbations. They agree with the closed formula at seven
+points within `1e-12 m`. With nodal perturbation magnitude `0.125 m`, the
+worst-sign midpoint is exactly `0.173828125 m`; constant-sign interpolation
+remains `0.125 m`. This shows why a unit amplification factor is insufficient.
+Reproduce rational and native controls with
+`conda run -n space-nav python -m pytest -q -s tests/test_trajectory_ephemeris.py -k amplification`
+(five tests, JSON identifies synthetic perturbations and SI/SSB/J2000/TDB).
+
+The result bounds amplification of already-bounded node errors under exact
+interpolation on this uniform stencil. It does not give those node errors,
+native evaluation roundoff, uniform SPICE approximation or boundary-spline
+behavior. No unused runtime helper, force change, tolerance relaxation or new
+work limit was introduced. Task 3.9 remains open pending the complete error
+argument and full-force interval qualification.
+
 Task 3.9 binary64 arithmetic-premise evidence (2026-09-08):
 `test_pinned_grid_binary64_arithmetic_matches_exact_rationals` replays the
 installed source's repeated time addition for all 83933 nodes in the padded

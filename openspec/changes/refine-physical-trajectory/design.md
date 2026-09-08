@@ -196,6 +196,21 @@ Numerator products, division, state multiplication/summation, compiler/runtime
 arithmetic and native node provenance still require separate error analysis.
 Exact-subtraction reference: https://flocq.gitlabpages.inria.fr/theos.html
 
+For the uniform six-node interior stencil `(-2,-1,0,1,2,3)` and `u in [0,1]`,
+the Lagrange basis signs are `(+,-,+,+,-,+)` (allow zeros at endpoints).
+Since `sum L_i=1`, its absolute-weight sum is `Lambda=1-2*(L_1+L_4)`.
+Factoring gives `L_1+L_4=-w*(6+w)/8`, where `w=u*(1-u) in [0,1/4]`.
+Thus `Lambda=1+w*(6+w)/4 <= 89/64`, with equality at `u=1/2`.
+This proves that nodal vector errors each bounded by `epsilon` amplify to
+at most `(89/64)*epsilon` under exact interpolation. Aligned error vectors
+with the basis signs attain the bound, so replacing it by one is unsafe.
+Verify the identity with rational basis evaluations and qualify the attaining
+and constant-sign controls against native tabulation on one-second/300-second
+grids. The factor does not bound native floating evaluation or SPICE polynomial
+approximation, and applies only to this uniform middle-cell stencil, not
+boundary splines or arbitrary grids. Keep it as a qualification result until
+the complete rounding argument is established; add no unused runtime machinery.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
