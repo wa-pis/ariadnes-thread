@@ -6,6 +6,7 @@ from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field as dataclass_field
 from datetime import datetime
 from decimal import Context, Decimal, ROUND_CEILING, localcontext
+from fractions import Fraction
 from hashlib import file_digest
 import math
 from numbers import Real
@@ -1730,6 +1731,75 @@ def _read_completed_arc_state(
     except ValueError as exc:
         _raise_refinement_error(candidate_id, "arc-completion", f"{context}: {exc}", exc)
     return cartesian, mass_kg
+
+
+def _ephemeris_cell_chord_bound(
+    budget: _RefinementBudget,
+    node_epochs_tdb_s: tuple[float, ...],
+    node_positions_m: tuple[tuple[float, float, float], ...],
+    initial_epoch_tdb_s: float,
+    final_epoch_tdb_s: float,
+) -> float:
+    """Bound exact six-node position polynomial chord deviation in metres.
+
+    Nodes must be SI/SSB/J2000; the interval lies inside the middle node pair.
+    This excludes native evaluation, SPICE approximation and trajectory errors.
+    """
+    budget.check()
+    try:
+        if len(node_epochs_tdb_s) != 6 or len(node_positions_m) != 6:
+            raise ValueError("exactly six epochs and position nodes are required")
+        epochs = [Fraction(_finite_float(f"node[{i}] epoch_tdb_s", value))
+                  for i, value in enumerate(node_epochs_tdb_s)]
+        if any(right <= left for left, right in zip(epochs, epochs[1:])):
+            raise ValueError("node epochs must be strictly increasing")
+        positions = []
+        for index, position in enumerate(node_positions_m):
+            if len(position) != 3:
+                raise ValueError(f"node[{index}] position_m must have three components")
+            positions.append([Fraction(_finite_float(f"node[{index}] position_m", value))
+                              for value in position])
+        start = Fraction(_finite_float("initial_epoch_tdb_s", initial_epoch_tdb_s))
+        end = Fraction(_finite_float("final_epoch_tdb_s", final_epoch_tdb_s))
+        if not epochs[2] <= start < end <= epochs[3]:
+            raise ValueError("interval must have positive duration within the middle node pair")
+        nodes = [(epoch - start) / (end - start) for epoch in epochs]
+        power_m = [[Fraction(0) for _ in range(3)] for _ in range(6)]
+        for selected, node in enumerate(nodes):
+            budget.check()
+            basis = [Fraction(1)]
+            for other_index, other in enumerate(nodes):
+                if other_index == selected:
+                    continue
+                product = [Fraction(0) for _ in range(len(basis) + 1)]
+                for degree, coefficient in enumerate(basis):
+                    product[degree] -= coefficient * other / (node - other)
+                    product[degree + 1] += coefficient / (node - other)
+                basis = product
+            for degree, coefficient in enumerate(basis):
+                for axis in range(3):
+                    power_m[degree][axis] += coefficient * positions[selected][axis]
+        # Subtract p(0) + u*(p(1)-p(0)) exactly, including large SSB offsets.
+        for axis in range(3):
+            power_m[0][axis] = Fraction(0)
+            power_m[1][axis] -= sum(row[axis] for row in power_m[1:])
+        bound_m = Fraction(0)
+        for index in range(6):
+            budget.check()
+            bernstein_m = [sum(
+                power_m[degree][axis] * Fraction(math.comb(index, degree), math.comb(5, degree))
+                for degree in range(index + 1)
+            ) for axis in range(3)]
+            # ponytail: L1 hull is conservative; use a certified L2 norm only
+            # if measured subdivision costs justify the added arithmetic.
+            bound_m = max(bound_m, sum(abs(value) for value in bernstein_m))
+        result_m = 0.0 if bound_m == 0 else _positive_finite(
+            "cell chord bound_m", math.nextafter(float(bound_m), math.inf),
+        )
+    except (ArithmeticError, TypeError, ValueError) as exc:
+        _raise_refinement_error(budget.candidate_id, "ephemeris-cell-bound", str(exc), exc)
+    budget.check()
+    return result_m
 
 
 def _create_time_limited_body_settings(

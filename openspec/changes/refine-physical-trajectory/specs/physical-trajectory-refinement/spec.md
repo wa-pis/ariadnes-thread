@@ -204,6 +204,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** native six-point tabulation interpolates analytic degree-five and degree-six position with consistent sampled velocity on one-second and 300-second grids
 - **THEN** evaluations on both sides of an interior knot match the closed polynomial remainder within `1e-10 m` in position and `1e-10 m/s` in velocity, and derivative-jump evidence prevents assuming global smoothness or equating interpolated velocity with the derivative of interpolated position
 
+#### Scenario: Enclose the exact position polynomial inside one cell
+- **WHEN** six ordered finite SI/SSB/J2000 position nodes and a positive-duration TDB interval within the middle node pair are supplied under the shared budget
+- **THEN** an outward-rounded Bernstein convex-hull bound encloses the exact degree-five polynomial's Euclidean deviation from its endpoint chord in metres, affine motion returns zero, invalid or cross-cell inputs fail clearly, and expiration returns no bound without native propagation
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

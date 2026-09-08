@@ -128,6 +128,25 @@ Any future chord enclosure spanning knots must split its mathematical analysis
 by interpolation cell or explicitly bound derivative jumps; this does not by
 itself require an additional native spacecraft propagation per ephemeris cell.
 
+For one six-node position polynomial, bound its deviation from its own endpoint
+chord on a positive-duration subinterval contained in the middle node pair.
+Normalize this interval to `u in [0,1]`. Construct the degree-five power
+coefficients of its Lagrange basis using exact Fraction arithmetic on supplied
+binary epochs and SI/SSB/J2000 positions. Subtract the endpoint chord exactly,
+then convert power coefficients `a_j` to degree-five Bernstein coefficients
+`b_k=sum(j<=k, a_j*choose(k,j)/choose(5,j))` componentwise. Nonnegative Bernstein
+weights sum to one, so `max_k sum_axis(abs(b_k))` bounds the Euclidean chord
+deviation in metres. This conservative L1 enclosure avoids square-root rounding;
+convert its exact rational value outward to float (return exact zero for a line).
+Reject malformed/nonfinite nodes, nonincreasing epochs, intervals crossing a
+cell boundary and overflow. Reuse the shared budget without native propagation.
+Verify exact monomial coefficient bounds, affine controls, subinterval scaling,
+translation invariance, independent sampled Lagrange controls and deadline errors.
+This only encloses the exact polynomial of supplied nodes: node provenance,
+native floating evaluation, uniform SPICE approximation, cross-cell composition
+and spacecraft integration error remain outside this helper. Bernstein basis
+properties: https://web.mit.edu/hyperbook/Patrikalakis-Maekawa-Cho/node9.html
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

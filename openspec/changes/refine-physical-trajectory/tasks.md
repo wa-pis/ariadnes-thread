@@ -42,6 +42,34 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 exact single-cell chord enclosure evidence (2026-09-08):
+`_ephemeris_cell_chord_bound` encloses the exact degree-five position polynomial
+of six finite ordered SI/SSB/J2000 nodes over a positive-duration TDB subinterval
+inside the middle node pair. It builds normalized Lagrange power coefficients,
+subtracts the endpoint chord and converts to Bernstein coefficients using exact
+Fraction arithmetic. The maximum coefficient L1 norm encloses Euclidean chord
+deviation over the entire cell subinterval by the convex-hull property; only the
+final float conversion is rounded outward. This deliberate conservative norm
+avoids additional square-root rounding. Affine motion returns exactly zero.
+
+`tests/test_ephemeris_cell_bound.py` verifies degree-zero through degree-five
+monomial hulls against exact binomial coefficients on 1-second and 300-second
+grids; quadratic subinterval scaling; exact cancellation of large SSB offsets;
+and independent rational Lagrange defects at 33 points on an irregular grid.
+It rejects malformed, nonfinite, Boolean, unordered and cross-cell inputs,
+preserves a positive subnormal enclosure, and rejects a finite-input example
+whose analytic midpoint L1 defect already exceeds float range. Shared-budget
+expiration at entry, during either coefficient pass and at exit returns no
+bound and leaves native/control counters unchanged. Reproduce with
+`conda run -n space-nav python -m pytest -q tests/test_ephemeris_cell_bound.py`
+(32 tests). No scientific tolerance, native-call limit or deadline changed.
+
+The mathematical interval claim applies only to the exact polynomial of the
+supplied binary nodes, not native floating evaluation, true SPICE motion or a
+spacecraft path. Node extraction/provenance, cross-cell composition, uniform
+ephemeris error and integration error still need qualification. This helper is
+not wired into production safety screening, and task 3.9 remains open.
+
 Task 3.9 grid-switch regularity evidence (2026-09-08):
 `test_native_ephemeris_grid_switch_does_not_guarantee_smooth_position` uses
 native six-point tabulation on analytic `x=u^d m`, `u=t/h`, with consistent
