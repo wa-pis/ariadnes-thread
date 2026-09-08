@@ -64,6 +64,7 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
     # Inventory every source node, not the inaccessible native table storage.
     source_node_ranges: dict[str, dict[str, object]] = {}
     native_knot_parity: dict[str, dict[str, object]] = {}
+    whole_interval_model_bounds: dict[str, dict[str, object]] = {}
     inventory_elapsed_s = 0.0
     for body in trajectory.PHYSICAL_BODY_NAMES:
         inventory_started_s = time.perf_counter()
@@ -109,6 +110,30 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
             "exact_binary64_state_matches": len(native_states_si),
             "state_sha256_big_endian_binary64_row_major": sha256(native_states_si.astype(">f8").tobytes()).hexdigest(),
             "construction_and_knot_check_elapsed_s": time.perf_counter() - parity_started_s,
+        }
+        # Every candidate stencil is a subset of the verified required-node union.
+        # Bound the inspected arithmetic model against its exact polynomial, not SPICE.
+        unit = Fraction(1, 2 ** 53)
+        gamma_15 = 15 * unit / (1 - 15 * unit)
+        global_maxima_si = np.max(np.abs(source_states_si), axis=0)
+        exact_component_bounds_si = [
+            gamma_15 * Fraction(89, 64) * Fraction(float(maximum))
+            for maximum in global_maxima_si
+        ]
+        exact_bounds_si = exact_component_bounds_si + [
+            sum(exact_component_bounds_si[:3]), sum(exact_component_bounds_si[3:]),
+        ]
+        rounded_bounds_si = [
+            math.nextafter(float(bound), math.inf) if bound else 0.0
+            for bound in exact_bounds_si
+        ]
+        for exact, rounded in zip(exact_bounds_si, rounded_bounds_si):
+            assert math.isfinite(rounded) and Fraction(rounded) >= exact
+        whole_interval_model_bounds[body] = {
+            "required_node_component_maxima_si": global_maxima_si.tolist(),
+            "component_roundoff_bounds_si": rounded_bounds_si[:6],
+            "position_roundoff_l1_bound_m": rounded_bounds_si[6],
+            "velocity_roundoff_l1_bound_m_s": rounded_bounds_si[7],
         }
         del native
         budget.check()
@@ -194,6 +219,10 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
         "component_units": ["m", "m", "m", "m/s", "m/s", "m/s"],
         "source_node_ranges": source_node_ranges,
         "native_required_knot_parity": native_knot_parity,
+        "whole_interval_arithmetic_model_bounds": whole_interval_model_bounds,
+        "whole_interval_model_scope": "gamma_15*(89/64)*global_node_maximum versus exact cell polynomial; "
+                                      "conditional on inspected correctly rounded binary64 graph, excludes "
+                                      "oracle conversion, SPICE approximation and spacecraft error",
         "required_knot_first_tdb_s": node_epochs_s[first_required],
         "required_knot_last_tdb_s": node_epochs_s[last_required],
         "native_knot_scope": "all nodes of candidate stencils via public queries; not storage introspection or between-knot certification",

@@ -42,6 +42,27 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 whole-interval conditional arithmetic summary (2026-09-08):
+Use complete required-node component maxima, rather than sampled cell maxima,
+in the already-derived `gamma_15*(89/64)*M_j` envelope. Every candidate stencil
+belongs to that node union. Record component bounds and separately upward-rounded
+position/velocity L1 sums (also Euclidean upper bounds), using exact Fraction
+arithmetic and checking every reported float is finite and no smaller than its
+exact value. Verify with `tests/test_trajectory_ephemeris.py -k grid_binary64`,
+the full ephemeris file, full pytest, Ruff and strict OpenSpec. This is a uniform
+bound for the inspected arithmetic model versus its exact polynomial under the
+stated binary64 premises; it is not a sampled-error maximum, a verified compiler
+contract, SPICE approximation error or spacecraft safety. Oracle-conversion
+rounding is excluded here and remains separate from the earlier gamma_16
+sampled comparison. No production behavior, tolerance or budget changes; 3.9
+remains open.
+
+Observed whole-interval model L1 maxima: `0.005219971 m` (Saturn) and
+`2.974497e-10 m/s` (Mercury), rounded upward here. The focused check passed
+in 3.80 s. These are not directly interchangeable with the older sampled
+gamma_16 figures: this uses maxima over all required nodes and gamma_15 excludes
+the rational oracle's conversion. No improvement in physical accuracy is claimed.
+
 Task 3.9 exhaustive required-native-knot parity (2026-09-08):
 Derive the union of candidate six-node stencils with exact rational floor indices
 and query every required knot through each production native ephemeris. Require

@@ -252,6 +252,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the exact-index union of all candidate six-node stencils is queried at every knot through each production body's ephemeris
 - **THEN** the safe interpolation interval contains the union, all six binary64 component bit patterns match direct SPICE exactly, per-body match counts/subset hashes/separate timings are reported under the existing shared deadline, and knot agreement is not promoted into between-knot or trajectory certification
 
+#### Scenario: Report a whole-interval conditional arithmetic-model envelope
+- **WHEN** component maxima are taken over the complete verified required-node union containing every candidate stencil
+- **THEN** per-component `gamma_15*(89/64)*M_j` and position/velocity L1 sums are computed exactly and reported as finite upward-rounded bounds, separately from sampled oracle differences, without including SPICE approximation or claiming verified compiled arithmetic or trajectory safety
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

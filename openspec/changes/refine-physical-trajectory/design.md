@@ -313,6 +313,22 @@ This is exhaustive knot-value agreement for the candidate's required nodes in
 the pinned runtime. It does not establish compiled between-knot arithmetic,
 boundary-spline behavior, SPICE approximation accuracy or spacecraft safety.
 
+Summarize the arithmetic model over the entire candidate interval, separately
+from the former sampled native/oracle comparisons. For each component let M be
+the largest absolute value across the complete required-node union, which
+contains every candidate stencil. The established bound is then
+`E_j=gamma_15*(89/64)*M_j` against the exact local polynomial for any represented
+query in the candidate interval, conditional on the inspected correctly rounded
+binary64 graph. Its range premises follow from the preceding complete-grid
+weight and state/lattice checks. At exact knots the error is zero. Compute E in
+Fraction arithmetic, round each reported component upward, and separately round
+the exact sums of the three position and velocity bounds upward. These L1 sums
+also bound Euclidean error; check every serialized float remains finite and is
+at least its exact rational bound. This summary deliberately excludes the extra
+rounding of a rational oracle (the older sampled comparison uses gamma_16).
+Do not interpret it as verified compiler semantics, SPICE interpolation error,
+spacecraft integration error, or permission to certify a safe trajectory.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 
