@@ -42,6 +42,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 bounded lookup-cost experiment (2026-09-08):
+Compare the existing 300 s table and test-only direct ephemerides for eight
+bodies using six alternating batches of 3,800 warm queries per path. Verify
+finite states and unchanged sampled parity limits outside timed loops, emit
+raw timings and medians, and preserve one shared 300-second budget with zero
+native arcs. Verification: `tests/test_trajectory_spk.py -k lookup_cost`, the
+whole SPK file, full pytest, Ruff and strict OpenSpec validation. The focused
+run passed; measured direct/table cost ratios were about 2.9–3.6. No timing
+ratio gate, full-force runtime projection or production changes are introduced.
+Task 3.9 remains open; passing this check does not repair table inaccuracies.
+
 Task 3.9 eight-body direct-SPICE path parity (2026-09-08):
 Extend all eight sampled source-chain cases with explicit SSB/J2000 direct
 native models and numeric-target CSPICE state comparisons at 38 epochs each.

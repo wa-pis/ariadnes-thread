@@ -9,7 +9,9 @@ from itertools import permutations
 import math
 from pathlib import Path
 import platform
+from statistics import median
 import sys
+from time import perf_counter
 
 import numpy as np
 import pytest
@@ -18,6 +20,82 @@ from space_nav import ephemeris, trajectory
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_direct_and_tabulated_ephemeris_lookup_cost() -> None:
+    """Measure warm Python-boundary lookup cost, not full-force propagation."""
+    from tudatpy.dynamics import environment_setup
+
+    evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
+    epochs_tdb_s = evidence["epoch_tdb_s"]
+    budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
+    spice = ephemeris._ensure_standard_kernels()
+    started_s = perf_counter()
+    settings = trajectory._create_time_limited_body_settings(
+        environment_setup, epochs_tdb_s[0], epochs_tdb_s[-1],
+    )
+    settings_elapsed_s = perf_counter() - started_s
+    repeats, batches = 100, 6
+    observations: list[dict[str, object]] = []
+    for body in trajectory.PHYSICAL_BODY_NAMES:
+        budget.check()
+        started_s = perf_counter()
+        table = environment_setup.create_body_ephemeris(
+            settings.get(body).ephemeris_settings, body,
+        )
+        table_setup_s = perf_counter() - started_s
+        started_s = perf_counter()
+        direct = environment_setup.create_body_ephemeris(
+            environment_setup.ephemeris.direct_spice("SSB", "J2000", body), body,
+        )
+        direct_setup_s = perf_counter() - started_s
+        # Validate and warm both paths outside the timed loops.
+        for model in (table, direct):
+            assert (model.frame_origin, model.frame_orientation) == ("SSB", "J2000")
+            for epoch_tdb_s in epochs_tdb_s:
+                state_si = model.cartesian_state(epoch_tdb_s)
+                reference_si = spice.get_body_cartesian_state_at_epoch(
+                    body, "SSB", "J2000", "NONE", epoch_tdb_s,
+                )
+                assert np.all(np.isfinite(state_si))
+                difference_si = state_si - reference_si
+                position_limit_m = 0.001 if model is direct else 0.025
+                velocity_limit_m_s = 0.000001 if model is direct else 0.0000025
+                assert np.linalg.norm(difference_si[:3]) <= position_limit_m
+                assert np.linalg.norm(difference_si[3:]) <= velocity_limit_m_s
+        elapsed_s: dict[str, list[float]] = {"table": [], "direct": []}
+        paths = (("table", table), ("direct", direct))
+        for batch in range(batches):
+            for name, model in paths if batch % 2 == 0 else paths[::-1]:
+                budget.check()
+                query = model.cartesian_state
+                started_s = perf_counter()
+                for _ in range(repeats):
+                    for epoch_tdb_s in epochs_tdb_s:
+                        query(epoch_tdb_s)
+                duration_s = perf_counter() - started_s
+                assert math.isfinite(duration_s) and duration_s > 0
+                elapsed_s[name].append(duration_s)
+                budget.check()
+        observations.append({
+            "body": body, "table_setup_s": table_setup_s,
+            "direct_setup_s": direct_setup_s, "batch_elapsed_s": elapsed_s,
+            "median_query_s": {
+                name: median(values) / (repeats * len(epochs_tdb_s))
+                for name, values in elapsed_s.items()
+            },
+        })
+    budget.check()
+    assert budget.native_arc_propagations == 0
+    print(json.dumps({
+        "candidate_id": evidence["candidate_id"], "platform": platform.platform(),
+        "python": platform.python_version(), "settings_elapsed_s": settings_elapsed_s,
+        "epoch_count": len(epochs_tdb_s), "batches_per_path": batches,
+        "queries_per_batch": repeats * len(epochs_tdb_s),
+        "time": "TDB seconds since J2000", "frame": "SSB/J2000",
+        "state_units": ["m", "m/s"], "observations": observations,
+        "scope": "Warm Python-boundary lookup timings; no speed gate or mission estimate",
+    }, sort_keys=True, allow_nan=False))
 
 
 @pytest.fixture

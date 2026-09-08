@@ -1,5 +1,28 @@
 ## Context
 
+### Direct versus tabulated lookup cost (2026-09-08)
+
+The bounded lookup experiment uses the existing 38 candidate epochs, eight
+bodies, six alternating-order batches per path and 3,800 queries per batch.
+Validate finite states, explicit SI/SSB/J2000 frames and the existing sampled
+parity tolerances before timing. Keep table construction separate from direct
+construction and query time; kernel loading is outside reported setup timings.
+One shared 300-second budget covers the experiment, with zero propagated arcs.
+
+On macOS 26.6.2 arm64, Python 3.12.14 and the pinned scientific environment,
+the first focused run measured median table queries of 0.412–0.550 microseconds
+and direct queries of 1.223–1.630 microseconds (about 2.9–3.6 times the cost).
+Per-body table construction took 0.088–0.111 seconds; direct construction took
+4.5–8.6 microseconds, with 0.060 seconds for shared table settings creation.
+The test prints raw batch timings and per-body medians; wall times are host/load
+dependent, not deterministic scientific baselines or test acceptance thresholds.
+
+This measures warm Python-boundary calls with repeated sampled epochs, not the
+native integrator's query distribution, full-force runtime, uniform accuracy
+or trajectory safety. It supports continued direct-path investigation without
+changing production tables, resource limits or scientific tolerances. Task 3.9
+remains open, including its existing table-accuracy counterexamples.
+
 ### Eight-body direct-SPICE path parity (2026-09-08)
 
 Extend the existing sampled source-chain qualification with a separate built-in
