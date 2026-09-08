@@ -329,6 +329,22 @@ rounding of a rational oracle (the older sampled comparison uses gamma_16).
 Do not interpret it as verified compiler semantics, SPICE interpolation error,
 spacecraft integration error, or permission to certify a safe trajectory.
 
+Record bounded static evidence for the installed Darwin/arm64 kernel in
+`tests/data/m3_native_arithmetic_observation.json`: module SHA-256/size, symbol,
+text-to-file offset mapping, disassembler version, reproduction command and
+selected instruction bytes. The double-time/double-six-state/double-scalar
+Lagrange symbol's interior loop contains scalar FSUB/FMUL/FDIV and three pairs
+of vector binary64 FMUL/FADD, without fused multiply-add in that inspected loop.
+On the matching platform, verify the entire installed module hash and selected
+bytes; a changed binary requires renewed inspection, not a silently refreshed
+baseline. Other platforms explicitly skip this platform-specific evidence.
+This narrows the compiled-graph premise for one symbol, but does not establish
+runtime dispatch to it, cached-denominator construction or FPCR rounding state.
+Arm documents that floating-point instructions depend on FPCR; no runtime mode
+is inferred from the instruction mnemonics:
+https://developer.arm.com/documentation/111108/2025-12/SIMD-FP-Instructions/FDIV--vector---Floating-point-divide--vector-- .
+The native safety certificate and task 3.9 remain incomplete.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

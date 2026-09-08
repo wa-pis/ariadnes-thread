@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from fractions import Fraction
-from hashlib import sha256
+from hashlib import file_digest, sha256
 from importlib.metadata import version
 from itertools import permutations
 import math
@@ -20,6 +20,24 @@ from space_nav.transfer import search_impulsive_transfers
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_native_arithmetic_binary_matches_static_observation() -> None:
+    """Pin inspected bytes on their platform; never infer another build's semantics."""
+    observation = json.loads((ROOT / "tests/data/m3_native_arithmetic_observation.json").read_text())
+    if (platform.system(), platform.machine()) != (observation["system"], observation["machine"]):
+        pytest.skip("No static native arithmetic observation for this platform")
+    import tudatpy
+    import tudatpy.kernel as kernel
+
+    assert tudatpy.__version__ == observation["tudatpy"]
+    binary_path = Path(kernel.__file__)
+    assert binary_path.stat().st_size == observation["kernel_size_bytes"]
+    with binary_path.open("rb") as binary:
+        assert file_digest(binary, "sha256").hexdigest() == observation["kernel_sha256"], "Native build changed; re-audit arithmetic observation"
+        for instruction in observation["instruction_observations"]:
+            binary.seek(int(instruction["file_offset"], 16))
+            assert binary.read(4) == bytes.fromhex(instruction["bytes"]), instruction["instruction"]
 
 
 def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:

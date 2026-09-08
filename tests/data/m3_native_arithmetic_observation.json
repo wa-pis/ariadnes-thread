@@ -1,0 +1,29 @@
+{
+  "observed_on": "2026-09-08",
+  "system": "Darwin",
+  "machine": "arm64",
+  "tudatpy": "1.0.0",
+  "kernel_size_bytes": 42188016,
+  "kernel_sha256": "4b36447713fef9a6ec23a73bd5642833381a0645ee573573144ed492f88b1f12",
+  "disassembler": "Apple LLVM 21.0.0",
+  "reproduce": "xcrun llvm-objdump --macho --disassemble --dis-symname SYMBOL KERNEL_PATH",
+  "symbol": "__ZN5tudat13interpolators20LagrangeInterpolatorIdN5Eigen6MatrixIdLi6ELi1ELi0ELi6ELi1EEEdE11interpolateEd",
+  "demangled_symbol": "tudat::interpolators::LagrangeInterpolator<double, Eigen::Matrix<double, 6, 1, 0, 6, 1>, double>::interpolate(double)",
+  "text_segment_vmaddr": 0,
+  "text_segment_fileoff": 0,
+  "interior_loop_start": "0x19abd8",
+  "interior_loop_end_exclusive": "0x19acb0",
+  "instruction_observations": [
+    {"file_offset": "0x19ac00", "bytes": "2138621e", "instruction": "fsub d1, d1, d2"},
+    {"file_offset": "0x19ac08", "bytes": "0008611e", "instruction": "fmul d0, d0, d1"},
+    {"file_offset": "0x19ac68", "bytes": "8408651e", "instruction": "fmul d4, d4, d5"},
+    {"file_offset": "0x19ac6c", "bytes": "0418641e", "instruction": "fdiv d4, d0, d4"},
+    {"file_offset": "0x19ac74", "bytes": "a590c44f", "instruction": "fmul.2d v5, v5, v4[0]"},
+    {"file_offset": "0x19ac78", "bytes": "21d4654e", "instruction": "fadd.2d v1, v1, v5"},
+    {"file_offset": "0x19ac84", "bytes": "a590c44f", "instruction": "fmul.2d v5, v5, v4[0]"},
+    {"file_offset": "0x19ac88", "bytes": "42d4654e", "instruction": "fadd.2d v2, v2, v5"},
+    {"file_offset": "0x19ac94", "bytes": "a490c44f", "instruction": "fmul.2d v4, v5, v4[0]"},
+    {"file_offset": "0x19ac98", "bytes": "63d4644e", "instruction": "fadd.2d v3, v3, v4"}
+  ],
+  "scope": "Static inspection of this exact binary and symbol's interior loop only. Separate binary64 multiply/add and division are present; no fused multiply-add is present in the inspected loop. Does not establish runtime dispatch, cached-denominator construction, FPCR state, boundary splines, or spacecraft safety."
+}

@@ -42,6 +42,22 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 static native arithmetic observation (2026-09-08):
+Apple LLVM 21.0.0 disassembly of the installed 42,188,016-byte Darwin/arm64
+kernel identifies the double-time/six-double-state/double-scalar Lagrange symbol.
+Its interior loop at `[0x19abd8,0x19acb0)` uses scalar FSUB/FMUL/FDIV and three
+separate binary64 vector multiply/add pairs, with no fused multiply-add in that
+loop. The checked-in JSON records the module SHA-256, exact symbol, selected
+instruction bytes and command; the text segment's virtual address and file
+offset are both zero. Verify installed hash/size and bytes using
+`tests/test_trajectory_ephemeris.py -k static_observation`, then the full
+ephemeris file, full pytest, Ruff and strict OpenSpec. The native file is read,
+not modified; other platforms skip this observation, and build drift requires
+re-inspection. Runtime dispatch, cached-denominator construction and FPCR state
+are still unqualified; no complete native rounding/safety certificate follows.
+No force model, scientific tolerance, production work limit or deadline changes;
+task 3.9 remains open.
+
 Task 3.9 whole-interval conditional arithmetic summary (2026-09-08):
 Use complete required-node component maxima, rather than sampled cell maxima,
 in the already-derived `gamma_15*(89/64)*M_j` envelope. Every candidate stencil

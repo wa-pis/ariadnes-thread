@@ -256,6 +256,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** component maxima are taken over the complete verified required-node union containing every candidate stencil
 - **THEN** per-component `gamma_15*(89/64)*M_j` and position/velocity L1 sums are computed exactly and reported as finite upward-rounded bounds, separately from sampled oracle differences, without including SPICE approximation or claiming verified compiled arithmetic or trajectory safety
 
+#### Scenario: Preserve platform-specific compiled-arithmetic evidence
+- **WHEN** the installed Darwin/arm64 TudatPy kernel is compared with the checked-in static arithmetic observation
+- **THEN** its full hash/size and selected instruction bytes match exactly or require renewed inspection, other platforms explicitly skip this evidence, and the observed separate operations are not treated as proof of runtime dispatch, FPCR mode or complete native safety
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states
