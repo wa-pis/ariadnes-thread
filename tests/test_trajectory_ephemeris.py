@@ -72,6 +72,44 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
             for node_s in nodes_s:
                 assert Fraction(query_s - node_s) == Fraction(query_s) - Fraction(node_s)
     assert largest_denominator_s5 < 2 ** 53
+    # All non-knot represented queries in a middle cell: delta <= |t-node| <= 3h.
+    # Spacing is nondecreasing on this positive epoch interval. Exact differences
+    # and cached denominators were established above; do not assume state ranges.
+    unit = Fraction(1, 2 ** 53)
+    delta_s = Fraction(math.ulp(start_s))
+    max_difference_s = 3 * exact_step_s
+    normal_min, finite_max = Fraction(sys.float_info.min), Fraction(sys.float_info.max)
+    numerator_lower = numerator_upper = Fraction(1)
+    for _ in range(6):
+        exact_lower = numerator_lower * delta_s
+        exact_upper = numerator_upper * max_difference_s
+        assert normal_min < exact_lower <= exact_upper < finite_max
+        numerator_lower = exact_lower * (1 - unit)
+        numerator_upper = exact_upper * (1 + unit)
+        assert normal_min < numerator_lower <= numerator_upper < finite_max
+    denominator_lower = delta_s * (math.factorial(2) * math.factorial(3) * exact_step_s ** 5)
+    denominator_upper = max_difference_s * largest_denominator_s5
+    assert normal_min < denominator_lower <= denominator_upper < finite_max
+    denominator_lower *= 1 - unit
+    denominator_upper *= 1 + unit
+    assert normal_min < denominator_lower <= denominator_upper < finite_max
+    weight_lower = numerator_lower / denominator_upper
+    weight_upper = numerator_upper / denominator_lower
+    assert normal_min < weight_lower <= weight_upper < finite_max
+    weight_lower *= 1 - unit
+    weight_upper *= 1 + unit
+    assert normal_min < weight_lower <= weight_upper < finite_max
+    # Exercise the nearest represented interior queries as well as the knot shortcut.
+    control_states_si = np.asarray([[float((i - 2) * (j + 1)) for j in range(6)] for i in range(6)])
+    for first_index in (0, count // 2, count - 6):
+        nodes_s = [start_s + index * step_s for index in range(first_index, first_index + 6)]
+        for query_s in (nodes_s[2], math.nextafter(nodes_s[2], nodes_s[3]),
+                        math.nextafter(nodes_s[3], nodes_s[2]), nodes_s[3]):
+            np.testing.assert_allclose(
+                _replay_lagrange_state(nodes_s, control_states_si, query_s),
+                _rational_lagrange_state(nodes_s, control_states_si, query_s),
+                rtol=0.0, atol=1e-12,
+            )
     # Counterexamples keep exactness conditional on the checked grid/domain.
     assert Fraction(start_s + 0.1) != Fraction(start_s) + Fraction(0.1)
     assert Fraction(float(2 ** 54) - 1.0) != Fraction(2 ** 54) - 1
@@ -83,6 +121,10 @@ def test_pinned_grid_binary64_arithmetic_matches_exact_rationals() -> None:
         "candidate_id": evidence["candidate_id"], "grid_node_count": count,
         "initial_tdb_s": start_s, "final_tdb_s": end_s, "step_s": step_s,
         "largest_exact_denominator_s5": largest_denominator_s5,
+        "weight_range_scope": "interior binary64 non-knot queries; excludes state arithmetic and compiled paths",
+        "minimum_epoch_spacing_s": float(delta_s),
+        "weight_magnitude_lower_exact": str(weight_lower),
+        "weight_magnitude_upper_exact": str(weight_upper),
         "time_scale": "TDB seconds since J2000",
     }, sort_keys=True, allow_nan=False))
 

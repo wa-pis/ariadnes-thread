@@ -239,6 +239,24 @@ and do not include SPICE approximation, boundary splines or integration error.
 Reference for the product/inverse-factor lemma: Higham, Lemma 2.1,
 https://nhigham.com/wp-content/uploads/2023/10/high99n.pdf .
 
+For weight arithmetic only, exclude exceptional ranges over every represented
+non-knot query in each uniform middle cell of the pinned positive epoch grid.
+The minimum timestamp spacing is `delta=ulp(initial_time)` and each nonzero
+exact time difference has magnitude in `[delta, 3h]`, `h=300 s`. Starting from
+`[1,1]`, propagate numerator magnitude bounds through six products using exact
+Fraction arithmetic and outward factors `1-u`, `1+u`. Cached denominator
+magnitudes lie between `2!*3!*h^5` and `5!*h^5`; combine these with the time
+difference range and one rounding factor, then bound the division similarly.
+Check both each exact-operation range and its rounded enclosure strictly inside
+the normal finite binary64 range. This inductive check justifies the relative
+model's range premise for weights assuming correctly rounded binary64 operations;
+it does not assume the relative model before excluding exceptional results.
+Exact knots take the stored-state shortcut. Nearest representable interior queries
+at the first, middle and last stencil have affine replay/oracle controls within
+`1e-12` in each SI component. State multiplication, cancellation in accumulation,
+oracle conversion for arbitrary data, compiled paths and SPICE approximation
+remain separate obligations; this is not yet a uniform native state certificate.
+
 
 See `proposal.md` for motivation and the three delta specs for normative behavior. M1 supplies strict immutable scenarios and one lazy SPICE/kernel boundary. M2 supplies deterministic center-to-center Lambert candidates, scalar patched-conic burns, and a Pareto front, but explicitly does not produce executable vector maneuvers.
 

@@ -236,6 +236,10 @@ replace the existing closure, integration, or model-sensitivity gates.
 - **WHEN** the inspected replay's exact-grid and relative-roundoff premises are checked operation by operation at the existing 304 native state requests
 - **THEN** each native/rounded-rational component difference fits the exact `gamma_16*(89/64)*M_j` envelope, deliberately invalid arithmetic fails its premise check, and this conditional model is not promoted into a uniform native or SPICE certificate
 
+#### Scenario: Exclude exceptional ranges in pinned-grid weight arithmetic
+- **WHEN** exact rational magnitude enclosures are propagated through the inspected weight arithmetic for all represented non-knot middle-cell queries on the pinned 300 s grid
+- **THEN** every exact and rounded numerator, denominator and division enclosure is strictly normal and finite in binary64, nearest-interior affine controls agree within `1e-12` per SI component, and state arithmetic and compiled-native certification remain explicitly excluded
+
 #### Scenario: Reject insufficient ephemeris coverage
 - **WHEN** validation requests an interval extending 86400 s beyond either end of the configured candidate interval
 - **THEN** it fails with a coverage error before attempting an out-of-range state query, without extrapolation or substitute states

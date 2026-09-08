@@ -42,6 +42,23 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 weight-arithmetic range qualification (2026-09-08):
+Extend the pinned-grid exact-arithmetic test with an inductive Fraction enclosure
+for all represented non-knot middle-cell queries, not just sampled epochs.
+Positive timestamp spacing bounds each nonzero difference below by
+`ulp(initial_time)`; `3*300 s` bounds it above. Six numerator products, the
+cached-denominator/time-difference product and division each have exact and
+rounded enclosures strictly inside the normal finite binary64 range. Nearest
+represented interior queries and knot shortcuts on the first, middle and last
+stencils have independent rational affine controls within `1e-12` per SI
+component. The JSON records exact weight-magnitude bounds and epoch spacing.
+Verify with `tests/test_trajectory_ephemeris.py`, full pytest, Ruff and strict
+OpenSpec validation. This addresses only range premises for correctly rounded
+weight operations: state multiply/add cancellation, arbitrary oracle conversion,
+compiled-native semantics and SPICE approximation are not certified. No runtime
+behavior, scientific tolerance, native-call limit or deadline changes; 3.9 stays
+open.
+
 Task 3.9 conditional roundoff-envelope evidence (2026-09-08):
 The design derives `gamma_15*(89/64)*M_j` for the inspected arithmetic graph
 under exact differences/denominators and the standard relative-roundoff model.
