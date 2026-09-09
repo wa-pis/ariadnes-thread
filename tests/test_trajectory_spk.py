@@ -22,6 +22,64 @@ from space_nav import ephemeris, trajectory
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@pytest.mark.parametrize("degree", [0, 1, 2, 19])
+def test_spk_rate_bound_matches_single_mode_endpoint_oracle(degree: int) -> None:
+    budget = trajectory._RefinementBudget("chebyshev-rate-control", 300.0)
+    row = tuple(1.0 if index == degree else 0.0 for index in range(degree + 1))
+    bound_m_s = trajectory._spk_position_rate_bound(budget, (row, (0.0,) * len(row),
+                                                               (0.0,) * len(row)), 17.0)
+    exact_m_s = Fraction(1000 * degree ** 2, 17)
+    assert Fraction(bound_m_s) >= exact_m_s
+    assert bound_m_s == (math.nextafter(float(exact_m_s), math.inf) if degree else 0.0)
+    derivative_m_s = np.polynomial.chebyshev.chebval(
+        1.0, np.polynomial.chebyshev.chebder(row),
+    ) * 1000 / 17
+    assert abs(derivative_m_s - float(exact_m_s)) <= 1e-12  # m/s
+
+
+def test_spk_rate_bound_rounds_mixed_axes_outward() -> None:
+    rows = ((1e200, 0.1, -0.3), (-1e200, 0.2, 0.0), (0.0, -0.4, 0.5))
+    exact_m_s = 1000 * sum((abs(Fraction(value)) * degree ** 2
+                            for row in rows for degree, value in enumerate(row)), Fraction(0)) / Fraction(0.3)
+    budget = trajectory._RefinementBudget("chebyshev-rate-control", 300.0)
+    bound_m_s = trajectory._spk_position_rate_bound(budget, rows, 0.3)
+    assert Fraction(bound_m_s) >= exact_m_s
+    assert bound_m_s == math.nextafter(float(exact_m_s), math.inf)
+
+
+def test_spk_rate_bound_preserves_positive_subnormal_bound() -> None:
+    smallest = math.nextafter(0.0, math.inf)
+    budget = trajectory._RefinementBudget("chebyshev-rate-control", 300.0)
+    bound_m_s = trajectory._spk_position_rate_bound(
+        budget, ((0.0, smallest), (0.0, 0.0), (0.0, 0.0)), 1e308,
+    )
+    assert Fraction(bound_m_s) >= 1000 * Fraction(smallest) / Fraction(1e308) > 0
+
+
+@pytest.mark.parametrize("rows,radius_s", [
+    ((), 1.0), (((), (), ()), 1.0), (((1.0,), (1.0, 2.0), (1.0,)), 1.0),
+    (((True,), (0.0,), (0.0,)), 1.0), (((float("nan"),), (0.0,), (0.0,)), 1.0),
+    (((0.0,), (0.0,), (0.0,)), 0.0), (((0.0,), (0.0,), (0.0,)), True),
+    (((0.0,), (0.0,), (0.0,)), float("inf")),
+    (((0.0, 1e308), (0.0, 0.0), (0.0, 0.0)), 1e-308),
+])
+def test_spk_rate_bound_rejects_invalid_coefficients_or_radius(
+    rows: tuple[tuple[float, ...], ...], radius_s: float,
+) -> None:
+    budget = trajectory._RefinementBudget("chebyshev-rate-control", 300.0)
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="spk-position-rate-bound") as caught:
+        trajectory._spk_position_rate_bound(budget, rows, radius_s)
+    assert caught.value.__cause__ is not None
+
+
+def test_spk_rate_bound_honors_expired_budget() -> None:
+    now_s = [0.0]
+    budget = trajectory._RefinementBudget("chebyshev-rate-control", 300.0, lambda: now_s[0])
+    now_s[0] = 300.0
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="deadline"):
+        trajectory._spk_position_rate_bound(budget, ((0.0,),) * 3, 1.0)
+
+
 def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
     """Verify nominal segment coverage, not record accuracy or trajectory safety."""
     import spiceypy as spice
@@ -485,6 +543,9 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
     assert overlaps[1][0] <= start_s < overlaps[1][1] == overlaps[0][0] < end_s <= overlaps[0][1]
     record_boundaries_tdb_s: set[float] = set()
     record_endpoints_si: dict[float, list[tuple[Fraction, ...]]] = {}
+    near_endpoints_m: dict[float, list[tuple[tuple[Fraction, ...], float]]] = {}
+    record_rate_bounds_m_s: list[float] = []
+    join_offset_s = Fraction(1, 8388608)  # One binary64 epoch ULP in this interval.
     overlapping_record_count = 0
     for segment_start_s, segment_end_s, begin, end in overlaps:
         directory = (ctypes.c_double * 4)()
@@ -507,6 +568,18 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
             assert all(math.isfinite(value) for value in record)
             if record_start_s <= end_s and record_end_s >= start_s:
                 overlapping_record_count += 1
+                coefficients_km = tuple(tuple(record[2 + axis * 20 + degree]
+                                              for degree in range(20)) for axis in range(3))
+                rate_bound_m_s = trajectory._spk_position_rate_bound(budget, coefficients_km, record[1])
+                record_rate_bounds_m_s.append(rate_bound_m_s)
+                derivative_coefficients = np.polynomial.chebyshev.chebder(
+                    np.asarray(coefficients_km).T, axis=0,
+                ) * (1000 / record[1])
+                for normalized_time in (-1.0, -0.5, 0.0, 0.5, 1.0):
+                    derivative_m_s = np.polynomial.chebyshev.chebval(
+                        normalized_time, derivative_coefficients,
+                    )
+                    assert np.linalg.norm(derivative_m_s) <= rate_bound_m_s
                 record_boundaries_tdb_s.update(
                     epoch_s for epoch_s in (record_start_s, record_end_s)
                     if start_s < epoch_s < end_s
@@ -525,6 +598,15 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
                         assert np.linalg.norm(oracle_difference_si[:3]) <= 1e-8  # m
                         assert np.linalg.norm(oracle_difference_si[3:]) <= 1e-12  # m/s
                         record_endpoints_si.setdefault(epoch_s, []).append(endpoint_si)
+                        # Exact recurrence at one epoch ULP inside this record.
+                        normalized_time = sign * (1 - join_offset_s / Fraction(record[1]))
+                        basis = [Fraction(1), normalized_time]
+                        for degree in range(2, 20):
+                            basis.append(2 * normalized_time * basis[-1] - basis[-2])
+                        near_m = tuple(1000 * sum((Fraction(row[degree]) * basis[degree]
+                                                 for degree in range(20)), Fraction(0))
+                                       for row in coefficients_km)
+                        near_endpoints_m.setdefault(epoch_s, []).append((near_m, rate_bound_m_s))
     assert overlapping_record_count == 74 and len(record_boundaries_tdb_s) == 73
     assert 986817600.0 in record_boundaries_tdb_s
     assert set(record_endpoints_si) == record_boundaries_tdb_s
@@ -533,6 +615,12 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
     for epoch_s, endpoints in sorted(record_endpoints_si.items()):
         assert len(endpoints) == 2
         difference_si = tuple(a - b for a, b in zip(*endpoints))
+        near_left, near_right = near_endpoints_m[epoch_s]
+        motion_m = sum((abs(a - b) for a, b in zip(near_left[0], near_right[0])), Fraction(0))
+        within_records_m = join_offset_s * (Fraction(near_left[1]) + Fraction(near_right[1]))
+        jump_m = sum((abs(value) for value in difference_si[:3]), Fraction(0))
+        assert motion_m <= within_records_m + jump_m
+        assert motion_m > within_records_m  # Omitting the source jump is invalid.
         # Exact squared SI norms decide allocation exceedance; floats are reporting only.
         position_squared_m2 = sum((value * value for value in difference_si[:3]), Fraction(0))
         velocity_squared_m2_s2 = sum((value * value for value in difference_si[3:]), Fraction(0))
@@ -593,6 +681,9 @@ def test_saturn_source_file_segment_inventory(cspice: ctypes.CDLL) -> None:
         "joins_exceeding_twice_position_allocation": incompatible_position_joins,
         "joins_exceeding_twice_velocity_allocation": incompatible_velocity_joins,
         "coefficient_frame": "Saturn barycenter/J2000",
+        "record_position_rate_bound_min_m_s": min(record_rate_bounds_m_s),
+        "record_position_rate_bound_max_m_s": max(record_rate_bounds_m_s),
+        "exact_jump_inclusive_motion_controls": len(near_endpoints_m),
         "position_failed_boundaries": position_failures, "velocity_failed_boundaries": velocity_failures,
         "position_worst_boundary": max(boundary_errors_si, key=lambda row: row[1]),
         "velocity_worst_boundary": max(boundary_errors_si, key=lambda row: row[2]),

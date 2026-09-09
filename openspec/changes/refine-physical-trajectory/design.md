@@ -1,5 +1,38 @@
 ## Context
 
+### Exact SPK position-rate and jump controls (2026-09-09)
+
+For one record write each position component as `p_j(t) = sum c_jk T_k(x)`,
+where raw coefficients are km and `x=(t-midpoint)/radius_s` lies in `[-1,1]`.
+Since `T'_k=k U_(k-1)` and `|U_(k-1)|<=k` there, the position derivative's
+Euclidean norm is bounded by the L1 majorant
+`L = 1000/radius_s * sum_j sum_k |c_jk| k^2` in m/s. The latter inequality
+follows from `U_(k-1)(cos(theta))=sin(k theta)/sin(theta)` and the finite sum
+of k unit complex terms, with endpoint limits. Evaluate this majorant using
+exact rational arithmetic on the stored binary64 coefficients, then round
+the final positive bound upward; keep an exactly zero constant-polynomial bound.
+References: [DLMF derivative identity](https://dlmf.nist.gov/18.9#E21) and
+[Chebyshev representation](https://dlmf.nist.gov/18.5#E2).
+
+The 74 overlapping Saturn-center-relative-to-barycenter/J2000 records give
+record-wide bounds from `3.0435980202672015` to `4.200998456248276 m/s`.
+These are derivative bounds for exact position polynomials, not the separately
+stored type-3 velocity series or Saturn's heliocentric orbital speed.
+Five NumPy derivative probes per record verify the implementation separately
+from the uniform mathematical inequality. Single-mode degree 0/1/2/19 controls,
+mixed-sign/axis rational controls, subnormal/overflow and invalid-input/deadline
+controls qualify the arithmetic and guards.
+
+Across a record join, add the exact L1 endpoint jump `J`: the displacement
+between interior points at offsets `h_left,h_right` is at most
+`L_left*h_left + J + L_right*h_right`. Exact Chebyshev recurrences at offsets
+`2^-23 s` verify this bound at all 73 joins and show that omitting `J` fails
+at every one. This does not assume source continuity or equate velocity with
+the derivative of position. The bound still excludes native evaluation error,
+other center-chain contributions and spacecraft integration error. It is a
+private qualification building block, not a production safety acceptance rule;
+task 3.9 and all current tolerances/limits remain unchanged.
+
 ### Accepted production revision (2026-09-09)
 
 The user approved direct SPICE after the table counterexample, lookup-cost,

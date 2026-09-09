@@ -1855,6 +1855,42 @@ def _compose_ephemeris_chord_bounds(
     return result_m
 
 
+def _spk_position_rate_bound(
+    budget: _RefinementBudget,
+    coefficients_km: tuple[tuple[float, ...], ...],
+    radius_s: float,
+) -> float:
+    """Bound an exact SPK position polynomial's rate norm in m/s on one record.
+
+    Three Chebyshev coefficient rows are in km; normalized time is in [-1, 1].
+    The bound excludes record jumps, native rounding and center-chain motion.
+    It is not the independently stored type-3 velocity polynomial.
+    """
+    budget.check()
+    try:
+        radius = Fraction(_positive_finite("SPK record radius_s", radius_s))
+        if len(coefficients_km) != 3 or not coefficients_km[0]:
+            raise ValueError("SPK position coefficients_km require three nonempty rows")
+        bound_m_s = Fraction(0)
+        for axis, row in enumerate(coefficients_km):
+            budget.check()
+            if len(row) != len(coefficients_km[0]):
+                raise ValueError("SPK position coefficient rows must have equal degree")
+            for degree, value in enumerate(row):
+                coefficient_m = 1000 * Fraction(_finite_float(
+                    f"SPK position coefficient_km[{axis}][{degree}]", value,
+                ))
+                # |T'_k(x)| <= k^2 on [-1,1]; L1 also bounds the Euclidean norm.
+                bound_m_s += abs(coefficient_m) * degree ** 2 / radius
+        result_m_s = 0.0 if bound_m_s == 0 else _positive_finite(
+            "SPK position rate bound_m_s", math.nextafter(float(bound_m_s), math.inf),
+        )
+    except (ArithmeticError, TypeError, ValueError) as exc:
+        _raise_refinement_error(budget.candidate_id, "spk-position-rate-bound", str(exc), exc)
+    budget.check()
+    return result_m_s
+
+
 def _validate_direct_spice_coverage(
     candidate_id: str,
     initial_epoch_tdb_s: float,

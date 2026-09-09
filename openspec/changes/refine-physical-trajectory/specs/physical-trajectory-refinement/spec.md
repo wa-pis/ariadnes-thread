@@ -19,6 +19,10 @@ Following user approval on 2026-09-09, all eight production body ephemerides SHA
 - **WHEN** coverage inspection or direct settings creation exceeds the existing candidate deadline
 - **THEN** no subsequent preparation or propagation starts and the original shared 300-second budget is not reset
 
+#### Scenario: Qualify exact record motion without assuming continuity
+- **WHEN** the private Chebyshev position-rate bound is checked for the 74 overlapping Saturn records and exact positions one epoch ULP inside all 73 joins
+- **THEN** single-mode degree 0/1/2/19 derivative maxima and rational mixed-axis controls verify outward rounding, all 370 sampled record derivatives lie below the bound, and every exact cross-join displacement lies below the two local rate contributions plus the exact L1 endpoint jump, while omission of that jump fails and no native-error or spacecraft-safety certificate is inferred
+
 ### Requirement: Verified M2 candidate handoff
 The system SHALL expose `refine_physical_trajectory(scenario: Scenario, candidate: ImpulsiveTransferCandidate) -> PhysicalTrajectoryResult`. It SHALL accept only a Pareto candidate reproduced from the same normalized scenario and M2 grid, and SHALL treat the M2 body-centre Lambert solution and scalar impulses only as the initial targeting seed rather than as physical endpoint states.
 

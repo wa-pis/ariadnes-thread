@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 exact SPK position-rate/jump controls (2026-09-09):
+Derive a record-wide Chebyshev position-derivative majorant from exact raw
+coefficients with outward SI rounding. Verify analytic endpoint equality,
+mixed-axis arithmetic, subnormal/overflow, invalid-input and deadline guards;
+check all 74 overlapping Saturn records and exact jump-inclusive motion bounds
+at 73 joins. Verification: `tests/test_trajectory_spk.py -k 'rate_bound or segment_inventory'`,
+whole SPK file, complete pytest, Ruff and strict OpenSpec validation. The initial
+controls passed, with rates bounded by 3.043598–4.200999 m/s relative to the
+Saturn barycenter. Native rounding, chain composition and spacecraft error
+remain outside this bound; do not mark 3.9 complete or change production limits.
+
 Task 3.9 loaded-SPK chain interval coverage (2026-09-08):
 Scan all loaded SPK descriptors and verify candidate-overlapping target centers,
 frames and types. Merge coverage by target and intersect all 11 required chain
