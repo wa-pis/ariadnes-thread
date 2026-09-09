@@ -39,6 +39,10 @@ Following user approval on 2026-09-09, all eight production body ephemerides SHA
 - **WHEN** the private position-rate helper receives an explicit nonnegative extension in seconds on each end of a record
 - **THEN** exact rational Chebyshev derivative bounds cover the enlarged interval with outward SI rounding, independent degree 0/1/2/3/19 and mixed-axis controls pass, zero extension reproduces the previous result, sub-ULP normalization is preserved, invalid or overflowing inputs fail contextually, and no uncovered SPICE query or native/spacecraft safety guarantee is authorized
 
+#### Scenario: Enclose ambiguity between adjacent exact position polynomials
+- **WHEN** exact endpoint jumps and extended position-rate bounds are composed over explicit 16-epoch-ULP strips at all 221 Mars/Jupiter joins
+- **THEN** 1,547 exact same-epoch branch differences satisfy the jump-plus-motion bound, omission of the jump fails each control, every reported SI bound is rounded outward, and the qualification distinguishes this two-polynomial envelope from native selection, native rounding and spacecraft safety
+
 ### Requirement: Verified M2 candidate handoff
 The system SHALL expose `refine_physical_trajectory(scenario: Scenario, candidate: ImpulsiveTransferCandidate) -> PhysicalTrajectoryResult`. It SHALL accept only a Pareto candidate reproduced from the same normalized scenario and M2 grid, and SHALL treat the M2 body-centre Lambert solution and scalar impulses only as the initial targeting seed rather than as physical endpoint states.
 

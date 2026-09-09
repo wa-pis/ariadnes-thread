@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 exact adjacent-branch ambiguity envelope (2026-09-10):
+Combine exact L1 endpoint jumps with both extended rate bounds over explicit
+16-epoch-ULP strips at 221 Mars/Jupiter joins. Verify 1,547 exact same-epoch
+branch differences, including both strip edges and the sampled switch,
+outward reporting and failure when the jump is omitted. Verification:
+whole `tests/test_trajectory_spk.py`, full pytest, Ruff, strict OpenSpec
+validation and unchanged legacy hash. This bounds two exact polynomials,
+not native selection/roundoff or spacecraft safety; leave 3.9 open.
+All 47 SPK tests and 909 full-suite tests passed (151.02 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 extended exact-polynomial rate qualification (2026-09-10):
 Add an explicit nonnegative extension_s to the private rate helper and derive
 the exact Chebyshev derivative majorant over that larger interval. Verify

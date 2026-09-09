@@ -1,5 +1,29 @@
 ## Context
 
+### Exact adjacent-branch ambiguity envelope (2026-09-10)
+
+For a shared record boundary `b`, let `J` be the exact L1 endpoint jump
+and `L_left`, `L_right` the already qualified position-rate majorants on
+records extended by an explicit `h` seconds. The triangle inequality gives
+`||p_left(t)-p_right(t)||_1 <= J + (L_left+L_right)*|t-b|`
+for `|t-b|<=h`. Consequently `J+(L_left+L_right)*h` uniformly encloses the
+difference between these two exact polynomial branches in that strip,
+regardless of which branch is chosen. L1 also bounds the Euclidean norm.
+
+The existing 221 Mars/Jupiter join controls use `h=16` epoch ULP and exact
+Chebyshev recurrences at offsets -16/-5/-4/-1/0/1/16. All 1,547 same-epoch
+branch differences satisfy the bound; dropping `J` fails every control.
+Each reported SI bound is rounded upward after exact fraction composition.
+The reported values range from `0.03839044549637998 m` to
+`14.382176150648052 m`; these are per-center branch-ambiguity bounds, not
+physical uncertainty, native roundoff or propagated spacecraft errors.
+
+This mathematical strip bound does not prove that native SPICE selects one
+of these two records throughout the strip or that it cannot switch elsewhere.
+The previous 7,293 sampled native comparisons remain separate evidence.
+Native evaluation rounding, center-chain composition and spacecraft error
+are still open; no production behavior, tolerance or work limit changes.
+
 ### Exact rate bound on an explicitly extended record (2026-09-10)
 
 The private position-rate helper accepts keyword-only `extension_s >= 0`,

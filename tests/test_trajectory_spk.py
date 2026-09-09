@@ -297,6 +297,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
     assert all(sign == 1 for _, _, sign, _ in native_join_failures)
 
     switching_probes: list[tuple[int, float, int, float]] = []
+    ambiguity_bounds: list[tuple[int, float, float]] = []
+    exact_ambiguity_checks = 0
     for target, records in switching_records.items():
         for left, right in zip(records, records[1:]):
             handle, descriptor, init_s, interval_s, index, left_record = left
@@ -304,11 +306,41 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
             right_record = right[5]
             epoch_s = float(left_record[0] + left_record[1])
             assert epoch_s == right_record[0] - right_record[1]
+            extension_s = 16 * math.ulp(epoch_s)
+            rate_sum_m_s = sum((Fraction(trajectory._spk_position_rate_bound(
+                budget, tuple(tuple(float(value) for value in row)
+                              for row in record[2:].reshape(6, -1)[:3]),
+                float(record[1]), extension_s=extension_s,
+            )) for record in (left_record, right_record)), Fraction(0))
+            endpoints = joins[(target, Fraction(epoch_s))]
+            jump_m = sum((abs(a - b) for a, b in zip(endpoints[1][0], endpoints[-1][0])), Fraction(0))
+            uniform_bound_m = jump_m + rate_sum_m_s * Fraction(extension_s)
+            reported_bound_m = math.nextafter(float(uniform_bound_m), math.inf)
+            assert math.isfinite(reported_bound_m) and Fraction(reported_bound_m) >= uniform_bound_m
+            ambiguity_bounds.append((target, epoch_s, reported_bound_m))
             selected_offsets: list[int] = []
             max_error_m = 0.0
             for offset in range(-16, 17):
                 budget.check()
                 query_s = epoch_s + offset * math.ulp(epoch_s)
+                if offset in (-16, -5, -4, -1, 0, 1, 16):
+                    exact_positions_m: list[tuple[Fraction, ...]] = []
+                    for record in (left_record, right_record):
+                        rows = record[2:].reshape(6, -1)[:3]
+                        x_exact = (Fraction(query_s) - Fraction(record[0])) / Fraction(record[1])
+                        assert abs(x_exact) <= 1 + Fraction(extension_s) / Fraction(record[1])
+                        basis = [Fraction(1), x_exact]
+                        for degree in range(2, rows.shape[1]):
+                            basis.append(2 * x_exact * basis[-1] - basis[-2])
+                        exact_positions_m.append(tuple(
+                            1000 * sum((Fraction(value) * basis[degree]
+                                        for degree, value in enumerate(row)), Fraction(0)) for row in rows
+                        ))
+                    difference_m = sum((abs(a - b) for a, b in zip(*exact_positions_m)), Fraction(0))
+                    motion_only_m = rate_sum_m_s * abs(Fraction(query_s) - Fraction(epoch_s))
+                    assert difference_m <= jump_m + motion_only_m <= uniform_bound_m
+                    assert difference_m > motion_only_m  # Omitting the source jump is unsafe.
+                    exact_ambiguity_checks += 1
                 if -4 <= offset < 0:
                     assert Fraction(query_s) - Fraction(init_s) < Fraction(epoch_s) - Fraction(init_s)
                     assert query_s - init_s == epoch_s - init_s
@@ -338,6 +370,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
             assert selected_offsets[0] == -4
             switching_probes.append((target, epoch_s, selected_offsets[0], max_error_m))
     assert len(switching_probes) == 221
+    assert exact_ambiguity_checks == 1547
 
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
@@ -393,6 +426,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
         "native_join_parity_tolerance_m": 0.001,
         "record_switch_fields": ["target", "boundary_tdb_s", "first_right_record_offset_ulp", "max_replay_error_m"],
         "record_switch_probes": switching_probes,
+        "exact_branch_ambiguity_fields": ["target", "boundary_tdb_s", "position_l1_bound_m"],
+        "exact_branch_ambiguity_bounds": ambiguity_bounds,
+        "exact_branch_ambiguity_checks": exact_ambiguity_checks,
         "type2_midpoint_max_velocity_difference_m_s": max_type2_velocity_difference_m_s,
         "frame": "J2000, each target relative to its listed center; chains end at SSB",
         "scope": "Coverage and exact per-record position-rate bounds, not composed motion or safety",
