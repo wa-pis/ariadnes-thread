@@ -126,6 +126,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
     max_position_difference_m = max_type2_velocity_difference_m_s = 0.0
     max_join_position_difference_m = 0.0
     native_join_failures: list[tuple[int, float, int, float]] = []
+    switching_records: dict[int, list[tuple[int, np.ndarray, float, float, int, np.ndarray]]] = {
+        499: [], 599: [],
+    }
     for handle, target, data_type, first, last, begin, end, descriptor in segments:
         budget.check()
         init_s, interval_s, raw_size, raw_count = spice.dafgda(handle, end - 3, end)
@@ -150,6 +153,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
             record_start_s = Fraction(init_s) + index * Fraction(interval_s)
             assert Fraction(record[0]) == record_start_s + Fraction(interval_s) / 2
             assert Fraction(record[1]) == Fraction(interval_s) / 2
+            if target in switching_records:
+                switching_records[target].append((handle, descriptor, init_s, interval_s, index, record))
             coefficients_km = record[2:].reshape(components, coefficient_count)[:3]
             bound_m_s = trajectory._spk_position_rate_bound(
                 budget, tuple(tuple(float(value) for value in row) for row in coefficients_km),
@@ -233,6 +238,49 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
     }
     assert all(sign == 1 for _, _, sign, _ in native_join_failures)
 
+    switching_probes: list[tuple[int, float, int, float]] = []
+    for target, records in switching_records.items():
+        for left, right in zip(records, records[1:]):
+            handle, descriptor, init_s, interval_s, index, left_record = left
+            assert right[4] == index + 1
+            right_record = right[5]
+            epoch_s = float(left_record[0] + left_record[1])
+            assert epoch_s == right_record[0] - right_record[1]
+            selected_offsets: list[int] = []
+            max_error_m = 0.0
+            for offset in range(-16, 17):
+                budget.check()
+                query_s = epoch_s + offset * math.ulp(epoch_s)
+                if -4 <= offset < 0:
+                    assert Fraction(query_s) - Fraction(init_s) < Fraction(epoch_s) - Fraction(init_s)
+                    assert query_s - init_s == epoch_s - init_s
+                # Candidate arithmetic replay, qualified against native values below.
+                selected_index = math.floor((query_s - init_s) / interval_s)
+                assert selected_index in (index, index + 1)
+                selected_record = left_record if selected_index == index else right_record
+                x = (query_s - selected_record[0]) / selected_record[1]
+                predicted_m = np.polynomial.chebyshev.chebval(
+                    x, selected_record[2:].reshape(6, -1)[:3].T,
+                ) * 1000
+                frame, state_km, center = spice.spkpvn(handle, descriptor, query_s)
+                assert (frame, center) == (1, expected_centers[target])
+                assert np.all(np.isfinite(state_km)) and np.all(np.isfinite(predicted_m))
+                error_m = float(np.linalg.norm(predicted_m - state_km[:3] * 1000))
+                assert error_m <= 0.001, (target, epoch_s, offset)
+                other_record = right_record if selected_index == index else left_record
+                other_m = np.polynomial.chebyshev.chebval(
+                    (query_s - other_record[0]) / other_record[1],
+                    other_record[2:].reshape(6, -1)[:3].T,
+                ) * 1000
+                assert np.linalg.norm(other_m - state_km[:3] * 1000) > 0.001
+                max_error_m = max(max_error_m, error_m)
+                if selected_index == index + 1:
+                    selected_offsets.append(offset)
+            assert selected_offsets == list(range(selected_offsets[0], 17))
+            assert selected_offsets[0] == -4
+            switching_probes.append((target, epoch_s, selected_offsets[0], max_error_m))
+    assert len(switching_probes) == 221
+
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
     observations: dict[int, list[tuple[float, float]]] = {}
@@ -285,6 +333,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
         "native_join_parity_failure_fields": ["target", "epoch_tdb_s", "record_endpoint_sign", "error_m"],
         "native_join_parity_failures": native_join_failures,
         "native_join_parity_tolerance_m": 0.001,
+        "record_switch_fields": ["target", "boundary_tdb_s", "first_right_record_offset_ulp", "max_replay_error_m"],
+        "record_switch_probes": switching_probes,
         "type2_midpoint_max_velocity_difference_m_s": max_type2_velocity_difference_m_s,
         "frame": "J2000, each target relative to its listed center; chains end at SSB",
         "scope": "Coverage and exact per-record position-rate bounds, not composed motion or safety",

@@ -51,6 +51,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 sampled native record-switch brackets (2026-09-09):
+Probe offsets -16 through +16 epoch ULP around all 221 Mars/Jupiter joins.
+Verify native position agrees with the rounded index replay within 0.001 m,
+the alternative record differs by more than 0.001 m, and each sampled switch
+occurs at -4 ULP. Verify exact versus binary64 epoch-minus-INIT arithmetic
+for all four early-selection epochs. Emit per-join brackets and maximum
+replay discrepancies. Verification: whole `tests/test_trajectory_spk.py`,
+complete pytest, Ruff, strict OpenSpec validation and unchanged legacy hash.
+This is local position-only evidence, not a compiled-arithmetic proof or a
+uniform native-error enclosure; retain the previous counterexample and 3.9.
+All 35 SPK tests and 897 full-suite tests passed (159.23 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+The maximum observed replay discrepancy was 9.203439287865708e-11 m.
+
 Task 3.9 all-chain join qualification and native counterexample (2026-09-09):
 Pair all 539 interior record joins, compute exact L1 endpoint jumps, and
 verify one-ULP interior displacements against both local rate bounds plus

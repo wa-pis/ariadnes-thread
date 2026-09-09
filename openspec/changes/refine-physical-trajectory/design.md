@@ -1,5 +1,29 @@
 ## Context
 
+### Sampled native record-switch bracket (2026-09-09)
+
+For each of the 221 Mars/Jupiter joins in the preceding counterexample,
+probe every binary64 epoch offset from -16 through +16 ULP. Across all
+7,293 queries, native positions agree within `0.001 m` with the polynomial
+selected by the binary64 replay `floor((epoch - INIT) / INTLEN)`; the other
+adjacent polynomial differs by more than `0.001 m`. The maximum replay
+position discrepancy observed is `9.203439287865708e-11 m`.
+
+All brackets switch to the right record at offset -4 ULP, with offset -5
+still selecting the left record: the first observed right-record epoch is
+`2^-21 s` (`0.476837158203125 microseconds`) before the exact boundary.
+At offsets -4 through -1, exact rational epoch-minus-INIT is less than its
+boundary value, while binary64 subtraction equals that boundary value.
+This establishes an early-switch mechanism in the arithmetic replay and
+agrees with native output at every tested epoch. It is not an inspection or
+proof of the compiled native arithmetic graph, nor a uniform bound for
+other segments, type-2 records or epochs outside these small brackets.
+Only position is qualified here; the type-3 velocity series remains separate.
+
+No custom SPICE reader, extra native binding or production workaround is
+introduced. The sampled switch brackets narrow the open native-selection
+problem; they do not remove the source jumps or complete task 3.9.
+
 ### All-chain joins and native near-boundary counterexample (2026-09-09)
 
 The all-chain record qualification now pairs both sides of all 539 interior
