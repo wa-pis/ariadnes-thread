@@ -642,6 +642,45 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert set(joins) - internal_strip_keys == {(699, Fraction(986817600))}
     assert native_core_checks == (1100 if native is not None else 0)
     assert native_strip_endpoint_checks == (1076 if native is not None else 0)
+    junction_s = 986817600.0
+    saturn_segments = sorted((segment for segment in segments if segment[1] == 699), key=lambda segment: segment[3])
+    left_segment, right_segment = saturn_segments
+    assert left_segment[0] == right_segment[0]  # Same loaded file.
+    assert left_segment[4] == right_segment[3] == junction_s
+    assert left_segment[5] > right_segment[5]  # Left interval is later in DAF order.
+    junction_epochs_s = [junction_s + offset * math.ulp(junction_s) for offset in range(-16, 17)]
+    assert len(junction_epochs_s) == 33
+    assert all(math.nextafter(a, math.inf) == b for a, b in zip(junction_epochs_s, junction_epochs_s[1:]))
+    assert Fraction(junction_epochs_s[0]) == Fraction(junction_s) - 16 * Fraction(math.ulp(junction_s))
+    assert Fraction(junction_epochs_s[-1]) == Fraction(junction_s) + 16 * Fraction(math.ulp(junction_s))
+    native_priority_checks = 0
+    for order in (junction_epochs_s, junction_epochs_s[::-1], junction_epochs_s[::2] + junction_epochs_s[1::2]):
+        for probe_s in order:
+            budget.check()
+            eligible = [segment for segment in saturn_segments if segment[3] <= probe_s <= segment[4]]
+            assert len(eligible) == (2 if probe_s == junction_s else 1)
+            expected_segment = max(eligible, key=lambda segment: segment[5])
+            assert expected_segment[5] == (left_segment[5] if probe_s <= junction_s else right_segment[5])
+            if native is not None:
+                selected_handle, found = ctypes.c_int(), ctypes.c_int()
+                selected_descriptor = (ctypes.c_double * 5)()
+                identifier = ctypes.create_string_buffer(41)
+                native.spksfs_c(699, probe_s, 41, ctypes.byref(selected_handle), selected_descriptor,
+                                identifier, ctypes.byref(found))
+                assert native.failed_c() == 0 and found.value == 1
+                assert selected_handle.value == expected_segment[0]
+                assert bytes(selected_descriptor) == expected_segment[7].tobytes()
+                handle, _, kind, _, _, begin, end, descriptor = expected_segment
+                _, _, raw_size, raw_count = spice.dafgda(handle, end - 3, end)
+                size, count = int(raw_size), int(raw_count)
+                assert kind == 3 and raw_size == size == 122 and raw_count == count == 100
+                selected_index = count - 1 if probe_s <= junction_s else 0
+                address = begin + selected_index * size
+                expected_record = spice.dafgda(handle, address, address + size - 1)
+                selected_record = _read_native_spk_record(native, kind, handle, descriptor, probe_s, size)
+                assert selected_record.tobytes() == expected_record.tobytes(), probe_s
+                native_priority_checks += 1
+    assert native_priority_checks == (99 if native is not None else 0)
     for target, pieces in selection_pieces.items():
         budget.check()
         assert len(pieces) == 2 * len(rates_m_s[target]) - 1
@@ -850,6 +889,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "native_selection_strip_endpoint_checks": native_strip_endpoint_checks,
         "internal_record_strip_count": len(internal_strip_keys),
         "segment_priority_strip_target_epoch": [699, 986817600.0],
+        "segment_priority_distinct_epoch_count": len(junction_epochs_s),
+        "native_segment_priority_and_record_checks": native_priority_checks,
         "native_join_envelope_omitted_jump_failures": omitted_jump_failures,
         "native_join_parity_failure_fields": ["target", "epoch_tdb_s", "record_endpoint_sign", "error_m"],
         "native_join_parity_failures": native_join_failures,

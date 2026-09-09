@@ -51,6 +51,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 exhaustive representable-epoch Saturn priority strip (2026-09-10):
+Enumerate all 33 binary64 epochs in the 16-ULP cross-segment strip; verify
+exact endpoints and consecutive nextafter coverage. Use independent segment
+eligibility and same-file priority to check 99 native selections in forward,
+reverse and interleaved query orders. Require file handle, descriptor and
+selected raw-record bytes to match, including the exact-junction left-segment
+priority and final-record clamp. Verification: complete SPK tests, full pytest,
+Ruff, strict OpenSpec validation and unchanged legacy hash. This qualifies the
+pinned strip and tested orders, not arbitrary cache histories or kernel pools;
+runtime premises, simultaneous chain joins and spacecraft safety remain open.
+Keep 3.9 unchecked and production unchanged.
+All 60 SPK tests and 922 full-suite tests passed (159.45 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 conditional within-segment selection domains (2026-09-10):
 Construct 550 trimmed record cores and 539 join strips with exact endpoints;
 verify their union covers the complete candidate interval for all 11 links.

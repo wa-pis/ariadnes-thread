@@ -1,5 +1,36 @@
 ## Context
 
+### Exhaustive representable-epoch Saturn priority strip (2026-09-10)
+
+The previously excluded cross-segment strip is centered at
+986817600 TDB seconds since J2000 with half-width 16 ULPs. Enumerate all 33
+binary64 epochs in this closed strip; exact endpoint checks and consecutive
+`nextafter` equality prove that no representable input epoch is skipped.
+The complete inventory contains exactly two relevant Saturn segments in
+the same file. Their coverage intervals intersect only at the junction;
+the left-time segment occurs later in DAF order.
+
+[NAIF's segment-priority contract](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/spk.html#Segment%20Order%20and%20Priority)
+selects the later-in-file applicable segment for the same target. Consequently
+only the left segment is eligible before the junction, both are eligible at
+it (left wins), and only the right segment is eligible afterward. Verify this
+eligibility independently from descriptor intervals before native selection.
+
+Query all 33 epochs in forward, reverse and even/odd-interleaved orders.
+All 99 SPKSFS results match the expected file handle and complete descriptor
+bytes. Then read the selected record: it matches the left segment's last or
+right segment's first DAF record byte-for-byte, including the last-record
+clamp at the exact junction. All prior coverage, core/strip, source-jump,
+roundoff and kernel-pool-preservation checks remain intact.
+
+This exhausts the epoch inputs in this fixed strip for three query orders,
+not all possible cache histories, altered kernel pools or other builds.
+It supplies the previously separate Saturn priority-strip evidence without
+extending a single-segment monotonicity proof across segment boundaries.
+Runtime arithmetic premises, simultaneous center-chain joins and spacecraft
+safety remain separate under 3.9. No production setting, kernel, scientific
+tolerance or native-call limit changes.
+
 ### Conditional within-segment selection domains (2026-09-10)
 
 For each of the 550 inventoried records, form a closed core trimmed by 16
