@@ -39,6 +39,46 @@ def test_spk_record_selector_matches_inspected_binary() -> None:
         for reader in observation["readers"]:
             binary.seek(int(reader["selection_file_offset"], 16))
             assert binary.read(len(selection_bytes)) == selection_bytes, reader["symbol"]
+        for instruction in observation["evaluation_instructions"]:
+            binary.seek(int(instruction["file_offset"], 16))
+            assert binary.read(4) == bytes.fromhex(instruction["bytes"]), instruction["instruction"]
+
+
+def _replay_spk_position(
+    coefficients_km: tuple[float, ...], midpoint_tdb_s: float,
+    radius_s: float, epoch_tdb_s: float,
+) -> float:
+    """Replay inspected position operations; round each exact fused expression once."""
+    assert coefficients_km and radius_s > 0
+    assert all(math.isfinite(value) for value in (*coefficients_km, midpoint_tdb_s,
+                                                 radius_s, epoch_tdb_s))
+    normalized_time = (epoch_tdb_s - midpoint_tdb_s) / radius_s
+    twice_time = normalized_time + normalized_time
+    current = following = 0.0
+    for coefficient_km in reversed(coefficients_km[1:]):
+        fused_km = float(Fraction(twice_time) * Fraction(current) - Fraction(following))
+        following, current = current, fused_km + coefficient_km
+        assert math.isfinite(current)
+    result_km = float(Fraction(normalized_time) * Fraction(current) - Fraction(following)) + coefficients_km[0]
+    assert math.isfinite(result_km)
+    return result_km
+
+
+def test_spk_position_replay_distinguishes_fused_rounding(cspice: ctypes.CDLL) -> None:
+    import spiceypy as spice
+
+    coefficients_km = (0.0, 0.1, 0.3)
+    epoch_s = 0.3
+    replay_km = _replay_spk_position(coefficients_km, 0.0, 1.0, epoch_s)
+    unfused_km = epoch_s * ((epoch_s + epoch_s) * 0.3 + 0.1) - 0.3
+    assert replay_km.hex() == "-0x1.ba5e353f7ced9p-3"
+    assert unfused_km.hex() == "-0x1.ba5e353f7ced8p-3"
+    assert replay_km != unfused_km
+    assert spice.chbval(coefficients_km, 2, [0.0, 1.0], epoch_s).hex() == replay_km.hex()
+    assert spice.chbint(coefficients_km, 2, [0.0, 1.0], epoch_s)[0].hex() == replay_km.hex()
+    exact_km = Fraction(0.1) * Fraction(epoch_s) + Fraction(0.3) * (2 * Fraction(epoch_s) ** 2 - 1)
+    assert abs(Fraction(replay_km) - exact_km) * 1000 < Fraction("1e-12")  # m
+    assert cspice.failed_c() == 0
 
 
 def _read_native_spk_record(
@@ -218,6 +258,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     early_record_choices = dict.fromkeys(expected_centers, 0)
     index_roundoff_margins: list[tuple[int, float, float, float]] = []
     endpoint_record_checks = 0
+    evaluation_checks = 0
+    max_evaluation_error_m = dict.fromkeys(expected_centers, 0.0)
     unit_roundoff = Fraction(1, 2 ** 53)
     switching_records: dict[int, list[tuple[int, np.ndarray, float, float, int, np.ndarray]]] = {
         499: [], 599: [],
@@ -304,6 +346,35 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             if target in switching_records:
                 switching_records[target].append((handle, descriptor, init_s, interval_s, index, record))
             coefficients_km = record[2:].reshape(components, coefficient_count)[:3]
+            if native is not None:
+                # Evaluate the supplied record itself, avoiding record-selection ambiguity.
+                native_record = (ctypes.c_double * (size + 1))(float(size), *record)
+                evaluator = native.spke02_ if data_type == 2 else native.spke03_
+                midpoint_s, radius_s = float(record[0]), float(record[1])
+                extension_s = 16 * math.ulp(midpoint_s)
+                for probe_s in (midpoint_s - radius_s - extension_s, midpoint_s - radius_s,
+                                midpoint_s, midpoint_s + radius_s / 3,
+                                midpoint_s + radius_s, midpoint_s + radius_s + extension_s):
+                    budget.check()
+                    native_epoch = ctypes.c_double(probe_s)
+                    state_km = (ctypes.c_double * 6)()
+                    evaluator(ctypes.byref(native_epoch), native_record, state_km)
+                    assert native.failed_c() == 0 and all(math.isfinite(value) for value in state_km)
+                    exact_time = (Fraction(probe_s) - Fraction(midpoint_s)) / Fraction(radius_s)
+                    basis = [Fraction(1), exact_time]
+                    for degree in range(2, coefficient_count):
+                        basis.append(2 * exact_time * basis[-1] - basis[-2])
+                    error_m = Fraction(0)
+                    for axis, row in enumerate(coefficients_km):
+                        replay_km = _replay_spk_position(tuple(float(value) for value in row),
+                                                       midpoint_s, radius_s, probe_s)
+                        assert state_km[axis].hex() == replay_km.hex(), (target, index, probe_s, axis)
+                        exact_km = sum((Fraction(value) * basis[degree]
+                                        for degree, value in enumerate(row)), Fraction(0))
+                        error_m += abs(Fraction(state_km[axis]) - exact_km) * 1000
+                    assert error_m <= Fraction("0.001"), (target, index, probe_s)  # L1 m, sampled only.
+                    max_evaluation_error_m[target] = max(max_evaluation_error_m[target], float(error_m))
+                    evaluation_checks += 1
             bound_m_s = trajectory._spk_position_rate_bound(
                 budget, tuple(tuple(float(value) for value in row) for row in coefficients_km),
                 float(record[1]),
@@ -380,6 +451,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                                                        velocity_difference_m_s)
 
     assert endpoint_record_checks == (24 if native is not None else 0)
+    assert evaluation_checks == (3300 if native is not None else 0)
     jump_observations: dict[int, list[tuple[float, float, bool]]] = {target: [] for target in expected_centers}
     for (target, epoch_s), sides in sorted(joins.items()):
         budget.check()
@@ -539,6 +611,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             for target, values in rates_m_s.items()
         },
         "record_midpoint_max_position_difference_m": max_position_difference_m,
+        "native_record_evaluation_checks": evaluation_checks,
+        "native_record_evaluation_max_l1_error_m": max_evaluation_error_m if native is not None else None,
         "record_join_fields": ["epoch_tdb_s", "exact_position_jump_l1_m", "jump_omission_fails"],
         "record_joins_by_target": jump_observations,
         "record_join_max_position_difference_m": max_join_position_difference_m,
@@ -666,6 +740,9 @@ def cspice() -> ctypes.CDLL:
     for reader in (native.spkr02_, native.spkr03_):
         reader.argtypes = [pointer(integer), pointer(double), pointer(double), pointer(double)]
         reader.restype = None
+    for evaluator in (native.spke02_, native.spke03_):
+        evaluator.argtypes = [pointer(double), pointer(double), pointer(double)]
+        evaluator.restype = None
     native.dafbfs_c.argtypes = [integer]
     native.dafbfs_c.restype = None
     native.daffna_c.argtypes = [pointer(integer)]

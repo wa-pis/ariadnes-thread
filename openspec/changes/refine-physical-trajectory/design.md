@@ -1,5 +1,45 @@
 ## Context
 
+### Native position-polynomial arithmetic replay (2026-09-10)
+
+The pinned binary's SPKE02 path calls CHBINT for three position polynomials
+and their derivatives; SPKE03 calls CHBVAL for six stored components.
+[NAIF CHBINT](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/chbint_c.html)
+and [CHBVAL](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/chbval_c.html)
+document the coefficient and midpoint/radius contracts. Static inspection
+shows that both position paths normalize time with separate subtraction and
+division, then use the same fused Clenshaw recurrence. Unlike the previously
+inspected index arithmetic, this recurrence is not a sequence of separate
+multiply/subtract operations. Retain the instruction bytes under the same
+CSPICE hash in `m3_spk_selector_observation.json`.
+
+For rounded normalized time `s`, set `a=fl(s+s)` and two trailing recurrence
+values to zero. For coefficients from degree n down to 1, compute
+`b_k=fl(RN(a*b_(k+1)-b_(k+2))+c_k)`; finish with
+`p=fl(RN(s*b_1-b_2)+c_0)`. Each inner RN denotes one fused rounding.
+The test-only replay uses exact fractions before that single conversion to
+binary64. A degree-2 control with coefficients `(0,0.1,0.3)` and `s=0.3`
+distinguishes fused result `-0x1.ba5e353f7ced9p-3 km` from the one-ULP-different
+separate-operation result; both native position routines match the fused replay.
+An independent quadratic expression checks the control within `1e-12 m`.
+
+Evaluate all 550 inventoried records directly, bypassing record selection,
+at six epochs each: both nominal endpoints, midpoint, midpoint plus radius/3,
+and 16 epoch ULPs beyond either endpoint. All 3,300 evaluations (9,900 position
+components) match the replay bit-for-bit. Independent exact Chebyshev-basis
+recurrences at the exact rational normalized epochs give sampled L1 position
+errors below the unchanged `0.001 m` gate; the largest is
+`0.00016239212647380994 m` for target 6 (Saturn barycenter). The tiny extension
+is an explicit test domain, not authorization for arbitrary extrapolation.
+
+These are sampled supplied-record comparisons in native km, with errors
+converted exactly to SI for reporting. They do not bound every epoch, qualify
+the derivative/stored-velocity arithmetic, include floating-point SI conversion
+or center-chain accumulation, or establish segment selection and spacecraft
+safety. Derive a uniform error enclosure using this fused graph before using
+it in interval screening; never substitute the sampled maximum for that bound.
+Production settings, dependencies and tolerances remain unchanged.
+
 ### Pinned native record-selector arithmetic (2026-09-10)
 
 Read-only disassembly of the installed Darwin/arm64 `libcspice.dylib`

@@ -51,6 +51,21 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 native position-polynomial arithmetic replay (2026-09-10):
+Pin the CHBVAL/CHBINT position instruction observations and replay fused
+Clenshaw operations with exact fractions rounded once per fused expression.
+Verify a manufactured one-ULP fused/unfused counterexample against both
+native routines and an independent quadratic oracle. Evaluate all 550 records
+at six epochs each, requiring 9,900 position components to match the replay
+bit-for-bit and independent exact-polynomial errors to remain within 0.001 m.
+Verification: complete SPK tests, full pytest, Ruff, strict OpenSpec validation
+and unchanged legacy hash. Observed maximum sampled L1 error is
+0.00016239212647380994 m; it is not a uniform bound. Native derivative error,
+SI conversion, chain accumulation and interval safety remain outside this step.
+Keep 3.9 open; no production model, dependency or tolerance changes.
+All 50 SPK tests and 912 full-suite tests passed (152.90 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 pinned native record-selector arithmetic (2026-09-10):
 Pin the inspected Darwin/arm64 CSPICE hash and identical type-2/type-3
 selection bytes. Verify separate binary64 subtraction/division, signed
