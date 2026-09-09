@@ -324,6 +324,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     joins: dict[tuple[int, Fraction], dict[int, tuple[
         tuple[Fraction, ...], tuple[Fraction, ...], float, np.ndarray,
     ]]] = {}
+    join_error_terms: dict[tuple[int, Fraction, int], tuple[Fraction, Fraction]] = {}
     max_position_difference_m = max_type2_velocity_difference_m_s = 0.0
     max_join_position_difference_m = 0.0
     native_join_failures: list[tuple[int, float, int, float]] = []
@@ -517,6 +518,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                 # Store each side explicitly; segment file order need not be chronological.
                 sides = joins.setdefault((target, epoch_s), {})
                 assert sign not in sides, (target, epoch_s)
+                assert math.ulp(float(epoch_s)) == math.ulp(midpoint_s)
+                native_si_error_m = uniform_error_m + unit_roundoff * 1000 * native_magnitude_km + 3 * Fraction(1, 2 ** 1075)
+                join_error_terms[target, epoch_s, sign] = (Fraction(extended_bound_m_s), native_si_error_m)
                 endpoint_m = tuple(1000 * sum((Fraction(value) * sign ** degree
                                               for degree, value in enumerate(row)), Fraction(0))
                                    for row in coefficients_km)
@@ -568,6 +572,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert endpoint_record_checks == (24 if native is not None else 0)
     assert evaluation_checks == (3300 if native is not None else 0)
     jump_observations: dict[int, list[tuple[float, float, bool]]] = {target: [] for target in expected_centers}
+    native_join_envelopes: list[tuple[int, float, float, float]] = []
+    native_join_envelope_checks = omitted_jump_failures = 0
     for (target, epoch_s), sides in sorted(joins.items()):
         budget.check()
         assert set(sides) == {-1, 1}, (target, epoch_s)
@@ -576,6 +582,20 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         motion_m = sum((abs(a - b) for a, b in zip(left[1], right[1])), Fraction(0))
         local_bound_m = Fraction(math.ulp(float(epoch_s))) * (Fraction(left[2]) + Fraction(right[2]))
         assert motion_m <= local_bound_m + jump_m, (target, epoch_s)
+        left_rate, left_error = join_error_terms[target, epoch_s, 1]
+        right_rate, right_error = join_error_terms[target, epoch_s, -1]
+        half_width_s = 16 * Fraction(math.ulp(float(epoch_s)))
+        arithmetic_and_motion_m = max(left_error, right_error) + (left_rate + right_rate) * half_width_s
+        envelope_m = jump_m + arithmetic_and_motion_m
+        reported_m = math.nextafter(float(envelope_m), math.inf)
+        assert math.isfinite(reported_m) and Fraction(reported_m) >= envelope_m
+        native_join_envelopes.append((target, float(epoch_s), float(half_width_s), reported_m))
+        if native is not None:
+            for side in (left, right):
+                error_m = sum((abs(Fraction(value) - exact) for value, exact in zip(side[3], side[1])), Fraction(0))
+                assert error_m <= envelope_m, (target, epoch_s)
+                omitted_jump_failures += error_m > arithmetic_and_motion_m
+                native_join_envelope_checks += 1
         if target in (499, 599):
             # Counterexample: just before the mathematical join, native values
             # agree with the other side instead. This is not a native-error bound.
@@ -583,6 +603,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         jump_observations[target].append((float(epoch_s), float(jump_m), motion_m > local_bound_m))
     assert all(len(jump_observations[target]) == len(rates_m_s[target]) - 1 for target in expected_centers)
     assert len(joins) == 539
+    assert len(native_join_envelopes) == 539
+    assert native_join_envelope_checks == (1078 if native is not None else 0)
+    assert omitted_jump_failures >= (221 if native is not None else 0)
     assert len(native_join_failures) == 221
     assert {(target, epoch_s) for target, epoch_s, _, _ in native_join_failures} == {
         (target, float(epoch_s)) for target, epoch_s in joins if target in (499, 599)
@@ -772,6 +795,10 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "record_join_fields": ["epoch_tdb_s", "exact_position_jump_l1_m", "jump_omission_fails"],
         "record_joins_by_target": jump_observations,
         "record_join_max_position_difference_m": max_join_position_difference_m,
+        "native_join_envelope_fields": ["target", "epoch_tdb_s", "half_width_s", "conditional_l1_bound_m"],
+        "native_join_envelopes": native_join_envelopes,
+        "native_join_envelope_checks": native_join_envelope_checks,
+        "native_join_envelope_omitted_jump_failures": omitted_jump_failures,
         "native_join_parity_failure_fields": ["target", "epoch_tdb_s", "record_endpoint_sign", "error_m"],
         "native_join_parity_failures": native_join_failures,
         "native_join_parity_tolerance_m": 0.001,

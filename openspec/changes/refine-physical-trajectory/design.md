@@ -1,5 +1,42 @@
 ## Context
 
+### Conditional native envelopes at every inventoried join (2026-09-10)
+
+Extend the existing exact-branch treatment to all 539 internal joins across
+the 11 source links, retaining all previous source-jump and early-selection
+counterexamples. For join epoch b use h=16 epoch ULPs on each side. Check
+that boundary and record-midpoint ULPs agree, so both existing extended rate
+and arithmetic bounds apply on [b-h,b+h]. Here h is exactly
+`1.9073486328125e-6 s` for every inventoried join.
+
+Let J be the exact L1 difference of the two endpoint polynomials, L_left and
+L_right their extended L1 position-rate bounds, and E_left/E_right their
+individual evaluation-plus-SI-conversion bounds. Conditional on native
+selection being one of those two records, its position at any t in the strip
+differs from either exact record polynomial at that same t by at most
+`J+(L_left+L_right)*h+max(E_left,E_right)` meters. This follows by routing
+the exact polynomial difference through b and adding the selected record's
+arithmetic error. It is not a two-time displacement bound; comparing two
+native evaluations would require both arithmetic errors.
+
+The new native-readback variant compares the existing 1,078 one-ULP side
+queries to their nominal exact polynomials using exact rational differences
+from native SI values. Every comparison lies inside its own outward-rounded
+envelope. Removing J fails 221 comparisons, preserving rather than masking
+the known early-selection counterexample. Envelopes range from
+`3.725238072706269e-5 m` to `14.382176411464647 m` (target 599 at
+`1003871232 TDB seconds since J2000`). Their size includes representation
+differences, not just floating-point rounding or physical orbit uncertainty.
+No millimeter gate is applied to or replaced by this distinct quantity.
+
+This treats one source link at a time. It does not prove the two-record
+selection premise or segment priority, compose simultaneous joins along a
+center chain, bound velocities, or establish spacecraft safety. Keep those
+obligations and the existing sub-millimeter arithmetic-only bounds separate.
+Native comparisons use only the already qualified Darwin/arm64 variant;
+the original portable checks remain unchanged. Task 3.9 stays open with no
+production, kernel, tolerance or native-call-limit changes.
+
 ### Conditional interval-wide position-chain composition (2026-09-10)
 
 For each of the 550 inventoried records, bound the exact position polynomial's

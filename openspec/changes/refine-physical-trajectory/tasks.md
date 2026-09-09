@@ -51,6 +51,21 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional native envelopes at every inventoried join (2026-09-10):
+Combine exact endpoint jumps, both extended position-rate bounds and the
+selected record's evaluation/SI error over each 16-ULP join strip. Verify
+ULP-domain alignment for all 539 joins and outward reporting. All 1,078
+existing side queries must lie inside their own conditional envelopes;
+removing the jump must retain at least the 221 known failure controls.
+Verification: complete SPK tests, full pytest, Ruff, strict OpenSpec validation
+and unchanged legacy hash. Observed omission failures: 221; largest envelope:
+14.382176411464647 m, including representation differences rather than only
+roundoff. This does not replace the 0.001 m arithmetic gate. Selection,
+segment priority, simultaneous chain joins and spacecraft safety remain
+unqualified; keep 3.9 open and production unchanged.
+All 60 SPK tests and 922 full-suite tests passed (159.52 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 conditional interval-wide position-chain composition (2026-09-10):
 Derive native position-magnitude bounds from all 550 records' coefficient
 majorants and evaluation errors. Verify exact and native magnitudes at all
