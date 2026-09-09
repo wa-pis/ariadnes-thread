@@ -334,6 +334,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     evaluation_checks = 0
     max_evaluation_error_m = dict.fromkeys(expected_centers, 0.0)
     uniform_evaluation_bounds_m: dict[int, list[float]] = {target: [] for target in expected_centers}
+    native_magnitude_bounds_km: dict[int, list[Fraction]] = {target: [] for target in expected_centers}
     unit_roundoff = Fraction(1, 2 ** 53)
     switching_records: dict[int, list[tuple[int, np.ndarray, float, float, int, np.ndarray]]] = {
         499: [], 599: [],
@@ -442,6 +443,15 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             assert math.isfinite(reported_uniform_m) and Fraction(reported_uniform_m) >= uniform_error_m
             assert Fraction(reported_uniform_m) <= Fraction("0.001")  # Conditional supplied-record L1 m.
             uniform_evaluation_bounds_m[target].append(reported_uniform_m)
+            # Uniform L1 magnitude from coefficients, not from sampled states.
+            magnitude_weights = [Fraction(1), rounded_limit]
+            for degree in range(2, coefficient_count):
+                budget.check()
+                magnitude_weights.append(2 * rounded_limit * magnitude_weights[-1] - magnitude_weights[-2])
+            polynomial_magnitude_km = sum((abs(Fraction(value)) * magnitude_weights[degree]
+                                          for row in rows_km for degree, value in enumerate(row)), Fraction(0))
+            native_magnitude_km = polynomial_magnitude_km + uniform_error_m / 1000
+            native_magnitude_bounds_km[target].append(native_magnitude_km)
             if native is not None:
                 # Evaluate the supplied record itself, avoiding record-selection ambiguity.
                 native_record = (ctypes.c_double * (size + 1))(float(size), *record)
@@ -456,6 +466,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                     state_km = (ctypes.c_double * 6)()
                     evaluator(ctypes.byref(native_epoch), native_record, state_km)
                     assert native.failed_c() == 0 and all(math.isfinite(value) for value in state_km)
+                    assert sum((abs(Fraction(value)) for value in state_km[:3]), Fraction(0)) <= native_magnitude_km
                     exact_time = (Fraction(probe_s) - Fraction(midpoint_s)) / Fraction(radius_s)
                     assert Fraction(probe_s - midpoint_s) == Fraction(probe_s) - Fraction(midpoint_s)
                     rounded_time = Fraction((probe_s - midpoint_s) / radius_s)
@@ -465,15 +476,18 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                     for degree in range(2, coefficient_count):
                         basis.append(2 * exact_time * basis[-1] - basis[-2])
                     error_m = Fraction(0)
+                    exact_magnitude_km = Fraction(0)
                     for axis, row in enumerate(coefficients_km):
                         replay_km = _replay_spk_position(tuple(float(value) for value in row),
                                                        midpoint_s, radius_s, probe_s)
                         assert state_km[axis].hex() == replay_km.hex(), (target, index, probe_s, axis)
                         exact_km = sum((Fraction(value) * basis[degree]
                                         for degree, value in enumerate(row)), Fraction(0))
+                        exact_magnitude_km += abs(exact_km)
                         error_m += abs(Fraction(state_km[axis]) - exact_km) * 1000
                     assert error_m <= Fraction("0.001"), (target, index, probe_s)  # L1 m, sampled only.
                     assert error_m <= uniform_error_m, (target, index, probe_s)
+                    assert exact_magnitude_km <= polynomial_magnitude_km
                     max_evaluation_error_m[target] = max(max_evaluation_error_m[target], float(error_m))
                     evaluation_checks += 1
             bound_m_s = trajectory._spk_position_rate_bound(
@@ -666,6 +680,41 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         for target in expected_centers
     }
 
+    chain_position_bounds_m: dict[int, float] = {}
+    chain_add_scale_bounds_m: dict[int, float] = {}
+    eta = Fraction(1, 2 ** 1075)
+    for target in (10, 1, 2, 399, 301, 499, 599, 699):
+        budget.check()
+        center = expected_centers[target]
+        chain = [target] if center == 0 else [target, center]
+        assert expected_centers[chain[-1]] == 0
+        magnitude_km = sum((max(native_magnitude_bounds_km[link]) for link in chain), Fraction(0))
+        source_error_m = sum((Fraction(max(uniform_evaluation_bounds_m[link])) for link in chain), Fraction(0))
+        addition_km = unit_roundoff * magnitude_km + 3 * eta if len(chain) == 2 else Fraction(0)
+        assert magnitude_km <= Fraction(sys.float_info.max)
+        assert 1000 * (magnitude_km + addition_km) <= Fraction(sys.float_info.max)
+        conversion_m = unit_roundoff * 1000 * (magnitude_km + addition_km) + 3 * eta
+        combined_m = source_error_m + 1000 * addition_km + conversion_m
+        reported_m = math.nextafter(float(combined_m), math.inf)
+        assert Fraction(reported_m) >= combined_m > source_error_m
+        assert Fraction(reported_m) <= Fraction("0.001")  # Conditional position L1 m, not selection error.
+        chain_position_bounds_m[target] = reported_m
+        chain_add_scale_bounds_m[target] = math.nextafter(float(1000 * addition_km + conversion_m), math.inf)
+        # Independent arithmetic controls at magnitude limits, not mission states.
+        control_values_km: list[float] = []
+        for link in chain:
+            limit_km = max(native_magnitude_bounds_km[link]) / 3
+            value_km = float(limit_km)
+            if Fraction(value_km) > limit_km:
+                value_km = math.nextafter(value_km, 0.0)
+            assert 3 * abs(Fraction(value_km)) <= max(native_magnitude_bounds_km[link])
+            control_values_km.append(value_km)
+        for sign in (-1, 1):
+            values_km = [control_values_km[0]] + [sign * value for value in control_values_km[1:]]
+            exact_sum_km = sum((Fraction(value) for value in values_km), Fraction(0))
+            actual_m = sum(values_km) * 1000
+            assert 3 * abs(Fraction(actual_m) - 1000 * exact_sum_km) <= 1000 * addition_km + conversion_m
+
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
     observations: dict[int, list[tuple[float, float]]] = {}
@@ -718,6 +767,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             target: {"record_count": len(values), "minimum": min(values), "maximum": max(values)}
             for target, values in uniform_evaluation_bounds_m.items()
         },
+        "conditional_chain_position_bound_m": chain_position_bounds_m,
+        "conditional_chain_add_scale_bound_m": chain_add_scale_bounds_m,
         "record_join_fields": ["epoch_tdb_s", "exact_position_jump_l1_m", "jump_omission_fails"],
         "record_joins_by_target": jump_observations,
         "record_join_max_position_difference_m": max_join_position_difference_m,

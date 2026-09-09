@@ -24,8 +24,9 @@ margins retain the source-boundary counterexamples. Static inspection pins
 the type-2/type-3 reader arithmetic, with endpoint checks for the last-record
 clamp. Conditional uniform supplied-record position-error bounds are below
 0.001 m; sampled center-chain addition and SI conversion now match direct
-SPICE bit-for-bit. Interval-wide chain composition, record/segment-choice
-effects and native execution premises still require qualification before
+SPICE bit-for-bit. Conditional interval-wide position-chain composition,
+including SI conversion, is now below 0.001 m for all eight bodies.
+Record/segment-choice effects and native execution premises still require qualification before
 full-force safety and runtime checks; targeting remains gated.
 See the active change's design and tasks for numerical scope and evidence.
 

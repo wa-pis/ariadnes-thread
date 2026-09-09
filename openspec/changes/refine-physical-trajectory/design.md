@@ -1,5 +1,46 @@
 ## Context
 
+### Conditional interval-wide position-chain composition (2026-09-10)
+
+For each of the 550 inventoried records, bound the exact position polynomial's
+L1 magnitude by `P=sum_axis,sum_k |c_k|*T_k(q)` in km, using the already
+qualified q>=1 domain. Add its uniform position-evaluation bound E/1000 to
+obtain a native-output magnitude bound M. Exact rational evaluation avoids
+rounding the coefficient majorant inward. All 3,300 supplied-record probes
+check both the exact polynomial magnitude against P and native magnitude
+against M; these are checks of coefficient-derived bounds, not sample maxima
+used as bounds.
+
+Take the maximum record M and outward E for each source link, then sum them
+over each of the eight declared one- or two-link J2000 chains. Write these
+sums as M (km) and E (m). For a two-link chain the extra L1 addition error is
+bounded by `A=u*M+3*eta` km; copying a single link has A=0. Unit conversion
+then contributes `C=u*1000*(M+A)+3*eta` m. Thus the total conditional L1
+position error relative to the exact selected-record sum is
+`B=E+1000*A+C` m. The factor three accounts for the componentwise absolute
+underflow terms. Check native and scaled magnitudes against the finite
+binary64 range; report B with upward rounding.
+
+This bounds every allowed combination of inventoried source records on their
+qualified extended domains, not just the 38 previously sampled epochs.
+Constructed aligned/opposed vectors at the link magnitude limits independently
+check the addition/conversion term against exact rational sums; these are
+arithmetic controls, explicitly not mission states. All eight B values are
+below the unchanged 0.001 m gate. The largest is
+`0.0007284371515436439 m` for Saturn, of which at most
+`0.0004811117291734273 m` is addition/conversion. Jupiter's B is
+`0.0004281144922474497 m`; the smallest is the Sun's
+`1.4595070471278306e-7 m`.
+
+The result remains conditional on each selected record being in the inventory,
+its epoch lying in its qualified extended domain, the inspected position
+arithmetic, round-to-nearest with gradual underflow, and add-then-scale chain
+composition. It does not include differences between competing record or
+segment polynomials, certify selection/dispatch throughout the interval,
+bound physical ephemeris uncertainty or velocity evaluation, or establish
+spacecraft safety. Keep those obligations separate under 3.9; no production
+settings, kernels, scientific tolerances or native-call limits change.
+
 ### Sampled center-chain and SI arithmetic (2026-09-10)
 
 Extend the existing eight-body, 38-epoch chain inventory without changing

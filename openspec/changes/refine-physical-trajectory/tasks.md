@@ -51,6 +51,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional interval-wide position-chain composition (2026-09-10):
+Derive native position-magnitude bounds from all 550 records' coefficient
+majorants and evaluation errors. Verify exact and native magnitudes at all
+3,300 supplied-record controls. Combine source, addition and SI conversion
+errors for the eight one/two-link chains using exact fractions and upward
+reporting, finite-range guards and independent aligned/opposed arithmetic
+controls. Verify every conditional chain bound is below 0.001 m; the maximum
+is 0.0007284371515436439 m for Saturn. Verification: complete SPK tests,
+full pytest, Ruff, strict OpenSpec validation and unchanged legacy hash.
+Record/segment choice, runtime arithmetic premises, velocity and spacecraft
+safety remain outside this enclosure; keep 3.9 open and production unchanged.
+All 60 SPK tests and 922 full-suite tests passed (159.30 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 sampled center-chain and SI arithmetic (2026-09-10):
 Extend all eight 38-epoch chain controls with 456 selected-link state reads.
 Verify add-then-scale replay is bit-identical to SPKSSB, the Tudat wrapper
