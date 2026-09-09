@@ -81,7 +81,7 @@ def test_spk_rate_bound_honors_expired_budget() -> None:
 
 
 def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
-    """Verify nominal segment coverage, not record accuracy or trajectory safety."""
+    """Qualify coverage and exact record motion, not native error or safety."""
     import spiceypy as spice
     from spiceypy.utils.support_types import SPICEDOUBLE_CELL
 
@@ -120,7 +120,12 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
     assert segment_counts == {target: 2 if target == 699 else 1 for target in expected_centers}
 
     rates_m_s: dict[int, list[float]] = {target: [] for target in expected_centers}
+    joins: dict[tuple[int, Fraction], dict[int, tuple[
+        tuple[Fraction, ...], tuple[Fraction, ...], float, np.ndarray,
+    ]]] = {}
     max_position_difference_m = max_type2_velocity_difference_m_s = 0.0
+    max_join_position_difference_m = 0.0
+    native_join_failures: list[tuple[int, float, int, float]] = []
     for handle, target, data_type, first, last, begin, end, descriptor in segments:
         budget.check()
         init_s, interval_s, raw_size, raw_count = spice.dafgda(handle, end - 3, end)
@@ -151,6 +156,37 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
                 float(record[1]),
             )
             rates_m_s[target].append(bound_m_s)
+            for sign in (-1, 1):
+                epoch_s = Fraction(record[0]) + sign * Fraction(record[1])
+                if not start_tdb_s < epoch_s < end_tdb_s:
+                    continue
+                # Store each side explicitly; segment file order need not be chronological.
+                sides = joins.setdefault((target, epoch_s), {})
+                assert sign not in sides, (target, epoch_s)
+                endpoint_m = tuple(1000 * sum((Fraction(value) * sign ** degree
+                                              for degree, value in enumerate(row)), Fraction(0))
+                                   for row in coefficients_km)
+                offset_s = Fraction(math.ulp(float(epoch_s)))
+                assert Fraction(float(epoch_s)) == epoch_s and 0 < offset_s < Fraction(record[1])
+                normalized_time = sign * (1 - offset_s / Fraction(record[1]))
+                basis = [Fraction(1), normalized_time]
+                for degree in range(2, coefficient_count):
+                    basis.append(2 * normalized_time * basis[-1] - basis[-2])
+                near_m = tuple(1000 * sum((Fraction(value) * basis[degree]
+                                          for degree, value in enumerate(row)), Fraction(0))
+                               for row in coefficients_km)
+                query_s = float(epoch_s) - sign * float(offset_s)
+                assert Fraction(query_s) == epoch_s - sign * offset_s
+                join_frame, join_state_km, join_center = spice.spkpvn(handle, descriptor, query_s)
+                assert (join_frame, join_center) == (1, expected_centers[target])
+                assert np.all(np.isfinite(join_state_km))
+                join_difference_m = float(np.linalg.norm(
+                    np.asarray([float(value) for value in near_m]) - join_state_km[:3] * 1000,
+                ))
+                if join_difference_m > 0.001:
+                    native_join_failures.append((target, float(epoch_s), sign, join_difference_m))
+                max_join_position_difference_m = max(max_join_position_difference_m, join_difference_m)
+                sides[sign] = (endpoint_m, near_m, bound_m_s, join_state_km[:3] * 1000)
             derivative_coefficients = np.polynomial.chebyshev.chebder(coefficients_km.T, axis=0)
             for normalized_time in (-1.0, -0.5, 0.0, 0.5, 1.0):
                 derivative_m_s = np.polynomial.chebyshev.chebval(
@@ -174,6 +210,28 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
                 assert velocity_difference_m_s <= 0.000001, (target, index)
                 max_type2_velocity_difference_m_s = max(max_type2_velocity_difference_m_s,
                                                        velocity_difference_m_s)
+
+    jump_observations: dict[int, list[tuple[float, float, bool]]] = {target: [] for target in expected_centers}
+    for (target, epoch_s), sides in sorted(joins.items()):
+        budget.check()
+        assert set(sides) == {-1, 1}, (target, epoch_s)
+        left, right = sides[1], sides[-1]
+        jump_m = sum((abs(a - b) for a, b in zip(left[0], right[0])), Fraction(0))
+        motion_m = sum((abs(a - b) for a, b in zip(left[1], right[1])), Fraction(0))
+        local_bound_m = Fraction(math.ulp(float(epoch_s))) * (Fraction(left[2]) + Fraction(right[2]))
+        assert motion_m <= local_bound_m + jump_m, (target, epoch_s)
+        if target in (499, 599):
+            # Counterexample: just before the mathematical join, native values
+            # agree with the other side instead. This is not a native-error bound.
+            assert np.linalg.norm(left[3] - np.asarray([float(value) for value in right[1]])) <= 0.001
+        jump_observations[target].append((float(epoch_s), float(jump_m), motion_m > local_bound_m))
+    assert all(len(jump_observations[target]) == len(rates_m_s[target]) - 1 for target in expected_centers)
+    assert len(joins) == 539
+    assert len(native_join_failures) == 221
+    assert {(target, epoch_s) for target, epoch_s, _, _ in native_join_failures} == {
+        (target, float(epoch_s)) for target, epoch_s in joins if target in (499, 599)
+    }
+    assert all(sign == 1 for _, _, sign, _ in native_join_failures)
 
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
@@ -221,6 +279,12 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
             for target, values in rates_m_s.items()
         },
         "record_midpoint_max_position_difference_m": max_position_difference_m,
+        "record_join_fields": ["epoch_tdb_s", "exact_position_jump_l1_m", "jump_omission_fails"],
+        "record_joins_by_target": jump_observations,
+        "record_join_max_position_difference_m": max_join_position_difference_m,
+        "native_join_parity_failure_fields": ["target", "epoch_tdb_s", "record_endpoint_sign", "error_m"],
+        "native_join_parity_failures": native_join_failures,
+        "native_join_parity_tolerance_m": 0.001,
         "type2_midpoint_max_velocity_difference_m_s": max_type2_velocity_difference_m_s,
         "frame": "J2000, each target relative to its listed center; chains end at SSB",
         "scope": "Coverage and exact per-record position-rate bounds, not composed motion or safety",

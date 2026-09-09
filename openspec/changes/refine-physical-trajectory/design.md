@@ -1,5 +1,34 @@
 ## Context
 
+### All-chain joins and native near-boundary counterexample (2026-09-09)
+
+The all-chain record qualification now pairs both sides of all 539 interior
+joins by target ID and exact TDB epoch, independently of segment file order.
+Every exact position-polynomial endpoint has a nonzero L1 jump. Using exact
+Chebyshev recurrence one binary64 epoch ULP (`2^-23 s`) inside each record,
+all displacements satisfy `L_left*h + J_L1 + L_right*h`. Omitting the jump
+fails at 298 joins. The largest L1 source-position jump is
+`14.382072321860564 m` for Jupiter center relative to its barycenter; this
+is a representation discontinuity, not physical motion or ephemeris uncertainty.
+
+The independent segment-native SPICE comparison adds 1,078 one-ULP-side
+position probes with the unchanged `0.001 m` parity threshold. It fails at
+221 probes: just before all 163 Mars-center joins and all 58 Jupiter-center
+joins. Maximum Euclidean discrepancy is `8.74270150900805 m`, for Jupiter
+at the left-side probe of `982745568 TDB seconds since J2000`. These native
+values instead agree within `0.001 m` with the right-side exact position
+probe. This is consistent with a near-boundary record-selection effect;
+its native arithmetic cause and transition width are not yet qualified.
+The test retains all failing epochs, sides and errors in its JSON diagnostic
+and explicitly requires this counterexample, rather than loosening the gate.
+
+Thus exact mathematical record boundaries cannot yet be assumed to partition
+native SPICE evaluation at arbitrary binary64 epochs. Midpoint parity remains
+valid, but does not establish this stronger claim. The exact-polynomial motion
+inequality is qualified separately from the failed native near-join parity;
+neither completes task 3.9 or accepts a safe spacecraft trajectory. Production
+forces, direct-SPICE strategy, kernels, tolerances and work limits are unchanged.
+
 ### All-chain SPK record-rate qualification (2026-09-09)
 
 Extend the existing loaded-file inventory with the same exact position-rate

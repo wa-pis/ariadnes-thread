@@ -51,6 +51,23 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 all-chain join qualification and native counterexample (2026-09-09):
+Pair all 539 interior record joins, compute exact L1 endpoint jumps, and
+verify one-ULP interior displacements against both local rate bounds plus
+the jump. Preserve the 298 controls where omission fails. Compare both
+sides to segment-native SPICE at the unchanged 0.001 m threshold: 221
+left-side probes fail (163 Mars and 58 Jupiter), with a maximum Euclidean
+error of 8.74270150900805 m. Verify those values agree with the neighboring
+right-side probe within 0.001 m, and emit every failed epoch and error.
+Verification: `tests/test_trajectory_spk.py -k chain_coverage`, whole SPK file,
+complete pytest, Ruff, strict OpenSpec validation and unchanged legacy hash.
+This is a reproducible failed scientific comparison, not successful native
+qualification. Investigate record-selection arithmetic and its transition
+width before using exact record intervals for native safety; keep 3.9 open.
+All 35 SPK tests and 897 full-suite tests passed (162.38 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+Passing regression tests reproduce the failed parity criterion, not resolve it.
+
 Task 3.9 all-chain SPK record-rate qualification (2026-09-09):
 Extend the existing loaded-chain test to decode type-2/type-3 position records
 for all 11 required target/center links. Verify exact directory/header layout,

@@ -27,6 +27,10 @@ Following user approval on 2026-09-09, all eight production body ephemerides SHA
 - **WHEN** the loaded-SPK qualification decodes the 550 candidate-overlapping type-2/type-3 records for all 11 required target/center links
 - **THEN** exact directory/header checks pass, five derivative probes per record satisfy the outward position-rate bound, every midpoint position agrees with segment-native SPICE within `0.001 m`, type-2 derivative velocities agree within `0.000001 m/s`, and the report preserves per-center units and distinguishes these controls from composed motion, type-3 stored velocity and spacecraft safety
 
+#### Scenario: Preserve all-chain join bounds and native selection counterexample
+- **WHEN** both sides of all 539 interior source-record joins are evaluated exactly one binary64 epoch ULP inside the corresponding records
+- **THEN** every exact displacement satisfies the two rate contributions plus the exact L1 jump, omission fails at 298 joins, and the unchanged `0.001 m` native-position comparison retains failures just before all 163 Mars and 58 Jupiter joins, with every failing epoch/side/error reported and no native-accuracy or spacecraft-safety acceptance
+
 ### Requirement: Verified M2 candidate handoff
 The system SHALL expose `refine_physical_trajectory(scenario: Scenario, candidate: ImpulsiveTransferCandidate) -> PhysicalTrajectoryResult`. It SHALL accept only a Pareto candidate reproduced from the same normalized scenario and M2 grid, and SHALL treat the M2 body-centre Lambert solution and scalar impulses only as the initial targeting seed rather than as physical endpoint states.
 
