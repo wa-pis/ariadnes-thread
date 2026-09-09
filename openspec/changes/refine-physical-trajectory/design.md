@@ -1,5 +1,30 @@
 ## Context
 
+### All-chain SPK record-rate qualification (2026-09-09)
+
+Extend the existing loaded-file inventory with the same exact position-rate
+helper for all 11 target/center links needed by the eight production bodies.
+Read type-2 and type-3 record directories, verify their exact midpoint/radius
+headers and storage lengths, and select candidate-overlapping records with
+rational index arithmetic, including both touching records at exact boundaries.
+The pinned candidate has 550 records: target IDs 1/2/4/5/6/10/301/399/499/599/699
+contribute 37/19/10/10/10/19/74/74/164/59/74 respectively.
+
+Five NumPy derivative probes per record satisfy the exact-polynomial rate
+majorant. At all 550 record midpoints, NumPy positions match segment-native
+SPICE positions within `0.001 m` (observed maximum `0 m`). For the 253 type-2
+records only, derivative velocities match within `0.000001 m/s` (observed
+maximum `1.4210854715202004e-11 m/s`). Type-3 stored velocities are separate
+series and are deliberately not used as a position-derivative oracle.
+The diagnostic emits per-target counts and minimum/maximum rate bounds in
+m/s relative to each listed center, with J2000 orientation and TDB epochs.
+
+This extends the verified record inputs, not the bound's scope: combining
+center chains, accounting for every record/segment jump, native evaluation
+roundoff and spacecraft integration error remain open. The kernel pool,
+production model, tolerances and shared 300-second budget are unchanged;
+no spacecraft propagation or safety acceptance is performed.
+
 ### Exact SPK position-rate and jump controls (2026-09-09)
 
 For one record write each position component as `p_j(t) = sum c_jk T_k(x)`,

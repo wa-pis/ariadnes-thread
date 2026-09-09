@@ -23,6 +23,10 @@ Following user approval on 2026-09-09, all eight production body ephemerides SHA
 - **WHEN** the private Chebyshev position-rate bound is checked for the 74 overlapping Saturn records and exact positions one epoch ULP inside all 73 joins
 - **THEN** single-mode degree 0/1/2/19 derivative maxima and rational mixed-axis controls verify outward rounding, all 370 sampled record derivatives lie below the bound, and every exact cross-join displacement lies below the two local rate contributions plus the exact L1 endpoint jump, while omission of that jump fails and no native-error or spacecraft-safety certificate is inferred
 
+#### Scenario: Qualify position records for every required center link
+- **WHEN** the loaded-SPK qualification decodes the 550 candidate-overlapping type-2/type-3 records for all 11 required target/center links
+- **THEN** exact directory/header checks pass, five derivative probes per record satisfy the outward position-rate bound, every midpoint position agrees with segment-native SPICE within `0.001 m`, type-2 derivative velocities agree within `0.000001 m/s`, and the report preserves per-center units and distinguishes these controls from composed motion, type-3 stored velocity and spacecraft safety
+
 ### Requirement: Verified M2 candidate handoff
 The system SHALL expose `refine_physical_trajectory(scenario: Scenario, candidate: ImpulsiveTransferCandidate) -> PhysicalTrajectoryResult`. It SHALL accept only a Pareto candidate reproduced from the same normalized scenario and M2 grid, and SHALL treat the M2 body-centre Lambert solution and scalar impulses only as the initial targeting seed rather than as physical endpoint states.
 

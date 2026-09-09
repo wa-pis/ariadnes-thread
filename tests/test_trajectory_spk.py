@@ -98,6 +98,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
     expected_centers = {10: 0, 1: 0, 2: 0, 399: 0, 301: 399,
                         499: 4, 4: 0, 599: 5, 5: 0, 699: 6, 6: 0}
     segment_counts = dict.fromkeys(expected_centers, 0)
+    segments: list[tuple[int, int, int, float, float, int, int, np.ndarray]] = []
     total_segments = 0
     # Complete DAF scans before calling other routines that start DAF searches.
     for path, kind, _, handle in files:
@@ -106,17 +107,73 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
         while spice.daffna():
             budget.check()
             total_segments += 1
-            target, center, frame, data_type, first, last, begin, end = spice.spkuds(
-                spice.dafgs()[:5],
-            )
+            descriptor = spice.dafgs()[:5]
+            target, center, frame, data_type, first, last, begin, end = spice.spkuds(descriptor)
             assert math.isfinite(first) and math.isfinite(last) and first <= last
             assert 0 < begin <= end
             if target in expected_centers and first <= end_tdb_s and last >= start_tdb_s:
                 assert center == expected_centers[target], (path, target, center)
                 assert frame == 1 and data_type in (2, 3), (path, target, frame, data_type)
                 segment_counts[target] += 1
+                segments.append((handle, target, data_type, first, last, begin, end, descriptor.copy()))
     assert len(files) == 6 and total_segments == 2028
     assert segment_counts == {target: 2 if target == 699 else 1 for target in expected_centers}
+
+    rates_m_s: dict[int, list[float]] = {target: [] for target in expected_centers}
+    max_position_difference_m = max_type2_velocity_difference_m_s = 0.0
+    for handle, target, data_type, first, last, begin, end, descriptor in segments:
+        budget.check()
+        init_s, interval_s, raw_size, raw_count = spice.dafgda(handle, end - 3, end)
+        assert all(math.isfinite(value) for value in (init_s, interval_s, raw_size, raw_count))
+        assert interval_s > 0 and raw_size == int(raw_size) and raw_count == int(raw_count)
+        size, count = int(raw_size), int(raw_count)
+        components = 3 if data_type == 2 else 6
+        assert size > 2 and count > 0 and (size - 2) % components == 0
+        coefficient_count = (size - 2) // components
+        assert end - begin + 1 == size * count + 4
+        assert Fraction(init_s) == Fraction(first)
+        assert Fraction(init_s) + count * Fraction(interval_s) == Fraction(last)
+        # Include both touching records at exact endpoints without rounded index division.
+        first_index = max(0, math.ceil((Fraction(start_tdb_s) - Fraction(init_s)) / Fraction(interval_s)) - 1)
+        last_index = min(count - 1, math.floor((Fraction(end_tdb_s) - Fraction(init_s)) / Fraction(interval_s)))
+        assert 0 <= first_index <= last_index < count
+        for index in range(first_index, last_index + 1):
+            budget.check()
+            address = begin + index * size
+            record = spice.dafgda(handle, address, address + size - 1)
+            assert np.all(np.isfinite(record))
+            record_start_s = Fraction(init_s) + index * Fraction(interval_s)
+            assert Fraction(record[0]) == record_start_s + Fraction(interval_s) / 2
+            assert Fraction(record[1]) == Fraction(interval_s) / 2
+            coefficients_km = record[2:].reshape(components, coefficient_count)[:3]
+            bound_m_s = trajectory._spk_position_rate_bound(
+                budget, tuple(tuple(float(value) for value in row) for row in coefficients_km),
+                float(record[1]),
+            )
+            rates_m_s[target].append(bound_m_s)
+            derivative_coefficients = np.polynomial.chebyshev.chebder(coefficients_km.T, axis=0)
+            for normalized_time in (-1.0, -0.5, 0.0, 0.5, 1.0):
+                derivative_m_s = np.polynomial.chebyshev.chebval(
+                    normalized_time, derivative_coefficients,
+                ) * (1000 / record[1])
+                assert np.all(np.isfinite(derivative_m_s))
+                assert np.linalg.norm(derivative_m_s) <= bound_m_s, (target, index)
+            frame, state_km, center = spice.spkpvn(handle, descriptor, float(record[0]))
+            assert (frame, center) == (1, expected_centers[target])
+            assert np.all(np.isfinite(state_km))
+            position_difference_m = float(np.linalg.norm(
+                (np.polynomial.chebyshev.chebval(0.0, coefficients_km.T) - state_km[:3]) * 1000,
+            ))
+            assert position_difference_m <= 0.001, (target, index)
+            max_position_difference_m = max(max_position_difference_m, position_difference_m)
+            if data_type == 2:
+                velocity_difference_m_s = float(np.linalg.norm(
+                    (np.polynomial.chebyshev.chebval(0.0, derivative_coefficients) / record[1]
+                     - state_km[3:]) * 1000,
+                ))
+                assert velocity_difference_m_s <= 0.000001, (target, index)
+                max_type2_velocity_difference_m_s = max(max_type2_velocity_difference_m_s,
+                                                       velocity_difference_m_s)
 
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
@@ -159,8 +216,14 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
         "spk_registration_count": len(registrations),
         "total_segments": total_segments, "overlapping_chain_segments": segment_counts,
         "coverage_intervals_tdb_s": observations, "chain_centers": expected_centers,
+        "position_rate_bounds_by_target": {
+            target: {"record_count": len(values), "min_m_s": min(values), "max_m_s": max(values)}
+            for target, values in rates_m_s.items()
+        },
+        "record_midpoint_max_position_difference_m": max_position_difference_m,
+        "type2_midpoint_max_velocity_difference_m_s": max_type2_velocity_difference_m_s,
         "frame": "J2000, each target relative to its listed center; chains end at SSB",
-        "scope": "Nominal segment coverage only, not polynomial continuity or accuracy",
+        "scope": "Coverage and exact per-record position-rate bounds, not composed motion or safety",
     }, sort_keys=True, allow_nan=False))
 
 
