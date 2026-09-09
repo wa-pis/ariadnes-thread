@@ -51,6 +51,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 sampled center-chain and SI arithmetic (2026-09-10):
+Extend all eight 38-epoch chain controls with 456 selected-link state reads.
+Verify add-then-scale replay is bit-identical to SPKSSB, the Tudat wrapper
+and production direct ephemerides for all 304 states. Check separate and
+combined addition/conversion roundoff against exact rational input-state
+sums under unchanged 0.001 m / 0.000001 m/s gates. Retain scale-before-add
+counterexamples for all four two-link bodies. Verification: complete SPK
+tests, full pytest, Ruff, strict OpenSpec validation and unchanged legacy hash.
+The maximum additional sampled L1 errors are 0.00024531567112262564 m and
+5.491607169005874e-12 m/s. These exclude source-polynomial errors and do not
+establish interval-wide magnitudes or native dispatch; keep 3.9 open.
+All 60 SPK tests and 922 full-suite tests passed (162.31 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 conditional uniform supplied-record position error (2026-09-10):
 Derive a fused-recurrence residual enclosure with relative and gradual-
 underflow terms, exact Sterbenz subtraction premises, division error and the

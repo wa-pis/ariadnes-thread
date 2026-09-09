@@ -1,5 +1,41 @@
 ## Context
 
+### Sampled center-chain and SI arithmetic (2026-09-10)
+
+Extend the existing eight-body, 38-epoch chain inventory without changing
+production queries. Read each selected segment state through SPKPVN and
+verify its J2000 orientation and expected center. The four direct-to-SSB
+bodies have one link; Moon, Mars, Jupiter and Saturn have two. Across 304
+body/epoch states and 456 link reads, copying one link or adding the two
+links componentwise in km/km/s matches SPKSSB bit-for-bit. Multiplying that
+result by 1000 matches both the Tudat SPICE wrapper and production direct
+ephemeris bit-for-bit for all six components.
+
+Isolate the extra arithmetic error relative to the already-rounded link
+states, not the exact source polynomials. For each component, form their
+exact rational sum S. The two-link addition has conditional rounding bound
+`e_add=u*|S|+eta` in native units; one-link copying has zero error. With
+native summed value y, the unit conversion has bound
+`e_scale=u*|1000*y|+eta` in SI. Use the previous round-to-nearest/gradual-
+underflow assumptions and explicitly exclude overflow. The combined bound
+is `1000*e_add+e_scale`; compare each term and their combined error against
+exact fractions and report the sum of three absolute component errors.
+
+Maximum sampled additional L1 errors are `0.00024531567112262564 m`
+(Saturn) and `5.491607169005874e-12 m/s` (Moon). Maximum sampled local
+bounds are `0.0004777256199478826 m` and `1.1281778968486291e-11 m/s`.
+Every local bound is below the existing `0.001 m` / `0.000001 m/s` gate.
+These maxima are not uniform interval bounds and omit source-polynomial
+evaluation errors; do not interpret them as total ephemeris accuracy.
+
+Reordering to scale each link before addition changes at least one component
+at 33 Moon, 33 Mars, 36 Jupiter and 38 Saturn epochs. Retain this countercheck
+so a mathematically equivalent but differently rounded composition cannot
+silently replace the observed order. This is sampled evidence, not static
+dispatch certification. Next derive interval-wide link-magnitude bounds and
+compose them with the supplied-record error bounds, retaining separate
+record/segment-choice and floating-point-mode premises. Task 3.9 stays open.
+
 ### Conditional uniform supplied-record position error (2026-09-10)
 
 Assume the inspected fused position graph, binary64 round-to-nearest and

@@ -887,10 +887,16 @@ def test_sampled_spk_chains_match_tudat_states(
     )
     assert (direct_native.frame_origin, direct_native.frame_orientation) == ("SSB", "J2000")
     direct_errors_si: list[tuple[float, float]] = []
+    accumulation_errors_si: list[tuple[float, float]] = []
+    accumulation_bounds_si: list[tuple[float, float]] = []
+    reordered_conversion_failures = 0
+    u, eta = Fraction(1, 2 ** 53), Fraction(1, 2 ** 1075)
+    assert 1 <= len(expected_chain) <= 2
     observations: set[tuple[int, int, int, float, float, str]] = set()
     for epoch_tdb_s in evidence["epoch_tdb_s"]:
         budget.check()
         current_id = target_id
+        link_states: list[tuple[float, ...]] = []
         for expected_body, expected_center, expected_type in expected_chain:
             assert current_id == expected_body
             handle, found = ctypes.c_int(), ctypes.c_int()
@@ -914,11 +920,22 @@ def test_sampled_spk_chains_match_tudat_states(
             assert first.value <= epoch_tdb_s <= last.value and 0 < begin <= end
             observations.add((segment_body, center, kind, first.value, last.value,
                               identifier.value.decode("ascii")))
+            link_frame, link_center = ctypes.c_int(), ctypes.c_int()
+            link_state = (ctypes.c_double * 6)()
+            cspice.spkpvn_c(handle, descriptor, epoch_tdb_s, ctypes.byref(link_frame),
+                           link_state, ctypes.byref(link_center))
+            assert cspice.failed_c() == 0
+            assert (link_frame.value, link_center.value) == (1, expected_center)
+            assert all(math.isfinite(value) for value in link_state)
+            link_states.append(tuple(link_state))  # J2000, target relative to center, km and km/s.
             current_id = center
         assert current_id == 0
         raw_state_km = (ctypes.c_double * 6)()
         cspice.spkssb_c(target_id, epoch_tdb_s, b"J2000", raw_state_km)
         assert cspice.failed_c() == 0
+        replay_km = tuple(link_states[0][axis] + link_states[1][axis]
+                          if len(link_states) == 2 else link_states[0][axis] for axis in range(6))
+        assert bytes(raw_state_km) == bytes((ctypes.c_double * 6)(*replay_km)), (body, epoch_tdb_s)
         native_state_si = np.asarray(raw_state_km) * 1000.0
         tudat_state_si = spice.get_body_cartesian_state_at_epoch(
             body, "SSB", "J2000", "NONE", epoch_tdb_s,
@@ -927,7 +944,33 @@ def test_sampled_spk_chains_match_tudat_states(
         assert np.all(np.isfinite(difference_si))
         assert np.linalg.norm(difference_si[:3]) <= 0.001  # m
         assert np.linalg.norm(difference_si[3:]) <= 0.000001  # m/s
-        difference_si = direct_native.cartesian_state(epoch_tdb_s) - native_state_si
+        direct_state_si = np.asarray(direct_native.cartesian_state(epoch_tdb_s)).reshape(6)
+        assert native_state_si.tobytes() == np.asarray(tudat_state_si).reshape(6).tobytes()
+        assert native_state_si.tobytes() == direct_state_si.tobytes()
+        errors_si: list[Fraction] = []
+        bounds_si: list[Fraction] = []
+        for axis in range(6):
+            exact_sum_km = sum((Fraction(link[axis]) for link in link_states), Fraction(0))
+            sum_bound_km = u * abs(exact_sum_km) + eta if len(link_states) == 2 else Fraction(0)
+            assert abs(exact_sum_km) <= Fraction(sys.float_info.max)
+            assert abs(Fraction(raw_state_km[axis]) - exact_sum_km) <= sum_bound_km
+            exact_conversion_si = 1000 * Fraction(raw_state_km[axis])
+            assert abs(exact_conversion_si) <= Fraction(sys.float_info.max)
+            conversion_bound_si = u * abs(exact_conversion_si) + eta
+            assert abs(Fraction(native_state_si[axis]) - exact_conversion_si) <= conversion_bound_si
+            errors_si.append(abs(Fraction(native_state_si[axis]) - 1000 * exact_sum_km))
+            bounds_si.append(1000 * sum_bound_km + conversion_bound_si)
+            assert errors_si[-1] <= bounds_si[-1]
+        position_bound_m, velocity_bound_m_s = sum(bounds_si[:3]), sum(bounds_si[3:])
+        assert position_bound_m <= Fraction("0.001") and velocity_bound_m_s <= Fraction("0.000001")
+        accumulation_errors_si.append((float(sum(errors_si[:3])), float(sum(errors_si[3:]))))
+        accumulation_bounds_si.append((math.nextafter(float(position_bound_m), math.inf),
+                                       math.nextafter(float(velocity_bound_m_s), math.inf)))
+        if len(link_states) == 2:
+            # Scale-then-add is mathematically equivalent, but need not round identically.
+            reordered_si = np.asarray(link_states[0]) * 1000.0 + np.asarray(link_states[1]) * 1000.0
+            reordered_conversion_failures += reordered_si.tobytes() != native_state_si.tobytes()
+        difference_si = direct_state_si - native_state_si
         assert np.all(np.isfinite(difference_si))
         error_m = float(np.linalg.norm(difference_si[:3]))
         error_m_s = float(np.linalg.norm(difference_si[3:]))
@@ -935,6 +978,7 @@ def test_sampled_spk_chains_match_tudat_states(
         direct_errors_si.append((error_m, error_m_s))
         budget.check()
     assert budget.native_arc_propagations == 0
+    assert reordered_conversion_failures > 0 if len(expected_chain) == 2 else reordered_conversion_failures == 0
     print(json.dumps({
         "body": body, "effective_spk_target_id": target_id,
         "epoch_count": len(evidence["epoch_tdb_s"]),
@@ -942,7 +986,12 @@ def test_sampled_spk_chains_match_tudat_states(
         "segments": sorted(observations),
         "experimental_direct_native_max_position_error_m": max(value[0] for value in direct_errors_si),
         "experimental_direct_native_max_velocity_error_m_s": max(value[1] for value in direct_errors_si),
-        "scope": "Sampled chain metadata and state parity, not full interval coverage",
+        "chain_and_conversion_max_l1_error_m": max(value[0] for value in accumulation_errors_si),
+        "chain_and_conversion_max_l1_error_m_s": max(value[1] for value in accumulation_errors_si),
+        "chain_and_conversion_max_sampled_bound_m": max(value[0] for value in accumulation_bounds_si),
+        "chain_and_conversion_max_sampled_bound_m_s": max(value[1] for value in accumulation_bounds_si),
+        "scale_before_add_different_epoch_count": reordered_conversion_failures,
+        "scope": "Sampled chain metadata, bit-exact arithmetic replay and local rounding bounds; excludes source-polynomial errors and uniform interval certification",
     }, sort_keys=True, allow_nan=False))
 
 

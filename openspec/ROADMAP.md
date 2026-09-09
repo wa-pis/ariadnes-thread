@@ -22,8 +22,11 @@ Latest 3.9 evidence (2026-09-10): direct-SPICE qualification now inventories
 controls, native selected-record readbacks and conditional index-roundoff
 margins retain the source-boundary counterexamples. Static inspection pins
 the type-2/type-3 reader arithmetic, with endpoint checks for the last-record
-clamp. Native evaluation-error and center-chain bounds, followed by full-force
-safety and runtime checks, are still required; targeting remains gated.
+clamp. Conditional uniform supplied-record position-error bounds are below
+0.001 m; sampled center-chain addition and SI conversion now match direct
+SPICE bit-for-bit. Interval-wide chain composition, record/segment-choice
+effects and native execution premises still require qualification before
+full-force safety and runtime checks; targeting remains gated.
 See the active change's design and tasks for numerical scope and evidence.
 
 Historical table counterexample (before the approved direct-SPICE switch): probes at all 73 mapped Saturn record boundaries
