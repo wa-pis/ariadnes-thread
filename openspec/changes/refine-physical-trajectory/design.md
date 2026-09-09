@@ -1,5 +1,28 @@
 ## Context
 
+### Native readback for every required source link (2026-09-10)
+
+Reuse one guarded test-only reader for the installed `spkr02_` and `spkr03_`
+entry points. Its buffer size comes from the validated segment directory;
+the length word, trailing guard and native error state are checked before
+returning copied record words. The previous 7,293 type-3 switch readbacks
+continue to use this same reader.
+
+Add 1,628 readbacks across all 11 required source links: 550 midpoints and
+both one-ULP interior sides of 539 joins. All raw records match the binary64
+index replay and direct DAF record bytes exactly. Midpoints retain their
+own record; 466 left-side probes already select the following record:
+245 type-2 joins plus the known 221 Mars/Jupiter type-3 joins. No such early
+selection occurs at the 73 sampled Saturn joins. These are side-probe
+observations, not measured switch brackets for all type-2 segments.
+
+This explains why passing the earlier 0.001 m position comparison did not
+identify record choice for type 2: those source jumps are small enough to
+remain within that gate. The readback reports counts for every target and
+preserves source-center/J2000 and TDB conventions, unchanged kernel pool,
+the shared deadline and zero spacecraft arcs. It neither changes production
+behavior nor proves uniform native selection or evaluation accuracy.
+
 ### Native selected-record readback (2026-09-10)
 
 A separate Darwin/arm64 variant of the existing qualification reads the

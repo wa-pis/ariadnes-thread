@@ -51,6 +51,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 all-link native record readback (2026-09-10):
+Share a guarded test-only type-2/type-3 reader and preserve the previous
+7,293 readbacks. Verify 1,628 additional midpoint/one-ULP-side probes across
+all 11 links against direct DAF bytes and the index replay. Require the
+observed 466 early record choices (245 type 2, 221 Mars/Jupiter type 3),
+per-target counts and unchanged pool/deadline controls. Verification: whole
+`tests/test_trajectory_spk.py`, full pytest, Ruff, strict OpenSpec validation
+and unchanged legacy hash. Do not infer type-2 switch widths or uniform
+native error from these probes; leave 3.9 open.
+All 48 SPK tests and 910 full-suite tests passed (152.21 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 native selected-record readback (2026-09-10):
 Add a separate pinned Darwin/arm64 qualification variant that directly reads
 the selected type-3 record for all 7,293 existing switch probes. Verify type,

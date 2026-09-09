@@ -22,6 +22,24 @@ from space_nav import ephemeris, trajectory
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def _read_native_spk_record(
+    native: ctypes.CDLL, data_type: int, handle: int, descriptor: np.ndarray,
+    epoch_tdb_s: float, record_size: int,
+) -> np.ndarray:
+    """Read raw TDB-s/km/type-3-km/s words using the pinned, test-only f2c ABI."""
+    assert data_type in (2, 3) and record_size > 2
+    native_handle = ctypes.c_int(handle)
+    native_epoch = ctypes.c_double(epoch_tdb_s)
+    native_descriptor = (ctypes.c_double * 5)(*descriptor)
+    raw_record = (ctypes.c_double * (record_size + 2))()
+    raw_record[-1] = 1234567.0  # Guard after length and directory-sized data.
+    reader = native.spkr02_ if data_type == 2 else native.spkr03_
+    reader(ctypes.byref(native_handle), native_descriptor, ctypes.byref(native_epoch), raw_record)
+    assert native.failed_c() == 0
+    assert raw_record[0] == record_size and raw_record[-1] == 1234567.0
+    return np.asarray(raw_record)[1:-1].copy()
+
+
 @pytest.mark.parametrize("degree", [0, 1, 2, 19])
 def test_spk_rate_bound_matches_single_mode_endpoint_oracle(degree: int) -> None:
     budget = trajectory._RefinementBudget("chebyshev-rate-control", 300.0)
@@ -177,6 +195,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     max_position_difference_m = max_type2_velocity_difference_m_s = 0.0
     max_join_position_difference_m = 0.0
     native_join_failures: list[tuple[int, float, int, float]] = []
+    all_record_checks = dict.fromkeys(expected_centers, 0)
+    early_record_choices = dict.fromkeys(expected_centers, 0)
     switching_records: dict[int, list[tuple[int, np.ndarray, float, float, int, np.ndarray]]] = {
         499: [], 599: [],
     }
@@ -204,6 +224,22 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             record_start_s = Fraction(init_s) + index * Fraction(interval_s)
             assert Fraction(record[0]) == record_start_s + Fraction(interval_s) / 2
             assert Fraction(record[1]) == Fraction(interval_s) / 2
+            if native is not None:
+                probes_s = [float(record[0])]
+                for boundary_s, direction in ((record_start_s, 1), (record_start_s + Fraction(interval_s), -1)):
+                    if start_tdb_s < boundary_s < end_tdb_s:
+                        probes_s.append(float(boundary_s) + direction * math.ulp(float(boundary_s)))
+                for probe_s in probes_s:
+                    budget.check()
+                    selected_index = math.floor((probe_s - init_s) / interval_s)
+                    assert 0 <= selected_index < count
+                    assert selected_index in (index, index + 1)
+                    selected_address = begin + selected_index * size
+                    expected_record = spice.dafgda(handle, selected_address, selected_address + size - 1)
+                    actual_record = _read_native_spk_record(native, data_type, handle, descriptor, probe_s, size)
+                    assert actual_record.tobytes() == expected_record.tobytes(), (target, probe_s)
+                    all_record_checks[target] += 1
+                    early_record_choices[target] += selected_index != index
             if target in switching_records:
                 switching_records[target].append((handle, descriptor, init_s, interval_s, index, record))
             coefficients_km = record[2:].reshape(components, coefficient_count)[:3]
@@ -362,16 +398,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                 assert selected_index in (index, index + 1)
                 selected_record = left_record if selected_index == index else right_record
                 if native is not None:
-                    native_handle = ctypes.c_int(handle)
-                    native_epoch = ctypes.c_double(query_s)
-                    native_descriptor = (ctypes.c_double * 5)(*descriptor)
-                    raw_record = (ctypes.c_double * 124)()
-                    raw_record[123] = 1234567.0  # Guard after size + 122 data words.
-                    native.spkr03_(ctypes.byref(native_handle), native_descriptor,
-                                   ctypes.byref(native_epoch), raw_record)
-                    assert native.failed_c() == 0
-                    assert raw_record[0] == 122.0 and raw_record[123] == 1234567.0
-                    assert np.asarray(raw_record)[1:123].tobytes() == selected_record.tobytes()
+                    actual_record = _read_native_spk_record(native, 3, handle, descriptor, query_s, 122)
+                    assert actual_record.tobytes() == selected_record.tobytes()
                     native_record_checks += 1
                 x = (query_s - selected_record[0]) / selected_record[1]
                 predicted_m = np.polynomial.chebyshev.chebval(
@@ -397,6 +425,11 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert len(switching_probes) == 221
     assert exact_ambiguity_checks == 1547
     assert native_record_checks == (7293 if native_record_readback else 0)
+    assert sum(all_record_checks.values()) == (1628 if native_record_readback else 0)
+    assert early_record_choices == {
+        target: len(rates_m_s[target]) - 1 if native_record_readback and target != 699 else 0
+        for target in expected_centers
+    }
 
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
@@ -456,6 +489,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "exact_branch_ambiguity_bounds": ambiguity_bounds,
         "exact_branch_ambiguity_checks": exact_ambiguity_checks,
         "native_selected_record_bitwise_checks": native_record_checks,
+        "all_chain_native_record_checks": all_record_checks,
+        "all_chain_early_record_choices": early_record_choices,
         "type2_midpoint_max_velocity_difference_m_s": max_type2_velocity_difference_m_s,
         "frame": "J2000, each target relative to its listed center; chains end at SSB",
         "scope": "Coverage and exact per-record position-rate bounds, not composed motion or safety",
@@ -564,8 +599,9 @@ def cspice() -> ctypes.CDLL:
     ]
     native.spkpvn_c.restype = None
     # Pinned f2c ABI: by-reference handle/descriptor/epoch and caller-owned record.
-    native.spkr03_.argtypes = [pointer(integer), pointer(double), pointer(double), pointer(double)]
-    native.spkr03_.restype = None
+    for reader in (native.spkr02_, native.spkr03_):
+        reader.argtypes = [pointer(integer), pointer(double), pointer(double), pointer(double)]
+        reader.restype = None
     native.dafbfs_c.argtypes = [integer]
     native.dafbfs_c.restype = None
     native.daffna_c.argtypes = [pointer(integer)]

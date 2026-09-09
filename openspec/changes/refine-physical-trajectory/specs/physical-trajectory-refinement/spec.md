@@ -47,6 +47,10 @@ Following user approval on 2026-09-09, all eight production body ephemerides SHA
 - **WHEN** the additional pinned Darwin/arm64 qualification reads native records at all 7,293 Mars/Jupiter switch probes
 - **THEN** the length and buffer guard remain valid, all 122 record words match the replay-selected source record bit-for-bit, native error state and kernel pool remain unchanged, the portable variant is preserved, and no uniform native-selection or trajectory-safety guarantee is inferred
 
+#### Scenario: Read native records across every required source link
+- **WHEN** the pinned native-readback variant queries all 550 record midpoints and both one-ULP sides of 539 joins for type-2/type-3 sources
+- **THEN** all 1,628 directory-sized records match the replay-selected DAF words bit-for-bit, midpoint selection stays within its record, 466 early choices are retained in per-target counts, previous readbacks and native guards remain valid, and neither switch widths outside the measured probes nor uniform native accuracy are certified
+
 ### Requirement: Verified M2 candidate handoff
 The system SHALL expose `refine_physical_trajectory(scenario: Scenario, candidate: ImpulsiveTransferCandidate) -> PhysicalTrajectoryResult`. It SHALL accept only a Pareto candidate reproduced from the same normalized scenario and M2 grid, and SHALL treat the M2 body-centre Lambert solution and scalar impulses only as the initial targeting seed rather than as physical endpoint states.
 
