@@ -1,5 +1,61 @@
 ## Context
 
+### Conditional uniform supplied-record position error (2026-09-10)
+
+Assume the inspected fused position graph, binary64 round-to-nearest and
+gradual underflow throughout evaluation. For exact operation result z,
+use `|RN(z)-z| <= u|z|+eta`, where `u=2^-53` and `eta=2^-1075` in the
+operation's units. The additive term covers subnormal rounding, not flushing
+to zero; overflow is excluded separately. See the rounding and gradual
+underflow discussion in [Goldberg](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html).
+These are explicit conditional premises, not continuous CPU-mode observation.
+
+For a supplied record with midpoint m, radius r and extension h=16 epoch ULPs,
+exact rational endpoint inequalities put every binary64 epoch in
+`[m-r-h,m+r+h]` inside the positive Sterbenz domain `[m/2,2m]`. Thus the
+subtraction t-m is exact. With `Q=1+h/r`, division contributes normalized
+error at most `d=uQ+eta`. Round Q+d upward to a binary64 upper bound q.
+All 550 records satisfy `1<=q<2`, so doubling any represented normalized
+argument is exact and cannot overflow. Enlarge the existing exact-polynomial
+rate helper's domain outward to include q; its L1 rate bound L contributes
+at most `L*r*d` meters for normalization error.
+
+Bound the remaining recurrence at any fixed represented argument |s|<=q.
+Set trailing computed-magnitude majorants A_(n+1)=A_(n+2)=0. For k=n,...,1,
+let `S_k=2q*A_(k+1)+A_(k+2)`, `F_k=(1+u)S_k+eta`, and
+`A_k=(1+u)(F_k+|c_k|)+eta`. The local fused-plus-add residual satisfies
+`R_k=u*S_k+eta+u*(F_k+|c_k|)+eta`. For the final k=0 operation use
+`S_0=q*A_1+A_2` and the same residual formula. Check both S_k and
+F_k+|c_k| against the largest finite binary64 number before using these
+bounds; no observed-small-intermediate assumption is used.
+
+The local residuals act exactly as coefficient perturbations in Clenshaw's
+recurrence, giving `p_hat-p(s)=sum(delta_k*T_k(s))`, |delta_k|<=R_k.
+For q>=1, `|T_k(s)|<=T_k(q)` on [-q,q]: inside [-1,1] the bound is 1;
+outside use the monotone hyperbolic-cosine representation. See
+[DLMF Chebyshev representations](https://dlmf.nist.gov/18.5#E1).
+Compute `sum(R_k*T_k(q))` with exact fractions, sum the three component
+bounds, convert km to m exactly and add L*r*d. Round only the reported
+final bound upward. This is a uniform conditional error enclosure relative
+to the exact supplied-record polynomial at the requested epoch.
+
+The 550 record bounds range from `4.868023067692928e-10 m` to
+`0.0002473194716238903 m` (largest for target 6), all below `0.001 m`.
+All 3,300 native supplied-record controls lie within their own bound and
+retain bit-exact fused replay parity. Independent single-mode polynomial
+controls cover degrees 0/1/2/19 at q=1 and 5/4; constant/linear closed-form
+residual checks, a smallest-subnormal half-way rounding control, overflow
+rejection and expired-deadline checks guard the derivation's implementation.
+Every rational loop consumes the existing shared qualification budget.
+
+The enclosure does not include wrong-record or segment-priority effects,
+center-chain summation, floating-point km-to-m conversion, derivative or
+stored-velocity evaluation, or spacecraft integration error. It is not a
+bound on physical ephemeris uncertainty. Native dispatch and uninterrupted
+rounding-mode premises remain conditional. Keep this helper test-only and
+task 3.9 open until these remaining terms and interval-safety composition
+are qualified; production settings and tolerances are unchanged.
+
 ### Native position-polynomial arithmetic replay (2026-09-10)
 
 The pinned binary's SPKE02 path calls CHBINT for three position polynomials

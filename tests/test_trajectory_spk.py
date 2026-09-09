@@ -64,6 +64,79 @@ def _replay_spk_position(
     return result_km
 
 
+def _spk_fused_roundoff_bound_km(
+    budget: trajectory._RefinementBudget, coefficients_km: tuple[float, ...],
+    normalized_limit: Fraction,
+) -> Fraction:
+    """Conditional RN/gradual-underflow bound at fixed rounded normalized time."""
+    budget.check()
+    assert coefficients_km and all(type(value) is float and math.isfinite(value)
+                                   for value in coefficients_km)
+    assert isinstance(normalized_limit, Fraction) and 1 <= normalized_limit < 2
+    u, eta = Fraction(1, 2 ** 53), Fraction(1, 2 ** 1075)
+    maximum = Fraction(sys.float_info.max)
+    weights = [Fraction(1), normalized_limit]
+    for degree in range(2, len(coefficients_km)):
+        budget.check()
+        weights.append(2 * normalized_limit * weights[-1] - weights[-2])
+    current = following = error_km = Fraction(0)
+    for degree in reversed(range(len(coefficients_km))):
+        budget.check()
+        coefficient = abs(Fraction(coefficients_km[degree]))
+        scale = normalized_limit if degree == 0 else 2 * normalized_limit
+        expression = scale * current + following
+        fused = (1 + u) * expression + eta
+        assert expression <= maximum and fused + coefficient <= maximum
+        residual = u * expression + eta + u * (fused + coefficient) + eta
+        following, current = current, (1 + u) * (fused + coefficient) + eta
+        error_km += residual * weights[degree]
+    budget.check()
+    return error_km
+
+
+@pytest.mark.parametrize("degree", [0, 1, 2, 19])
+@pytest.mark.parametrize("limit", [Fraction(1), Fraction(5, 4)])
+def test_spk_fused_bound_contains_exact_single_mode_errors(degree: int, limit: Fraction) -> None:
+    budget = trajectory._RefinementBudget("fused-roundoff-control", 300.0)
+    coefficients_km = (0.0,) * degree + (0.3,)
+    bound_km = _spk_fused_roundoff_bound_km(budget, coefficients_km, limit)
+    u, eta = Fraction(1, 2 ** 53), Fraction(1, 2 ** 1075)
+    if degree == 0:
+        assert bound_km == u * Fraction(0.3) + (2 + u) * eta
+    elif degree == 1:
+        first_residual = u * Fraction(0.3) + (2 + u) * eta
+        first_magnitude = (1 + u) * Fraction(0.3) + (2 + u) * eta
+        assert bound_km == limit * first_residual + (2 * u + u ** 2) * limit * first_magnitude + (2 + u) * eta
+    for normalized_time in (-limit, -limit / 2, Fraction(0), limit / 2, limit):
+        x = float(normalized_time)
+        basis = [Fraction(1), normalized_time]
+        for k in range(2, degree + 1):
+            basis.append(2 * normalized_time * basis[-1] - basis[-2])
+        exact_km = Fraction(0.3) * basis[degree]
+        replay_km = _replay_spk_position(coefficients_km, 0.0, 1.0, x)
+        assert abs(Fraction(replay_km) - exact_km) <= bound_km
+
+
+def test_spk_fused_bound_retains_gradual_underflow_term() -> None:
+    budget = trajectory._RefinementBudget("fused-underflow-control", 300.0)
+    smallest_km = math.ulp(0.0)
+    coefficients_km = (0.0, smallest_km)
+    bound_km = _spk_fused_roundoff_bound_km(budget, coefficients_km, Fraction(1))
+    assert _replay_spk_position(coefficients_km, 0.0, 1.0, 0.5) == 0.0
+    assert bound_km >= Fraction(smallest_km) / 2 > 0
+
+
+def test_spk_fused_bound_rejects_overflow_and_expired_budget() -> None:
+    budget = trajectory._RefinementBudget("fused-range-control", 300.0)
+    with pytest.raises(AssertionError):
+        _spk_fused_roundoff_bound_km(budget, (sys.float_info.max,) * 2, Fraction(1))
+    now_s = [0.0]
+    budget = trajectory._RefinementBudget("fused-deadline-control", 300.0, lambda: now_s[0])
+    now_s[0] = 300.0
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="deadline"):
+        _spk_fused_roundoff_bound_km(budget, (1.0,), Fraction(1))
+
+
 def test_spk_position_replay_distinguishes_fused_rounding(cspice: ctypes.CDLL) -> None:
     import spiceypy as spice
 
@@ -260,6 +333,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     endpoint_record_checks = 0
     evaluation_checks = 0
     max_evaluation_error_m = dict.fromkeys(expected_centers, 0.0)
+    uniform_evaluation_bounds_m: dict[int, list[float]] = {target: [] for target in expected_centers}
     unit_roundoff = Fraction(1, 2 ** 53)
     switching_records: dict[int, list[tuple[int, np.ndarray, float, float, int, np.ndarray]]] = {
         499: [], 599: [],
@@ -346,6 +420,28 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             if target in switching_records:
                 switching_records[target].append((handle, descriptor, init_s, interval_s, index, record))
             coefficients_km = record[2:].reshape(components, coefficient_count)[:3]
+            midpoint_s, radius_s = float(record[0]), float(record[1])
+            extension_s = 16 * math.ulp(midpoint_s)
+            # Every binary64 query in this closed domain has exact Sterbenz subtraction.
+            assert Fraction(midpoint_s) / 2 <= Fraction(midpoint_s) - Fraction(radius_s) - Fraction(extension_s)
+            assert Fraction(midpoint_s) + Fraction(radius_s) + Fraction(extension_s) <= 2 * Fraction(midpoint_s)
+            exact_limit = 1 + Fraction(extension_s) / Fraction(radius_s)
+            normalization_error = unit_roundoff * exact_limit + Fraction(1, 2 ** 1075)
+            rounded_limit = Fraction(math.nextafter(float(exact_limit + normalization_error), math.inf))
+            assert exact_limit + normalization_error <= rounded_limit < 2
+            rate_extension_s = math.nextafter(float(Fraction(radius_s) * (rounded_limit - 1)), math.inf)
+            assert 1 + Fraction(rate_extension_s) / Fraction(radius_s) >= rounded_limit
+            rows_km = tuple(tuple(float(value) for value in row) for row in coefficients_km)
+            normalization_rate_m_s = trajectory._spk_position_rate_bound(
+                budget, rows_km, radius_s, extension_s=rate_extension_s,
+            )
+            uniform_error_m = Fraction(normalization_rate_m_s) * Fraction(radius_s) * normalization_error
+            uniform_error_m += 1000 * sum((_spk_fused_roundoff_bound_km(budget, row, rounded_limit)
+                                          for row in rows_km), Fraction(0))
+            reported_uniform_m = math.nextafter(float(uniform_error_m), math.inf)
+            assert math.isfinite(reported_uniform_m) and Fraction(reported_uniform_m) >= uniform_error_m
+            assert Fraction(reported_uniform_m) <= Fraction("0.001")  # Conditional supplied-record L1 m.
+            uniform_evaluation_bounds_m[target].append(reported_uniform_m)
             if native is not None:
                 # Evaluate the supplied record itself, avoiding record-selection ambiguity.
                 native_record = (ctypes.c_double * (size + 1))(float(size), *record)
@@ -361,6 +457,10 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                     evaluator(ctypes.byref(native_epoch), native_record, state_km)
                     assert native.failed_c() == 0 and all(math.isfinite(value) for value in state_km)
                     exact_time = (Fraction(probe_s) - Fraction(midpoint_s)) / Fraction(radius_s)
+                    assert Fraction(probe_s - midpoint_s) == Fraction(probe_s) - Fraction(midpoint_s)
+                    rounded_time = Fraction((probe_s - midpoint_s) / radius_s)
+                    assert abs(rounded_time - exact_time) <= normalization_error
+                    assert abs(rounded_time) <= rounded_limit
                     basis = [Fraction(1), exact_time]
                     for degree in range(2, coefficient_count):
                         basis.append(2 * exact_time * basis[-1] - basis[-2])
@@ -373,6 +473,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                                         for degree, value in enumerate(row)), Fraction(0))
                         error_m += abs(Fraction(state_km[axis]) - exact_km) * 1000
                     assert error_m <= Fraction("0.001"), (target, index, probe_s)  # L1 m, sampled only.
+                    assert error_m <= uniform_error_m, (target, index, probe_s)
                     max_evaluation_error_m[target] = max(max_evaluation_error_m[target], float(error_m))
                     evaluation_checks += 1
             bound_m_s = trajectory._spk_position_rate_bound(
@@ -613,6 +714,10 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "record_midpoint_max_position_difference_m": max_position_difference_m,
         "native_record_evaluation_checks": evaluation_checks,
         "native_record_evaluation_max_l1_error_m": max_evaluation_error_m if native is not None else None,
+        "conditional_uniform_evaluation_bound_m": {
+            target: {"record_count": len(values), "minimum": min(values), "maximum": max(values)}
+            for target, values in uniform_evaluation_bounds_m.items()
+        },
         "record_join_fields": ["epoch_tdb_s", "exact_position_jump_l1_m", "jump_omission_fails"],
         "record_joins_by_target": jump_observations,
         "record_join_max_position_difference_m": max_join_position_difference_m,

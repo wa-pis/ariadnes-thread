@@ -51,6 +51,22 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional uniform supplied-record position error (2026-09-10):
+Derive a fused-recurrence residual enclosure with relative and gradual-
+underflow terms, exact Sterbenz subtraction premises, division error and the
+existing extended L1 polynomial-rate bound. Verify all 550 record enclosures
+are rounded outward and below 0.001 m; all 3,300 sampled native errors must
+lie inside their own enclosure. Verify exact single-mode and constant/linear
+oracles, smallest-subnormal rounding, overflow rejection and deadline failure.
+Verification: complete SPK tests, full pytest, Ruff, strict OpenSpec validation
+and unchanged legacy hash. Largest conditional bound: 0.0002473194716238903 m.
+Keep the helper test-only: continuous rounding mode, dispatch, record/segment
+selection, chain accumulation, SI conversion and spacecraft error are not
+established by this step. No scientific tolerance or production-limit changes;
+3.9 remains open.
+All 60 SPK tests and 922 full-suite tests passed (158.92 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 native position-polynomial arithmetic replay (2026-09-10):
 Pin the CHBVAL/CHBINT position instruction observations and replay fused
 Clenshaw operations with exact fractions rounded once per fused expression.
