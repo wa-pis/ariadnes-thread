@@ -35,6 +35,10 @@ Following user approval on 2026-09-09, all eight production body ephemerides SHA
 - **WHEN** the qualification probes offsets -16 through +16 binary64 epoch ULP at all 221 Mars/Jupiter record joins
 - **THEN** all 7,293 native positions match the rounded-index selected polynomial within `0.001 m` while the other record differs by more than `0.001 m`, every sampled switch occurs at -4 ULP, exact versus rounded subtraction distinguishes all early-selection epochs, and the report does not generalize these position-only brackets to a uniform native-error or spacecraft-safety bound
 
+#### Scenario: Bound exact polynomial motion beyond the nominal record interval
+- **WHEN** the private position-rate helper receives an explicit nonnegative extension in seconds on each end of a record
+- **THEN** exact rational Chebyshev derivative bounds cover the enlarged interval with outward SI rounding, independent degree 0/1/2/3/19 and mixed-axis controls pass, zero extension reproduces the previous result, sub-ULP normalization is preserved, invalid or overflowing inputs fail contextually, and no uncovered SPICE query or native/spacecraft safety guarantee is authorized
+
 ### Requirement: Verified M2 candidate handoff
 The system SHALL expose `refine_physical_trajectory(scenario: Scenario, candidate: ImpulsiveTransferCandidate) -> PhysicalTrajectoryResult`. It SHALL accept only a Pareto candidate reproduced from the same normalized scenario and M2 grid, and SHALL treat the M2 body-centre Lambert solution and scalar impulses only as the initial targeting seed rather than as physical endpoint states.
 

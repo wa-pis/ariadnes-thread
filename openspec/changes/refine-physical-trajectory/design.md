@@ -1,5 +1,34 @@
 ## Context
 
+### Exact rate bound on an explicitly extended record (2026-09-10)
+
+The private position-rate helper accepts keyword-only `extension_s >= 0`,
+defaulting to zero (the unchanged closed-record contract). With exact
+`q = 1 + extension_s/radius_s`, use
+`L = 1000/radius_s * sum_j sum_k |c_jk| k U_(k-1)(q)`.
+For `|x| <= 1`, the existing derivative bound is `k^2`. For `1 <= |x| <= q`,
+write `|x|=cosh(u)`: the finite representation of `U_n` pairs terms into
+nonnegative increasing `cosh` terms, so `|U_n(x)| <= U_n(q)` and
+`U_n(q) >= n+1`. Thus this same majorant covers the entire extended domain.
+This derives from the [DLMF derivative identity](https://dlmf.nist.gov/18.9#E21)
+and [finite representation](https://dlmf.nist.gov/18.5#E2).
+
+Evaluate `U_-1=0, U_0=1, U_n=2q U_(n-1)-U_(n-2)` with exact fractions and
+round only the final positive SI bound upward. In particular, do not round
+`1 + extension_s/radius_s` to binary64 before the recurrence. At zero
+extension, `k U_(k-1)(1)=k^2` reproduces the old numerical values.
+
+Independent finite-power coefficient oracles cover degrees 0/1/2/3/19;
+mixed-axis rational controls, sub-ULP normalization, invalid/overflow and
+existing deadline guards cover arithmetic. All 550 loaded position records
+also receive explicit 16-epoch-ULP extensions, with derivative probes kept
+inside the exact enlarged interval and rates no smaller than the old bounds.
+This is exact-polynomial extrapolation qualification only: it neither
+authorizes uncovered ephemeris queries nor bounds native evaluation rounding,
+record-selection width, jumps, center composition or spacecraft error.
+Production ephemeris settings and all scientific tolerances/limits stay fixed;
+task 3.9 remains open.
+
 ### Sampled native record-switch bracket (2026-09-09)
 
 For each of the 221 Mars/Jupiter joins in the preceding counterexample,

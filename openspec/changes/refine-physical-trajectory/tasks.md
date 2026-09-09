@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 extended exact-polynomial rate qualification (2026-09-10):
+Add an explicit nonnegative extension_s to the private rate helper and derive
+the exact Chebyshev derivative majorant over that larger interval. Verify
+independent finite-power degree 0/1/2/3/19 oracles, unchanged zero-extension
+results, mixed-axis rational rounding, sub-ULP normalization and invalid/
+overflow/deadline guards. Check 16-epoch-ULP extensions for all 550 source
+records, without inferring native coverage or safety. Verification: whole
+`tests/test_trajectory_spk.py`, full pytest, Ruff, strict OpenSpec validation
+and unchanged legacy checksum. Native error, switches and jump/chain
+composition remain separate open prerequisites; do not close 3.9.
+All 47 SPK tests and 909 full-suite tests passed (160.09 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 sampled native record-switch brackets (2026-09-09):
 Probe offsets -16 through +16 epoch ULP around all 221 Mars/Jupiter joins.
 Verify native position agrees with the rounded index replay within 0.001 m,

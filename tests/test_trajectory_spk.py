@@ -37,12 +37,55 @@ def test_spk_rate_bound_matches_single_mode_endpoint_oracle(degree: int) -> None
     assert abs(derivative_m_s - float(exact_m_s)) <= 1e-12  # m/s
 
 
-def test_spk_rate_bound_rounds_mixed_axes_outward() -> None:
+@pytest.mark.parametrize("degree", [0, 1, 2, 3, 19])
+def test_spk_extended_rate_bound_matches_closed_polynomial_oracle(degree: int) -> None:
+    budget = trajectory._RefinementBudget("extended-chebyshev-control", 300.0)
+    row = (0.0,) * degree + (1.0,)
+    rows = (row, (0.0,) * len(row), (0.0,) * len(row))
+    q = Fraction(5, 4)
+    # Independent finite power formula for U_n, not the implementation recurrence.
+    n = degree - 1
+    exact_m_s = 1000 * degree * sum(((-1) ** j * math.comb(n - j, j) * (2 * q) ** (n - 2 * j)
+                                    for j in range((n // 2) + 1)), Fraction(0)) / 4
+    bound_m_s = trajectory._spk_position_rate_bound(budget, rows, 4.0, extension_s=1.0)
+    assert Fraction(bound_m_s) >= exact_m_s
+    assert bound_m_s == (math.nextafter(float(exact_m_s), math.inf) if degree else 0.0)
+    for x in (-float(q), float(q)):
+        derivative_m_s = abs(np.polynomial.chebyshev.chebval(x, np.polynomial.chebyshev.chebder(row))) * 250
+        assert derivative_m_s == pytest.approx(float(exact_m_s), rel=1e-12, abs=1e-12)  # m/s
+    assert trajectory._spk_position_rate_bound(budget, rows, 4.0, extension_s=0.0) == (
+        trajectory._spk_position_rate_bound(budget, rows, 4.0)
+    )
+
+
+def test_spk_extended_rate_keeps_sub_ulp_normalized_extension() -> None:
+    budget = trajectory._RefinementBudget("extended-chebyshev-control", 300.0)
+    rows = ((0.0, 0.0, 1.0), (0.0,) * 3, (0.0,) * 3)
+    extension_s = 2.0 ** -53
+    assert 1.0 + extension_s == 1.0
+    bound_m_s = trajectory._spk_position_rate_bound(budget, rows, 1.0, extension_s=extension_s)
+    assert Fraction(bound_m_s) >= 4000 * (1 + Fraction(extension_s))
+    assert bound_m_s > trajectory._spk_position_rate_bound(budget, rows, 1.0)
+
+
+@pytest.mark.parametrize("extension_s", [-1.0, True, float("nan"), float("inf"), 1e308])
+def test_spk_extended_rate_rejects_invalid_or_overflowing_extension(extension_s: float) -> None:
+    budget = trajectory._RefinementBudget("extended-chebyshev-control", 300.0)
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="spk-position-rate-bound") as caught:
+        trajectory._spk_position_rate_bound(
+            budget, ((0.0, 0.0, 1.0), (0.0,) * 3, (0.0,) * 3), 1e-308, extension_s=extension_s,
+        )
+    assert caught.value.__cause__ is not None
+
+
+@pytest.mark.parametrize("extension_s", [0.0, 0.1])
+def test_spk_rate_bound_rounds_mixed_axes_outward(extension_s: float) -> None:
     rows = ((1e200, 0.1, -0.3), (-1e200, 0.2, 0.0), (0.0, -0.4, 0.5))
-    exact_m_s = 1000 * sum((abs(Fraction(value)) * degree ** 2
+    weights = (Fraction(0), Fraction(1), 4 * (1 + Fraction(extension_s) / Fraction(0.3)))
+    exact_m_s = 1000 * sum((abs(Fraction(value)) * weights[degree]
                             for row in rows for degree, value in enumerate(row)), Fraction(0)) / Fraction(0.3)
     budget = trajectory._RefinementBudget("chebyshev-rate-control", 300.0)
-    bound_m_s = trajectory._spk_position_rate_bound(budget, rows, 0.3)
+    bound_m_s = trajectory._spk_position_rate_bound(budget, rows, 0.3, extension_s=extension_s)
     assert Fraction(bound_m_s) >= exact_m_s
     assert bound_m_s == math.nextafter(float(exact_m_s), math.inf)
 
@@ -161,6 +204,21 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
                 float(record[1]),
             )
             rates_m_s[target].append(bound_m_s)
+            extension_s = 16 * math.ulp(float(record[0]))
+            extended_bound_m_s = trajectory._spk_position_rate_bound(
+                budget, tuple(tuple(float(value) for value in row) for row in coefficients_km),
+                float(record[1]), extension_s=extension_s,
+            )
+            assert extended_bound_m_s >= bound_m_s
+            exact_q = 1 + Fraction(extension_s) / Fraction(record[1])
+            extended_q = float(exact_q)
+            if Fraction(extended_q) > exact_q:
+                extended_q = math.nextafter(extended_q, 1.0)
+            for x in (-extended_q, extended_q):
+                derivative_m_s = np.polynomial.chebyshev.chebval(
+                    x, np.polynomial.chebyshev.chebder(coefficients_km.T, axis=0),
+                ) * (1000 / record[1])
+                assert np.linalg.norm(derivative_m_s) <= extended_bound_m_s
             for sign in (-1, 1):
                 epoch_s = Fraction(record[0]) + sign * Fraction(record[1])
                 if not start_tdb_s < epoch_s < end_tdb_s:

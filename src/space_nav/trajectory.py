@@ -1859,18 +1859,31 @@ def _spk_position_rate_bound(
     budget: _RefinementBudget,
     coefficients_km: tuple[tuple[float, ...], ...],
     radius_s: float,
+    *,
+    extension_s: float = 0.0,
 ) -> float:
     """Bound an exact SPK position polynomial's rate norm in m/s on one record.
 
-    Three Chebyshev coefficient rows are in km; normalized time is in [-1, 1].
+    Three Chebyshev coefficient rows are in km. An explicit nonnegative
+    extension_s enlarges both ends of the exact polynomial's time interval.
     The bound excludes record jumps, native rounding and center-chain motion.
     It is not the independently stored type-3 velocity polynomial.
     """
     budget.check()
     try:
         radius = Fraction(_positive_finite("SPK record radius_s", radius_s))
+        extension = Fraction(_finite_float("SPK record extension_s", extension_s))
+        if extension < 0:
+            raise ValueError("SPK record extension_s must be nonnegative")
         if len(coefficients_km) != 3 or not coefficients_km[0]:
             raise ValueError("SPK position coefficients_km require three nonempty rows")
+        q = 1 + extension / radius
+        derivative_bounds = [Fraction(0)]
+        previous, current = Fraction(0), Fraction(1)  # U_-1(q), U_0(q).
+        for degree in range(1, len(coefficients_km[0])):
+            budget.check()
+            derivative_bounds.append(degree * current)
+            previous, current = current, 2 * q * current - previous
         bound_m_s = Fraction(0)
         for axis, row in enumerate(coefficients_km):
             budget.check()
@@ -1880,8 +1893,8 @@ def _spk_position_rate_bound(
                 coefficient_m = 1000 * Fraction(_finite_float(
                     f"SPK position coefficient_km[{axis}][{degree}]", value,
                 ))
-                # |T'_k(x)| <= k^2 on [-1,1]; L1 also bounds the Euclidean norm.
-                bound_m_s += abs(coefficient_m) * degree ** 2 / radius
+                # |T'_k(x)| <= k U_(k-1)(q) on [-q,q], q>=1; at q=1 this is k^2.
+                bound_m_s += abs(coefficient_m) * derivative_bounds[degree] / radius
         result_m_s = 0.0 if bound_m_s == 0 else _positive_finite(
             "SPK position rate bound_m_s", math.nextafter(float(bound_m_s), math.inf),
         )
