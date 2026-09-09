@@ -51,6 +51,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional within-segment selection domains (2026-09-10):
+Construct 550 trimmed record cores and 539 join strips with exact endpoints;
+verify their union covers the complete candidate interval for all 11 links.
+Verify 1,100 native core endpoint reads and 1,076 internal-strip endpoint
+reads against exact DAF records and the inspected index replay. Use the
+fixed-profile selector's monotonicity to justify the one-record core and
+two-record internal-strip implications, not sparse sampling alone.
+Verification: complete SPK tests, full pytest, Ruff, strict OpenSpec validation
+and unchanged legacy hash. Explicitly exclude the single cross-segment strip
+(699, 986817600 TDB s) from the 538 internal-strip claim. Runtime premises,
+segment priority and spacecraft safety remain open; keep 3.9 unchecked.
+All 60 SPK tests and 922 full-suite tests passed (159.32 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 conditional native envelopes at every inventoried join (2026-09-10):
 Combine exact endpoint jumps, both extended position-rate bounds and the
 selected record's evaluation/SI error over each 16-ULP join strip. Verify

@@ -1,5 +1,38 @@
 ## Context
 
+### Conditional within-segment selection domains (2026-09-10)
+
+For each of the 550 inventoried records, form a closed core trimmed by 16
+epoch ULPs at its nominal ends and clipped to the candidate interval. All
+core endpoints are exactly representable binary64 epochs. At 1,100 native
+core endpoint reads, the complete returned record matches that core's DAF
+record byte-for-byte and agrees with the inspected index replay.
+
+For the 538 joins internal to a single segment, read the selector at b-h and
+b+h, h=16 ULPs. All 1,076 additional reads return exactly the left and right
+records, respectively. Under a fixed correctly rounded arithmetic profile,
+subtraction of INIT, division by positive INTLEN, in-range integer truncation
+and the final min-clamp are nondecreasing in epoch. The previously qualified
+integer/range premises exclude wraparound or invalid conversion. Therefore
+equal endpoint indices force one index throughout a core; adjacent endpoint
+indices confine selection to those two records throughout an internal strip.
+This is a monotonicity argument with native endpoint controls, not an inference
+from arbitrary sparse samples.
+
+Merge the 550 cores and all 539 closed join strips using exact rational
+endpoints. Their union covers the full candidate interval without gaps for
+each of the 11 source links, including both candidate endpoints. Intervals
+may share endpoints; no representable epoch is silently discarded.
+
+One strip is intentionally outside the within-segment result: target 699 at
+986817600 TDB seconds since J2000 joins two different file segments. Its
+selection requires segment-priority reasoning, not monotonicity of either
+individual reader outside its segment. The strip remains in the geometric
+cover but is explicitly excluded from the 538 internal-strip selector claim.
+Keep native runtime/rounding premises, this priority boundary, simultaneous
+center-chain joins and spacecraft safety separate under task 3.9. No kernels,
+production settings, scientific tolerances or native-call limits change.
+
 ### Conditional native envelopes at every inventoried join (2026-09-10)
 
 Extend the existing exact-branch treatment to all 539 internal joins across

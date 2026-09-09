@@ -336,6 +336,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     max_evaluation_error_m = dict.fromkeys(expected_centers, 0.0)
     uniform_evaluation_bounds_m: dict[int, list[float]] = {target: [] for target in expected_centers}
     native_magnitude_bounds_km: dict[int, list[Fraction]] = {target: [] for target in expected_centers}
+    selection_pieces: dict[int, list[tuple[Fraction, Fraction]]] = {target: [] for target in expected_centers}
+    internal_strip_keys: set[tuple[int, Fraction]] = set()
+    native_core_checks = native_strip_endpoint_checks = 0
     unit_roundoff = Fraction(1, 2 ** 53)
     switching_records: dict[int, list[tuple[int, np.ndarray, float, float, int, np.ndarray]]] = {
         499: [], 599: [],
@@ -396,6 +399,36 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             record_start_s = Fraction(init_s) + index * Fraction(interval_s)
             assert Fraction(record[0]) == record_start_s + Fraction(interval_s) / 2
             assert Fraction(record[1]) == Fraction(interval_s) / 2
+            half_width_s = 16 * Fraction(math.ulp(float(record[0])))
+            core_start_s = max(Fraction(start_tdb_s), record_start_s + half_width_s)
+            core_end_s = min(Fraction(end_tdb_s), record_start_s + Fraction(interval_s) - half_width_s)
+            assert core_start_s < core_end_s
+            selection_pieces[target].append((core_start_s, core_end_s))
+            if native is not None:
+                for exact_probe_s in (core_start_s, core_end_s):
+                    budget.check()
+                    probe_s = float(exact_probe_s)
+                    assert Fraction(probe_s) == exact_probe_s
+                    assert min(math.floor((probe_s - init_s) / interval_s), count - 1) == index
+                    selected = _read_native_spk_record(native, data_type, handle, descriptor, probe_s, size)
+                    assert selected.tobytes() == record.tobytes(), (target, index, probe_s)
+                    native_core_checks += 1
+            boundary_s = record_start_s + Fraction(interval_s)
+            if start_tdb_s < boundary_s < end_tdb_s and boundary_s < Fraction(last):
+                assert index + 1 < count
+                internal_strip_keys.add((target, boundary_s))
+                if native is not None:
+                    for direction, selected_index in ((-1, index), (1, index + 1)):
+                        budget.check()
+                        exact_probe_s = boundary_s + direction * half_width_s
+                        probe_s = float(exact_probe_s)
+                        assert Fraction(probe_s) == exact_probe_s
+                        assert min(math.floor((probe_s - init_s) / interval_s), count - 1) == selected_index
+                        selected_address = begin + selected_index * size
+                        expected_record = spice.dafgda(handle, selected_address, selected_address + size - 1)
+                        selected = _read_native_spk_record(native, data_type, handle, descriptor, probe_s, size)
+                        assert selected.tobytes() == expected_record.tobytes(), (target, selected_index, probe_s)
+                        native_strip_endpoint_checks += 1
             if native is not None:
                 probes_s = [float(record[0])]
                 for boundary_s, direction in ((record_start_s, 1), (record_start_s + Fraction(interval_s), -1)):
@@ -585,6 +618,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         left_rate, left_error = join_error_terms[target, epoch_s, 1]
         right_rate, right_error = join_error_terms[target, epoch_s, -1]
         half_width_s = 16 * Fraction(math.ulp(float(epoch_s)))
+        assert Fraction(start_tdb_s) < epoch_s - half_width_s < epoch_s + half_width_s < Fraction(end_tdb_s)
+        selection_pieces[target].append((epoch_s - half_width_s, epoch_s + half_width_s))
         arithmetic_and_motion_m = max(left_error, right_error) + (left_rate + right_rate) * half_width_s
         envelope_m = jump_m + arithmetic_and_motion_m
         reported_m = math.nextafter(float(envelope_m), math.inf)
@@ -603,6 +638,19 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         jump_observations[target].append((float(epoch_s), float(jump_m), motion_m > local_bound_m))
     assert all(len(jump_observations[target]) == len(rates_m_s[target]) - 1 for target in expected_centers)
     assert len(joins) == 539
+    assert len(internal_strip_keys) == 538
+    assert set(joins) - internal_strip_keys == {(699, Fraction(986817600))}
+    assert native_core_checks == (1100 if native is not None else 0)
+    assert native_strip_endpoint_checks == (1076 if native is not None else 0)
+    for target, pieces in selection_pieces.items():
+        budget.check()
+        assert len(pieces) == 2 * len(rates_m_s[target]) - 1
+        covered_to_s = Fraction(start_tdb_s)
+        for first_s, last_s in sorted(pieces):
+            assert Fraction(start_tdb_s) <= first_s <= covered_to_s
+            assert first_s < last_s <= Fraction(end_tdb_s)
+            covered_to_s = max(covered_to_s, last_s)
+        assert covered_to_s == Fraction(end_tdb_s)
     assert len(native_join_envelopes) == 539
     assert native_join_envelope_checks == (1078 if native is not None else 0)
     assert omitted_jump_failures >= (221 if native is not None else 0)
@@ -798,6 +846,10 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "native_join_envelope_fields": ["target", "epoch_tdb_s", "half_width_s", "conditional_l1_bound_m"],
         "native_join_envelopes": native_join_envelopes,
         "native_join_envelope_checks": native_join_envelope_checks,
+        "native_selection_core_endpoint_checks": native_core_checks,
+        "native_selection_strip_endpoint_checks": native_strip_endpoint_checks,
+        "internal_record_strip_count": len(internal_strip_keys),
+        "segment_priority_strip_target_epoch": [699, 986817600.0],
         "native_join_envelope_omitted_jump_failures": omitted_jump_failures,
         "native_join_parity_failure_fields": ["target", "epoch_tdb_s", "record_endpoint_sign", "error_m"],
         "native_join_parity_failures": native_join_failures,
