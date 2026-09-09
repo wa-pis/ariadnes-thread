@@ -197,6 +197,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     native_join_failures: list[tuple[int, float, int, float]] = []
     all_record_checks = dict.fromkeys(expected_centers, 0)
     early_record_choices = dict.fromkeys(expected_centers, 0)
+    index_roundoff_margins: list[tuple[int, float, float, float]] = []
+    unit_roundoff = Fraction(1, 2 ** 53)
     switching_records: dict[int, list[tuple[int, np.ndarray, float, float, int, np.ndarray]]] = {
         499: [], 599: [],
     }
@@ -212,6 +214,23 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         assert end - begin + 1 == size * count + 4
         assert Fraction(init_s) == Fraction(first)
         assert Fraction(init_s) + count * Fraction(interval_s) == Fraction(last)
+        # Conditional two-operation, round-to-nearest binary64 replay over
+        # the whole segment; zero offset is exact and handled separately.
+        minimum_offset_s = Fraction(math.nextafter(float(init_s), math.inf)) - Fraction(init_s)
+        maximum_offset_s = Fraction(last) - Fraction(init_s)
+        minimum_normal = Fraction(sys.float_info.min)
+        maximum_finite = Fraction(sys.float_info.max)
+        assert (float(init_s) - float(init_s)) / float(interval_s) == 0.0
+        assert minimum_offset_s * (1 - unit_roundoff) > minimum_normal
+        assert minimum_offset_s * (1 - unit_roundoff) ** 2 / Fraction(interval_s) > minimum_normal
+        assert maximum_offset_s * (1 + unit_roundoff) < maximum_finite
+        assert maximum_offset_s * (1 + unit_roundoff) ** 2 / Fraction(interval_s) < maximum_finite
+        margin_s = (2 * unit_roundoff + unit_roundoff ** 2) * maximum_offset_s
+        assert 0 < margin_s < Fraction(interval_s)
+        assert margin_s < 16 * Fraction(min(math.ulp(start_tdb_s), math.ulp(end_tdb_s)))
+        reported_margin_s = math.nextafter(float(margin_s), math.inf)
+        assert math.isfinite(reported_margin_s) and Fraction(reported_margin_s) >= margin_s
+        index_roundoff_margins.append((target, first, last, reported_margin_s))
         # Include both touching records at exact endpoints without rounded index division.
         first_index = max(0, math.ceil((Fraction(start_tdb_s) - Fraction(init_s)) / Fraction(interval_s)) - 1)
         last_index = min(count - 1, math.floor((Fraction(end_tdb_s) - Fraction(init_s)) / Fraction(interval_s)))
@@ -231,9 +250,16 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                         probes_s.append(float(boundary_s) + direction * math.ulp(float(boundary_s)))
                 for probe_s in probes_s:
                     budget.check()
-                    selected_index = math.floor((probe_s - init_s) / interval_s)
+                    rounded_quotient = (probe_s - init_s) / interval_s
+                    exact_quotient = (Fraction(probe_s) - Fraction(init_s)) / Fraction(interval_s)
+                    assert abs(Fraction(rounded_quotient) - exact_quotient) * Fraction(interval_s) <= margin_s
+                    selected_index = math.floor(rounded_quotient)
+                    assert abs(selected_index - math.floor(exact_quotient)) <= 1
                     assert 0 <= selected_index < count
                     assert selected_index in (index, index + 1)
+                    if selected_index != index:
+                        selected_boundary_s = Fraction(init_s) + selected_index * Fraction(interval_s)
+                        assert abs(Fraction(probe_s) - selected_boundary_s) <= margin_s
                     selected_address = begin + selected_index * size
                     expected_record = spice.dafgda(handle, selected_address, selected_address + size - 1)
                     actual_record = _read_native_spk_record(native, data_type, handle, descriptor, probe_s, size)
@@ -491,6 +517,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "native_selected_record_bitwise_checks": native_record_checks,
         "all_chain_native_record_checks": all_record_checks,
         "all_chain_early_record_choices": early_record_choices,
+        "conditional_index_margin_fields": ["target", "segment_start_tdb_s", "segment_end_tdb_s", "time_margin_s"],
+        "conditional_index_margins": index_roundoff_margins,
         "type2_midpoint_max_velocity_difference_m_s": max_type2_velocity_difference_m_s,
         "frame": "J2000, each target relative to its listed center; chains end at SSB",
         "scope": "Coverage and exact per-record position-rate bounds, not composed motion or safety",

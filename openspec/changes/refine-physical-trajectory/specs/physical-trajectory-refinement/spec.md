@@ -51,6 +51,10 @@ Following user approval on 2026-09-09, all eight production body ephemerides SHA
 - **WHEN** the pinned native-readback variant queries all 550 record midpoints and both one-ULP sides of 539 joins for type-2/type-3 sources
 - **THEN** all 1,628 directory-sized records match the replay-selected DAF words bit-for-bit, midpoint selection stays within its record, 466 early choices are retained in per-target counts, previous readbacks and native guards remain valid, and neither switch widths outside the measured probes nor uniform native accuracy are certified
 
+#### Scenario: Bound the declared index arithmetic conditionally over full segments
+- **WHEN** the two-operation binary64 round-to-nearest index replay is analyzed for all 12 relevant SPK segments
+- **THEN** exact normal-range and zero-offset checks support an outward time margin `(2u+u^2)*segment_span_s`, all 1,628 readback probes satisfy the quotient-error bound and all 466 early choices lie within the margin of a neighboring boundary, while the report explicitly retains native arithmetic/rounding assumptions and makes no native-error or trajectory-safety certification
+
 ### Requirement: Verified M2 candidate handoff
 The system SHALL expose `refine_physical_trajectory(scenario: Scenario, candidate: ImpulsiveTransferCandidate) -> PhysicalTrajectoryResult`. It SHALL accept only a Pareto candidate reproduced from the same normalized scenario and M2 grid, and SHALL treat the M2 body-centre Lambert solution and scalar impulses only as the initial targeting seed rather than as physical endpoint states.
 

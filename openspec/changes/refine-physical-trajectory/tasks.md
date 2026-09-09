@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional whole-segment index-roundoff margin (2026-09-10):
+Derive `(2u+u^2)*segment_span_s` for the two-operation round-to-nearest
+binary64 index replay. Verify normal-range bounds from the next epoch after
+INIT through the segment end, exact zero offset and outward SI reporting
+for all 12 segments. Check the quotient-error inequality and neighboring
+record implication at all 1,628 readbacks, including all 466 early choices.
+Verification: whole `tests/test_trajectory_spk.py`, full pytest, Ruff, strict
+OpenSpec validation and unchanged legacy hash. The native arithmetic graph
+and rounding environment remain assumptions, not a qualified native error
+bound; keep 3.9 open and the targeting spike blocked.
+All 48 SPK tests and 910 full-suite tests passed (155.31 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 all-link native record readback (2026-09-10):
 Share a guarded test-only type-2/type-3 reader and preserve the previous
 7,293 readbacks. Verify 1,628 additional midpoint/one-ULP-side probes across

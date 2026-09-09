@@ -1,5 +1,35 @@
 ## Context
 
+### Conditional whole-segment index-roundoff margin (2026-09-10)
+
+For the declared replay `q_hat = fl(fl(t-INIT)/INTLEN)`, assume two correctly
+rounded binary64 round-to-nearest operations, exact stored inputs and no
+overflow or nonzero subnormal intermediate/result. With `u=2^-53`, write
+`q_hat=q(1+d1)(1+d2)`, `|d1|,|d2|<=u`, hence
+`|q_hat-q|*INTLEN <= (2u+u^2)*|t-INIT|`. This is the standard relative-error
+model discussed by [Goldberg](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html).
+Use exact fractions and the whole segment span as the maximum offset,
+not a sampled maximum, then round the reported seconds upward.
+
+For each of the 12 relevant segments, the next representable epoch after
+INIT bounds the smallest positive offset. Explicit rational lower/upper
+checks establish normal-range subtraction and division throughout the
+segment for binary64 epochs; the zero offset is exact and checked separately.
+The resulting margins are `1.4365468814503404e-6 s` for the type-2 segments,
+`1.3587517670998752e-6 s` for Mars, `1.1911860937630083e-6 s` for Jupiter,
+and `7.635492238478038e-9 s` for each relevant Saturn segment. Each is
+less than one record duration and less than the existing 16-ULP strip
+half-width on the candidate interval.
+
+Since flooring can change only across an integer boundary, this conditional
+margin confines a replay index discrepancy to a neighboring record within
+that time margin of a join. Exact rational comparisons at all 1,628 native
+readback probes verify the quotient-error inequality, index difference at
+most one, and coverage of all 466 observed early choices. This does not
+prove the native binary uses exactly that arithmetic graph or rounding
+environment at every epoch; native evaluation error, segment priority and
+spacecraft safety remain separate. No production limits or tolerances change.
+
 ### Native readback for every required source link (2026-09-10)
 
 Reuse one guarded test-only reader for the installed `spkr02_` and `spkr03_`
