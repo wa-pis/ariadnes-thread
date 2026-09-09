@@ -17,15 +17,23 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest 3.9 evidence: new probes at all 73 mapped Saturn record boundaries
+Latest 3.9 evidence (2026-09-10): direct-SPICE qualification now inventories
+550 records across all 11 required source links. Exact polynomial rate/jump
+controls, native selected-record readbacks and conditional index-roundoff
+margins retain the source-boundary counterexamples. Static inspection pins
+the type-2/type-3 reader arithmetic, with endpoint checks for the last-record
+clamp. Native evaluation-error and center-chain bounds, followed by full-force
+safety and runtime checks, are still required; targeting remains gated.
+See the active change's design and tasks for numerical scope and evidence.
+
+Historical table counterexample (before the approved direct-SPICE switch): probes at all 73 mapped Saturn record boundaries
 fail the position allocation; 71 also fail the velocity allocation. Maximum
 errors are `0.182333 m` and `2.138636e-5 m/s` near `997133760 TDB seconds since
 J2000`, versus unchanged `0.025 m` and `2.5e-6 m/s` limits. The earlier single
 segment-junction counterexample is therefore not the only affected boundary.
 The counterexample is retained; task 2.7's original samples are not a uniform
-certificate. Investigate source boundaries and query-order behavior before a
-reviewed remedy. No tolerance, kernel or production-limit changes are approved
-by this observation, and targeting remains gated.
+certificate. The approved switch above supersedes the proposed table remedy,
+not the counterexample or the unchanged scientific tolerances.
 
 ### Historical prototype priority (superseded by resumption above)
 

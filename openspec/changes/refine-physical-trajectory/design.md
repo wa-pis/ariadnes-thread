@@ -1,5 +1,31 @@
 ## Context
 
+### Pinned native record-selector arithmetic (2026-09-10)
+
+Read-only disassembly of the installed Darwin/arm64 `libcspice.dylib`
+shows identical contiguous selection instructions in `_spkr02_` and
+`_spkr03_`: binary64 subtraction, binary64 division, signed integer
+truncation and a one-based `min(trunc(q_hat)+1,N)` clamp. Truncation equals
+floor for the nonnegative in-segment quotient. The subsequent `MADD` is
+integer DAF addressing, not a floating-point fused operation. Retain the
+library hash, text/file mapping, bytes, interpretation and reproduction
+command in `tests/data/m3_spk_selector_observation.json`; a regression test
+rejects changed builds on the inspected platform instead of inheriting this
+observation silently. Other platforms are explicitly unqualified.
+
+The existing 12-segment inventory checks signed 32-bit conversion, increment
+and address ranges, including the conditional quotient-roundoff margin.
+At both endpoints of every segment, 24 additional guarded raw-reader queries
+match the first/last DAF records byte-for-byte. In particular, the exact final
+epoch gives quotient N and exercises the clamp, not an out-of-range record.
+The previous 1,628 all-link and 7,293 switch readbacks remain unchanged.
+
+This qualifies the static arithmetic graph used in the conditional
+bound, not a uniform runtime certificate. Continuous floating-point control,
+live dispatch, segment selection, native polynomial evaluation and center-chain
+summation remain separate obligations. No production settings, scientific
+tolerances or source resources change; task 3.9 remains open.
+
 ### Conditional whole-segment index-roundoff margin (2026-09-10)
 
 For the declared replay `q_hat = fl(fl(t-INIT)/INTLEN)`, assume two correctly

@@ -51,6 +51,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 pinned native record-selector arithmetic (2026-09-10):
+Pin the inspected Darwin/arm64 CSPICE hash and identical type-2/type-3
+selection bytes. Verify separate binary64 subtraction/division, signed
+conversion/address ranges and the final-record clamp with 24 endpoint
+readbacks across the 12 relevant segments. Preserve all prior readback and
+counterexample checks. Verification: complete SPK tests, full pytest, Ruff,
+strict OpenSpec validation and unchanged legacy hash. Static observation
+does not establish continuous rounding mode, live dispatch or a native
+evaluation-error enclosure; keep task 3.9 open.
+All 49 SPK tests and 911 full-suite tests passed (152.30 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 conditional whole-segment index-roundoff margin (2026-09-10):
 Derive `(2u+u^2)*segment_span_s` for the two-operation round-to-nearest
 binary64 index replay. Verify normal-range bounds from the next epoch after

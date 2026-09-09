@@ -1,0 +1,38 @@
+{
+  "observed_on": "2026-09-10",
+  "system": "Darwin",
+  "machine": "arm64",
+  "library": "lib/libcspice.dylib",
+  "size_bytes": 2614640,
+  "sha256": "cf75f55be27385fef9c097c5a1a53a43c225f9f27cf7e19924f78eaaf5f7a738",
+  "reproduce": "xcrun llvm-objdump --macho --disassemble --dis-symname SYMBOL LIBRARY_PATH; otool -l LIBRARY_PATH",
+  "text_segment_vmaddr": 0,
+  "text_segment_fileoff": 0,
+  "readers": [
+    {"symbol": "_spkr02_", "entry_file_offset": "0xf8fc8", "selection_file_offset": "0xf9060"},
+    {"symbol": "_spkr03_", "entry_file_offset": "0xf90fc", "selection_file_offset": "0xf9194"}
+  ],
+  "selection_bytes": "608c40fc810a416d2800781e830240fd4900781ec20240fd4238631e4018601e0a00781e4b0500117f01096b29a58a1a29050051295d081b810200fd0801090b08050051e9230129",
+  "selection_instructions": [
+    "ldr d0, [x3, #0x8]! (INTLEN)",
+    "ldp d1, d2, [x20, #0x10] (RSIZE, N)",
+    "fcvtzs w8, d1",
+    "ldr d3, [x20] (INIT)",
+    "fcvtzs w9, d2",
+    "ldr d2, [x22] (ET)",
+    "fsub d2, d2, d3",
+    "fdiv d0, d2, d0",
+    "fcvtzs w10, d0",
+    "add w11, w10, #0x1",
+    "cmp w11, w9",
+    "csinc w9, w9, w10, ge",
+    "sub w9, w9, #0x1",
+    "madd w9, w9, w8, w23",
+    "str d1, [x20]",
+    "add w8, w8, w9",
+    "sub w8, w8, #0x1",
+    "stp w9, w8, [sp, #0x8]"
+  ],
+  "interpretation": "DAF directory supplies INIT, INTLEN, RSIZE and N. Separate binary64 subtraction then division; signed truncation equals floor for nonnegative quotient. One-based record is min(trunc(q_hat)+1,N), followed by integer DAF addressing. MADD here is integer, not floating-point FMA.",
+  "scope": "Static successful reader path in this exact build. Assumes valid directory, nonnegative finite in-range quotient, no signed integer overflow and declared floating-point mode. Does not certify live dispatch, continuous FPCR, DAF internals, segment priority, polynomial evaluation error, center-chain summation or spacecraft safety."
+}

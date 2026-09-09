@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ctypes
 from fractions import Fraction
+from hashlib import file_digest
 import json
 from itertools import permutations
 import math
@@ -20,6 +21,24 @@ from space_nav import ephemeris, trajectory
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_spk_record_selector_matches_inspected_binary() -> None:
+    """Pin the inspected reader instructions, not live dispatch or CPU modes."""
+    observation = json.loads((ROOT / "tests/data/m3_spk_selector_observation.json").read_text())
+    if (platform.system(), platform.machine()) != (observation["system"], observation["machine"]):
+        pytest.skip("No static SPK reader observation for this platform")
+    binary_path = Path(sys.prefix) / "lib/libcspice.dylib"
+    assert binary_path.stat().st_size == observation["size_bytes"]
+    selection_bytes = bytes.fromhex(observation["selection_bytes"])
+    assert len(selection_bytes) == 4 * len(observation["selection_instructions"]) == 72
+    with binary_path.open("rb") as binary:
+        assert file_digest(binary, "sha256").hexdigest() == observation["sha256"], (
+            "SPICE build changed; re-audit record selection"
+        )
+        for reader in observation["readers"]:
+            binary.seek(int(reader["selection_file_offset"], 16))
+            assert binary.read(len(selection_bytes)) == selection_bytes, reader["symbol"]
 
 
 def _read_native_spk_record(
@@ -198,6 +217,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     all_record_checks = dict.fromkeys(expected_centers, 0)
     early_record_choices = dict.fromkeys(expected_centers, 0)
     index_roundoff_margins: list[tuple[int, float, float, float]] = []
+    endpoint_record_checks = 0
     unit_roundoff = Fraction(1, 2 ** 53)
     switching_records: dict[int, list[tuple[int, np.ndarray, float, float, int, np.ndarray]]] = {
         499: [], 599: [],
@@ -214,6 +234,20 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         assert end - begin + 1 == size * count + 4
         assert Fraction(init_s) == Fraction(first)
         assert Fraction(init_s) + count * Fraction(interval_s) == Fraction(last)
+        # Inspected signed 32-bit conversion/add/address path must not overflow.
+        assert 0 < size < 2 ** 31 and 0 < count + 1 < 2 ** 31
+        assert 0 < begin <= begin + count * size < end < 2 ** 31
+        if native is not None:
+            for probe_s, selected_index in ((float(first), 0), (float(last), count - 1)):
+                budget.check()
+                quotient = (probe_s - init_s) / interval_s
+                assert quotient == (0 if selected_index == 0 else count)
+                assert min(math.trunc(quotient) + 1, count) - 1 == selected_index
+                address = begin + selected_index * size
+                expected_record = spice.dafgda(handle, address, address + size - 1)
+                actual_record = _read_native_spk_record(native, data_type, handle, descriptor, probe_s, size)
+                assert actual_record.tobytes() == expected_record.tobytes(), (target, probe_s)
+                endpoint_record_checks += 1
         # Conditional two-operation, round-to-nearest binary64 replay over
         # the whole segment; zero offset is exact and handled separately.
         minimum_offset_s = Fraction(math.nextafter(float(init_s), math.inf)) - Fraction(init_s)
@@ -226,6 +260,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         assert maximum_offset_s * (1 + unit_roundoff) < maximum_finite
         assert maximum_offset_s * (1 + unit_roundoff) ** 2 / Fraction(interval_s) < maximum_finite
         margin_s = (2 * unit_roundoff + unit_roundoff ** 2) * maximum_offset_s
+        assert count + margin_s / Fraction(interval_s) < count + 1 < 2 ** 31
         assert 0 < margin_s < Fraction(interval_s)
         assert margin_s < 16 * Fraction(min(math.ulp(start_tdb_s), math.ulp(end_tdb_s)))
         reported_margin_s = math.nextafter(float(margin_s), math.inf)
@@ -344,6 +379,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                 max_type2_velocity_difference_m_s = max(max_type2_velocity_difference_m_s,
                                                        velocity_difference_m_s)
 
+    assert endpoint_record_checks == (24 if native is not None else 0)
     jump_observations: dict[int, list[tuple[float, float, bool]]] = {target: [] for target in expected_centers}
     for (target, epoch_s), sides in sorted(joins.items()):
         budget.check()
