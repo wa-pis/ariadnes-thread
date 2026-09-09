@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 native selected-record readback (2026-09-10):
+Add a separate pinned Darwin/arm64 qualification variant that directly reads
+the selected type-3 record for all 7,293 existing switch probes. Verify type,
+directory-derived buffer size, length word, guard, native error state and
+bitwise equality of all 122 words with the selected source record. Keep the
+portable variant, kernel pool and shared budget unchanged. Verification:
+whole `tests/test_trajectory_spk.py`, full pytest, Ruff, strict OpenSpec
+validation and unchanged legacy checksum. All sampled selections agree;
+uniform native behavior and evaluation error remain open under task 3.9.
+All 48 SPK tests and 910 full-suite tests passed (154.04 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+Both focused variants also passed after placing native setup inside the budget.
+
 Task 3.9 exact adjacent-branch ambiguity envelope (2026-09-10):
 Combine exact L1 endpoint jumps with both extended rate bounds over explicit
 16-epoch-ULP strips at 221 Mars/Jupiter joins. Verify 1,547 exact same-epoch

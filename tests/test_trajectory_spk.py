@@ -123,7 +123,10 @@ def test_spk_rate_bound_honors_expired_budget() -> None:
         trajectory._spk_position_rate_bound(budget, ((0.0,),) * 3, 1.0)
 
 
-def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
+@pytest.mark.parametrize("native_record_readback", [False, True], ids=["portable", "native-readback"])
+def test_loaded_spk_chain_coverage_contains_candidate_interval(
+    native_record_readback: bool, request: pytest.FixtureRequest,
+) -> None:
     """Qualify coverage and exact record motion, not native error or safety."""
     import spiceypy as spice
     from spiceypy.utils.support_types import SPICEDOUBLE_CELL
@@ -131,6 +134,11 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
     evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
     start_tdb_s, end_tdb_s = evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1]
     budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
+    native: ctypes.CDLL | None = None
+    if native_record_readback:
+        native = request.getfixturevalue("cspice")
+        assert isinstance(native, ctypes.CDLL)
+        budget.check()
     ephemeris._ensure_standard_kernels()
     kernels_before = [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
     registrations = [spice.kdata(i, "SPK") for i in range(spice.ktotal("SPK"))]
@@ -299,11 +307,16 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
     switching_probes: list[tuple[int, float, int, float]] = []
     ambiguity_bounds: list[tuple[int, float, float]] = []
     exact_ambiguity_checks = 0
+    native_record_checks = 0
     for target, records in switching_records.items():
         for left, right in zip(records, records[1:]):
             handle, descriptor, init_s, interval_s, index, left_record = left
             assert right[4] == index + 1
             right_record = right[5]
+            if native is not None:
+                # Both directories were checked before calling the raw record reader.
+                assert len(left_record) == len(right_record) == 122
+                assert spice.spkuds(descriptor)[3] == 3
             epoch_s = float(left_record[0] + left_record[1])
             assert epoch_s == right_record[0] - right_record[1]
             extension_s = 16 * math.ulp(epoch_s)
@@ -348,6 +361,18 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
                 selected_index = math.floor((query_s - init_s) / interval_s)
                 assert selected_index in (index, index + 1)
                 selected_record = left_record if selected_index == index else right_record
+                if native is not None:
+                    native_handle = ctypes.c_int(handle)
+                    native_epoch = ctypes.c_double(query_s)
+                    native_descriptor = (ctypes.c_double * 5)(*descriptor)
+                    raw_record = (ctypes.c_double * 124)()
+                    raw_record[123] = 1234567.0  # Guard after size + 122 data words.
+                    native.spkr03_(ctypes.byref(native_handle), native_descriptor,
+                                   ctypes.byref(native_epoch), raw_record)
+                    assert native.failed_c() == 0
+                    assert raw_record[0] == 122.0 and raw_record[123] == 1234567.0
+                    assert np.asarray(raw_record)[1:123].tobytes() == selected_record.tobytes()
+                    native_record_checks += 1
                 x = (query_s - selected_record[0]) / selected_record[1]
                 predicted_m = np.polynomial.chebyshev.chebval(
                     x, selected_record[2:].reshape(6, -1)[:3].T,
@@ -371,6 +396,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
             switching_probes.append((target, epoch_s, selected_offsets[0], max_error_m))
     assert len(switching_probes) == 221
     assert exact_ambiguity_checks == 1547
+    assert native_record_checks == (7293 if native_record_readback else 0)
 
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
@@ -429,6 +455,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval() -> None:
         "exact_branch_ambiguity_fields": ["target", "boundary_tdb_s", "position_l1_bound_m"],
         "exact_branch_ambiguity_bounds": ambiguity_bounds,
         "exact_branch_ambiguity_checks": exact_ambiguity_checks,
+        "native_selected_record_bitwise_checks": native_record_checks,
         "type2_midpoint_max_velocity_difference_m_s": max_type2_velocity_difference_m_s,
         "frame": "J2000, each target relative to its listed center; chains end at SSB",
         "scope": "Coverage and exact per-record position-rate bounds, not composed motion or safety",
@@ -536,6 +563,9 @@ def cspice() -> ctypes.CDLL:
         integer, pointer(double), double, pointer(integer), pointer(double), pointer(integer),
     ]
     native.spkpvn_c.restype = None
+    # Pinned f2c ABI: by-reference handle/descriptor/epoch and caller-owned record.
+    native.spkr03_.argtypes = [pointer(integer), pointer(double), pointer(double), pointer(double)]
+    native.spkr03_.restype = None
     native.dafbfs_c.argtypes = [integer]
     native.dafbfs_c.restype = None
     native.daffna_c.argtypes = [pointer(integer)]

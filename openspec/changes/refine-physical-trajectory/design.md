@@ -1,5 +1,27 @@
 ## Context
 
+### Native selected-record readback (2026-09-10)
+
+A separate Darwin/arm64 variant of the existing qualification reads the
+selected type-3 record through the installed CSPICE `spkr03_` entry point.
+The [NAIF record layout](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/FORTRAN/spicelib/spkr03.html)
+starts with the record length, followed by midpoint, radius and six coefficient
+series. Before calling, verify the type and both adjacent 122-word records
+against the previously checked directories. Allocate the length word plus
+122 words and an extra guard, verify the length/guard and native error state,
+then compare all 122 data words byte-for-byte with the replay-selected record.
+
+All 7,293 queries across the 221 Mars/Jupiter joins agree exactly, including
+the four early-selection epochs. Thus selection is now directly observed at
+those samples, not only inferred from nearby position values. The original
+portable test variant remains intact; only the additional raw-ABI variant
+uses the existing platform gate. Both retain the kernel-pool equality check,
+shared 300-second budget and zero spacecraft propagations.
+
+This diagnostic binding stays in tests and does not change the production
+SPICE wrapper. It is still sampled selection evidence, not a uniform native
+arithmetic proof, evaluation-error enclosure or completion of task 3.9.
+
 ### Exact adjacent-branch ambiguity envelope (2026-09-10)
 
 For a shared record boundary `b`, let `J` be the exact L1 endpoint jump

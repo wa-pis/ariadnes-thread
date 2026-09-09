@@ -43,6 +43,10 @@ Following user approval on 2026-09-09, all eight production body ephemerides SHA
 - **WHEN** exact endpoint jumps and extended position-rate bounds are composed over explicit 16-epoch-ULP strips at all 221 Mars/Jupiter joins
 - **THEN** 1,547 exact same-epoch branch differences satisfy the jump-plus-motion bound, omission of the jump fails each control, every reported SI bound is rounded outward, and the qualification distinguishes this two-polynomial envelope from native selection, native rounding and spacecraft safety
 
+#### Scenario: Read back the native selected type-3 record
+- **WHEN** the additional pinned Darwin/arm64 qualification reads native records at all 7,293 Mars/Jupiter switch probes
+- **THEN** the length and buffer guard remain valid, all 122 record words match the replay-selected source record bit-for-bit, native error state and kernel pool remain unchanged, the portable variant is preserved, and no uniform native-selection or trajectory-safety guarantee is inferred
+
 ### Requirement: Verified M2 candidate handoff
 The system SHALL expose `refine_physical_trajectory(scenario: Scenario, candidate: ImpulsiveTransferCandidate) -> PhysicalTrajectoryResult`. It SHALL accept only a Pareto candidate reproduced from the same normalized scenario and M2 grid, and SHALL treat the M2 body-centre Lambert solution and scalar impulses only as the initial targeting seed rather than as physical endpoint states.
 
