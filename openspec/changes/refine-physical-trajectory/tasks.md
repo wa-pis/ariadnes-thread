@@ -26,6 +26,15 @@ production force, step size, closure tolerance, or dependency was changed.
 
 ## 3. Segmented finite-burn propagation
 
+- [x] 3.10 Apply the user-approved 2026-09-09 direct-SPICE production revision; verify whole-chain interval coverage, missing/gapped/incompatible resources and deadline rejection before body creation, direct settings/frame readback, 38-epoch eight-body and 219-probe Saturn production parity within 0.001 m / 0.000001 m/s, unchanged force controls, versioned model identity, complete pytest, Ruff and strict OpenSpec validation. This prerequisite does not complete 3.9 or permit the targeting spike.
+
+Task 3.10 verification (2026-09-09): 139 focused environment/contract/gravity
+tests and all 881 tests passed; Ruff, strict OpenSpec validation and the
+unchanged legacy SHA-256 passed. The production comparison covers 523 state
+requests under the stated tolerances. No new dependencies, kernel versions,
+force settings, tolerances or native-call limits. Historical tables remain
+test controls; current M3 result identity is explicitly direct-SPICE v2.
+
 User-approved revision (2026-09-08): investigate adaptive subdivision and revise
 native-call limits from measured evidence. Scientific tolerances and the shared
 300-second deadline remain unchanged. Production limits are not replaced by

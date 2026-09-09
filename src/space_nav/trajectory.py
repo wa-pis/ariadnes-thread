@@ -61,7 +61,7 @@ PHYSICAL_BODY_NAMES = (
     "Jupiter",
     "Saturn",
 )
-EPHEMERIS_TIME_STEP_S = 300.0
+EPHEMERIS_TIME_STEP_S = 300.0  # Historical v1 qualification tables only.
 
 _FIELD_GM_RELATIVE_TOLERANCE = 1e-15
 _DIRECT_GRAVITY_BODY_NAMES = (
@@ -1855,6 +1855,103 @@ def _compose_ephemeris_chord_bounds(
     return result_m
 
 
+def _validate_direct_spice_coverage(
+    candidate_id: str,
+    initial_epoch_tdb_s: float,
+    final_epoch_tdb_s: float,
+    budget: _RefinementBudget | None = None,
+) -> None:
+    """Require geometric SSB/J2000 SPK chain coverage, not an accuracy bound."""
+    try:
+        start = _finite_float("initial_epoch_tdb_s", initial_epoch_tdb_s)
+        end = _finite_float("final_epoch_tdb_s", final_epoch_tdb_s)
+        if start >= end:
+            raise ValueError("SPK coverage requires initial_epoch_tdb_s < final_epoch_tdb_s")
+    except ValueError as exc:
+        _raise_refinement_error(candidate_id, "ephemeris-coverage", str(exc), exc)
+    if budget is not None:
+        budget.check()
+    try:
+        import spiceypy as spice
+        from spiceypy.utils.support_types import SPICEDOUBLE_CELL
+
+        # These fixed center chains are qualified against named Tudat states.
+        centers = {10: 0, 1: 0, 2: 0, 399: 0, 301: 399,
+                   499: 4, 4: 0, 599: 5, 5: 0, 699: 6, 6: 0}
+        coverage = {target: SPICEDOUBLE_CELL(10000) for target in centers}
+        registrations = [spice.kdata(i, "SPK") for i in range(spice.ktotal("SPK"))]
+        files = {str(Path(entry[0]).resolve()): entry for entry in registrations}
+        if not files:
+            raise ValueError("no loaded SPK files")
+        for path, entry in files.items():
+            if budget is not None:
+                budget.check()
+            if not Path(path).is_file():
+                raise ValueError(f"missing loaded SPK file: {path}")
+            spice.dafbfs(entry[3])
+            while spice.daffna():
+                if budget is not None:
+                    budget.check()
+                target, center, frame, kind, first, last, begin, finish = spice.spkuds(
+                    spice.dafgs()[:5],
+                )
+                if target not in centers:
+                    continue
+                if not (math.isfinite(first) and math.isfinite(last) and first <= last
+                        and 0 < begin <= finish):
+                    raise ValueError(f"SPK target {target}: invalid segment descriptor in {path}")
+                if first > end or last < start:
+                    continue
+                if center != centers[target] or frame != 1 or kind not in (2, 3):
+                    raise ValueError(
+                        f"SPK target {target}: unsupported center/frame/type "
+                        f"{center}/{frame}/{kind} in {path}"
+                    )
+                spice.wninsd(max(first, start), min(last, end), coverage[target])
+        for target, window in coverage.items():
+            if not spice.wnincd(start, end, window):
+                raise ValueError(
+                    f"SPK target {target} relative to {centers[target]}: "
+                    f"missing or gapped coverage for TDB interval [{start}, {end}]"
+                )
+    except TrajectoryRefinementError:
+        raise
+    except Exception as exc:
+        # Translate only this untyped SPICE inspection boundary; never reload.
+        _raise_refinement_error(candidate_id, "ephemeris-coverage", str(exc), exc)
+    if budget is not None:
+        budget.check()
+
+
+def _create_direct_body_settings(environment_setup: Any) -> Any:
+    """Configure direct geometric SPICE explicitly for all eight bodies."""
+    try:
+        settings = environment_setup.get_default_body_settings(
+            PHYSICAL_BODY_NAMES, base_frame_origin="SSB", base_frame_orientation="J2000",
+        )
+        for body in PHYSICAL_BODY_NAMES:
+            settings.get(body).ephemeris_settings = environment_setup.ephemeris.direct_spice(
+                "SSB", "J2000", body,
+            )
+        return settings
+    except Exception as exc:
+        raise RuntimeError("Tudat could not configure direct SSB/J2000 SPICE bodies") from exc
+
+
+def _validate_direct_body_settings(environment_setup: Any, body_settings: Any) -> None:
+    if (body_settings.frame_origin, body_settings.frame_orientation) != ("SSB", "J2000"):
+        raise ValueError("Tudat body settings must use global frame SSB/J2000")
+    for body in PHYSICAL_BODY_NAMES:
+        settings = body_settings.get(body).ephemeris_settings
+        if not isinstance(settings, environment_setup.ephemeris.DirectSpiceEphemerisSettings):
+            raise ValueError(f"{body} ephemeris must use direct SPICE")
+        if (settings.frame_origin, settings.frame_orientation) != ("SSB", "J2000"):
+            raise ValueError(f"{body} ephemeris settings must use frame SSB/J2000")
+        if (settings.correct_for_light_time_aberration or settings.correct_for_stellar_aberration
+                or settings.converge_light_time_aberration):
+            raise ValueError(f"{body} direct SPICE ephemeris must be geometric, without aberration")
+
+
 def _create_time_limited_body_settings(
     environment_setup: Any,
     initial_epoch_tdb_s: float,
@@ -2586,17 +2683,8 @@ def _validate_created_environment(
             or body.ephemeris.frame_orientation != "J2000"
         ):
             raise ValueError(f"{body_name} runtime ephemeris must use SSB/J2000")
-        safe_start_tdb_s, safe_end_tdb_s = (
-            environment_setup.get_safe_interpolation_interval(body.ephemeris)
-        )
-        if (
-            safe_start_tdb_s > initial_epoch_tdb_s
-            or safe_end_tdb_s < final_epoch_tdb_s
-        ):
-            raise ValueError(
-                f"{body_name} runtime ephemeris does not cover TDB interval "
-                f"[{initial_epoch_tdb_s}, {final_epoch_tdb_s}]"
-            )
+        # Full SPK-chain coverage is checked before construction. The table
+        # safe-interval API is not a coverage certificate for direct SPICE.
         for epoch_tdb_s in (initial_epoch_tdb_s, final_epoch_tdb_s):
             state = body.ephemeris.cartesian_state(epoch_tdb_s)
             _finite_cartesian_values(
@@ -2704,18 +2792,16 @@ def _build_physical_environment(
         budget.check()
 
     try:
-        body_settings = _create_time_limited_body_settings(
-            environment_setup,
-            candidate.departure_epoch_tdb_s,
-            candidate.arrival_epoch_tdb_s,
+        _validate_direct_spice_coverage(
+            candidate.candidate_id, candidate.departure_epoch_tdb_s,
+            candidate.arrival_epoch_tdb_s, budget,
         )
         if budget is not None:
             budget.check()
-        _validate_time_limited_body_settings(
-            body_settings,
-            candidate.departure_epoch_tdb_s,
-            candidate.arrival_epoch_tdb_s,
-        )
+        body_settings = _create_direct_body_settings(environment_setup)
+        if budget is not None:
+            budget.check()
+        _validate_direct_body_settings(environment_setup, body_settings)
     except (AttributeError, RuntimeError, TypeError, ValueError) as exc:
         _raise_refinement_error(
             candidate.candidate_id,

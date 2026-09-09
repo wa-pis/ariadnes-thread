@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from hashlib import sha256
+import json
 import math
 import os
 from pathlib import Path
@@ -78,6 +79,137 @@ def _gravity_models_path() -> Path:
     return Path(data.get_gravity_models_path())
 
 
+def test_production_direct_ephemerides_match_candidate_and_saturn_joins() -> None:
+    import numpy as np
+
+    evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
+    start, end = evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1]
+    budget = trajectory._RefinementBudget(evidence["candidate_id"], 300.0)
+    candidate = _candidate(
+        departure_epoch_tdb_s=start, arrival_epoch_tdb_s=end, flight_time_s=end - start,
+        departure_epoch_utc=ephemeris.tdb_to_utc(start),
+        arrival_epoch_utc=ephemeris.tdb_to_utc(end),
+    )
+    environment = trajectory._build_physical_environment(candidate, _spacecraft(), budget=budget)
+    spice = ephemeris._ensure_standard_kernels()
+    for body in trajectory.PHYSICAL_BODY_NAMES:
+        epochs = list(evidence["epoch_tdb_s"])
+        if body == "Saturn":
+            # Directory-derived joins already independently qualified in test_trajectory_spk.
+            for index in range(73):
+                epoch = 979252416.0 + index * 343872.0
+                epochs.extend((math.nextafter(epoch, -math.inf), epoch,
+                               math.nextafter(epoch, math.inf)))
+        model = environment.bodies.get(body).ephemeris
+        for epoch in epochs:
+            budget.check()
+            expected = spice.get_body_cartesian_state_at_epoch(body, "SSB", "J2000", "NONE", epoch)
+            difference = np.asarray(model.cartesian_state(epoch)).reshape(6) - expected
+            assert np.all(np.isfinite(difference)), (body, epoch)
+            assert np.linalg.norm(difference[:3]) <= 0.001, (body, epoch)  # m
+            assert np.linalg.norm(difference[3:]) <= 0.000001, (body, epoch)  # m/s
+    budget.check()
+    assert budget.native_arc_propagations == 0
+
+
+@pytest.mark.parametrize("case", ["valid", "gap", "missing-center", "frame", "center", "type",
+                                  "descriptor", "no-files", "missing-file", "native", "expired"])
+def test_direct_coverage_rejects_invalid_chains(
+    case: str, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import spiceypy as spice
+
+    centers = {10: 0, 1: 0, 2: 0, 399: 0, 301: 399,
+               499: 4, 4: 0, 599: 5, 5: 0, 699: 6, 6: 0}
+    records = [(target, center, 1, 2, 100.0, 200.0, 1, 100) for target, center in centers.items()]
+    if case == "gap":
+        records = [record for record in records if record[0] != 699]
+        records += [(699, 6, 1, 3, 100.0, 149.0, 1, 100),
+                    (699, 6, 1, 3, 151.0, 200.0, 101, 200)]
+    if case == "missing-center":
+        records = [record for record in records if record[0] != 4]
+    if case in {"frame", "center", "type", "descriptor"}:
+        changed = list(records[0])
+        changed[{"frame": 2, "center": 1, "type": 3, "descriptor": 4}[case]] = (
+            float("nan") if case == "descriptor" else 99
+        )
+        records[0] = tuple(changed)
+    now_s = [0.0]
+    budget = trajectory._RefinementBudget("coverage-control", 300.0, lambda: now_s[0])
+    cursor = [-1]
+    failure = RuntimeError("unreadable SPK directory")
+
+    def next_segment() -> bool:
+        if case == "native":
+            raise failure
+        cursor[0] += 1
+        if case == "expired":
+            now_s[0] = 300.0
+        return cursor[0] < len(records)
+
+    monkeypatch.setattr(spice, "ktotal", lambda kind: 0 if case == "no-files" else 1)
+    path = ROOT / ("missing-coverage-kernel.bsp" if case == "missing-file" else "README.md")
+    monkeypatch.setattr(spice, "kdata", lambda index, kind: (str(path), "SPK", "", 1))
+    monkeypatch.setattr(spice, "dafbfs", lambda handle: None)
+    monkeypatch.setattr(spice, "daffna", next_segment)
+    monkeypatch.setattr(spice, "dafgs", lambda: [0.0] * 5)
+    monkeypatch.setattr(spice, "spkuds", lambda descriptor: records[cursor[0]])
+    if case == "valid":
+        trajectory._validate_direct_spice_coverage("coverage-control", 100.0, 200.0, budget)
+    else:
+        with pytest.raises(TrajectoryRefinementError, match="coverage-control") as caught:
+            trajectory._validate_direct_spice_coverage("coverage-control", 100.0, 200.0, budget)
+        assert caught.value.__cause__ is not None
+        if case == "native":
+            assert caught.value.__cause__ is failure
+        if case in {"gap", "missing-center"}:
+            assert "missing or gapped coverage" in str(caught.value)
+        if case == "expired":
+            assert "deadline" in str(caught.value)
+    assert budget.native_arc_propagations == 0
+
+
+@pytest.mark.parametrize("start,end", [(True, 200.0), (float("nan"), 200.0),
+                                       (100.0, float("inf")), (200.0, 100.0)])
+def test_direct_coverage_invalid_epochs_precede_native_inspection(
+    start: float, end: float, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import spiceypy as spice
+
+    native = Mock(side_effect=AssertionError("invalid epochs reached SPICE"))
+    monkeypatch.setattr(spice, "ktotal", native)
+    with pytest.raises(TrajectoryRefinementError, match="ephemeris-coverage"):
+        trajectory._validate_direct_spice_coverage("coverage-control", start, end)
+    native.assert_not_called()
+
+
+@pytest.mark.parametrize("case", ["table", "frame", "light", "stellar", "converge", "global"])
+def test_direct_settings_reject_wrong_model_frame_or_aberration(
+    case: str, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from tudatpy.dynamics import environment_setup
+
+    ephemeris._ensure_standard_kernels()
+    settings = trajectory._create_direct_body_settings(environment_setup)
+    target = settings.get("Moon").ephemeris_settings
+    if case == "table":
+        settings.get("Moon").ephemeris_settings = environment_setup.ephemeris.constant(
+            [0.0] * 6, "SSB", "J2000",
+        )
+    elif case == "global":
+        settings = SimpleNamespace(frame_origin="Earth", frame_orientation="J2000")
+    elif case == "frame":
+        target.frame_orientation = "ECLIPJ2000"
+    else:
+        # Native aberration flags are read-only in the pinned binding.
+        attribute = {"light": "correct_for_light_time_aberration",
+                     "stellar": "correct_for_stellar_aberration",
+                     "converge": "converge_light_time_aberration"}[case]
+        monkeypatch.setattr(type(target), attribute, property(lambda self: True))
+    with pytest.raises(ValueError, match="frame|direct SPICE|geometric"):
+        trajectory._validate_direct_body_settings(environment_setup, settings)
+
+
 def test_expired_environment_budget_starts_no_native_work(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -91,11 +223,34 @@ def test_expired_environment_budget_starts_no_native_work(
     native_import.assert_not_called()
 
 
+def test_coverage_failure_precedes_body_system_creation(monkeypatch: pytest.MonkeyPatch) -> None:
+    failure = TrajectoryRefinementError("coverage-control: missing center 4")
+    monkeypatch.setattr(trajectory, "_validate_direct_spice_coverage", Mock(side_effect=failure))
+    native = Mock(side_effect=AssertionError("coverage failure reached body creation"))
+    monkeypatch.setattr(trajectory, "_create_system_of_bodies", native)
+    with pytest.raises(TrajectoryRefinementError) as caught:
+        trajectory._build_physical_environment(_real_candidate(monkeypatch), _spacecraft())
+    assert caught.value is failure
+    native.assert_not_called()
+
+
+@pytest.mark.parametrize("stage", ["defaults", "ephemeris"])
+def test_direct_factory_failure_retains_native_cause(stage: str) -> None:
+    native = Mock()
+    failure = RuntimeError("direct factory failed")
+    target = native.get_default_body_settings if stage == "defaults" else native.ephemeris.direct_spice
+    target.side_effect = failure
+    with pytest.raises(RuntimeError, match="direct SSB/J2000") as caught:
+        trajectory._create_direct_body_settings(native)
+    assert caught.value.__cause__ is failure
+
+
 @pytest.mark.parametrize(
     ("stage", "next_stage"),
     [
         ("_verified_coefficient_files", "_build_collision_resource"),
-        ("_create_time_limited_body_settings", "_validate_time_limited_body_settings"),
+        ("_validate_direct_spice_coverage", "_create_direct_body_settings"),
+        ("_create_direct_body_settings", "_validate_direct_body_settings"),
         ("_load_harmonic_field_settings", "_validate_harmonic_field_settings"),
         ("_create_system_of_bodies", "_validate_created_environment"),
         ("_build_relativistic_acceleration_settings", "_PhysicalEnvironment"),
@@ -154,48 +309,32 @@ assert "moon_to_mars" not in sys.modules
     assert completed.returncode == 0, completed.stderr
 
 
-def test_real_environment_uses_exact_time_limited_resources_and_frames(
+def test_real_environment_uses_exact_direct_resources_and_frames(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     pytest.importorskip("tudatpy")
     from tudatpy.dynamics import environment_setup
 
     candidate = _real_candidate(monkeypatch)
-    calls: list[tuple[tuple[str, ...], float, float, str, str, float]] = []
-    original = environment_setup.get_default_body_settings_time_limited
+    calls: list[tuple[tuple[str, ...], str, str]] = []
+    original = environment_setup.get_default_body_settings
 
-    def record_limited_settings(
+    def record_direct_settings(
         bodies: Sequence[str],
-        initial_time: float,
-        final_time: float,
         base_frame_origin: str = "SSB",
         base_frame_orientation: str = "ECLIPJ2000",
-        time_step: float = 300.0,
     ) -> Any:
-        calls.append(
-            (
-                tuple(bodies),
-                initial_time,
-                final_time,
-                base_frame_origin,
-                base_frame_orientation,
-                time_step,
-            )
-        )
-        return original(
-            bodies,
-            initial_time,
-            final_time,
-            base_frame_origin,
-            base_frame_orientation,
-            time_step,
-        )
+        calls.append((tuple(bodies), base_frame_origin, base_frame_orientation))
+        return original(bodies, base_frame_origin, base_frame_orientation)
 
     monkeypatch.setattr(
         environment_setup,
-        "get_default_body_settings_time_limited",
-        record_limited_settings,
+        "get_default_body_settings",
+        record_direct_settings,
     )
+    table_factory = Mock(side_effect=AssertionError("production requested a table"))
+    monkeypatch.setattr(environment_setup, "get_default_body_settings_time_limited", table_factory)
+    monkeypatch.setattr(environment_setup, "get_safe_interpolation_interval", table_factory)
     budget = trajectory._RefinementBudget(candidate.candidate_id, 300.0, lambda: 100.0)
     environment = trajectory._build_physical_environment(
         candidate,
@@ -209,7 +348,7 @@ def test_real_environment_uses_exact_time_limited_resources_and_frames(
 
     assert trajectory.PHYSICAL_MODEL_IDENTIFIER == (
         "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-"
-        "cannonball-srp-schwarzschild-v1"
+        "cannonball-srp-schwarzschild-direct-spice-v2"
     )
     assert trajectory.PHYSICAL_BODY_NAMES == (
         "Sun",
@@ -221,17 +360,8 @@ def test_real_environment_uses_exact_time_limited_resources_and_frames(
         "Jupiter",
         "Saturn",
     )
-    assert trajectory.EPHEMERIS_TIME_STEP_S == 300.0
-    assert calls == [
-        (
-            trajectory.PHYSICAL_BODY_NAMES,
-            candidate.departure_epoch_tdb_s,
-            candidate.arrival_epoch_tdb_s,
-            "SSB",
-            "J2000",
-            trajectory.EPHEMERIS_TIME_STEP_S,
-        )
-    ]
+    assert calls == [(trajectory.PHYSICAL_BODY_NAMES, "SSB", "J2000")]
+    table_factory.assert_not_called()
 
     assert environment.model_id == trajectory.PHYSICAL_MODEL_IDENTIFIER
     assert environment.initial_epoch_tdb_s == candidate.departure_epoch_tdb_s

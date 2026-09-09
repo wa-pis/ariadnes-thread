@@ -1,5 +1,28 @@
 ## Context
 
+### Accepted production revision (2026-09-09)
+
+The user approved direct SPICE after the table counterexample, lookup-cost,
+fixed-state force and chain-coverage investigations. This section supersedes
+dated references below to unchanged production tables; those describe the
+historical v1 experiments, not the current production choice.
+
+Build default SSB/J2000 bodies and explicitly assign Tudat `direct_spice` to
+each body. Before body-system creation, inspect unique loaded SPK files and
+merge segment intervals for each of the eleven required target/center IDs.
+Require full candidate-interval inclusion for every link and reject overlapping
+segments with unsupported center, frame or type. Do not use the interpolation
+safe-interval API as evidence for direct SPICE. Read back runtime frames and
+finite endpoint states. Every inspection remains under the supplied shared
+deadline; no kernel reload, fallback or caching of coverage is introduced.
+
+The revised full model identifier ends in `cannonball-srp-schwarzschild-direct-spice-v2`.
+Existing v1 table controls remain historical regression evidence. Removing our
+table eliminates the measured additional interpolation difference (up to
+0.182333 m / 2.138636e-5 m/s at sampled Saturn joins); it does not remove source
+representation jumps or establish a spacecraft error bound. Preserve every
+force, dependency, kernel, tolerance and native-call limit. M3/3.9 remains open.
+
 ### Loaded-SPK chain interval coverage (2026-09-08)
 
 Use the already-pinned SpiceyPy bindings to inspect all six Tudat-loaded SPK
@@ -833,7 +856,7 @@ Orbit altitude continues to use the M1 radii, Moon `1737400 m` and Mars `3389500
 
 ### 4. Build one explicit Tudat environment
 
-Use `get_default_body_settings_time_limited` with SSB/J2000 and the complete candidate interval. The literal production model identifier is `ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-v1`. Override Moon gravity with pinned `gggrx1200` degree/order 200 in `IAU_Moon` and Mars gravity with pinned `jgmro120d` degree/order 120 in `IAU_Mars`, and require each gravity field's associated frame to equal its rotation target frame. The pinned baseline coefficient hashes are:
+Use `get_default_body_settings` with SSB/J2000, explicit direct-SPICE ephemerides and verified coverage of the complete candidate interval. The literal production model identifier is `ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2`. Override Moon gravity with pinned `gggrx1200` degree/order 200 in `IAU_Moon` and Mars gravity with pinned `jgmro120d` degree/order 120 in `IAU_Mars`, and require each gravity field's associated frame to equal its rotation target frame. The pinned baseline coefficient hashes are:
 
 - Moon: `3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d`
 - Mars: `d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980`
@@ -848,7 +871,7 @@ Collision checks cover exactly Sun, Mercury, Venus, Earth, Moon, Mars, Jupiter, 
 
 Before segmented propagation, concatenate the existing force settings by source: Sun has point gravity, SRP, and Schwarzschild; Moon and Mars each retain exactly one harmonic term; other sources retain one point term. Verify the combined acceleration independently at near-Moon, cruise, and near-Mars states under the existing force tolerance. Reset and read back TudatPy 1.0's mutable global PPN gamma/beta as `(1, 1)` immediately before each arc's acceleration-model construction; concurrent simulations that mutate the shared SPICE/PPN state are unsupported. A resource record alone does not freeze the native globals.
 
-The `300 s` time-limited ephemeris table is an approximation. Both integrators
+Historical v1 regression only: the `300 s` time-limited ephemeris table is an approximation. Both integrators
 using the same table do not test this source of error. Qualification evidence is
 `tests/data/m3_ephemeris_qualification.json`, reproduced with
 `conda run -n space-nav python -m pytest -q -s tests/test_trajectory_ephemeris.py`.
@@ -856,7 +879,7 @@ It covers all eight bodies over the full provisional candidate interval at 38
 deterministic epochs (32 off-grid interior points, endpoints and four near-edge
 points), comparing the default six-point Lagrange tables at 300 s and 150 s
 against direct SPICE with no aberration, SI/SSB/J2000 and TDB seconds from J2000.
-The fixture constructs the same ephemeris settings as production and verifies
+The fixture constructs the former v1 ephemeris settings and verifies
 their safe runtime intervals; missing coverage is rejected before querying.
 
 Measured maxima for 300 s versus direct SPICE were `0.0116642 m` and

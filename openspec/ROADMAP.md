@@ -2,6 +2,12 @@
 
 ## Current priority — M3 resumed (2026-09-07)
 
+On 2026-09-09 the user approved replacing production tabulated ephemerides with
+direct SPICE, preserving all tolerances and the shared 300-second deadline.
+This revision is implemented and verified as task 3.10 (881 passing tests);
+the historical table counterexamples below remain evidence, not a new safety
+certificate. Task 3.9 remains open after the switch.
+
 The user approved resuming M3 after prototype delivery. The prototype is archived
 as `2026-09-07-refine-physical-trajectory` and synced to `visual-transfer-explorer`.
 The sole active `refine-physical-trajectory` restores unfinished M3 requirements.

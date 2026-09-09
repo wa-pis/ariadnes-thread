@@ -23,7 +23,7 @@ _BOUNDARY_DIFFERENCE_LABELS = (
 )
 _PHYSICAL_FORCE_MODEL_ID = (
     "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-"
-    "cannonball-srp-schwarzschild-v1"
+    "cannonball-srp-schwarzschild-direct-spice-v2"
 )
 _STANDARD_GRAVITY_M_S2 = 9.80665
 

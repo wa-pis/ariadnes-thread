@@ -17,7 +17,7 @@ from space_nav.models import (
 
 _FORCE_MODEL_ID = (
     "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-"
-    "cannonball-srp-schwarzschild-v1"
+    "cannonball-srp-schwarzschild-direct-spice-v2"
 )
 _G0_M_S2 = 9.80665
 
@@ -356,6 +356,8 @@ def test_boundary_difference_rejects_invalid_fields(
         ("converged", {"orientation": "ICRF"}, "J2000"),
         ("converged", {"time_scale": "UTC"}, "time_scale"),
         ("converged", {"force_model_id": "other"}, "force_model_id"),
+        ("converged", {"force_model_id": _FORCE_MODEL_ID.replace("direct-spice-v2", "v1")},
+         "force_model_id"),
         ("converged", {"correction_iterations": 9}, "0 through 8"),
         ("converged", {"control_attempts": True}, "0 through 73"),
         ("converged", {"propagation_evaluations": 77}, "0 through 76"),

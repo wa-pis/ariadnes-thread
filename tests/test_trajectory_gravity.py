@@ -376,12 +376,12 @@ def test_gravity_factory_failure_is_chained_with_candidate_context(
     ("combined", "burn_id"),
     [(False, None), (True, None), (True, "departure"), (True, "arrival")],
 )
-@pytest.mark.parametrize("direct_ephemerides", [False, True], ids=["table", "direct"])
+@pytest.mark.parametrize("historical_table", [False, True], ids=["production-direct", "historical-table"])
 def test_real_gravity_matches_independent_fixed_state_component_sum(
     monkeypatch: pytest.MonkeyPatch,
     combined: bool,
     burn_id: Literal["departure", "arrival"] | None,
-    direct_ephemerides: bool,
+    historical_table: bool,
 ) -> None:
     pytest.importorskip("tudatpy")
     import numpy as np
@@ -400,12 +400,15 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
     assert environment.gravity_acceleration_inventory == _expected_inventory()
     assert tuple(environment.gravity_acceleration_settings) == _SOURCE_ORDER
     bodies = environment.bodies
-    if direct_ephemerides:
-        # Test-only replacement after normal resource validation, before forces.
+    if historical_table:
+        # Keep the old v1 path as a test-only comparison, never production.
+        settings = trajectory._create_time_limited_body_settings(
+            environment_setup, candidate.departure_epoch_tdb_s, candidate.arrival_epoch_tdb_s,
+        )
         for body in _SOURCE_ORDER:
             budget.check()
             bodies.get(body).ephemeris = environment_setup.create_body_ephemeris(
-                environment_setup.ephemeris.direct_spice("SSB", "J2000", body), body,
+                settings.get(body).ephemeris_settings, body,
             )
             model = bodies.get(body).ephemeris
             assert (model.frame_origin, model.frame_orientation) == ("SSB", "J2000")
@@ -415,8 +418,8 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
                     body, "SSB", "J2000", "NONE", epoch_tdb_s,
                 )
                 assert np.all(np.isfinite(actual_si))
-                assert np.linalg.norm((actual_si - expected_si)[:3]) <= 0.001
-                assert np.linalg.norm((actual_si - expected_si)[3:]) <= 0.000001
+                assert np.linalg.norm((actual_si - expected_si)[:3]) <= 0.025
+                assert np.linalg.norm((actual_si - expected_si)[3:]) <= 0.0000025
     if combined:
         trajectory._install_tnw_engine(
             candidate.candidate_id, bodies, _spacecraft(),

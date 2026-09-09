@@ -4,6 +4,21 @@ Turn one explicitly selected M2 trade-space candidate into a reproducible, physi
 
 ## ADDED Requirements
 
+### Requirement: Direct SPICE production ephemerides
+Following user approval on 2026-09-09, all eight production body ephemerides SHALL use Tudat direct geometric SPICE in SI/SSB/J2000 with TDB seconds since J2000. No extra time table, circular-orbit approximation or stale-data fallback SHALL be used. Production model identity SHALL end in `cannonball-srp-schwarzschild-direct-spice-v2`; v1 SHALL NOT label a newly produced result. This requirement supersedes historical references below to production interpolation, while retaining their regression tests and unchanged `0.025 m` / `0.0000025 m/s` sampled allocation. Source discontinuities, uniform safety bounds, integration accuracy and full-force runtime remain separate open qualifications.
+
+#### Scenario: Validate the actual production path
+- **WHEN** the production environment is built for the qualification candidate
+- **THEN** every ephemeris is direct SPICE, no time-table factory is called, and all eight body states at the 38 qualification epochs and Saturn's 219 record-boundary probes agree with named geometric SPICE within `0.001 m` and `0.000001 m/s`
+
+#### Scenario: Reject incomplete or incompatible coverage
+- **WHEN** a required SPK target or center has missing or gapped coverage, an overlapping segment has an unsupported type, center or frame, or a native resource call fails
+- **THEN** environment construction raises a contextual chained `TrajectoryRefinementError` before body-system creation, without endpoint-only acceptance, fallback, or kernel reload
+
+#### Scenario: Keep coverage within the shared deadline
+- **WHEN** coverage inspection or direct settings creation exceeds the existing candidate deadline
+- **THEN** no subsequent preparation or propagation starts and the original shared 300-second budget is not reset
+
 ### Requirement: Verified M2 candidate handoff
 The system SHALL expose `refine_physical_trajectory(scenario: Scenario, candidate: ImpulsiveTransferCandidate) -> PhysicalTrajectoryResult`. It SHALL accept only a Pareto candidate reproduced from the same normalized scenario and M2 grid, and SHALL treat the M2 body-centre Lambert solution and scalar impulses only as the initial targeting seed rather than as physical endpoint states.
 
@@ -31,7 +46,7 @@ The selected candidate's departure epoch SHALL mean departure-burn ignition and 
 - **THEN** the terminal Mars-relative state differs from the configured target by no more than `1000 m` in Euclidean position norm and `0.01 m/s` in Euclidean velocity norm
 
 ### Requirement: Declared gravitational dynamics
-The production trajectory SHALL use model identifier `ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-v1`, direct inertial gravity from the Sun, Mercury, Venus, Earth, Jupiter, and Saturn, Moon `gggrx1200` spherical-harmonic gravity through degree and order 200, and Mars `jgmro120d` spherical-harmonic gravity through degree and order 120. The Moon field SHALL use GM `4902800121846.8 m^3/s^2`, normalization radius `1738000 m`, coefficient SHA-256 `3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d`, and `IAU_Moon`. The Mars field SHALL use GM `42828375815756.1 m^3/s^2`, normalization radius `3396000 m`, coefficient SHA-256 `d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980`, and `IAU_Mars`. Loaded GMs SHALL match those values to relative error `1e-15`; each gravity field's associated frame SHALL equal its rotation-model target frame, whose base frame is `J2000`. Moon and Mars point-mass accelerations SHALL NOT be added separately because the harmonic terms already include degree zero. The harmonic fields' constants, coefficient files, frames, and hashes SHALL remain distinct from orbit-altitude shape radii and conservative collision surfaces.
+The production trajectory SHALL use model identifier `ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2`, direct inertial gravity from the Sun, Mercury, Venus, Earth, Jupiter, and Saturn, Moon `gggrx1200` spherical-harmonic gravity through degree and order 200, and Mars `jgmro120d` spherical-harmonic gravity through degree and order 120. The Moon field SHALL use GM `4902800121846.8 m^3/s^2`, normalization radius `1738000 m`, coefficient SHA-256 `3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d`, and `IAU_Moon`. The Mars field SHALL use GM `42828375815756.1 m^3/s^2`, normalization radius `3396000 m`, coefficient SHA-256 `d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980`, and `IAU_Mars`. Loaded GMs SHALL match those values to relative error `1e-15`; each gravity field's associated frame SHALL equal its rotation-model target frame, whose base frame is `J2000`. Moon and Mars point-mass accelerations SHALL NOT be added separately because the harmonic terms already include degree zero. The harmonic fields' constants, coefficient files, frames, and hashes SHALL remain distinct from orbit-altitude shape radii and conservative collision surfaces.
 
 #### Scenario: Match an independent force assembly
 - **WHEN** acceleration components are evaluated at fixed near-Moon, cruise, and near-Mars SSB/J2000 states
@@ -176,19 +191,20 @@ A missing kernel or gravity file, hash or frame mismatch, uncovered epoch, inval
 - **THEN** their status, commands, boundary epochs, scientific values, and model diagnostics are identical
 
 ### Requirement: Qualification of feasibility and shared numerical state
-The system SHALL describe `mass-infeasible` with reason `preflight-m2-propellant-shortfall` as rejection by the selected M2 seed-budget policy, not proof that no physical transfer exists. A scenario passing that filter SHALL NOT be described as a demonstrated finite-burn solution until the targeting gate passes. The implementation SHALL qualify interpolated ephemerides independently of integrator agreement, validate the combined force assembly, and reestablish the declared PPN values before every native arc. The single cooperative deadline SHALL include M2 verification, resource construction/hashing, and manifest construction; it SHALL NOT restart between stages.
+The system SHALL describe `mass-infeasible` with reason `preflight-m2-propellant-shortfall` as rejection by the selected M2 seed-budget policy, not proof that no physical transfer exists. A scenario passing that filter SHALL NOT be described as a demonstrated finite-burn solution until the targeting gate passes. The implementation SHALL qualify production direct ephemerides independently of integrator agreement, validate the combined force assembly, and reestablish the declared PPN values before every native arc. The single cooperative deadline SHALL include M2 verification, resource construction/hashing, and manifest construction; it SHALL NOT restart between stages.
 
 #### Scenario: Change only dry mass in the provisional fixture
 - **WHEN** reference dry mass changes from 1000 kg to 500 kg and all other scenario inputs remain fixed
 - **THEN** candidate `d0001-t0035` retains its geometry, epochs, excess velocities, delta-v, and ideal masses, its M2 `mass_feasible` flag changes from false to true, and no finite-burn convergence is inferred from that flag
 
-#### Scenario: Qualify interpolation before targeting
-- **WHEN** the time-limited ephemeris environment is prepared for the prerequisite targeting spike
-- **THEN** checked-in evidence reports per-body maximum position and velocity differences against direct SPICE at deterministic off-grid and interval-edge epochs and against a denser table, and an explicit measured error allocation within the existing endpoint budgets is strictly validated before the spike proceeds
+#### Scenario: Qualify direct ephemerides before targeting
+- **WHEN** the direct ephemeris environment is prepared for the prerequisite targeting spike
+- **THEN** whole-chain coverage and production-path SPICE parity pass the direct-ephemeris requirement, and no historical table test or API parity test substitutes for the remaining full-force safety and integration gates
 
 Before targeting, the sampled ephemeris input-state allocation SHALL be
 `0.025 m` in Euclidean position and `0.0000025 m/s` in Euclidean velocity for
-both tables against SPICE and for their mutual difference. This allocation
+production input states against SPICE. Historical table regressions retain
+the same allocation for both tables and their mutual difference. This allocation
 does not bound unsampled epochs or propagated spacecraft error and does not
 replace the existing closure, integration, or model-sensitivity gates.
 

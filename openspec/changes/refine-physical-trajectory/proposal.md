@@ -9,6 +9,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ## What Changes
 
+- User-approved on 2026-09-09: replace production 300 s interpolated ephemerides with Tudat direct SPICE for all eight bodies. Preserve the old tables only as regression evidence; validate complete SPK center-chain coverage before environment creation, retain all numerical tolerances and the shared deadline, and identify the revised model as `cannonball-srp-schwarzschild-direct-spice-v2` (with the existing model prefix).
 - Add deterministic boundary-value refinement from the configured lunar parking-orbit state to the configured Martian target-orbit state, using the M2 candidate only as the initial targeting seed.
 - Propagate separate departure-burn, coast, and arrival-burn arcs with TudatPy, coupled spacecraft mass, dry-mass protection, impact detection, and bounded targeting failure.
 - Use the pinned Moon `gggrx1200` degree/order 200 and Mars `jgmro120d` degree/order 120 gravity fields, point-mass perturbations, cannonball solar-radiation pressure with Moon/Earth/Mars occultation, and the Sun Schwarzschild correction.
