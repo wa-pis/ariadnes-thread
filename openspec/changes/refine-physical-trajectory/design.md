@@ -1,5 +1,31 @@
 ## Context
 
+### Conditional position-reach integration bound (2026-09-10)
+
+For a continuous position trajectory with initial anchor error e, initial
+speed at most v and acceleration norm at most A throughout [0,h], integrating
+the acceleration inequality twice gives an anchor-centered reach radius
+`R = e + v*h + A*h^2/2` meters. All four inputs are explicit, finite and
+nonnegative; v must include initial velocity uncertainty. The acceleration
+premise must be independently established on the entire region reached.
+Using an acceleration evaluated only at the initial state would be circular
+and is not allowed. Discontinuous SPK source representations still require
+their separate jump-aware ephemeris enclosure, not this smooth-motion formula.
+
+The private helper computes the expression with exact Fractions and rounds
+binary64 upward only when needed. Exact zero is preserved; a positive value
+below the smallest subnormal rounds upward, and unrepresentable upper bounds
+fail. Check both shared-deadline boundaries without incrementing native work.
+
+Verify exact kinematics for zero duration, initial error, constant velocity,
+constant acceleration, mixed binary inputs and positive underflow; reject
+negative/boolean/nonfinite inputs and overflow. Compose the reach and distance
+helpers on x_ship(t)=10-t-t^2 and x_body(t)=t over [0,1] seconds: the exact
+minimum is 7 m, and the computed floor may establish clearance for a 6 m
+guard but not an 8 m guard. This analytic control does not establish the
+full-force acceleration premise, integration error or actual mission safety.
+Production safety remains unwired and task 3.9 remains open.
+
 ### Conditional relative-distance floor (2026-09-10)
 
 Add a private geometry primitive for two declared SSB/J2000 position balls.

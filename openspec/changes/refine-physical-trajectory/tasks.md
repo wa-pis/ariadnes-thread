@@ -51,6 +51,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional position-reach integration bound (2026-09-10):
+Add an outward-rounded private reach radius e+v*h+A*h^2/2 with explicit
+nonnegative initial error, initial speed bound, acceleration bound and duration.
+Verify exact constant-velocity/acceleration controls, zero duration, mixed
+inputs, underflow, invalid inputs, overflow and shared-deadline rejection.
+Compose with the distance floor on an independent exact-motion control with
+7 m minimum separation and distinct 6 m/8 m clearance guards. Run focused and
+full tests, Ruff, strict validation and legacy checksum. Require an independently
+justified full-interval acceleration bound before production use; the formula
+does not cover source-representation jumps or certify numerical propagation.
+Keep task 3.9 open and production safety decisions unchanged.
+All 56 focused geometry/reach tests and 978 full-suite tests passed (159.92 s
+for the full suite), as did Ruff, strict validation and the legacy checksum.
+
 Task 3.9 conditional relative-distance floor (2026-09-10):
 Add a private downward-rounded separation floor for two supplied position
 balls, requiring explicit finite nonnegative spacecraft/body reach radii.

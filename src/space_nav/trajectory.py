@@ -1399,6 +1399,43 @@ def _install_tnw_engine(
     return engine_name
 
 
+def _position_reach_upper_bound(
+    budget: _RefinementBudget,
+    duration_s: float,
+    initial_position_error_m: float,
+    initial_speed_bound_m_s: float,
+    acceleration_bound_m_s2: float,
+) -> float:
+    """Bound position reach from an SSB/J2000 anchor in metres over [0, h].
+
+    The supplied speed must enclose actual initial speed, including velocity
+    error. Acceleration must be bounded throughout the interval independently;
+    this integration inequality does not certify that premise or a numerical
+    trajectory. All four scalar inputs must be finite and nonnegative.
+    """
+    budget.check()
+    try:
+        values = []
+        for name, value in (
+            ("duration_s", duration_s), ("initial_position_error_m", initial_position_error_m),
+            ("initial_speed_bound_m_s", initial_speed_bound_m_s),
+            ("acceleration_bound_m_s2", acceleration_bound_m_s2),
+        ):
+            number = Fraction(_finite_float(name, value))
+            if number < 0:
+                raise ValueError(f"{name} must be nonnegative")
+            values.append(number)
+        h, error, speed, acceleration = values
+        reach_m = error + speed * h + acceleration * h * h / 2
+        result_m = _finite_float("position reach upper bound_m", float(reach_m))
+        if Fraction(result_m) < reach_m:
+            result_m = _finite_float("position reach upper bound_m", math.nextafter(result_m, math.inf))
+    except (ArithmeticError, TypeError, ValueError) as exc:
+        _raise_refinement_error(budget.candidate_id, "position-reach-bound", str(exc), exc)
+    budget.check()
+    return result_m
+
+
 def _relative_distance_lower_bound(
     budget: _RefinementBudget,
     spacecraft_anchor_m: tuple[float, float, float],

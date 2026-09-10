@@ -10,6 +10,64 @@ from space_nav import trajectory
 from space_nav.errors import TrajectoryRefinementError
 
 
+@pytest.mark.parametrize("values", [
+    (0.0, 0.0, 0.0, 0.0), (0.0, 0.1, 1e300, 1e300),
+    (2.0, 0.0, 3.0, 0.0), (2.0, 0.0, 0.0, 4.0),
+    (0.1, 0.2, 0.3, 0.4), (1e-300, 0.0, 1e-300, 0.0),
+])
+def test_position_reach_matches_exact_kinematics(values: tuple[float, float, float, float]) -> None:
+    budget = trajectory._RefinementBudget("reach-bound", 300.0)
+    result = trajectory._position_reach_upper_bound(budget, *values)
+    h, error, speed, acceleration = map(Fraction, values)
+    exact_m = error + speed * h + acceleration * h ** 2 / 2
+    assert Fraction(result) >= exact_m
+    if exact_m == 0:
+        assert result == 0.0
+    else:
+        assert Fraction(math.nextafter(result, -math.inf)) <= exact_m
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+
+
+def test_position_reach_composes_with_distance_floor_on_exact_motion() -> None:
+    budget = trajectory._RefinementBudget("reach-bound", 300.0)
+    # x_ship(t)=10-t-t^2; x_body(t)=t for 0<=t<=1, so minimum distance is 7 m.
+    ship_reach_m = trajectory._position_reach_upper_bound(budget, 1.0, 0.0, 1.0, 2.0)
+    body_reach_m = trajectory._position_reach_upper_bound(budget, 1.0, 0.0, 1.0, 0.0)
+    floor_m = trajectory._relative_distance_lower_bound(
+        budget, (10.0, 0.0, 0.0), (0.0,) * 3, ship_reach_m, body_reach_m,
+    )
+    assert 0 <= 7 - Fraction(floor_m) <= Fraction("1e-13")  # m
+    for i in range(101):
+        t = Fraction(i, 100)
+        assert Fraction(floor_m) <= 10 - 2 * t - t * t
+    assert floor_m > 6.0 and floor_m <= 8.0  # No clearance claim for an 8 m guard.
+
+
+@pytest.mark.parametrize("field", range(4))
+@pytest.mark.parametrize("value", [-1.0, True, math.nan, math.inf])
+def test_position_reach_rejects_invalid_input(field: int, value: float) -> None:
+    values = [1.0, 0.0, 1.0, 1.0]
+    values[field] = value
+    with pytest.raises(TrajectoryRefinementError, match="position-reach-bound") as caught:
+        trajectory._position_reach_upper_bound(trajectory._RefinementBudget("reach-bound", 300.0), *values)
+    assert caught.value.__cause__ is not None
+
+
+def test_position_reach_rejects_overflow() -> None:
+    with pytest.raises(TrajectoryRefinementError, match="position-reach-bound"):
+        trajectory._position_reach_upper_bound(
+            trajectory._RefinementBudget("reach-bound", 300.0), 1e300, 0.0, 1.0, 1e300,
+        )
+
+
+@pytest.mark.parametrize("expiry_check", [1, 2])
+def test_position_reach_preserves_shared_deadline(expiry_check: int) -> None:
+    clock = iter([0.0] * expiry_check + [300.0])
+    budget = trajectory._RefinementBudget("reach-bound", 300.0, lambda: next(clock))
+    with pytest.raises(TrajectoryRefinementError, match="shared deadline"):
+        trajectory._position_reach_upper_bound(budget, 1.0, 0.0, 1.0, 1.0)
+
+
 @pytest.mark.parametrize("offset", [0.0, 1e12])
 @pytest.mark.parametrize("reach", [(0.0, 0.0), (0.1, 0.2), (2.0, 3.0), (4.0, 5.0)])
 def test_distance_bound_matches_translated_exact_triangle(
