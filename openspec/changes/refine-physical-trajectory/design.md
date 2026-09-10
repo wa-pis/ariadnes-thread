@@ -1,5 +1,29 @@
 ## Context
 
+### Velocity-domain first-exit counterexample (2026-09-10)
+
+For a force majorant A valid only inside a position/speed domain, the
+first-exit argument must close both coordinates: require initial inclusion,
+`e+v0*h+A*h^2/2 < R` and `v0+A*h < V`. Before a hypothetical first exit
+through either boundary, both integral bounds hold and contradict that exit.
+Positional inclusion alone does not establish a speed-dependent force bound.
+
+Use the synthetic SI control x'=v, v'=k*v^2 with k=1/m, x0=0 m and v0=1 m/s.
+Its exact solution, in these SI units, is v=1/(1-t), x=-log(1-t) for t<1 s.
+A trial |x|<=2 m, |v|<=2 m/s implies A=4 m/s^2. At h=0.1 s both strict
+tests pass. At h=0.25 s the speed majorant equals 2 m/s, so the strict test
+is unresolved even though the true speed is still below the boundary. At
+h=0.75 s the position majorant remains 1.875 m < 2 m, but true speed is
+4 m/s and true acceleration 16 m/s^2: position-only acceptance would rely
+on a false force premise. The exact position remains inside the trial box.
+
+Verify these cases using exact rational speed values and the independent
+analytic position formula, with no new production API or native work.
+This synthetic counterexample is not the actual Schwarzschild model and
+does not establish M3's speed, mass, ephemeris or numerical-error domains.
+It records a required joint-domain check before any real safety integration.
+Keep task 3.9 and all production decisions/limits unchanged.
+
 ### First-exit closure on a monopole control (2026-09-10)
 
 A trial position-ball radius R is not itself a proven reach. First establish

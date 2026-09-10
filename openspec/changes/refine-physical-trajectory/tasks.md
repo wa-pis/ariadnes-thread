@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 velocity-domain first-exit counterexample (2026-09-10):
+Verify joint position/speed inclusion on x'=v, v'=v^2 in normalized SI units:
+0.1 s passes; 0.25 s fails strict speed inclusion without actual domain exit;
+0.75 s retains positional inclusion while true speed invalidates the assumed
+acceleration bound. Use exact rational velocity and analytic position oracles.
+Run focused/full tests, Ruff, strict validation and legacy checksum. This is
+a synthetic necessity control, not a real-mission or Schwarzschild enclosure.
+Keep full-force domains and numerical-error premises open under task 3.9.
+All 65 focused geometry/reach tests and 987 full-suite tests passed (159.69 s
+for the full suite), as did Ruff, strict validation and the legacy checksum.
+
 Task 3.9 first-exit closure on a monopole control (2026-09-10):
 Compose distance, whole-domain monopole acceleration and reach bounds on an
 independent circular solution. Verify strict inclusion for 0.05 s and failure

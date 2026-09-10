@@ -10,6 +10,39 @@ from space_nav import trajectory
 from space_nav.errors import TrajectoryRefinementError
 
 
+@pytest.mark.parametrize("duration_s,expected_inclusion", [(0.1, True), (0.25, False), (0.75, False)])
+def test_velocity_domain_is_required_for_velocity_dependent_force(
+    duration_s: float, expected_inclusion: bool,
+) -> None:
+    budget = trajectory._RefinementBudget("phase-domain-control", 300.0)
+    # SI control: x'=v, v'=k*v^2, k=1/m, x(0)=0 m, v(0)=1 m/s.
+    # Exact solution: v=1/(1-t), x=-log(1-t), with t in seconds, t<1.
+    position_domain_m, speed_domain_m_s = 2.0, 2.0
+    acceleration_bound_m_s2 = 4.0  # Valid only while |v|<=2 m/s.
+    reach_m = trajectory._position_reach_upper_bound(
+        budget, duration_s, 0.0, 1.0, acceleration_bound_m_s2,
+    )
+    speed_upper_m_s = Fraction(1) + Fraction(acceleration_bound_m_s2) * Fraction(duration_s)
+    assert reach_m < position_domain_m  # Position alone would accept every case.
+    assert (reach_m < position_domain_m and speed_upper_m_s < Fraction(speed_domain_m_s)) is expected_inclusion
+    end_velocity_m_s = 1 / (1 - Fraction(duration_s))
+    end_position_m = -math.log1p(-duration_s)
+    assert 0 < end_position_m < position_domain_m
+    if expected_inclusion:
+        for i in range(101):
+            t_s = Fraction(duration_s) * i / 100
+            assert 1 / (1 - t_s) <= speed_upper_m_s < Fraction(speed_domain_m_s)
+            assert -math.log1p(-float(t_s)) <= reach_m
+    elif duration_s == 0.25:
+        assert speed_upper_m_s == Fraction(speed_domain_m_s)
+        assert end_velocity_m_s < Fraction(speed_domain_m_s)  # Unresolved is not actual exit.
+    else:
+        assert end_velocity_m_s > Fraction(speed_domain_m_s)
+        assert end_velocity_m_s ** 2 > Fraction(acceleration_bound_m_s2)
+        # At 0.75 s the position box still contains x, but its assumed force bound is false.
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+
+
 @pytest.mark.parametrize("duration_s,expected_inclusion", [(0.05, True), (1.0, False)])
 @pytest.mark.parametrize("body_reach_m", [0.0, 0.25])
 def test_first_exit_domain_closes_only_for_short_circular_control(
