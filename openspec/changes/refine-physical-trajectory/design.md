@@ -1,5 +1,31 @@
 ## Context
 
+### Short full-force controls cross a Jupiter source-record join (2026-09-10)
+
+Extend the existing force test matrix with direct-SPICE departure and arrival
+controls at the previously qualified Jupiter record join TDB 1003871232 s.
+Each uses the same near-Moon/cruise/near-Mars relative geometries and begins
+0.01 s before the join, propagating the existing 0.025 s isolated test arc.
+The environment coverage interval explicitly brackets the entire arc and
+its UTC labels are derived from those TDB bounds. These are synthetic force
+controls, not a new physical mission candidate or a targeting attempt.
+
+Require finite thrust-callback epochs before, at and after the join; retain
+all eight-source SPICE parity, saved native-Time output, force-component,
+PPN reset and declared-domain controls under their unchanged tolerances.
+The two cases add six qualification propagations: each case still uses
+three evaluations/three native arcs and the same cooperative 300 s budget.
+The eight original test cases and their identifiers remain unchanged.
+
+The added controls produce 1008 callback source-state comparisons (384 at
+non-output callback epochs) and 192 saved-output source comparisons. All
+meet 0.001 m / 0.000001 m/s; saved-output differences are zero. The known
+source-representation jump is not removed, treated as physical motion, or
+converted into a safety certificate. This samples native update behavior
+across a difficult boundary without proving an interval error enclosure,
+all-stage coverage or feasible targeting. Task 3.9 and production stay open
+and unchanged; scientific tolerances and work limits are preserved.
+
 ### Source-state observation in finite thrust callbacks (2026-09-10)
 
 Wrap only the existing constant-thrust callback in the six direct-SPICE

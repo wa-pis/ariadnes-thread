@@ -376,15 +376,23 @@ def test_gravity_factory_failure_is_chained_with_candidate_context(
 
 
 @pytest.mark.parametrize(
-    ("combined", "burn_id"),
-    [(False, None), (True, None), (True, "departure"), (True, "arrival")],
+    ("combined", "burn_id", "historical_table", "join_tdb_s"),
+    [
+        pytest.param(combined, burn_id, historical, None,
+                     id=f"{'historical-table' if historical else 'production-direct'}-{combined}-{burn_id}")
+        for historical in (False, True)
+        for combined, burn_id in ((False, None), (True, None), (True, "departure"), (True, "arrival"))
+    ] + [
+        pytest.param(True, burn, False, 1003871232.0, id=f"jupiter-join-{burn}")
+        for burn in ("departure", "arrival")
+    ],
 )
-@pytest.mark.parametrize("historical_table", [False, True], ids=["production-direct", "historical-table"])
 def test_real_gravity_matches_independent_fixed_state_component_sum(
     monkeypatch: pytest.MonkeyPatch,
     combined: bool,
     burn_id: Literal["departure", "arrival"] | None,
     historical_table: bool,
+    join_tdb_s: float | None,
 ) -> None:
     pytest.importorskip("tudatpy")
     import numpy as np
@@ -393,6 +401,14 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
     )
 
     candidate = _real_candidate(monkeypatch)
+    if join_tdb_s is not None:
+        start_tdb_s, end_tdb_s = join_tdb_s - 0.01, join_tdb_s + 1.0
+        candidate = _candidate(
+            departure_epoch_tdb_s=start_tdb_s, arrival_epoch_tdb_s=end_tdb_s,
+            departure_epoch_utc=ephemeris.tdb_to_utc(start_tdb_s),
+            arrival_epoch_utc=ephemeris.tdb_to_utc(end_tdb_s),
+            flight_time_s=end_tdb_s - start_tdb_s,
+        )
     budget = trajectory._RefinementBudget(candidate.candidate_id, 300.0)
     environment = trajectory._build_physical_environment(
         candidate,
@@ -614,7 +630,12 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
                     assert np.linalg.norm(difference[3:]) <= 0.000001, (label, source, callback_epoch_tdb_s)
             assert internal_callbacks > 0
             assert non_epoch_callback_count > 0
+            if join_tdb_s is not None:
+                callback_epochs = [epoch for epoch, _ in stage_sources]
+                assert min(callback_epochs) < join_tdb_s < max(callback_epochs)
+                assert join_tdb_s in callback_epochs
             print(json.dumps({"label": label, "burn_id": burn_id,
+                "source_join_tdb_s": join_tdb_s,
                 "thrust_callback_count": len(stage_sources), "nonoutput_callback_count": internal_callbacks,
                 "non_epoch_callback_count": non_epoch_callback_count,
                 "scope": "observed thrust callbacks, not all stages or uniform native dispatch"}, sort_keys=True))

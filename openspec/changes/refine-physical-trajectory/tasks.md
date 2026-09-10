@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 native force controls across a Jupiter record join (2026-09-10):
+Add two direct burn cases to the existing matrix, with explicit coverage
+bracketing the known TDB 1003871232 source join. Verify callbacks before/at/
+after the join, all prior source parity/force checks and unchanged per-case
+native counters/deadline. Preserve original cases and tolerances; report
+the added six qualification arcs, not a production limit revision. Run
+gravity/full pytest, Ruff, strict validation and legacy checksum; retain
+the representation-jump caveat and leave interval safety/3.9 unqualified.
+All 40 gravity tests passed (24.05 s) and all 1077 full-suite tests passed
+(181.13 s), as did Ruff, strict validation and the unchanged legacy hash.
+
 Task 3.9 finite thrust-callback source-state observations (2026-09-10):
 Wrap the existing thrust callback in six direct short burn controls without
 changing returned thrust. Verify cached source states against SPICE after
