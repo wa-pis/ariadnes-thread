@@ -1,5 +1,36 @@
 ## Context
 
+### Initial PCK Euler-angle arithmetic enclosures (2026-09-10)
+
+Use the already hashed and validated text-PCK inputs to evaluate RA, DEC and
+PM at the exact stored start epoch. The polynomial time units and lunar
+sine/cosine corrections follow the [NAIF PCK model](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/pck.html).
+Evaluate polynomial and phase coefficients with Fractions; do not replace
+the authoritative resources or change their physical constants.
+
+For a rational phase in degrees, reduce exactly modulo 360 to [-180,180).
+Multiply by the existing rational pi enclosure, take the rational midpoint,
+and evaluate degree-47 sine/cosine Taylor polynomials exactly. Each remainder
+is bounded by `abs(midpoint)^48/48!`; add half the radian-input interval width
+using the unit Lipschitz constant. The interval contains the ideal trig value
+without relying on native sine/cosine accuracy. Independent tests cover all
+quadrants, sqrt(1/2), exact huge-turn reduction and inexact-input rejection.
+
+For each pinned Euler angle, add signed periodic intervals to the exact
+polynomial. Reduce PM modulo a revolution, rejecting a wrap-crossing interval,
+then enclose degree-to-radian conversion. Compare the six observed BODEUL
+angles with both endpoints and report outward absolute errors in radians.
+Require finite output and zero native long-axis offset. Retain source-hash,
+override, frame, rate and deadline checks; the original rate-return contract
+is unchanged. Two BODEUL reads are added per inventory, no spacecraft arcs.
+
+These are error bounds at one epoch relative to the declared ideal text-PCK
+angles, not physical orientation uncertainty, uniform native error, or a
+rotation-matrix certificate. No new mission angular tolerance is allocated.
+The observed PM bounds are 7.374458205306444e-14 rad for Moon and
+5.055961329794478e-13 rad for Mars. Native matrix parity alone does not bound
+these shared upstream errors. Task 3.9 remains open.
+
 ### Complete harmonic term assembly readback (2026-09-10)
 
 Request all degree/order vectors for the declared Moon 200 and Mars 120

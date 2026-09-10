@@ -1766,6 +1766,45 @@ def test_pi_enclosure_machin_identity_and_width() -> None:
     assert float(lower) == float(upper) == math.pi  # Binary64 parity, not the proof.
 
 
+def _sin_cos_degrees_bounds(angle_deg: Fraction) -> tuple[tuple[Fraction, Fraction], ...]:
+    """Enclose sine/cosine with exact degree reduction and Taylor remainder bounds."""
+    assert isinstance(angle_deg, Fraction)
+    reduced_deg = (angle_deg + 180) % 360 - 180
+    radians = sorted(reduced_deg * pi / 180 for pi in _pi_rational_bounds())
+    midpoint = (radians[0] + radians[1]) / 2
+    assert abs(midpoint) < 4
+    # Degree-47 Taylor polynomials; every 48th derivative has magnitude <=1.
+    remainder = abs(midpoint)**48 / math.factorial(48) + (radians[1] - radians[0]) / 2
+    results: list[tuple[Fraction, Fraction]] = []
+    for parity in (1, 0):
+        value = sum((Fraction((-1)**k, math.factorial(2 * k + parity)) * midpoint**(2 * k + parity)
+                     for k in range(24)), Fraction(0))
+        results.append((value - remainder, value + remainder))
+    return tuple(results)
+
+
+@pytest.mark.parametrize(("angle_deg", "sine", "cosine"), [
+    (0, 0, 1), (90, 1, 0), (180, 0, -1), (270, -1, 0), (-90, -1, 0), (360, 0, 1),
+])
+def test_trig_enclosure_exact_quadrants(angle_deg: int, sine: int, cosine: int) -> None:
+    bounds = _sin_cos_degrees_bounds(Fraction(angle_deg))
+    for (lower, upper), exact in zip(bounds, (sine, cosine), strict=True):
+        assert lower <= exact <= upper and upper - lower < Fraction(2)**-100
+
+
+def test_trig_enclosure_diagonal_and_large_exact_turns() -> None:
+    for lower, upper in _sin_cos_degrees_bounds(Fraction(45)):
+        assert 0 < lower and lower**2 <= Fraction(1, 2) <= upper**2
+        assert upper - lower < Fraction(2)**-100
+    for angle_deg in (Fraction(1, 3), Fraction(-45)):
+        assert _sin_cos_degrees_bounds(angle_deg + 360 * 10**18) == _sin_cos_degrees_bounds(angle_deg)
+
+
+def test_trig_enclosure_rejects_inexact_input() -> None:
+    with pytest.raises(AssertionError):
+        _sin_cos_degrees_bounds(0.5)  # type: ignore[arg-type] -- explicit boundary rejection.
+
+
 def _fully_lit_srp_anchor_error_bound_m_s2(
     sun_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
     luminosity_w: float, area_m2: float, cr: float, mass_kg: float,
@@ -2132,11 +2171,19 @@ def _check_pinned_pck_rotation_rates(
     phase_rates = tuple(Fraction(value) / century_s for value in phases[1::2])
     epoch_magnitude_s = max(abs(Fraction(start_tdb_s)), abs(Fraction(end_tdb_s)))
     bounds: dict[str, Fraction] = {}
+    angle_error_upper_rad: dict[str, dict[str, float]] = {}
+    phase_bounds = [_sin_cos_degrees_bounds(Fraction(offset) + Fraction(rate) * Fraction(start_tdb_s) / century_s)
+                    for offset, rate in zip(phases[::2], phases[1::2], strict=True)]
+    pi_bounds = _pi_rational_bounds()
     for body, name, frame_id in ((301, "Moon", 10020), (499, "Mars", 10014)):
         budget.check()
         frame = f"IAU_{name.upper()}"
         assert spice.namfrm(frame) == frame_id and spice.frinfo(frame_id) == (body, 2, body)
         components = []
+        native_angles = spice.bodeul(body, start_tdb_s)
+        assert len(native_angles) == 4 and all(math.isfinite(value) for value in native_angles)
+        assert native_angles[3] == 0.0  # No long-axis offset in the pinned model.
+        angle_error_upper_rad[name] = {}
         for polynomial, periodic, time_unit_s in (("POLE_RA", "RA", century_s),
                                                  ("POLE_DEC", "DEC", century_s), ("PM", "PM", 86400)):
             amplitudes = tuple(inputs[f"BODY301_NUT_PREC_{periodic}"]) if body == 301 else ()
@@ -2145,6 +2192,26 @@ def _check_pinned_pck_rotation_rates(
                 tuple(inputs[f"BODY{body}_{polynomial}"]), time_unit_s,
                 epoch_magnitude_s, amplitudes, phase_rates if body == 301 else (),
             ))
+            time = Fraction(start_tdb_s) / time_unit_s
+            angle_deg = sum((Fraction(value) * time**power for power, value in
+                            enumerate(inputs[f"BODY{body}_{polynomial}"])), Fraction(0))
+            lower_deg = upper_deg = angle_deg
+            for amplitude, phase in zip(amplitudes, phase_bounds if body == 301 else (), strict=True):
+                term = [Fraction(amplitude) * endpoint for endpoint in phase[int(periodic == "DEC")]]
+                lower_deg += min(term)
+                upper_deg += max(term)
+            # BODEUL returns the prime meridian modulo one revolution.
+            if periodic == "PM":
+                turns = lower_deg // 360
+                assert upper_deg // 360 == turns  # Reject a wrap-crossing enclosure.
+                lower_deg -= 360 * turns
+                upper_deg -= 360 * turns
+            angle_rad = [degree * pi / 180 for degree in (lower_deg, upper_deg) for pi in pi_bounds]
+            observed_rad = Fraction(native_angles[len(components) - 1])
+            error_rad = max(abs(observed_rad - endpoint) for endpoint in angle_rad)
+            reported_error_rad = math.nextafter(float(error_rad), math.inf)
+            assert math.isfinite(reported_error_rad) and Fraction(reported_error_rad) >= error_rad
+            angle_error_upper_rad[name][periodic] = reported_error_rad
         bounds[name] = sum(components, Fraction(0))
         # Euler generators have unit operator norm: |omega| <= sum |angle'|.
         for epoch_tdb_s in np.linspace(start_tdb_s, end_tdb_s, 13):
@@ -2153,6 +2220,8 @@ def _check_pinned_pck_rotation_rates(
             assert np.max(np.abs(rotation @ rotation.T - np.eye(3))) <= 1e-14
             assert float(np.linalg.norm(angular_velocity)) <= float(bounds[name])
     budget.check()
+    print(json.dumps({"pck_anchor_epoch_tdb_s": start_tdb_s,
+                      "pck_anchor_angle_error_upper_rad": angle_error_upper_rad}, sort_keys=True, allow_nan=False))
     return bounds
 
 

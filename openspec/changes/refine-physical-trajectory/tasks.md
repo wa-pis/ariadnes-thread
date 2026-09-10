@@ -51,6 +51,23 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 initial PCK Euler-angle arithmetic (2026-09-10):
+Evaluate the six initial Euler angles from pinned polynomial/periodic data
+with rational sine/cosine and pi enclosures. Verify quadrant, diagonal,
+large-turn and invalid-input oracles; preserve all five resource-rejection
+controls and report outward radian bounds against BODEUL after wrap checks.
+Run focused/full pytest, Ruff, strict OpenSpec and legacy checksum. Do not
+allocate a new angular mission tolerance, infer a full-matrix certificate
+or add spacecraft arcs; task 3.9 remains open.
+
+Verification: 15 focused tests passed (29.86 s), including both inventories
+and all resource-rejection controls; all 1250 project tests passed (255.89 s).
+The largest observed angle-error enclosure is Mars PM at
+5.055961329794478e-13 rad; both inventory variants reproduce all six bounds.
+Ruff, strict OpenSpec and the unchanged legacy SHA-256 pass. Native spacecraft
+controls/evaluations/arcs remain (4,4,4) or (0,0,0) by variant; two BODEUL
+readbacks per inventory do not propagate a spacecraft or change the model.
+
 Task 3.9 complete harmonic term assembly readback (2026-09-10):
 Request 20,301 Moon and 7,381 Mars term vectors in the four existing coast
 controls. Verify finite dimensions, stable degree/order mapping against the
