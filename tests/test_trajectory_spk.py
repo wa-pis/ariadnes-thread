@@ -825,6 +825,42 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             actual_m = sum(values_km) * 1000
             assert 3 * abs(Fraction(actual_m) - 1000 * exact_sum_km) <= 1000 * addition_km + conversion_m
 
+    # Moon/Earth joins coincide: neither link's representation error may be omitted.
+    moon_epochs_s = {epoch for target, epoch in joins if target == 301}
+    earth_epochs_s = {epoch for target, epoch in joins if target == 399}
+    assert moon_epochs_s == earth_epochs_s and len(moon_epochs_s) == 73
+    moon_chain_join_bounds_m: list[tuple[float, float]] = []
+    moon_chain_join_checks = 0
+    for epoch_s in sorted(moon_epochs_s):
+        budget.check()
+        half_width_s = 16 * Fraction(math.ulp(float(epoch_s)))
+        jump_sum_m = sum((abs(a - b) for link in (301, 399)
+                          for a, b in zip(joins[link, epoch_s][1][0], joins[link, epoch_s][-1][0])), Fraction(0))
+        rate_sum_m_s = sum((join_error_terms[link, epoch_s, sign][0]
+                            for link in (301, 399) for sign in (-1, 1)), Fraction(0))
+        envelope_m = jump_sum_m + rate_sum_m_s * half_width_s + Fraction(chain_position_bounds_m[301])
+        reported_m = math.nextafter(float(envelope_m), math.inf)
+        assert math.isfinite(reported_m) and Fraction(reported_m) >= envelope_m
+        moon_chain_join_bounds_m.append((float(epoch_s), reported_m))
+        # Exact rational sums retain cancellation; the bound assumes none.
+        endpoint_branches_m = [tuple(a + b for a, b in zip(
+            joins[301, epoch_s][moon_sign][0], joins[399, epoch_s][earth_sign][0],
+        )) for moon_sign in (-1, 1) for earth_sign in (-1, 1)]
+        for left in endpoint_branches_m:
+            for right in endpoint_branches_m:
+                assert sum((abs(a - b) for a, b in zip(left, right)), Fraction(0)) <= jump_sum_m
+        for sign in (-1, 1):
+            query_s = float(epoch_s) - sign * math.ulp(float(epoch_s))
+            exact_m = tuple(a + b for a, b in zip(
+                joins[301, epoch_s][sign][1], joins[399, epoch_s][sign][1],
+            ))
+            state_m = spice.spkssb(301, query_s, "J2000")[:3] * 1000
+            assert np.all(np.isfinite(state_m))
+            error_m = sum((abs(Fraction(value) - exact) for value, exact in zip(state_m, exact_m)), Fraction(0))
+            assert error_m <= envelope_m, (epoch_s, sign, float(error_m), reported_m)
+            moon_chain_join_checks += 1
+    assert moon_chain_join_checks == 146
+
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
     observations: dict[int, list[tuple[float, float]]] = {}
@@ -879,6 +915,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         },
         "conditional_chain_position_bound_m": chain_position_bounds_m,
         "conditional_chain_add_scale_bound_m": chain_add_scale_bounds_m,
+        "moon_chain_join_fields": ["epoch_tdb_s", "conditional_l1_bound_m"],
+        "moon_chain_join_bounds": moon_chain_join_bounds_m,
+        "moon_chain_join_checks": moon_chain_join_checks,
         "record_join_fields": ["epoch_tdb_s", "exact_position_jump_l1_m", "jump_omission_fails"],
         "record_joins_by_target": jump_observations,
         "record_join_max_position_difference_m": max_join_position_difference_m,

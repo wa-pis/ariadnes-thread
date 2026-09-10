@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 coincident Moon/Earth join composition (2026-09-10):
+Verify the two source links share exactly 73 join epochs. Compose both source
+jumps and extended rate terms with the existing uniform Moon-chain arithmetic
+bound. Independently check all pairs of four exact mixed endpoint sums and
+146 one-ULP-side SPKSSB positions against exact nominal polynomial sums.
+Verification: complete SPK tests, full pytest, Ruff, strict OpenSpec validation
+and unchanged legacy checksum. The envelope includes representation ambiguity;
+it does not replace the 0.001 m arithmetic gate or estimate physical orbit
+uncertainty. Keep native premises, other chain configurations and spacecraft
+safety open; leave task 3.9 unchecked and production unchanged.
+All 60 SPK tests and 922 full-suite tests passed (159.28 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 exhaustive representable-epoch Saturn priority strip (2026-09-10):
 Enumerate all 33 binary64 epochs in the 16-ULP cross-segment strip; verify
 exact endpoints and consecutive nextafter coverage. Use independent segment

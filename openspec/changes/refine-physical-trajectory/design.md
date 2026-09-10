@@ -1,5 +1,29 @@
 ## Context
 
+### Coincident Moon/Earth join composition (2026-09-10)
+
+The inventories for Moon relative to Earth and Earth relative to SSB have
+exactly the same 73 internal join epochs. At each join, bound the Moon's
+SSB position against the sum of either adjacent exact polynomial per link:
+`sum(J_link) + h * sum(L_link_left + L_link_right) + B_chain`, in meters,
+where h is 16 epoch ULPs and B_chain is the existing uniform Moon-chain
+evaluation/addition/SI error bound. The triangle inequality composes both
+representation jumps without assuming cancellation or independent errors.
+This is a same-epoch comparison, not displacement between two query times.
+
+For each join, exact rational arithmetic verifies every pair of the four
+mixed endpoint sums against sum(J_link). Then 146 direct SPKSSB positions
+at the one-ULP sides are compared with exact sums of the nominal-side
+polynomials. Require each L1 error to fit its own outward-rounded envelope.
+Retain the existing 0.001 m arithmetic gate: the composed envelope is a
+different quantity including source-representation ambiguity, not a relaxed
+arithmetic tolerance or a physical orbit-uncertainty estimate.
+
+The uniform implication remains conditional on the previously stated native
+selection and arithmetic premises. The native probes verify only their query
+epochs. Other center-chain join configurations, runtime premises and complete
+spacecraft error/safety remain open under 3.9; no production settings change.
+
 ### Exhaustive representable-epoch Saturn priority strip (2026-09-10)
 
 The previously excluded cross-segment strip is centered at
