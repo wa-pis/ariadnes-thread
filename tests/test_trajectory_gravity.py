@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from fractions import Fraction
+import json
 import math
 import os
 from pathlib import Path
@@ -613,6 +615,50 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
                 thrust_enabled=burn_id is not None,
             )
             assert np.linalg.norm(production_total_m_s2) <= total_bound_m_s2, label
+            if not historical_table:
+                # Declared phase-domain controls, not inferred between-epoch reaches.
+                position_reach_m, velocity_reach_m_s = 10.0, 1.0
+                domain_gravity_m_s2: dict[str, float] = {}
+                domain_floors_m: dict[str, float] = {}
+                for source, source_state in source_states.items():
+                    budget.check()
+                    floor_m = trajectory._relative_distance_lower_bound(
+                        budget, tuple(state[:3]), tuple(source_state[:3]), position_reach_m, position_reach_m,
+                    )
+                    exact_squared_m2 = sum(((Fraction(a) - Fraction(b)) ** 2
+                                           for a, b in zip(state[:3], source_state[:3])), Fraction(0))
+                    assert floor_m > 0 and (Fraction(floor_m) + 2 * Fraction(position_reach_m)) ** 2 <= exact_squared_m2
+                    domain_floors_m[source] = floor_m
+                    field = bodies.get(source).gravity_field_model
+                    harmonic = source in {"Moon", "Mars"}
+                    domain_gravity_m_s2[source] = trajectory._harmonic_acceleration_upper_bound(
+                        candidate.candidate_id, field.gravitational_parameter,
+                        field.reference_radius if harmonic else floor_m, floor_m,
+                        field.cosine_coefficients if harmonic else ((1.0,),),
+                        field.sine_coefficients if harmonic else ((0.0,),),
+                    )
+                speed_limit_m_s = sum((abs(Fraction(a) - Fraction(b))
+                                       for a, b in zip(state[3:], source_states["Sun"][3:])), Fraction(0))
+                speed_limit_m_s += 2 * Fraction(velocity_reach_m_s)
+                speed_upper_m_s = math.nextafter(float(speed_limit_m_s), math.inf)
+                assert math.isfinite(speed_upper_m_s) and Fraction(speed_upper_m_s) >= speed_limit_m_s
+                domain_thrust, domain_srp = trajectory._thrust_and_srp_upper_bounds(
+                    candidate.candidate_id, _spacecraft(), domain_floors_m["Sun"], thrust_enabled=burn_id is not None,
+                )
+                domain_relativity = trajectory._schwarzschild_acceleration_upper_bound(
+                    candidate.candidate_id, bodies.get("Sun").gravity_field_model.gravitational_parameter,
+                    domain_floors_m["Sun"], speed_upper_m_s,
+                )
+                domain_total_m_s2 = trajectory._sum_force_acceleration_bounds(
+                    budget, domain_gravity_m_s2, domain_thrust, domain_srp, domain_relativity,
+                    thrust_enabled=burn_id is not None,
+                )
+                assert np.linalg.norm(production_total_m_s2) <= domain_total_m_s2, label
+                print(json.dumps({"control": label, "burn_id": burn_id,
+                    "position_reach_m": position_reach_m, "velocity_reach_m_s": velocity_reach_m_s,
+                    "legacy_bound_m_s2": total_bound_m_s2, "domain_bound_m_s2": domain_total_m_s2,
+                    "scope": "Declared fixed-epoch phase domain, not a mission interval enclosure"},
+                    sort_keys=True, allow_nan=False))
         budget.check()
         assert (budget.control_attempts, budget.propagation_evaluations,
                 budget.native_arc_propagations) == (0, arc_count, arc_count)

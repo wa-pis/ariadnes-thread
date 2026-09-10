@@ -51,6 +51,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 declared phase-domain full-force controls (2026-09-10):
+Add explicit 10 m position balls and 1 m/s velocity balls to the direct-SPICE
+fixed-epoch full-force controls. Verify exact squared-distance implications,
+outward Sun-relative speed bounds, and native total acceleration below the
+composed domain majorant near Moon/cruise/Mars for coast and both burns.
+Preserve old bounds, component parity, historical-table controls and native
+counters; report old/new bounds with domain inputs. Run gravity/full tests,
+Ruff, strict validation and legacy checksum. The domain radii are declared
+test inputs, not proven trajectory reaches; do not close 3.9 or change safety.
+All 38 gravity tests and 987 full-suite tests passed (161.26 s for the full
+suite), as did Ruff, strict validation and the unchanged legacy checksum.
+
 Task 3.9 conditional whole-interval body reach (2026-09-10):
 Replace the second endpoint error in the reach construction with the maximum
 error envelope across all intersecting strips, including joins centered

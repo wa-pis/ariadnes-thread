@@ -1,5 +1,37 @@
 ## Context
 
+### Declared phase-domain full-force controls (2026-09-10)
+
+Connect the new distance-floor primitive to the existing direct-SPICE
+near-Moon, cruise and near-Mars force controls for coast and both burns.
+Retain all prior percentage-margin bounds and component parity checks.
+Add a separate declared domain: spacecraft and each source position lie in
+10 m balls around their fixed-epoch anchors; spacecraft and Sun velocity
+lie in 1 m/s balls. These radii are explicit test inputs, not hidden mission
+defaults or claims about actual between-epoch motion.
+
+For every gravity source, compute the downward separation floor and verify
+its squared-distance implication independently with exact Fractions. Feed
+these floors into the existing degree-200/120 harmonic and monopole bounds.
+For Schwarzschild, use an outward bound on the exact L1 anchor-relative
+velocity plus both 1 m/s radii; L1 bounds Euclidean speed. Reuse the declared
+dry-mass thrust/SRP bounds and all-component summation. Compare the native
+full-force value at each domain center to the new majorant, preserving all
+existing numerical tolerances and native propagation counters.
+
+Print both old and new total bounds with domain radii and control labels so
+their numerical differences remain inspectable. The historical table path
+is unchanged. These are spatial phase-domain controls at fixed epochs, not
+evidence that a real arc stays inside the balls, nor uniform native force
+roundoff bounds. Ephemeris/time-domain, mass/speed closure and propagated
+state-error premises remain open under 3.9; production settings do not change.
+Observed coast totals (old -> declared-domain, m/s^2): near-Moon
+1.4810058584359551 -> 1.4776833812418995; cruise
+0.004741393414576713 -> 0.004731915483136204; near-Mars
+3.1869964690322714 -> 3.180447036857837. All nine direct full-force controls
+pass both bounds; these changes describe the additional test domain, not a
+changed force model or tolerance.
+
 ### Conditional whole-interval body reach (2026-09-10)
 
 The two-epoch displacement bound does not alone provide an anchor-centered
