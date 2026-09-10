@@ -670,11 +670,18 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
         non_epoch_callback_count = 0
         record_source_updates = True
         try:
+            if combined:
+                # A caller may mutate global PPN after force-model construction.
+                ppn.parameter_vector = np.asarray([0.75, 1.25])
             simulator = trajectory._run_native_arc(
                 budget, bodies, propagator_settings, first_in_evaluation=True,
             )
+            if combined:
+                assert np.array_equal(ppn.parameter_vector, [1.0, 1.0]), label
         finally:
             record_source_updates = False
+            if combined:
+                ppn.parameter_vector = np.asarray([1.0, 1.0])
         history = simulator.dependent_variable_history
         if combined and burn_id is not None and not historical_table:
             internal_callbacks = 0

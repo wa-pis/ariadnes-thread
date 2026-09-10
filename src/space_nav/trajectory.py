@@ -1745,6 +1745,9 @@ def _run_native_arc(
         simulator_module = _import_tudat_simulator()
     except RuntimeError as exc:
         _raise_refinement_error(budget.candidate_id, "native-integration", str(exc), exc)
+    budget.check()
+    # Global PPN may have changed since the arc's force models were built.
+    _set_general_relativity_ppn_parameters(budget.candidate_id, bodies)
     budget.begin_arc(first_in_evaluation=first_in_evaluation)
     try:
         simulator = simulator_module.create_dynamics_simulator(bodies, propagator_settings)

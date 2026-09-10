@@ -48,8 +48,22 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.3 Configure the exact nominal RKF78 and tighter RKDP87 elementwise tolerances and burn/coast initial/minimum/maximum steps using the non-deprecated interface; verify settings introspection, forced minimum-step, failed-completion, and final-epoch mismatch tests enforce the numerical contract and chained errors.
 - [ ] 3.4 Propagate exact departure-burn, coast, and arrival-burn arcs with state and mass handoff at fixed boundaries; verify a safely completed evaluation meets epoch, position, velocity, and mass continuity, preserves coast mass, and contains exactly two positive-duration burn records.
 - [ ] 3.5 Enforce analytic and propagated dry-mass guards plus all eight collision surfaces without clamping or retaining unsafe states; verify unsafe internal trials increment deterministic reason/body counters without directly selecting public status, no unsafe state is retained, and no-safe-complete-trial results contain no propagated-result values.
-- [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
+- [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
+
+Task 3.6 per-native-arc PPN guard (2026-09-10):
+Reproduce missing native-entry/continuation resets on the previous runner;
+restore and read back beta/gamma immediately before each native call while
+retaining the force-builder guard. Verify setup failure/timeout starts no
+native arc and preserves error causes, and three continuations reset/count
+correctly. Poison PPN after model construction in all 24 existing combined
+force arcs; require native readback and unchanged independent force oracles.
+Run runner/gravity/relativity tests, full pytest, Ruff, strict validation and
+legacy checksum. No new native qualification arcs or interval safety claim.
+All 83 focused tests passed (47.66 s), including the late-poison native force
+controls; all 1116 full-suite tests passed (229.35 s). Ruff, strict OpenSpec
+validation and the unchanged legacy SHA-256 passed. Task 3.6 is complete;
+3.4/3.5/3.7/3.9 and the remaining targeting prerequisites stay open.
 
 Task 3.9 conditional chain velocity and SI rounding (2026-09-10):
 Derive coefficient-based native velocity magnitudes for all 11 source links,

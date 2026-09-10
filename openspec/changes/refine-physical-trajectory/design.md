@@ -1,5 +1,35 @@
 ## Context
 
+### Restore PPN immediately before every native arc (2026-09-10)
+
+The force builder already restored/read back general-relativity beta and
+gamma, but the native runner did not. A mutation between model construction
+and simulation could therefore leave the arc entry state inconsistent with
+the declared force contract. Regression controls against the previous runner
+fail because its simulator is entered without a PPN reset; continuation
+controls retain the deliberately poisoned `[0.75, 1.25]` values.
+
+Keep the construction-time guard and call the existing reset/readback helper
+again immediately before native arc accounting and simulator creation. Check
+the shared deadline after simulator import, then let `begin_arc` recheck it
+after PPN setup. An import timeout, failed PPN readback or setup-time timeout
+must start/count no native propagation; exceptions retain their original
+cause and candidate context. Successful arcs and native integration failures
+retain the existing counter semantics and unchanged limits.
+
+Verify all three continuation calls restore `[1,1]` before native entry and
+count one evaluation/three arcs. Extend all 24 existing combined-force arcs
+near Moon/cruise/Mars with a second deliberate PPN mutation after model
+construction, then require post-run readback and the existing independent
+force-vector oracles under unchanged tolerances. Add no native qualification
+arcs. The nominal clean-GR model, constants, kernels and integrators do not
+change; poisoned globals are no longer accepted at native arc entry.
+
+This completes the missing per-arc guard in task 3.6 after its full checks,
+not task 3.9 or safe arc composition. It is not a lock against concurrent
+external mutation while native integration is running, and establishes no
+new interval-error or collision-safety guarantee. Targeting remains gated.
+
 ### Conditional chain velocity and SI conversion bounds (2026-09-10)
 
 Compose the supplied-record velocity errors through the previously inspected
