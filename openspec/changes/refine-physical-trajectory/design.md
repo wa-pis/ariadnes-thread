@@ -1,5 +1,42 @@
 ## Context
 
+### All degree-two orders at the stored matrix (2026-09-10)
+
+Generalize the existing Cartesian C20 enclosure to each degree-two order,
+retaining every C20 oracle and diagnostic field. For body-fixed `u=(x,y,z)`,
+`q=u.u`, write the potential as `GM*R^2*N*H/q^(5/2)`, where:
+
+| Order | H | N |
+|---|---|---|
+| 0 | C20*(3*z^2-q)/2 | sqrt(5) |
+| 1 | C21*x*z + S21*y*z | sqrt(15) |
+| 2 | C22*(x^2-y^2)/2 + S22*x*y | sqrt(15) |
+
+The gradient is `GM*R^2*N*(q*gradient(H)-5*H*u)/q^(7/2)`.
+Evaluate each polynomial and stored Q-transpose projection exactly, with
+the existing dyadic root enclosures for N and sqrt(q). Order must be an
+integer in {0,1,2}; nonzero S20 is rejected. Native term outputs combine
+the cosine and sine coefficient at their degree/order, matching this formula.
+
+Append only the two remaining order vectors per body after the earlier 64
+outputs (76 total), without altering the full dynamics or prior layout.
+Require all 24 observed degree-two vectors at four anchors to have outward
+stored-matrix L1 reference bounds <=1e-15 m/s^2. Verify independent single
+cosine/sine axis controls with both signs, transformed coordinates and
+oppositely directed observations; mixed coefficients at (1,1,1) exercise
+irrational radius and cancellation. Reject unsupported/boolean orders.
+Reuse C20 zero and invalid-geometry checks and preserve all native gates.
+
+These are separate order-wise error bounds, not a bound on the summed
+degree-two acceleration, ideal PCK orientation, higher degrees, or complete
+trajectory. No dependencies, extra propagations or production settings are
+added; task 3.9 remains open.
+
+Both integrator profiles reproduce the same order-wise bounds. For the new
+orders 1/2, the largest bounds across these anchors are respectively
+2.1830285905683608e-23 and 2.339400995609037e-19 m/s^2. Previously recorded
+C20 bounds are unchanged. These maxima do not replace per-order reports.
+
 ### C20 anchor arithmetic at a stored rotation matrix (2026-09-10)
 
 Append the `(2,0)` force vectors and inertial-to-body-fixed rotation matrices

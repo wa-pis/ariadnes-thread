@@ -51,6 +51,23 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 all degree-two orders at a stored rotation (2026-09-10):
+Generalize the existing C20 Cartesian enclosure to orders 0/1/2 without
+duplicating its arithmetic. Append native C21/S21 and C22/S22 vectors in the
+same four coast runs; require all 24 order-wise bounds <=1e-15 m/s^2.
+Verify independent cosine/sine, signs, rotated/translated/reversed vectors,
+mixed coefficients and invalid orders, retaining all C20 tests and diagnostics.
+Run focused/full pytest, Ruff, strict OpenSpec and legacy checksum. Keep
+native counts and settings unchanged; summed degree-two, ideal rotation and
+full harmonic errors remain unqualified, and task 3.9 stays open.
+
+Verification: 34 focused tests passed (28.57 s), followed by four invalid
+order/S20 checks (0.24 s); all 1242 project tests passed (254.53 s). All 24
+degree-two order vectors meet 1e-15 m/s^2. New order-1/order-2 maxima are
+2.1830285905683608e-23 / 2.339400995609037e-19 m/s^2; C20 bounds are unchanged.
+Ruff, strict OpenSpec and the unchanged legacy SHA-256 pass. Native controls/
+evaluations/arcs remain (4,4,4) or (0,0,0) by variant, with no production changes.
+
 Task 3.9 C20 arithmetic at a stored rotation (2026-09-10):
 Read Moon/Mars C20 vectors and inertial-to-fixed matrices in the four existing
 coast runs. Verify row-major direct-SPICE matrix parity, S20=0 and an exact

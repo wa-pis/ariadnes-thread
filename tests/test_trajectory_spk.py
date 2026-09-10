@@ -1624,15 +1624,17 @@ def test_schwarzschild_anchor_rejects_invalid_state(invalid_state: tuple[float, 
         _schwarzschild_anchor_error_bound_m_s2(1.0, np.zeros(6), np.asarray(invalid_state), np.zeros(3))
 
 
-def _c20_anchor_error_bound_m_s2(
-    gm_m3_s2: float, reference_radius_m: float, c20: float,
+def _degree_two_anchor_error_bound_m_s2(
+    gm_m3_s2: float, reference_radius_m: float, cosine: float, sine: float, order: int,
     body_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
     inertial_to_fixed: np.ndarray, observed_acceleration_m_s2: np.ndarray,
 ) -> Fraction:
-    """Bound C20 arithmetic at exact stored SI positions and matrix, not ideal PCK orientation."""
+    """Bound one degree-two order at exact stored SI inputs/matrix, not ideal PCK orientation."""
     assert all(type(value) is float and math.isfinite(value) and value > 0
                for value in (gm_m3_s2, reference_radius_m))
-    assert type(c20) is float and math.isfinite(c20)
+    assert type(order) is int and order in (0, 1, 2)
+    assert all(type(value) is float and math.isfinite(value) for value in (cosine, sine))
+    assert order != 0 or sine == 0.0
     for array, shape in ((body_position_m, (3,)), (spacecraft_position_m, (3,)),
                          (inertial_to_fixed, (3, 3)), (observed_acceleration_m_s2, (3,))):
         assert array.shape == shape and array.dtype == np.float64 and np.all(np.isfinite(array))
@@ -1643,15 +1645,26 @@ def _c20_anchor_error_bound_m_s2(
                     zip(row, relative_m, strict=True)), Fraction(0)) for row in matrix]
     q_m2 = sum((value**2 for value in fixed_m), Fraction(0))
     root_lower_m, root_upper_m = _dyadic_sqrt_bounds(q_m2)
-    sqrt5_lower, sqrt5_upper = _dyadic_sqrt_bounds(Fraction(5))
-    factor = Fraction(gm_m3_s2) * Fraction(c20) * Fraction(reference_radius_m)**2 / (2 * q_m2**3)
-    # Gradient of GM*C20*R^2*sqrt(5)/2 * (3*z^2-q)/q^(5/2).
-    polynomial = [factor * coordinate * (multiple * q_m2 - 15 * fixed_m[2]**2)
-                  for coordinate, multiple in zip(fixed_m, (3, 3, 9), strict=True)]
+    normalization_lower, normalization_upper = _dyadic_sqrt_bounds(Fraction(5 if order == 0 else 15))
+    x, y, z = fixed_m
+    c, s = Fraction(cosine), Fraction(sine)
+    if order == 0:
+        harmonic = c * (3 * z**2 - q_m2) / 2
+        gradient = (-c * x, -c * y, 2 * c * z)
+    elif order == 1:
+        harmonic = c * x * z + s * y * z
+        gradient = (c * z, s * z, c * x + s * y)
+    else:
+        harmonic = c * (x**2 - y**2) / 2 + s * x * y
+        gradient = (c * x + s * y, -c * y + s * x, Fraction(0))
+    factor = Fraction(gm_m3_s2) * Fraction(reference_radius_m)**2 / q_m2**3
+    # Gradient of GM*R^2*normalization*H(x,y,z)/q^(5/2).
+    polynomial = [factor * (q_m2 * derivative - 5 * harmonic * coordinate)
+                  for coordinate, derivative in zip(fixed_m, gradient, strict=True)]
     error_m_s2 = Fraction(0)
     for axis, observed in enumerate(observed_acceleration_m_s2):
         projected = sum((matrix[row][axis] * polynomial[row] for row in range(3)), Fraction(0))
-        endpoints = (projected * sqrt5_lower / root_upper_m, projected * sqrt5_upper / root_lower_m)
+        endpoints = (projected * normalization_lower / root_upper_m, projected * normalization_upper / root_lower_m)
         error_m_s2 += max(abs(Fraction(observed) - endpoint) for endpoint in endpoints)
     return error_m_s2
 
@@ -1665,7 +1678,7 @@ def test_c20_anchor_exact_axis_oracle(pole: bool, rotated: bool, c20: float) -> 
     coefficient = Fraction(c20) * (Fraction(-3) if pole else Fraction(3, 2))
     observed = -math.copysign(0.5, coefficient) * direction
     body_m = np.full(3, 1e12)
-    bound_m_s2 = _c20_anchor_error_bound_m_s2(1.0, 1.0, c20, body_m, body_m + direction, matrix, observed)
+    bound_m_s2 = _degree_two_anchor_error_bound_m_s2(1.0, 1.0, c20, 0.0, 0, body_m, body_m + direction, matrix, observed)
     # Exact acceleration is coefficient*sqrt(5)*direction; observation points backwards.
     residual = bound_m_s2 - Fraction(1, 2)
     assert residual > 0 and 5 * coefficient**2 <= residual**2 < 5 * coefficient**2 * (1 + Fraction(2)**-90)
@@ -1673,19 +1686,61 @@ def test_c20_anchor_exact_axis_oracle(pole: bool, rotated: bool, c20: float) -> 
 
 def test_c20_anchor_irrational_radius_and_zero_coefficient() -> None:
     c20 = 0.125
-    bound_m_s2 = _c20_anchor_error_bound_m_s2(1.0, 1.0, c20, np.zeros(3), np.ones(3), np.eye(3), np.zeros(3))
+    bound_m_s2 = _degree_two_anchor_error_bound_m_s2(1.0, 1.0, c20, 0.0, 0, np.zeros(3), np.ones(3), np.eye(3), np.zeros(3))
     # At (1,1,1), force = C20/9 * sqrt(5/3) * (-1,-1,2).
     exact_squared = Fraction(80, 243) * Fraction(c20)**2
     assert exact_squared <= bound_m_s2**2 < exact_squared * (1 + Fraction(2)**-90)
-    assert _c20_anchor_error_bound_m_s2(
-        1.0, 1.0, 0.0, np.zeros(3), np.ones(3), np.eye(3), np.asarray([0.5, 0.0, 0.0]),
+    assert _degree_two_anchor_error_bound_m_s2(
+        1.0, 1.0, 0.0, 0.0, 0, np.zeros(3), np.ones(3), np.eye(3), np.asarray([0.5, 0.0, 0.0]),
     ) == Fraction(1, 2)
 
 
 @pytest.mark.parametrize("invalid_matrix", [np.zeros((3, 3)), np.full((3, 3), math.nan)])
 def test_c20_anchor_rejects_invalid_geometry(invalid_matrix: np.ndarray) -> None:
     with pytest.raises(AssertionError):
-        _c20_anchor_error_bound_m_s2(1.0, 1.0, 0.125, np.zeros(3), np.ones(3), invalid_matrix, np.zeros(3))
+        _degree_two_anchor_error_bound_m_s2(1.0, 1.0, 0.125, 0.0, 0, np.zeros(3), np.ones(3), invalid_matrix, np.zeros(3))
+
+
+@pytest.mark.parametrize("sign", [-1.0, 1.0])
+@pytest.mark.parametrize("rotated", [False, True])
+@pytest.mark.parametrize(("order", "sine_term", "direction", "coefficient"), [
+    (1, False, (0.0, 0.0, 1.0), 1.0),
+    (1, True, (0.0, 1.0, 0.0), 1.0),
+    (2, False, (-1.0, 0.0, 0.0), 1.5),
+    (2, True, (0.0, 1.0, 0.0), 1.0),
+])
+def test_degree_two_tesseral_axis_oracles(
+    sign: float, rotated: bool, order: int, sine_term: bool,
+    direction: tuple[float, float, float], coefficient: float,
+) -> None:
+    matrix = np.asarray([[0.0, 0.0, 1.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]) if rotated else np.eye(3)
+    # C21 at x=1 accelerates along z; S21 at z=1 along y; C22/S22 use x=1.
+    fixed_position = np.asarray([0.0, 0.0, 1.0] if order == 1 and sine_term else [1.0, 0.0, 0.0])
+    force_direction = sign * (matrix.T @ np.asarray(direction))
+    body_m = np.full(3, 1e12)
+    bound_m_s2 = _degree_two_anchor_error_bound_m_s2(
+        1.0, 1.0, 0.0 if sine_term else sign, sign if sine_term else 0.0, order,
+        body_m, body_m + matrix.T @ fixed_position, matrix, -0.5 * force_direction,
+    )
+    exact_squared = 15 * Fraction(coefficient)**2
+    residual = bound_m_s2 - Fraction(1, 2)
+    assert residual > 0 and exact_squared <= residual**2 < exact_squared * (1 + Fraction(2)**-90)
+
+
+@pytest.mark.parametrize(("order", "scaled_l1"), [(1, Fraction(11, 8)), (2, Fraction(9, 4))])
+def test_degree_two_tesseral_mixed_coefficients(order: int, scaled_l1: Fraction) -> None:
+    bound_m_s2 = _degree_two_anchor_error_bound_m_s2(
+        1.0, 1.0, 0.125, -0.25, order, np.zeros(3), np.ones(3), np.eye(3), np.zeros(3),
+    )
+    # At (1,1,1), force/sqrt(5) is (1,-1/8,1/4)/27 or (7/8,1/8,5/4)/27.
+    exact_squared = 5 * (scaled_l1 / 27)**2
+    assert exact_squared <= bound_m_s2**2 < exact_squared * (1 + Fraction(2)**-90)
+
+
+@pytest.mark.parametrize(("order", "sine"), [(-1, 0.0), (3, 0.0), (True, 0.0), (0, 1.0)])
+def test_degree_two_rejects_invalid_order_or_sine(order: int, sine: float) -> None:
+    with pytest.raises(AssertionError):
+        _degree_two_anchor_error_bound_m_s2(1.0, 1.0, 1.0, sine, order, np.zeros(3), np.ones(3), np.eye(3), np.zeros(3))
 
 
 def _pi_rational_bounds() -> tuple[Fraction, Fraction]:
@@ -2391,6 +2446,9 @@ def _check_conditional_full_force_coast_domains(
                     output_variables.extend(propagation_setup.dependent_variable.inertial_to_body_fixed_rotation_frame(
                         source,
                     ) for source in ("Moon", "Mars"))
+                    output_variables.extend(propagation_setup.dependent_variable.spherical_harmonic_terms_acceleration(
+                        "Spacecraft", source, [(2, 1), (2, 2)],
+                    ) for source in ("Moon", "Mars"))
                     # Pinned binding accepts double time, not these native-Time
                     # settings. Retain the incompatibility as a regression check.
                     with pytest.raises(TypeError, match="SingleArcPropagatorSettings<double, double>"):
@@ -2415,7 +2473,7 @@ def _check_conditional_full_force_coast_domains(
                     force_epoch = min(force_history)
                     assert (force_epoch - first_epoch).to_float() == 0.0
                     force_values = np.asarray(force_history[force_epoch]).reshape(-1)
-                    assert force_values.shape == (64,) and np.all(np.isfinite(force_values))
+                    assert force_values.shape == (76,) and np.all(np.isfinite(force_values))
                     anchor_m_s2, components_m_s2 = force_values[:3], force_values[3:33].reshape(10, 3)
                     shadow = float(force_values[33])
                     source_radius_m = bodies.get("Sun").shape_model.average_radius
@@ -2483,20 +2541,34 @@ def _check_conditional_full_force_coast_domains(
                     import spiceypy as spice
 
                     c20_error_upper_m_s2: dict[str, float] = {}
+                    degree_two_error_upper_m_s2: dict[str, dict[str, float]] = {}
                     for index, source in enumerate(("Moon", "Mars")):
                         field = bodies.get(source).gravity_field_model
                         observed_c20_m_s2 = force_values[40:46].reshape(2, 3)[index]
                         rotation = force_values[46:64].reshape(2, 3, 3)[index]
                         assert np.max(np.abs(rotation - spice.pxform("J2000", f"IAU_{source.upper()}", start_tdb_s))) <= 1e-14
                         assert field.sine_coefficients[2, 0] == 0.0
-                        c20_error_m_s2 = _c20_anchor_error_bound_m_s2(
+                        c20_error_m_s2 = _degree_two_anchor_error_bound_m_s2(
                             field.gravitational_parameter, field.reference_radius, float(field.cosine_coefficients[2, 0]),
+                            0.0, 0,
                             states[source][:3], state[:3], rotation, observed_c20_m_s2,
                         )
                         assert c20_error_m_s2 <= Fraction(1e-15), (center, source)
                         reported_c20_error_m_s2 = math.nextafter(float(c20_error_m_s2), math.inf)
                         assert math.isfinite(reported_c20_error_m_s2) and Fraction(reported_c20_error_m_s2) >= c20_error_m_s2
                         c20_error_upper_m_s2[source] = reported_c20_error_m_s2
+                        degree_two_error_upper_m_s2[source] = {"0": reported_c20_error_m_s2}
+                        for order in (1, 2):
+                            observed_term = force_values[64:76].reshape(2, 2, 3)[index, order - 1]
+                            term_error_m_s2 = _degree_two_anchor_error_bound_m_s2(
+                                field.gravitational_parameter, field.reference_radius,
+                                float(field.cosine_coefficients[2, order]), float(field.sine_coefficients[2, order]), order,
+                                states[source][:3], state[:3], rotation, observed_term,
+                            )
+                            assert term_error_m_s2 <= Fraction(1e-15), (center, source, order)
+                            reported_term_error_m_s2 = math.nextafter(float(term_error_m_s2), math.inf)
+                            assert math.isfinite(reported_term_error_m_s2) and Fraction(reported_term_error_m_s2) >= term_error_m_s2
+                            degree_two_error_upper_m_s2[source][str(order)] = reported_term_error_m_s2
                     relativity_anchor_error_m_s2 = _schwarzschild_anchor_error_bound_m_s2(
                         bodies.get("Sun").gravity_field_model.gravitational_parameter,
                         states["Sun"], state, components_m_s2[9],
@@ -2531,6 +2603,7 @@ def _check_conditional_full_force_coast_domains(
                         "point_anchor_error_upper_m_s2": point_anchor_error_upper_m_s2,
                         "harmonic_monopole_anchor_error_upper_m_s2": harmonic_monopole_error_upper_m_s2,
                         "c20_stored_matrix_anchor_error_upper_m_s2": c20_error_upper_m_s2,
+                        "degree_two_stored_matrix_anchor_error_upper_m_s2": degree_two_error_upper_m_s2,
                         "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
