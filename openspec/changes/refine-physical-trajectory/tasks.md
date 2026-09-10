@@ -51,6 +51,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 first-exit closure on a monopole control (2026-09-10):
+Compose distance, whole-domain monopole acceleration and reach bounds on an
+independent circular solution. Verify strict inclusion for 0.05 s and failure
+for 1 s at two source-reach radii, distinguish domain from initial-point
+acceleration, reject a domain containing the force singularity, and retain
+the strict equality boundary. Run focused/full tests, Ruff, strict OpenSpec
+validation and legacy checksum. The first-exit argument closes only this
+analytic positional domain; full-force velocity/mass, native arithmetic and
+trajectory-error premises remain open. Do not close 3.9 or change production.
+All 62 focused geometry/reach tests and 984 full-suite tests passed (159.73 s
+for the full suite), as did Ruff, strict validation and the legacy checksum.
+
 Task 3.9 conditional position-reach integration bound (2026-09-10):
 Add an outward-rounded private reach radius e+v*h+A*h^2/2 with explicit
 nonnegative initial error, initial speed bound, acceleration bound and duration.

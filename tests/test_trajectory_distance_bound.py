@@ -10,6 +10,59 @@ from space_nav import trajectory
 from space_nav.errors import TrajectoryRefinementError
 
 
+@pytest.mark.parametrize("duration_s,expected_inclusion", [(0.05, True), (1.0, False)])
+@pytest.mark.parametrize("body_reach_m", [0.0, 0.25])
+def test_first_exit_domain_closes_only_for_short_circular_control(
+    duration_s: float, expected_inclusion: bool, body_reach_m: float,
+) -> None:
+    budget = trajectory._RefinementBudget("first-exit-control", 300.0)
+    domain_radius_m = 1.0
+    floor_m = trajectory._relative_distance_lower_bound(
+        budget, (10.0, 0.0, 0.0), (0.0,) * 3, domain_radius_m, body_reach_m,
+    )
+    assert 0 < floor_m <= 9 - body_reach_m
+    bound_m_s2 = trajectory._harmonic_acceleration_upper_bound(
+        budget.candidate_id, 1000.0, 10.0, floor_m, ((1.0,),), ((0.0,),),
+    )
+    exact_domain_max_m_s2 = Fraction(1000) / (Fraction(9) - Fraction(body_reach_m)) ** 2
+    assert Fraction(bound_m_s2) >= exact_domain_max_m_s2 > 10
+    # Acceleration at the anchor (10 m/s^2) is not a bound on its 1 m domain.
+    reach_m = trajectory._position_reach_upper_bound(budget, duration_s, 0.0, 10.0, bound_m_s2)
+    assert (reach_m < domain_radius_m) is expected_inclusion
+    # Independent exact solution: GM=1000, r=10, omega=1 rad/s, speed=10 m/s.
+    for i in range(101):
+        t_s = duration_s * i / 100
+        displacement_m = 20 * abs(math.sin(t_s / 2))
+        cartesian_displacement_m = math.hypot(10 * math.cos(t_s) - 10, 10 * math.sin(t_s))
+        assert abs(displacement_m - cartesian_displacement_m) <= 1e-12  # m
+        assert displacement_m <= reach_m
+        if expected_inclusion:
+            assert displacement_m < domain_radius_m
+    if not expected_inclusion:
+        assert 20 * math.sin(duration_s / 2) > domain_radius_m
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+
+
+def test_first_exit_control_rejects_domain_containing_force_singularity() -> None:
+    budget = trajectory._RefinementBudget("first-exit-control", 300.0)
+    floor_m = trajectory._relative_distance_lower_bound(
+        budget, (10.0, 0.0, 0.0), (0.0,) * 3, 11.0, 0.0,
+    )
+    assert floor_m < 0
+    with pytest.raises(TrajectoryRefinementError, match="minimum_distance_m"):
+        trajectory._harmonic_acceleration_upper_bound(
+            budget.candidate_id, 1000.0, 10.0, floor_m, ((1.0,),), ((0.0,),),
+        )
+
+
+def test_first_exit_strict_inclusion_does_not_accept_equality() -> None:
+    budget = trajectory._RefinementBudget("first-exit-control", 300.0)
+    for duration_s in (math.nextafter(1.0, 0.0), 1.0):
+        reach_m = trajectory._position_reach_upper_bound(budget, duration_s, 0.0, 1.0, 0.0)
+        assert reach_m == duration_s
+        assert (reach_m < 1.0) is (duration_s < 1.0)
+
+
 @pytest.mark.parametrize("values", [
     (0.0, 0.0, 0.0, 0.0), (0.0, 0.1, 1e300, 1e300),
     (2.0, 0.0, 3.0, 0.0), (2.0, 0.0, 0.0, 4.0),

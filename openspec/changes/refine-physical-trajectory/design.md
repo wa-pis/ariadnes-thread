@@ -1,5 +1,34 @@
 ## Context
 
+### First-exit closure on a monopole control (2026-09-10)
+
+A trial position-ball radius R is not itself a proven reach. First establish
+an acceleration majorant A on the entire trial domain for the whole time
+interval, using independently enclosed source positions. If initial error
+e<R and the integrated reach e+v*h+A*h^2/2 is strictly below R, a continuous
+trajectory cannot first exit that domain by h: until a hypothetical first
+exit A applies, yet the integration inequality places the exit point
+strictly inside. This closes the positional assumption without substituting
+an acceleration measured only at the initial state. Equality fails this
+strict sufficient test; a failed test is not generally proof of collision.
+
+Compose the existing distance-floor, monopole-force and reach helpers on
+the analytic orbit GM=1000 m^3/s^2, radius=10 m, angular speed=1 rad/s.
+Use a 1 m trial ball centered on (10,0,0), with source reach 0 or 0.25 m
+(the actual source is stationary). The domain force bound exceeds the
+anchor acceleration of 10 m/s^2. A 0.05 s interval closes; a 1 s interval
+does not, and the analytic circular orbit actually leaves the trial ball.
+Check the independent circular displacement formula and its Cartesian
+identity within 1e-12 m, singularity-containing domain rejection, and the
+strict equality boundary using an exact constant-velocity control.
+
+These are analytic controls only, with no native propagations. For M3 the
+full force field also needs a velocity domain for the Schwarzschild term,
+mass/dry-mass bounds for thrust/SRP, time-dependent ephemeris enclosures and
+native force-evaluation/numerical trajectory error controls. A position-only
+first-exit argument does not discharge those premises. Keep 3.9 and production
+safety unchanged; do not infer real-mission safety or native-call limits.
+
 ### Conditional position-reach integration bound (2026-09-10)
 
 For a continuous position trajectory with initial anchor error e, initial
