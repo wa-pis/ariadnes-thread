@@ -51,6 +51,23 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 harmonic degree-zero anchor enclosure (2026-09-10):
+Append Moon/Mars `(0,0)` acceleration outputs to the four existing native
+coast controls without replacing their full harmonic models. Verify C00/S00,
+finite output dimensions and inertial direction using the existing exact
+point-force error enclosure and force gate; report eight outward L1 bounds.
+Rerun the independent point-force controls, both SPK inventory variants,
+complete pytest, Ruff, strict OpenSpec and legacy checksum. Preserve native
+counts, production settings and every previous gate; higher-degree and full
+harmonic errors remain unqualified, so task 3.9 stays open.
+
+Verification: 10 focused tests passed (28.63 s), including both SPK inventory
+variants; all 1209 project tests passed (254.49 s). The eight degree-zero
+observations have error bounds <=4.981248128809384e-16 m/s^2, identical
+between nominal/tighter profiles. Ruff, strict OpenSpec and the unchanged
+legacy SHA-256 pass. Native controls/evaluations/arcs remain (4,4,4) or
+(0,0,0) by variant, with no production or scientific-setting changes.
+
 Task 3.9 fully lit SRP initial anchor enclosure (2026-09-10):
 Bound the four native SRP observations only after their exact clear-disc
 proofs, using rational pi and root enclosures with explicit SI inputs.

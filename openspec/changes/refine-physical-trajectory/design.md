@@ -1,5 +1,37 @@
 ## Context
 
+### Harmonic degree-zero anchor readback and enclosure (2026-09-10)
+
+The pinned gravity-field object exposes coefficients but no public gradient
+evaluator. Its existing `spherical_harmonic_terms_acceleration` dependent
+variable can instead report selected degree/order vectors without another
+propagation. Append only `(0,0)` for Moon and Mars after the existing 34
+outputs, giving 40 values. Keep the first 33 acceleration values and shadow
+factor in their original positions and retain every previous gate.
+
+Require each native field's `C00=1` and `S00=0`. The ideal degree-zero vector
+is exactly point gravity and independent of body orientation. Reuse the
+qualified exact-input point-force enclosure against all eight saved vectors
+(two sources at four anchors). Require the L1 upper bound to satisfy the
+existing `max(1e-15 m/s^2,1e-12*observed norm)` force criterion and report it
+outward. This also tests that the term output has the inertial direction
+expected by the declared SSB/J2000 force contract. Preserve the analytic
+point-force success, perturbed-vector, irrational-radius, extreme-scale and
+singularity tests as independent oracles for this reused enclosure.
+
+Only diagnostic outputs change; the complete Moon 200/Mars 120 model still
+drives propagation. These observed degree-zero error bounds include any
+native transformation arithmetic on that term but do not qualify a rotation
+matrix, higher-degree terms, their summation, or the full harmonic vector.
+Monopole rotation invariance is not evidence that non-spherical fields are
+rotation-independent. Task 3.9 and mission accuracy/safety gates remain open.
+
+Both integrator profiles reproduce the same bounds. Near Moon, the Moon/Mars
+degree-zero bounds are respectively 1.138242749052017e-16 and
+1.1352476394016963e-25 m/s^2. Near Mars they are respectively
+3.397852682363994e-26 and 4.981248128809384e-16 m/s^2. All are below
+1e-15 m/s^2, without treating them as full-field errors.
+
 ### Fully lit SRP initial anchor error enclosure (2026-09-10)
 
 After all three exact clear-disc proofs and the saved shadow factor of 1,

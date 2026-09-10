@@ -2318,6 +2318,9 @@ def _check_conditional_full_force_coast_domains(
                     output_variables.append(propagation_setup.dependent_variable.received_irradiance_shadow_function(
                         "Spacecraft", "Sun",
                     ))
+                    output_variables.extend(propagation_setup.dependent_variable.spherical_harmonic_terms_acceleration(
+                        "Spacecraft", source, [(0, 0)],
+                    ) for source in ("Moon", "Mars"))
                     # Pinned binding accepts double time, not these native-Time
                     # settings. Retain the incompatibility as a regression check.
                     with pytest.raises(TypeError, match="SingleArcPropagatorSettings<double, double>"):
@@ -2342,7 +2345,7 @@ def _check_conditional_full_force_coast_domains(
                     force_epoch = min(force_history)
                     assert (force_epoch - first_epoch).to_float() == 0.0
                     force_values = np.asarray(force_history[force_epoch]).reshape(-1)
-                    assert force_values.shape == (34,) and np.all(np.isfinite(force_values))
+                    assert force_values.shape == (40,) and np.all(np.isfinite(force_values))
                     anchor_m_s2, components_m_s2 = force_values[:3], force_values[3:33].reshape(10, 3)
                     shadow = float(force_values[33])
                     source_radius_m = bodies.get("Sun").shape_model.average_radius
@@ -2391,6 +2394,22 @@ def _check_conditional_full_force_coast_domains(
                             assert Fraction(reported_point_error_m_s2) >= point_error_m_s2
                             point_anchor_error_upper_m_s2[source] = reported_point_error_m_s2
                     assert set(point_anchor_error_upper_m_s2) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
+                    harmonic_monopole_error_upper_m_s2: dict[str, float] = {}
+                    harmonic_monopoles_m_s2 = force_values[34:40].reshape(2, 3)
+                    for source, observed in zip(("Moon", "Mars"), harmonic_monopoles_m_s2, strict=True):
+                        field = bodies.get(source).gravity_field_model
+                        assert field.cosine_coefficients[0, 0] == 1.0
+                        assert field.sine_coefficients[0, 0] == 0.0
+                        monopole_error_m_s2 = _point_gravity_anchor_error_bound_m_s2(
+                            field.gravitational_parameter, states[source][:3], state[:3], observed,
+                        )
+                        tolerance_m_s2 = max(1e-15, 1e-12 * float(np.linalg.norm(observed)))
+                        assert monopole_error_m_s2 <= Fraction(tolerance_m_s2), (center, source)
+                        reported_monopole_error_m_s2 = math.nextafter(float(monopole_error_m_s2), math.inf)
+                        assert math.isfinite(reported_monopole_error_m_s2)
+                        assert Fraction(reported_monopole_error_m_s2) >= monopole_error_m_s2
+                        harmonic_monopole_error_upper_m_s2[source] = reported_monopole_error_m_s2
+                    assert set(harmonic_monopole_error_upper_m_s2) == {"Moon", "Mars"}
                     relativity_anchor_error_m_s2 = _schwarzschild_anchor_error_bound_m_s2(
                         bodies.get("Sun").gravity_field_model.gravitational_parameter,
                         states["Sun"], state, components_m_s2[9],
@@ -2423,6 +2442,7 @@ def _check_conditional_full_force_coast_domains(
                         "fully_lit_srp_anchor_error_upper_m_s2": reported_srp_error_m_s2,
                         "initial_apparent_discs_strictly_disjoint": clear_by_body,
                         "point_anchor_error_upper_m_s2": point_anchor_error_upper_m_s2,
+                        "harmonic_monopole_anchor_error_upper_m_s2": harmonic_monopole_error_upper_m_s2,
                         "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
