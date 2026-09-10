@@ -1,5 +1,35 @@
 ## Context
 
+### All-body center-chain join composition (2026-09-10)
+
+Extend the Moon/Earth composition to every union of source-link join epochs
+for the eight production bodies. Exact rational comparisons prove distinct
+16-ULP strips within a chain are disjoint. For every nonjoining link, require
+the entire event strip to lie inside exactly one previously qualified record
+core; evaluate that record's polynomial at the same query epoch. Thus no
+unchanging link is silently dropped or treated as a zero position.
+
+For active joining links A, use
+`B_chain + sum_A(J_link + h*(L_link_left + L_link_right))` meters.
+Nonjoining links contribute through B_chain, which already includes every
+link's evaluation error and chain addition/SI conversion. No motion term is
+needed for them in this same-epoch comparison. This is not a bound on
+two-time displacement or numerical spacecraft propagation.
+
+There are 539 body/event pairs: Sun 18, Mercury 36, Venus 18, Earth 73,
+Moon 73, Mars 172, Jupiter 67 and Saturn 82. Only Moon has simultaneous
+two-link joins (73). All 1,078 one-ULP-side SPKSSB L1 comparisons with exact
+polynomial sums fit their own outward-rounded bounds. The generalized Moon
+bounds must equal the previous dedicated controls exactly. The largest
+composed envelope is 14.382604265140298 m for Jupiter; it includes the known
+source-representation jump and does not replace the unchanged 0.001 m
+arithmetic criterion or describe physical orbit uncertainty.
+
+Native execution/selection premises remain conditional, and the side probes
+are not an exhaustive runtime certificate. This completes the test-only
+composition across the inventoried chain join configurations, not task 3.9,
+full-force error propagation, safety or runtime-budget qualification.
+
 ### Coincident Moon/Earth join composition (2026-09-10)
 
 The inventories for Moon relative to Earth and Earth relative to SSB have

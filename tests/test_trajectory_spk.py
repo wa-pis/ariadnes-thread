@@ -321,6 +321,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert segment_counts == {target: 2 if target == 699 else 1 for target in expected_centers}
 
     rates_m_s: dict[int, list[float]] = {target: [] for target in expected_centers}
+    position_records: dict[int, list[tuple[float, float, tuple[tuple[float, ...], ...]]]] = {
+        target: [] for target in expected_centers
+    }
     joins: dict[tuple[int, Fraction], dict[int, tuple[
         tuple[Fraction, ...], tuple[Fraction, ...], float, np.ndarray,
     ]]] = {}
@@ -467,6 +470,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             rate_extension_s = math.nextafter(float(Fraction(radius_s) * (rounded_limit - 1)), math.inf)
             assert 1 + Fraction(rate_extension_s) / Fraction(radius_s) >= rounded_limit
             rows_km = tuple(tuple(float(value) for value in row) for row in coefficients_km)
+            position_records[target].append((midpoint_s, radius_s, rows_km))
             normalization_rate_m_s = trajectory._spk_position_rate_bound(
                 budget, rows_km, radius_s, extension_s=rate_extension_s,
             )
@@ -861,6 +865,60 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             moon_chain_join_checks += 1
     assert moon_chain_join_checks == 146
 
+    chain_join_bounds_m: dict[int, list[tuple[float, float, int]]] = {}
+    chain_join_checks = 0
+    for target in chain_position_bounds_m:
+        center = expected_centers[target]
+        chain = [target] if center == 0 else [target, center]
+        epochs_s = sorted({epoch for link, epoch in joins if link in chain})
+        # Distinct strips do not overlap; simultaneous joins are grouped once.
+        assert all(b - a > 16 * (Fraction(math.ulp(float(a))) + Fraction(math.ulp(float(b))))
+                   for a, b in zip(epochs_s, epochs_s[1:]))
+        chain_join_bounds_m[target] = []
+        for epoch_s in epochs_s:
+            budget.check()
+            half_width_s = 16 * Fraction(math.ulp(float(epoch_s)))
+            active_links = [link for link in chain if (link, epoch_s) in joins]
+            assert active_links
+            jump_m = sum((abs(a - b) for link in active_links
+                          for a, b in zip(joins[link, epoch_s][1][0], joins[link, epoch_s][-1][0])), Fraction(0))
+            rates_m_s_sum = sum((join_error_terms[link, epoch_s, sign][0]
+                                for link in active_links for sign in (-1, 1)), Fraction(0))
+            envelope_m = jump_m + rates_m_s_sum * half_width_s + Fraction(chain_position_bounds_m[target])
+            reported_m = math.nextafter(float(envelope_m), math.inf)
+            assert math.isfinite(reported_m) and Fraction(reported_m) >= envelope_m
+            chain_join_bounds_m[target].append((float(epoch_s), reported_m, len(active_links)))
+            for sign in (-1, 1):
+                query_s = float(epoch_s) - sign * math.ulp(float(epoch_s))
+                exact_links_m: list[tuple[Fraction, ...]] = []
+                for link in chain:
+                    if link in active_links:
+                        exact_links_m.append(joins[link, epoch_s][sign][1])
+                        continue
+                    # The entire event strip must fit one qualified record core.
+                    records = [(mid, radius, rows) for mid, radius, rows in position_records[link]
+                               if Fraction(mid) - Fraction(radius) + 16 * Fraction(math.ulp(mid))
+                               <= epoch_s - half_width_s
+                               and epoch_s + half_width_s
+                               <= Fraction(mid) + Fraction(radius) - 16 * Fraction(math.ulp(mid))]
+                    assert len(records) == 1, (target, link, epoch_s)
+                    midpoint_s, radius_s, rows_km = records[0]
+                    x = (Fraction(query_s) - Fraction(midpoint_s)) / Fraction(radius_s)
+                    assert abs(x) < 1
+                    basis = [Fraction(1), x]
+                    for degree in range(2, len(rows_km[0])):
+                        basis.append(2 * x * basis[-1] - basis[-2])
+                    exact_links_m.append(tuple(1000 * sum((Fraction(value) * basis[degree]
+                        for degree, value in enumerate(row)), Fraction(0)) for row in rows_km))
+                exact_m = tuple(sum(axis_values, Fraction(0)) for axis_values in zip(*exact_links_m))
+                state_m = spice.spkssb(target, query_s, "J2000")[:3] * 1000
+                assert np.all(np.isfinite(state_m))
+                error_m = sum((abs(Fraction(value) - exact) for value, exact in zip(state_m, exact_m)), Fraction(0))
+                assert error_m <= envelope_m, (target, epoch_s, sign, float(error_m), reported_m)
+                chain_join_checks += 1
+    assert chain_join_checks == 2 * sum(len(values) for values in chain_join_bounds_m.values())
+    assert [(epoch, bound) for epoch, bound, count in chain_join_bounds_m[301] if count == 2] == moon_chain_join_bounds_m
+
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
     observations: dict[int, list[tuple[float, float]]] = {}
@@ -918,6 +976,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "moon_chain_join_fields": ["epoch_tdb_s", "conditional_l1_bound_m"],
         "moon_chain_join_bounds": moon_chain_join_bounds_m,
         "moon_chain_join_checks": moon_chain_join_checks,
+        "chain_join_fields": ["epoch_tdb_s", "conditional_l1_bound_m", "joining_link_count"],
+        "chain_join_bounds": chain_join_bounds_m,
+        "chain_join_checks": chain_join_checks,
         "record_join_fields": ["epoch_tdb_s", "exact_position_jump_l1_m", "jump_omission_fails"],
         "record_joins_by_target": jump_observations,
         "record_join_max_position_difference_m": max_join_position_difference_m,

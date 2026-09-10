@@ -26,8 +26,11 @@ clamp. Conditional uniform supplied-record position-error bounds are below
 0.001 m; sampled center-chain addition and SI conversion now match direct
 SPICE bit-for-bit. Conditional interval-wide position-chain composition,
 including SI conversion, is now below 0.001 m for all eight bodies.
-Record/segment-choice effects and native execution premises still require qualification before
-full-force safety and runtime checks; targeting remains gated.
+Conditional source-join composition now covers 539 body/event pairs across
+all eight chains, with 1,078 direct-SPICE side controls. These envelopes include
+source-representation jumps and are distinct from the arithmetic-only bound.
+Native execution premises still require qualification before full-force
+safety and runtime checks; targeting remains gated.
 See the active change's design and tasks for numerical scope and evidence.
 
 Historical table counterexample (before the approved direct-SPICE switch): probes at all 73 mapped Saturn record boundaries

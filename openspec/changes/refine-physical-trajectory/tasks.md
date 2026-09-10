@@ -51,6 +51,21 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 all-body center-chain join composition (2026-09-10):
+Form the join-epoch union for all eight body chains. Verify distinct event
+strips are disjoint and each nonjoining link contains the entire strip in
+exactly one qualified record core. Compose active source jumps/rates with
+the existing all-link evaluation/addition/SI bound, and compare 1,078 direct
+SPKSSB side queries across 539 body/event pairs with exact polynomial sums.
+Require generalized Moon bounds to equal the dedicated controls exactly.
+Verification: all SPK tests, full pytest, Ruff, strict OpenSpec validation
+and legacy checksum. Maximum composed envelope: 14.382604265140298 m
+(Jupiter, including representation ambiguity, not just arithmetic error).
+Keep the 0.001 m arithmetic gate unchanged; native execution premises,
+full-force trajectory error and safety remain open. Do not close 3.9.
+All 60 SPK tests and 922 full-suite tests passed (160.22 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 coincident Moon/Earth join composition (2026-09-10):
 Verify the two source links share exactly 73 join epochs. Compose both source
 jumps and extended rate terms with the existing uniform Moon-chain arithmetic
