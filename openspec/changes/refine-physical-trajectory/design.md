@@ -1,5 +1,55 @@
 ## Context
 
+### Conditional arbitrary-rotation harmonic cap (2026-09-10)
+
+Separate each finite harmonic field into its degree-zero monopole and the
+remaining degrees. For an ideal orthogonal rotation Q, the monopole satisfies
+`Q*g0(Q^T*r)=g0(r)` exactly. If B_tail(d) bounds the remaining acceleration
+norm at every radius >=d, then at the same relative position any two field
+orientations obey
+`|Q1*g_tail(Q1^T*r)-Q0*g_tail(Q0^T*r)| <= 2*B_tail(d)`.
+This follows directly from norm preservation and the triangle inequality;
+it needs no angular-rate model, sampling assumption or small-angle premise.
+
+Evaluate B_tail with the existing directed gravity-bound helper, zeroing only
+C00 in a private coefficient copy. Do not alter native coefficient arrays or
+rotation settings. Multiply the finite returned bound by two using exact
+Fractions and round the diagnostic m/s^2 value upward. Keep zero monopole-only
+caps exactly zero in the helper, and check the shared deadline before and
+after the gravity-bound calculation.
+
+Independent controls verify that pure monopoles of three strengths have no
+rotation contribution and that input coefficients remain unchanged. A signed
+degree-two zonal control rotates its symmetry axis from inertial z to x at
+position (0,0,1), with GM=R=r=1 SI. Direct differentiation of its Cartesian
+quadrupole potential gives an acceleration difference of magnitude
+`(9/2)*sqrt(5)*|C20|`, enclosed by the cap. A separate exact squared
+addition-norm expression checks cap arithmetic to relative 1e-15; this is a
+synthetic arithmetic check, not a change to mission tolerances. Expired
+budgets return no bound.
+
+Report this cap separately for both pinned harmonic fields and every existing
+trial domain, without adding native arcs. It may be added to a correctly
+established frozen-orientation spatial variation bound via an intermediate
+force at the same position, but no complete force/residual certificate is
+assembled here. This is deliberately coarse: at fixed d it does not shrink
+with elapsed time, even if the actual rotation is tiny. It covers the ideal
+rotation contribution, not native floating-point rotation/force evaluation
+error or a measured change in force. The previous unresolved velocity bound
+is retained; task 3.9 and production limits remain unchanged.
+
+| Trial domain | Largest arbitrary-rotation cap (m/s^2) | Field |
+|---|---:|---|
+| Moon, 1/64 s (closed) | 0.034304352174851255 | Moon |
+| Moon, 1 s (unresolved) | 0.094734151761051 | Moon |
+| Mars, 1/64 s (closed) | 0.064255605448081 | Mars |
+| Mars, 1 s (unresolved) | 0.07292870382405088 | Mars |
+
+These maxima among the two field caps are not a complete force sum. Both
+inventory variants reproduce them. The larger than frozen-spatial values in
+the short controls motivate a tighter angle-dependent rotation enclosure;
+they do not imply that the physical fields actually change by these amounts.
+
 ### Conditional frozen-orientation harmonic variation (2026-09-10)
 
 Extend the existing addition-theorem bound to spatial derivatives, without

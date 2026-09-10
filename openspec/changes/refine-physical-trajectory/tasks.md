@@ -51,6 +51,22 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional arbitrary-rotation harmonic cap (2026-09-10):
+Bound any two ideal field orientations by twice the nonmonopole acceleration
+norm, retaining exact monopole cancellation. Verify unchanged coefficients,
+three pure monopoles, signed analytic quadrupole rotations, cap arithmetic
+and expired-budget rejection. Report both pinned-field caps in the existing
+four trial domains without additional native arcs. Run focused/full pytest,
+Ruff, strict validation and legacy checksum. Keep the cap's lack of angular
+or elapsed-time sharpness explicit; do not claim native/full-trajectory error
+qualification or close 3.9.
+All eight focused controls passed (26.00 s) and all 1148 full-suite tests
+passed (251.58 s). Both inventory variants reproduce the caps: dominant
+closed-domain components are 0.034304352174851255 m/s^2 (Moon) and
+0.064255605448081 m/s^2 (Mars). These are worst-orientation bounds, not
+observed force changes. Ruff, strict OpenSpec validation and the unchanged
+legacy SHA-256 passed. Native counts remain (4,4,4) or (0,0,0) by variant.
+
 Task 3.9 conditional frozen-orientation harmonic variation (2026-09-10):
 Derive the harmonic spatial Jacobian bound using the Laplacian of the
 gradient addition identity. Verify independent Cartesian Hessian identities,

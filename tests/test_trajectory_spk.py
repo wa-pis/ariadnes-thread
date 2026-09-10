@@ -1614,6 +1614,64 @@ def test_harmonic_spatial_jacobian_zero_and_expired_budget() -> None:
         )
 
 
+def _harmonic_arbitrary_rotation_bound_m_s2(
+    budget: trajectory._RefinementBudget, gm_m3_s2: float,
+    radius_m: float, distance_m: float, cosine: np.ndarray, sine: np.ndarray,
+) -> Fraction:
+    """Bound ideal force change at one position under any two field rotations."""
+    budget.check()
+    assert cosine.ndim == 2 and cosine.size > 0
+    assert cosine.dtype == np.dtype("float64") and np.all(np.isfinite(cosine))
+    nonmonopole_cosine = cosine.copy()
+    nonmonopole_cosine[0, 0] = 0.0  # Degree zero is exactly rotation invariant.
+    bound_m_s2 = trajectory._harmonic_acceleration_upper_bound(
+        budget.candidate_id, gm_m3_s2, radius_m, distance_m,
+        nonmonopole_cosine, sine,
+    )
+    budget.check()
+    return 2 * Fraction(bound_m_s2)
+
+
+@pytest.mark.parametrize("monopole", [0.0, 1.0, 100.0])
+def test_harmonic_arbitrary_rotation_preserves_monopole(monopole: float) -> None:
+    cosine, sine = np.asarray([[monopole]]), np.zeros((1, 1))
+    assert _harmonic_arbitrary_rotation_bound_m_s2(
+        trajectory._RefinementBudget("monopole-rotation", 300.0),
+        1.0, 1.0, 1.0, cosine, sine,
+    ) == 0
+    assert cosine[0, 0] == monopole and sine[0, 0] == 0.0
+
+
+@pytest.mark.parametrize("coefficient", [-0.125, 0.125])
+def test_harmonic_arbitrary_rotation_encloses_quadrupole(coefficient: float) -> None:
+    cosine, sine = np.zeros((3, 3)), np.zeros((3, 3))
+    cosine[0, 0], cosine[2, 0] = 1.0, coefficient
+    original = cosine.copy()
+    bound_m_s2 = _harmonic_arbitrary_rotation_bound_m_s2(
+        trajectory._RefinementBudget("quadrupole-rotation", 300.0),
+        1.0, 1.0, 1.0, cosine, sine,
+    )
+    assert np.array_equal(cosine, original)
+    # At inertial (0,0,1), turn the symmetry axis from z to x. For the
+    # potential c*sqrt(5)/2*(3*(n.r)^2-r^2)/r^5, accelerations along z
+    # change from -3*c*sqrt(5) to 3*c*sqrt(5)/2 (GM=R=r=1 SI).
+    exact_change_squared = 5 * (Fraction(9, 2) * Fraction(coefficient))**2
+    assert 0 < exact_change_squared <= bound_m_s2**2
+    # Independent degree-2 addition norm: (2*5*sqrt(3)*|c|)^2.
+    expected_bound_squared = 300 * Fraction(coefficient)**2
+    assert expected_bound_squared <= bound_m_s2**2
+    assert math.isclose(float(bound_m_s2), math.sqrt(float(expected_bound_squared)), rel_tol=1e-15)
+
+
+def test_harmonic_arbitrary_rotation_rejects_expired_budget() -> None:
+    clock = iter([0.0, 301.0])
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="shared deadline"):
+        _harmonic_arbitrary_rotation_bound_m_s2(
+            trajectory._RefinementBudget("expired-rotation", 300.0, lambda: next(clock)),
+            1.0, 1.0, 1.0, np.ones((1, 1)), np.zeros((1, 1)),
+        )
+
+
 def _check_conditional_full_force_coast_domains(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
     body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
@@ -1656,6 +1714,7 @@ def _check_conditional_full_force_coast_domains(
             gravity_m_s2: dict[str, float] = {}
             point_mass_variation_m_s2: dict[str, float] = {}
             frozen_harmonic_variation_m_s2: dict[str, float] = {}
+            arbitrary_rotation_variation_m_s2: dict[str, float] = {}
             for body in trajectory.PHYSICAL_BODY_NAMES:
                 floor_m = trajectory._relative_distance_lower_bound(
                     budget, tuple(state[:3]), tuple(states[body][:3]), position_radius_m, reaches_m[body],
@@ -1683,6 +1742,14 @@ def _check_conditional_full_force_coast_domains(
                     assert math.isfinite(reported_variation_m_s2)
                     assert Fraction(reported_variation_m_s2) >= variation_m_s2
                     frozen_harmonic_variation_m_s2[body] = reported_variation_m_s2
+                    rotation_m_s2 = _harmonic_arbitrary_rotation_bound_m_s2(
+                        budget, field.gravitational_parameter, field.reference_radius,
+                        floor_m, field.cosine_coefficients, field.sine_coefficients,
+                    )
+                    reported_rotation_m_s2 = math.nextafter(float(rotation_m_s2), math.inf)
+                    assert math.isfinite(reported_rotation_m_s2)
+                    assert Fraction(reported_rotation_m_s2) >= rotation_m_s2
+                    arbitrary_rotation_variation_m_s2[body] = reported_rotation_m_s2
                 gravity_m_s2[body] = trajectory._harmonic_acceleration_upper_bound(
                     budget.candidate_id, field.gravitational_parameter,
                     field.reference_radius if harmonic else floor_m, floor_m,
@@ -1691,6 +1758,7 @@ def _check_conditional_full_force_coast_domains(
                 )
             assert set(point_mass_variation_m_s2) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
             assert set(frozen_harmonic_variation_m_s2) == {"Moon", "Mars"}
+            assert set(arbitrary_rotation_variation_m_s2) == {"Moon", "Mars"}
             thrust, srp = trajectory._thrust_and_srp_upper_bounds(
                 budget.candidate_id, spacecraft, floors_m["Sun"], thrust_enabled=False,
             )
@@ -1754,6 +1822,7 @@ def _check_conditional_full_force_coast_domains(
                 "acceleration_bound_m_s2": acceleration_m_s2, "position_reach_m": reach_m,
                 "conditional_point_mass_variation_m_s2": point_mass_variation_m_s2,
                 "conditional_frozen_harmonic_variation_m_s2": frozen_harmonic_variation_m_s2,
+                "conditional_arbitrary_rotation_variation_m_s2": arbitrary_rotation_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
     expected_arcs = 4 if run_native_controls else 0
