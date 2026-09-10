@@ -1,5 +1,46 @@
 ## Context
 
+### Conditional uniform type-3 stored-velocity bound (2026-09-10)
+
+Complete the other supplied-record velocity path using the existing CHBVAL
+series replay and fused-roundoff calculation. Rename their test-only helpers
+to make the coefficient-unit contract explicit: input and result may be km
+for position or km/s for stored velocity; the numerical operations do not
+change. Keep all prior position and type-2 derivative checks.
+
+For each of the 297 type-3 records, read the three stored velocity coefficient
+rows, not the position derivatives. With rounded normalized input bounded by
+q and the previously derived normalization error delta, use
+
+```
+E_velocity_m_s = 1000 * (
+    delta * sum_axis,sum_k |velocity_coefficient_km_s[k]| * k * U_(k-1)(q)
+    + sum_axis fused_series_roundoff_bound_km_s
+)
+```
+
+The derivative weights are with respect to normalized time. There is no
+additional division by record radius: the stored series already evaluates
+velocity in km/s. Sum with exact Fractions, then round the reported L1 bound
+upward. The maximum conditional bound is 1.7455876272338752e-11 m/s, below
+the unchanged 1e-6 m/s gate, over the existing record domains including the
+16-ULP endpoint extensions.
+
+All 1782 existing native supplied-record observations reproduce stored
+velocity bit-for-bit and lie inside their own conditional bound. Their
+maximum exact-polynomial L1 difference is 1.1216387400584274e-15 m/s.
+Six additional synthetic type-3 evaluations deliberately have zero position
+polynomials and nonzero quadratic velocity polynomials, at endpoint/interior
+epochs with 1 s and 32 s radii. Independent exact quadratic oracles reject
+confusion with differentiated position or an erroneous radius division.
+These are format-contract controls, not physically consistent ephemerides.
+
+This extends conditional supplied-record velocity arithmetic to both types
+across all 550 inventoried records. It does not compose source joins, center
+chains or output SI rounding, verify live floating-point/native-time premises,
+bound physical ephemeris uncertainty, or certify spacecraft safety. Add no
+spacecraft propagations or production changes; keep 3.9 and targeting gated.
+
 ### Conditional uniform type-2 derivative-roundoff bound (2026-09-10)
 
 Extend the inspected CHBINT replay with a test-only exact-Fraction forward

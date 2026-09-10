@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional uniform type-3 stored-velocity rounding (2026-09-10):
+Reuse the unchanged fused series arithmetic with an explicit coefficient-unit
+contract. Bound normalization and series rounding for all 297 type-3 velocity
+records; verify all 1782 existing native observations against bitwise replay,
+exact polynomials and the conditional bound under the unchanged 1e-6 m/s gate.
+Verify six synthetic records distinguish stored velocity from differentiated
+position and erroneous radius scaling. Preserve earlier controls; run focused/
+full pytest, Ruff, strict validation and legacy checksum. No spacecraft runs,
+production changes or interval safety status; keep execution premises and 3.9 open.
+All 19 focused tests passed (22.32 s); the maximum type-3 conditional bound
+is 1.7455876272338752e-11 m/s. All 1113 full-suite tests passed (228.46 s),
+as did Ruff, strict OpenSpec validation and the unchanged legacy SHA-256.
+
 Task 3.9 conditional uniform type-2 velocity rounding (2026-09-10):
 Derive a forward error bound for the inspected CHBINT derivative operations,
 including contamination by position rounding and final division. Compose
