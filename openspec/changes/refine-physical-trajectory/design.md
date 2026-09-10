@@ -1,5 +1,26 @@
 ## Context
 
+### Python direct-ephemeris time conversion (2026-09-10)
+
+The installed `Ephemeris.cartesian_state` binding declares a SupportsFloat
+argument in TDB seconds from J2000. Reuse the production direct-SPICE
+environment parity fixture for all eight bodies. At one interior candidate
+epoch and the Saturn segment junction TDB 986817600 s, pass native Time
+objects offset by +/-0.25 and +/-0.75 absolute-epoch ULP. Require nonzero
+native offsets, the predicted same/adjacent rounded labels, identical state
+values for Time input versus explicit rounded-float input, and direct SPICE
+parity at that rounded label within the unchanged 0.001 m / 0.000001 m/s.
+These 64 controls retain the existing 523 state comparisons and use no
+native trajectory propagations under the same cooperative budget.
+
+This qualifies the Python API conversion only. It does not show how the
+native integrator routes its high-resolution Time to ephemeris evaluation,
+nor bound the difference from an exact source polynomial at a fractional
+epoch. Source-record jumps and time-quantization allowances remain distinct
+from arithmetic/state parity. In particular, direct SPICE agreement at a
+rounded epoch must not be promoted to exact-time or interval safety.
+No model, kernel, tolerance, public time convention or task status changes.
+
 ### Mass-dependent thrust requires joint domain closure (2026-09-10)
 
 Connect the mass-floor and position-reach primitives with a speed inequality

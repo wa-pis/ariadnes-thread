@@ -81,6 +81,7 @@ def _gravity_models_path() -> Path:
 
 def test_production_direct_ephemerides_match_candidate_and_saturn_joins() -> None:
     import numpy as np
+    from tudatpy.astro.time_representation import Time
 
     evidence = json.loads((ROOT / "tests/data/m3_ephemeris_qualification.json").read_text())
     start, end = evidence["epoch_tdb_s"][0], evidence["epoch_tdb_s"][-1]
@@ -108,6 +109,28 @@ def test_production_direct_ephemerides_match_candidate_and_saturn_joins() -> Non
             assert np.all(np.isfinite(difference)), (body, epoch)
             assert np.linalg.norm(difference[:3]) <= 0.001, (body, epoch)  # m
             assert np.linalg.norm(difference[3:]) <= 0.000001, (body, epoch)  # m/s
+        # Qualify the Python Ephemeris binding's SupportsFloat boundary, not
+        # the native propagator's internal Time-to-SPICE dispatch.
+        for anchor_tdb_s in (evidence["epoch_tdb_s"][10], 986817600.0):
+            for ulp_fraction in (-0.75, -0.25, 0.25, 0.75):
+                budget.check()
+                native_epoch = Time(anchor_tdb_s) + ulp_fraction * math.ulp(anchor_tdb_s)
+                assert (native_epoch - anchor_tdb_s).to_float() != 0.0
+                rounded_epoch_tdb_s = native_epoch.to_float()
+                expected_label = anchor_tdb_s if abs(ulp_fraction) < 0.5 else math.nextafter(
+                    anchor_tdb_s, -math.inf if ulp_fraction < 0 else math.inf,
+                )
+                assert rounded_epoch_tdb_s == expected_label
+                state = np.asarray(model.cartesian_state(native_epoch)).reshape(6)
+                rounded_state = np.asarray(model.cartesian_state(rounded_epoch_tdb_s)).reshape(6)
+                assert np.all(np.isfinite(state))
+                assert np.array_equal(state, rounded_state), (body, anchor_tdb_s, ulp_fraction)
+                direct_state = spice.get_body_cartesian_state_at_epoch(
+                    body, "SSB", "J2000", "NONE", rounded_epoch_tdb_s,
+                )
+                difference = state - direct_state
+                assert np.linalg.norm(difference[:3]) <= 0.001  # m, at rounded epoch only.
+                assert np.linalg.norm(difference[3:]) <= 0.000001  # m/s.
     budget.check()
     assert budget.native_arc_propagations == 0
 

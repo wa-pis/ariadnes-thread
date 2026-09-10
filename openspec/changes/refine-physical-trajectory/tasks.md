@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 Python direct-ephemeris time boundary (2026-09-10):
+Extend the existing production parity fixture with 64 native Time input
+controls across eight bodies and two epochs, including a Saturn segment
+junction. Verify rounding labels, identical Time/float state values and
+unchanged direct-SPICE parity limits. Preserve the earlier comparisons,
+shared deadline and zero native propagation count. Run environment/full
+pytest, Ruff, strict validation and legacy checksum. This tests the Python
+binding, not internal native dispatch or interval safety; keep 3.9 open.
+All 44 environment tests passed (36.14 s) and all 1075 full-suite tests
+passed (165.10 s), as did Ruff, strict validation and the unchanged legacy hash.
+
 Task 3.9 joint mass-dependent thrust domain control (2026-09-10):
 Compose the existing mass/position bounds and speed inequality on exact
 constant-thrust motion. Verify strict closure, equality-unresolved and
