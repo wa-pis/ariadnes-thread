@@ -1,5 +1,54 @@
 ## Context
 
+### Conditional angle-limited harmonic rotation (2026-09-10)
+
+Connect the ideal text-PCK angular-path bound to the nonmonopole harmonic
+field. At a fixed relative position r, write its rotated acceleration as
+`a_Q(r)=Q*g(Q^T*r)`. Along a rotation path parametrized by angular length,
+the derivative contains both the output-vector rotation and the change of
+the body-fixed evaluation point. With acceleration-norm bound B and spatial
+Jacobian bound H for the nonmonopole field, it obeys
+`|da_Q/dtheta| <= B + H*|r|`. Orthogonal rotations preserve radius, so the
+same distance floor applies throughout this path. For |r|<=r_max and angular
+path length <=Theta, combine integration with the prior arbitrary-rotation
+cap to obtain `C_rotation=min(2*B, Theta*(B+H*r_max))` in m/s^2.
+
+Use the already qualified PCK bound Theta=Omega*h, half the previous cap for
+B, and the existing spatial-Jacobian helper applied to a private copy with
+C00 zero for H. The monopole contributes exactly zero throughout. Bound
+r_max by the exact L1 norm of the initial stored relative vector plus both
+position-ball radii. Compute this composition with Fractions and round only
+the diagnostic result upward. No native physical coefficient or rotation
+setting is changed. Keep the old arbitrary-rotation caps alongside the
+strictly smaller angle-limited values for both fields on all four trial
+domains; unresolved 1 s domains still do not prove trajectory inclusion.
+
+Independent quadrupole controls use rational rotations with
+u=tan(theta/2), sin(theta)=2u/(1+u^2) and theta<=2u. At inertial (0,0,1),
+direct differentiation of the degree-two zonal potential yields exact
+`|delta_a|^2=(5*C20^2/4)*(36*sin(theta)^2+45*sin(theta)^4)` for GM=R=r=1 SI.
+Zero, small and quarter-turn controls test zero response, genuine tightening
+and selection of the global cap without a floating-point trigonometric
+oracle. Also verify zero monopole contribution and invalid bound rejection.
+
+This completes only a conditional ideal rotation-contribution composition.
+It does not bound native PCK/rotation/force arithmetic error, include other
+forces, certify accumulated numerical error, or authorize a safe mission
+result. Keep the previous unresolved velocity controls, task 3.9, scientific
+tolerances and native-call limits unchanged; no native arcs are added.
+
+| Trial domain | Largest angle-limited rotation bound (m/s^2) | Field |
+|---|---:|---|
+| Moon, 1/64 s (closed) | 2.696904664414131e-8 | Moon |
+| Moon, 1 s (unresolved) | 9.17080430354907e-6 | Moon |
+| Mars, 1/64 s (closed) | 4.818121087323815e-7 | Mars |
+| Mars, 1 s (unresolved) | 4.135651375207534e-5 | Mars |
+
+Both inventory variants reproduce the same values. These maxima among two
+field contributions are neither complete force bounds nor observed changes;
+the much smaller short-domain values qualify this rotation-only refinement,
+not improved numerical trajectory accuracy.
+
 ### Conditional text-PCK angular-path bounds (2026-09-10)
 
 Before using a small rotation angle in the force enclosure, qualify the

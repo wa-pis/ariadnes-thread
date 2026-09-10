@@ -1790,6 +1790,52 @@ def test_pck_rotation_rates_reject_changed_source(
     assert budget.native_arc_propagations == 0
 
 
+def _angle_limited_rotation_bound_m_s2(
+    angle_rad: Fraction, acceleration_m_s2: Fraction,
+    jacobian_s_inv2: Fraction, radius_upper_m: Fraction,
+) -> Fraction:
+    """Bound ideal rotation-only force change using nonmonopole norm bounds."""
+    assert all(isinstance(value, Fraction) and value >= 0
+               for value in (angle_rad, acceleration_m_s2, jacobian_s_inv2, radius_upper_m))
+    assert radius_upper_m > 0
+    return min(2 * acceleration_m_s2,
+               angle_rad * (acceleration_m_s2 + jacobian_s_inv2 * radius_upper_m))
+
+
+@pytest.mark.parametrize("half_angle_tangent", [Fraction(0), Fraction(1, 1000), Fraction(1)])
+def test_angle_limited_rotation_encloses_exact_quadrupole(
+    half_angle_tangent: Fraction,
+) -> None:
+    budget = trajectory._RefinementBudget("angle-control", 300.0)
+    cosine, sine = np.zeros((3, 3)), np.zeros((3, 3))
+    cosine[2, 0] = 0.125
+    norm = _harmonic_arbitrary_rotation_bound_m_s2(budget, 1.0, 1.0, 1.0, cosine, sine) / 2
+    jacobian = _harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, 1.0, cosine, sine)
+    # theta=2*atan(u) <= 2*u and sin(theta)=2*u/(1+u^2), all exact here.
+    u = half_angle_tangent
+    angle_upper_rad = 2 * u
+    sin_squared = (2 * u / (1 + u**2))**2
+    # At inertial r=(0,0,1), rotate the quadrupole axis about y. Direct
+    # differentiation gives delta-a squared = (5*c^2/4)*(36*sin^2+45*sin^4).
+    exact_change_squared = Fraction(5, 4) * Fraction(0.125)**2 * (36 * sin_squared + 45 * sin_squared**2)
+    bound = _angle_limited_rotation_bound_m_s2(angle_upper_rad, norm, jacobian, Fraction(1))
+    assert exact_change_squared <= bound**2
+    if u == 0:
+        assert bound == 0
+    elif u < 1:
+        assert 0 < bound < 2 * norm
+    else:
+        assert bound == 2 * norm
+
+
+def test_angle_limited_rotation_preserves_monopole_and_rejects_invalid_bounds() -> None:
+    assert _angle_limited_rotation_bound_m_s2(Fraction(10), Fraction(0), Fraction(0), Fraction(1)) == 0
+    with pytest.raises(AssertionError):
+        _angle_limited_rotation_bound_m_s2(Fraction(-1), Fraction(1), Fraction(1), Fraction(1))
+    with pytest.raises(AssertionError):
+        _angle_limited_rotation_bound_m_s2(Fraction(1), Fraction(1), Fraction(1), Fraction(0))
+
+
 def _check_conditional_full_force_coast_domains(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
     body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
@@ -1834,6 +1880,7 @@ def _check_conditional_full_force_coast_domains(
             point_mass_variation_m_s2: dict[str, float] = {}
             frozen_harmonic_variation_m_s2: dict[str, float] = {}
             arbitrary_rotation_variation_m_s2: dict[str, float] = {}
+            angle_limited_rotation_variation_m_s2: dict[str, float] = {}
             for body in trajectory.PHYSICAL_BODY_NAMES:
                 floor_m = trajectory._relative_distance_lower_bound(
                     budget, tuple(state[:3]), tuple(states[body][:3]), position_radius_m, reaches_m[body],
@@ -1869,6 +1916,24 @@ def _check_conditional_full_force_coast_domains(
                     assert math.isfinite(reported_rotation_m_s2)
                     assert Fraction(reported_rotation_m_s2) >= rotation_m_s2
                     arbitrary_rotation_variation_m_s2[body] = reported_rotation_m_s2
+                    nonmonopole_cosine = field.cosine_coefficients.copy()
+                    nonmonopole_cosine[0, 0] = 0.0
+                    tail_jacobian_s_inv2 = _harmonic_spatial_jacobian_bound_s_inv2(
+                        budget, field.gravitational_parameter, field.reference_radius,
+                        floor_m, nonmonopole_cosine, field.sine_coefficients,
+                    )
+                    radius_upper_m = sum((abs(Fraction(x) - Fraction(b)) for x, b in
+                                          zip(state[:3], states[body][:3], strict=True)), Fraction(0))
+                    radius_upper_m += Fraction(position_radius_m) + Fraction(reaches_m[body])
+                    angle_limited_m_s2 = _angle_limited_rotation_bound_m_s2(
+                        rotation_rates_rad_s[body] * Fraction(duration_s), rotation_m_s2 / 2,
+                        tail_jacobian_s_inv2, radius_upper_m,
+                    )
+                    assert 0 < angle_limited_m_s2 < rotation_m_s2
+                    reported_angle_limited_m_s2 = math.nextafter(float(angle_limited_m_s2), math.inf)
+                    assert math.isfinite(reported_angle_limited_m_s2)
+                    assert Fraction(reported_angle_limited_m_s2) >= angle_limited_m_s2
+                    angle_limited_rotation_variation_m_s2[body] = reported_angle_limited_m_s2
                 gravity_m_s2[body] = trajectory._harmonic_acceleration_upper_bound(
                     budget.candidate_id, field.gravitational_parameter,
                     field.reference_radius if harmonic else floor_m, floor_m,
@@ -1878,6 +1943,7 @@ def _check_conditional_full_force_coast_domains(
             assert set(point_mass_variation_m_s2) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
             assert set(frozen_harmonic_variation_m_s2) == {"Moon", "Mars"}
             assert set(arbitrary_rotation_variation_m_s2) == {"Moon", "Mars"}
+            assert set(angle_limited_rotation_variation_m_s2) == {"Moon", "Mars"}
             thrust, srp = trajectory._thrust_and_srp_upper_bounds(
                 budget.candidate_id, spacecraft, floors_m["Sun"], thrust_enabled=False,
             )
@@ -1945,6 +2011,7 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_point_mass_variation_m_s2": point_mass_variation_m_s2,
                 "conditional_frozen_harmonic_variation_m_s2": frozen_harmonic_variation_m_s2,
                 "conditional_arbitrary_rotation_variation_m_s2": arbitrary_rotation_variation_m_s2,
+                "conditional_angle_limited_rotation_variation_m_s2": angle_limited_rotation_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
     expected_arcs = 4 if run_native_controls else 0

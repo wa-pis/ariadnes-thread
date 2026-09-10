@@ -51,6 +51,22 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional angle-limited harmonic rotation (2026-09-10):
+Compose the nonmonopole force/Jacobian bounds, relative-radius upper bound
+and qualified ideal PCK angular path as min(2*B,Theta*(B+H*r_max)). Verify
+exact rational quadrupole rotations, zero/small/global-cap branches, monopole
+cancellation and invalid inputs. Report tighter bounds for both harmonic
+fields on the four existing trial domains; preserve all coarse controls.
+Run focused/full pytest, Ruff, strict validation and legacy checksum. Add no
+native arcs; leave native arithmetic and complete trajectory error unqualified.
+All six focused controls passed (27.47 s), and all 1161 full-suite tests
+passed (253.08 s). Both inventory variants reproduce the tighter bounds;
+dominant short-domain rotation contributions are 2.696904664414131e-8 m/s^2
+(Moon) and 4.818121087323815e-7 m/s^2 (Mars). These are ideal component
+bounds, not measured trajectory errors. Ruff, strict OpenSpec validation and
+the unchanged legacy SHA-256 passed; native control/evaluation/arc counts
+remain (4,4,4) or (0,0,0) by variant.
+
 Task 3.9 conditional text-PCK angular-path bounds (2026-09-10):
 Pin the selected Moon/Mars orientation coefficients and reject incompatible
 binary/frame/phase/epoch overrides. Derive a uniform ideal Euler-rate bound
