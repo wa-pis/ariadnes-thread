@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 terminal native-time gate correction (2026-09-10):
+Require native Time endpoint residuals in the shared completion reader,
+retaining float-label consistency and the unchanged 1-microsecond limit.
+Verify real Time offsets on both sides of the limit, native simulator
+readback, missing/empty/nonfinite/inconsistent/failing native data and
+existing completion/safety precedence. Run focused/full pytest, Ruff, strict
+validation and legacy checksum. No public types, tolerances or integrators
+change; this endpoint fix does not complete interval safety or task 3.9.
+All 133 focused checks passed (6.67 s) and all 1072 full-suite tests passed
+(163.85 s), as did Ruff, strict validation and the unchanged legacy hash.
+
 Task 3.9 high-resolution native time diagnosis (2026-09-10):
 Reuse all 72 native histories and verify identical arrays/counts under native
 Time and float epoch keys. Subtract Time objects before conversion, verify

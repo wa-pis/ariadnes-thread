@@ -12,6 +12,13 @@ from space_nav.errors import TrajectoryRefinementError
 STATE = (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 1500.0)
 
 
+def _native_history(epoch: float) -> dict[MagicMock, object]:
+    native = MagicMock()
+    native.to_float.return_value = epoch
+    native.__sub__.side_effect = lambda expected: SimpleNamespace(to_float=lambda: epoch - expected)
+    return {native: STATE}
+
+
 @pytest.mark.parametrize("reason", [
     "rejected-dry-mass",
     *(f"rejected-impact:{body}" for body in trajectory.PHYSICAL_BODY_NAMES),
@@ -55,7 +62,7 @@ def test_invalid_safety_reason_starts_no_native_read(reason: object) -> None:
 
 def test_trial_outcome_preserves_safe_completion_and_native_errors() -> None:
     simulator = SimpleNamespace(integration_completed_successfully=True,
-                                state_history={10.0: STATE})
+                                state_history={10.0: STATE}, state_history_time_object=_native_history(10.0))
     assert trajectory._read_trial_arc_outcome(
         "safe-control", "coast", simulator, 10.0, None,
     ) == (STATE[:6], STATE[6])
@@ -75,6 +82,7 @@ def test_completed_state_is_immutable_and_selects_latest_epoch() -> None:
     simulator = SimpleNamespace(
         integration_completed_successfully=True,
         state_history={10.0: list(STATE), 0.0: [0.0] * 7},
+        state_history_time_object=_native_history(10.0),
     )
     state, mass = trajectory._read_completed_arc_state("fixture", "coast", simulator, 10.0)
     simulator.state_history[10.0][0] = 99.0
@@ -117,6 +125,45 @@ def test_native_history_failure_preserves_original_cause() -> None:
     with pytest.raises(TrajectoryRefinementError) as caught:
         trajectory._read_completed_arc_state("fixture", "coast", simulator, 10.0)
     assert caught.value.__cause__ is original
+
+
+@pytest.mark.parametrize("offset_s", [-1.01e-6, -0.99e-6, 0.0, 0.99e-6, 1.01e-6])
+def test_native_time_rejects_mismatch_hidden_by_float_epoch(offset_s: float) -> None:
+    from tudatpy.astro.time_representation import Time
+
+    expected = 978995455.2304223
+    native = Time(expected) + offset_s
+    label = native.to_float()
+    assert abs(label - expected) <= 1e-6  # Old float-only gate accepts all cases.
+    simulator = SimpleNamespace(
+        integration_completed_successfully=True, state_history={label: STATE},
+        state_history_time_object={native: STATE},
+    )
+    if abs(offset_s) > 1e-6:
+        with pytest.raises(TrajectoryRefinementError, match="final epoch mismatch: native offset"):
+            trajectory._read_completed_arc_state("native-epoch", "coast", simulator, expected)
+    else:
+        assert trajectory._read_completed_arc_state("native-epoch", "coast", simulator, expected) == (STATE[:6], STATE[6])
+
+
+@pytest.mark.parametrize("case", ["missing", "empty", "label", "nonfinite", "failure"])
+def test_native_time_is_required_and_validated(case: str) -> None:
+    simulator = SimpleNamespace(integration_completed_successfully=True, state_history={10.0: STATE})
+    native_history = _native_history(11.0 if case == "label" else 10.0)
+    native = next(iter(native_history))
+    failure = RuntimeError("native time unavailable")
+    if case == "nonfinite":
+        native.__sub__.side_effect = None
+        native.__sub__.return_value.to_float.return_value = float("nan")
+    if case == "failure":
+        native.to_float.side_effect = failure
+    if case != "missing":
+        simulator.state_history_time_object = {} if case == "empty" else native_history
+    with pytest.raises(TrajectoryRefinementError, match="arc-completion") as caught:
+        trajectory._read_completed_arc_state("native-epoch", "coast", simulator, 10.0)
+    assert caught.value.__cause__ is not None
+    if case == "failure":
+        assert caught.value.__cause__ is failure
 
 
 @pytest.mark.parametrize("expected", [True, float("nan"), float("inf"), "10"])

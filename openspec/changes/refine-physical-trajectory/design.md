@@ -1,5 +1,26 @@
 ## Context
 
+### Native terminal-epoch gate (2026-09-10)
+
+The float-only completion gate can hide a final-time violation: around TDB
+978995455.2304223 s, native offsets of approximately +/-1.01 microseconds
+both produce float-label offsets of +/-0.95367431640625 microseconds.
+The latter pass the unchanged 1-microsecond gate while the native offsets
+do not. `_read_completed_arc_state` now additionally requires native Time
+history, checks that its latest epoch maps to the selected float label, and
+compares `(native_terminal - expected).to_float()` against the same limit.
+Subtract before converting. Missing/empty/invalid native time fails with a
+chained contextual error; there is no float-only fallback. Keep the existing
+completion flag, float-history, state, mass and safety-precedence checks.
+
+Real Tudat Time tests exercise +/-0.99 and +/-1.01 microseconds and zero
+offset. Existing native burns, handoff, conservation and minimum-step tests
+exercise the reader against actual simulators. Injected tests cover missing,
+empty, inconsistent, nonfinite and failing native-time data. This fixes a
+boundary acceptance error without changing output types or tolerances; it
+does not correct arbitrary saved-state time labels, resample states or
+establish interval safety. Tasks 3.9 and 3.5 remain open.
+
 ### High-resolution native time isolates the mass-label error (2026-09-10)
 
 The installed TudatPy 1.0 binding documents `state_history_time_object` as

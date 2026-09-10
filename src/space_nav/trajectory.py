@@ -1841,6 +1841,22 @@ def _read_completed_arc_state(
         mass_kg = _positive_finite("terminal mass_kg", values[6])
     except ValueError as exc:
         _raise_refinement_error(candidate_id, "arc-completion", f"{context}: {exc}", exc)
+    # Float epoch labels can round an out-of-tolerance native endpoint inward.
+    # Require the native-time residual too; never fall back to float-only data.
+    try:
+        native_history = simulator.state_history_time_object
+        native_terminal = max(native_history)
+        native_label = native_terminal.to_float()
+        native_offset_s = (native_terminal - expected).to_float()
+    except Exception as exc:
+        _raise_refinement_error(candidate_id, "arc-completion", f"{context}: native time: {exc}", exc)
+    try:
+        if _finite_float("native terminal epoch", native_label) != terminal_epoch:
+            raise ValueError("native terminal epoch label disagrees with state history")
+        if abs(_finite_float("native terminal offset_s", native_offset_s)) > _TIME_TOLERANCE_S:
+            raise ValueError(f"final epoch mismatch: native offset {native_offset_s} s")
+    except ValueError as exc:
+        _raise_refinement_error(candidate_id, "arc-completion", f"{context}: {exc}", exc)
     return cartesian, mass_kg
 
 

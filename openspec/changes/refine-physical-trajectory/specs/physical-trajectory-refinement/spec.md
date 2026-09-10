@@ -192,6 +192,10 @@ Each trajectory evaluation SHALL propagate a seven-component translation/mass st
 - **WHEN** the frozen converged commands are run with the nominal and independently tighter integrators
 - **THEN** every departure-ignition, departure-cutoff, arrival-ignition, and arrival-cutoff comparison satisfies all three numerical bounds
 
+#### Scenario: Reject a native endpoint hidden by epoch-label rounding
+- **WHEN** a completed native endpoint differs from its expected TDB epoch by more than `0.000001 s`, even though its rounded floating-point epoch label lies within that limit
+- **THEN** the completion reader raises `TrajectoryRefinementError` and returns no state, comparing the native time difference before conversion; unavailable or inconsistent native endpoint time also fails rather than falling back to the rounded label
+
 #### Scenario: Reject unvalidated nominal closure
 - **WHEN** nominal commands meet the target closure but any tighter-integration or Moon-400 boundary difference exceeds its bound
 - **THEN** refinement raises `TrajectoryRefinementError` for `scientific-validation`, emits no completed result, and does not label the trajectory `converged` or `targeting-failed`
