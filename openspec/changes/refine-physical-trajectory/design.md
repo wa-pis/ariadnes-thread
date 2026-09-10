@@ -1,5 +1,30 @@
 ## Context
 
+### Conditional mass-rate roundoff envelope (2026-09-10)
+
+The Python control gate retains two rounded operations, exhaust velocity
+`g0 * Isp` and rate `T / exhaust`. For positive normal binary64 operations
+rounded to nearest, with unit roundoff `u = 2^-53`, their rate satisfies
+`q_hat/q = (1+d_div)/(1+d_mul)` and relative error at most `2u/(1-u)`.
+Here `q` is the exact law on the stored binary64 inputs, not a claim that
+binary64 g0 equals its decimal definition exactly. At constant thrust, the
+mass error for every powered duration in `[0,h]` is bounded by
+`q * 2u/(1-u) * h`; coast introduces no consumption in this analytic law.
+This conditional enclosure excludes underflow/overflow, native engine
+arithmetic, state integration error and arc-boundary timing error.
+
+Six exact-Fraction controls use 2000 kg initial mass, dry mass 1000 kg or
+either adjacent float, 1000 s powered duration, and Isp 300/450 s. Set thrust
+to the rounded `9.80665 * Isp`, giving computed rate exactly 1 kg/s. At Isp
+300 s the exact stored-input law consumes 2.1736558430047985e-14 kg more
+than the available 1000 kg while the current gate accepts equality. At
+450 s it consumes 8.131082968277209e-14 kg less. The conditional rate-error
+margin exceeds even the adjacent-float mass headroom in all six controls:
+none certifies dry-mass safety using that enclosure. Preserve this explicit
+counterexample rather than equating an accepted control with a safe trajectory.
+No production behavior, tolerance or native-call limit changes; tasks 3.9
+and 3.5 remain open pending native and integrated interval-mass evidence.
+
 ### Analytic mass-gate rounding correction (2026-09-10)
 
 The existing analytic control gate could accept a sub-ULP mass shortfall.

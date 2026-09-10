@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional mass-rate arithmetic evidence (2026-09-10):
+Verify the two-operation normal round-to-nearest rate-error bound
+`2u/(1-u)` with exact Fraction oracles for Isp 300/450 s and three adjacent
+dry masses. Record the accepted-equality/exact-law shortfall counterexample
+and the conditional whole-powered-interval mass margin. Verify all control
+tests, full pytest, Ruff, strict validation and unchanged legacy checksum.
+This is not native engine, integration or timing qualification; keep 3.9
+and 3.5 unchecked and preserve production behavior and resource limits.
+All 29 control tests and 996 full-suite tests passed (161.10 s for the full
+suite), as did Ruff, strict OpenSpec validation and the unchanged legacy hash.
+
 Task 3.9 mass-premise control-gate correction (2026-09-10):
 Reproduce a 5.684341886080802e-14 kg shortfall hidden by rounded burn-duration
 summation at exactly 1 kg/s. Preserve the existing mass-rate calculation but
