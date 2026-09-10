@@ -1489,6 +1489,19 @@ def test_coast_velocity_certificate_can_be_unresolved_for_exact_endpoint() -> No
     # An upper bound exceeding a gate is not evidence of actual error.
 
 
+def _dyadic_sqrt_bounds(value: Fraction) -> tuple[Fraction, Fraction]:
+    """Enclose a positive rational root with 100 relative binary guard bits."""
+    assert isinstance(value, Fraction) and value > 0
+    exponent = (value.numerator.bit_length() - value.denominator.bit_length()) // 2
+    step = Fraction(2) ** (exponent - 100)
+    scaled = value / step**2
+    root = math.isqrt(scaled.numerator // scaled.denominator)
+    lower = root * step
+    upper = lower if lower**2 == value else (root + 1) * step
+    assert 0 < lower and lower**2 <= value <= upper**2
+    return lower, upper
+
+
 def _point_gravity_anchor_error_bound_m_s2(
     gm_m3_s2: float, body_position_m: np.ndarray,
     spacecraft_position_m: np.ndarray, observed_acceleration_m_s2: np.ndarray,
@@ -1502,15 +1515,7 @@ def _point_gravity_anchor_error_bound_m_s2(
                   zip(body_position_m, spacecraft_position_m, strict=True)]
     squared_m2 = sum((value**2 for value in relative_m), Fraction(0))
     assert squared_m2 > 0
-    # Scale-adaptive dyadic sqrt enclosure; 100 guard bits are algorithmic,
-    # not a physical tolerance. All operations, including endpoints, are exact.
-    exponent = (squared_m2.numerator.bit_length() - squared_m2.denominator.bit_length()) // 2
-    step_m = Fraction(2) ** (exponent - 100)
-    scaled = squared_m2 / step_m**2
-    root = math.isqrt(scaled.numerator // scaled.denominator)
-    lower_m = root * step_m
-    upper_m = lower_m if lower_m**2 == squared_m2 else (root + 1) * step_m
-    assert 0 < lower_m and lower_m**2 <= squared_m2 <= upper_m**2
+    lower_m, upper_m = _dyadic_sqrt_bounds(squared_m2)
     error_m_s2 = Fraction(0)
     for relative, observed in zip(relative_m, observed_acceleration_m_s2, strict=True):
         endpoints = [Fraction(gm_m3_s2) * relative / (squared_m2 * radius)
@@ -1552,6 +1557,71 @@ def test_point_gravity_anchor_extreme_scale(distance_m: float) -> None:
 def test_point_gravity_anchor_rejects_singularity() -> None:
     with pytest.raises(AssertionError):
         _point_gravity_anchor_error_bound_m_s2(1.0, np.zeros(3), np.zeros(3), np.zeros(3))
+
+
+def _schwarzschild_anchor_error_bound_m_s2(
+    gm_m3_s2: float, sun_state: np.ndarray, spacecraft_state: np.ndarray,
+    observed_acceleration_m_s2: np.ndarray,
+) -> Fraction:
+    """Enclose PPN=1 Schwarzschild L1 error at exact stored SI SSB/J2000 states."""
+    assert type(gm_m3_s2) is float and math.isfinite(gm_m3_s2) and gm_m3_s2 > 0
+    for vector, size in ((sun_state, 6), (spacecraft_state, 6), (observed_acceleration_m_s2, 3)):
+        assert vector.shape == (size,) and vector.dtype == np.float64
+        assert np.all(np.isfinite(vector))
+    relative = [Fraction(ship) - Fraction(sun) for ship, sun in
+                zip(spacecraft_state, sun_state, strict=True)]
+    position_m, velocity_m_s = relative[:3], relative[3:]
+    squared_m2 = sum((value**2 for value in position_m), Fraction(0))
+    lower_m, upper_m = _dyadic_sqrt_bounds(squared_m2)
+    speed_squared_m2_s2 = sum((value**2 for value in velocity_m_s), Fraction(0))
+    radial_m2_s = sum((r * v for r, v in zip(position_m, velocity_m_s, strict=True)), Fraction(0))
+    gm = Fraction(gm_m3_s2)
+    error_m_s2 = Fraction(0)
+    for r, v, observed in zip(position_m, velocity_m_s, observed_acceleration_m_s2, strict=True):
+        # Separate the rational potential term; only the velocity term needs sqrt.
+        potential_m_s2 = 4 * gm**2 * r / (299792458**2 * squared_m2**2)
+        velocity_term = gm * (-speed_squared_m2_s2 * r + 4 * radial_m2_s * v)
+        endpoints = [potential_m_s2 + velocity_term / (299792458**2 * squared_m2 * radius)
+                     for radius in (lower_m, upper_m)]
+        error_m_s2 += max(abs(Fraction(observed) - endpoint) for endpoint in endpoints)
+    return error_m_s2
+
+
+@pytest.mark.parametrize("offset", [0.0, 1e12])
+@pytest.mark.parametrize(("velocity", "scaled_force"), [
+    ((0.0, 0.0, 0.0), (300, 400, 0)),
+    ((3.0, 4.0, 0.0), (525, 700, 0)),
+    ((-4.0, 3.0, 0.0), (225, 300, 0)),
+    ((1.0, -2.0, 3.0), (238, 384, -60)),
+])
+def test_schwarzschild_anchor_exact_geometry(
+    offset: float, velocity: tuple[float, float, float], scaled_force: tuple[int, int, int],
+) -> None:
+    # r=(3,4,0), GM=125: potential term*c^2=100*r, velocity factor*c^2=1.
+    exact_m_s2 = [Fraction(value, 299792458**2) for value in scaled_force]
+    observed_m_s2 = np.asarray([float(value) for value in exact_m_s2])
+    observed_m_s2[2] += 0.125  # Deliberately corrupt a component, including negative force.
+    sun_state = np.full(6, offset)
+    bound_m_s2 = _schwarzschild_anchor_error_bound_m_s2(
+        125.0, sun_state, sun_state + np.asarray([3.0, 4.0, 0.0, *velocity]), observed_m_s2,
+    )
+    assert bound_m_s2 == sum((abs(Fraction(value) - exact) for value, exact in
+                             zip(observed_m_s2, exact_m_s2, strict=True)), Fraction(0))
+
+
+def test_schwarzschild_anchor_irrational_radius() -> None:
+    bound_m_s2 = _schwarzschild_anchor_error_bound_m_s2(
+        2.0, np.zeros(6), np.asarray([1.0, -1.0, 0.0, 0.0, 0.0, 1.0]), np.zeros(3),
+    )
+    # Exact L1 force*c^2 = 8-sqrt(2); both signs and cancellation are exercised.
+    remainder = 8 - bound_m_s2 * 299792458**2
+    assert remainder > 0 and 2 - Fraction(2)**-90 < remainder**2 <= 2
+
+
+@pytest.mark.parametrize("invalid_state", [(0.0,) * 6, (1.0, 0.0, 0.0, math.nan, 0.0, 0.0)])
+def test_schwarzschild_anchor_rejects_invalid_state(invalid_state: tuple[float, ...]) -> None:
+    with pytest.raises(AssertionError):
+        _schwarzschild_anchor_error_bound_m_s2(1.0, np.zeros(6), np.asarray(invalid_state), np.zeros(3))
 
 
 def _point_mass_variation_bound_m_s2(
@@ -2154,6 +2224,15 @@ def _check_conditional_full_force_coast_domains(
                             assert Fraction(reported_point_error_m_s2) >= point_error_m_s2
                             point_anchor_error_upper_m_s2[source] = reported_point_error_m_s2
                     assert set(point_anchor_error_upper_m_s2) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
+                    relativity_anchor_error_m_s2 = _schwarzschild_anchor_error_bound_m_s2(
+                        bodies.get("Sun").gravity_field_model.gravitational_parameter,
+                        states["Sun"], state, components_m_s2[9],
+                    )
+                    # The existing force gate is at least 1e-15 m/s^2; require its floor.
+                    assert relativity_anchor_error_m_s2 <= Fraction(1e-15)
+                    reported_relativity_error_m_s2 = math.nextafter(float(relativity_anchor_error_m_s2), math.inf)
+                    assert math.isfinite(reported_relativity_error_m_s2)
+                    assert Fraction(reported_relativity_error_m_s2) >= relativity_anchor_error_m_s2
                     if first_acceleration_m_s2 is None:
                         first_acceleration_m_s2 = anchor_m_s2.copy()
                     else:
@@ -2174,6 +2253,7 @@ def _check_conditional_full_force_coast_domains(
                     endpoint_controls.append({"tighter": tighter,
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),
                         "point_anchor_error_upper_m_s2": point_anchor_error_upper_m_s2,
+                        "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,

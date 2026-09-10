@@ -51,6 +51,22 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 Schwarzschild initial anchor enclosure (2026-09-10):
+Reuse the dyadic root enclosure to bound the four observed native
+Schwarzschild vectors at exact stored SI Sun-relative states and PPN=1.
+Verify exact radial/transverse/mixed controls, translated states, corrupted
+vectors, irrational radius, singular and non-finite input; require outward
+L1 bounds <=1e-15 m/s^2 and retain point-gravity regressions. Run focused/full
+pytest, Ruff, strict OpenSpec validation and the legacy checksum. Keep
+native counts and production settings unchanged; task 3.9 stays open.
+
+Verification: 21 focused tests passed (27.59 s), including both inventory
+variants and all earlier point-anchor controls; all 1186 project tests passed
+(253.30 s). The four native Schwarzschild bounds are <=1.311646303961854e-25
+m/s^2, with identical nominal/tighter results. Ruff, strict OpenSpec and the
+unchanged legacy SHA-256 pass. Native controls/evaluations/arcs remain
+(4,4,4) or (0,0,0) by variant. No production or scientific settings changed.
+
 Task 3.9 point-gravity initial anchor enclosure (2026-09-10):
 Bound each observed point-force vector against the ideal force at exact
 stored GM/position inputs using Fraction arithmetic and integer-sqrt dyadic

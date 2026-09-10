@@ -1,5 +1,37 @@
 ## Context
 
+### Schwarzschild initial anchor error enclosure (2026-09-10)
+
+Reuse the four existing native coast outputs with PPN beta=gamma=1. For
+exact stored SI SSB/J2000 Sun and spacecraft states, subtract as Fractions
+to obtain Sun-relative `r,v`, and let `q=r.r > 0`, `w=v.v`, `z=r.v`.
+Rewrite the already independently tested Schwarzschild component as
+`4*GM^2*r_i/(c^2*q^2) + GM*(-w*r_i+4*z*v_i)/(c^2*q*sqrt(q))`,
+where `c=299792458 m/s` exactly. The first term is rational; only the second
+requires a square-root enclosure. Extract and reuse the existing exact
+dyadic root helper without changing the point-gravity algorithm or bounds.
+The second term is affine in `1/sqrt(q)`; either sign is enclosed by its
+endpoint values. Sum exact per-component maximum distances from the native
+observation to those endpoints and report the L1 upper bound outward.
+
+Require each bound <=1e-15 m/s^2, the floor of the existing force criterion,
+without changing production tolerances. Verify rational 3-4-5 geometry with
+stationary, radial, transverse and mixed velocity, common translated states,
+perturbed observed vectors, and an irrational-radius signed control with
+exact scaled L1 force `8-sqrt(2)`. Reject singular and non-finite states.
+Keep all point-source regressions and the unchanged native control counts.
+
+This encloses error of the observed Schwarzschild term relative to the ideal
+declared model at exact stored inputs. It excludes source uncertainty,
+higher-order relativistic physics, uniform native execution error and other
+force components. It does not complete the acceleration anchor, task 3.9,
+or a mission-wide accuracy/safety certificate. No new native runs or dependencies.
+
+Nominal and tighter profiles reproduce the same upper bound at each centre:
+1.311646303961854e-25 m/s^2 near Moon and 1.5926187108899425e-26 m/s^2 near
+Mars. These bound the observed term's arithmetic error at the specified
+inputs, not errors elsewhere in the mission or omitted physical effects.
+
 ### Point-gravity initial anchor error enclosure (2026-09-10)
 
 Reuse the 24 native point-force observations in the four existing coast
