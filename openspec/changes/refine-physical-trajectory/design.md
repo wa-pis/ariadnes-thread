@@ -1,5 +1,40 @@
 ## Context
 
+### C20 anchor arithmetic at a stored rotation matrix (2026-09-10)
+
+Append the `(2,0)` force vectors and inertial-to-body-fixed rotation matrices
+for Moon/Mars to the same four native controls (64 outputs total). The pinned
+matrix output uses row-major `3*i+j` order; verify readback against direct
+SPICE `J2000 -> IAU_MOON/IAU_MARS` at the exact anchor within the existing
+1e-14 matrix-element gate. This parity is not a bound on ideal PCK error.
+Require S20=0 and read GM, reference radius and normalized C20 from each
+unchanged field. Do not truncate the dynamics to these diagnostic terms.
+
+Treat the stored matrix Q and input positions as exact: `u=Q*(x-b)`,
+`q=u.u>0`. The normalized C20 potential is
+`GM*C20*R^2*sqrt(5)/2 * (3*u_z^2-q)/q^(5/2)`.
+Its fixed-frame gradient is
+`GM*C20*R^2*sqrt(5)/(2*q^(7/2)) *
+[u_x*(3*q-15*u_z^2), u_y*(3*q-15*u_z^2), u_z*(9*q-15*u_z^2)]`.
+Evaluate all rational factors and Q-transpose projection exactly, then use
+the existing dyadic bounds for sqrt(5) and sqrt(q) to enclose the common
+factor. Sum componentwise maximum errors from the observed vector and
+report the L1 bound outward. Require <=1e-15 m/s^2, the existing force floor.
+
+Independent controls cover both C20 signs at pole/equator, axis-permutation
+rotation and translation, deliberately reversed observations, the analytic
+force at (1,1,1), zero coefficient and invalid geometry. Retain every earlier
+native gate and propagation count. The reference is specifically the algebraic
+expression `Q^T*gradient(U)(Q*(x-b))` at the stored Q, which need not be exactly
+orthogonal. Its difference from the ideal physical PCK rotation remains
+unqualified, as do other harmonic terms, full summation and mission-wide
+errors. This bounded prerequisite does not close task 3.9.
+
+At the near-Moon anchor, Moon/Mars C20 bounds are respectively
+1.768552273218787e-19 and 6.756222976487729e-37 m/s^2; at the near-Mars
+anchor they are 1.2642002899229278e-39 and 3.3644477105573347e-18 m/s^2.
+Both integrator profiles reproduce these stored-matrix reference bounds.
+
 ### Harmonic degree-zero anchor readback and enclosure (2026-09-10)
 
 The pinned gravity-field object exposes coefficients but no public gradient

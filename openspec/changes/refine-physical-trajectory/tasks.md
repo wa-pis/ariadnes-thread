@@ -51,6 +51,23 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 C20 arithmetic at a stored rotation (2026-09-10):
+Read Moon/Mars C20 vectors and inertial-to-fixed matrices in the four existing
+coast runs. Verify row-major direct-SPICE matrix parity, S20=0 and an exact
+Cartesian C20 gradient enclosure at the stored matrix within 1e-15 m/s^2.
+Check independent pole/equator, both coefficient signs, rotated/translated
+and reversed-observation controls, irrational radius, zero and invalid inputs.
+Run focused/full pytest, Ruff, strict OpenSpec and legacy checksum. Preserve
+all previous gates/counts; do not infer ideal-PCK or full harmonic error.
+Task 3.9 remains open.
+
+Verification: 13 focused tests passed (28.42 s), including both SPK inventory
+variants; all 1220 project tests passed (257.59 s). The eight C20 observations
+have stored-matrix reference bounds <=3.3644477105573347e-18 m/s^2, identical
+between integrator profiles. Matrix parity, Ruff, strict OpenSpec and the
+unchanged legacy SHA-256 pass. Native controls/evaluations/arcs remain
+(4,4,4) or (0,0,0) by variant; production settings and tolerances are unchanged.
+
 Task 3.9 harmonic degree-zero anchor enclosure (2026-09-10):
 Append Moon/Mars `(0,0)` acceleration outputs to the four existing native
 coast controls without replacing their full harmonic models. Verify C00/S00,
