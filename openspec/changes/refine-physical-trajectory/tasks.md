@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional full-force coast phase inclusion (2026-09-10):
+Compose existing source-motion and Sun-speed envelopes with full-force
+position/velocity domains near Moon and Mars at the qualified start epoch.
+Verify matching source anchors, all eight distance floors, constant coast
+mass, outward force summation, strict short-interval inclusion and unresolved
+longer intervals. Reuse pinned physical fields and preserve the shared budget
+with zero spacecraft propagations. Run focused/full pytest, Ruff, strict
+validation and legacy checksum. This is an ideal-ODE control conditional on
+source premises, not a native trajectory-error/safety certificate; keep 3.9 open.
+Both focused inventory/domain controls passed (23.64 s), with short Moon/Mars
+inclusion and unresolved 1 s controls. All 1116 full-suite tests passed
+(249.47 s), as did Ruff, strict validation and the unchanged legacy SHA-256.
+
 Task 3.6 per-native-arc PPN guard (2026-09-10):
 Reproduce missing native-entry/continuation resets on the previous runner;
 restore and read back beta/gamma immediately before each native call while

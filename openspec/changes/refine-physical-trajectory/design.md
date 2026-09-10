@@ -1,5 +1,55 @@
 ## Context
 
+### Conditional full-force coast phase inclusion (2026-09-10)
+
+Connect the existing source-motion and speed bounds to a short ideal coast
+domain using the actual direct-SPICE environment, pinned Moon/Mars harmonic
+coefficients and source GMs. This is a mathematical full-force control, not
+a native spacecraft propagation or a numerically qualified mission segment.
+The synthetic candidate supplies the existing qualification interval only;
+its transfer vectors are not used or claimed as a reproduced mission.
+
+Anchor each source at the candidate-window start. For h equal to exactly
+representable 1/64 s or 1 s, reuse the conditional enclosure
+`R_body = L*h + J_all + E_start + E_max`: L sums whole-window polynomial
+position-rate bounds along the chain, J_all deliberately includes every
+window source jump, and E_max includes all selection-error strips. This
+overcounts events but avoids inferring continuity or using velocity channels
+as position derivatives. The direct environment's eight position anchors
+must exactly match those used by the source-motion calculation.
+
+Define an exact initial spacecraft state by the stored SSB/J2000 floats:
+Moon/Mars state plus the existing 1837400/3689500 m radial offset and
+1500 m/s transverse relative velocity. Use a 1000 m position ball and
+0.1 m/s velocity ball about that state. Source reaches and these balls give
+distance floors outside all eight collision spheres. Reuse the rotation-
+invariant harmonic/monopole bounds, fully lit SRP bound and Schwarzschild
+bound with `|v_relative_Sun| <= |v_anchor|_1 + 0.1 m/s + S_Sun`.
+Coast thrust is zero and exact mass is constant at 2000 kg, above 1000 kg dry
+mass. Shadows cannot increase the declared SRP bound.
+
+If the conditional force majorant is A, any ideal solution before its first
+exit satisfies position reach <= `|v_anchor|_1*h + A*h^2/2` and velocity
+change <= `A*h`. Strict inclusion of both bounds contradicts a first exit.
+This uses zero initial-state error for the defined mathematical control,
+not an asserted numerical integration-error allowance.
+
+| Center | h (s) | A (m/s^2) | Position reach (m) | Velocity-change bound (m/s) | Strict inclusion |
+|---|---:|---:|---:|---:|---|
+| Moon | 0.015625 | 1.4808734050931807 | 645.589029830596 | 0.02313864695458095 | Yes, conditional |
+| Moon | 1 | 1.599557598507921 | 41318.48611863392 | 1.5995575985079211 | Unresolved |
+| Mars | 0.015625 | 3.1836144969855678 | 476.9506694873882 | 0.0497439765153995 | Yes, conditional |
+| Mars | 1 | 3.274360803727464 | 30526.455155606454 | 3.2743608037274643 | Unresolved |
+
+The longer controls do not prove exit, impact or infeasibility; their chosen
+domains simply do not close. The short controls retain every source-domain,
+selection, native-time and floating-point premise. Force evaluation rounding
+and propagated-state errors remain unqualified; no finite-burn TNW domain,
+mission arc composition or public safety status is established. All work
+shares the existing 300 s qualification budget with zero native spacecraft
+arcs. Keep task 3.9 and targeting gated; do not extrapolate these tiny-domain
+controls to full-mission runtime or revise production limits from them.
+
 ### Restore PPN immediately before every native arc (2026-09-10)
 
 The force builder already restored/read back general-relativity beta and

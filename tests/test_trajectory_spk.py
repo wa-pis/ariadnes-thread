@@ -1286,6 +1286,33 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert body_reach_checks == 3 * chain_join_checks + 32
     assert set(full_interval_body_reach_m) == set(chain_position_bounds_m)
 
+    coast_durations_s = (1 / 64, 1.0)
+    coast_body_reaches_m: dict[float, dict[str, float]] = {}
+    body_ids = dict(zip(trajectory.PHYSICAL_BODY_NAMES, (10, 1, 2, 399, 301, 499, 599, 699), strict=True))
+    for duration_s in coast_durations_s:
+        assert start_tdb_s + duration_s <= end_tdb_s
+        assert Fraction(start_tdb_s + duration_s) - Fraction(start_tdb_s) == Fraction(duration_s)
+        coast_body_reaches_m[duration_s] = {}
+        for body, target in body_ids.items():
+            budget.check()
+            center = expected_centers[target]
+            chain = [target] if center == 0 else [target, center]
+            rate_m_s = sum((Fraction(max(rates_m_s[link])) for link in chain), Fraction(0))
+            # Deliberately overcount every candidate-window jump, not only local joins.
+            jumps_m = sum((abs(a - b) for (link, _), sides in joins.items() if link in chain
+                           for a, b in zip(sides[1][0], sides[-1][0])), Fraction(0))
+            interval_error_m = max([Fraction(chain_position_bounds_m[target]),
+                                    *(Fraction(error) for _, error, _ in chain_join_bounds_m[target])])
+            reach_m = rate_m_s * Fraction(duration_s) + jumps_m + Fraction(chain_position_bounds_m[target]) + interval_error_m
+            reported_reach_m = math.nextafter(float(reach_m), math.inf)
+            assert math.isfinite(reported_reach_m) and Fraction(reported_reach_m) >= reach_m
+            coast_body_reaches_m[duration_s][body] = reported_reach_m
+    coast_domains = _check_conditional_full_force_coast_domains(
+        budget, start_tdb_s, end_tdb_s, coast_body_reaches_m, chain_speed_bounds_m_s[10],
+        {body: motion_samples[target][0][1] for body, target in body_ids.items()},
+    )
+    assert all(motion_samples[target][0][0] == start_tdb_s for target in body_ids.values())
+
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
     observations: dict[int, list[tuple[float, float]]] = {}
@@ -1342,6 +1369,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "conditional_chain_add_scale_bound_m": chain_add_scale_bounds_m,
         "conditional_chain_velocity_bound_m_s": chain_velocity_bounds_m_s,
         "conditional_chain_speed_bound_m_s": chain_speed_bounds_m_s,
+        "conditional_full_force_coast_domains": coast_domains,
         "velocity_arithmetic_controls": velocity_arithmetic_controls,
         "moon_chain_join_fields": ["epoch_tdb_s", "conditional_l1_bound_m"],
         "moon_chain_join_bounds": moon_chain_join_bounds_m,
@@ -1389,6 +1417,86 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "frame": "J2000, each target relative to its listed center; chains end at SSB",
         "scope": "Coverage and exact per-record position-rate bounds, not composed motion or safety",
     }, sort_keys=True, allow_nan=False))
+
+
+def _check_conditional_full_force_coast_domains(
+    budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
+    body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
+    position_anchors_m: dict[str, np.ndarray],
+) -> list[dict[str, object]]:
+    """Test ideal coast phase inclusion; no native integration-error certificate."""
+    from test_trajectory_gravity import _candidate, _spacecraft
+
+    candidate = _candidate(
+        departure_epoch_utc=ephemeris.tdb_to_utc(start_tdb_s),
+        arrival_epoch_utc=ephemeris.tdb_to_utc(end_tdb_s),
+        departure_epoch_tdb_s=start_tdb_s, arrival_epoch_tdb_s=end_tdb_s,
+        flight_time_s=end_tdb_s - start_tdb_s,
+    )
+    spacecraft = _spacecraft()
+    environment = trajectory._build_physical_environment(candidate, spacecraft, budget=budget)
+    bodies = environment.bodies
+    states = {body: np.asarray(bodies.get(body).ephemeris.cartesian_state(start_tdb_s)).reshape(6)
+              for body in trajectory.PHYSICAL_BODY_NAMES}
+    assert all(np.all(np.isfinite(state)) for state in states.values())
+    for body, state in states.items():
+        assert np.array_equal(state[:3], position_anchors_m[body]), body
+    assert sum((abs(Fraction(value)) for value in states["Sun"][3:]), Fraction(0)) <= Fraction(sun_speed_upper_m_s)
+    guards_m = {surface.body: surface.guard_radius_m for surface in environment.collision_resource.surfaces}
+    position_radius_m, velocity_radius_m_s = 1000.0, 0.1
+    results: list[dict[str, object]] = []
+    for center, radius_m in (("Moon", 1_837_400.0), ("Mars", 3_689_500.0)):
+        # The stored SI state defines the exact initial condition of this control.
+        state = states[center] + np.asarray([radius_m, 0.0, 0.0, 0.0, 1500.0, 0.0])
+        initial_speed_m_s = sum((abs(Fraction(value)) for value in state[3:]), Fraction(0))
+        initial_speed_upper_m_s = math.nextafter(float(initial_speed_m_s), math.inf)
+        assert Fraction(initial_speed_upper_m_s) >= initial_speed_m_s
+        relative_speed_m_s = initial_speed_m_s + Fraction(velocity_radius_m_s) + Fraction(sun_speed_upper_m_s)
+        relative_speed_upper_m_s = math.nextafter(float(relative_speed_m_s), math.inf)
+        assert Fraction(relative_speed_upper_m_s) >= relative_speed_m_s
+        for duration_s, reaches_m in body_reaches_m.items():
+            budget.check()
+            floors_m: dict[str, float] = {}
+            gravity_m_s2: dict[str, float] = {}
+            for body in trajectory.PHYSICAL_BODY_NAMES:
+                floor_m = trajectory._relative_distance_lower_bound(
+                    budget, tuple(state[:3]), tuple(states[body][:3]), position_radius_m, reaches_m[body],
+                )
+                assert floor_m > guards_m[body]  # Only a declared position-domain property.
+                floors_m[body] = floor_m
+                field = bodies.get(body).gravity_field_model
+                harmonic = body in {"Moon", "Mars"}
+                gravity_m_s2[body] = trajectory._harmonic_acceleration_upper_bound(
+                    budget.candidate_id, field.gravitational_parameter,
+                    field.reference_radius if harmonic else floor_m, floor_m,
+                    field.cosine_coefficients if harmonic else ((1.0,),),
+                    field.sine_coefficients if harmonic else ((0.0,),),
+                )
+            thrust, srp = trajectory._thrust_and_srp_upper_bounds(
+                budget.candidate_id, spacecraft, floors_m["Sun"], thrust_enabled=False,
+            )
+            relativity = trajectory._schwarzschild_acceleration_upper_bound(
+                budget.candidate_id, bodies.get("Sun").gravity_field_model.gravitational_parameter,
+                floors_m["Sun"], relative_speed_upper_m_s,
+            )
+            acceleration_m_s2 = trajectory._sum_force_acceleration_bounds(
+                budget, gravity_m_s2, thrust, srp, relativity, thrust_enabled=False,
+            )
+            assert Fraction(acceleration_m_s2) >= sum(map(Fraction, (*gravity_m_s2.values(), thrust, srp, relativity)))
+            reach_m = trajectory._position_reach_upper_bound(
+                budget, duration_s, 0.0, initial_speed_upper_m_s, acceleration_m_s2,
+            )
+            velocity_reach_m_s = Fraction(acceleration_m_s2) * Fraction(duration_s)
+            mass_floor_kg = trajectory._mass_lower_bound(budget, spacecraft.initial_mass_kg, 0.0, 0.0, duration_s)
+            assert mass_floor_kg == spacecraft.initial_mass_kg > spacecraft.dry_mass_kg
+            closed = reach_m < position_radius_m and velocity_reach_m_s < Fraction(velocity_radius_m_s)
+            assert closed is (duration_s == 1 / 64), (center, duration_s, reach_m, float(velocity_reach_m_s))
+            results.append({"center": center, "duration_s": duration_s,
+                "acceleration_bound_m_s2": acceleration_m_s2, "position_reach_m": reach_m,
+                "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
+                "conditional_domain_closed": closed})
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+    return results
 
 
 def test_direct_and_tabulated_ephemeris_lookup_cost() -> None:
