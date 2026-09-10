@@ -526,6 +526,16 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
             )
         ]
 
+    force_output_size = 3 * len(output_variables)
+    observe_native_sources = combined and not historical_table
+    if observe_native_sources:
+        def source_states_si() -> np.ndarray:
+            return np.concatenate([np.asarray(bodies.get(source).state).reshape(6) for source in _SOURCE_ORDER])
+
+        output_variables.append(propagation_setup.dependent_variable.custom_dependent_variable(
+            source_states_si, 6 * len(_SOURCE_ORDER),
+        ))
+
     for arc_count, (label, state) in enumerate(fixed_states.items(), start=1):
         budget.check()
         if combined:
@@ -545,7 +555,7 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
             )
         )
         termination_settings = propagation_setup.propagator.time_termination(
-            epoch_tdb_s + 0.01,
+            epoch_tdb_s + (0.025 if observe_native_sources else 0.01),
             terminate_exactly_on_final_condition=True,
         )
         propagator_settings = propagation_setup.propagator.translational(
@@ -564,7 +574,39 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
         history = simulator.dependent_variable_history
         initial_epoch_tdb_s = min(history)
         assert initial_epoch_tdb_s == epoch_tdb_s, label
-        initial_values = np.asarray(history[initial_epoch_tdb_s], dtype=float)
+        initial_values = np.asarray(history[initial_epoch_tdb_s], dtype=float)[:force_output_size]
+        if observe_native_sources:
+            from tudatpy.astro.time_representation import Time
+
+            fractional_epochs = 0
+            source_checks = 0
+            maximum_position_error_m = 0.0
+            maximum_velocity_error_m_s = 0.0
+            for native_epoch, output in simulator.dependent_variable_history_time_object.items():
+                budget.check()
+                rounded_epoch_tdb_s = native_epoch.to_float()
+                fractional_epochs += (native_epoch - Time(rounded_epoch_tdb_s)).to_float() != 0.0
+                saved_sources = np.asarray(output)[force_output_size:].reshape(len(_SOURCE_ORDER), 6)
+                for source, saved_state in zip(_SOURCE_ORDER, saved_sources):
+                    direct_state = ephemeris._ensure_standard_kernels().get_body_cartesian_state_at_epoch(
+                        source, "SSB", "J2000", "NONE", rounded_epoch_tdb_s,
+                    )
+                    difference = saved_state - direct_state
+                    assert np.all(np.isfinite(difference))
+                    assert np.linalg.norm(difference[:3]) <= 0.001, (label, source)  # m
+                    assert np.linalg.norm(difference[3:]) <= 0.000001, (label, source)  # m/s
+                    maximum_position_error_m = max(maximum_position_error_m, float(np.linalg.norm(difference[:3])))
+                    maximum_velocity_error_m_s = max(maximum_velocity_error_m_s, float(np.linalg.norm(difference[3:])))
+                    source_checks += 1
+            assert fractional_epochs > 0
+            assert source_checks >= 4 * len(_SOURCE_ORDER)
+            print(json.dumps({
+                "label": label, "burn_id": burn_id, "source_state_checks": source_checks,
+                "fractional_native_epochs": fractional_epochs,
+                "maximum_position_error_m": maximum_position_error_m,
+                "maximum_velocity_error_m_s": maximum_velocity_error_m_s,
+                "scope": "native environment at saved outputs, not all integration stages",
+            }, sort_keys=True, allow_nan=False))
         production_total_m_s2 = initial_values[:3]
         direct_components_m_s2 = initial_values[3:].reshape(-1, 3)
         if not combined:

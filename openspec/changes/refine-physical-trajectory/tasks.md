@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 native saved-output source-state parity (2026-09-10):
+Observe cached source states in nine existing combined/direct force arcs,
+extending only those isolated test arcs to 0.025 s at unchanged RK4 step.
+Verify rounded-epoch SPICE parity for all eight bodies at saved native Time
+outputs, including nonrepresentable float epochs; retain all original force
+controls and native counters. Report counts and residuals. Run gravity/full
+pytest, Ruff, strict validation and legacy checksum. Saved-output evidence
+does not qualify every RK stage or interval safety; keep 3.9 open.
+All 38 gravity tests passed (16.55 s) and all 1075 full-suite tests passed
+(164.27 s), as did Ruff, strict validation and the unchanged legacy hash.
+All 288 sampled source comparisons reported zero position/velocity differences;
+this is parity of computed values, not a physical uncertainty bound.
+
 Task 3.9 Python direct-ephemeris time boundary (2026-09-10):
 Extend the existing production parity fixture with 64 native Time input
 controls across eight bodies and two epochs, including a Saturn segment

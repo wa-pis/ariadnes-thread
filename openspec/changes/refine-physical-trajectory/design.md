@@ -1,5 +1,31 @@
 ## Context
 
+### Direct-SPICE source states during native output updates (2026-09-10)
+
+Extend only the nine combined/direct short force controls (near Moon,
+cruise and near Mars, each coast/departure/arrival thrust configuration).
+Keep the RK4 0.01 s step and all force settings, but extend these isolated
+test arcs from 0.01 to 0.025 s to include two interior native Time epochs
+that differ from their float labels. The other gravity/historical-table
+controls retain their original duration. No extra native propagations:
+the existing per-evaluation and shared-budget counters remain enforced.
+
+A custom dependent variable reads the current cached SSB/J2000 six-state
+of every source body after the native environment update; it does not call
+the ephemeris itself. Associate the saved output with native Time keys and
+compare each source with direct SPICE at `native_epoch.to_float()`, retaining
+the 0.001 m / 0.000001 m/s parity gates. The nine arcs provide 288 source
+checks at 36 outputs, including 18 fractional-native-time outputs. Retain
+the original initial-force sum, PPN-reset and domain-bound checks unchanged.
+Per-arc JSON reports counts and maximum position/velocity differences.
+
+This advances from Python binding conversion to observed native environment
+updates at saved outputs. It does not inspect every RK stage, prove uniform
+native dispatch/rounding, or establish full-trajectory error and safety.
+In particular, passing rounded-epoch parity does not remove source-jump or
+time-quantization allowances. No production duration, integrator, force,
+resource, tolerance or call-limit changes; task 3.9 remains open.
+
 ### Python direct-ephemeris time conversion (2026-09-10)
 
 The installed `Ephemeris.cartesian_state` binding declares a SupportsFloat
