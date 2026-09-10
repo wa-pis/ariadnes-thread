@@ -1537,6 +1537,83 @@ def test_point_mass_variation_rejects_singular_chord_floor() -> None:
         _point_mass_variation_bound_m_s2(1.0, 0.0, Fraction(2))
 
 
+def _harmonic_spatial_jacobian_bound_s_inv2(
+    budget: trajectory._RefinementBudget, gm_m3_s2: float,
+    radius_m: float, distance_m: float, cosine: np.ndarray, sine: np.ndarray,
+) -> Fraction:
+    """Bound the ideal spatial Jacobian in s^-2, at a fixed field orientation."""
+    scaled: list[list[list[float]]] = []
+    for matrix in (cosine, sine):
+        assert matrix.ndim == 2 and matrix.dtype == np.dtype("float64")
+        assert np.all(np.isfinite(matrix))
+        rows: list[list[float]] = []
+        for degree, row in enumerate(matrix):
+            budget.check()
+            squared_weight = (degree + 2) * (2 * degree + 3)
+            weight = math.isqrt(squared_weight)
+            weight += int(weight**2 < squared_weight)
+            values: list[float] = []
+            for coefficient in row:
+                magnitude = abs(float(coefficient))
+                value = math.nextafter(magnitude * weight, math.inf) if magnitude else 0.0
+                assert math.isfinite(value)
+                assert Fraction(value) >= Fraction(magnitude) * weight
+                values.append(value)
+            rows.append(values)
+        scaled.append(rows)
+    # Only the norm-bound calculation sees these weights, never native dynamics.
+    acceleration_bound = trajectory._harmonic_acceleration_upper_bound(
+        budget.candidate_id, gm_m3_s2, radius_m, distance_m, *scaled,
+    )
+    budget.check()
+    return Fraction(acceleration_bound) / Fraction(distance_m)
+
+
+@pytest.mark.parametrize("degree", [0, 1, 2])
+def test_harmonic_hessian_addition_identity_at_north_pole(degree: int) -> None:
+    # Independent Cartesian Hessians of the real 4pi solid harmonics at (0,0,1).
+    # Each pair is a squared normalization and an unnormalized Hessian's
+    # squared Frobenius norm, obtained from 1/r, {x,y,z}/r^3 and quadratics/r^5.
+    terms = (
+        ((1, 1 + 1 + 4),),
+        ((3, 2 * 9), (3, 2 * 9), (3, 9 + 9 + 36)),
+        ((5, 36 + 36 + 144), (15, 2 * 16), (15, 2 * 16), (15, 2), (15, 2)),
+    )
+    exact_squared_norm = sum(normalization * norm for normalization, norm in terms[degree])
+    assert exact_squared_norm == (2 * degree + 1)**2 * (degree + 1) * (degree + 2) * (2 * degree + 3)
+
+
+@pytest.mark.parametrize("degree", [0, 1, 2, 19, 120, 200])
+def test_harmonic_spatial_jacobian_encloses_single_degree(degree: int) -> None:
+    cosine = np.zeros((degree + 1, degree + 1))
+    cosine[degree, 0] = (-1.0)**degree
+    bound_s_inv2 = _harmonic_spatial_jacobian_bound_s_inv2(
+        trajectory._RefinementBudget("jacobian-bound", 300.0),
+        1.0, 1.0, 1.0, cosine, np.zeros_like(cosine),
+    )
+    # At the north pole, the independent radial second derivative of
+    # sqrt(2n+1)*r^(-n-1) has this squared magnitude (GM=R=r=1 SI).
+    radial_squared = Fraction((2 * degree + 1) * ((degree + 1) * (degree + 2))**2)
+    frobenius_squared = Fraction((2 * degree + 1)**2 * (degree + 1) * (degree + 2) * (2 * degree + 3))
+    assert radial_squared <= frobenius_squared <= bound_s_inv2**2
+    # Integer ceiling weights cost at most 23% for these degrees, not an
+    # unexplained numerical tolerance on the underlying scientific dynamics.
+    assert bound_s_inv2**2 < frobenius_squared * Fraction(123, 100)**2
+
+
+def test_harmonic_spatial_jacobian_zero_and_expired_budget() -> None:
+    zeros = np.zeros((1, 1))
+    assert _harmonic_spatial_jacobian_bound_s_inv2(
+        trajectory._RefinementBudget("zero-jacobian", 300.0), 1.0, 1.0, 1.0, zeros, zeros,
+    ) == 0
+    clock = iter([0.0, 301.0])
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="shared deadline"):
+        _harmonic_spatial_jacobian_bound_s_inv2(
+            trajectory._RefinementBudget("expired-jacobian", 300.0, lambda: next(clock)),
+            1.0, 1.0, 1.0, zeros, zeros,
+        )
+
+
 def _check_conditional_full_force_coast_domains(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
     body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
@@ -1578,6 +1655,7 @@ def _check_conditional_full_force_coast_domains(
             floors_m: dict[str, float] = {}
             gravity_m_s2: dict[str, float] = {}
             point_mass_variation_m_s2: dict[str, float] = {}
+            frozen_harmonic_variation_m_s2: dict[str, float] = {}
             for body in trajectory.PHYSICAL_BODY_NAMES:
                 floor_m = trajectory._relative_distance_lower_bound(
                     budget, tuple(state[:3]), tuple(states[body][:3]), position_radius_m, reaches_m[body],
@@ -1595,6 +1673,16 @@ def _check_conditional_full_force_coast_domains(
                     assert math.isfinite(reported_variation_m_s2)
                     assert Fraction(reported_variation_m_s2) >= variation_m_s2
                     point_mass_variation_m_s2[body] = reported_variation_m_s2
+                else:
+                    jacobian_s_inv2 = _harmonic_spatial_jacobian_bound_s_inv2(
+                        budget, field.gravitational_parameter, field.reference_radius,
+                        floor_m, field.cosine_coefficients, field.sine_coefficients,
+                    )
+                    variation_m_s2 = jacobian_s_inv2 * (Fraction(position_radius_m) + Fraction(reaches_m[body]))
+                    reported_variation_m_s2 = math.nextafter(float(variation_m_s2), math.inf)
+                    assert math.isfinite(reported_variation_m_s2)
+                    assert Fraction(reported_variation_m_s2) >= variation_m_s2
+                    frozen_harmonic_variation_m_s2[body] = reported_variation_m_s2
                 gravity_m_s2[body] = trajectory._harmonic_acceleration_upper_bound(
                     budget.candidate_id, field.gravitational_parameter,
                     field.reference_radius if harmonic else floor_m, floor_m,
@@ -1602,6 +1690,7 @@ def _check_conditional_full_force_coast_domains(
                     field.sine_coefficients if harmonic else ((0.0,),),
                 )
             assert set(point_mass_variation_m_s2) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
+            assert set(frozen_harmonic_variation_m_s2) == {"Moon", "Mars"}
             thrust, srp = trajectory._thrust_and_srp_upper_bounds(
                 budget.candidate_id, spacecraft, floors_m["Sun"], thrust_enabled=False,
             )
@@ -1664,6 +1753,7 @@ def _check_conditional_full_force_coast_domains(
             results.append({"center": center, "duration_s": duration_s,
                 "acceleration_bound_m_s2": acceleration_m_s2, "position_reach_m": reach_m,
                 "conditional_point_mass_variation_m_s2": point_mass_variation_m_s2,
+                "conditional_frozen_harmonic_variation_m_s2": frozen_harmonic_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
     expected_arcs = 4 if run_native_controls else 0

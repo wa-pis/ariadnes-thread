@@ -1,5 +1,60 @@
 ## Context
 
+### Conditional frozen-orientation harmonic variation (2026-09-10)
+
+Extend the existing addition-theorem bound to spatial derivatives, without
+assuming a constant orientation over physical time. For a real 4pi basis set
+`f_nk(r)=r^(-n-1)*Y_nk`, the prior gradient identity is
+`sum_k |grad f_nk|^2=(n+1)*(2n+1)^2*r^(-2n-4)`. Each exterior solid harmonic
+obeys `Delta f_nk=0`, hence differentiating componentwise gives
+`Delta sum_k |grad f_nk|^2=2*sum_k |Hess f_nk|_F^2`. Applying the radial
+identity `Delta r^(-p)=p*(p-1)*r^(-p-2)` yields
+
+```
+sum_k |Hess f_nk|_F^2 = (2n+1)^2*(n+1)*(n+2)*(2n+3)*r^(-2n-6)
+H = GM/d^3 * sum_n (R/d)^n*(2n+1)*sqrt((n+1)*(n+2)*(2n+3)*q_n)
+```
+
+Cauchy-Schwarz over coefficients and the triangle inequality over degrees
+make H an operator-norm bound in s^-2 for the finite gravity field's spatial
+Jacobian at r>=d>0. Orthogonal field rotations preserve this norm. Explicit
+Cartesian Hessians of degree 0/1/2 solid harmonics at the north pole have
+summed squared Frobenius norms 6, 270 and 2100, independently checking the
+identity. Single-degree radial second derivatives also check degrees
+0/1/2/19/120/200, including negative coefficients.
+
+Reuse the validated acceleration-norm helper instead of duplicating its
+coefficient validation and directed Decimal sum: weight every coefficient's
+magnitude upward by the exact integer `ceil(sqrt((n+2)*(2n+3)))`, call that
+helper, then divide its result by d with exact Fractions. Check every stored
+weighted coefficient encloses the exact product and leave exact zeros zero.
+These artificial weights are only inputs to the bound calculation; the
+native force model and physical coefficients are unchanged. The integer
+ceiling adds at most 23% over H in the six single-degree controls, a declared
+conservative allowance rather than a changed scientific tolerance. Check
+the shared deadline per row and after the existing helper; reject expiry.
+
+Multiply this Jacobian bound by the existing relative-position ball radius
+to report frozen-orientation spatial force variation for both harmonic
+fields on each Moon/Mars trial domain. The entire comparison chord shares
+the proven distance floor. An unresolved 1 s trial domain still does not
+establish trajectory inclusion. Critically, orientation invariance of H
+does NOT remove the additional force change from rotation between epochs.
+Do not add these values to a claimed complete time-varying force enclosure,
+native error certificate or velocity qualification. Rotation, other forces,
+native evaluation error and accumulated trajectory error remain open. Keep
+task 3.9, native counts, scientific tolerances and production dynamics unchanged.
+
+| Trial domain | Largest frozen-orientation variation bound (m/s^2) | Field |
+|---|---:|---|
+| Moon, 1/64 s (closed) | 0.005024341840953305 | Moon |
+| Moon, 1 s (unresolved) | 0.24209888823672562 | Moon |
+| Mars, 1/64 s (closed) | 0.004792226927804076 | Mars |
+| Mars, 1 s (unresolved) | 0.14456438761458335 | Mars |
+
+These are maxima of the two separate harmonic-field bounds, not a complete
+force sum or actual acceleration differences. Both inventory variants agree.
+
 ### Conditional point-mass acceleration variation (2026-09-10)
 
 For ideal point gravity `a(r)=-mu*r/|r|^3`, direct differentiation gives

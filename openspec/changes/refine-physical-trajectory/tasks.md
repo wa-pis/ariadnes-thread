@@ -51,6 +51,23 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional frozen-orientation harmonic variation (2026-09-10):
+Derive the harmonic spatial Jacobian bound using the Laplacian of the
+gradient addition identity. Verify independent Cartesian Hessian identities,
+single-degree radial derivatives through degree 200, directed coefficient
+weights, zero fields and deadline rejection. Reuse the existing gravity norm
+helper with bound-only weights and report the two frozen-orientation field
+variations on all four trial domains. Run focused/full pytest, Ruff, strict
+validation and legacy checksum. Add no native arcs and do not claim coverage
+of time-varying rotation or a complete force/trajectory-error certificate.
+All 12 focused checks passed (25.51 s), and all 1142 full-suite tests passed
+(250.74 s) after explicitly naming the Jacobian units s^-2. Both inventory
+variants reproduce the frozen-field bounds. The dominant closed-domain
+components are 0.005024341840953305 m/s^2 (Moon) and
+0.004792226927804076 m/s^2 (Mars), excluding rotation between epochs.
+Ruff, strict OpenSpec validation and the unchanged legacy SHA-256 passed;
+native controls/evaluations/arcs remain (4,4,4) or (0,0,0) by variant.
+
 Task 3.9 conditional point-mass acceleration variation (2026-09-10):
 Derive 2*GM*D/d^3 from the point-gravity Jacobian on a nonsingular comparison
 chord. Verify exact inward/outward/zero radial changes, GM scaling, rational
