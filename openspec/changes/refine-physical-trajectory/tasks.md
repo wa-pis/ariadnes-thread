@@ -51,6 +51,22 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional point-mass acceleration variation (2026-09-10):
+Derive 2*GM*D/d^3 from the point-gravity Jacobian on a nonsingular comparison
+chord. Verify exact inward/outward/zero radial changes, GM scaling, rational
+transverse motion and singular-floor rejection. Compose the existing trial
+balls and distance floors for all six point sources using native GMs and
+outward report rounding; preserve the unresolved 1 s domain distinction.
+Run focused/full pytest, Ruff, strict validation and legacy checksum. Add no
+native arcs; do not claim harmonic/full-force/trajectory error qualification.
+All ten focused controls passed (23.83 s), and all 1132 full-suite tests
+passed (249.02 s). Both inventory variants reproduced the six-source bounds;
+the largest component bound in the closed Moon domain is Earth's
+2.2087972387894688e-8 m/s^2, and in the closed Mars domain the Sun's
+1.731174197972173e-11 m/s^2. These exclude Moon/Mars harmonic forces.
+Ruff, strict OpenSpec validation and the unchanged legacy SHA-256 passed;
+native control/evaluation/arc counts remain (4,4,4) or (0,0,0) by variant.
+
 Task 3.9 conditional coast velocity certificate limitation (2026-09-10):
 Derive the endpoint velocity bound from exact velocity increment plus A*h.
 Verify constant-acceleration equality, zero duration/acceleration, and an

@@ -1,5 +1,46 @@
 ## Context
 
+### Conditional point-mass acceleration variation (2026-09-10)
+
+For ideal point gravity `a(r)=-mu*r/|r|^3`, direct differentiation gives
+`Da=mu/|r|^3*(3*u*u^T-I)` with radial eigenvalue `2*mu/|r|^3` and two
+transverse eigenvalues `-mu/|r|^3`. Thus its Euclidean operator norm is
+`2*mu/|r|^3`. If the entire straight comparison chord between relative
+positions stays outside distance d>0 and its length is at most D, integrating
+this Jacobian along that chord proves `|a(r)-a(r0)|_2 <= 2*mu*D/d^3`.
+Endpoint distances alone are not the chord premise.
+
+Reuse the declared spacecraft position ball and each conditional source-motion
+ball. Their relative vectors lie in the convex ball about exact x0-b0 with
+radius D=R_ship+R_body. The existing outward distance-floor calculation
+establishes d for that whole ball and hence every comparison chord. Use the
+six existing native point-mass GMs; evaluate the scalar bound with exact
+Fractions, then round finite reported m/s^2 bounds upward. Do not use this
+monopole formula for Moon/Mars harmonic fields. Both the closed 1/64 s and
+unresolved 1 s trial domains report the six component bounds, but only the
+closed domains have a conditional ideal-trajectory inclusion argument.
+
+| Trial domain | Largest point-source variation bound (m/s^2) | Source |
+|---|---:|---|
+| Moon, 1/64 s (closed) | 2.2087972387894688e-8 | Earth |
+| Moon, 1 s (unresolved) | 6.428266571858848e-7 | Earth |
+| Mars, 1/64 s (closed) | 1.731174197972173e-11 | Sun |
+| Mars, 1 s (unresolved) | 1.7523383540640805e-11 | Sun |
+
+These are maxima among six separate component bounds, not sums or bounds
+on all forces. Both inventory variants reproduce the same values.
+
+Six exact radial controls cover both displacement signs, zero displacement,
+and two GM scales. Nonzero controls reject omission of the factor two.
+A rational rotation with exactly fixed radius independently checks a nonzero
+directional force change; a zero chord-distance floor is rejected.
+The qualification adds no native arcs and retains all previous position and
+unresolved velocity controls. These are ideal force-variation bounds, not
+native force-evaluation error, a full-force residual enclosure or accumulated
+trajectory error. Harmonic fields/rotation, SRP/shadows and relativity still
+need their corresponding treatment before a tighter velocity certificate.
+No production force, limit or scientific tolerance changes; task 3.9 stays open.
+
 ### Conditional coast velocity certificate limitation (2026-09-10)
 
 For the same closed ideal coast domains and exact defining initial state,

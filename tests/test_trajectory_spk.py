@@ -1489,6 +1489,54 @@ def test_coast_velocity_certificate_can_be_unresolved_for_exact_endpoint() -> No
     # An upper bound exceeding a gate is not evidence of actual error.
 
 
+def _point_mass_variation_bound_m_s2(
+    gm_m3_s2: float, distance_floor_m: float, displacement_m: Fraction,
+) -> Fraction:
+    """Bound ideal force change when the entire comparison chord stays above d."""
+    assert all(type(value) is float and math.isfinite(value) and value > 0
+               for value in (gm_m3_s2, distance_floor_m))
+    assert isinstance(displacement_m, Fraction) and displacement_m >= 0
+    return 2 * Fraction(gm_m3_s2) * displacement_m / Fraction(distance_floor_m)**3
+
+
+@pytest.mark.parametrize("gm_m3_s2", [1.0, 1000.0])
+@pytest.mark.parametrize("delta_m", [-0.125, 0.0, 0.125])
+def test_point_mass_variation_encloses_exact_radial_force(
+    gm_m3_s2: float, delta_m: float,
+) -> None:
+    initial_m, final_m = Fraction(10), Fraction(10) + Fraction(delta_m)
+    # The complete symmetric displacement ball has this exact distance floor.
+    floor_m = float(initial_m - abs(Fraction(delta_m)))
+    bound_m_s2 = _point_mass_variation_bound_m_s2(
+        gm_m3_s2, floor_m, abs(Fraction(delta_m)),
+    )
+    exact_change_m_s2 = abs(Fraction(gm_m3_s2) / initial_m**2
+                            - Fraction(gm_m3_s2) / final_m**2)
+    assert exact_change_m_s2 <= bound_m_s2
+    if delta_m:
+        assert exact_change_m_s2 > bound_m_s2 / 2  # A missing factor 2 fails.
+    else:
+        assert exact_change_m_s2 == bound_m_s2 == 0
+
+
+def test_point_mass_variation_encloses_exact_transverse_force() -> None:
+    # A rational rotation preserves radius exactly and changes force direction.
+    initial_m = (Fraction(10), Fraction(0), Fraction(0))
+    final_m = (Fraction(99990, 10001), Fraction(2000, 10001), Fraction(0))
+    assert sum(value**2 for value in final_m) == 100
+    displacement_m = sum(map(abs, (b - a for a, b in zip(initial_m, final_m, strict=True))))
+    assert displacement_m < Fraction("0.5")  # Whole chord is outside 9.5 m.
+    bound_m_s2 = _point_mass_variation_bound_m_s2(1000.0, 9.5, displacement_m)
+    # With GM=1000 and r=10, a=-r exactly, so no numerical force oracle is used.
+    exact_change_squared = sum((b - a)**2 for a, b in zip(initial_m, final_m, strict=True))
+    assert 0 < exact_change_squared <= bound_m_s2**2
+
+
+def test_point_mass_variation_rejects_singular_chord_floor() -> None:
+    with pytest.raises(AssertionError):
+        _point_mass_variation_bound_m_s2(1.0, 0.0, Fraction(2))
+
+
 def _check_conditional_full_force_coast_domains(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
     body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
@@ -1529,6 +1577,7 @@ def _check_conditional_full_force_coast_domains(
             budget.check()
             floors_m: dict[str, float] = {}
             gravity_m_s2: dict[str, float] = {}
+            point_mass_variation_m_s2: dict[str, float] = {}
             for body in trajectory.PHYSICAL_BODY_NAMES:
                 floor_m = trajectory._relative_distance_lower_bound(
                     budget, tuple(state[:3]), tuple(states[body][:3]), position_radius_m, reaches_m[body],
@@ -1537,12 +1586,22 @@ def _check_conditional_full_force_coast_domains(
                 floors_m[body] = floor_m
                 field = bodies.get(body).gravity_field_model
                 harmonic = body in {"Moon", "Mars"}
+                if not harmonic:
+                    variation_m_s2 = _point_mass_variation_bound_m_s2(
+                        field.gravitational_parameter, floor_m,
+                        Fraction(position_radius_m) + Fraction(reaches_m[body]),
+                    )
+                    reported_variation_m_s2 = math.nextafter(float(variation_m_s2), math.inf)
+                    assert math.isfinite(reported_variation_m_s2)
+                    assert Fraction(reported_variation_m_s2) >= variation_m_s2
+                    point_mass_variation_m_s2[body] = reported_variation_m_s2
                 gravity_m_s2[body] = trajectory._harmonic_acceleration_upper_bound(
                     budget.candidate_id, field.gravitational_parameter,
                     field.reference_radius if harmonic else floor_m, floor_m,
                     field.cosine_coefficients if harmonic else ((1.0,),),
                     field.sine_coefficients if harmonic else ((0.0,),),
                 )
+            assert set(point_mass_variation_m_s2) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
             thrust, srp = trajectory._thrust_and_srp_upper_bounds(
                 budget.candidate_id, spacecraft, floors_m["Sun"], thrust_enabled=False,
             )
@@ -1604,6 +1663,7 @@ def _check_conditional_full_force_coast_domains(
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
                 "acceleration_bound_m_s2": acceleration_m_s2, "position_reach_m": reach_m,
+                "conditional_point_mass_variation_m_s2": point_mass_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
     expected_arcs = 4 if run_native_controls else 0
