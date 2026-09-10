@@ -1,5 +1,29 @@
 ## Context
 
+### Conditional interval mass floor (2026-09-10)
+
+Add the private `_mass_lower_bound` arithmetic primitive. For positive anchor
+mass `m0`, nonnegative uniform mass-error enclosure `E`, consumption-rate
+upper bound `Q` and duration `h`, return a downward-rounded binary64 value
+of exact `m0 - E - Q*h` kg. If consumption is bounded by Q throughout the
+interval and all initial/native/integration mass deviations are enclosed by
+E, integrating the rate inequality gives this floor for every elapsed time
+in `[0,h]`. Required premises are explicit inputs, not inferred from saved
+samples or solver tolerances. Timing effects must be included in the supplied
+duration/rate/error enclosures. No production safety path uses this helper yet.
+
+Exact Fraction arithmetic followed by conditional nextafter toward minus
+infinity preserves sub-ULP deficits, exact zero and signed negative floors.
+A floor below dry mass is unresolved, not proof of crossing; no clamping or
+public status is introduced. Validate finite inputs, positive initial mass,
+nonnegative remaining fields, output overflow and the shared deadline at
+entry/exit. No native counters are incremented. Tests cover exact constant
+flow/coast, subnormal and rounded-boundary cases, and variable consumption
+`q(t)=t kg/s`, `m(t)=10-t^2/2 kg` with a declared 0.25 kg error enclosure.
+The latter includes an unresolved conservative floor while the exact mass
+stays above dry mass. These analytic controls do not qualify native mass
+errors or complete tasks 3.9/3.5; tolerances and budgets are unchanged.
+
 ### Saved native mass history versus exact constant flow (2026-09-10)
 
 Reuse all 36 isolated native burn controls (two durations, two initial masses,

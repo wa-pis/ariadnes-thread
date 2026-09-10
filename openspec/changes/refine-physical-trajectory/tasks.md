@@ -51,6 +51,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional interval mass floor (2026-09-10):
+Add the private outward mass-floor primitive with explicit duration, rate
+and mass-error enclosures. Verify exact constant/variable flow and coast,
+sub-ULP/subnormal/negative bounds, unresolved-not-crossing, invalid inputs,
+overflow and both deadline checks without native counter changes. Run
+focused/full pytest, Ruff, strict validation and legacy checksum. The caller
+must justify all enclosures before any safety use; keep 3.9/3.5 open.
+All 30 focused tests passed (0.04 s); all 1026 full-suite tests passed
+(162.39 s), as did Ruff, strict validation and the unchanged legacy hash.
+
 Task 3.9 saved native mass-history evidence (2026-09-10):
 Reuse the 36 isolated native burns to compare every saved mass with exact
 stored-input constant flow under the unchanged mass tolerance. Verify finite

@@ -1400,6 +1400,42 @@ def _install_tnw_engine(
     return engine_name
 
 
+def _mass_lower_bound(
+    budget: _RefinementBudget,
+    initial_mass_kg: float,
+    mass_error_bound_kg: float,
+    mass_rate_upper_kg_s: float,
+    duration_s: float,
+) -> float:
+    """Return a conditional signed mass floor in kg throughout [0, duration].
+
+    Callers must enclose consumption rate and all initial/native/integration
+    mass errors over the interval. This arithmetic helper proves neither
+    premise; a floor below dry mass is unresolved, not an impact or status.
+    """
+    budget.check()
+    try:
+        initial = Fraction(_positive_finite("initial_mass_kg", initial_mass_kg))
+        values = []
+        for name, value in (
+            ("mass_error_bound_kg", mass_error_bound_kg),
+            ("mass_rate_upper_kg_s", mass_rate_upper_kg_s), ("duration_s", duration_s),
+        ):
+            number = Fraction(_finite_float(name, value))
+            if number < 0:
+                raise ValueError(f"{name} must be nonnegative")
+            values.append(number)
+        error, rate, duration = values
+        lower_kg = initial - error - rate * duration
+        result_kg = _finite_float("mass lower bound_kg", float(lower_kg))
+        if Fraction(result_kg) > lower_kg:
+            result_kg = _finite_float("mass lower bound_kg", math.nextafter(result_kg, -math.inf))
+    except (ArithmeticError, TypeError, ValueError) as exc:
+        _raise_refinement_error(budget.candidate_id, "mass-bound", str(exc), exc)
+    budget.check()
+    return result_kg
+
+
 def _position_reach_upper_bound(
     budget: _RefinementBudget,
     duration_s: float,
