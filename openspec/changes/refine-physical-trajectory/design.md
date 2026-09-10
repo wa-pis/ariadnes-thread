@@ -1,5 +1,40 @@
 ## Context
 
+### Type-2 native velocity arithmetic replay (2026-09-10)
+
+The Sun-relative speed domain needed by the Schwarzschild force cannot reuse
+the supplied-record position-roundoff certificate as a velocity certificate.
+[NAIF SPKE02](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/FORTRAN/spicelib/spke02.html)
+describes type-2 velocity as the derivative evaluated by CHBINT, whereas
+[SPKE03](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/FORTRAN/spicelib/spke03.html)
+evaluates separate stored velocity polynomials. Keep these paths distinct.
+
+Inspect the installed, already hash-pinned Darwin/arm64 CHBINT instructions
+and pin six additional derivative operations. For normalized time x, the
+derivative recurrence rounds `2*x*d`, fuses `2*b + rounded_product`, then
+subtracts the following derivative. The terminal derivative fuses `x*d+b`,
+subtracts the next derivative and divides by the record radius. Replaying
+these operations with exact Fraction expressions rounded once per fused
+instruction preserves their actual evaluation order; algebraic equivalence
+alone would not establish identical floating-point behavior.
+
+Twelve native single-mode controls cover degrees 0, 1, 2 and 19 at both record
+endpoints and a mission-epoch interior point. They compare the replay bitwise
+with CHBINT and independently with `T'_n = n U_(n-1)` under the unchanged
+1e-6 m/s tolerance. Extend the existing supplied-record controls without
+additional native requests: for all 253 type-2 records, inspect all three
+velocity components at six existing epochs, including the 16-ULP endpoint
+extensions. All 1518 state checks reproduce native velocity bit-for-bit.
+Their exact differentiated-polynomial oracle has maximum L1 error
+1.4697270998851237e-11 m/s, below the unchanged 1e-6 m/s gate.
+
+These are supplied-record observations, not uniform derivative-roundoff
+bounds, source-selection/center-chain/time-conversion guarantees or physical
+ephemeris uncertainties. No spacecraft propagations are added. Preserve the
+shared qualification deadline, all prior position controls and production
+settings. Task 3.9 and the targeting prerequisite remain open; a uniform
+derivative-error derivation is still required.
+
 ### Full-force coupled mass-history controls (2026-09-10)
 
 Add four single-arc controls using the actual direct-SPICE physical environment,

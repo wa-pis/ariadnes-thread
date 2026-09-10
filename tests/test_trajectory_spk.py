@@ -64,6 +64,51 @@ def _replay_spk_position(
     return result_km
 
 
+def _replay_spk_type2_velocity(
+    coefficients_km: tuple[float, ...], midpoint_tdb_s: float,
+    radius_s: float, epoch_tdb_s: float,
+) -> float:
+    """Replay the inspected CHBINT derivative path in km/s, not an error bound."""
+    assert coefficients_km and radius_s > 0
+    assert all(math.isfinite(value) for value in (*coefficients_km, midpoint_tdb_s,
+                                                 radius_s, epoch_tdb_s))
+    normalized_time = (epoch_tdb_s - midpoint_tdb_s) / radius_s
+    twice_time = normalized_time + normalized_time
+    current = following = derivative = next_derivative = 0.0
+    for coefficient_km in reversed(coefficients_km[1:]):
+        position_km = float(Fraction(twice_time) * Fraction(current) - Fraction(following)) + coefficient_km
+        # The derivative first rounds a multiply, then a fused add, then a subtract.
+        product_km = twice_time * derivative
+        slope_km = float(2 * Fraction(current) + Fraction(product_km)) - next_derivative
+        following, current = current, position_km
+        next_derivative, derivative = derivative, slope_km
+        assert all(math.isfinite(value) for value in (current, derivative))
+    slope_km = float(Fraction(normalized_time) * Fraction(derivative) + Fraction(current)) - next_derivative
+    return slope_km / radius_s
+
+
+@pytest.mark.parametrize("degree", [0, 1, 2, 19])
+@pytest.mark.parametrize("normalized_time", [-1.0, 0.3, 1.0])
+def test_type2_velocity_replay_matches_native_single_modes(
+    cspice: ctypes.CDLL, degree: int, normalized_time: float,
+) -> None:
+    import spiceypy as spice
+
+    coefficients_km = (0.0,) * degree + (0.3,)
+    midpoint_tdb_s, radius_s = 978995455.0, 32.0
+    epoch_tdb_s = midpoint_tdb_s + radius_s * normalized_time
+    replay_km_s = _replay_spk_type2_velocity(coefficients_km, midpoint_tdb_s, radius_s, epoch_tdb_s)
+    _, native_km_s = spice.chbint(coefficients_km, degree, [midpoint_tdb_s, radius_s], epoch_tdb_s)
+    assert replay_km_s.hex() == native_km_s.hex()
+    x = (Fraction(epoch_tdb_s) - Fraction(midpoint_tdb_s)) / Fraction(radius_s)
+    previous, current = Fraction(0), Fraction(1)  # U_-1, U_0; T'_n = n U_(n-1).
+    for _ in range(1, degree):
+        previous, current = current, 2 * x * current - previous
+    exact_km_s = Fraction(0.3) * degree * current / Fraction(radius_s)
+    assert 1000 * abs(Fraction(native_km_s) - exact_km_s) <= Fraction("0.000001")  # m/s
+    assert cspice.failed_c() == 0
+
+
 def _spk_fused_roundoff_bound_km(
     budget: trajectory._RefinementBudget, coefficients_km: tuple[float, ...],
     normalized_limit: Fraction,
@@ -336,6 +381,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     index_roundoff_margins: list[tuple[int, float, float, float]] = []
     endpoint_record_checks = 0
     evaluation_checks = 0
+    type2_velocity_checks = 0
+    max_type2_evaluation_error_m_s = 0.0
     max_evaluation_error_m = dict.fromkeys(expected_centers, 0.0)
     uniform_evaluation_bounds_m: dict[int, list[float]] = {target: [] for target in expected_centers}
     native_magnitude_bounds_km: dict[int, list[Fraction]] = {target: [] for target in expected_centers}
@@ -511,9 +558,13 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                     assert abs(rounded_time - exact_time) <= normalization_error
                     assert abs(rounded_time) <= rounded_limit
                     basis = [Fraction(1), exact_time]
+                    derivative_basis = [Fraction(0), Fraction(1)]
                     for degree in range(2, coefficient_count):
+                        derivative_basis.append(2 * basis[-1] + 2 * exact_time * derivative_basis[-1]
+                                                - derivative_basis[-2])
                         basis.append(2 * exact_time * basis[-1] - basis[-2])
                     error_m = Fraction(0)
+                    velocity_error_m_s = Fraction(0)
                     exact_magnitude_km = Fraction(0)
                     for axis, row in enumerate(coefficients_km):
                         replay_km = _replay_spk_position(tuple(float(value) for value in row),
@@ -523,11 +574,23 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                                         for degree, value in enumerate(row)), Fraction(0))
                         exact_magnitude_km += abs(exact_km)
                         error_m += abs(Fraction(state_km[axis]) - exact_km) * 1000
+                        if data_type == 2:
+                            replay_km_s = _replay_spk_type2_velocity(
+                                tuple(float(value) for value in row), midpoint_s, radius_s, probe_s,
+                            )
+                            assert state_km[axis + 3].hex() == replay_km_s.hex(), (target, index, probe_s, axis)
+                            exact_km_s = sum((Fraction(value) * derivative_basis[degree]
+                                              for degree, value in enumerate(row)), Fraction(0)) / Fraction(radius_s)
+                            velocity_error_m_s += abs(Fraction(state_km[axis + 3]) - exact_km_s) * 1000
                     assert error_m <= Fraction("0.001"), (target, index, probe_s)  # L1 m, sampled only.
                     assert error_m <= uniform_error_m, (target, index, probe_s)
                     assert exact_magnitude_km <= polynomial_magnitude_km
                     max_evaluation_error_m[target] = max(max_evaluation_error_m[target], float(error_m))
                     evaluation_checks += 1
+                    if data_type == 2:
+                        assert velocity_error_m_s <= Fraction("0.000001"), (target, index, probe_s)
+                        max_type2_evaluation_error_m_s = max(max_type2_evaluation_error_m_s, float(velocity_error_m_s))
+                        type2_velocity_checks += 1
             bound_m_s = trajectory._spk_position_rate_bound(
                 budget, tuple(tuple(float(value) for value in row) for row in coefficients_km),
                 float(record[1]),
@@ -608,6 +671,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
 
     assert endpoint_record_checks == (24 if native is not None else 0)
     assert evaluation_checks == (3300 if native is not None else 0)
+    assert type2_velocity_checks == (1518 if native is not None else 0)
     jump_observations: dict[int, list[tuple[float, float, bool]]] = {target: [] for target in expected_centers}
     native_join_envelopes: list[tuple[int, float, float, float]] = []
     native_join_envelope_checks = omitted_jump_failures = 0
@@ -1072,6 +1136,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "conditional_index_margin_fields": ["target", "segment_start_tdb_s", "segment_end_tdb_s", "time_margin_s"],
         "conditional_index_margins": index_roundoff_margins,
         "type2_midpoint_max_velocity_difference_m_s": max_type2_velocity_difference_m_s,
+        "type2_supplied_record_velocity_checks": type2_velocity_checks,
+        "type2_supplied_record_max_velocity_error_m_s": max_type2_evaluation_error_m_s,
         "frame": "J2000, each target relative to its listed center; chains end at SSB",
         "scope": "Coverage and exact per-record position-rate bounds, not composed motion or safety",
     }, sort_keys=True, allow_nan=False))

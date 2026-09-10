@@ -48,8 +48,14 @@
     {"file_offset": "0x832c", "bytes": "26c0661f", "instruction": "chbint: fnmsub d6, d1, d6, d16"},
     {"file_offset": "0x8330", "bytes": "c628621e", "instruction": "chbint: fadd d6, d6, d2"},
     {"file_offset": "0x836c", "bytes": "038c661f", "instruction": "chbint: fnmsub d3, d0, d6, d3"},
-    {"file_offset": "0x8370", "bytes": "6128611e", "instruction": "chbint: fadd d1, d3, d1"}
+    {"file_offset": "0x8370", "bytes": "6128611e", "instruction": "chbint: fadd d1, d3, d1"},
+    {"file_offset": "0x8334", "bytes": "2208641e", "instruction": "chbint derivative: fmul d2, d1, d4"},
+    {"file_offset": "0x8338", "bytes": "6208451f", "instruction": "chbint derivative: fmadd d2, d3, d5, d2"},
+    {"file_offset": "0x833c", "bytes": "4238671e", "instruction": "chbint derivative: fsub d2, d2, d7"},
+    {"file_offset": "0x8378", "bytes": "0018421f", "instruction": "chbint derivative: fmadd d0, d0, d2, d6"},
+    {"file_offset": "0x837c", "bytes": "0038641e", "instruction": "chbint derivative: fsub d0, d0, d4"},
+    {"file_offset": "0x8388", "bytes": "0018611e", "instruction": "chbint derivative: fdiv d0, d0, d1"}
   ],
-  "evaluation_scope": "Inspected positive-degree position recurrence in chbval_ and chbint_. Each product-minus-previous term is fused, followed by a separate coefficient addition. SPKE03 calls chbval_ for six stored components; SPKE02 calls chbint_ for three position polynomials and derivatives. Only the position recurrence is replayed; derivative arithmetic is not qualified by it.",
-  "scope": "Static successful reader and position-evaluation paths in this exact build. Assumes valid directory, nonnegative finite in-range quotient, no signed integer overflow and declared floating-point mode. Does not certify live dispatch, continuous FPCR, DAF internals, segment priority, polynomial evaluation error, center-chain summation or spacecraft safety."
+  "evaluation_scope": "Inspected position recurrence in chbval_ and chbint_, plus chbint_ derivative recurrence. Each position product-minus-previous term is fused, followed by a separate coefficient addition. Derivative steps multiply twice-normalized-time by the previous derivative, fuse 2 times the previous position plus that rounded product, then subtract the following derivative. The final derivative fuses normalized-time times derivative plus position, subtracts the next derivative, then divides by record radius. SPKE03 calls chbval_ for six stored components; SPKE02 calls chbint_ for three position polynomials and derivatives. Bitwise supplied-record velocity replay and sampled exact-oracle checks do not bound uniform derivative rounding error.",
+  "scope": "Static successful reader, position-evaluation and type-2 derivative paths in this exact build. Assumes valid directory, nonnegative finite in-range quotient, no signed integer overflow and declared floating-point mode. Does not certify live dispatch, continuous FPCR, DAF internals, segment priority, uniform polynomial evaluation error, center-chain summation or spacecraft safety."
 }

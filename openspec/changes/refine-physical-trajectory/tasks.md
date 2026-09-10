@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 type-2 native velocity arithmetic replay (2026-09-10):
+Pin the inspected CHBINT derivative instructions and replay their rounding
+order. Verify twelve native single-mode controls against the independent
+Chebyshev derivative identity, then all 1518 existing type-2 supplied-record
+queries against bitwise replay and exact differentiated polynomials within
+1e-6 m/s. Add no native propagation or new record queries; preserve the
+shared deadline and position controls. Run focused/full pytest, Ruff, strict
+validation and legacy checksum. Sampled agreement does not supply a uniform
+velocity-error bound or close 3.9.
+All 15 focused tests passed (11.97 s), including 1518 supplied-record
+velocity comparisons; all 1093 full-suite tests passed (218.79 s).
+Ruff, strict OpenSpec validation and the unchanged legacy SHA-256 passed.
+
 Task 3.9 full-force coupled mass-history qualification (2026-09-10):
 Add near-Moon/departure and near-Mars/arrival 100.25 s coupled burns with
 both production integrator profiles and full direct-SPICE forces. Verify
