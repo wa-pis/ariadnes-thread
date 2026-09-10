@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import ctypes
 from fractions import Fraction
-from hashlib import file_digest
+from hashlib import file_digest, sha256
 import json
 from itertools import permutations
 import math
@@ -1672,6 +1672,124 @@ def test_harmonic_arbitrary_rotation_rejects_expired_budget() -> None:
         )
 
 
+def _pck_euler_rate_upper_rad_s(
+    polynomial_deg: tuple[float, ...], time_unit_s: int,
+    epoch_magnitude_s: Fraction, amplitudes_deg: tuple[float, ...],
+    phase_rates_deg_s: tuple[Fraction, ...],
+) -> Fraction:
+    """Bound an ideal text-PCK Euler-angle derivative over |t| <= epoch_magnitude_s."""
+    assert len(polynomial_deg) == 3 and len(amplitudes_deg) == len(phase_rates_deg_s)
+    assert all(type(value) is float and math.isfinite(value)
+               for value in (*polynomial_deg, *amplitudes_deg))
+    assert type(time_unit_s) is int and time_unit_s > 0
+    assert isinstance(epoch_magnitude_s, Fraction) and epoch_magnitude_s >= 0
+    assert all(isinstance(value, Fraction) for value in phase_rates_deg_s)
+    radians_per_degree_upper = Fraction(22, 7 * 180)  # Exact pi < 22/7 enclosure.
+    polynomial_rate = (abs(Fraction(polynomial_deg[1])) / time_unit_s
+                       + 2 * abs(Fraction(polynomial_deg[2])) * epoch_magnitude_s / time_unit_s**2)
+    periodic_rate = sum((abs(Fraction(amplitude) * rate) for amplitude, rate in
+                         zip(amplitudes_deg, phase_rates_deg_s, strict=True)), Fraction(0))
+    return radians_per_degree_upper * (polynomial_rate + radians_per_degree_upper * periodic_rate)
+
+
+def test_pck_euler_rate_bounds_signed_quadratic_and_periodic_terms() -> None:
+    day_s = 86400
+    bound = _pck_euler_rate_upper_rad_s((2.0, 3.0, -0.25), day_s, Fraction(2 * day_s), (), ())
+    for epoch_s in (-2 * day_s, 0, 2 * day_s):
+        exact_derivative_deg_s = Fraction(3, day_s) - Fraction(epoch_s, 2 * day_s**2)
+        assert abs(float(exact_derivative_deg_s)) * math.pi / 180 <= float(bound)
+    assert bound == Fraction(4, day_s) * Fraction(22, 1260)
+    # One-degree sine oscillation with one revolution/day: derivative at zero
+    # is pi^2/(90*day) rad/s. The two degree-to-radian factors are essential.
+    periodic = _pck_euler_rate_upper_rad_s(
+        (0.0, 0.0, 0.0), day_s, Fraction(0), (-1.0,), (Fraction(360, day_s),),
+    )
+    analytic_rad_s = math.pi**2 / (90 * day_s)
+    assert analytic_rad_s <= float(periodic) < 1.001 * analytic_rad_s
+    assert _pck_euler_rate_upper_rad_s((1.0, 0.0, 0.0), day_s, Fraction(0), (), ()) == 0
+
+
+@pytest.mark.parametrize("time_unit_s", [0, -1, True])
+def test_pck_euler_rate_rejects_invalid_time_unit(time_unit_s: int) -> None:
+    with pytest.raises(AssertionError):
+        _pck_euler_rate_upper_rad_s((0.0, 0.0, 0.0), time_unit_s, Fraction(0), (), ())
+
+
+def _check_pinned_pck_rotation_rates(
+    budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
+) -> dict[str, Fraction]:
+    """Qualify ideal text-PCK rates; sampled native readbacks are not error bounds."""
+    import spiceypy as spice
+
+    budget.check()
+    assert spice.ktotal("PCK") == 0  # No binary orientation model may override text.
+    keys = [f"BODY{body}_{name}" for body in (301, 499) for name in ("POLE_RA", "POLE_DEC", "PM")]
+    keys += [f"BODY301_NUT_PREC_{name}" for name in ("RA", "DEC", "PM")]
+    keys += ["BODY3_NUT_PREC_ANGLES"]
+    inputs = {key: spice.gdpool(key, 0, 100).tolist() for key in keys}
+    assert sha256(json.dumps(inputs, sort_keys=True, allow_nan=False).encode()).hexdigest() == (
+        "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0"
+    )
+    for body in (3, 4, 301, 499):
+        for suffix in ("MAX_PHASE_DEGREE", "CONSTANTS_JED", "CONSTANTS_REF_FRAME"):
+            assert not spice.expool(f"BODY{body}_{suffix}")
+    for suffix in ("RA", "DEC", "PM"):
+        assert not spice.expool(f"BODY499_NUT_PREC_{suffix}")
+    century_s = 36525 * 86400
+    phases = inputs["BODY3_NUT_PREC_ANGLES"]
+    assert len(phases) == 26
+    phase_rates = tuple(Fraction(value) / century_s for value in phases[1::2])
+    epoch_magnitude_s = max(abs(Fraction(start_tdb_s)), abs(Fraction(end_tdb_s)))
+    bounds: dict[str, Fraction] = {}
+    for body, name, frame_id in ((301, "Moon", 10020), (499, "Mars", 10014)):
+        budget.check()
+        frame = f"IAU_{name.upper()}"
+        assert spice.namfrm(frame) == frame_id and spice.frinfo(frame_id) == (body, 2, body)
+        components = []
+        for polynomial, periodic, time_unit_s in (("POLE_RA", "RA", century_s),
+                                                 ("POLE_DEC", "DEC", century_s), ("PM", "PM", 86400)):
+            amplitudes = tuple(inputs[f"BODY301_NUT_PREC_{periodic}"]) if body == 301 else ()
+            assert len(amplitudes) == (13 if body == 301 else 0)
+            components.append(_pck_euler_rate_upper_rad_s(
+                tuple(inputs[f"BODY{body}_{polynomial}"]), time_unit_s,
+                epoch_magnitude_s, amplitudes, phase_rates if body == 301 else (),
+            ))
+        bounds[name] = sum(components, Fraction(0))
+        # Euler generators have unit operator norm: |omega| <= sum |angle'|.
+        for epoch_tdb_s in np.linspace(start_tdb_s, end_tdb_s, 13):
+            budget.check()
+            rotation, angular_velocity = spice.xf2rav(spice.sxform("J2000", frame, float(epoch_tdb_s)))
+            assert np.max(np.abs(rotation @ rotation.T - np.eye(3))) <= 1e-14
+            assert float(np.linalg.norm(angular_velocity)) <= float(bounds[name])
+    budget.check()
+    return bounds
+
+
+@pytest.mark.parametrize("changed_source", ["binary", "coefficients", "phase", "frame", "mars-periodic"])
+def test_pck_rotation_rates_reject_changed_source(
+    monkeypatch: pytest.MonkeyPatch, changed_source: str,
+) -> None:
+    import spiceypy as spice
+
+    ephemeris._ensure_standard_kernels()
+    if changed_source == "binary":
+        monkeypatch.setattr(spice, "ktotal", lambda kind: 1)
+    elif changed_source == "coefficients":
+        original_pool = spice.gdpool
+        monkeypatch.setattr(spice, "gdpool", lambda key, start, room:
+                            np.zeros(3) if key == "BODY301_POLE_RA" else original_pool(key, start, room))
+    elif changed_source == "frame":
+        monkeypatch.setattr(spice, "frinfo", lambda frame_id: (301, 4, 301))
+    else:
+        override = "BODY3_MAX_PHASE_DEGREE" if changed_source == "phase" else "BODY499_NUT_PREC_RA"
+        original_exists = spice.expool
+        monkeypatch.setattr(spice, "expool", lambda key: key == override or original_exists(key))
+    budget = trajectory._RefinementBudget("changed-pck", 300.0)
+    with pytest.raises(AssertionError):
+        _check_pinned_pck_rotation_rates(budget, 100.0, 200.0)
+    assert budget.native_arc_propagations == 0
+
+
 def _check_conditional_full_force_coast_domains(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
     body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
@@ -1688,6 +1806,7 @@ def _check_conditional_full_force_coast_domains(
         flight_time_s=end_tdb_s - start_tdb_s,
     )
     spacecraft = _spacecraft()
+    rotation_rates_rad_s = _check_pinned_pck_rotation_rates(budget, start_tdb_s, end_tdb_s)
     environment = trajectory._build_physical_environment(candidate, spacecraft, budget=budget)
     bodies = environment.bodies
     states = {body: np.asarray(bodies.get(body).ephemeris.cartesian_state(start_tdb_s)).reshape(6)
@@ -1819,6 +1938,9 @@ def _check_conditional_full_force_coast_domains(
                         "velocity_bound_resolves_1um_s": velocity_error_m_s <= Fraction("0.000001"),
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
+                "conditional_pck_rotation_path_rad": {
+                    body: math.nextafter(float(rate * Fraction(duration_s)), math.inf)
+                    for body, rate in rotation_rates_rad_s.items()},
                 "acceleration_bound_m_s2": acceleration_m_s2, "position_reach_m": reach_m,
                 "conditional_point_mass_variation_m_s2": point_mass_variation_m_s2,
                 "conditional_frozen_harmonic_variation_m_s2": frozen_harmonic_variation_m_s2,

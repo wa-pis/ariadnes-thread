@@ -51,6 +51,24 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional text-PCK angular-path bounds (2026-09-10):
+Pin the selected Moon/Mars orientation coefficients and reject incompatible
+binary/frame/phase/epoch overrides. Derive a uniform ideal Euler-rate bound
+with explicit day/century scales and both periodic degree conversions; verify
+signed quadratic, sinusoidal, zero and invalid-unit controls. Sum unit-axis
+Euler rates to bound angular path length and compare 26 native state-transform
+readbacks over the candidate window. Report angles for existing trial domains,
+run focused/full pytest, Ruff, strict validation and legacy checksum. Keep
+native roundoff and force-cap composition conditional/unqualified; do not
+increase native arcs or close 3.9.
+Six focused formula/inventory checks passed (25.73 s), followed by five
+injected source-rejection checks (0.30 s). All 1157 full-suite tests passed
+(251.02 s). Both inventory variants reproduce the short-interval angular
+path bounds 4.181611885677073e-8 rad (Moon) and 1.1079798691355498e-6 rad
+(Mars). Ruff, strict OpenSpec validation and the unchanged legacy SHA-256
+passed. Each inventory adds 26 native orientation readbacks, but spacecraft
+control/evaluation/arc counts remain (4,4,4) or (0,0,0) by variant.
+
 Task 3.9 conditional arbitrary-rotation harmonic cap (2026-09-10):
 Bound any two ideal field orientations by twice the nonmonopole acceleration
 norm, retaining exact monopole cancellation. Verify unchanged coefficients,

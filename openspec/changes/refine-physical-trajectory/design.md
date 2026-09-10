@@ -1,5 +1,59 @@
 ## Context
 
+### Conditional text-PCK angular-path bounds (2026-09-10)
+
+Before using a small rotation angle in the force enclosure, qualify the
+underlying orientation-time model. The loaded pool's Moon has 13 periodic
+terms per Euler angle; its Mars model has none. Pin the 83 relevant stored
+float values with canonical-JSON SHA-256
+`75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0`.
+Reject binary PCK overrides, changed IAU frame IDs/class/centres, explicit
+phase-degree/epoch/reference-frame overrides, and newly present Mars periodic
+terms. Their absence is a checked property of this resource set, not a
+fallback when required Moon coefficients are missing.
+
+The [NAIF PCK model](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/pck.html)
+expresses pole RA/DEC polynomials in TDB Julian centuries, prime-meridian W
+in TDB days, and the loaded lunar phases as linear polynomials in centuries.
+RA/W use sine corrections and DEC uses cosine corrections. The orientation
+matrix is the product of three Euler rotations about unit axes. No new
+orientation model, date default or physical constant is installed.
+
+For each angle, let p0,p1,p2 be its stored degree coefficients, S its time
+unit in seconds, M=max(|t_start|,|t_end|), a_i its periodic amplitudes in
+degrees, and b_i its phase rates in degrees/second. Exact rational arithmetic
+and k=(22/7)/180 > pi/180 give the uniform ideal derivative bound
+`R_angle = k*(|p1|/S + 2*|p2|*M/S^2 + k*sum_i |a_i*b_i|)` in rad/s.
+The second conversion factor is required by the trigonometric derivative.
+The rational pi enclosure is deliberately conservative, not the native
+degree-to-radian conversion. Signed quadratic and sinusoidal controls verify
+time scaling and both conversions; zero motion and invalid units are checked.
+
+Unit-axis rotation generators and norm preservation imply
+`|omega(t)| <= R_RA+R_DEC+R_W = Omega`. Integrating yields the angular path
+length bound `Theta(h) <= Omega*h` throughout the qualified interval, and
+hence a bound on the orientation distance from its initial value. Unlike
+endpoint-angle differences this argument does not miss complete revolutions
+or intermediate excursions. Report upward-rounded radian bounds for the
+existing short and long trial durations, without changing native arc counts.
+
+At 13 epochs per body, native SPICE state-transform angular velocities obey
+the bound and their rotation matrices are orthogonal within 1e-14
+dimensionless. These 26 samples are consistency checks, not proof of uniform
+native rotation-evaluation error. The derivation is conditional on the ideal
+selected text-PCK formulas and fixed loaded pool; native arithmetic/phase
+reduction error and connection to the harmonic force cap remain unqualified.
+No trajectory safety or completed task 3.9 is claimed.
+
+| Body | Uniform ideal angular-rate upper bound (rad/s) | Path upper bound over 1/64 s (rad) |
+|---|---:|---:|
+| Moon | 2.6762316068333267e-6 | 4.181611885677073e-8 |
+| Mars | 7.091071162467519e-5 | 1.1079798691355498e-6 |
+
+Both inventory variants reproduce these values. Five injected controls reject
+changed coefficients, a binary PCK, higher phase degree, a different frame
+class and newly present Mars periodic terms before any spacecraft propagation.
+
 ### Conditional arbitrary-rotation harmonic cap (2026-09-10)
 
 Separate each finite harmonic field into its degree-zero monopole and the
