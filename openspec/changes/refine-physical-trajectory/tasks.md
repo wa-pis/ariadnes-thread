@@ -51,6 +51,23 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 point-gravity initial anchor enclosure (2026-09-10):
+Bound each observed point-force vector against the ideal force at exact
+stored GM/position inputs using Fraction arithmetic and integer-sqrt dyadic
+enclosures. Verify rational and irrational geometry, translation, perturbed
+observations, extreme scales and singularity; retain the 24 native parity
+checks and require outward L1 bounds within the unchanged force gate.
+Run focused/full pytest, Ruff, strict validation and the legacy checksum.
+Do not add native arcs or infer a complete acceleration-anchor certificate;
+task 3.9 remains open.
+
+Verification: all 10 focused checks passed (27.43 s), including both SPK
+inventory variants; all 1175 project tests passed (253.17 s). The largest
+per-source L1 bound is 2.154025085051632e-18 m/s^2, with identical
+nominal/tighter observations. Ruff, strict OpenSpec validation and the legacy
+SHA-256 pass. Native controls/evaluations/arcs remain (4,4,4) or (0,0,0)
+by variant, and no production tolerances, kernels or settings changed.
+
 Task 3.9 native initial acceleration readback (2026-09-10):
 Add total and ten component acceleration outputs to the four existing native
 coast controls. Verify exact native initial epoch, finite dimensions, exact

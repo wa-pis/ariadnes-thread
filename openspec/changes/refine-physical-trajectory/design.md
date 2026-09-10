@@ -1,5 +1,38 @@
 ## Context
 
+### Point-gravity initial anchor error enclosure (2026-09-10)
+
+Reuse the 24 native point-force observations in the four existing coast
+controls. For each source, treat its stored GM and both stored SSB/J2000
+positions as exact inputs. Subtract positions as Fractions, not rounded
+floating-point differences, and form exact `q = sum(r_i^2) > 0`.
+Enclose `sqrt(q)` by dyadic endpoints: choose
+`s = 2^(floor((bit_length(num(q))-bit_length(den(q)))/2)-100)` and
+`n = isqrt(floor(q/s^2))`. Then `l=n*s`, `u=(n+1)*s` enclose the
+root; set `u=l` when `l^2=q`. Verify these inequalities exactly.
+The 100 guard bits control enclosure width, not a scientific tolerance.
+
+Each ideal component `GM*r_i/(q*sqrt(q))` lies between the two rational
+endpoint evaluations, including negative components. Sum the largest exact
+distance from each observed component to either endpoint. This L1 bound
+also bounds Euclidean error. Require it to meet the unchanged per-source
+force gate `max(1e-15 m/s^2,1e-12*norm(direct force))`, retaining the
+independent NumPy parity control. Round diagnostic bounds upward in m/s^2.
+
+Verify exact 3-4-5 geometry, translated coordinates and perturbed observations;
+an irrational-radius signed vector against the exact squared bound; extreme
+scales that underflow floating squared distance or acceleration; and singular
+input rejection. No extra native arcs, dependencies or production changes.
+These are point-component error bounds at the observed stored-input anchors,
+not uniform native arithmetic bounds, source physical uncertainty, or a
+complete acceleration anchor. Harmonic, rotation, SRP and relativistic
+anchor errors remain unqualified; task 3.9 and targeting gates remain open.
+
+Both integrator profiles reproduce the same bounds. The largest per-source
+bound near Moon is 2.154025085051632e-18 m/s^2 (Sun), and near Mars it is
+8.567984425863587e-20 m/s^2 (Sun). These are upper bounds on observed
+point-component arithmetic error, not measured physical force uncertainty.
+
 ### Native initial acceleration readback (2026-09-10)
 
 Record the total acceleration and its ten coast components in the same four

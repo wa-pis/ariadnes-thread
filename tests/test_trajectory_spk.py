@@ -1489,6 +1489,71 @@ def test_coast_velocity_certificate_can_be_unresolved_for_exact_endpoint() -> No
     # An upper bound exceeding a gate is not evidence of actual error.
 
 
+def _point_gravity_anchor_error_bound_m_s2(
+    gm_m3_s2: float, body_position_m: np.ndarray,
+    spacecraft_position_m: np.ndarray, observed_acceleration_m_s2: np.ndarray,
+) -> Fraction:
+    """Enclose L1 point-force error at exact stored SSB/J2000 inputs, in m/s^2."""
+    assert type(gm_m3_s2) is float and math.isfinite(gm_m3_s2) and gm_m3_s2 > 0
+    for vector in (body_position_m, spacecraft_position_m, observed_acceleration_m_s2):
+        assert vector.shape == (3,) and vector.dtype == np.float64
+        assert np.all(np.isfinite(vector))
+    relative_m = [Fraction(body) - Fraction(ship) for body, ship in
+                  zip(body_position_m, spacecraft_position_m, strict=True)]
+    squared_m2 = sum((value**2 for value in relative_m), Fraction(0))
+    assert squared_m2 > 0
+    # Scale-adaptive dyadic sqrt enclosure; 100 guard bits are algorithmic,
+    # not a physical tolerance. All operations, including endpoints, are exact.
+    exponent = (squared_m2.numerator.bit_length() - squared_m2.denominator.bit_length()) // 2
+    step_m = Fraction(2) ** (exponent - 100)
+    scaled = squared_m2 / step_m**2
+    root = math.isqrt(scaled.numerator // scaled.denominator)
+    lower_m = root * step_m
+    upper_m = lower_m if lower_m**2 == squared_m2 else (root + 1) * step_m
+    assert 0 < lower_m and lower_m**2 <= squared_m2 <= upper_m**2
+    error_m_s2 = Fraction(0)
+    for relative, observed in zip(relative_m, observed_acceleration_m_s2, strict=True):
+        endpoints = [Fraction(gm_m3_s2) * relative / (squared_m2 * radius)
+                     for radius in (lower_m, upper_m)]
+        error_m_s2 += max(abs(Fraction(observed) - endpoint) for endpoint in endpoints)
+    return error_m_s2
+
+
+@pytest.mark.parametrize("offset_m", [0.0, 1e12])
+@pytest.mark.parametrize("error_m_s2", [0.0, 0.125])
+def test_point_gravity_anchor_exact_geometry(offset_m: float, error_m_s2: float) -> None:
+    ship_m = np.full(3, offset_m)
+    bound_m_s2 = _point_gravity_anchor_error_bound_m_s2(
+        125.0, ship_m + np.asarray([3.0, 4.0, 0.0]), ship_m,
+        np.asarray([3.0 + error_m_s2, 4.0, 0.0]),
+    )
+    assert bound_m_s2 == Fraction(error_m_s2)  # r=5, GM/r^3=1 exactly.
+
+
+def test_point_gravity_anchor_irrational_radius() -> None:
+    bound_m_s2 = _point_gravity_anchor_error_bound_m_s2(
+        2.0, np.asarray([1.0, -1.0, 0.0]), np.zeros(3), np.zeros(3),
+    )
+    # The exact L1 force is sqrt(2); verify enclosure without a float sqrt.
+    assert 2 <= bound_m_s2**2 < 2 + Fraction(2)**-90
+
+
+@pytest.mark.parametrize("distance_m", [1e-200, 1e100])
+def test_point_gravity_anchor_extreme_scale(distance_m: float) -> None:
+    exact_m_s2 = Fraction(1e-300) / Fraction(distance_m)**2
+    observed_m_s2 = float(exact_m_s2)
+    bound_m_s2 = _point_gravity_anchor_error_bound_m_s2(
+        1e-300, np.asarray([distance_m, 0.0, 0.0]), np.zeros(3),
+        np.asarray([observed_m_s2, 0.0, 0.0]),
+    )
+    assert bound_m_s2 == abs(Fraction(observed_m_s2) - exact_m_s2) > 0
+
+
+def test_point_gravity_anchor_rejects_singularity() -> None:
+    with pytest.raises(AssertionError):
+        _point_gravity_anchor_error_bound_m_s2(1.0, np.zeros(3), np.zeros(3), np.zeros(3))
+
+
 def _point_mass_variation_bound_m_s2(
     gm_m3_s2: float, distance_floor_m: float, displacement_m: Fraction,
 ) -> Fraction:
@@ -2073,11 +2138,22 @@ def _check_conditional_full_force_coast_domains(
                     component_norm_sum = float(np.linalg.norm(components_m_s2, axis=1).sum())
                     force_tolerance_m_s2 = max(1e-15, 1e-12 * component_norm_sum)
                     assert sum(value**2 for value in sum_residual) <= Fraction(force_tolerance_m_s2)**2
+                    point_anchor_error_upper_m_s2: dict[str, float] = {}
                     for source, component in zip(trajectory.PHYSICAL_BODY_NAMES, components_m_s2[:8], strict=True):
                         if source not in {"Moon", "Mars"}:
                             relative_m = states[source][:3] - state[:3]
                             direct_m_s2 = bodies.get(source).gravity_field_model.gravitational_parameter * relative_m / np.linalg.norm(relative_m)**3
                             assert np.linalg.norm(component - direct_m_s2) <= max(1e-15, 1e-12 * np.linalg.norm(direct_m_s2))
+                            point_error_m_s2 = _point_gravity_anchor_error_bound_m_s2(
+                                bodies.get(source).gravity_field_model.gravitational_parameter,
+                                states[source][:3], state[:3], component,
+                            )
+                            assert point_error_m_s2 <= Fraction(float(max(1e-15, 1e-12 * np.linalg.norm(direct_m_s2))))
+                            reported_point_error_m_s2 = math.nextafter(float(point_error_m_s2), math.inf)
+                            assert math.isfinite(reported_point_error_m_s2)
+                            assert Fraction(reported_point_error_m_s2) >= point_error_m_s2
+                            point_anchor_error_upper_m_s2[source] = reported_point_error_m_s2
+                    assert set(point_anchor_error_upper_m_s2) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
                     if first_acceleration_m_s2 is None:
                         first_acceleration_m_s2 = anchor_m_s2.copy()
                     else:
@@ -2097,6 +2173,7 @@ def _check_conditional_full_force_coast_domains(
                     assert Fraction(reported_velocity_error_m_s) >= velocity_error_m_s
                     endpoint_controls.append({"tighter": tighter,
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),
+                        "point_anchor_error_upper_m_s2": point_anchor_error_upper_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,
