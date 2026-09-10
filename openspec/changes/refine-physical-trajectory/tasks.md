@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 full-force coupled mass-history qualification (2026-09-10):
+Add near-Moon/departure and near-Mars/arrival 100.25 s coupled burns with
+both production integrator profiles and full direct-SPICE forces. Verify
+native-Time endpoint, finite seven-states, monotone sampled mass and the
+exact constant-flow oracle under unchanged mass tolerance. Account for each
+of four qualification arcs with the existing budget; return no safety or
+targeting result. Run focused/full pytest, Ruff, strict validation and legacy
+checksum; sampled full-force evidence does not complete 3.9/3.5.
+All four focused cases passed (5.53 s), covering 238 saved states with a
+maximum mass error of 3.2088692720365647e-12 kg against the unchanged
+1e-8 kg absolute tolerance. All 1081 full-suite tests passed (218.09 s),
+as did Ruff, strict validation and the unchanged legacy hash.
+
 Task 3.9 native force controls across a Jupiter record join (2026-09-10):
 Add two direct burn cases to the existing matrix, with explicit coverage
 bracketing the known TDB 1003871232 source join. Verify callbacks before/at/

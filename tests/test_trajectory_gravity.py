@@ -66,6 +66,67 @@ def _spacecraft() -> SpacecraftSpec:
     )
 
 
+@pytest.mark.parametrize("burn_id", ["departure", "arrival"])
+@pytest.mark.parametrize("tighter", [False, True])
+def test_full_force_coupled_burn_preserves_constant_mass_flow(
+    monkeypatch: pytest.MonkeyPatch, burn_id: Literal["departure", "arrival"], tighter: bool,
+) -> None:
+    import numpy as np
+    from tudatpy.astro.time_representation import Time
+    from tudatpy.dynamics import propagation_setup
+
+    candidate = _real_candidate(monkeypatch)
+    budget = trajectory._RefinementBudget("full-force-mass-control", 300.0)
+    spacecraft = _spacecraft()
+    environment = trajectory._build_physical_environment(candidate, spacecraft, budget=budget)
+    bodies = environment.bodies
+    trajectory._install_tnw_engine(budget.candidate_id, bodies, spacecraft, burn_id, 0.4, 0.2)
+    accelerations = trajectory._build_arc_force_models(budget.candidate_id, environment, burn_id=burn_id)
+    start_tdb_s = candidate.departure_epoch_tdb_s
+    central_body = "Moon" if burn_id == "departure" else "Mars"
+    radius_m = 1_837_400.0 if burn_id == "departure" else 3_689_500.0
+    central_state = np.asarray(bodies.get(central_body).ephemeris.cartesian_state(start_tdb_s)).reshape(6)
+    initial_state = central_state + np.asarray([radius_m, 0.0, 0.0, 0.0, 1500.0, 0.0])
+    arc = "departure-burn" if burn_id == "departure" else "arrival-burn"
+    duration_s = 100.25
+    end_tdb_s = start_tdb_s + duration_s
+    assert Fraction(end_tdb_s) - Fraction(start_tdb_s) == Fraction(duration_s)
+    settings = trajectory._build_coupled_arc_settings(
+        budget.candidate_id, bodies, accelerations, initial_state, spacecraft.initial_mass_kg,
+        start_tdb_s, trajectory._build_arc_integrator(budget.candidate_id, arc, tighter=tighter),
+        propagation_setup.propagator.time_termination(end_tdb_s, terminate_exactly_on_final_condition=True),
+        thrust_enabled=True,
+    )
+    budget.begin_control()
+    simulator = trajectory._run_native_arc(budget, bodies, settings, first_in_evaluation=True)
+    assert simulator.integration_completed_successfully
+    # This is a mass-law qualification, not an arc-safety classification.
+    native_history = simulator.state_history_time_object
+    assert abs((max(native_history) - Time(end_tdb_s)).to_float()) <= 1e-6
+    rate_kg_s = Fraction(spacecraft.max_thrust_n) / (Fraction(9.80665) * Fraction(spacecraft.isp_s))
+    maximum_error_kg = Fraction(0)
+    previous_mass_kg = spacecraft.initial_mass_kg
+    for native_epoch, raw_state in sorted(native_history.items()):
+        budget.check()
+        state = np.asarray(raw_state).reshape(-1)
+        assert state.shape == (7,) and np.all(np.isfinite(state))
+        elapsed_s = (native_epoch - Time(start_tdb_s)).to_float()
+        assert 0 <= elapsed_s <= duration_s + 1e-6
+        consumed_kg = rate_kg_s * Fraction(elapsed_s)
+        error_kg = abs(Fraction(float(state[6])) - (Fraction(spacecraft.initial_mass_kg) - consumed_kg))
+        assert error_kg <= max(Fraction(1e-8), Fraction(1e-11) * consumed_kg)
+        assert spacecraft.dry_mass_kg < state[6] <= previous_mass_kg
+        previous_mass_kg = float(state[6])
+        maximum_error_kg = max(maximum_error_kg, error_kg)
+    assert len(native_history) > 2
+    assert previous_mass_kg < spacecraft.initial_mass_kg - 20.0
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (1, 1, 1)
+    print(json.dumps({"burn_id": burn_id, "tighter": tighter, "duration_s": duration_s,
+        "saved_states": len(native_history), "maximum_mass_error_kg": float(maximum_error_kg),
+        "scope": "full-force coupled mass samples, not interval safety or targeting"},
+        sort_keys=True, allow_nan=False))
+
+
 def _real_candidate(monkeypatch: pytest.MonkeyPatch) -> ImpulsiveTransferCandidate:
     monkeypatch.setattr(ephemeris, "_spice", None)
     monkeypatch.setattr(ephemeris, "_kernels_loaded", False)

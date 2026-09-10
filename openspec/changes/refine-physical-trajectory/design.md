@@ -1,5 +1,37 @@
 ## Context
 
+### Full-force coupled mass-history controls (2026-09-10)
+
+Add four single-arc controls using the actual direct-SPICE physical environment,
+full arc-force builder, TNW engine and seven-component translation/mass settings.
+Use departure guidance near Moon or arrival guidance near Mars, each under
+the unchanged nominal RKF78 and tighter RKDP87 profiles. Initial offsets are
+the existing force controls' 1837400/3689500 m radii and 1500 m/s transverse
+relative velocity. Each 100.25 s burn starts at the explicit 2031-01-01 test
+epoch, uses 2000 kg initial/1000 kg dry mass, 1000 N and 450 s Isp, and remains
+inside the explicitly constructed ephemeris coverage interval. These are
+synthetic short controls, not orbital-target closure or a feasible mission.
+
+Check native successful completion, native-Time endpoint agreement within
+1e-6 s, finite seven-state histories and monotone sampled mass above dry mass.
+At every saved native elapsed time, compare with exact stored-input
+`m0 - T*t/(g0*Isp)` using the unchanged `max(1e-8 kg,
+1e-11 * consumed_mass)` tolerance. No rocket-equation velocity invariant is
+applied to this forced motion. Each case consumes one control, evaluation and
+native arc under its existing 300 s budget, including environment construction.
+
+| Control | Saved states | Maximum mass error (kg) |
+|---|---:|---:|
+| Nominal near Moon | 7 | 5.023694521730494e-13 |
+| Nominal near Mars | 7 | 4.81929576688571e-13 |
+| Tighter near Moon | 153 | 1.7032349540567256e-12 |
+| Tighter near Mars | 71 | 3.2088692720365647e-12 |
+
+The 238 samples extend constant-flow evidence to coupled full-force burns,
+not uniform native mass errors, internal-stage safety or completed arc
+composition. No collision classification or public refinement result is
+returned. Preserve all existing controls and tolerances; keep 3.9/3.5 open.
+
 ### Short full-force controls cross a Jupiter source-record join (2026-09-10)
 
 Extend the existing force test matrix with direct-SPICE departure and arrival
