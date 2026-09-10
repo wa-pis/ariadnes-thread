@@ -1836,6 +1836,48 @@ def test_angle_limited_rotation_preserves_monopole_and_rejects_invalid_bounds() 
         _angle_limited_rotation_bound_m_s2(Fraction(1), Fraction(1), Fraction(1), Fraction(0))
 
 
+def _coast_force_variation_bound_m_s2(
+    point_m_s2: dict[str, float], spatial_m_s2: dict[str, float],
+    rotation_m_s2: dict[str, float], srp_norm_m_s2: float, relativity_norm_m_s2: float,
+) -> Fraction:
+    """Sum conditional ideal force changes for coast, excluding native roundoff."""
+    assert set(point_m_s2) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
+    assert set(spatial_m_s2) == set(rotation_m_s2) == {"Moon", "Mars"}
+    gravity_values = (*point_m_s2.values(), *spatial_m_s2.values(), *rotation_m_s2.values())
+    assert all(type(value) is float and math.isfinite(value) and value >= 0
+               for value in (*gravity_values, srp_norm_m_s2, relativity_norm_m_s2))
+    return (sum(map(Fraction, gravity_values), Fraction(0))
+            + 2 * (Fraction(srp_norm_m_s2) + Fraction(relativity_norm_m_s2)))
+
+
+@pytest.mark.parametrize("component_m_s2", [0.0, 0.1, 1.0])
+def test_coast_force_variation_attains_aligned_component_changes(component_m_s2: float) -> None:
+    point = {body: component_m_s2 for body in trajectory.PHYSICAL_BODY_NAMES if body not in {"Moon", "Mars"}}
+    harmonic = dict.fromkeys(("Moon", "Mars"), component_m_s2)
+    bound = _coast_force_variation_bound_m_s2(point, harmonic, harmonic, component_m_s2, component_m_s2)
+    # Abstract collinear vector oracle, not a physical trajectory: ten gravity
+    # change terms increase from zero by c each. The two norm-only terms
+    # reverse from -c to +c, so the exact total change is 14*c along one axis.
+    before = -2 * Fraction(component_m_s2)
+    after = 12 * Fraction(component_m_s2)
+    assert bound == abs(after - before)
+
+
+@pytest.mark.parametrize("case", ["missing-point", "extra-rotation", "negative-norm"])
+def test_coast_force_variation_rejects_invalid_components(case: str) -> None:
+    point = {body: 1.0 for body in trajectory.PHYSICAL_BODY_NAMES if body not in {"Moon", "Mars"}}
+    spatial, rotation = dict.fromkeys(("Moon", "Mars"), 1.0), dict.fromkeys(("Moon", "Mars"), 1.0)
+    srp = 1.0
+    if case == "missing-point":
+        point.pop("Sun")
+    elif case == "extra-rotation":
+        rotation["Sun"] = 1.0
+    else:
+        srp = -1.0
+    with pytest.raises(AssertionError):
+        _coast_force_variation_bound_m_s2(point, spatial, rotation, srp, 1.0)
+
+
 def _check_conditional_full_force_coast_domains(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
     body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
@@ -1955,6 +1997,16 @@ def _check_conditional_full_force_coast_domains(
                 budget, gravity_m_s2, thrust, srp, relativity, thrust_enabled=False,
             )
             assert Fraction(acceleration_m_s2) >= sum(map(Fraction, (*gravity_m_s2.values(), thrust, srp, relativity)))
+            assert thrust == 0.0
+            force_variation_m_s2 = _coast_force_variation_bound_m_s2(
+                point_mass_variation_m_s2, frozen_harmonic_variation_m_s2,
+                angle_limited_rotation_variation_m_s2, srp, relativity,
+            )
+            assert 0 < force_variation_m_s2 < 2 * Fraction(acceleration_m_s2)
+            reported_force_variation_m_s2 = math.nextafter(float(force_variation_m_s2), math.inf)
+            assert math.isfinite(reported_force_variation_m_s2)
+            assert Fraction(reported_force_variation_m_s2) >= force_variation_m_s2
+            budget.check()
             reach_m = trajectory._position_reach_upper_bound(
                 budget, duration_s, 0.0, initial_speed_upper_m_s, acceleration_m_s2,
             )
@@ -2012,6 +2064,7 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_frozen_harmonic_variation_m_s2": frozen_harmonic_variation_m_s2,
                 "conditional_arbitrary_rotation_variation_m_s2": arbitrary_rotation_variation_m_s2,
                 "conditional_angle_limited_rotation_variation_m_s2": angle_limited_rotation_variation_m_s2,
+                "conditional_total_coast_force_variation_m_s2": reported_force_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
     expected_arcs = 4 if run_native_controls else 0

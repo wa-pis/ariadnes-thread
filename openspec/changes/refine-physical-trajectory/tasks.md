@@ -51,6 +51,21 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional complete coast force-variation sum (2026-09-10):
+Combine six point-source changes and two harmonic spatial/rotation pairs,
+plus twice the SRP and relativity norm bounds with exactly zero coast thrust.
+Verify exact aligned-vector controls, zero and non-dyadic sums, inventory
+and negative-input rejection, outward reports, and all four existing trial
+domains. Run focused/full pytest, Ruff, strict validation and legacy checksum.
+Keep the 1 s inclusion failure, native counts and unresolved velocity evidence;
+do not claim a qualified native acceleration anchor or complete mission error.
+All eight focused checks passed (27.77 s), and all 1167 full-suite tests
+passed (256.82 s). Both inventory variants reproduce short-domain total
+variation bounds 0.005024646481491329 m/s^2 (Moon) and
+0.004792798636344572 m/s^2 (Mars), with unchanged inclusion classifications.
+Ruff, strict OpenSpec validation and the unchanged legacy SHA-256 passed;
+native controls/evaluations/arcs remain (4,4,4) or (0,0,0) by variant.
+
 Task 3.9 conditional angle-limited harmonic rotation (2026-09-10):
 Compose the nonmonopole force/Jacobian bounds, relative-radius upper bound
 and qualified ideal PCK angular path as min(2*B,Theta*(B+H*r_max)). Verify

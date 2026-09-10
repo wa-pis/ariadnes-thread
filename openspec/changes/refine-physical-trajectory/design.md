@@ -1,5 +1,53 @@
 ## Context
 
+### Conditional complete coast force-variation sum (2026-09-10)
+
+Combine the qualified ideal component variations relative to the exact
+initial stored state and selected source model, on the existing trial domain.
+For each of the six point sources use its spatial force-change bound. For
+Moon and Mars, insert an intermediate force at the current relative position
+with the initial orientation: the total difference is bounded by the sum of
+the frozen-orientation spatial bound and the angle-limited rotation bound.
+This is a decomposition of each harmonic field, not duplicate gravity.
+
+For SRP and Sun Schwarzschild relativity, use twice their existing uniform
+acceleration-norm bounds. Both the anchor and compared state belong to the
+same declared domain, so the triangle inequality applies even through shadow
+changes. This conservative SRP treatment assumes no shadow smoothness, and
+the relativity norm retains the established relative-speed domain and PPN
+premises. Coast thrust and its variation are exactly zero; no burn variation
+claim follows from this calculation.
+
+The resulting scalar in m/s^2 is
+`D=sum(point_changes)+sum(harmonic_spatial_changes)+sum(harmonic_rotation_changes)+2*B_srp+2*B_rel`.
+Validate the exact six/two/two source inventories and finite nonnegative
+inputs, sum stored outward bounds with exact Fractions, then round the report
+upward. Three independent collinear-vector controls, including zero and a
+non-dyadic stored value, attain the sum exactly: ten difference terms each
+contribute c, while two norm-only terms reverse from -c to +c. These are
+algebraic controls, not realizable mission states. Missing/extra sources and
+negative norms are rejected.
+
+All four trial domains produce a tighter bound than the generic 2*A norm
+cap, without changing the original A used in the domain-inclusion argument.
+Only the short closed domains inherit a conditional ideal-trajectory
+interpretation; the unresolved 1 s domains do not. No numerical endpoint
+velocity certificate is produced: that still needs a qualified acceleration
+anchor/residual and native arithmetic/accumulated-error treatment. This sum
+completes an ideal coast component assembly, not task 3.9, flight safety or
+the full mission. Preserve all previous controls, native counts, scientific
+tolerances, production model and UI.
+
+| Trial domain | Conditional total coast force-variation bound (m/s^2) |
+|---|---:|
+| Moon, 1/64 s (closed) | 0.005024646481491329 |
+| Moon, 1 s (unresolved) | 0.24210895745222824 |
+| Mars, 1/64 s (closed) | 0.004792798636344572 |
+| Mars, 1 s (unresolved) | 0.14460583402499338 |
+
+Both inventory variants reproduce these values. They bound ideal acceleration
+change, not acceleration itself, observed native error or mission uncertainty.
+
 ### Conditional angle-limited harmonic rotation (2026-09-10)
 
 Connect the ideal text-PCK angular-path bound to the nonmonopole harmonic
