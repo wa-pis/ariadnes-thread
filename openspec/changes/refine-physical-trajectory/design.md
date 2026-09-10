@@ -1,5 +1,52 @@
 ## Context
 
+### Conditional chain velocity and SI conversion bounds (2026-09-10)
+
+Compose the supplied-record velocity errors through the previously inspected
+one- or two-link center chains and add-then-scale arithmetic. For every link,
+bound exact velocity L1 magnitude from coefficients: use position derivative
+weights divided by record radius for type 2, and T_k(q) weights on the stored
+velocity coefficients for type 3. Add its conditional evaluation error to
+enclose the native km/s result. Check all 3300 existing supplied-record states
+and exact polynomial values against their corresponding magnitude bounds.
+
+For each target let M be the sum of the maximum native link magnitudes in
+km/s and E the sum of the maximum link evaluation errors in m/s. With
+`u=2^-53`, `eta=2^-1075`, the three-component rounding bounds are
+
+```
+A_km_s = u*M + 3*eta       # two links; zero for a single link
+C_m_s  = u*1000*(M+A_km_s) + 3*eta
+B_m_s  = E + 1000*A_km_s + C_m_s
+S_m_s  = 1000*(M+A_km_s) + C_m_s
+```
+
+Enforce finite intermediate ranges and round B and S upward from exact
+Fractions. B bounds arithmetic error relative to the exact selected source
+polynomials; S bounds native SSB/J2000 speed using L1 >= Euclidean norm.
+Neither is a measured orbital speed or physical ephemeris uncertainty.
+
+| Body | Conditional velocity error B (m/s) | Conditional speed ceiling S (m/s) |
+|---|---:|---:|
+| Sun | 6.9538963374104784e-15 | 12.42178218031509 |
+| Mercury | 9.435271804131137e-11 | 132964.30529973257 |
+| Venus | 4.556985798740064e-11 | 71521.24938561367 |
+| Earth | 2.9178710770321576e-11 | 51513.83050421906 |
+| Moon | 3.7255734754619317e-11 | 54223.04191236409 |
+| Mars | 3.654874324951061e-11 | 50359.67797945601 |
+| Jupiter | 2.915768945876917e-11 | 17342.04075847092 |
+| Saturn | 1.03346930310149e-11 | 14666.601540383499 |
+
+All eight error bounds meet the unchanged 1e-6 m/s criterion. Sixteen exact
+arithmetic controls at declared magnitude limits check same/opposite-sign
+link sums and SI rounding; these synthetic values are not mission states.
+No additional source queries or spacecraft propagations are needed.
+The Sun speed ceiling is a conditional input for later phase-domain work,
+not a completed Sun-relative spacecraft velocity domain. Preserve all source
+selection, record-domain, native-time and floating-point execution premises;
+do not absorb source-representation jumps into arithmetic error or claim
+continuity. Full-force integration error and task 3.9 remain unqualified.
+
 ### Conditional uniform type-3 stored-velocity bound (2026-09-10)
 
 Complete the other supplied-record velocity path using the existing CHBVAL

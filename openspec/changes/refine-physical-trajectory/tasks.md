@@ -51,6 +51,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional chain velocity and SI rounding (2026-09-10):
+Derive coefficient-based native velocity magnitudes for all 11 source links,
+checking 3300 existing supplied-record states and exact values. Compose
+source errors, center-chain addition and SI rounding for all eight bodies;
+require every conditional error bound to stay within 1e-6 m/s. Verify sixteen
+near-limit arithmetic controls and outward finite speed ceilings. Run focused/
+full pytest, Ruff, strict validation and legacy checksum. Add no native calls;
+preserve execution/selection premises, source-jump caveats and the open 3.9 gate.
+Both focused inventory controls passed (21.60 s), including all 3300 native
+states and sixteen arithmetic cases. All 1113 full-suite tests passed
+(229.18 s), as did Ruff, strict validation and the unchanged legacy SHA-256.
+
 Task 3.9 conditional uniform type-3 stored-velocity rounding (2026-09-10):
 Reuse the unchanged fused series arithmetic with an explicit coefficient-unit
 contract. Bound normalization and series rounding for all 297 type-3 velocity

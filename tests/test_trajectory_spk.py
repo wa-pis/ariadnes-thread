@@ -515,6 +515,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     max_evaluation_error_m = dict.fromkeys(expected_centers, 0.0)
     uniform_evaluation_bounds_m: dict[int, list[float]] = {target: [] for target in expected_centers}
     native_magnitude_bounds_km: dict[int, list[Fraction]] = {target: [] for target in expected_centers}
+    native_velocity_magnitudes_km_s: dict[int, list[Fraction]] = {target: [] for target in expected_centers}
+    uniform_velocity_errors_m_s: dict[int, list[Fraction]] = {target: [] for target in expected_centers}
     selection_pieces: dict[int, list[tuple[Fraction, Fraction]]] = {target: [] for target in expected_centers}
     internal_strip_keys: set[tuple[int, Fraction]] = set()
     native_core_checks = native_strip_endpoint_checks = 0
@@ -712,6 +714,15 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                                           for row in rows_km for degree, value in enumerate(row)), Fraction(0))
             native_magnitude_km = polynomial_magnitude_km + uniform_error_m / 1000
             native_magnitude_bounds_km[target].append(native_magnitude_km)
+            if data_type == 2:
+                polynomial_velocity_magnitude_km_s = sum((abs(Fraction(value)) * first_derivatives[degree]
+                    for row in rows_km for degree, value in enumerate(row)), Fraction(0)) / Fraction(radius_s)
+            else:
+                polynomial_velocity_magnitude_km_s = sum((abs(Fraction(value)) * magnitude_weights[degree]
+                    for row in velocity_rows_km_s for degree, value in enumerate(row)), Fraction(0))
+            native_velocity_magnitude_km_s = polynomial_velocity_magnitude_km_s + uniform_velocity_error_m_s / 1000
+            native_velocity_magnitudes_km_s[target].append(native_velocity_magnitude_km_s)
+            uniform_velocity_errors_m_s[target].append(uniform_velocity_error_m_s)
             if native is not None:
                 # Evaluate the supplied record itself, avoiding record-selection ambiguity.
                 native_record = (ctypes.c_double * (size + 1))(float(size), *record)
@@ -727,6 +738,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                     evaluator(ctypes.byref(native_epoch), native_record, state_km)
                     assert native.failed_c() == 0 and all(math.isfinite(value) for value in state_km)
                     assert sum((abs(Fraction(value)) for value in state_km[:3]), Fraction(0)) <= native_magnitude_km
+                    assert sum((abs(Fraction(value)) for value in state_km[3:]), Fraction(0)) <= native_velocity_magnitude_km_s
                     exact_time = (Fraction(probe_s) - Fraction(midpoint_s)) / Fraction(radius_s)
                     assert Fraction(probe_s - midpoint_s) == Fraction(probe_s) - Fraction(midpoint_s)
                     rounded_time = Fraction((probe_s - midpoint_s) / radius_s)
@@ -741,6 +753,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                     error_m = Fraction(0)
                     velocity_error_m_s = Fraction(0)
                     exact_magnitude_km = Fraction(0)
+                    exact_velocity_magnitude_km_s = Fraction(0)
                     for axis, row in enumerate(coefficients_km):
                         replay_km = _replay_spk_series(tuple(float(value) for value in row),
                                                        midpoint_s, radius_s, probe_s)
@@ -764,6 +777,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                             exact_km_s = sum((Fraction(value) * basis[degree]
                                               for degree, value in enumerate(velocity_row_km_s)), Fraction(0))
                             velocity_error_m_s += abs(Fraction(state_km[axis + 3]) - exact_km_s) * 1000
+                        exact_velocity_magnitude_km_s += abs(exact_km_s)
+                    assert exact_velocity_magnitude_km_s <= polynomial_velocity_magnitude_km_s
                     assert error_m <= Fraction("0.001"), (target, index, probe_s)  # L1 m, sampled only.
                     assert error_m <= uniform_error_m, (target, index, probe_s)
                     assert exact_magnitude_km <= polynomial_magnitude_km
@@ -1049,6 +1064,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
 
     chain_position_bounds_m: dict[int, float] = {}
     chain_add_scale_bounds_m: dict[int, float] = {}
+    chain_velocity_bounds_m_s: dict[int, float] = {}
+    chain_speed_bounds_m_s: dict[int, float] = {}
+    velocity_arithmetic_controls = 0
     eta = Fraction(1, 2 ** 1075)
     for target in (10, 1, 2, 399, 301, 499, 599, 699):
         budget.check()
@@ -1081,6 +1099,40 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             exact_sum_km = sum((Fraction(value) for value in values_km), Fraction(0))
             actual_m = sum(values_km) * 1000
             assert 3 * abs(Fraction(actual_m) - 1000 * exact_sum_km) <= 1000 * addition_km + conversion_m
+
+        # Same inspected add-then-scale path, with native km/s magnitudes.
+        magnitude_km_s = sum((max(native_velocity_magnitudes_km_s[link]) for link in chain), Fraction(0))
+        source_error_m_s = sum((max(uniform_velocity_errors_m_s[link]) for link in chain), Fraction(0))
+        addition_km_s = unit_roundoff * magnitude_km_s + 3 * eta if len(chain) == 2 else Fraction(0)
+        assert magnitude_km_s <= Fraction(sys.float_info.max)
+        assert 1000 * (magnitude_km_s + addition_km_s) <= Fraction(sys.float_info.max)
+        conversion_m_s = unit_roundoff * 1000 * (magnitude_km_s + addition_km_s) + 3 * eta
+        combined_m_s = source_error_m_s + 1000 * addition_km_s + conversion_m_s
+        reported_m_s = math.nextafter(float(combined_m_s), math.inf)
+        assert Fraction(reported_m_s) >= combined_m_s > source_error_m_s
+        assert Fraction(reported_m_s) <= Fraction("0.000001")  # Conditional SSB/J2000 L1 m/s.
+        chain_velocity_bounds_m_s[target] = reported_m_s
+        speed_m_s = 1000 * (magnitude_km_s + addition_km_s) + conversion_m_s
+        reported_speed_m_s = math.nextafter(float(speed_m_s), math.inf)
+        assert math.isfinite(reported_speed_m_s) and Fraction(reported_speed_m_s) >= speed_m_s
+        chain_speed_bounds_m_s[target] = reported_speed_m_s
+        control_values_km_s: list[float] = []
+        for link in chain:
+            limit_km_s = max(native_velocity_magnitudes_km_s[link]) / 3
+            value_km_s = float(limit_km_s)
+            if Fraction(value_km_s) > limit_km_s:
+                value_km_s = math.nextafter(value_km_s, 0.0)
+            assert 3 * abs(Fraction(value_km_s)) <= max(native_velocity_magnitudes_km_s[link])
+            control_values_km_s.append(value_km_s)
+        for sign in (-1, 1):
+            values_km_s = [control_values_km_s[0]] + [sign * value for value in control_values_km_s[1:]]
+            exact_sum_km_s = sum((Fraction(value) for value in values_km_s), Fraction(0))
+            actual_m_s = sum(values_km_s) * 1000
+            assert 3 * abs(Fraction(actual_m_s) - 1000 * exact_sum_km_s) <= 1000 * addition_km_s + conversion_m_s
+            assert 3 * abs(Fraction(actual_m_s)) <= Fraction(reported_speed_m_s)
+            velocity_arithmetic_controls += 1
+    assert velocity_arithmetic_controls == 16
+    assert set(chain_velocity_bounds_m_s) == set(chain_speed_bounds_m_s) == set(chain_position_bounds_m)
 
     # Moon/Earth joins coincide: neither link's representation error may be omitted.
     moon_epochs_s = {epoch for target, epoch in joins if target == 301}
@@ -1288,6 +1340,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         },
         "conditional_chain_position_bound_m": chain_position_bounds_m,
         "conditional_chain_add_scale_bound_m": chain_add_scale_bounds_m,
+        "conditional_chain_velocity_bound_m_s": chain_velocity_bounds_m_s,
+        "conditional_chain_speed_bound_m_s": chain_speed_bounds_m_s,
+        "velocity_arithmetic_controls": velocity_arithmetic_controls,
         "moon_chain_join_fields": ["epoch_tdb_s", "conditional_l1_bound_m"],
         "moon_chain_join_bounds": moon_chain_join_bounds_m,
         "moon_chain_join_checks": moon_chain_join_checks,
