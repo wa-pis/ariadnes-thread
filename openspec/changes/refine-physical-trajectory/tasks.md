@@ -51,6 +51,24 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 exact initial clear-disc geometry (2026-09-10):
+Prove disjoint apparent Sun/occultor discs at exact stored initial positions
+and native spherical radii using rational sign and squared inequalities.
+Verify tangent/separated/overlap/opposite cases, translation and invalid
+geometry. Append a shadow output to the four existing native runs; require
+three independent clear-disc proofs per anchor, direct shadow parity within
+1e-12 and saved combined illumination exactly 1. Run focused/full pytest,
+Ruff, strict OpenSpec and legacy checksum. Preserve counts and all previous
+gates; neither interval illumination nor SRP error is yet qualified, and
+task 3.9 remains open.
+
+Verification: 16 focused tests passed (27.63 s), including both SPK inventory
+variants; all 1200 project tests passed (253.40 s). All 12 native-anchor
+Sun/occultor pairs have exact disjoint-disc proofs, direct shadow parity
+passes, and all four saved combined shadow factors equal 1. Ruff, strict
+OpenSpec and the unchanged legacy SHA-256 pass. Native controls/evaluations/
+arcs remain (4,4,4) or (0,0,0) by variant, with no production changes.
+
 Task 3.9 Schwarzschild initial anchor enclosure (2026-09-10):
 Reuse the dyadic root enclosure to bound the four observed native
 Schwarzschild vectors at exact stored SI Sun-relative states and PPN=1.

@@ -1,5 +1,35 @@
 ## Context
 
+### Exact initial clear-disc geometry (2026-09-10)
+
+Before bounding the SRP anchor's arithmetic error, qualify its illumination
+state independently of native shadow arithmetic. For exact stored SSB/J2000
+positions, let `s,o` be source/occultor vectors from the observer, with
+positive native spherical shape radii `Rs,Ro`. Require the observer outside
+both spheres: `s.s > Rs^2` and `o.o > Ro^2`. Their apparent angular radii
+are in `(0,pi/2)`. The discs are strictly disjoint exactly when
+`s.o + Rs*Ro < sqrt((s.s-Rs^2)*(o.o-Ro^2))`, derived by comparing the cosine
+of centre separation with the cosine of the sum of angular radii. Evaluate
+as Fractions: a negative left side passes directly, otherwise compare
+squares strictly. Tangency is not certified clear. No trigonometric or
+square-root approximation is needed; a false result is not an impact or
+general shadow classification (depth ordering is not used).
+
+Verify exact tangent, separated, overlapping and opposite-direction controls,
+translation invariance, observer-on/inside-sphere and invalid-radius rejection.
+Reuse the four native coast runs, appending only one shadow-function output
+after their 33 acceleration values. Prove all three Moon/Earth/Mars apparent
+discs disjoint from the Sun at each initial anchor using native shape radii,
+compare direct Tudat shadow functions within the existing 1e-12 fraction gate,
+and require the saved combined shadow factor exactly 1. All prior acceleration,
+state and budget controls remain unchanged. Report the dimensionless factor
+and per-body proof results separately from SI acceleration data.
+
+This qualifies full illumination of the declared spherical-source geometry
+at these exact stored anchors only. It does not prove lighting between epochs,
+bound SRP arithmetic or physical uncertainty, resolve penumbra, or complete
+task 3.9. No production changes, extra spacecraft propagations or dependencies.
+
 ### Schwarzschild initial anchor error enclosure (2026-09-10)
 
 Reuse the four existing native coast outputs with PPN beta=gamma=1. For

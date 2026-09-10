@@ -1624,6 +1624,60 @@ def test_schwarzschild_anchor_rejects_invalid_state(invalid_state: tuple[float, 
         _schwarzschild_anchor_error_bound_m_s2(1.0, np.zeros(6), np.asarray(invalid_state), np.zeros(3))
 
 
+def _apparent_spheres_strictly_disjoint(
+    source_position_m: np.ndarray, source_radius_m: float,
+    occultor_position_m: np.ndarray, occultor_radius_m: float,
+    observer_position_m: np.ndarray,
+) -> bool:
+    """Prove disjoint apparent spherical discs at exact stored SI/J2000 inputs."""
+    assert all(type(radius) is float and math.isfinite(radius) and radius > 0
+               for radius in (source_radius_m, occultor_radius_m))
+    for vector in (source_position_m, occultor_position_m, observer_position_m):
+        assert vector.shape == (3,) and vector.dtype == np.float64
+        assert np.all(np.isfinite(vector))
+    source, occultor = ([Fraction(body) - Fraction(observer) for body, observer in
+                        zip(position, observer_position_m, strict=True)]
+                       for position in (source_position_m, occultor_position_m))
+    source_squared_m2 = sum((value**2 for value in source), Fraction(0))
+    occultor_squared_m2 = sum((value**2 for value in occultor), Fraction(0))
+    source_radius, occultor_radius = Fraction(source_radius_m), Fraction(occultor_radius_m)
+    assert source_squared_m2 > source_radius**2 and occultor_squared_m2 > occultor_radius**2
+    dot_m2 = sum((s * o for s, o in zip(source, occultor, strict=True)), Fraction(0))
+    left_m2 = dot_m2 + source_radius * occultor_radius
+    right_squared_m4 = ((source_squared_m2 - source_radius**2)
+                        * (occultor_squared_m2 - occultor_radius**2))
+    # cos(separation) < cos(source angular radius + occultor angular radius).
+    # Avoid squaring a negative left side: it already lies below the positive root.
+    return left_m2 < 0 or left_m2**2 < right_squared_m4
+
+
+@pytest.mark.parametrize("offset_m", [0.0, 1e12])
+@pytest.mark.parametrize(("occultor", "radius_m", "clear"), [
+    ((15.0, 20.0, 0.0), 6.0, True),
+    ((15.0, 20.0, 0.0), 7.0, False),  # Exact apparent tangency: 480^2=400*576.
+    ((15.0, 20.0, 0.0), 8.0, False),
+    ((-25.0, 0.0, 0.0), 15.0, True),  # Opposite hemispheres; left side is negative.
+    ((25.0, 0.0, 0.0), 15.0, False),
+])
+def test_apparent_spheres_exact_geometry(
+    offset_m: float, occultor: tuple[float, float, float], radius_m: float, clear: bool,
+) -> None:
+    observer_m = np.full(3, offset_m)
+    assert _apparent_spheres_strictly_disjoint(
+        observer_m + np.asarray([25.0, 0.0, 0.0]), 15.0,
+        observer_m + np.asarray(occultor), radius_m, observer_m,
+    ) is clear
+
+
+@pytest.mark.parametrize("source_radius_m", [25.0, 26.0, math.nan, -1.0])
+def test_apparent_spheres_rejects_invalid_geometry(source_radius_m: float) -> None:
+    with pytest.raises(AssertionError):
+        _apparent_spheres_strictly_disjoint(
+            np.asarray([25.0, 0.0, 0.0]), source_radius_m,
+            np.asarray([0.0, 25.0, 0.0]), 1.0, np.zeros(3),
+        )
+
+
 def _point_mass_variation_bound_m_s2(
     gm_m3_s2: float, distance_floor_m: float, displacement_m: Fraction,
 ) -> Fraction:
@@ -2154,6 +2208,7 @@ def _check_conditional_full_force_coast_domains(
             first_acceleration_m_s2: np.ndarray | None = None
             if run_native_controls and closed:
                 from tudatpy.astro.time_representation import Time
+                from tudatpy.astro import fundamentals
                 from tudatpy.dynamics import propagation_setup
 
                 for tighter in (False, True):
@@ -2177,6 +2232,9 @@ def _check_conditional_full_force_coast_domains(
                     output_variables.extend(propagation_setup.dependent_variable.single_acceleration(
                         kind, "Spacecraft", "Sun",
                     ) for kind in (acceleration.radiation_pressure_type, acceleration.relativistic_correction_acceleration_type))
+                    output_variables.append(propagation_setup.dependent_variable.received_irradiance_shadow_function(
+                        "Spacecraft", "Sun",
+                    ))
                     # Pinned binding accepts double time, not these native-Time
                     # settings. Retain the incompatibility as a regression check.
                     with pytest.raises(TypeError, match="SingleArcPropagatorSettings<double, double>"):
@@ -2201,8 +2259,25 @@ def _check_conditional_full_force_coast_domains(
                     force_epoch = min(force_history)
                     assert (force_epoch - first_epoch).to_float() == 0.0
                     force_values = np.asarray(force_history[force_epoch]).reshape(-1)
-                    assert force_values.shape == (33,) and np.all(np.isfinite(force_values))
-                    anchor_m_s2, components_m_s2 = force_values[:3], force_values[3:].reshape(10, 3)
+                    assert force_values.shape == (34,) and np.all(np.isfinite(force_values))
+                    anchor_m_s2, components_m_s2 = force_values[:3], force_values[3:33].reshape(10, 3)
+                    shadow = float(force_values[33])
+                    source_radius_m = bodies.get("Sun").shape_model.average_radius
+                    clear_by_body: dict[str, bool] = {}
+                    for occultor in trajectory.SOLAR_RADIATION_OCCULTING_BODY_NAMES:
+                        occultor_radius_m = bodies.get(occultor).shape_model.average_radius
+                        clear_by_body[occultor] = _apparent_spheres_strictly_disjoint(
+                            states["Sun"][:3], source_radius_m, states[occultor][:3],
+                            occultor_radius_m, state[:3],
+                        )
+                        assert clear_by_body[occultor], (center, occultor)
+                        direct_shadow = fundamentals.compute_shadow_function(
+                            states["Sun"][:3], source_radius_m, states[occultor][:3],
+                            occultor_radius_m, state[:3],
+                        )
+                        assert abs(direct_shadow - 1.0) <= 1e-12
+                    assert set(clear_by_body) == {"Moon", "Earth", "Mars"}
+                    assert shadow == 1.0  # Exact full illumination at this observed anchor only.
                     exact_sum = [sum(map(Fraction, components_m_s2[:, axis]), Fraction(0)) for axis in range(3)]
                     sum_residual = [Fraction(anchor_m_s2[axis]) - exact_sum[axis] for axis in range(3)]
                     component_norm_sum = float(np.linalg.norm(components_m_s2, axis=1).sum())
@@ -2252,6 +2327,8 @@ def _check_conditional_full_force_coast_domains(
                     assert Fraction(reported_velocity_error_m_s) >= velocity_error_m_s
                     endpoint_controls.append({"tighter": tighter,
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),
+                        "initial_shadow_function": shadow,
+                        "initial_apparent_discs_strictly_disjoint": clear_by_body,
                         "point_anchor_error_upper_m_s2": point_anchor_error_upper_m_s2,
                         "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
