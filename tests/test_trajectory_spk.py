@@ -1450,6 +1450,45 @@ def test_ballistic_residual_certificate_attains_constant_acceleration_error(dura
     assert certificate_m > Fraction("0.001")  # Cannot accept this corrupted endpoint.
 
 
+def _coast_endpoint_velocity_error_bound_m_s(
+    initial_velocity_m_s: np.ndarray, final_velocity_m_s: np.ndarray,
+    duration_s: float, acceleration_bound_m_s2: float,
+) -> Fraction:
+    """Bound SI/SSB/J2000 endpoint velocity error using a conditional force norm."""
+    assert initial_velocity_m_s.shape == final_velocity_m_s.shape == (3,)
+    assert initial_velocity_m_s.dtype == final_velocity_m_s.dtype == np.dtype("float64")
+    assert np.all(np.isfinite(initial_velocity_m_s)) and np.all(np.isfinite(final_velocity_m_s))
+    assert all(type(value) is float and math.isfinite(value) and value >= 0
+               for value in (duration_s, acceleration_bound_m_s2))
+    residual_m_s = sum((abs(Fraction(final) - Fraction(initial))
+                        for initial, final in zip(initial_velocity_m_s, final_velocity_m_s, strict=True)), Fraction(0))
+    return residual_m_s + Fraction(acceleration_bound_m_s2) * Fraction(duration_s)
+
+
+@pytest.mark.parametrize(("duration_s", "acceleration_m_s2"), [(0.0, 2.0), (0.25, 0.0), (1 / 64, 2.0), (0.3, 2.0)])
+def test_coast_velocity_certificate_attains_constant_acceleration_error(
+    duration_s: float, acceleration_m_s2: float,
+) -> None:
+    # Exact v(t)=64+A*t; the corrupted endpoint is 0.5 m/s below v(0).
+    bound_m_s = _coast_endpoint_velocity_error_bound_m_s(
+        np.asarray([64.0, 0.0, 0.0]), np.asarray([63.5, 0.0, 0.0]), duration_s, acceleration_m_s2,
+    )
+    true_m_s = Fraction(64) + Fraction(acceleration_m_s2) * Fraction(duration_s)
+    assert abs(Fraction(63.5) - true_m_s) == bound_m_s
+    assert bound_m_s > Fraction("0.000001")
+
+
+def test_coast_velocity_certificate_can_be_unresolved_for_exact_endpoint() -> None:
+    duration_s = 1 / 64
+    exact_final_m_s = 64.0 + 2.0 * duration_s
+    assert Fraction(exact_final_m_s) == Fraction(64) + 2 * Fraction(duration_s)
+    bound_m_s = _coast_endpoint_velocity_error_bound_m_s(
+        np.asarray([64.0, 0.0, 0.0]), np.asarray([exact_final_m_s, 0.0, 0.0]), duration_s, 2.0,
+    )
+    assert bound_m_s == 4 * Fraction(duration_s) > Fraction("0.000001")
+    # An upper bound exceeding a gate is not evidence of actual error.
+
+
 def _check_conditional_full_force_coast_domains(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
     body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
@@ -1552,8 +1591,16 @@ def _check_conditional_full_force_coast_domains(
                     assert error_bound_m <= Fraction("0.001"), (center, tighter, float(error_bound_m))
                     reported_error_m = math.nextafter(float(error_bound_m), math.inf)
                     assert Fraction(reported_error_m) >= error_bound_m
+                    velocity_error_m_s = _coast_endpoint_velocity_error_bound_m_s(
+                        state[3:], final_state[3:6], duration_s, acceleration_m_s2,
+                    )
+                    assert velocity_error_m_s >= velocity_reach_m_s > Fraction("0.000001")
+                    reported_velocity_error_m_s = math.nextafter(float(velocity_error_m_s), math.inf)
+                    assert Fraction(reported_velocity_error_m_s) >= velocity_error_m_s
                     endpoint_controls.append({"tighter": tighter,
                         "conditional_endpoint_position_error_m": reported_error_m,
+                        "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,
+                        "velocity_bound_resolves_1um_s": velocity_error_m_s <= Fraction("0.000001"),
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
                 "acceleration_bound_m_s2": acceleration_m_s2, "position_reach_m": reach_m,

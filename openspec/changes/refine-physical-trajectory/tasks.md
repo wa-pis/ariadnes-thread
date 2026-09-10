@@ -51,6 +51,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional coast velocity certificate limitation (2026-09-10):
+Derive the endpoint velocity bound from exact velocity increment plus A*h.
+Verify constant-acceleration equality, zero duration/acceleration, and an
+exact endpoint whose conservative bound remains unresolved. Measure all
+four existing native coast endpoints without new native calls; record the
+unresolved 1e-6 m/s local target separately from passing position bounds.
+Run focused/full pytest, Ruff, strict validation and legacy checksum.
+Keep 3.9 open; this diagnoses the enclosure method, not actual native error.
+All seven focused checks passed (24.24 s), followed by all 1124 full-suite
+tests (249.38 s). The four native velocity bounds remain above the local
+target while their position certificates still pass. Ruff, strict OpenSpec
+validation and the unchanged legacy SHA-256 passed. Native counts remain
+four controls/evaluations/arcs in the native inventory and zero in the other.
+
 Task 3.9 conditional native coast endpoint position certificate (2026-09-10):
 Bound a saved endpoint using its exact ballistic residual plus A*h^2/2 from
 the closed ideal domain. Verify independent constant-acceleration controls

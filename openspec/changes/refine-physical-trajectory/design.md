@@ -1,5 +1,33 @@
 ## Context
 
+### Conditional coast velocity certificate limitation (2026-09-10)
+
+For the same closed ideal coast domains and exact defining initial state,
+integration of the force norm gives `|v(h)-v0|_2 <= A*h`. The native endpoint
+therefore admits the conditional bound
+`|v_hat-v(h)|_2 <= |v_hat-v0|_1 + A*h`. Evaluate it using exact Fractions of
+stored SI values and round the reported m/s bound upward. Four independent
+constant-acceleration controls attain this bound with corrupted endpoints,
+including zero duration, zero acceleration and non-dyadic elapsed time.
+A separate exactly represented, error-free endpoint still has a bound above
+1e-6 m/s: an unresolved upper bound does not establish integration failure.
+
+Reuse the four existing native coast controls without additional native calls.
+Report velocity bounds separately from the passing position certificates.
+Compare with 1e-6 m/s as a local qualification target, not a new mission
+acceptance requirement or a certified global error allocation. The A*h term
+alone exceeds this target for all four controls at h=1/64 s, irrespective of
+the numerical endpoint's accuracy (A*h is approximately 0.02314 m/s near
+Moon and 0.04974 m/s near Mars). A force-norm-only velocity certificate
+cannot qualify these controls at that duration. Directional force/residual
+enclosures are needed to avoid losing cancellation between actual and
+reference acceleration; shortening intervals alone has not been shown to
+meet the mission's runtime or accumulated-error requirements.
+
+Keep all source/reference-force premises conditional. Do not classify the
+native controls as inaccurate, unsafe or mission-infeasible from this loose
+bound, relax tolerances, increase native-call limits, or close task 3.9.
+
 ### Conditional native coast endpoint position certificate (2026-09-10)
 
 Use the already closed ideal full-force domains at h=1/64 s to bound an
