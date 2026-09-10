@@ -51,6 +51,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 joint mass-dependent thrust domain control (2026-09-10):
+Compose the existing mass/position bounds and speed inequality on exact
+constant-thrust motion. Verify strict closure, equality-unresolved and
+mass-domain exit despite contained position/speed, using an independent
+T/m(h) global bound. Preserve zero native counters and production settings.
+Run focused/full pytest, Ruff, strict validation and legacy checksum; do
+not transfer analytic evidence to native full-force safety or close 3.9.
+All 98 focused tests passed (0.07 s) and all 1075 full-suite tests passed
+(163.92 s), as did Ruff, strict validation and the unchanged legacy hash.
+
 Task 3.9 conditional labelled-sample mass floors (2026-09-10):
 Compose the existing mass-floor primitive with outward rate/duration inputs
 and the checked native/float label shift. Verify all saved native samples

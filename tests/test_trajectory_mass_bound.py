@@ -45,6 +45,38 @@ def test_mass_floor_encloses_variable_consumption_control(duration_s: float, cle
         # An unresolved conservative floor does not prove dry-mass crossing.
 
 
+@pytest.mark.parametrize("duration_s,closed", [(4.0, True), (5.0, False), (6.0, False)])
+def test_thrust_domain_requires_mass_as_well_as_position_and_speed(
+    duration_s: float, closed: bool,
+) -> None:
+    budget = trajectory._RefinementBudget("thrust-domain", 300.0)
+    # SI control: constant thrust 10 N, consumption 1 kg/s, m0=10 kg,
+    # x0=v0=0. Trial domain: |x|<100 m, |v|<20 m/s, m>5 kg.
+    acceleration_m_s2 = 2.0  # T/m <= 2 only while m >= 5 kg.
+    reach_m = trajectory._position_reach_upper_bound(budget, duration_s, 0.0, 0.0, acceleration_m_s2)
+    speed_upper_m_s = Fraction(acceleration_m_s2) * Fraction(duration_s)
+    mass_floor_kg = trajectory._mass_lower_bound(budget, 10.0, 0.0, 1.0, duration_s)
+    assert reach_m < 100 and speed_upper_m_s < 20  # These alone accept all three.
+    assert (reach_m < 100 and speed_upper_m_s < 20 and mass_floor_kg > 5) is closed
+    exact_final_mass_kg = 10 - Fraction(duration_s)
+    assert Fraction(mass_floor_kg) == exact_final_mass_kg
+    # Independent global bound: monotone mass gives a <= T/m(h) over [0,h].
+    # It proves that actual position/speed stay inside their trial domains
+    # even in the counterexample where the assumed 2 m/s^2 bound is false.
+    actual_acceleration_upper = Fraction(10) / exact_final_mass_kg
+    assert actual_acceleration_upper * Fraction(duration_s) < 20
+    assert actual_acceleration_upper * Fraction(duration_s)**2 / 2 < 100
+    if closed:
+        assert actual_acceleration_upper < Fraction(acceleration_m_s2)
+    elif duration_s == 5.0:
+        assert mass_floor_kg == 5  # Strict first-exit proof is unresolved at equality.
+        assert actual_acceleration_upper == Fraction(acceleration_m_s2)
+    else:
+        assert mass_floor_kg < 5
+        assert actual_acceleration_upper > Fraction(acceleration_m_s2)
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+
+
 @pytest.mark.parametrize("index", range(4))
 @pytest.mark.parametrize("invalid", [-1.0, True, math.nan, math.inf])
 def test_mass_floor_rejects_invalid_inputs(index: int, invalid: object) -> None:

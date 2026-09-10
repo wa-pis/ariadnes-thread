@@ -1,5 +1,26 @@
 ## Context
 
+### Mass-dependent thrust requires joint domain closure (2026-09-10)
+
+Connect the mass-floor and position-reach primitives with a speed inequality
+on an exact constant-thrust control: 10 N thrust, 1 kg/s consumption, 10 kg
+initial mass, zero initial position/speed. The trial domain is |x|<100 m,
+|v|<20 m/s, m>5 kg, so acceleration is at most 2 m/s^2 while inside it.
+At durations 4, 5 and 6 s, the conditional position/speed bounds all lie
+strictly inside their domains, but the mass floor is respectively 6, 5, 4 kg.
+Only the 4 s case closes the strict joint first-exit proof. At 5 s the mass
+boundary is reached, so strict inclusion is unresolved (not a dry-mass
+classification). At 6 s acceleration reaches 2.5 m/s^2 and violates the
+assumed bound although an independent global bound T/m(h) proves actual
+position and speed stay inside their trial domains. This demonstrates why
+mass closure cannot be omitted from full-force domain reasoning.
+
+All comparisons use exact rational controls and the existing outward helpers;
+no native propagations, new dependencies or production safety wiring. The
+domain mass of 5 kg is not a spacecraft dry-mass policy, and strict proof
+inclusion does not replace the existing analytic dry-mass equality rule.
+Real native-error and ephemeris domains remain unqualified under task 3.9.
+
 ### Compose label-time uncertainty with the mass floor (2026-09-10)
 
 Reuse the 72 native burn histories to connect the conditional mass-floor
