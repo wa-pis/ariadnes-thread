@@ -1,5 +1,53 @@
 ## Context
 
+### Conditional native coast endpoint position certificate (2026-09-10)
+
+Use the already closed ideal full-force domains at h=1/64 s to bound an
+observed numerical endpoint without trusting the integrator's internal
+error estimate. For the exact initial stored state x0,v0 and the conditional
+acceleration bound A, any reference solution satisfies
+`|x(h)-x0-v0*h|_2 <= A*h^2/2`. Therefore, for any observed endpoint x_hat,
+
+```
+|x_hat-x(h)|_2 <= |x_hat-x0-v0*h|_1 + A*h^2/2
+```
+
+Evaluate the residual and sum with exact Fractions of stored SI values;
+round the reported metre bound upward. Three independent constant-acceleration
+controls attain the bound with deliberately wrong numerical endpoints at a
+1e12 m offset, including non-dyadic elapsed time. Their 0.5 m perturbation
+must not pass the existing 0.001 m endpoint-position gate.
+
+In the native-readback inventory variant, run four full-force, seven-state
+coast controls: near Moon/Mars with each unchanged production integrator
+profile. Each starts from the exact state defining its ideal domain. Require
+successful integration, matching initial state, zero represented native-Time
+endpoint offset, finite final state and unchanged mass before applying the
+0.001 m position certificate. Reusing the analytic controls' threshold does
+not transfer their error proof: the native endpoint bound is derived here.
+Count all four controls/evaluations/native arcs
+inside the inventory's existing shared 300 s budget. The other inventory
+variant and both unresolved 1 s domains add no spacecraft propagation.
+
+| Control | Conditional endpoint position-error bound (m) |
+|---|---:|
+| Moon, nominal | 0.00036674494259305484 |
+| Moon, tighter | 0.00040239444720360134 |
+| Mars, nominal | 0.0008134678012758771 |
+| Mars, tighter | 0.0008037676237897389 |
+
+These conservative residual-based bounds are not observed exact errors and
+need not rank the integrators by their configured tolerance.
+
+This is a local, conditional position-error certificate for four observed
+endpoints, not just nominal/tighter agreement. It retains the source and
+reference-force premises. It does not bound velocity error or error accumulated
+across later segments, prove native internal trials stayed in the ideal domain,
+or authorize a safe mission result. The unchanged integrators may evaluate
+internal trial epochs beyond this very short output interval; no safety
+classification is assigned to them. Preserve native failed/unsafe-trial gates,
+scientific tolerances and production limits; task 3.9 remains open.
+
 ### Conditional full-force coast phase inclusion (2026-09-10)
 
 Connect the existing source-motion and speed bounds to a short ideal coast

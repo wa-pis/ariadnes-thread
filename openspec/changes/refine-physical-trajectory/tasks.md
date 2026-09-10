@@ -51,6 +51,21 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional native coast endpoint position certificate (2026-09-10):
+Bound a saved endpoint using its exact ballistic residual plus A*h^2/2 from
+the closed ideal domain. Verify independent constant-acceleration controls
+reject corrupted endpoints. Run four near-Moon/Mars native coast controls
+with unchanged nominal/tighter profiles, exact native endpoint epoch, initial
+state and coast-mass checks; require the conditional position bound <=0.001 m.
+Count four native arcs in the existing inventory budget; run focused/full
+pytest, Ruff, strict validation and legacy checksum. Do not claim velocity,
+accumulated error, internal-trial safety or completed task 3.9.
+The four initial focused controls passed (23.83 s), and all three final
+analytic residual controls passed (0.18 s). All 1119 full-suite tests passed
+(248.97 s), including the four native endpoint bounds, whose maximum is
+0.0008134678012758771 m. Ruff, strict validation and the unchanged legacy
+SHA-256 passed; native qualification counts are (4,4,4) in the native variant.
+
 Task 3.9 conditional full-force coast phase inclusion (2026-09-10):
 Compose existing source-motion and Sun-speed envelopes with full-force
 position/velocity domains near Moon and Mars at the qualified start epoch.

@@ -447,7 +447,7 @@ def test_spk_rate_bound_honors_expired_budget() -> None:
 def test_loaded_spk_chain_coverage_contains_candidate_interval(
     native_record_readback: bool, request: pytest.FixtureRequest,
 ) -> None:
-    """Qualify coverage and exact record motion, not native error or safety."""
+    """Qualify conditional source/endpoint bounds, not full-mission safety."""
     import spiceypy as spice
     from spiceypy.utils.support_types import SPICEDOUBLE_CELL
 
@@ -1310,6 +1310,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     coast_domains = _check_conditional_full_force_coast_domains(
         budget, start_tdb_s, end_tdb_s, coast_body_reaches_m, chain_speed_bounds_m_s[10],
         {body: motion_samples[target][0][1] for body, target in body_ids.items()},
+        run_native_controls=native_record_readback,
     )
     assert all(motion_samples[target][0][0] == start_tdb_s for target in body_ids.values())
 
@@ -1346,7 +1347,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert not spice.failed()
     assert kernels_before == [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
     budget.check()
-    assert budget.native_arc_propagations == 0
+    assert budget.native_arc_propagations == (4 if native_record_readback else 0)
     print(json.dumps({
         "candidate_id": evidence["candidate_id"], "time": "TDB seconds since J2000",
         "candidate_interval_tdb_s": [start_tdb_s, end_tdb_s],
@@ -1419,12 +1420,43 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     }, sort_keys=True, allow_nan=False))
 
 
+def _ballistic_endpoint_error_bound_m(
+    initial_state: np.ndarray, final_position_m: np.ndarray,
+    duration_s: float, acceleration_bound_m_s2: float,
+) -> Fraction:
+    """Bound endpoint error in SI/SSB/J2000, conditional on an ideal force bound."""
+    assert initial_state.shape == (6,) and final_position_m.shape == (3,)
+    assert initial_state.dtype == final_position_m.dtype == np.dtype("float64")
+    assert np.all(np.isfinite(initial_state)) and np.all(np.isfinite(final_position_m))
+    assert all(type(value) is float and math.isfinite(value) and value >= 0
+               for value in (duration_s, acceleration_bound_m_s2))
+    residual_m = sum((abs(Fraction(final_position_m[axis]) - Fraction(initial_state[axis])
+                         - Fraction(initial_state[axis + 3]) * Fraction(duration_s)) for axis in range(3)), Fraction(0))
+    return residual_m + Fraction(acceleration_bound_m_s2) * Fraction(duration_s)**2 / 2
+
+
+@pytest.mark.parametrize("duration_s", [1 / 64, 0.3, 0.5])
+def test_ballistic_residual_certificate_attains_constant_acceleration_error(duration_s: float) -> None:
+    # Exact SI control x(t)=x0+64*t+t^2, with A=2 m/s^2 and a 0.5 m
+    # deliberately wrong numerical displacement opposite to acceleration.
+    initial_m, speed_m_s = 1e12, 64.0
+    approximate_m = initial_m + speed_m_s * duration_s - 0.5
+    true_m = Fraction(initial_m) + 64 * Fraction(duration_s) + Fraction(duration_s)**2
+    certificate_m = _ballistic_endpoint_error_bound_m(
+        np.asarray([initial_m, 0.0, 0.0, speed_m_s, 0.0, 0.0]),
+        np.asarray([approximate_m, 0.0, 0.0]), duration_s, 2.0,
+    )
+    assert abs(Fraction(approximate_m) - true_m) == certificate_m
+    assert certificate_m > Fraction("0.001")  # Cannot accept this corrupted endpoint.
+
+
 def _check_conditional_full_force_coast_domains(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
     body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
     position_anchors_m: dict[str, np.ndarray],
+    *, run_native_controls: bool,
 ) -> list[dict[str, object]]:
-    """Test ideal coast phase inclusion; no native integration-error certificate."""
+    """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_gravity import _candidate, _spacecraft
 
     candidate = _candidate(
@@ -1491,11 +1523,44 @@ def _check_conditional_full_force_coast_domains(
             assert mass_floor_kg == spacecraft.initial_mass_kg > spacecraft.dry_mass_kg
             closed = reach_m < position_radius_m and velocity_reach_m_s < Fraction(velocity_radius_m_s)
             assert closed is (duration_s == 1 / 64), (center, duration_s, reach_m, float(velocity_reach_m_s))
+            endpoint_controls: list[dict[str, object]] = []
+            if run_native_controls and closed:
+                from tudatpy.astro.time_representation import Time
+                from tudatpy.dynamics import propagation_setup
+
+                for tighter in (False, True):
+                    budget.begin_control()
+                    models = trajectory._build_arc_force_models(budget.candidate_id, environment)
+                    final_tdb_s = start_tdb_s + duration_s
+                    settings = trajectory._build_coupled_arc_settings(
+                        budget.candidate_id, bodies, models, state, spacecraft.initial_mass_kg, start_tdb_s,
+                        trajectory._build_arc_integrator(budget.candidate_id, "coast", tighter=tighter),
+                        propagation_setup.propagator.time_termination(final_tdb_s, terminate_exactly_on_final_condition=True),
+                        thrust_enabled=False,
+                    )
+                    simulator = trajectory._run_native_arc(budget, bodies, settings, first_in_evaluation=True)
+                    assert simulator.integration_completed_successfully
+                    history = simulator.state_history_time_object
+                    first_epoch, last_epoch = min(history), max(history)
+                    assert (first_epoch - Time(start_tdb_s)).to_float() == 0.0
+                    assert (last_epoch - Time(final_tdb_s)).to_float() == 0.0
+                    assert np.array_equal(np.asarray(history[first_epoch]).reshape(7)[:6], state)
+                    final_state = np.asarray(history[last_epoch]).reshape(7)
+                    assert np.all(np.isfinite(final_state)) and final_state[6] == spacecraft.initial_mass_kg
+                    curvature_m = Fraction(acceleration_m_s2) * Fraction(duration_s)**2 / 2
+                    error_bound_m = _ballistic_endpoint_error_bound_m(state, final_state[:3], duration_s, acceleration_m_s2)
+                    assert error_bound_m <= Fraction("0.001"), (center, tighter, float(error_bound_m))
+                    reported_error_m = math.nextafter(float(error_bound_m), math.inf)
+                    assert Fraction(reported_error_m) >= error_bound_m
+                    endpoint_controls.append({"tighter": tighter,
+                        "conditional_endpoint_position_error_m": reported_error_m,
+                        "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
                 "acceleration_bound_m_s2": acceleration_m_s2, "position_reach_m": reach_m,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
-                "conditional_domain_closed": closed})
-    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+                "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
+    expected_arcs = 4 if run_native_controls else 0
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (expected_arcs,) * 3
     return results
 
 
