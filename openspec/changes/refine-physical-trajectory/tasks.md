@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 saved native mass-history evidence (2026-09-10):
+Reuse the 36 isolated native burns to compare every saved mass with exact
+stored-input constant flow under the unchanged mass tolerance. Verify finite
+states, nonincreasing mass and a rate-only-envelope counterexample in every
+fixture; report sampled errors/counts as reproducible JSON. No additional
+native propagations. Run focused/full pytest, Ruff, strict validation and
+legacy checksum. Saved samples do not enclose stages or between-output
+states; keep 3.9/3.5 open and production settings unchanged.
+All 36 focused controls passed (3.29 s); all 996 full-suite tests passed
+(160.88 s), as did Ruff, strict validation and the unchanged legacy hash.
+
 Task 3.9 conditional mass-rate arithmetic evidence (2026-09-10):
 Verify the two-operation normal round-to-nearest rate-error bound
 `2u/(1-u)` with exact Fraction oracles for Isp 300/450 s and three adjacent

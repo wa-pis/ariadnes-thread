@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import json
 import math
 from collections.abc import Callable
+from fractions import Fraction
 from typing import Any, Literal
 
 import pytest
@@ -200,3 +202,40 @@ def test_native_engine_couples_translation_and_mass(
         assert max(direction_errors) <= 1e-12
     assert all(float(np.asarray(state).reshape(-1)[6]) > 1000.0
                for state in history.values())
+
+    # Use exact stored-input arithmetic at each saved epoch, not a rounded
+    # final-mass oracle. These are samples, not an inter-step enclosure.
+    exact_rate_kg_s = Fraction(thrust_n) / (Fraction(g0_m_s2) * Fraction(isp_s))
+    unit_roundoff = Fraction(1, 2**53)
+    relative_rate_bound = 2 * unit_roundoff / (1 - unit_roundoff)
+    largest_error_kg = Fraction(0)
+    outside_rate_only_bound = 0
+    previous_mass_kg = initial_mass_kg
+    for epoch_tdb_s, state in sorted(history.items()):
+        elapsed_s = Fraction(float(epoch_tdb_s))  # This fixture ignites at TDB 0 s.
+        assert 0 <= elapsed_s <= Fraction(duration_s) + Fraction(1e-6)
+        sample = np.asarray(state).reshape(-1)
+        assert sample.shape == (7,) and np.all(np.isfinite(sample))
+        sample_mass_kg = float(sample[6])
+        assert sample_mass_kg <= previous_mass_kg
+        previous_mass_kg = sample_mass_kg
+        exact_consumed_kg = exact_rate_kg_s * elapsed_s
+        exact_mass_kg = Fraction(initial_mass_kg) - exact_consumed_kg
+        error_kg = abs(Fraction(sample_mass_kg) - exact_mass_kg)
+        assert error_kg <= max(Fraction(1e-8), Fraction(1e-11) * exact_consumed_kg)
+        largest_error_kg = max(largest_error_kg, error_kg)
+        rate_only_bound_kg = exact_consumed_kg * relative_rate_bound
+        outside_rate_only_bound += error_kg > rate_only_bound_kg
+    # Preserve a counterexample to using the Python rate bound as a bound on
+    # native propagated mass (which also includes other arithmetic errors).
+    assert outside_rate_only_bound > 0
+    print(json.dumps({
+        "burn_id": burn_id,
+        "duration_s": duration_s,
+        "initial_mass_kg": initial_mass_kg,
+        "integration": integration,
+        "saved_states": len(history),
+        "maximum_sampled_mass_error_kg": float(largest_error_kg),
+        "samples_outside_python_rate_only_bound": outside_rate_only_bound,
+        "scope": "isolated saved-state mass evidence, not interval safety",
+    }, sort_keys=True, allow_nan=False))

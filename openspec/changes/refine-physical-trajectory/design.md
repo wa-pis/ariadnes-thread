@@ -1,5 +1,27 @@
 ## Context
 
+### Saved native mass history versus exact constant flow (2026-09-10)
+
+Reuse all 36 isolated native burn controls (two durations, two initial masses,
+three guidance modes and three integrators), without additional propagations.
+At each saved TDB epoch, compare mass to exact Fraction evaluation of
+`m0 - T*t/(g0*Isp)` on stored binary64 inputs; ignition is TDB 0 s in these
+fixtures. Retain the existing final-state and rocket-equation checks, and
+apply the unchanged `max(1e-8 kg, 1e-11 * consumed_mass)` mass tolerance at
+each saved state. Validate finite seven-component states and nonincreasing
+saved mass. This is neither internal-stage nor between-output safety.
+
+The focused run observes 6229 saved states. Maximum sampled error is
+5.727098398589237e-11 kg (2000 kg initial mass, 100.25 s inertial RK4 burn).
+6193 samples exceed the conditional Python rate-only error margin; every
+fixture contains such a counterexample, now asserted. This does not refute
+the conditional two-operation rate bound: native engine arithmetic, state
+updates and timing are outside its scope. The sampled residual does not
+isolate those contributions, and its maximum is not a uniform bound to use
+in safety screening. Reproducible per-fixture JSON reports units, sample
+counts, peak errors and rate-only exceedance counts. No native-call budget,
+force, tolerance or production behavior changes; tasks 3.9/3.5 remain open.
+
 ### Conditional mass-rate roundoff envelope (2026-09-10)
 
 The Python control gate retains two rounded operations, exhaust velocity
