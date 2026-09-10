@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 mass-premise control-gate correction (2026-09-10):
+Reproduce a 5.684341886080802e-14 kg shortfall hidden by rounded burn-duration
+summation at exactly 1 kg/s. Preserve the existing mass-rate calculation but
+compare remaining mass with dry mass using exact validated binary64 operands.
+Verify below/equal/above threshold durations, all control tests, full pytest,
+Ruff, strict validation and legacy checksum. Equality remains accepted and
+no epsilon is added. Native mass-rate/integration error and full propagated
+safety remain unqualified; do not close 3.9 or 3.5.
+All 23 control tests and 990 full-suite tests passed (160.56 s for the full
+suite), as did Ruff, strict validation and the unchanged legacy checksum.
+
 Task 3.9 declared phase-domain full-force controls (2026-09-10):
 Add explicit 10 m position balls and 1 m/s velocity balls to the direct-SPICE
 fixed-epoch full-force controls. Verify exact squared-distance implications,

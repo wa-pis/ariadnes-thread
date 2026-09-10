@@ -1,5 +1,27 @@
 ## Context
 
+### Analytic mass-gate rounding correction (2026-09-10)
+
+The existing analytic control gate could accept a sub-ULP mass shortfall.
+With the existing calculated mass rate exactly 1 kg/s, initial/dry masses
+2000/1000 kg and burn durations 500 s and nextafter(500,+infinity) s, the
+rounded duration sum is 1000 s. The old computation therefore reports exactly
+dry mass and accepts, although the exact sum of the validated binary64
+durations consumes 5.684341886080802e-14 kg too much at that mass rate.
+
+Retain the existing exhaust-velocity/mass-rate calculation and its validation.
+After it, form the duration sum, consumed mass and remaining mass exactly as
+Fractions, and compare with the exact binary64 dry-mass value. Retain the
+finite-result/overflow guard. No epsilon or tolerance is introduced: equality
+remains accepted; either adjacent representable duration is classified on
+the correct side of the threshold. All callers use the shared control gate.
+
+This fixes downstream summation/product/subtraction rounding, not uncertainty
+in the calculated mass rate, native engine arithmetic or integrated mass.
+Those remain separate prerequisites for an interval mass enclosure and
+propagated dry-mass safety. Keep tasks 3.9 and 3.5 open; no force, kernel,
+scientific tolerance or work limit changes.
+
 ### Declared phase-domain full-force controls (2026-09-10)
 
 Connect the new distance-floor primitive to the existing direct-SPICE

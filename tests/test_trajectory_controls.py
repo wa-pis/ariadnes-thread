@@ -36,6 +36,18 @@ def test_analytic_dry_mass_boundary_uses_constant_mass_flow(total_burn_s: float)
     assert result == (controls if total_burn_s <= 1000 else "rejected-dry-mass")
 
 
+@pytest.mark.parametrize("last_duration_s", [math.nextafter(500.0, 0.0), 500.0, math.nextafter(500.0, math.inf)])
+def test_analytic_mass_gate_preserves_sub_ulp_duration_shortfalls(last_duration_s: float) -> None:
+    spacecraft = load_scenario(ROOT / "examples/reference_mission.toml").spacecraft
+    spacecraft = replace(spacecraft, max_thrust_n=9.80665 * spacecraft.isp_s)
+    assert spacecraft.max_thrust_n / (9.80665 * spacecraft.isp_s) == 1.0  # kg/s
+    assert spacecraft.initial_mass_kg - spacecraft.dry_mass_kg == 1000.0  # kg
+    assert 500.0 + last_duration_s == 1000.0  # Rounded sum loses the side of the boundary.
+    controls = (0.0, 0.0, 500.0, 0.0, 0.0, last_duration_s)
+    result = trajectory._prepare_burn_controls("sub-ulp-mass", spacecraft, 0.0, 2000.0, controls)
+    assert result == (controls if last_duration_s <= 500.0 else "rejected-dry-mass")
+
+
 def test_control_angles_are_canonical_and_repeatable() -> None:
     spacecraft = load_scenario(ROOT / "examples/reference_mission.toml").spacecraft
     original = (5 * math.pi, math.pi / 2, 1.0, -5 * math.pi, -math.pi / 2, 2.0)

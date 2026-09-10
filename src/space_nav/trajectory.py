@@ -1259,11 +1259,12 @@ def _prepare_burn_controls(
         mass_rate_kg_s = _positive_finite(
             "mass_rate_kg_s", spacecraft.max_thrust_n / exhaust_m_s,
         )
-        terminal_mass_kg = _finite_float(
-            "analytic_terminal_mass_kg",
-            spacecraft.initial_mass_kg - mass_rate_kg_s * (values[2] + values[5]),
+        # Preserve sub-ULP shortfalls after the existing mass-rate calculation.
+        terminal_mass_kg = Fraction(spacecraft.initial_mass_kg) - Fraction(mass_rate_kg_s) * (
+            Fraction(values[2]) + Fraction(values[5])
         )
-        if terminal_mass_kg < spacecraft.dry_mass_kg:
+        _finite_float("analytic_terminal_mass_kg", float(terminal_mass_kg))
+        if terminal_mass_kg < Fraction(spacecraft.dry_mass_kg):
             return "rejected-dry-mass"
         return tuple(values)
     except (TypeError, ValueError, OverflowError, ZeroDivisionError) as exc:
