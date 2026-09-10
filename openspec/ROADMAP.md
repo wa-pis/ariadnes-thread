@@ -17,7 +17,15 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest mass-safety counterexample (2026-09-10): translating isolated engine
+Latest mass-label diagnosis (2026-09-10): comparing the same native states
+using Tudat's high-resolution elapsed time makes all 72 isolated controls
+meet the unchanged mass tolerance. Native-time and float-key histories have
+identical state values: the prior violations arise from associating states
+with rounded absolute-time labels in these fixtures. Preserve those
+counterexamples; explicit timing-error handling at data boundaries and
+uniform interval mass safety remain unqualified. Production is unchanged.
+
+Mass-safety counterexample (2026-09-10): translating isolated engine
 controls from TDB 0 to the candidate start epoch causes 18 of 36 controls to
 exceed the unchanged intermediate mass tolerance, including six tighter
 integrator controls. Final-state checks still pass. The worst sampled error

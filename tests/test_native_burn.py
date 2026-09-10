@@ -25,6 +25,7 @@ def test_native_engine_couples_translation_and_mass(
 ) -> None:
     import numpy as np
     from tudatpy.dynamics import environment_setup, propagation_setup
+    from tudatpy.astro.time_representation import Time
     from space_nav import trajectory
 
     thrust_n = 1000.0
@@ -243,6 +244,27 @@ def test_native_engine_couples_translation_and_mass(
         integration == "rk4" or (integration == "tighter" and duration_s == 100.25)
     )
     assert (outside_mass_tolerance > 0) is expected_mass_failure
+    # Subtract native high-resolution times BEFORE converting to binary64.
+    # Conversion of a large absolute epoch is not lossless state labelling.
+    native_history = simulator.state_history_time_object
+    assert len(native_history) == len(history)
+    largest_native_time_error_kg = Fraction(0)
+    largest_label_shift_s = Fraction(0)
+    for native_epoch, state in native_history.items():
+        epoch_tdb_s = native_epoch.to_float()
+        assert epoch_tdb_s in history
+        assert np.array_equal(state, history[epoch_tdb_s])
+        elapsed_s = (native_epoch - Time(initial_epoch_tdb_s)).to_float()
+        assert math.isfinite(elapsed_s) and elapsed_s >= 0
+        label_elapsed_s = Fraction(epoch_tdb_s) - Fraction(initial_epoch_tdb_s)
+        label_shift_s = abs(label_elapsed_s - Fraction(elapsed_s))
+        largest_label_shift_s = max(largest_label_shift_s, label_shift_s)
+        assert label_shift_s <= (Fraction(math.ulp(epoch_tdb_s)) + Fraction(math.ulp(elapsed_s))) / 2
+        exact_consumed_kg = exact_rate_kg_s * Fraction(elapsed_s)
+        exact_mass_kg = Fraction(initial_mass_kg) - exact_consumed_kg
+        error_kg = abs(Fraction(float(np.asarray(state).reshape(-1)[6])) - exact_mass_kg)
+        assert error_kg <= max(Fraction(1e-8), Fraction(1e-11) * exact_consumed_kg)
+        largest_native_time_error_kg = max(largest_native_time_error_kg, error_kg)
     print(json.dumps({
         "burn_id": burn_id,
         "duration_s": duration_s,
@@ -253,6 +275,8 @@ def test_native_engine_couples_translation_and_mass(
         "maximum_sampled_mass_error_kg": float(largest_error_kg),
         "maximum_error_epoch_tdb_s": largest_error_epoch_tdb_s,
         "samples_outside_mass_tolerance": outside_mass_tolerance,
+        "maximum_native_elapsed_mass_error_kg": float(largest_native_time_error_kg),
+        "maximum_epoch_label_shift_s": float(largest_label_shift_s),
         "samples_outside_python_rate_only_bound": outside_rate_only_bound,
         "scope": "isolated saved-state mass evidence, not interval safety",
     }, sort_keys=True, allow_nan=False))

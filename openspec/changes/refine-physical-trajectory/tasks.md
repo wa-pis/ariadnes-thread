@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 high-resolution native time diagnosis (2026-09-10):
+Reuse all 72 native histories and verify identical arrays/counts under native
+Time and float epoch keys. Subtract Time objects before conversion, verify
+the half-ULP epoch-label shift control and the unchanged mass tolerance for
+every native-elapsed sample, retaining the 18 float-label counterexamples.
+Report both residuals and label shifts. Run focused/full pytest, Ruff,
+strict validation and legacy checksum. This diagnoses the sampled boundary
+error without changing production or proving interval safety; keep 3.9 open.
+All 72 focused controls passed (6.09 s) and all 1062 full-suite tests passed
+(164.19 s), as did Ruff, strict validation and the unchanged legacy hash.
+
 Task 3.9 mission-epoch mass-history counterexample (2026-09-10):
 Repeat the 36 isolated engine controls at the candidate start TDB epoch,
 preserving the original zero-epoch cases. Verify exact endpoint durations,

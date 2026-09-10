@@ -1,5 +1,37 @@
 ## Context
 
+### High-resolution native time isolates the mass-label error (2026-09-10)
+
+The installed TudatPy 1.0 binding documents `state_history_time_object` as
+the same history keyed by the high-resolution `Time` independent variable.
+Its Time API stores integer hours and a sub-hour remainder and permits
+subtraction before `to_float()`. Reuse all 72 existing controls with no new
+propagations: pair each native-time entry with its ordinary float-key entry,
+require equal counts and identical state values, then compute elapsed
+seconds as `(native_epoch - Time(initial_epoch)).to_float()`. This preserves
+the small elapsed interval before conversion instead of subtracting already
+rounded large absolute epoch labels.
+
+Every saved mass now satisfies the unchanged `max(1e-8 kg,
+1e-11 * consumed_mass)` oracle at the native elapsed time. The original
+18 float-label counterexamples remain asserted separately. The observed
+label shift is at most half an absolute-epoch ULP plus half an elapsed-time
+ULP, checked exactly with Fractions. Shifted-epoch maxima are:
+
+| Integrator | Native-elapsed mass error (kg) | Absolute-label elapsed shift (s) |
+|---|---:|---:|
+| RK4 | 5.18140157752548e-11 | 4.7706407713121735e-8 |
+| Nominal RKF78 | 6.133610589705078e-13 | 0 |
+| Tighter RKDP87 | 5.657159660278695e-12 | 5.827462246088544e-8 |
+
+Only the epoch representation used by the oracle changes; native states and
+integrator settings do not. This isolates the prior threshold violations to
+state/time-label association in these fixtures, not a demonstrated failure
+of integrated mass at its native epoch. The float-label boundary still needs
+an explicit timing-error treatment before safety use. These sample checks
+are not uniform integration/Time-arithmetic certificates or permission to
+shift frames, time scales or scientific tolerances. Keep 3.9/3.5 open.
+
 ### Mission-epoch mass-history counterexample (2026-09-10)
 
 Repeat the 36 isolated engine controls with ignition shifted from TDB 0 to
