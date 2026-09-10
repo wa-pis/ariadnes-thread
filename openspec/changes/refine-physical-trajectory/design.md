@@ -1,5 +1,34 @@
 ## Context
 
+### Conditional whole-interval body reach (2026-09-10)
+
+The two-epoch displacement bound does not alone provide an anchor-centered
+ball for all intermediate epochs. For [a,b], take Emax as the maximum of
+the chain arithmetic bound and every chain join envelope whose closed
+16-ULP strip intersects [a,b]. Include intersecting strips even when their
+central join epoch lies just outside the interval. With the previous global
+rate majorant L and exact jump sum J over [a,b], use
+`R = L*(b-a) + J + E(a) + Emax` meters around native position N(a).
+
+For any t in [a,b], the two-epoch proof gives L*(t-a), the crossed jump
+sum up to t, and E(t). Each nonnegative term is bounded by its corresponding
+whole-interval term, so the same R encloses every N(t), conditional on the
+existing native premises. The L1 bound also encloses Euclidean displacement.
+This allows a position ball without treating endpoint error estimates as
+uniform error estimates or assuming a smooth SPK representation.
+
+Reuse all existing native states for adjacent panels and complete candidate
+intervals. Verify 3,266 anchor-to-state comparisons, containment of both
+endpoint error bounds, and outward binary64 radius reporting. For every
+body, the full-interval Emax is strictly larger than either candidate-endpoint
+error bound, preserving the interior-strip distinction. No extra SPICE
+queries or native propagations are introduced.
+
+The resulting conditional radii are deliberately coarse, especially on long
+intervals. They are not physical orbit uncertainty, a spacecraft enclosure,
+a native execution certificate, or proof of usable safety/performance bounds.
+Production safety remains unwired and task 3.9 remains open.
+
 ### Velocity-domain first-exit counterexample (2026-09-10)
 
 For a force majorant A valid only inside a position/speed domain, the

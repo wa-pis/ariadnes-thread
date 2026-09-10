@@ -923,7 +923,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert [(epoch, bound) for epoch, bound, count in chain_join_bounds_m[301] if count == 2] == moon_chain_join_bounds_m
 
     motion_checks = 0
+    body_reach_checks = 0
     full_interval_motion_bounds_m: dict[int, float] = {}
+    full_interval_body_reach_m: dict[int, float] = {}
     for target, samples in motion_samples.items():
         center = expected_centers[target]
         chain = [target] if center == 0 else [target, center]
@@ -952,12 +954,32 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             displacement_m = sum((abs(Fraction(b) - Fraction(a)) for a, b in zip(first[1], last[1])), Fraction(0))
             assert displacement_m <= bound_m, (target, first[0], last[0])
             motion_checks += 1
+            # Enclose every intermediate epoch, including error strips not at the endpoints.
+            overlapping_errors_m = [Fraction(error) for epoch, error, _ in chain_join_bounds_m[target]
+                                    if Fraction(epoch) - 16 * Fraction(math.ulp(epoch)) <= b_s
+                                    and Fraction(epoch) + 16 * Fraction(math.ulp(epoch)) >= a_s]
+            interval_error_m = max([Fraction(chain_position_bounds_m[target]), *overlapping_errors_m])
+            assert interval_error_m >= first[2] and interval_error_m >= last[2]
+            radius_m = rate_m_s * (b_s - a_s) + jumps_m + first[2] + interval_error_m
+            assert radius_m >= bound_m
+            for query_s, state_m, _ in samples:
+                if first[0] <= query_s <= last[0]:
+                    budget.check()
+                    offset_m = sum((abs(Fraction(b) - Fraction(a)) for a, b in zip(first[1], state_m)), Fraction(0))
+                    assert offset_m <= radius_m, (target, first[0], last[0], query_s)
+                    body_reach_checks += 1
             if first[0] == start_tdb_s and last[0] == end_tdb_s:
                 reported_m = math.nextafter(float(bound_m), math.inf)
                 assert math.isfinite(reported_m) and Fraction(reported_m) >= bound_m
                 full_interval_motion_bounds_m[target] = reported_m
+                assert interval_error_m > max(first[2], last[2])  # Endpoint errors alone miss interior strips.
+                reported_radius_m = math.nextafter(float(radius_m), math.inf)
+                assert math.isfinite(reported_radius_m) and Fraction(reported_radius_m) >= radius_m
+                full_interval_body_reach_m[target] = reported_radius_m
     assert motion_checks == chain_join_checks + 16
     assert set(full_interval_motion_bounds_m) == set(chain_position_bounds_m)
+    assert body_reach_checks == 3 * chain_join_checks + 32
+    assert set(full_interval_body_reach_m) == set(chain_position_bounds_m)
 
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
@@ -1021,6 +1043,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "chain_join_checks": chain_join_checks,
         "two_epoch_motion_checks": motion_checks,
         "conditional_full_interval_displacement_bound_m": full_interval_motion_bounds_m,
+        "body_reach_checks": body_reach_checks,
+        "conditional_full_interval_body_reach_m": full_interval_body_reach_m,
         "record_join_fields": ["epoch_tdb_s", "exact_position_jump_l1_m", "jump_omission_fails"],
         "record_joins_by_target": jump_observations,
         "record_join_max_position_difference_m": max_join_position_difference_m,

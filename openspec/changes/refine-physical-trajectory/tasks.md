@@ -51,6 +51,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional whole-interval body reach (2026-09-10):
+Replace the second endpoint error in the reach construction with the maximum
+error envelope across all intersecting strips, including joins centered
+outside the interval. Verify 3,266 reused native-state comparisons over
+adjacent/full intervals, endpoint-error containment, larger interior error
+maxima on full intervals and outward radius reporting. Run all SPK and full
+tests, Ruff, strict validation and legacy checksum. These conditional coarse
+position balls do not establish spacecraft error, physical uncertainty or
+native runtime premises; leave 3.9 and production safety unchanged.
+All 60 SPK tests and 987 full-suite tests passed (160.29 s for the full suite),
+as did Ruff, strict validation and the unchanged legacy checksum.
+
 Task 3.9 velocity-domain first-exit counterexample (2026-09-10):
 Verify joint position/speed inclusion on x'=v, v'=v^2 in normalized SI units:
 0.1 s passes; 0.25 s fails strict speed inclusion without actual domain exit;
