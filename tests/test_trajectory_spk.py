@@ -1624,6 +1624,89 @@ def test_schwarzschild_anchor_rejects_invalid_state(invalid_state: tuple[float, 
         _schwarzschild_anchor_error_bound_m_s2(1.0, np.zeros(6), np.asarray(invalid_state), np.zeros(3))
 
 
+def _pi_rational_bounds() -> tuple[Fraction, Fraction]:
+    """Enclose pi using Machin's identity and exact alternating-series tails."""
+    bounds: list[tuple[Fraction, Fraction]] = []
+    for denominator in (5, 239):
+        # 24 terms end with a negative term; the next positive term bounds the tail.
+        lower = sum((Fraction((-1)**k, (2 * k + 1) * denominator**(2 * k + 1))
+                     for k in range(24)), Fraction(0))
+        bounds.append((lower, lower + Fraction(1, 49 * denominator**49)))
+    return 16 * bounds[0][0] - 4 * bounds[1][1], 16 * bounds[0][1] - 4 * bounds[1][0]
+
+
+def test_pi_enclosure_machin_identity_and_width() -> None:
+    tangent = Fraction(1, 5)
+    for _ in range(2):
+        tangent = 2 * tangent / (1 - tangent**2)
+    assert (tangent - Fraction(1, 239)) / (1 + tangent / 239) == 1
+    # 0 < 4*atan(1/5)-atan(1/239) < 4/5 < pi/2 fixes the tangent branch.
+    lower, upper = _pi_rational_bounds()
+    assert Fraction(333, 106) < lower < upper < Fraction(355, 113)
+    assert upper - lower < Fraction(2)**-100
+    assert float(lower) == float(upper) == math.pi  # Binary64 parity, not the proof.
+
+
+def _fully_lit_srp_anchor_error_bound_m_s2(
+    sun_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
+    luminosity_w: float, area_m2: float, cr: float, mass_kg: float,
+    observed_acceleration_m_s2: np.ndarray,
+) -> Fraction:
+    """Enclose cannonball SRP L1 error at exact SI inputs; requires proven full light."""
+    assert all(type(value) is float and math.isfinite(value) and value > 0
+               for value in (luminosity_w, area_m2, cr, mass_kg))
+    for vector in (sun_position_m, spacecraft_position_m, observed_acceleration_m_s2):
+        assert vector.shape == (3,) and vector.dtype == np.float64
+        assert np.all(np.isfinite(vector))
+    relative_m = [Fraction(ship) - Fraction(sun) for ship, sun in
+                  zip(spacecraft_position_m, sun_position_m, strict=True)]
+    squared_m2 = sum((value**2 for value in relative_m), Fraction(0))
+    lower_m, upper_m = _dyadic_sqrt_bounds(squared_m2)
+    pi_lower, pi_upper = _pi_rational_bounds()
+    coefficient = (Fraction(luminosity_w) * Fraction(area_m2) * Fraction(cr)
+                   / (4 * 299792458 * Fraction(mass_kg) * squared_m2))
+    error_m_s2 = Fraction(0)
+    for relative, observed in zip(relative_m, observed_acceleration_m_s2, strict=True):
+        endpoints = [coefficient * relative / (pi * radius) for pi, radius in
+                     ((pi_lower, lower_m), (pi_upper, upper_m))]
+        error_m_s2 += max(abs(Fraction(observed) - endpoint) for endpoint in endpoints)
+    return error_m_s2
+
+
+@pytest.mark.parametrize("offset_m", [0.0, 1e12])
+def test_fully_lit_srp_anchor_signed_geometry(offset_m: float) -> None:
+    sun_m = np.full(3, offset_m)
+    ship_m = sun_m + np.asarray([3.0, -4.0, 0.0])
+    # L=4*c*125, A=Cr=m=1 gives exact acceleration (3,-4,0)/pi m/s^2.
+    zero_bound = _fully_lit_srp_anchor_error_bound_m_s2(
+        sun_m, ship_m, float(4 * 299792458 * 125), 1.0, 1.0, 1.0, np.zeros(3),
+    )
+    assert Fraction(7 * 113, 355) < zero_bound < Fraction(7 * 106, 333)
+    observed = np.asarray([0.9, -1.2, 0.0])
+    directed_bound = _fully_lit_srp_anchor_error_bound_m_s2(
+        sun_m, ship_m, float(4 * 299792458 * 125), 1.0, 1.0, 1.0, observed,
+    )
+    assert directed_bound == zero_bound - Fraction(0.9) - Fraction(1.2)
+    assert Fraction("0.12") < directed_bound < Fraction("0.14")
+
+
+@pytest.mark.parametrize(("area_m2", "cr", "mass_kg"), [(2.0, 1.0, 1.0), (1.0, 2.0, 1.0), (1.0, 1.0, 0.5)])
+def test_fully_lit_srp_anchor_exact_scaling(area_m2: float, cr: float, mass_kg: float) -> None:
+    # Irrational radius exercises the second enclosure; zero observation makes scaling exact.
+    source_m, ship_m = np.zeros(3), np.asarray([1.0, -1.0, 0.0])
+    baseline = _fully_lit_srp_anchor_error_bound_m_s2(source_m, ship_m, 1.0, 1.0, 1.0, 1.0, np.zeros(3))
+    scaled = _fully_lit_srp_anchor_error_bound_m_s2(source_m, ship_m, 1.0, area_m2, cr, mass_kg, np.zeros(3))
+    assert scaled == 2 * baseline > 0
+
+
+@pytest.mark.parametrize("mass_kg", [0.0, -1.0, math.nan])
+def test_fully_lit_srp_anchor_rejects_invalid_mass(mass_kg: float) -> None:
+    with pytest.raises(AssertionError):
+        _fully_lit_srp_anchor_error_bound_m_s2(
+            np.zeros(3), np.ones(3), 1.0, 1.0, 1.0, mass_kg, np.zeros(3),
+        )
+
+
 def _apparent_spheres_strictly_disjoint(
     source_position_m: np.ndarray, source_radius_m: float,
     occultor_position_m: np.ndarray, occultor_radius_m: float,
@@ -2278,6 +2361,15 @@ def _check_conditional_full_force_coast_domains(
                         assert abs(direct_shadow - 1.0) <= 1e-12
                     assert set(clear_by_body) == {"Moon", "Earth", "Mars"}
                     assert shadow == 1.0  # Exact full illumination at this observed anchor only.
+                    srp_anchor_error_m_s2 = _fully_lit_srp_anchor_error_bound_m_s2(
+                        states["Sun"][:3], state[:3], trajectory.SUN_LUMINOSITY_W,
+                        spacecraft.srp_area_m2, spacecraft.reflectivity_coefficient,
+                        spacecraft.initial_mass_kg, components_m_s2[8],
+                    )
+                    assert srp_anchor_error_m_s2 <= Fraction(1e-15)
+                    reported_srp_error_m_s2 = math.nextafter(float(srp_anchor_error_m_s2), math.inf)
+                    assert math.isfinite(reported_srp_error_m_s2)
+                    assert Fraction(reported_srp_error_m_s2) >= srp_anchor_error_m_s2
                     exact_sum = [sum(map(Fraction, components_m_s2[:, axis]), Fraction(0)) for axis in range(3)]
                     sum_residual = [Fraction(anchor_m_s2[axis]) - exact_sum[axis] for axis in range(3)]
                     component_norm_sum = float(np.linalg.norm(components_m_s2, axis=1).sum())
@@ -2328,6 +2420,7 @@ def _check_conditional_full_force_coast_domains(
                     endpoint_controls.append({"tighter": tighter,
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),
                         "initial_shadow_function": shadow,
+                        "fully_lit_srp_anchor_error_upper_m_s2": reported_srp_error_m_s2,
                         "initial_apparent_discs_strictly_disjoint": clear_by_body,
                         "point_anchor_error_upper_m_s2": point_anchor_error_upper_m_s2,
                         "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,

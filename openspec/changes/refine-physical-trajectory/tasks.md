@@ -51,6 +51,23 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 fully lit SRP initial anchor enclosure (2026-09-10):
+Bound the four native SRP observations only after their exact clear-disc
+proofs, using rational pi and root enclosures with explicit SI inputs.
+Verify Machin identity/width, signed exact geometry, translation, corrupted
+vectors, parameter scaling, irrational radius and invalid mass; require
+outward L1 bounds <=1e-15 m/s^2. Run focused/full pytest, Ruff, strict
+OpenSpec and legacy checksum. Keep all prior gates and native counts;
+neither penumbra nor complete acceleration/trajectory error is qualified.
+Task 3.9 remains open.
+
+Verification: all 11 focused tests passed (27.59 s), including both SPK
+inventory variants; all 1209 project tests passed (253.37 s). Four native
+SRP observations have L1 error bounds <=1.6307362146447312e-23 m/s^2, with
+identical nominal/tighter values per centre. Ruff, strict OpenSpec and the
+unchanged legacy SHA-256 pass. Native controls/evaluations/arcs remain
+(4,4,4) or (0,0,0) by variant; production physics and tolerances are unchanged.
+
 Task 3.9 exact initial clear-disc geometry (2026-09-10):
 Prove disjoint apparent Sun/occultor discs at exact stored initial positions
 and native spherical radii using rational sign and squared inequalities.

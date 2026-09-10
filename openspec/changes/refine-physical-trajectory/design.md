@@ -1,5 +1,38 @@
 ## Context
 
+### Fully lit SRP initial anchor error enclosure (2026-09-10)
+
+After all three exact clear-disc proofs and the saved shadow factor of 1,
+bound the native SRP vector against the declared ideal cannonball force.
+For exact stored Sun/spacecraft positions let `r=spacecraft-Sun`, `q=r.r>0`.
+The outward force is `L*A*Cr*r/(4*pi*c*m*q*sqrt(q))`, with explicit stored
+luminosity, area, reflectivity and initial coast mass, and exact
+`c=299792458 m/s`. Use the existing dyadic root enclosure. Enclose pi by
+Machin's identity `pi=16*atan(1/5)-4*atan(1/239)`: for each inverse tangent,
+24 alternating rational terms give a lower endpoint and the next positive
+term bounds the remaining tail. Account for the negative coefficient when
+combining endpoints. Exact tangent-doubling/subtraction and the first-quadrant
+branch verify the identity; the interval width is <2^-100. Binary64 pi
+parity is only a check, not the source of the bound.
+
+All denominator factors are positive; endpoint products enclose each signed
+force component. Sum maximum exact distances from the native observed vector
+to both endpoints and round the L1 m/s^2 result upward. Require <=1e-15 m/s^2,
+the floor of the existing force gate, without changing production tolerances.
+Verify a signed 3-4-5 geometry with known ideal force `(3,-4,0)/pi`, translated
+inputs, corrupted observations, exact area/Cr/inverse-mass scaling at an
+irrational radius, and invalid mass rejection. Retain all prior shadow,
+point-gravity, relativity, state and resource controls without extra runs.
+
+This only bounds the observed fully lit SRP term at exact stored inputs.
+It does not bound physical luminosity/optical uncertainty, penumbra arithmetic,
+illumination between epochs, other forces or accumulated trajectory error.
+Task 3.9 stays open; the production model and dependencies are unchanged.
+
+Both unchanged integrator profiles reproduce the same bound per centre:
+1.6307362146447312e-23 m/s^2 near Moon and 2.5535761363328114e-24 m/s^2 near
+Mars. These are observed-anchor arithmetic upper bounds, not global errors.
+
 ### Exact initial clear-disc geometry (2026-09-10)
 
 Before bounding the SRP anchor's arithmetic error, qualify its illumination
