@@ -1,5 +1,40 @@
 ## Context
 
+### Mission-epoch mass-history counterexample (2026-09-10)
+
+Repeat the 36 isolated engine controls with ignition shifted from TDB 0 to
+978995455.2304223 s since J2000, the qualification candidate's start epoch.
+The synthetic stationary geometry is unchanged: this is an epoch-translation
+control, not a real mission propagation. Both tested durations (0.25 and
+100.25 s) remain exactly representable as the difference of endpoint epochs,
+verified with Fractions. The mass oracle uses the exact difference of each
+saved epoch and the ignition epoch; it does not round elapsed time first.
+
+All 36 shifted controls pass the existing final mass, epoch, velocity and
+guidance checks. However 18 violate the unchanged saved-state mass tolerance
+`max(1e-8 kg, 1e-11 * consumed_mass)`: all 12 RK4 controls and the six tighter
+100.25 s controls. Keep these as explicit expected counterexamples; all 36
+original zero-epoch controls and the other 18 shifted controls must still
+have no violations. No test is skipped and no tolerance is increased.
+
+Shifted-epoch measurements (6229 saved states, 2418 tolerance violations):
+
+| Integrator | Saved states | Violating states | Maximum sampled error (kg) |
+|---|---:|---:|---:|
+| RK4 | 6048 | 2412 | 1.086197618146042e-8 |
+| Nominal RKF78 | 54 | 0 | 6.133610589705078e-13 |
+| Tighter RKDP87 | 127 | 6 | 1.3204770034323948e-8 |
+
+The worst tighter sample is at TDB 978995456.6371623 s, in the 2000 kg,
+100.25 s inertial fixture. Per-control JSON retains the initial and peak-error
+TDB epochs, counts and kg residuals. Shifting the epoch changes the observed
+error; this does not yet isolate native time arithmetic from integration
+updates or justify a remedy. In particular, a tighter profile is not an
+interval-error certificate. The prior zero-epoch evidence remains valid
+only for its declared fixtures. Keep 3.9/3.5 open; do not use these sample
+maxima as safety bounds or alter the full-force model, timing contract,
+integrators, native-call limits or shared 300-second deadline.
+
 ### Conditional interval mass floor (2026-09-10)
 
 Add the private `_mass_lower_bound` arithmetic primitive. For positive anchor

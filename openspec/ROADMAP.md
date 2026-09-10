@@ -17,7 +17,16 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest 3.9 evidence (2026-09-10): direct-SPICE qualification now inventories
+Latest mass-safety counterexample (2026-09-10): translating isolated engine
+controls from TDB 0 to the candidate start epoch causes 18 of 36 controls to
+exceed the unchanged intermediate mass tolerance, including six tighter
+integrator controls. Final-state checks still pass. The worst sampled error
+is 1.3204770034323948e-8 kg versus a 1e-8 kg gate in these fixtures. The
+counterexample is retained in tests; it is not a qualified mission result.
+Native timing/integration error requires investigation before interval mass
+safety or targeting; no tolerance or production setting has been changed.
+
+Position-envelope evidence (2026-09-10): direct-SPICE qualification now inventories
 550 records across all 11 required source links. Exact polynomial rate/jump
 controls, native selected-record readbacks and conditional index-roundoff
 margins retain the source-boundary counterexamples. Static inspection pins

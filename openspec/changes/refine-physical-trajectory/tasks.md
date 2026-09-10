@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 mission-epoch mass-history counterexample (2026-09-10):
+Repeat the 36 isolated engine controls at the candidate start TDB epoch,
+preserving the original zero-epoch cases. Verify exact endpoint durations,
+saved-epoch elapsed-time oracles and all unchanged final-state checks.
+Preserve the 18 shifted-epoch intermediate-mass failures as explicit
+counterexamples without widening the tolerance; require no violations in
+all remaining controls. Report peak-error epochs and exceedance counts.
+Run focused/full pytest, Ruff, strict validation and legacy checksum. This
+qualifies neither mission safety nor the cause/remedy; leave 3.9/3.5 open.
+All 72 focused controls passed as regression/counterexample checks (5.98 s);
+all 1062 full-suite tests passed (163.83 s), as did Ruff, strict validation
+and the unchanged legacy hash. The 18 scientific failures remain unresolved.
+
 Task 3.9 conditional interval mass floor (2026-09-10):
 Add the private outward mass-floor primitive with explicit duration, rate
 and mass-error enclosures. Verify exact constant/variable flow and coast,
