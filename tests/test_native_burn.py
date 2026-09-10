@@ -250,6 +250,11 @@ def test_native_engine_couples_translation_and_mass(
     assert len(native_history) == len(history)
     largest_native_time_error_kg = Fraction(0)
     largest_label_shift_s = Fraction(0)
+    rate_upper_kg_s = float(exact_rate_kg_s)
+    if Fraction(rate_upper_kg_s) < exact_rate_kg_s:
+        rate_upper_kg_s = math.nextafter(rate_upper_kg_s, math.inf)
+    assert Fraction(rate_upper_kg_s) >= exact_rate_kg_s
+    missed_without_label_margin = 0
     for native_epoch, state in native_history.items():
         epoch_tdb_s = native_epoch.to_float()
         assert epoch_tdb_s in history
@@ -265,6 +270,28 @@ def test_native_engine_couples_translation_and_mass(
         error_kg = abs(Fraction(float(np.asarray(state).reshape(-1)[6])) - exact_mass_kg)
         assert error_kg <= max(Fraction(1e-8), Fraction(1e-11) * exact_consumed_kg)
         largest_native_time_error_kg = max(largest_native_time_error_kg, error_kg)
+        # Compose declared sample error with label-time uncertainty. This is
+        # NOT a proof that the sampled 1e-8 kg criterion holds between points.
+        assert max(Fraction(1e-8), Fraction(1e-11) * exact_consumed_kg) == Fraction(1e-8)
+        upper_elapsed_s = label_elapsed_s + (
+            Fraction(math.ulp(epoch_tdb_s)) + Fraction(math.ulp(elapsed_s))
+        ) / 2
+        duration_upper_s = float(upper_elapsed_s)
+        if Fraction(duration_upper_s) < upper_elapsed_s:
+            duration_upper_s = math.nextafter(duration_upper_s, math.inf)
+        assert Fraction(duration_upper_s) >= upper_elapsed_s >= Fraction(elapsed_s)
+        floor_kg = trajectory._mass_lower_bound(
+            budget, initial_mass_kg, 1e-8, rate_upper_kg_s, duration_upper_s,
+        )
+        sample_mass_kg = float(np.asarray(state).reshape(-1)[6])
+        assert floor_kg <= sample_mass_kg
+        uncorrected_floor_kg = Fraction(initial_mass_kg) - Fraction(1e-8) - exact_rate_kg_s * label_elapsed_s
+        missed_without_label_margin += uncorrected_floor_kg > Fraction(sample_mass_kg)
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (1, 1, 1)
+    expected_floor_miss = initial_epoch_tdb_s != 0.0 and duration_s == 100.25 and (
+        integration == "rk4" or (integration == "tighter" and initial_mass_kg == 1500.0)
+    )
+    assert (missed_without_label_margin > 0) is expected_floor_miss
     print(json.dumps({
         "burn_id": burn_id,
         "duration_s": duration_s,
@@ -277,6 +304,7 @@ def test_native_engine_couples_translation_and_mass(
         "samples_outside_mass_tolerance": outside_mass_tolerance,
         "maximum_native_elapsed_mass_error_kg": float(largest_native_time_error_kg),
         "maximum_epoch_label_shift_s": float(largest_label_shift_s),
+        "samples_below_floor_without_label_margin": missed_without_label_margin,
         "samples_outside_python_rate_only_bound": outside_rate_only_bound,
         "scope": "isolated saved-state mass evidence, not interval safety",
     }, sort_keys=True, allow_nan=False))

@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional labelled-sample mass floors (2026-09-10):
+Compose the existing mass-floor primitive with outward rate/duration inputs
+and the checked native/float label shift. Verify all saved native samples
+above the floor under the explicitly declared unchanged sample-error bound,
+and preserve counterexamples when the timing allowance is omitted. Retain
+all prior checks and native counters. Run focused/full pytest, Ruff, strict
+validation and legacy checksum. Sample-error premises are not interval
+certificates; keep 3.9/3.5 open and production safety unchanged.
+All 102 focused tests passed (6.26 s) and all 1072 full-suite tests passed
+(164.15 s), as did Ruff, strict validation and the unchanged legacy hash.
+
 Task 3.9 terminal native-time gate correction (2026-09-10):
 Require native Time endpoint residuals in the shared completion reader,
 retaining float-label consistency and the unchanged 1-microsecond limit.

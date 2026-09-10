@@ -1,5 +1,27 @@
 ## Context
 
+### Compose label-time uncertainty with the mass floor (2026-09-10)
+
+Reuse the 72 native burn histories to connect the conditional mass-floor
+primitive to the diagnosed epoch-label rounding. Given label elapsed time
+`h_label` and the previously checked shift bound
+`D = (ulp(absolute_epoch) + ulp(native_elapsed_float))/2`, construct an
+outward upper duration `H >= h_label + D` and rate `Q >= T/(g0*Isp)` using
+exact Fractions and conditional nextafter. Verify `H >= native_elapsed_float`
+and use `_mass_lower_bound(m0, E, Q, H)` with the existing 1e-8 kg sample
+criterion as explicitly declared E. Assert that this criterion is the active
+unchanged mass tolerance in every fixture. This is conditional composition,
+not evidence that E bounds unsaved stages or the whole native trajectory.
+
+All 12458 saved masses lie above the composed floor. Omitting D from the
+exact lower-floor expression misses 1203 samples: 200 in each of six shifted
+100.25 s RK4 controls, and one in each of three shifted 1500 kg, 100.25 s
+tighter controls. Assert this counterexample pattern and retain all prior
+epoch/mass tests. The broad native-error question is not solved by adding
+a label allowance: this only composes a known sample criterion with its
+sampled time-label uncertainty. No new native propagations or counter
+increments; no production safety wiring, changed tolerances or task closure.
+
 ### Native terminal-epoch gate (2026-09-10)
 
 The float-only completion gate can hide a final-time violation: around TDB
