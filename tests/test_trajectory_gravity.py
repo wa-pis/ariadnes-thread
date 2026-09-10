@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from fractions import Fraction
 import json
 import math
@@ -7,7 +8,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
-from typing import Literal
+from typing import Any, Literal
 from unittest.mock import MagicMock
 
 import pytest
@@ -422,6 +423,26 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
                 assert np.all(np.isfinite(actual_si))
                 assert np.linalg.norm((actual_si - expected_si)[:3]) <= 0.025
                 assert np.linalg.norm((actual_si - expected_si)[3:]) <= 0.0000025
+    stage_sources: list[tuple[float, np.ndarray]] = []
+    non_epoch_callback_count = 0
+    record_source_updates = False
+    if combined and burn_id is not None and not historical_table:
+        original_thrust_factory = propagation_setup.thrust.custom_thrust_magnitude_fixed_isp
+
+        def observed_thrust_factory(thrust_function: Callable[[float], float], isp_s: float) -> Any:
+            def observed_thrust(epoch_tdb_s: float) -> float:
+                nonlocal non_epoch_callback_count
+                if record_source_updates and math.isnan(epoch_tdb_s):
+                    non_epoch_callback_count += 1
+                elif record_source_updates:
+                    stage_sources.append((epoch_tdb_s, np.concatenate([
+                        np.asarray(bodies.get(source).state).reshape(6).copy() for source in _SOURCE_ORDER
+                    ])))
+                return thrust_function(epoch_tdb_s)
+
+            return original_thrust_factory(observed_thrust, isp_s)
+
+        monkeypatch.setattr(propagation_setup.thrust, "custom_thrust_magnitude_fixed_isp", observed_thrust_factory)
     if combined:
         trajectory._install_tnw_engine(
             candidate.candidate_id, bodies, _spacecraft(),
@@ -568,10 +589,35 @@ def test_real_gravity_matches_independent_fixed_state_component_sum(
             termination_settings,
             output_variables=output_variables,
         )
-        simulator = trajectory._run_native_arc(
-            budget, bodies, propagator_settings, first_in_evaluation=True,
-        )
+        stage_sources.clear()
+        non_epoch_callback_count = 0
+        record_source_updates = True
+        try:
+            simulator = trajectory._run_native_arc(
+                budget, bodies, propagator_settings, first_in_evaluation=True,
+            )
+        finally:
+            record_source_updates = False
         history = simulator.dependent_variable_history
+        if combined and burn_id is not None and not historical_table:
+            internal_callbacks = 0
+            for callback_epoch_tdb_s, source_values in stage_sources:
+                budget.check()
+                assert math.isfinite(callback_epoch_tdb_s) and np.all(np.isfinite(source_values))
+                internal_callbacks += callback_epoch_tdb_s not in history
+                for source, saved_state in zip(_SOURCE_ORDER, source_values.reshape(len(_SOURCE_ORDER), 6)):
+                    direct_state = ephemeris._ensure_standard_kernels().get_body_cartesian_state_at_epoch(
+                        source, "SSB", "J2000", "NONE", callback_epoch_tdb_s,
+                    )
+                    difference = saved_state - direct_state
+                    assert np.linalg.norm(difference[:3]) <= 0.001, (label, source, callback_epoch_tdb_s)
+                    assert np.linalg.norm(difference[3:]) <= 0.000001, (label, source, callback_epoch_tdb_s)
+            assert internal_callbacks > 0
+            assert non_epoch_callback_count > 0
+            print(json.dumps({"label": label, "burn_id": burn_id,
+                "thrust_callback_count": len(stage_sources), "nonoutput_callback_count": internal_callbacks,
+                "non_epoch_callback_count": non_epoch_callback_count,
+                "scope": "observed thrust callbacks, not all stages or uniform native dispatch"}, sort_keys=True))
         initial_epoch_tdb_s = min(history)
         assert initial_epoch_tdb_s == epoch_tdb_s, label
         initial_values = np.asarray(history[initial_epoch_tdb_s], dtype=float)[:force_output_size]

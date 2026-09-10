@@ -1,5 +1,31 @@
 ## Context
 
+### Source-state observation in finite thrust callbacks (2026-09-10)
+
+Wrap only the existing constant-thrust callback in the six direct-SPICE
+departure/arrival short force controls. Delegate every returned thrust value
+to the original function and leave Isp, guidance, forces, durations, steps
+and native-call counts unchanged. While the simulator runs, copy the current
+cached eight-source states in finite-time callbacks; perform SPICE queries
+afterwards, outside the callback, to avoid perturbing native resource state.
+Compare at the callback's TDB float epoch with unchanged 0.001 m / 0.000001 m/s
+limits and require callback epochs absent from saved dependent-output history.
+
+Initial instrumentation exposed NaN callback invocations for which current
+body states may be unavailable. Count these separately and still call the
+original thrust function; they are not physical epochs and no substitute
+states are supplied. After this distinction the six arcs each have 21
+finite-time observations, eight at non-output epochs, and 21 NaN calls.
+Thus 1008 source comparisons include 384 at non-output callback epochs.
+Any finite-time unavailable/nonfinite state or parity failure still fails.
+
+This provides internal-update samples through the existing thrust interface,
+not proof that every RK stage or coast update is observed, nor a uniform
+Time-to-SPICE dispatch certificate. The callback epoch is already a float;
+the exact native Time mapping remains a separate premise. Keep all earlier
+output/force comparisons and resource counters, preserve production and
+scientific tolerances, and leave task 3.9 open.
+
 ### Direct-SPICE source states during native output updates (2026-09-10)
 
 Extend only the nine combined/direct short force controls (near Moon,

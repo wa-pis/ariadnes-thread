@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 finite thrust-callback source-state observations (2026-09-10):
+Wrap the existing thrust callback in six direct short burn controls without
+changing returned thrust. Verify cached source states against SPICE after
+propagation, including callback epochs absent from saved outputs. Count NaN
+calls separately without querying/fabricating states; retain all finite-data,
+force, saved-output and native-budget checks. Run gravity/full pytest, Ruff,
+strict validation and legacy checksum. Callback samples do not prove all-stage
+or interval safety; keep 3.9 open and production unchanged.
+All 38 gravity tests passed (16.51 s) and all 1075 full-suite tests passed
+(163.91 s), as did Ruff, strict validation and the unchanged legacy hash.
+
 Task 3.9 native saved-output source-state parity (2026-09-10):
 Observe cached source states in nine existing combined/direct force arcs,
 extending only those isolated test arcs to 0.025 s at unchanged RK4 step.
