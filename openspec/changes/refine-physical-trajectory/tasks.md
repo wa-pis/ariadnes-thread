@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional uniform type-2 velocity rounding (2026-09-10):
+Derive a forward error bound for the inspected CHBINT derivative operations,
+including contamination by position rounding and final division. Compose
+normalized-time uncertainty through exact second-derivative envelopes;
+verify their independent Chebyshev identity. Require all 253 supplied-record
+bounds and 1518 existing native observations to meet the unchanged 1e-6 m/s
+gate. Verify single modes, underflow, invalid domains, overflow and deadline;
+run focused/full pytest, Ruff, strict validation and legacy checksum. Add no
+spacecraft runs or safety status; retain execution premises and keep 3.9 open.
+All 16 focused tests passed (16.93 s); the maximum conditional record bound
+is 7.95907147216062e-11 m/s. All 1107 full-suite tests passed (224.36 s),
+as did Ruff, strict OpenSpec validation and the unchanged legacy SHA-256.
+
 Task 3.9 type-2 native velocity arithmetic replay (2026-09-10):
 Pin the inspected CHBINT derivative instructions and replay their rounding
 order. Verify twelve native single-mode controls against the independent

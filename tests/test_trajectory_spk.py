@@ -109,6 +109,102 @@ def test_type2_velocity_replay_matches_native_single_modes(
     assert cspice.failed_c() == 0
 
 
+def _spk_type2_velocity_roundoff_bound_km_s(
+    budget: trajectory._RefinementBudget, coefficients_km: tuple[float, ...],
+    radius_s: float, normalized_limit: Fraction,
+) -> Fraction:
+    """Conditional CHBINT derivative error at fixed rounded normalized time.
+
+    Assume binary64 nearest rounding, gradual underflow and the inspected
+    operations. Exclude normalization, source selection and SI conversion.
+    """
+    budget.check()
+    assert coefficients_km and all(type(value) is float and math.isfinite(value)
+                                   for value in coefficients_km)
+    assert type(radius_s) is float and math.isfinite(radius_s) and radius_s > 0
+    assert isinstance(normalized_limit, Fraction) and 1 <= normalized_limit < 2
+    u, eta = Fraction(1, 2 ** 53), Fraction(1, 2 ** 1075)
+    maximum = Fraction(sys.float_info.max)
+
+    def rounded_bound(magnitude: Fraction) -> tuple[Fraction, Fraction]:
+        error = u * magnitude + eta
+        assert 0 <= magnitude <= magnitude + error <= maximum
+        return magnitude + error, error
+
+    q, radius = normalized_limit, Fraction(radius_s)
+    position = following_position = derivative = following_derivative = Fraction(0)
+    position_error = following_position_error = derivative_error = following_derivative_error = Fraction(0)
+    for coefficient_km in reversed(coefficients_km[1:]):
+        budget.check()
+        fused_position, fused_position_error = rounded_bound(2 * q * position + following_position)
+        new_position, addition_error = rounded_bound(fused_position + abs(Fraction(coefficient_km)))
+        new_position_error = 2 * q * position_error + following_position_error + fused_position_error + addition_error
+        product, product_error = rounded_bound(2 * q * derivative)
+        fused_derivative, fused_derivative_error = rounded_bound(2 * position + product)
+        new_derivative, subtraction_error = rounded_bound(fused_derivative + following_derivative)
+        new_derivative_error = (2 * q * derivative_error + following_derivative_error
+                                + 2 * position_error + product_error + fused_derivative_error + subtraction_error)
+        following_position, position = position, new_position
+        following_position_error, position_error = position_error, new_position_error
+        following_derivative, derivative = derivative, new_derivative
+        following_derivative_error, derivative_error = derivative_error, new_derivative_error
+    fused, fused_error = rounded_bound(q * derivative + position)
+    numerator, subtraction_error = rounded_bound(fused + following_derivative)
+    numerator_error = q * derivative_error + position_error + following_derivative_error + fused_error + subtraction_error
+    _, division_error = rounded_bound(numerator / radius)
+    result_km_s = numerator_error / radius + division_error
+    budget.check()
+    return result_km_s
+
+
+@pytest.mark.parametrize("degree", [0, 1, 2, 19])
+@pytest.mark.parametrize("limit", [Fraction(1), Fraction(5, 4)])
+def test_type2_velocity_bound_contains_single_mode_errors(degree: int, limit: Fraction) -> None:
+    budget = trajectory._RefinementBudget("velocity-roundoff-control", 300.0)
+    coefficients_km, radius_s = (0.0,) * degree + (0.3,), 32.0
+    bound_km_s = _spk_type2_velocity_roundoff_bound_km_s(budget, coefficients_km, radius_s, limit)
+    for x in (-limit, -limit / 2, Fraction(0), limit / 2, limit):
+        previous, current = Fraction(0), Fraction(1)
+        for _ in range(1, degree):
+            previous, current = current, 2 * x * current - previous
+        exact_km_s = Fraction(0.3) * degree * current / Fraction(radius_s)
+        replay_km_s = _replay_spk_type2_velocity(coefficients_km, 0.0, radius_s, float(x * 32))
+        assert abs(Fraction(replay_km_s) - exact_km_s) <= bound_km_s
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+
+
+def test_type2_velocity_bound_retains_division_underflow() -> None:
+    budget = trajectory._RefinementBudget("velocity-underflow-control", 300.0)
+    coefficients_km = (0.0, math.ulp(0.0))
+    bound_km_s = _spk_type2_velocity_roundoff_bound_km_s(budget, coefficients_km, 2.0, Fraction(1))
+    assert _replay_spk_type2_velocity(coefficients_km, 0.0, 2.0, 0.0) == 0.0
+    assert bound_km_s >= Fraction(math.ulp(0.0)) / 2 > 0
+
+
+@pytest.mark.parametrize("coefficients,radius,limit", [
+    ((math.nan,), 1.0, Fraction(1)), ((True,), 1.0, Fraction(1)),
+    ((1.0,), 0.0, Fraction(1)), ((1.0,), 1.0, Fraction(2)),
+])
+def test_type2_velocity_bound_rejects_invalid_domain(
+    coefficients: tuple[float, ...], radius: float, limit: Fraction,
+) -> None:
+    with pytest.raises(AssertionError):
+        _spk_type2_velocity_roundoff_bound_km_s(
+            trajectory._RefinementBudget("velocity-domain-control", 300.0), coefficients, radius, limit,
+        )
+
+
+def test_type2_velocity_bound_rejects_overflow_and_expired_budget() -> None:
+    budget = trajectory._RefinementBudget("velocity-range-control", 300.0)
+    for coefficients_km, radius_s in (((0.0, sys.float_info.max), 1.0), ((0.0, 1.0), math.ulp(0.0))):
+        with pytest.raises(AssertionError):
+            _spk_type2_velocity_roundoff_bound_km_s(budget, coefficients_km, radius_s, Fraction(1))
+    clock_s = iter([0.0, 300.0])
+    budget = trajectory._RefinementBudget("velocity-deadline-control", 300.0, lambda: next(clock_s))
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="deadline"):
+        _spk_type2_velocity_roundoff_bound_km_s(budget, (1.0,), 1.0, Fraction(1))
+
+
 def _spk_fused_roundoff_bound_km(
     budget: trajectory._RefinementBudget, coefficients_km: tuple[float, ...],
     normalized_limit: Fraction,
@@ -383,6 +479,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     evaluation_checks = 0
     type2_velocity_checks = 0
     max_type2_evaluation_error_m_s = 0.0
+    type2_uniform_velocity_bounds_m_s: list[float] = []
     max_evaluation_error_m = dict.fromkeys(expected_centers, 0.0)
     uniform_evaluation_bounds_m: dict[int, list[float]] = {target: [] for target in expected_centers}
     native_magnitude_bounds_km: dict[int, list[Fraction]] = {target: [] for target in expected_centers}
@@ -528,6 +625,34 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             assert math.isfinite(reported_uniform_m) and Fraction(reported_uniform_m) >= uniform_error_m
             assert Fraction(reported_uniform_m) <= Fraction("0.001")  # Conditional supplied-record L1 m.
             uniform_evaluation_bounds_m[target].append(reported_uniform_m)
+            if data_type == 2:
+                # Uniform normalization error in velocity uses the exact second
+                # derivative, not the position-rate bound or sampled velocities.
+                values = [Fraction(1), rounded_limit]
+                first_derivatives = [Fraction(0), Fraction(1)]
+                second_derivatives = [Fraction(0), Fraction(0)]
+                for degree in range(2, coefficient_count):
+                    budget.check()
+                    second_derivatives.append(4 * first_derivatives[-1] + 2 * rounded_limit * second_derivatives[-1] - second_derivatives[-2])
+                    first_derivatives.append(2 * values[-1] + 2 * rounded_limit * first_derivatives[-1] - first_derivatives[-2])
+                    values.append(2 * rounded_limit * values[-1] - values[-2])
+                assert all(value >= 0 for value in second_derivatives)
+                for degree in range(coefficient_count):
+                    # Independent identity from the positive Chebyshev expansion
+                    # of U_(n-1): T''_n = 2*n*(T'_(n-1) + T'_(n-3) + ...).
+                    assert second_derivatives[degree] == 2 * degree * sum(
+                        (first_derivatives[index] for index in range(degree - 1, 0, -2)), Fraction(0),
+                    )
+                curvature_km = sum((abs(Fraction(value)) * second_derivatives[degree]
+                                    for row in rows_km for degree, value in enumerate(row)), Fraction(0))
+                velocity_normalization_error_km_s = curvature_km * normalization_error / Fraction(radius_s)
+                uniform_velocity_error_m_s = 1000 * (velocity_normalization_error_km_s + sum(
+                    (_spk_type2_velocity_roundoff_bound_km_s(budget, row, radius_s, rounded_limit) for row in rows_km), Fraction(0),
+                ))
+                reported_velocity_m_s = math.nextafter(float(uniform_velocity_error_m_s), math.inf)
+                assert math.isfinite(reported_velocity_m_s) and Fraction(reported_velocity_m_s) >= uniform_velocity_error_m_s
+                assert reported_velocity_m_s <= 0.000001  # Conditional supplied-record L1 m/s.
+                type2_uniform_velocity_bounds_m_s.append(reported_velocity_m_s)
             # Uniform L1 magnitude from coefficients, not from sampled states.
             magnitude_weights = [Fraction(1), rounded_limit]
             for degree in range(2, coefficient_count):
@@ -589,6 +714,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                     evaluation_checks += 1
                     if data_type == 2:
                         assert velocity_error_m_s <= Fraction("0.000001"), (target, index, probe_s)
+                        assert velocity_error_m_s <= uniform_velocity_error_m_s, (target, index, probe_s)
                         max_type2_evaluation_error_m_s = max(max_type2_evaluation_error_m_s, float(velocity_error_m_s))
                         type2_velocity_checks += 1
             bound_m_s = trajectory._spk_position_rate_bound(
@@ -672,6 +798,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert endpoint_record_checks == (24 if native is not None else 0)
     assert evaluation_checks == (3300 if native is not None else 0)
     assert type2_velocity_checks == (1518 if native is not None else 0)
+    assert len(type2_uniform_velocity_bounds_m_s) == 253
     jump_observations: dict[int, list[tuple[float, float, bool]]] = {target: [] for target in expected_centers}
     native_join_envelopes: list[tuple[int, float, float, float]] = []
     native_join_envelope_checks = omitted_jump_failures = 0
@@ -1137,6 +1264,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "conditional_index_margins": index_roundoff_margins,
         "type2_midpoint_max_velocity_difference_m_s": max_type2_velocity_difference_m_s,
         "type2_supplied_record_velocity_checks": type2_velocity_checks,
+        "type2_conditional_max_uniform_velocity_bound_m_s": max(type2_uniform_velocity_bounds_m_s),
         "type2_supplied_record_max_velocity_error_m_s": max_type2_evaluation_error_m_s,
         "frame": "J2000, each target relative to its listed center; chains end at SSB",
         "scope": "Coverage and exact per-record position-rate bounds, not composed motion or safety",

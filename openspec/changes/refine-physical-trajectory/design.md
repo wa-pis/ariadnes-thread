@@ -1,5 +1,55 @@
 ## Context
 
+### Conditional uniform type-2 derivative-roundoff bound (2026-09-10)
+
+Extend the inspected CHBINT replay with a test-only exact-Fraction forward
+error calculation. This bounds derivative evaluation at every rounded
+normalized input with `|x| <= q`, `1 <= q < 2`, under the previously declared
+binary64 nearest-rounding, gradual-underflow and inspected-operation premises.
+For an exact expression magnitude bounded by z, use `e(z)=u*z+eta` and
+`R(z)=z+e(z)`, with `u=2^-53`, `eta=2^-1075`; require each R(z) to remain
+within the finite binary64 range. Doubling normalized x is exact here.
+
+Carry native position/derivative intermediate magnitude bounds B, F, D, G
+and errors E_B, E_F, E_D, E_G for the current and following recurrence terms.
+At each coefficient, with all quantities nonnegative and initially zero:
+
+```
+P = R(2*q*B + F); B_new = R(P + |c_i|)
+E_B_new = 2*q*E_B + E_F + e(2*q*B + F) + e(P + |c_i|)
+M = R(2*q*D); N = R(2*B + M); D_new = R(N + G)
+E_D_new = 2*q*E_D + E_G + 2*E_B + e(2*q*D) + e(2*B + M) + e(N + G)
+```
+
+These are triangle inequalities following the actual multiply/fused-add/
+subtract order, including position-roundoff contamination of the derivative.
+For the terminal numerator use `V=R(q*D+B)`, `W=R(V+G)` and
+`E_num=q*E_D+E_B+E_G+e(q*D+B)+e(V+G)`. The returned derivative-error bound
+is `E_num/radius + e(W/radius)` in km/s, including the final rounded division.
+The position's constant coefficient does not enter its derivative.
+
+Compose the existing uniform normalized-time error delta separately:
+add `delta * sum(|c_k|*T''_k(q))/radius` per axis, then multiply the exact
+three-axis sum by 1000 and round the reported L1 m/s bound upward.
+The second-derivative weights bound absolute values on [-q,q]: differentiate
+the positive Chebyshev expansion of U_(k-1), using the already qualified
+first-derivative envelopes. Verify the independently formed recurrence with
+`T''_k(q)=2*k*(T'_(k-1)(q)+T'_(k-3)(q)+...)` for every record degree.
+
+All 253 supplied type-2 records receive this conditional uniform bound,
+including their existing 16-ULP endpoint extensions. The maximum is
+7.95907147216062e-11 m/s, below the unchanged 1e-6 m/s gate. All 1518
+existing native velocity observations lie inside their own record's bound.
+Single-mode controls, division underflow, invalid domains, overflow and
+deadline checks exercise the arithmetic without adding spacecraft runs.
+
+This closes only the conditional supplied-record derivative calculation.
+It excludes type-3 velocity series, source selection and joins, center-chain
+addition, output SI rounding, native-time dispatch, physical ephemeris
+uncertainty and spacecraft integration error. The CPU execution premises
+remain conditional. No production path or scientific tolerance changes;
+task 3.9 and targeting remain gated.
+
 ### Type-2 native velocity arithmetic replay (2026-09-10)
 
 The Sun-relative speed domain needed by the Schwarzschild force cannot reuse
