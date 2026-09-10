@@ -1,5 +1,32 @@
 ## Context
 
+### Conditional two-epoch body-motion composition (2026-09-10)
+
+Let R(t) be the nominal piecewise exact source-polynomial chain in SSB/J2000,
+and N(t) its native SI position. Use a global rate majorant L equal to the
+sum of each link's maximum qualified record position-rate bound, not a
+sampled velocity maximum or the separate type-3 velocity polynomial.
+For a <= b in the candidate interval, the triangle inequality gives
+`|N(b)-N(a)|_1 <= L*(b-a) + sum(J in [a,b]) + E(a) + E(b)`.
+The jump sum includes every crossed source-link join, counting simultaneous
+joins from both links. Inclusive endpoint membership is conservative for
+either nominal boundary convention. E is the existing chain arithmetic
+bound in record cores or the chain join envelope in a 16-ULP strip.
+
+The proof splits R at every source join, bounds each smooth piece by its
+rate majorant, adds the intervening jumps, and then adds both native endpoint
+errors. It must not omit either endpoint error or assume source continuity.
+Reuse the 1,078 existing chain-side states and read 16 candidate-endpoint
+states, verifying that every link at those endpoints lies in exactly one
+qualified core. Check all adjacent sample pairs and each body's entire
+candidate interval: 1,094 exact-rational L1 displacement comparisons.
+
+This is a deliberately coarse conditional displacement bound, not a chord
+error, spacecraft trajectory error, collision-clearance certificate or
+useful subdivision-count measurement. Its native premises remain those of
+the preceding qualification. No production safety wiring, force, tolerance,
+deadline or native-call limit changes; task 3.9 remains open.
+
 ### All-body center-chain join composition (2026-09-10)
 
 Extend the Moon/Earth composition to every union of source-link join epochs

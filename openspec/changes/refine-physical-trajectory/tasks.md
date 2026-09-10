@@ -51,6 +51,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional two-epoch body-motion composition (2026-09-10):
+Compose per-link maximum position rates, every crossed source jump and both
+native endpoint error envelopes. Reuse 1,078 chain-side states, add 16
+candidate-endpoint reads with exact one-core membership, and verify 1,094
+adjacent/full-interval L1 displacement comparisons against direct SPKSSB.
+Verification: all SPK tests, full pytest, Ruff, strict OpenSpec validation and
+legacy checksum. This coarse conditional displacement bound is not a chord
+or propagated-spacecraft error bound, nor a safety/performance result.
+Keep scientific tolerances and production limits unchanged; leave 3.9 open.
+All 60 SPK tests and 922 full-suite tests passed (159.87 s for the full suite),
+as did Ruff, strict OpenSpec validation and the unchanged legacy checksum.
+
 Task 3.9 all-body center-chain join composition (2026-09-10):
 Form the join-epoch union for all eight body chains. Verify distinct event
 strips are disjoint and each nonjoining link contains the entire strip in

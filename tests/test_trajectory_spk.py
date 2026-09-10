@@ -866,6 +866,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert moon_chain_join_checks == 146
 
     chain_join_bounds_m: dict[int, list[tuple[float, float, int]]] = {}
+    motion_samples: dict[int, list[tuple[float, np.ndarray, Fraction]]] = {}
     chain_join_checks = 0
     for target in chain_position_bounds_m:
         center = expected_centers[target]
@@ -875,6 +876,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         assert all(b - a > 16 * (Fraction(math.ulp(float(a))) + Fraction(math.ulp(float(b))))
                    for a, b in zip(epochs_s, epochs_s[1:]))
         chain_join_bounds_m[target] = []
+        motion_samples[target] = []
         for epoch_s in epochs_s:
             budget.check()
             half_width_s = 16 * Fraction(math.ulp(float(epoch_s)))
@@ -915,9 +917,47 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                 assert np.all(np.isfinite(state_m))
                 error_m = sum((abs(Fraction(value) - exact) for value, exact in zip(state_m, exact_m)), Fraction(0))
                 assert error_m <= envelope_m, (target, epoch_s, sign, float(error_m), reported_m)
+                motion_samples[target].append((query_s, state_m.copy(), Fraction(reported_m)))
                 chain_join_checks += 1
     assert chain_join_checks == 2 * sum(len(values) for values in chain_join_bounds_m.values())
     assert [(epoch, bound) for epoch, bound, count in chain_join_bounds_m[301] if count == 2] == moon_chain_join_bounds_m
+
+    motion_checks = 0
+    full_interval_motion_bounds_m: dict[int, float] = {}
+    for target, samples in motion_samples.items():
+        center = expected_centers[target]
+        chain = [target] if center == 0 else [target, center]
+        rate_m_s = sum((Fraction(max(rates_m_s[link])) for link in chain), Fraction(0))
+        source_jumps = [(epoch, sum((abs(a - b) for a, b in zip(sides[1][0], sides[-1][0])), Fraction(0)))
+                        for (link, epoch), sides in joins.items() if link in chain]
+        for query_s in (start_tdb_s, end_tdb_s):
+            budget.check()
+            # At candidate endpoints, every source link is in a qualified core.
+            for link in chain:
+                assert sum(Fraction(mid) - Fraction(radius) + 16 * Fraction(math.ulp(mid)) <= Fraction(query_s)
+                           <= Fraction(mid) + Fraction(radius) - 16 * Fraction(math.ulp(mid))
+                           for mid, radius, _ in position_records[link]) == 1
+            state_m = spice.spkssb(target, query_s, "J2000")[:3] * 1000
+            assert np.all(np.isfinite(state_m))
+            samples.append((query_s, state_m, Fraction(chain_position_bounds_m[target])))
+        samples.sort(key=lambda sample: sample[0])
+        assert len(samples) == 2 * len(chain_join_bounds_m[target]) + 2
+        for first, last in [*zip(samples, samples[1:]), (samples[0], samples[-1])]:
+            budget.check()
+            a_s, b_s = Fraction(first[0]), Fraction(last[0])
+            assert a_s < b_s
+            jumps_m = sum((jump for epoch, jump in source_jumps if a_s <= epoch <= b_s), Fraction(0))
+            # Piecewise exact motion plus both native endpoint errors; no continuity assumption.
+            bound_m = rate_m_s * (b_s - a_s) + jumps_m + first[2] + last[2]
+            displacement_m = sum((abs(Fraction(b) - Fraction(a)) for a, b in zip(first[1], last[1])), Fraction(0))
+            assert displacement_m <= bound_m, (target, first[0], last[0])
+            motion_checks += 1
+            if first[0] == start_tdb_s and last[0] == end_tdb_s:
+                reported_m = math.nextafter(float(bound_m), math.inf)
+                assert math.isfinite(reported_m) and Fraction(reported_m) >= bound_m
+                full_interval_motion_bounds_m[target] = reported_m
+    assert motion_checks == chain_join_checks + 16
+    assert set(full_interval_motion_bounds_m) == set(chain_position_bounds_m)
 
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
@@ -979,6 +1019,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "chain_join_fields": ["epoch_tdb_s", "conditional_l1_bound_m", "joining_link_count"],
         "chain_join_bounds": chain_join_bounds_m,
         "chain_join_checks": chain_join_checks,
+        "two_epoch_motion_checks": motion_checks,
+        "conditional_full_interval_displacement_bound_m": full_interval_motion_bounds_m,
         "record_join_fields": ["epoch_tdb_s", "exact_position_jump_l1_m", "jump_omission_fails"],
         "record_joins_by_target": jump_observations,
         "record_join_max_position_difference_m": max_join_position_difference_m,
