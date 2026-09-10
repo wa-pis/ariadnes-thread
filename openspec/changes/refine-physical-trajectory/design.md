@@ -1,5 +1,38 @@
 ## Context
 
+### Complete harmonic term assembly readback (2026-09-10)
+
+Request all degree/order vectors for the declared Moon 200 and Mars 120
+truncations in the four existing native coast controls: 20,301 and 7,381
+terms respectively, including degree zero. Preserve the earlier 76 output
+values and append 83,046 term components, giving 83,122 finite scalars at
+each inspected initial output. Do not print or commit the raw vectors; report counts
+and residual summaries only. This is test-only diagnostic storage, not an
+additional spacecraft propagation or a production output requirement.
+
+Require degree-major ordering and compare the (0,0)/(2,0)/(2,1)/(2,2)
+entries exactly with the separately requested vectors already validated by
+independent formulas. Sum each field's stored term components as Fractions,
+then compute the exact L1 difference from its native full-field vector.
+Require that residual within the existing assembly force criterion
+`max(1e-15 m/s^2,1e-12*sum(term norms))`; report its upper-rounded value.
+Check the shared deadline before/after each field's readback processing,
+retain all previous state, mass, force, source and counter gates, and measure
+the focused/full-suite cost rather than increasing production limits.
+
+This checks the complete requested inventory, selected low-degree mapping
+and observed assembly consistency; individual high-degree mapping is not
+independently validated by a sum.
+The residual is not a bound on each term's error, ideal orientation, or the
+full field's error relative to the physical model. High-degree evaluation
+and reference rotation remain unqualified; task 3.9 stays open.
+
+The largest observed assembly L1 residual per near-body control is
+2.2034390550853973e-15 m/s^2 near Moon and 2.847930732105142e-15 m/s^2 near
+Mars, identical between the nominal/tighter profiles. These exceed the
+absolute 1e-15 floor but pass the unchanged norm-scaled assembly criterion;
+they are not full-field error certificates.
+
 ### All degree-two orders at the stored matrix (2026-09-10)
 
 Generalize the existing Cartesian C20 enclosure to each degree-two order,

@@ -2449,6 +2449,13 @@ def _check_conditional_full_force_coast_domains(
                     output_variables.extend(propagation_setup.dependent_variable.spherical_harmonic_terms_acceleration(
                         "Spacecraft", source, [(2, 1), (2, 2)],
                     ) for source in ("Moon", "Mars"))
+                    harmonic_indices = {source: [(degree, order) for degree in range(limit + 1)
+                                                for order in range(degree + 1)]
+                                        for source, limit in (("Moon", 200), ("Mars", 120))}
+                    assert {source: len(indices) for source, indices in harmonic_indices.items()} == {"Moon": 20301, "Mars": 7381}
+                    output_variables.extend(propagation_setup.dependent_variable.spherical_harmonic_terms_acceleration(
+                        "Spacecraft", source, indices,
+                    ) for source, indices in harmonic_indices.items())
                     # Pinned binding accepts double time, not these native-Time
                     # settings. Retain the incompatibility as a regression check.
                     with pytest.raises(TypeError, match="SingleArcPropagatorSettings<double, double>"):
@@ -2473,7 +2480,7 @@ def _check_conditional_full_force_coast_domains(
                     force_epoch = min(force_history)
                     assert (force_epoch - first_epoch).to_float() == 0.0
                     force_values = np.asarray(force_history[force_epoch]).reshape(-1)
-                    assert force_values.shape == (76,) and np.all(np.isfinite(force_values))
+                    assert force_values.shape == (83122,) and np.all(np.isfinite(force_values))
                     anchor_m_s2, components_m_s2 = force_values[:3], force_values[3:33].reshape(10, 3)
                     shadow = float(force_values[33])
                     source_radius_m = bodies.get("Sun").shape_model.average_radius
@@ -2569,6 +2576,27 @@ def _check_conditional_full_force_coast_domains(
                             reported_term_error_m_s2 = math.nextafter(float(term_error_m_s2), math.inf)
                             assert math.isfinite(reported_term_error_m_s2) and Fraction(reported_term_error_m_s2) >= term_error_m_s2
                             degree_two_error_upper_m_s2[source][str(order)] = reported_term_error_m_s2
+                    harmonic_sum_residual_upper_m_s2: dict[str, float] = {}
+                    harmonic_offset = 76
+                    for index, (source, indices) in enumerate(harmonic_indices.items()):
+                        budget.check()
+                        terms = force_values[harmonic_offset:harmonic_offset + 3 * len(indices)].reshape(-1, 3)
+                        harmonic_offset += 3 * len(indices)
+                        # Check degree/order mapping against the earlier individually requested terms.
+                        assert np.array_equal(terms[0], harmonic_monopoles_m_s2[index])
+                        assert np.array_equal(terms[3], force_values[40:46].reshape(2, 3)[index])
+                        assert np.array_equal(terms[4:6], force_values[64:76].reshape(2, 2, 3)[index])
+                        exact_term_sum = [sum(map(Fraction, terms[:, axis]), Fraction(0)) for axis in range(3)]
+                        observed_total = components_m_s2[trajectory.PHYSICAL_BODY_NAMES.index(source)]
+                        residual_m_s2 = sum((abs(Fraction(value) - exact) for value, exact in
+                                            zip(observed_total, exact_term_sum, strict=True)), Fraction(0))
+                        tolerance_m_s2 = max(1e-15, 1e-12 * float(np.linalg.norm(terms, axis=1).sum()))
+                        assert residual_m_s2 <= Fraction(tolerance_m_s2), (center, source)
+                        reported_residual_m_s2 = math.nextafter(float(residual_m_s2), math.inf)
+                        assert math.isfinite(reported_residual_m_s2) and Fraction(reported_residual_m_s2) >= residual_m_s2
+                        harmonic_sum_residual_upper_m_s2[source] = reported_residual_m_s2
+                    assert harmonic_offset == len(force_values)
+                    budget.check()
                     relativity_anchor_error_m_s2 = _schwarzschild_anchor_error_bound_m_s2(
                         bodies.get("Sun").gravity_field_model.gravitational_parameter,
                         states["Sun"], state, components_m_s2[9],
@@ -2604,6 +2632,8 @@ def _check_conditional_full_force_coast_domains(
                         "harmonic_monopole_anchor_error_upper_m_s2": harmonic_monopole_error_upper_m_s2,
                         "c20_stored_matrix_anchor_error_upper_m_s2": c20_error_upper_m_s2,
                         "degree_two_stored_matrix_anchor_error_upper_m_s2": degree_two_error_upper_m_s2,
+                        "observed_harmonic_sum_residual_l1_upper_m_s2": harmonic_sum_residual_upper_m_s2,
+                        "observed_harmonic_term_counts": {source: len(indices) for source, indices in harmonic_indices.items()},
                         "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,

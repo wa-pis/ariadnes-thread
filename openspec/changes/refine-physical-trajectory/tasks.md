@@ -51,6 +51,24 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 complete harmonic term assembly readback (2026-09-10):
+Request 20,301 Moon and 7,381 Mars term vectors in the four existing coast
+controls. Verify finite dimensions, stable degree/order mapping against the
+separately qualified terms, and exact-Fraction component sums against the
+native full fields within the existing assembly force gate. Report only
+counts and outward residuals; check the shared deadline around processing.
+Run both focused inventory variants, complete pytest, Ruff, strict OpenSpec
+and legacy checksum, recording runtime without changing limits. This is
+assembly consistency, not full-field accuracy; task 3.9 remains open.
+
+Verification: both focused inventory variants passed (28.90 s); all 1242
+project tests passed (254.78 s). Each of four controls reads 27,682 harmonic
+vectors; selected low-degree entries are exactly equal to prior outputs.
+Maximum observed L1 assembly residual is 2.847930732105142e-15 m/s^2, within
+the unchanged norm-scaled gate (not its absolute floor alone). Ruff, strict
+OpenSpec and the legacy SHA-256 pass. Native controls/evaluations/arcs remain
+(4,4,4) or (0,0,0) by variant; no production limits or settings were changed.
+
 Task 3.9 all degree-two orders at a stored rotation (2026-09-10):
 Generalize the existing C20 Cartesian enclosure to orders 0/1/2 without
 duplicating its arithmetic. Append native C21/S21 and C22/S22 vectors in the
