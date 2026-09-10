@@ -51,6 +51,23 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 native initial acceleration readback (2026-09-10):
+Add total and ten component acceleration outputs to the four existing native
+coast controls. Verify exact native initial epoch, finite dimensions, exact
+component summation within the unchanged force gate, independent point-force
+vectors and identical nominal/tighter initial acceleration. Run focused/full
+pytest, Ruff, strict validation and legacy checksum. Retain all prior gates
+and counters; do not promote assembly consistency into an ideal-anchor error
+certificate or complete 3.9.
+The first attempt reproduced the native-Time binding incompatibility before
+propagation (one inventory passed, one failed in 25.85 s). After retaining
+that rejection and using constructor-time output settings, both focused
+inventories passed (27.40 s) and all 1167 full-suite tests passed (253.13 s).
+Four initial readbacks and 24 independent point-force checks pass; maximum
+observed component-sum L1 residual is 1.4418908130884947e-16 m/s^2, not an
+ideal-anchor error bound. Ruff, strict validation and the legacy SHA-256
+pass; native controls/evaluations/arcs remain (4,4,4) or (0,0,0) by variant.
+
 Task 3.9 conditional complete coast force-variation sum (2026-09-10):
 Combine six point-source changes and two harmonic spatial/rotation pairs,
 plus twice the SRP and relativity norm bounds with exactly zero coast thrust.

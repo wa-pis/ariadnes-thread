@@ -1,5 +1,48 @@
 ## Context
 
+### Native initial acceleration readback (2026-09-10)
+
+Record the total acceleration and its ten coast components in the same four
+coupled native controls. The pinned `add_dependent_variable_settings` binding
+accepts `SingleArcPropagatorSettings<double,double>`, not our native-Time
+container; the first attempt fails before propagation (one inventory passes,
+one fails). Retain this TypeError as an explicit regression control. Instead,
+rebuild only the outer multitype container with the same two child settings,
+integrator, initial time, termination and processing objects, passing output
+variables to its supported constructor. Verify unchanged initial states.
+This is not another propagation or a change to the production builder.
+The output is 33 finite SI components: total, eight ordered
+gravity sources, Sun SRP and Sun Schwarzschild relativity. Read it through
+the high-resolution dependent-variable history and require zero represented
+offset from the native initial state epoch. No extra propagation is needed.
+
+Compare the total with an exact-Fraction sum of the ten stored component
+vectors under the existing `max(1e-15 m/s^2,1e-12*sum(component norms))` force
+criterion. Independently compare each of the six point-gravity vectors with
+`GM*(body_position-spacecraft_position)/distance^3` evaluated from the saved
+initial anchors and native GMs under the corresponding existing force gate.
+Nominal and tighter controls must return exactly equal initial acceleration
+components for each centre. Retain all prior state, mass, epoch, interval,
+position and unresolved velocity checks.
+
+Report the observed initial acceleration and component-sum residual in m/s^2.
+This qualifies the readback path and sampled assembly consistency, not a
+complete bound on the anchor's error relative to the ideal force model.
+In particular, agreement of a native total with its own components is not
+an independent validation of harmonic or rotation arithmetic. No native
+force-error allowance is inferred from this comparison and the recorded
+vector is not yet used to certify endpoint velocity. Production dynamics,
+integrator settings, scientific tolerances, native counts and task 3.9 are
+unchanged; the additional settings only request diagnostic outputs in tests.
+
+| Control centre | Observed initial acceleration [x,y,z] (m/s^2, SSB/J2000) | Exact component-sum residual L1 (m/s^2, rounded) |
+|---|---|---:|
+| Moon | [-1.4489709625674443, -0.007604441361167442, -0.0029959970650966783] | 3.9974121813336206e-17 |
+| Mars | [-3.147750557315358, 0.003058839814924726, -0.00550689601275007] | 1.4418908130884947e-16 |
+
+Each pair of nominal/tighter controls reproduces the same row. These tiny
+assembly residuals do not bound the errors inside the individual components.
+
 ### Conditional complete coast force-variation sum (2026-09-10)
 
 Combine the qualified ideal component variations relative to the exact

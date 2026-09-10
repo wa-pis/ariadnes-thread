@@ -2016,6 +2016,7 @@ def _check_conditional_full_force_coast_domains(
             closed = reach_m < position_radius_m and velocity_reach_m_s < Fraction(velocity_radius_m_s)
             assert closed is (duration_s == 1 / 64), (center, duration_s, reach_m, float(velocity_reach_m_s))
             endpoint_controls: list[dict[str, object]] = []
+            first_acceleration_m_s2: np.ndarray | None = None
             if run_native_controls and closed:
                 from tudatpy.astro.time_representation import Time
                 from tudatpy.dynamics import propagation_setup
@@ -2030,6 +2031,30 @@ def _check_conditional_full_force_coast_domains(
                         propagation_setup.propagator.time_termination(final_tdb_s, terminate_exactly_on_final_condition=True),
                         thrust_enabled=False,
                     )
+                    acceleration = propagation_setup.acceleration
+                    output_variables = [propagation_setup.dependent_variable.total_acceleration("Spacecraft")]
+                    for source in trajectory.PHYSICAL_BODY_NAMES:
+                        kind = (acceleration.spherical_harmonic_gravity_type if source in {"Moon", "Mars"}
+                                else acceleration.point_mass_gravity_type)
+                        output_variables.append(propagation_setup.dependent_variable.single_acceleration(
+                            kind, "Spacecraft", source,
+                        ))
+                    output_variables.extend(propagation_setup.dependent_variable.single_acceleration(
+                        kind, "Spacecraft", "Sun",
+                    ) for kind in (acceleration.radiation_pressure_type, acceleration.relativistic_correction_acceleration_type))
+                    # Pinned binding accepts double time, not these native-Time
+                    # settings. Retain the incompatibility as a regression check.
+                    with pytest.raises(TypeError, match="SingleArcPropagatorSettings<double, double>"):
+                        propagation_setup.propagator.add_dependent_variable_settings(output_variables, settings)
+                    original_settings = settings
+                    children = [child for group in settings.propagator_settings_per_type.values() for child in group]
+                    assert len(children) == 2
+                    settings = propagation_setup.propagator.multitype(
+                        children, original_settings.integrator_settings, start_tdb_s,
+                        original_settings.termination_settings, output_variables=output_variables,
+                        processing_settings=original_settings.processing_settings,
+                    )
+                    assert np.array_equal(settings.initial_states, original_settings.initial_states)
                     simulator = trajectory._run_native_arc(budget, bodies, settings, first_in_evaluation=True)
                     assert simulator.integration_completed_successfully
                     history = simulator.state_history_time_object
@@ -2037,6 +2062,26 @@ def _check_conditional_full_force_coast_domains(
                     assert (first_epoch - Time(start_tdb_s)).to_float() == 0.0
                     assert (last_epoch - Time(final_tdb_s)).to_float() == 0.0
                     assert np.array_equal(np.asarray(history[first_epoch]).reshape(7)[:6], state)
+                    force_history = simulator.dependent_variable_history_time_object
+                    force_epoch = min(force_history)
+                    assert (force_epoch - first_epoch).to_float() == 0.0
+                    force_values = np.asarray(force_history[force_epoch]).reshape(-1)
+                    assert force_values.shape == (33,) and np.all(np.isfinite(force_values))
+                    anchor_m_s2, components_m_s2 = force_values[:3], force_values[3:].reshape(10, 3)
+                    exact_sum = [sum(map(Fraction, components_m_s2[:, axis]), Fraction(0)) for axis in range(3)]
+                    sum_residual = [Fraction(anchor_m_s2[axis]) - exact_sum[axis] for axis in range(3)]
+                    component_norm_sum = float(np.linalg.norm(components_m_s2, axis=1).sum())
+                    force_tolerance_m_s2 = max(1e-15, 1e-12 * component_norm_sum)
+                    assert sum(value**2 for value in sum_residual) <= Fraction(force_tolerance_m_s2)**2
+                    for source, component in zip(trajectory.PHYSICAL_BODY_NAMES, components_m_s2[:8], strict=True):
+                        if source not in {"Moon", "Mars"}:
+                            relative_m = states[source][:3] - state[:3]
+                            direct_m_s2 = bodies.get(source).gravity_field_model.gravitational_parameter * relative_m / np.linalg.norm(relative_m)**3
+                            assert np.linalg.norm(component - direct_m_s2) <= max(1e-15, 1e-12 * np.linalg.norm(direct_m_s2))
+                    if first_acceleration_m_s2 is None:
+                        first_acceleration_m_s2 = anchor_m_s2.copy()
+                    else:
+                        assert np.array_equal(anchor_m_s2, first_acceleration_m_s2)
                     final_state = np.asarray(history[last_epoch]).reshape(7)
                     assert np.all(np.isfinite(final_state)) and final_state[6] == spacecraft.initial_mass_kg
                     curvature_m = Fraction(acceleration_m_s2) * Fraction(duration_s)**2 / 2
@@ -2051,6 +2096,8 @@ def _check_conditional_full_force_coast_domains(
                     reported_velocity_error_m_s = math.nextafter(float(velocity_error_m_s), math.inf)
                     assert Fraction(reported_velocity_error_m_s) >= velocity_error_m_s
                     endpoint_controls.append({"tighter": tighter,
+                        "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),
+                        "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,
                         "velocity_bound_resolves_1um_s": velocity_error_m_s <= Fraction("0.000001"),
