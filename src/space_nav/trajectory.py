@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field as dataclass_field
 from datetime import datetime
-from decimal import Context, Decimal, ROUND_CEILING, localcontext
+from decimal import Context, Decimal, ROUND_CEILING, ROUND_FLOOR, localcontext
 from fractions import Fraction
 from hashlib import file_digest
 import math
@@ -1397,6 +1397,43 @@ def _install_tnw_engine(
             f"{burn_id} engine installation failed: {exc}", exc,
         )
     return engine_name
+
+
+def _relative_distance_lower_bound(
+    budget: _RefinementBudget,
+    spacecraft_anchor_m: tuple[float, float, float],
+    body_anchor_m: tuple[float, float, float],
+    spacecraft_reach_m: float,
+    body_reach_m: float,
+) -> float:
+    """Bound separation in metres for two declared SSB/J2000 position balls.
+
+    Callers must prove both nonnegative reach radii over their interval,
+    including numerical errors. A nonpositive result is unresolved, not an
+    impact classification. This helper does not prove the input enclosures.
+    """
+    budget.check()
+    try:
+        spacecraft = _finite_vector3_values(spacecraft_anchor_m, "spacecraft_anchor_m")
+        body = _finite_vector3_values(body_anchor_m, "body_anchor_m")
+        radii = tuple(Fraction(_finite_float(name, value)) for name, value in (
+            ("spacecraft_reach_m", spacecraft_reach_m), ("body_reach_m", body_reach_m),
+        ))
+        if any(radius < 0 for radius in radii):
+            raise ValueError("reach radii must be nonnegative")
+        squared_m2 = sum(((Fraction(a) - Fraction(b)) ** 2 for a, b in zip(spacecraft, body)), Fraction(0))
+        with localcontext(Context(prec=50, rounding=ROUND_FLOOR)):
+            squared_lower_m2 = Decimal(squared_m2.numerator) / Decimal(squared_m2.denominator)
+            # Decimal.sqrt is half-even; its predecessor is a lower bound.
+            distance_lower_m = squared_lower_m2.sqrt().next_minus() if squared_m2 else Decimal(0)
+        lower_m = Fraction(distance_lower_m) - sum(radii, Fraction(0))
+        result_m = _finite_float("relative distance lower bound_m", float(lower_m))
+        if Fraction(result_m) > lower_m:
+            result_m = _finite_float("relative distance lower bound_m", math.nextafter(result_m, -math.inf))
+    except (ArithmeticError, TypeError, ValueError) as exc:
+        _raise_refinement_error(budget.candidate_id, "relative-distance-bound", str(exc), exc)
+    budget.check()
+    return result_m
 
 
 def _sum_force_acceleration_bounds(

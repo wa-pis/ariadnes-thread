@@ -51,6 +51,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional relative-distance floor (2026-09-10):
+Add a private downward-rounded separation floor for two supplied position
+balls, requiring explicit finite nonnegative spacecraft/body reach radii.
+Verify exact translated 3-4-5 geometry, attainable collinear displacement,
+irrational norms across extreme scales, tangency, negative overlap bounds,
+external Decimal-context isolation, invalid input, overflow and deadline
+rejection. Run focused tests, all pytest, Ruff and strict OpenSpec validation;
+verify unchanged legacy checksum. Do not wire into production safety before
+the reach radii and numerical error are justified; task 3.9 remains open.
+All 30 focused geometry tests and 952 full-suite tests passed (159.78 s for
+the full suite), as did Ruff, strict validation and the legacy checksum.
+
 Task 3.9 conditional two-epoch body-motion composition (2026-09-10):
 Compose per-link maximum position rates, every crossed source jump and both
 native endpoint error envelopes. Reuse 1,078 chain-side states, add 16

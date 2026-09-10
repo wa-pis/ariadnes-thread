@@ -1,5 +1,31 @@
 ## Context
 
+### Conditional relative-distance floor (2026-09-10)
+
+Add a private geometry primitive for two declared SSB/J2000 position balls.
+Given anchors x0 and b0 and nonnegative reach radii Rx and Rb, return a
+downward-rounded lower bound for `norm(x0-b0) - Rx - Rb` in meters. The
+reverse triangle inequality supplies the geometric implication; the caller
+must independently enclose all spacecraft/body motion and numerical error
+inside the two balls over the requested interval. The helper does not make
+that assumption true and is not connected to production safety decisions.
+
+Compute squared anchor separation exactly from the binary inputs using
+Fractions, convert its rational value downward in an isolated 50-digit
+Decimal context, and take the predecessor of the half-even square root.
+Subtract both radii exactly as Fractions, then round the returned binary64
+value downward. Handle coincident anchors exactly. Negative lower bounds
+are retained, not clamped; nonpositive results establish neither clearance
+nor actual impact. Reject invalid vectors, boolean/nonfinite scalars,
+negative radii and unrepresentable outputs with a chained domain error.
+
+Verify translated 3-4-5 triangles against exact rational distances and
+attainable collinear displacements, irrational norms by exact squaring at
+scales 1e-300 through 1e300, tangency/overlap, poisoned Decimal context,
+invalid inputs, overflow and both shared-deadline checks. No native work
+counters are incremented. This prerequisite closes neither the input reach
+enclosures nor the full-force trajectory error and safety requirements.
+
 ### Conditional two-epoch body-motion composition (2026-09-10)
 
 Let R(t) be the nominal piecewise exact source-polynomial chain in SSB/J2000,
