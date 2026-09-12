@@ -1,5 +1,29 @@
 ## Context
 
+### Doubled-duration coast control (2026-09-12)
+
+Add an explicit 1/32 s diagnostic alongside the preserved 1/64 s and 1 s
+domains. Keep their nominal-centred 1000 m / 0.1 m/s domain radii, force
+model, kernels, initial states, tolerances and shared 300-second deadline.
+Recompute source reaches, distance floors, illumination, sensitivities and
+first-exit closure at the new duration; do not extrapolate old bounds.
+
+WHEN the new domain is closed, THEN perform one nominal native coast and
+recompute the existing independent force-anchor and reference-defect
+checks. Retain all four original short native controls, their stricter
+profile and initial-ball regressions. WHEN a domain cannot be closed,
+THEN retain its diagnostic reach bounds without integrating a new arc or
+claiming safety. Report position/velocity gates separately at 0.001 m /
+1e-6 m/s, including unresolved longer-interval bounds without adjusting
+inputs or tolerances. A failed bound is not an actual-error measurement.
+
+Count every additional native arc and source readback. This is a bounded
+duration experiment, not adaptive subdivision, a longer mission segment
+qualification, or an increase in the production call limit. Preserve the
+existing 1/64 s uniform-tiling counterexample as that strategy's evidence,
+not as a claim that all subsequently tested closed domains have that length.
+Task 3.9 and the targeting prerequisite remain open.
+
 ### Time-weighted reference defect (2026-09-12)
 
 Keep the uniform-defect controls unchanged as regressions. Extend their

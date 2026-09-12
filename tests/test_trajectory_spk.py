@@ -1432,7 +1432,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert body_reach_checks == 3 * chain_join_checks + 32
     assert set(full_interval_body_reach_m) == set(chain_position_bounds_m)
 
-    coast_durations_s = (1 / 64, 1.0)
+    coast_durations_s = (1 / 64, 1 / 32, 1.0)
     coast_body_reaches_m: dict[float, dict[str, float]] = {}
     body_ids = dict(zip(trajectory.PHYSICAL_BODY_NAMES, (10, 1, 2, 399, 301, 499, 599, 699), strict=True))
     affine_links: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...], Fraction]] = {}
@@ -1464,7 +1464,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                             for observed, initial, velocity in zip(native_position, position, slope, strict=True)), Fraction(0))
             assert residual <= curvature * Fraction(duration_s)**2 / 2 + Fraction(chain_position_bounds_m[target]), body
             affine_native_checks += 1
-    assert len(affine_links) == 11 and affine_native_checks == 16
+    assert len(affine_links) == 11 and affine_native_checks == 24
     print(json.dumps({"position_polynomial_acceleration_l1_bound_m_s2": affine_curvature_bounds_m_s2,
                       "affine_native_position_checks": affine_native_checks}, sort_keys=True, allow_nan=False))
     for duration_s in coast_durations_s:
@@ -1528,11 +1528,13 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert not spice.failed()
     assert kernels_before == [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
     budget.check()
-    assert budget.native_arc_propagations == (4 if native_record_readback else 0)
+    assert budget.native_arc_propagations == (5 if native_record_readback else 0)
     # Hypothetical uniform reuse, not proof these controls apply elsewhere.
     control_duration = Fraction(1, 64)
-    assert all(Fraction(domain["duration_s"]) == control_duration
-               for domain in coast_domains if domain["conditional_domain_closed"])
+    assert {(domain["center"], Fraction(domain["duration_s"]))
+            for domain in coast_domains if domain["conditional_domain_closed"]} == {
+        ("Moon", control_duration), ("Mars", control_duration), ("Mars", 2 * control_duration),
+    }
     interval_duration = Fraction(end_tdb_s) - Fraction(start_tdb_s)
     uniform_arc_count = math.ceil(interval_duration / control_duration)
     assert (uniform_arc_count - 1) * control_duration < interval_duration <= uniform_arc_count * control_duration
@@ -3571,6 +3573,7 @@ def _check_conditional_full_force_coast_domains(
         assert Fraction(relative_speed_upper_m_s) >= relative_speed_m_s
         for duration_s, reaches_m in body_reaches_m.items():
             budget.check()
+            short_control = duration_s == 1 / 64
             floors_m: dict[str, float] = {}
             gravity_m_s2: dict[str, float] = {}
             point_mass_variation_m_s2: dict[str, float] = {}
@@ -3724,7 +3727,9 @@ def _check_conditional_full_force_coast_domains(
             mass_floor_kg = trajectory._mass_lower_bound(budget, spacecraft.initial_mass_kg, 0.0, 0.0, duration_s)
             assert mass_floor_kg == spacecraft.initial_mass_kg > spacecraft.dry_mass_kg
             closed = reach_m < position_radius_m and velocity_reach_m_s < Fraction(velocity_radius_m_s)
-            assert closed is (duration_s == 1 / 64), (center, duration_s, reach_m, float(velocity_reach_m_s))
+            assert closed is (short_control or (center == "Mars" and duration_s == 1 / 32)), (
+                center, duration_s, reach_m, float(velocity_reach_m_s),
+            )
             relative_reaches_m: dict[str, float] = {}
             reported_relative_variation_m_s2: float | None = None
             reported_split_relative_variation_m_s2: float | None = None
@@ -3778,7 +3783,7 @@ def _check_conditional_full_force_coast_domains(
                 from tudatpy.astro import fundamentals
                 from tudatpy.dynamics import propagation_setup
 
-                for tighter in (False, True):
+                for tighter in ((False, True) if short_control else (False,)):
                     control_started_s = perf_counter()
                     budget.begin_control()
                     models = trajectory._build_arc_force_models(budget.candidate_id, environment)
@@ -4165,7 +4170,7 @@ def _check_conditional_full_force_coast_domains(
                     assert np.all(np.isfinite(final_state)) and final_state[6] == spacecraft.initial_mass_kg
                     curvature_m = Fraction(acceleration_m_s2) * Fraction(duration_s)**2 / 2
                     error_bound_m = _ballistic_endpoint_error_bound_m(state, final_state[:3], duration_s, acceleration_m_s2)
-                    assert error_bound_m <= Fraction("0.001"), (center, tighter, float(error_bound_m))
+                    assert (error_bound_m <= Fraction("0.001")) is short_control, (center, tighter, float(error_bound_m))
                     reported_error_m = math.nextafter(float(error_bound_m), math.inf)
                     assert Fraction(reported_error_m) >= error_bound_m
                     velocity_error_m_s = _coast_endpoint_velocity_error_bound_m_s(
@@ -4196,12 +4201,13 @@ def _check_conditional_full_force_coast_domains(
                         prefix_full_error_m_s2, Fraction(reported_split_relative_variation_m_s2),
                     )
                     assert 0 < split_velocity_error_m_s < relative_velocity_error_m_s
-                    assert split_velocity_error_m_s <= Fraction("0.000001")
+                    assert (split_velocity_error_m_s <= Fraction("0.000001")) is short_control
                     anchored_position_error_m = _anchored_coast_position_error_bound_m(
                         state, final_state[:3], anchor_m_s2, duration_s,
                         prefix_full_error_m_s2, Fraction(reported_split_relative_variation_m_s2),
                     )
-                    assert 0 < anchored_position_error_m < error_bound_m <= Fraction("0.001")
+                    assert 0 < anchored_position_error_m < error_bound_m
+                    assert anchored_position_error_m <= Fraction("0.001")
                     reported_anchored_position_m = math.nextafter(float(anchored_position_error_m), math.inf)
                     assert math.isfinite(reported_anchored_position_m)
                     assert Fraction(reported_anchored_position_m) >= anchored_position_error_m
@@ -4229,7 +4235,8 @@ def _check_conditional_full_force_coast_domains(
                     transported_position_error_m = reference_position_residual_m + reference_position_error_m
                     transported_velocity_error_m_s = anchor_residual_m_s + reference_velocity_error_m_s
                     assert anchored_position_error_m < transported_position_error_m <= Fraction("0.001")
-                    assert split_velocity_error_m_s < transported_velocity_error_m_s <= Fraction("0.000001")
+                    assert split_velocity_error_m_s < transported_velocity_error_m_s
+                    assert (transported_velocity_error_m_s <= Fraction("0.000001")) is short_control
                     # Relative reaches are a*t+b*t^2, a,b>=0, hence <=t/h times
                     # their endpoint bounds. Rotation uses the verified linear branch.
                     gravity_variation_m_s2 = sum((Fraction(value) for partition in (
@@ -4247,7 +4254,8 @@ def _check_conditional_full_force_coast_domains(
                     weighted_position_error_m += reference_position_residual_m
                     weighted_velocity_error_m_s += anchor_residual_m_s
                     assert 0 < weighted_position_error_m < transported_position_error_m <= Fraction("0.001")
-                    assert 0 < weighted_velocity_error_m_s < transported_velocity_error_m_s <= Fraction("0.000001")
+                    assert 0 < weighted_velocity_error_m_s < transported_velocity_error_m_s
+                    assert (weighted_velocity_error_m_s <= Fraction("0.000001")) is short_control
                     transport_bounds = {
                         "conditional_linear_reference_defect_constant_m_s2": constant_defect_m_s2,
                         "conditional_linear_reference_defect_rate_m_s3": defect_rate_m_s3,
@@ -4264,7 +4272,7 @@ def _check_conditional_full_force_coast_domains(
                     assert all(math.isfinite(value) and Fraction(value) >= transport_bounds[key] > 0
                                for key, value in reported_transport_bounds.items())
                     initial_ball_controls: list[dict[str, object]] = []
-                    for initial_velocity_radius_m_s in (0.0, 5e-8, 1e-7):
+                    for initial_velocity_radius_m_s in ((0.0, 5e-8, 1e-7) if short_control else ()):
                         budget.check()
                         initial_position_radius_m = 0.0001  # Explicit fixture, not a mission default/allocation.
                         p, v, h = Fraction(initial_position_radius_m), Fraction(initial_velocity_radius_m_s), Fraction(duration_s)
@@ -4306,6 +4314,8 @@ def _check_conditional_full_force_coast_domains(
                     budget.check()
                     endpoint_controls.append({"tighter": tighter,
                         **reported_transport_bounds,
+                        "weighted_position_bound_resolves_1mm": weighted_position_error_m <= Fraction("0.001"),
+                        "weighted_velocity_bound_resolves_1um_s": weighted_velocity_error_m_s <= Fraction("0.000001"),
                         "conditional_initial_state_ball_controls": initial_ball_controls,
                         "native_arc_elapsed_s": native_elapsed_s,
                         "control_verification_elapsed_s": control_elapsed_s,
@@ -4372,7 +4382,7 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_split_relative_force_variation_m_s2": reported_split_relative_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
-    expected_arcs = 4 if run_native_controls else 0
+    expected_arcs = 5 if run_native_controls else 0
     assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (expected_arcs,) * 3
     return results
 

@@ -51,6 +51,41 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 doubled-duration coast control (2026-09-12):
+Add a 1/32 s domain without changing the existing radii or scientific
+settings. Recompute closure and all force bounds before one nominal native
+control per newly closed domain; preserve unclosed cases without native
+integration. Verify both real inventories and analytic transport controls,
+exact readback/arc counts, separate unchanged position/velocity gates,
+full pytest, Ruff, strict OpenSpec and legacy isolation. Preserve all older
+short controls and the 1/64 s uniform-tiling counterexample. Do not mark
+3.9 complete or infer actual trajectory errors from unresolved envelopes.
+
+Focused verification: all 84 tests passed in 197.39 s, including 82 analytic
+transport controls and both real inventories. Each inventory now verifies
+24 affine SPICE positions instead of 16. The native inventory performs
+exactly five spacecraft arcs: four preserved short controls plus one nominal
+Mars control at 1/32 s, within the existing 32-control qualification ceiling.
+
+The doubled Moon position reach is 1291.178421959348 m versus the unchanged
+1000 m domain, so closure is unresolved and no native arc is launched there.
+Mars closes with 953.9021169099452 m position reach and
+0.09953182731368805 m/s velocity reach versus 1000 m / 0.1 m/s.
+Its weighted position bound is 4.9306456908110534e-5 m (passes 0.001 m),
+but its velocity bound is 1.978951932550837e-6 m/s (unresolved at 1e-6 m/s).
+The extra native arc took 0.14766687504015863 s; the complete extra control,
+including independent force qualification, took 23.39191791601479 s in this
+local run. These are diagnostic timings, not mission-runtime predictions.
+The four original weighted endpoint gates and initial-ball outcomes persist;
+the failed doubled-duration velocity bound is retained without relaxing it.
+
+Completion verification: all 1706 project tests passed in 463.21 s;
+Ruff, strict OpenSpec, diff and legacy checksum/import-isolation checks
+passed. Full-suite time is separate from the unchanged 300-second operation
+deadline. Production limits, dependencies, force settings and the UI are
+unchanged; the experiment reuses existing qualification routines. Task 3.9
+remains open because the doubled interval did not pass all scientific gates.
+
 Task 3.9 time-weighted reference defect (2026-09-12):
 Qualify an explicit linear-in-time defect extension of the existing
 test-only transport lemma. Verify exact constant-jerk controls, nonzero
