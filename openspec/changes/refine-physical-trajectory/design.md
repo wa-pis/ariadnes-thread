@@ -1,5 +1,37 @@
 ## Context
 
+### Degree-two force error including ideal PCK orientation (2026-09-12)
+
+Compose the initial matrix enclosure with the existing exact-input degree-two
+arithmetic enclosures. Let Q be the ideal orthogonal PCK rotation, A the stored
+native matrix, r the exact difference of stored SSB positions, and
+`||A-Q||_2 <= e < 1`. A is not assumed orthogonal. For body-fixed harmonic
+acceleration g, split the discrepancy exactly as
+`A.T g(Ar) - Q.T g(Qr) = (A-Q).T g(Ar) + Q.T [g(Ar)-g(Qr)]`.
+The chord from Qr to Ar stays at radius at least `(1-e)||r||`. Reuse the
+existing acceleration and spatial-Jacobian bounds B and H outside that
+floor, obtaining the Euclidean acceleration-error bound `e*(B+H*r_upper)`.
+Enclose the radius with exact dyadic square roots and round the floor
+downward; all final composition is rational and reported upward in m/s^2.
+
+Do not reuse the proper-rotation-only `min(2B, theta*(B+H*r))` cap or drop
+degree zero in this general matrix-perturbation formula: a nonorthogonal A
+also distorts a monopole. Independent tests use uniform dilation/contraction
+of a Cartesian quadrupole (homogeneity factor scale^-3), a proper rotation,
+and monopole dilation (factor scale^-1), plus invalid domains and deadlines.
+
+In the four existing native controls, select only the complete degree-two
+coefficient row of each field. Add its orientation-error bound to the sum
+of the three previously qualified stored-matrix order-wise L1 errors.
+The resulting `degree_two_ideal_pck_anchor_l2_error_upper_m_s2` bounds the
+exact sum of the three saved native vectors against the ideal degree-two
+force at the same stored SSB positions and ideal PCK orientation. It does
+not include a new floating-point summation or ephemeris position error.
+No new force tolerance is allocated or existing gate loosened. Higher-degree
+native arithmetic, physical model uncertainty, interval-wide force/trajectory
+error and mission safety remain unqualified; task 3.9 stays open. No extra
+spacecraft arcs, production behavior, dependencies or UI changes are added.
+
 ### Initial PCK rotation-matrix enclosure (2026-09-12)
 
 Extend the private PCK rate helper to return its already evaluated RA/DEC/PM

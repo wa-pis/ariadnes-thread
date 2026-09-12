@@ -51,6 +51,34 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 degree-two force/PCK error composition (2026-09-12):
+Bound the effect of a stored, potentially nonorthogonal rotation matrix
+using the already qualified force/Jacobian bounds on a proven chord floor.
+Compose that bound with all three degree-two order-wise arithmetic errors.
+Verify quadrupole dilation/contraction, radius scaling, proper rotation,
+monopole non-invariance under dilation, invalid inputs and deadline rejection;
+reuse the four native coast controls. Run focused/full pytest, Ruff, strict
+OpenSpec and legacy checks. Do not claim a full harmonic-field, ephemeris or
+trajectory certificate; task 3.9 remains open.
+
+Focused verification: 20 tests passed in 30.19 s, including both inventories.
+The exact sum of the three saved order vectors has an initial Euclidean error
+bound against the ideal PCK-oriented degree-two field of
+1.7737236576742766e-15 m/s^2 for near-Moon lunar gravity and
+2.2845795288621046e-13 m/s^2 for near-Mars Martian gravity. Distant-body
+bounds are respectively 1.7668792988230888e-32 (Mars near Moon) and
+8.438684083285713e-36 m/s^2 (Moon near Mars). Both integrator profiles give
+identical bounds. These conservative bounds are not measured force errors;
+no new mission allocation or relaxed tolerance is introduced. In particular,
+the old 1e-15 m/s^2 stored-matrix arithmetic gate is not a gate for the new
+orientation-inclusive error. Controls/evaluations/arcs remain (4,4,4) or
+(0,0,0) per inventory variant; all four focused native arcs count as work.
+
+Completion verification: all 1278 project tests passed in 256.68 s, including
+another four native inventory arcs. Ruff, strict OpenSpec, diff checks and
+the unchanged legacy SHA-256 passed. The full-suite runtime is not a mission
+runtime qualification. Production settings, limits and UI are unchanged.
+
 Task 3.9 initial PCK rotation-matrix arithmetic (2026-09-12):
 Reuse the pinned angle intervals and saved native rotations to enclose all
 nine entries of `R3(PM) R1(90 deg - DEC) R3(90 deg + RA)`. Verify exact-axis,

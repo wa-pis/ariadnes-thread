@@ -2325,6 +2325,87 @@ def test_pck_rotation_rates_reject_changed_source(
     assert budget.native_arc_propagations == 0
 
 
+def _stored_matrix_force_error_bound_m_s2(
+    budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
+    radius_squared_m2: Fraction, matrix_error: Fraction,
+    cosine: np.ndarray, sine: np.ndarray,
+) -> Fraction:
+    """Bound |A.T g(A r) - Q.T g(Q r)|_2 for orthogonal Q and |A-Q|_2 <= e < 1."""
+    budget.check()
+    assert isinstance(radius_squared_m2, Fraction) and radius_squared_m2 > 0
+    assert isinstance(matrix_error, Fraction) and 0 <= matrix_error < 1
+    lower_m, upper_m = _dyadic_sqrt_bounds(radius_squared_m2)
+    # The entire straight chord from Qr to Ar stays outside (1-e)*|r|.
+    exact_floor_m = (1 - matrix_error) * lower_m
+    floor_m = math.nextafter(float(exact_floor_m), -math.inf)
+    assert math.isfinite(floor_m) and 0 < Fraction(floor_m) <= exact_floor_m
+    acceleration_m_s2 = trajectory._harmonic_acceleration_upper_bound(
+        budget.candidate_id, gm_m3_s2, reference_radius_m, floor_m, cosine, sine,
+    )
+    jacobian_s_inv2 = _harmonic_spatial_jacobian_bound_s_inv2(
+        budget, gm_m3_s2, reference_radius_m, floor_m, cosine, sine,
+    )
+    budget.check()
+    # (A-Q).T g(Ar) + Q.T [g(Ar)-g(Qr)]; A need not be orthogonal.
+    # Unlike rotation-only bounds, do not discard C00 or cap by 2*|g|.
+    return matrix_error * (Fraction(acceleration_m_s2) + jacobian_s_inv2 * upper_m)
+
+
+@pytest.mark.parametrize("radius_m", [1, 2])
+@pytest.mark.parametrize("scale", [Fraction(7, 8), Fraction(1), Fraction(9, 8)])
+@pytest.mark.parametrize("coefficient", [-0.125, 0.125])
+def test_stored_matrix_force_encloses_nonorthogonal_dilation(
+    radius_m: int, scale: Fraction, coefficient: float,
+) -> None:
+    cosine, sine = np.zeros((3, 3)), np.zeros((3, 3))
+    cosine[2, 0] = coefficient
+    bound = _stored_matrix_force_error_bound_m_s2(
+        trajectory._RefinementBudget("matrix-dilation", 300.0),
+        1.0, 1.0, Fraction(radius_m**2), abs(scale - 1), cosine, sine,
+    )
+    # Q=I, A=scale*I, r=(0,0,radius). Homogeneity gives A.T*g(Ar)=scale^-3*g(r).
+    exact_error_squared = 45 * Fraction(coefficient)**2 * (scale**-3 - 1)**2 / radius_m**8
+    assert exact_error_squared <= bound**2
+    assert (bound == 0) == (scale == 1)
+
+
+def test_stored_matrix_force_encloses_proper_rotation_and_monopole_scaling() -> None:
+    budget = trajectory._RefinementBudget("matrix-rotation", 300.0)
+    cosine, sine = np.zeros((3, 3)), np.zeros((3, 3))
+    cosine[2, 0] = 0.125
+    u = Fraction(1, 1000)  # tan(theta/2); |A-I|_2 <= 2*u.
+    sin_squared = (2 * u / (1 + u**2))**2
+    exact_squared = Fraction(5, 4) * Fraction(0.125)**2 * (36 * sin_squared + 45 * sin_squared**2)
+    bound = _stored_matrix_force_error_bound_m_s2(budget, 1.0, 1.0, Fraction(1), 2 * u, cosine, sine)
+    assert 0 < exact_squared <= bound**2
+    # C00 is invariant under proper rotations, not under a rounded nonorthogonal matrix.
+    bound = _stored_matrix_force_error_bound_m_s2(
+        budget, 1.0, 1.0, Fraction(1), Fraction(1, 8), np.ones((1, 1)), np.zeros((1, 1)),
+    )
+    assert 0 < 1 - Fraction(9, 8)**-1 <= bound  # A=(9/8)*I, g(r)=-r/|r|^3.
+
+
+@pytest.mark.parametrize(("squared", "error"), [
+    (Fraction(0), Fraction(0)), (Fraction(1), Fraction(-1)),
+    (Fraction(1), Fraction(1)), (Fraction(1), 0.125),
+])
+def test_stored_matrix_force_rejects_invalid_domain(squared: Fraction, error: Fraction | float) -> None:
+    with pytest.raises(AssertionError):
+        _stored_matrix_force_error_bound_m_s2(
+            trajectory._RefinementBudget("matrix-domain", 300.0), 1.0, 1.0,
+            squared, error, np.ones((1, 1)), np.zeros((1, 1)),  # type: ignore[arg-type] -- boundary rejection.
+        )
+
+
+def test_stored_matrix_force_rejects_expired_budget() -> None:
+    clock = iter([0.0, 301.0])
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="shared deadline"):
+        _stored_matrix_force_error_bound_m_s2(
+            trajectory._RefinementBudget("matrix-expired", 300.0, lambda: next(clock)),
+            1.0, 1.0, Fraction(1), Fraction(0), np.ones((1, 1)), np.zeros((1, 1)),
+        )
+
+
 def _angle_limited_rotation_bound_m_s2(
     angle_rad: Fraction, acceleration_m_s2: Fraction,
     jacobian_s_inv2: Fraction, radius_upper_m: Fraction,
@@ -2694,6 +2775,7 @@ def _check_conditional_full_force_coast_domains(
                     c20_error_upper_m_s2: dict[str, float] = {}
                     degree_two_error_upper_m_s2: dict[str, dict[str, float]] = {}
                     pck_matrix_error_upper: dict[str, float] = {}
+                    degree_two_ideal_pck_error_upper_m_s2: dict[str, float] = {}
                     for index, source in enumerate(("Moon", "Mars")):
                         field = bodies.get(source).gravity_field_model
                         observed_c20_m_s2 = force_values[40:46].reshape(2, 3)[index]
@@ -2716,6 +2798,7 @@ def _check_conditional_full_force_coast_domains(
                         assert math.isfinite(reported_c20_error_m_s2) and Fraction(reported_c20_error_m_s2) >= c20_error_m_s2
                         c20_error_upper_m_s2[source] = reported_c20_error_m_s2
                         degree_two_error_upper_m_s2[source] = {"0": reported_c20_error_m_s2}
+                        stored_error_m_s2 = c20_error_m_s2
                         for order in (1, 2):
                             observed_term = force_values[64:76].reshape(2, 2, 3)[index, order - 1]
                             term_error_m_s2 = _degree_two_anchor_error_bound_m_s2(
@@ -2727,6 +2810,21 @@ def _check_conditional_full_force_coast_domains(
                             reported_term_error_m_s2 = math.nextafter(float(term_error_m_s2), math.inf)
                             assert math.isfinite(reported_term_error_m_s2) and Fraction(reported_term_error_m_s2) >= term_error_m_s2
                             degree_two_error_upper_m_s2[source][str(order)] = reported_term_error_m_s2
+                            stored_error_m_s2 += term_error_m_s2
+                        degree_two_cosine, degree_two_sine = np.zeros((3, 3)), np.zeros((3, 3))
+                        degree_two_cosine[2] = field.cosine_coefficients[2, :3]
+                        degree_two_sine[2] = field.sine_coefficients[2, :3]
+                        squared_radius_m2 = sum(((Fraction(ship) - Fraction(body))**2 for ship, body in
+                                                 zip(state[:3], states[source][:3], strict=True)), Fraction(0))
+                        orientation_error_m_s2 = _stored_matrix_force_error_bound_m_s2(
+                            budget, field.gravitational_parameter, field.reference_radius,
+                            squared_radius_m2, matrix_error, degree_two_cosine, degree_two_sine,
+                        )
+                        # Exact sum of the three saved vectors: no extra float summation is claimed.
+                        ideal_error_m_s2 = stored_error_m_s2 + orientation_error_m_s2
+                        reported_ideal_error_m_s2 = math.nextafter(float(ideal_error_m_s2), math.inf)
+                        assert math.isfinite(reported_ideal_error_m_s2) and Fraction(reported_ideal_error_m_s2) >= ideal_error_m_s2
+                        degree_two_ideal_pck_error_upper_m_s2[source] = reported_ideal_error_m_s2
                     harmonic_sum_residual_upper_m_s2: dict[str, float] = {}
                     harmonic_offset = 76
                     for index, (source, indices) in enumerate(harmonic_indices.items()):
@@ -2784,6 +2882,7 @@ def _check_conditional_full_force_coast_domains(
                         "c20_stored_matrix_anchor_error_upper_m_s2": c20_error_upper_m_s2,
                         "degree_two_stored_matrix_anchor_error_upper_m_s2": degree_two_error_upper_m_s2,
                         "pck_anchor_matrix_entry_l1_error_upper": pck_matrix_error_upper,
+                        "degree_two_ideal_pck_anchor_l2_error_upper_m_s2": degree_two_ideal_pck_error_upper_m_s2,
                         "observed_harmonic_sum_residual_l1_upper_m_s2": harmonic_sum_residual_upper_m_s2,
                         "observed_harmonic_term_counts": {source: len(indices) for source, indices in harmonic_indices.items()},
                         "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,
