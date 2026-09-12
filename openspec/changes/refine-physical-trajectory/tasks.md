@@ -51,6 +51,28 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 pole-only PCK rate bounds (2026-09-13):
+Retain RA+DEC separately from the full three-angle rate; verify exact
+spherical-derivative controls, the reused 26 native pole derivative
+readbacks, and corrupted-derivative rejection. Report outward rate/path
+bounds without changing current force certificates. Verify focused tests,
+both inventories, full pytest, Ruff, strict OpenSpec and legacy isolation;
+retain the Mars 1/8 s unresolved gate and leave task 3.9 open.
+
+Focused evidence: 45 analytic/rejection tests passed in 1.13 s and both
+real inventories passed in 252.64 s. Both report identical outward pole
+rate upper bounds: Moon 7.911311791211134e-9 rad/s and Mars
+9.239844018154159e-13 rad/s over the candidate interval. The existing
+26 native state transformations per inventory also satisfy the new
+pole-derivative squared-norm checks with no added numerical tolerance.
+Fifteen exact spherical-derivative controls cover signed, stationary and
+polar cases; the new corrupted-derivative test rejects its injected input.
+All former scientific outcomes and seven/zero native arc counts remain
+unchanged. No extra inventory readbacks, coefficient partition or tighter
+force certificate is claimed; 3.9 remains open.
+All 1893 tests passed in 510.95 s. Ruff, strict OpenSpec validation,
+diff whitespace checks and legacy checksum/import isolation passed.
+
 Task 3.9 ideal zonal spin symmetry (2026-09-13):
 Verify exact spin invariance for zonal force terms of degree 0..8 using
 the existing solid-harmonic recurrence, rational rotations, three positions

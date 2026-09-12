@@ -5,7 +5,23 @@ from fractions import Fraction
 import pytest
 
 from space_nav import trajectory
-from test_trajectory_spk import _regular_solid_harmonic_jets
+from test_trajectory_spk import _pck_euler_rate_upper_rad_s, _pi_rational_bounds, _regular_solid_harmonic_jets
+
+
+@pytest.mark.parametrize("ra_deg_day,dec_deg_day", [(0.0, 0.0), (1.0, 0.0), (0.0, -2.0), (1.0, -2.0), (-1.0, 2.0)])
+@pytest.mark.parametrize("declination_tangent", [Fraction(0), Fraction(1, 2), Fraction(1)])
+def test_pole_rate_sum_encloses_exact_spherical_derivative(
+    ra_deg_day: float, dec_deg_day: float, declination_tangent: Fraction,
+) -> None:
+    bound_rad_s = sum((_pck_euler_rate_upper_rad_s((0.0, rate, 0.0), 86400, Fraction(0), (), ())
+                       for rate in (ra_deg_day, dec_deg_day)), Fraction(0))
+    cosine = (1 - declination_tangent**2) / (1 + declination_tangent**2)
+    # Independent derivative of n=(cos(dec)cos(ra), cos(dec)sin(ra), sin(dec)):
+    # |n'|^2 = ra'^2*cos(dec)^2 + dec'^2. Exact pi enclosure, rad/s units.
+    squared_deg_day = (Fraction(ra_deg_day) * cosine)**2 + Fraction(dec_deg_day)**2
+    analytic_upper_squared_rad_s = squared_deg_day * (_pi_rational_bounds()[1] / (180 * 86400))**2
+    assert analytic_upper_squared_rad_s <= bound_rad_s**2
+    assert (bound_rad_s == 0) is (ra_deg_day == dec_deg_day == 0)
 
 
 @pytest.mark.parametrize("coordinates_m", [(1, 2, 2), (0, 0, 3), (3, 0, 0)])

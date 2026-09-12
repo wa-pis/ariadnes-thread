@@ -1,5 +1,27 @@
 ## Context
 
+### Pole-only PCK rate bounds (2026-09-13)
+
+Retain the individual RA and DEC bounds from the existing exact text-PCK
+Euler derivative calculation. Their sum bounds the angular path of
+B=R1(90-DEC)*R3(90+RA); PM is excluded only from this separate bound.
+The full three-angle rate and every existing force allowance remain unchanged.
+WHEN analytic constant RA/DEC rates are supplied, THEN the squared pole
+speed ra'^2*cos(DEC)^2+dec'^2 must be enclosed using exact rational pi
+bounds, including signed rates, stationary and polar controls.
+
+For Q=R3(PM)*B the third row is the inertial pole direction and its
+derivative is independent of PM. Reuse all 26 existing native state
+transform readbacks and check the squared norm of row 3 of dQ/dt against
+the pole bound squared without adding a numerical tolerance. The state
+transformation convention follows [NAIF sxform](https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/cspice/sxform_c.html).
+WHEN a native pole derivative is corrupted, THEN the check must reject it.
+These sampled readbacks do not establish uniform native arithmetic error;
+the interval bound concerns the pinned ideal text-PCK model. Report outward
+rate/path bounds, but do not use them to tighten forces before coefficient
+partition qualification. No extra native arcs or inventory state-transform
+calls; the separate corrupted-derivative test adds one injected readback.
+
 ### Ideal zonal spin symmetry (2026-09-13)
 
 For each zonal potential term V_n0, rotation Z about the body's z axis

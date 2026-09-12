@@ -2955,7 +2955,7 @@ def test_pck_euler_rate_rejects_invalid_time_unit(time_unit_s: int) -> None:
 
 def _check_pinned_pck_rotation_rates(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
-) -> tuple[dict[str, Fraction], dict[str, tuple[tuple[Fraction, Fraction], ...]]]:
+) -> tuple[dict[str, Fraction], dict[str, tuple[tuple[Fraction, Fraction], ...]], dict[str, Fraction]]:
     """Qualify ideal text-PCK rates; sampled native readbacks are not error bounds."""
     import spiceypy as spice
 
@@ -2979,6 +2979,7 @@ def _check_pinned_pck_rotation_rates(
     phase_rates = tuple(Fraction(value) / century_s for value in phases[1::2])
     epoch_magnitude_s = max(abs(Fraction(start_tdb_s)), abs(Fraction(end_tdb_s)))
     bounds: dict[str, Fraction] = {}
+    pole_bounds: dict[str, Fraction] = {}
     angle_error_upper_rad: dict[str, dict[str, float]] = {}
     angle_intervals_deg: dict[str, tuple[tuple[Fraction, Fraction], ...]] = {}
     phase_bounds = [_sin_cos_degrees_bounds(Fraction(offset) + Fraction(rate) * Fraction(start_tdb_s) / century_s)
@@ -3024,20 +3025,31 @@ def _check_pinned_pck_rotation_rates(
             assert math.isfinite(reported_error_rad) and Fraction(reported_error_rad) >= error_rad
             angle_error_upper_rad[name][periodic] = reported_error_rad
         bounds[name] = sum(components, Fraction(0))
+        pole_bounds[name] = sum(components[:2], Fraction(0))
+        assert 0 < pole_bounds[name] < bounds[name]
         angle_intervals_deg[name] = tuple(initial_angles_deg)
         # Euler generators have unit operator norm: |omega| <= sum |angle'|.
         for epoch_tdb_s in np.linspace(start_tdb_s, end_tdb_s, 13):
             budget.check()
-            rotation, angular_velocity = spice.xf2rav(spice.sxform("J2000", frame, float(epoch_tdb_s)))
+            transform = spice.sxform("J2000", frame, float(epoch_tdb_s))
+            assert transform.shape == (6, 6) and np.all(np.isfinite(transform))
+            # Q=R3(PM)*B: Q's third row is the pole, independent of PM.
+            # The lower-left state-transform block is dQ/dt (s^-1).
+            pole_rate_squared = sum((Fraction(value)**2 for value in transform[5, :3]), Fraction(0))
+            assert pole_rate_squared <= pole_bounds[name]**2
+            rotation, angular_velocity = spice.xf2rav(transform)
             assert np.max(np.abs(rotation @ rotation.T - np.eye(3))) <= 1e-14
             assert float(np.linalg.norm(angular_velocity)) <= float(bounds[name])
     budget.check()
+    reported_pole_bounds = {name: math.nextafter(float(bound), math.inf) for name, bound in pole_bounds.items()}
+    assert all(math.isfinite(value) and Fraction(value) >= pole_bounds[name] > 0 for name, value in reported_pole_bounds.items())
     print(json.dumps({"pck_anchor_epoch_tdb_s": start_tdb_s,
+                      "conditional_pck_pole_rate_upper_rad_s": reported_pole_bounds,
                       "pck_anchor_angle_error_upper_rad": angle_error_upper_rad}, sort_keys=True, allow_nan=False))
-    return bounds, angle_intervals_deg
+    return bounds, angle_intervals_deg, pole_bounds
 
 
-@pytest.mark.parametrize("changed_source", ["binary", "coefficients", "phase", "frame", "mars-periodic"])
+@pytest.mark.parametrize("changed_source", ["binary", "coefficients", "phase", "frame", "mars-periodic", "pole-rate"])
 def test_pck_rotation_rates_reject_changed_source(
     monkeypatch: pytest.MonkeyPatch, changed_source: str,
 ) -> None:
@@ -3052,6 +3064,10 @@ def test_pck_rotation_rates_reject_changed_source(
                             np.zeros(3) if key == "BODY301_POLE_RA" else original_pool(key, start, room))
     elif changed_source == "frame":
         monkeypatch.setattr(spice, "frinfo", lambda frame_id: (301, 4, 301))
+    elif changed_source == "pole-rate":
+        original_transform = spice.sxform
+        monkeypatch.setattr(spice, "sxform", lambda source, target, epoch:
+                            original_transform(source, target, epoch) + np.pad(np.ones((1, 3)), ((5, 0), (0, 3))))
     else:
         override = "BODY3_MAX_PHASE_DEGREE" if changed_source == "phase" else "BODY499_NUT_PREC_RA"
         original_exists = spice.expool
@@ -3614,7 +3630,7 @@ def _check_conditional_full_force_coast_domains(
         flight_time_s=end_tdb_s - start_tdb_s,
     )
     spacecraft = _spacecraft()
-    rotation_rates_rad_s, pck_angles_deg = _check_pinned_pck_rotation_rates(budget, start_tdb_s, end_tdb_s)
+    rotation_rates_rad_s, pck_angles_deg, pole_rates_rad_s = _check_pinned_pck_rotation_rates(budget, start_tdb_s, end_tdb_s)
     environment = trajectory._build_physical_environment(candidate, spacecraft, budget=budget)
     bodies = environment.bodies
     states = {body: np.asarray(bodies.get(body).ephemeris.cartesian_state(start_tdb_s)).reshape(6)
@@ -4565,6 +4581,9 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_pck_rotation_path_rad": {
                     body: math.nextafter(float(rate * Fraction(duration_s)), math.inf)
                     for body, rate in rotation_rates_rad_s.items()},
+                "conditional_pck_pole_rotation_path_rad": {
+                    body: math.nextafter(float(rate * Fraction(duration_s)), math.inf)
+                    for body, rate in pole_rates_rad_s.items()},
                 "acceleration_bound_m_s2": acceleration_m_s2, "position_reach_m": reach_m,
                 "conditional_point_mass_variation_m_s2": point_mass_variation_m_s2,
                 "conditional_frozen_harmonic_variation_m_s2": frozen_harmonic_variation_m_s2,

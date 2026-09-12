@@ -52,8 +52,14 @@ terms of degree 0..8 cancel prime-meridian spin, even with a tilted pole.
 Independent monopole/C20 gradients and negative controls retain tesseral
 spin dependence and zonal pole-motion dependence. These controls do not
 yet tighten the native force bounds or qualify rounded PCK arithmetic.
-Next bounded work within 3.9 is to qualify coefficient partition and
-pole-only rotation rates, preserving nonzonal spin and all arithmetic
+Separate ideal pole-only PCK rate upper bounds now retain RA+DEC without
+PM: 7.911311791211134e-9 rad/s for Moon and 9.239844018154159e-13 rad/s
+for Mars over the candidate interval. Fifteen exact spherical-derivative
+controls and the reused 26 native pole readbacks per inventory pass;
+corrupted derivative input is rejected. Native sampling is not a uniform
+arithmetic proof. No force bound has yet changed.
+Next bounded work within 3.9 is to qualify coefficient partition,
+preserving nonzonal spin and all arithmetic
 allowances, before applying the zonal symmetry to the reference bound or
 attempting mission composition. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
@@ -62,7 +68,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 1877 passing tests; both focused
+The latest completed code check has 1893 passing tests; both focused
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost
