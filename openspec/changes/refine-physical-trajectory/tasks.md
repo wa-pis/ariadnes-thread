@@ -51,6 +51,38 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional degree-20 prefix composition (2026-09-12):
+Extend native per-term parity through degree 20, then compose the additional
+degrees 1 and 3-20 with existing PCK-matrix and SPK-position bounds. Replace
+only the old remainder partition in a separately reported complete initial
+force envelope. Verify analytic polar shift/dilation controls at degrees
+3, 8 and 20, all native term gates, tighter-than-old composition, focused/full
+pytest, Ruff, strict OpenSpec and unchanged legacy checks. Keep 3.9 open.
+
+Focused verification: 49 tests passed in 33.73 s, including 27 new analytic
+composition controls and both inventories. All 1848 native vectors (231
+terms, two sources, four existing controls) meet the unchanged force gate.
+The additional prefix's combined L2 error bounds are
+7.2372515077845795e-12 m/s^2 for the near-Moon lunar field and
+6.289794678711191e-12 m/s^2 for the near-Mars Martian field. The complete
+conditional initial-force bound drops from 0.016305005499436833 to
+0.007732609670047144 m/s^2 near the Moon and from 0.012168297081840857 to
+0.0030663443245067807 m/s^2 near Mars. Both profiles reproduce these values.
+Even multiplying these bounds by the 1/64 s control duration exceeds the
+1e-6 m/s velocity allocation; this is unresolved, not measured trajectory
+error or permission to relax the gate. The old envelope remains a regression.
+
+Each generic prefix evaluation took 0.07090216712094843 to
+0.1239720000885427 s in the focused run, excluding other qualification work.
+This does not establish degree-200/120 runtime or mission feasibility within
+300 s. The focused run uses the same four native arcs and adds none; no
+production, resource, native-call limit or UI changes.
+
+Completion verification: all 1399 project tests passed in 285.15 s. Ruff,
+strict OpenSpec and diff checks passed; the legacy SHA-256 remains unchanged
+and the package does not import it. Full-suite duration is not a mission
+runtime certificate. Task 3.9 remains open.
+
 Task 3.9 normalized harmonic acceleration pilot (2026-09-12):
 Reuse exact polynomial jets with geodesy normalization, radial factors and
 stored-matrix projection. Verify monopole and degree-two independent oracles,

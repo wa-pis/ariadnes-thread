@@ -2893,6 +2893,30 @@ def test_stored_matrix_force_rejects_expired_budget() -> None:
         )
 
 
+@pytest.mark.parametrize("degree", [3, 8, 20])
+@pytest.mark.parametrize("scale", [Fraction(127, 128), Fraction(1), Fraction(129, 128)])
+@pytest.mark.parametrize("source_shift_m", [Fraction(-1, 128), Fraction(0), Fraction(1, 128)])
+def test_harmonic_prefix_matrix_and_source_error_composition(
+    degree: int, scale: Fraction, source_shift_m: Fraction,
+) -> None:
+    budget = trajectory._RefinementBudget("prefix-composition", 300.0)
+    cosine, sine = np.zeros((degree + 1, degree + 1)), np.zeros((degree + 1, degree + 1))
+    cosine[degree, 0] = 0.125
+    orientation_error_m_s2 = _stored_matrix_force_error_bound_m_s2(
+        budget, 1.0, 1.0, Fraction(1), abs(scale - 1), cosine, sine,
+    )
+    source_error_m_s2 = _harmonic_spatial_jacobian_bound_s_inv2(
+        budget, 1.0, 1.0, float(1 - abs(source_shift_m)), cosine, sine,
+    ) * abs(source_shift_m)
+    # At the north pole, g_n=-(n+1)*sqrt(2*n+1)*C/r^(n+2).
+    # A=scale*I gives A.T*g_n(A*r)=scale^(-n-1)*g_n(r).
+    exact_error_squared = (degree + 1)**2 * (2 * degree + 1) * Fraction(0.125)**2 * (
+        scale**(-degree - 1) - (1 - source_shift_m)**(-degree - 2)
+    )**2
+    assert exact_error_squared <= (orientation_error_m_s2 + source_error_m_s2)**2
+    assert (orientation_error_m_s2 + source_error_m_s2 == 0) == (scale == 1 and source_shift_m == 0)
+
+
 def _angle_limited_rotation_bound_m_s2(
     angle_rad: Fraction, acceleration_m_s2: Fraction,
     jacobian_s_inv2: Fraction, radius_upper_m: Fraction,
@@ -3367,6 +3391,10 @@ def _check_conditional_full_force_coast_domains(
                     conditional_remainder_error_upper_m_s2: dict[str, float] = {}
                     diagnostic_tail_profiles_m_s2: dict[str, dict[str, float]] = {}
                     generic_degree_three_errors_m_s2: dict[str, dict[str, float]] = {}
+                    conditional_additional_prefix_errors_m_s2: dict[str, Fraction] = {}
+                    generic_prefix_elapsed_s: dict[str, float] = {}
+                    prefix_degree = 20
+                    prefix_count = (prefix_degree + 1) * (prefix_degree + 2) // 2
                     harmonic_offset = 76
                     for index, (source, indices) in enumerate(harmonic_indices.items()):
                         budget.check()
@@ -3389,12 +3417,16 @@ def _check_conditional_full_force_coast_domains(
                             (Fraction(terms[term, axis]) for term in (0, 3, 4, 5)), Fraction(0),
                         ) for axis in range(3))
                         field = bodies.get(source).gravity_field_model
+                        prefix_cosine = field.cosine_coefficients[:prefix_degree + 1, :prefix_degree + 1].copy()
+                        prefix_sine = field.sine_coefficients[:prefix_degree + 1, :prefix_degree + 1].copy()
+                        prefix_started_s = perf_counter()
                         generic_errors = _generic_harmonic_term_errors_m_s2(
                             budget, field.gravitational_parameter, field.reference_radius,
-                            field.cosine_coefficients[:4, :4], field.sine_coefficients[:4, :4],
-                            states[source][:3], state[:3], force_values[46:64].reshape(2, 3, 3)[index], terms[:10],
+                            prefix_cosine, prefix_sine,
+                            states[source][:3], state[:3], force_values[46:64].reshape(2, 3, 3)[index], terms[:prefix_count],
                         )
-                        assert list(generic_errors) == indices[:10]
+                        generic_prefix_elapsed_s[source] = perf_counter() - prefix_started_s
+                        assert list(generic_errors) == indices[:prefix_count]
                         for term_index, ((degree, order), error_m_s2) in enumerate(generic_errors.items()):
                             gate_m_s2 = max(1e-15, 1e-12 * float(np.linalg.norm(terms[term_index])))
                             assert error_m_s2 <= Fraction(gate_m_s2), (center, source, degree, order, float(error_m_s2))
@@ -3404,6 +3436,26 @@ def _check_conditional_full_force_coast_domains(
                             reported_generic_m_s2 = math.nextafter(float(error_m_s2), math.inf) if error_m_s2 else 0.0
                             assert math.isfinite(reported_generic_m_s2) and Fraction(reported_generic_m_s2) >= error_m_s2
                             generic_degree_three_errors_m_s2[source][str(order)] = reported_generic_m_s2
+                        # Degrees zero and two already have separate SPK/PCK bounds.
+                        # Compose only the newly qualified, disjoint prefix terms.
+                        for matrix in (prefix_cosine, prefix_sine):
+                            matrix[0] = 0.0
+                            matrix[2] = 0.0
+                        additional_stored_error_m_s2 = sum((error for (degree, _), error in generic_errors.items()
+                                                          if degree not in (0, 2)), Fraction(0))
+                        squared_radius_m2 = sum(((Fraction(ship) - Fraction(body))**2 for ship, body in
+                                                 zip(state[:3], states[source][:3], strict=True)), Fraction(0))
+                        additional_orientation_error_m_s2 = _stored_matrix_force_error_bound_m_s2(
+                            budget, field.gravitational_parameter, field.reference_radius, squared_radius_m2,
+                            Fraction(pck_matrix_error_upper[source]), prefix_cosine, prefix_sine,
+                        )
+                        additional_source_error_m_s2 = _harmonic_spatial_jacobian_bound_s_inv2(
+                            budget, field.gravitational_parameter, field.reference_radius, source_error_floors_m[source],
+                            prefix_cosine, prefix_sine,
+                        ) * Fraction(source_position_errors_m[source])
+                        conditional_additional_prefix_errors_m_s2[source] = (
+                            additional_stored_error_m_s2 + additional_orientation_error_m_s2 + additional_source_error_m_s2
+                        )
                         remainder_error_m_s2 = _harmonic_remainder_anchor_error_bound_m_s2(
                             budget, field.gravitational_parameter, field.reference_radius, source_error_floors_m[source],
                             field.cosine_coefficients, field.sine_coefficients, observed_remainder_m_s2,
@@ -3463,6 +3515,19 @@ def _check_conditional_full_force_coast_domains(
                     full_anchor_error_m_s2 += sum(map(abs, sum_residual), Fraction(0))
                     reported_full_anchor_error_m_s2 = math.nextafter(float(full_anchor_error_m_s2), math.inf)
                     assert math.isfinite(reported_full_anchor_error_m_s2) and Fraction(reported_full_anchor_error_m_s2) >= full_anchor_error_m_s2
+                    # Preserve the old envelope as a regression; replace only its
+                    # remainder partition in the new, conditional degree-20 bound.
+                    prefix_full_error_m_s2 = full_anchor_error_m_s2
+                    reported_additional_prefix_errors_m_s2: dict[str, float] = {}
+                    for source, prefix_error_m_s2 in conditional_additional_prefix_errors_m_s2.items():
+                        prefix_full_error_m_s2 -= Fraction(conditional_remainder_error_upper_m_s2[source])
+                        prefix_full_error_m_s2 += prefix_error_m_s2 + Fraction(diagnostic_tail_profiles_m_s2[source][str(prefix_degree)])
+                        reported_prefix_error_m_s2 = math.nextafter(float(prefix_error_m_s2), math.inf)
+                        assert math.isfinite(reported_prefix_error_m_s2) and Fraction(reported_prefix_error_m_s2) >= prefix_error_m_s2
+                        reported_additional_prefix_errors_m_s2[source] = reported_prefix_error_m_s2
+                    reported_prefix_full_error_m_s2 = math.nextafter(float(prefix_full_error_m_s2), math.inf)
+                    assert math.isfinite(reported_prefix_full_error_m_s2)
+                    assert 0 < prefix_full_error_m_s2 <= Fraction(reported_prefix_full_error_m_s2) < full_anchor_error_m_s2
                     budget.check()
                     if first_acceleration_m_s2 is None:
                         first_acceleration_m_s2 = anchor_m_s2.copy()
@@ -3506,6 +3571,10 @@ def _check_conditional_full_force_coast_domains(
                         "conditional_full_force_anchor_l2_error_upper_m_s2": reported_full_anchor_error_m_s2,
                         "diagnostic_unqualified_prefix_tail_error_upper_m_s2": diagnostic_tail_profiles_m_s2,
                         "generic_degree_three_stored_matrix_term_l1_error_upper_m_s2": generic_degree_three_errors_m_s2,
+                        "qualified_prefix_degree": prefix_degree,
+                        "generic_prefix_evaluation_seconds": generic_prefix_elapsed_s,
+                        "conditional_additional_prefix_anchor_l2_error_upper_m_s2": reported_additional_prefix_errors_m_s2,
+                        "conditional_prefix_full_force_anchor_l2_error_upper_m_s2": reported_prefix_full_error_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,

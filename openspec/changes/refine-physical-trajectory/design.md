@@ -1,5 +1,44 @@
 ## Context
 
+### Conditional degree-20 prefix composition (2026-09-12)
+
+Extend the normalized stored-state/matrix oracle through degree 20 using
+the same saved native terms. Each of eight source/control combinations
+checks 231 degree-major vectors against the unchanged per-term force gate.
+Retain the earlier degree-three diagnostic and measure only the generic
+evaluator's elapsed time separately from scientific error data.
+
+Partition the exact saved harmonic sum into the existing degree-zero and
+degree-two groups, the additional degrees 1 and 3 through 20, and the tail
+above 20. Copy the prefix coefficient matrices and zero rows zero and two
+only for the additional group's orientation/source bounds. Its arithmetic
+error is the exact sum of those terms' stored-matrix L1 bounds. Add the
+existing `e*(B+H*r_upper)` stored-to-ideal-PCK bound at the stored relative
+position and `H*source_position_error` at the source-error chord floor.
+Both existing bounds apply to arbitrary finite normalized coefficient sets;
+no cross term is omitted: first fix source position while correcting the
+matrix, then fix the ideal orientation while correcting source position.
+
+For the new complete initial-force envelope, retain the previous point,
+degree-two, SRP, Schwarzschild and both assembly-residual contributions.
+Replace only each old remainder bound with its additional-prefix bound
+plus the already computed above-degree-20 tail bound. Keep the previous
+complete envelope as a regression, and report the new result separately as
+`conditional_prefix_full_force_anchor_l2_error_upper_m_s2`. The exact saved
+prefix/tail partition neither adds another native sum nor drops a degree.
+
+Independent polar controls at degrees 3, 8 and 20 combine a source shift
+with a nonorthogonal scalar matrix. The analytic force scales as r^(-n-2),
+and the stored-matrix expression as scale^(-n-1); test both signs of shift,
+matrix dilation/contraction, and zero perturbation. The 27 combinations
+verify the composed bound without using the generic acceleration oracle.
+
+The new result remains conditional on SPK/PCK premises and exact initial
+spacecraft state. It is not an interval trajectory certificate: the
+unqualified higher-degree tail and force variation still dominate. No
+additional native arcs, production changes, tolerance changes or new
+dependencies; task 3.9 and targeting remain gated.
+
 ### Normalized harmonic acceleration pilot (2026-09-12)
 
 Reuse the exact solid-harmonic jets to enclose individual native acceleration
