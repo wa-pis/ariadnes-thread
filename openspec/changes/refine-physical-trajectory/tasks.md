@@ -51,6 +51,37 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 degree-100 qualification and cost (2026-09-12):
+Extend the existing prefix oracle and composed full-force bound through
+degree 100 without changing production fields or tolerances. Add degrees
+50/100 to the independent polar matrix/source-perturbation checks. Verify
+all term comparisons under the shared deadline, measure evaluator cost,
+run focused/full pytest, Ruff, strict OpenSpec and legacy checks. Keep 3.9
+open; neither a small anchor bound nor a completed inventory permits targeting.
+
+Focused verification: 47 tests passed in 167.48 s. All 41,208 term vectors
+(5151 terms, two sources, four existing controls) meet the unchanged gate.
+The 45 analytic perturbation combinations include 18 new degree-50/100
+controls. Additional-prefix SPK/PCK/arithmetic L2 error bounds are
+2.8315355138753893e-11 m/s^2 for the near-Moon lunar field and
+1.2817684204623578e-11 m/s^2 for the near-Mars Martian field. The complete
+conditional initial-force bounds are 9.090490153088587e-5 m/s^2 and
+1.6433030933895662e-6 m/s^2 respectively, identical across both profiles.
+Multiplying only the anchor bound by 1/64 s remains above 1e-6 m/s near
+the Moon and below it near Mars; this does not bound time variation or
+prove the velocity gate for either trajectory.
+
+Each generic evaluation took 10.599210041109473-21.467858250020072 s.
+The same four native arcs are counted; no extra arcs, dependencies, settings,
+deadline changes or production/UI edits. Representative full-mission and
+higher-degree qualification costs remain unresolved.
+
+Completion verification: all 1417 project tests passed in 427.88 s. Ruff,
+strict OpenSpec validation and diff checks passed. The legacy SHA-256 is
+unchanged and the package does not import the educational model. Full-suite
+wall time is not the per-mission 300-second budget; no budget was enlarged.
+Task 3.9 remains open.
+
 Task 3.9 conditional degree-20 prefix composition (2026-09-12):
 Extend native per-term parity through degree 20, then compose the additional
 degrees 1 and 3-20 with existing PCK-matrix and SPK-position bounds. Replace

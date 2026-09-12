@@ -2893,7 +2893,7 @@ def test_stored_matrix_force_rejects_expired_budget() -> None:
         )
 
 
-@pytest.mark.parametrize("degree", [3, 8, 20])
+@pytest.mark.parametrize("degree", [3, 8, 20, 50, 100])
 @pytest.mark.parametrize("scale", [Fraction(127, 128), Fraction(1), Fraction(129, 128)])
 @pytest.mark.parametrize("source_shift_m", [Fraction(-1, 128), Fraction(0), Fraction(1, 128)])
 def test_harmonic_prefix_matrix_and_source_error_composition(
@@ -3393,7 +3393,7 @@ def _check_conditional_full_force_coast_domains(
                     generic_degree_three_errors_m_s2: dict[str, dict[str, float]] = {}
                     conditional_additional_prefix_errors_m_s2: dict[str, Fraction] = {}
                     generic_prefix_elapsed_s: dict[str, float] = {}
-                    prefix_degree = 20
+                    prefix_degree = 100
                     prefix_count = (prefix_degree + 1) * (prefix_degree + 2) // 2
                     harmonic_offset = 76
                     for index, (source, indices) in enumerate(harmonic_indices.items()):
@@ -3516,7 +3516,7 @@ def _check_conditional_full_force_coast_domains(
                     reported_full_anchor_error_m_s2 = math.nextafter(float(full_anchor_error_m_s2), math.inf)
                     assert math.isfinite(reported_full_anchor_error_m_s2) and Fraction(reported_full_anchor_error_m_s2) >= full_anchor_error_m_s2
                     # Preserve the old envelope as a regression; replace only its
-                    # remainder partition in the new, conditional degree-20 bound.
+                    # remainder partition in the new, conditional prefix bound.
                     prefix_full_error_m_s2 = full_anchor_error_m_s2
                     reported_additional_prefix_errors_m_s2: dict[str, float] = {}
                     for source, prefix_error_m_s2 in conditional_additional_prefix_errors_m_s2.items():

@@ -1,5 +1,32 @@
 ## Context
 
+### Degree-100 qualification and runtime measurement (2026-09-12)
+
+Raise only the test oracle's checked prefix from 20 to 100, retaining the
+same exact evaluator, PCK/SPK composition and four native controls. Each
+source/control now checks 5151 stored acceleration vectors. The additional
+qualified group is degrees 1 and 3 through 100; use the existing above-100
+tail bound in the same disjoint complete-force partition. Production Moon
+200/Mars 120 fields are unchanged, not truncated to the oracle's prefix.
+Extend the independent polar shift/dilation controls to degrees 50 and 100.
+
+Both integrator profiles reproduce conditional complete initial-force
+error bounds of 9.090490153088587e-5 m/s^2 near the Moon and
+1.6433030933895662e-6 m/s^2 near Mars. These are conservative arithmetic/model
+evaluation bounds under the existing premises, not measured trajectory
+errors or physical ephemeris uncertainty. The previous degree-20 results
+below are historical measurements; the original coarse envelope is still
+computed as a regression. Scientific tolerances are unchanged.
+
+Generic degree-100 evaluations take 10.599210041109473 to
+21.467858250020072 s each in the focused run, versus roughly 0.07-0.12 s at
+degree 20. The complete focused invocation finishes in 167.48 s, including
+both inventories and analytic controls; no deadline is reset or enlarged.
+This cost prevents assuming repeated full-degree checks will fit within the
+mission budget. The native inventory still uses four arcs, the portable
+inventory none. Higher-degree terms and force variation remain unqualified
+for trajectory accuracy; task 3.9 stays open and targeting stays gated.
+
 ### Conditional degree-20 prefix composition (2026-09-12)
 
 Extend the normalized stored-state/matrix oracle through degree 20 using
