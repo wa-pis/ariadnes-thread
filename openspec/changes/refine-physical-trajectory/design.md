@@ -1,5 +1,42 @@
 ## Context
 
+### Initial gravity error including conditional SPK position bounds (2026-09-12)
+
+Pass each initial sample's already qualified position-error enclosure into
+the coast controls together with its saved position. Check the epoch before
+handoff; all links at this candidate endpoint are in previously checked
+record cores, not join strips. These are conditional errors relative to
+the ideal pinned SPK polynomials, including chain addition/SI conversion,
+not physical ephemeris uncertainty or an unconditional native certificate.
+The current binary/arithmetic/selector premises remain necessary.
+
+Hold the control spacecraft's stored initial SSB position exactly fixed.
+For each source with position error E, reuse the outward relative-distance
+helper to prove a positive chord floor `d <= ||ship-source_stored||-E`.
+The existing point-mass bound `2*GM*E/d^3` encloses the source-position
+effect. Add the saved-force arithmetic enclosure for all six point sources
+and separately for the Moon/Mars monopoles; report eight conditional
+Euclidean force-error bounds in m/s^2. No extra native evaluations are needed.
+
+For Moon/Mars degree two, hold ideal PCK orientation fixed while changing
+the source position. Reuse the rotationally invariant harmonic Jacobian
+bound H on that floor, multiply by E exactly, and add the prior PCK plus
+stored-matrix arithmetic bound. The target remains the exact sum of the
+three saved native order vectors, now compared to the ideal degree-two
+field at ideal source position. Any new floating-point vector summation is
+outside this claim. Radial quadrupole source-shift tests use the independent
+polar law `g_z=-3*sqrt(5)*C20/r^4`, both signs, zero displacement and large
+SSB translations; retain the existing radial/transverse point-force controls.
+
+Report source bounds as `conditional_source_position_error_upper_m`, and
+composed results as `conditional_point_spk_anchor_l2_error_upper_m_s2` and
+`conditional_degree_two_spk_pck_anchor_l2_error_upper_m_s2`. Keep prior
+arithmetic-only diagnostics/gates unchanged. Do not apply those gates to
+the new source-inclusive bounds or allocate new scientific tolerances.
+This does not bound initial-condition uncertainty, higher-degree arithmetic,
+SRP/relativistic source-state effects, or an entire trajectory. Task 3.9
+remains open; production, resource versions, limits and UI are unchanged.
+
 ### Degree-two force error including ideal PCK orientation (2026-09-12)
 
 Compose the initial matrix enclosure with the existing exact-input degree-two

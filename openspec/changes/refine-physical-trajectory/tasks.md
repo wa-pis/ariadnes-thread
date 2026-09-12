@@ -51,6 +51,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 initial SPK-position/gravity error composition (2026-09-12):
+Pass each qualified initial source-position enclosure into the existing
+coast controls, verify endpoint/core provenance before handoff, and prove
+positive comparison-chord floors. Combine point-force arithmetic with
+`2*GM*E/d^3` for all eight monopoles, and degree-two arithmetic/PCK error
+with the existing harmonic Jacobian times E. Verify independent radial
+quadrupole source-shift oracles and prior point-force controls; run both
+inventories, full pytest, Ruff, strict OpenSpec and legacy checks. Keep all
+native arithmetic gates and scientific tolerances unchanged; 3.9 stays open.
+
+Focused verification: 22 tests passed in 29.98 s. Initial source-position
+bounds span 1.4595070471278306e-7 m (Sun) to 7.284371515436439e-4 m
+(Saturn). Near-Moon lunar monopole and degree-two combined error bounds are
+1.4123540242346412e-10 and 3.211210370276435e-13 m/s^2; near-Mars Martian
+bounds are 2.811771855495014e-10 and 5.677804516507641e-12 m/s^2.
+Both native profiles report identical values. These are conditional upper
+bounds relative to ideal pinned SPK/PCK models, not observed physical errors
+or a new tolerance allocation. Controls/evaluations/arcs remain (4,4,4) or
+(0,0,0); the focused run used four native arcs. No extra propagation or new
+helper abstraction was added; the existing distance and force bounds suffice.
+
+Completion verification: all 1290 project tests passed in 256.72 s; the
+full suite reran the four native inventory arcs. Ruff, strict OpenSpec,
+diff checks and the unchanged legacy SHA-256 passed. Full-suite wall time
+does not qualify the mission runtime; production settings/limits/UI remain
+unchanged and task 3.9 remains open.
+
 Task 3.9 degree-two force/PCK error composition (2026-09-12):
 Bound the effect of a stored, potentially nonorthogonal rotation matrix
 using the already qualified force/Jacobian bounds on a proven chord floor.

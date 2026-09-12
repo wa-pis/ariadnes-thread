@@ -1307,12 +1307,13 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             reported_reach_m = math.nextafter(float(reach_m), math.inf)
             assert math.isfinite(reported_reach_m) and Fraction(reported_reach_m) >= reach_m
             coast_body_reaches_m[duration_s][body] = reported_reach_m
+    assert all(motion_samples[target][0][0] == start_tdb_s for target in body_ids.values())
     coast_domains = _check_conditional_full_force_coast_domains(
         budget, start_tdb_s, end_tdb_s, coast_body_reaches_m, chain_speed_bounds_m_s[10],
         {body: motion_samples[target][0][1] for body, target in body_ids.items()},
+        {body: float(motion_samples[target][0][2]) for body, target in body_ids.items()},
         run_native_controls=native_record_readback,
     )
-    assert all(motion_samples[target][0][0] == start_tdb_s for target in body_ids.values())
 
     common = SPICEDOUBLE_CELL(2)
     spice.wninsd(start_tdb_s, end_tdb_s, common)
@@ -2115,6 +2116,26 @@ def test_harmonic_spatial_jacobian_zero_and_expired_budget() -> None:
         )
 
 
+@pytest.mark.parametrize("offset_m", [0.0, 1e12])
+@pytest.mark.parametrize("delta_m", [-0.125, 0.0, 0.125])
+@pytest.mark.parametrize("coefficient", [-0.125, 0.125])
+def test_ephemeris_position_error_encloses_radial_quadrupole(
+    offset_m: float, delta_m: float, coefficient: float,
+) -> None:
+    budget = trajectory._RefinementBudget("source-error-quadrupole", 300.0)
+    body = (offset_m, offset_m, offset_m)
+    ship = (offset_m, offset_m, offset_m + 2.0)
+    floor_m = trajectory._relative_distance_lower_bound(budget, ship, body, 0.0, abs(delta_m))
+    assert 0 < Fraction(floor_m) <= 2 - abs(Fraction(delta_m))
+    cosine, sine = np.zeros((3, 3)), np.zeros((3, 3))
+    cosine[2, 0] = coefficient
+    bound = _harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, floor_m, cosine, sine) * Fraction(abs(delta_m))
+    # At the pole, g_z=-3*sqrt(5)*C20/r^4. Move only the source, not the ship.
+    exact_squared = 45 * Fraction(coefficient)**2 * (Fraction(2)**-4 - (2 + Fraction(delta_m))**-4)**2
+    assert exact_squared <= bound**2
+    assert (bound == 0) == (delta_m == 0)
+
+
 def _harmonic_arbitrary_rotation_bound_m_s2(
     budget: trajectory._RefinementBudget, gm_m3_s2: float,
     radius_m: float, distance_m: float, cosine: np.ndarray, sine: np.ndarray,
@@ -2498,6 +2519,7 @@ def _check_conditional_full_force_coast_domains(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
     body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
     position_anchors_m: dict[str, np.ndarray],
+    source_position_errors_m: dict[str, float],
     *, run_native_controls: bool,
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
@@ -2518,6 +2540,9 @@ def _check_conditional_full_force_coast_domains(
     assert all(np.all(np.isfinite(state)) for state in states.values())
     for body, state in states.items():
         assert np.array_equal(state[:3], position_anchors_m[body]), body
+    assert set(source_position_errors_m) == set(states)
+    assert all(type(error) is float and math.isfinite(error) and 0 <= error <= 0.001
+               for error in source_position_errors_m.values())
     assert sum((abs(Fraction(value)) for value in states["Sun"][3:]), Fraction(0)) <= Fraction(sun_speed_upper_m_s)
     guards_m = {surface.body: surface.guard_radius_m for surface in environment.collision_resource.surfaces}
     position_radius_m, velocity_radius_m_s = 1000.0, 0.1
@@ -2525,6 +2550,12 @@ def _check_conditional_full_force_coast_domains(
     for center, radius_m in (("Moon", 1_837_400.0), ("Mars", 3_689_500.0)):
         # The stored SI state defines the exact initial condition of this control.
         state = states[center] + np.asarray([radius_m, 0.0, 0.0, 0.0, 1500.0, 0.0])
+        source_error_floors_m = {
+            body: trajectory._relative_distance_lower_bound(
+                budget, tuple(state[:3]), tuple(states[body][:3]), 0.0, source_position_errors_m[body],
+            ) for body in states
+        }
+        assert all(floor > 0 for floor in source_error_floors_m.values())
         initial_speed_m_s = sum((abs(Fraction(value)) for value in state[3:]), Fraction(0))
         initial_speed_upper_m_s = math.nextafter(float(initial_speed_m_s), math.inf)
         assert Fraction(initial_speed_upper_m_s) >= initial_speed_m_s
@@ -2739,6 +2770,7 @@ def _check_conditional_full_force_coast_domains(
                     force_tolerance_m_s2 = max(1e-15, 1e-12 * component_norm_sum)
                     assert sum(value**2 for value in sum_residual) <= Fraction(force_tolerance_m_s2)**2
                     point_anchor_error_upper_m_s2: dict[str, float] = {}
+                    conditional_point_spk_error_upper_m_s2: dict[str, float] = {}
                     for source, component in zip(trajectory.PHYSICAL_BODY_NAMES, components_m_s2[:8], strict=True):
                         if source not in {"Moon", "Mars"}:
                             relative_m = states[source][:3] - state[:3]
@@ -2753,6 +2785,13 @@ def _check_conditional_full_force_coast_domains(
                             assert math.isfinite(reported_point_error_m_s2)
                             assert Fraction(reported_point_error_m_s2) >= point_error_m_s2
                             point_anchor_error_upper_m_s2[source] = reported_point_error_m_s2
+                            combined_error = point_error_m_s2 + _point_mass_variation_bound_m_s2(
+                                bodies.get(source).gravity_field_model.gravitational_parameter,
+                                source_error_floors_m[source], Fraction(source_position_errors_m[source]),
+                            )
+                            reported_combined = math.nextafter(float(combined_error), math.inf)
+                            assert math.isfinite(reported_combined) and Fraction(reported_combined) >= combined_error
+                            conditional_point_spk_error_upper_m_s2[source] = reported_combined
                     assert set(point_anchor_error_upper_m_s2) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
                     harmonic_monopole_error_upper_m_s2: dict[str, float] = {}
                     harmonic_monopoles_m_s2 = force_values[34:40].reshape(2, 3)
@@ -2769,13 +2808,21 @@ def _check_conditional_full_force_coast_domains(
                         assert math.isfinite(reported_monopole_error_m_s2)
                         assert Fraction(reported_monopole_error_m_s2) >= monopole_error_m_s2
                         harmonic_monopole_error_upper_m_s2[source] = reported_monopole_error_m_s2
+                        combined_error = monopole_error_m_s2 + _point_mass_variation_bound_m_s2(
+                            field.gravitational_parameter, source_error_floors_m[source], Fraction(source_position_errors_m[source]),
+                        )
+                        reported_combined = math.nextafter(float(combined_error), math.inf)
+                        assert math.isfinite(reported_combined) and Fraction(reported_combined) >= combined_error
+                        conditional_point_spk_error_upper_m_s2[source] = reported_combined
                     assert set(harmonic_monopole_error_upper_m_s2) == {"Moon", "Mars"}
+                    assert set(conditional_point_spk_error_upper_m_s2) == set(states)
                     import spiceypy as spice
 
                     c20_error_upper_m_s2: dict[str, float] = {}
                     degree_two_error_upper_m_s2: dict[str, dict[str, float]] = {}
                     pck_matrix_error_upper: dict[str, float] = {}
                     degree_two_ideal_pck_error_upper_m_s2: dict[str, float] = {}
+                    conditional_degree_two_spk_pck_error_upper_m_s2: dict[str, float] = {}
                     for index, source in enumerate(("Moon", "Mars")):
                         field = bodies.get(source).gravity_field_model
                         observed_c20_m_s2 = force_values[40:46].reshape(2, 3)[index]
@@ -2825,6 +2872,14 @@ def _check_conditional_full_force_coast_domains(
                         reported_ideal_error_m_s2 = math.nextafter(float(ideal_error_m_s2), math.inf)
                         assert math.isfinite(reported_ideal_error_m_s2) and Fraction(reported_ideal_error_m_s2) >= ideal_error_m_s2
                         degree_two_ideal_pck_error_upper_m_s2[source] = reported_ideal_error_m_s2
+                        source_force_error_m_s2 = _harmonic_spatial_jacobian_bound_s_inv2(
+                            budget, field.gravitational_parameter, field.reference_radius,
+                            source_error_floors_m[source], degree_two_cosine, degree_two_sine,
+                        ) * Fraction(source_position_errors_m[source])
+                        combined_error = ideal_error_m_s2 + source_force_error_m_s2
+                        reported_combined = math.nextafter(float(combined_error), math.inf)
+                        assert math.isfinite(reported_combined) and Fraction(reported_combined) >= combined_error
+                        conditional_degree_two_spk_pck_error_upper_m_s2[source] = reported_combined
                     harmonic_sum_residual_upper_m_s2: dict[str, float] = {}
                     harmonic_offset = 76
                     for index, (source, indices) in enumerate(harmonic_indices.items()):
@@ -2883,6 +2938,9 @@ def _check_conditional_full_force_coast_domains(
                         "degree_two_stored_matrix_anchor_error_upper_m_s2": degree_two_error_upper_m_s2,
                         "pck_anchor_matrix_entry_l1_error_upper": pck_matrix_error_upper,
                         "degree_two_ideal_pck_anchor_l2_error_upper_m_s2": degree_two_ideal_pck_error_upper_m_s2,
+                        "conditional_source_position_error_upper_m": source_position_errors_m,
+                        "conditional_point_spk_anchor_l2_error_upper_m_s2": conditional_point_spk_error_upper_m_s2,
+                        "conditional_degree_two_spk_pck_anchor_l2_error_upper_m_s2": conditional_degree_two_spk_pck_error_upper_m_s2,
                         "observed_harmonic_sum_residual_l1_upper_m_s2": harmonic_sum_residual_upper_m_s2,
                         "observed_harmonic_term_counts": {source: len(indices) for source, indices in harmonic_indices.items()},
                         "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,
