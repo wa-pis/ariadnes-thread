@@ -51,6 +51,36 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 exact solid-harmonic polynomial kernel (2026-09-12):
+Implement a streamed Fraction recurrence for unnormalized regular solid
+harmonics and Cartesian first derivatives, with positive sectoral phase
+and deadline checks. Verify every value/gradient through degree eight
+against independently expanded Rodrigues/binomial polynomials, both poles
+through degree 200, nonpolar homogeneity through degree 200, invalid inputs
+and mid-stream expiry. Measure cost before force integration; run focused
+and full pytest, Ruff, strict OpenSpec and legacy checks. Keep 3.9 open.
+
+Focused verification: 10 tests passed in 26.42 s. The nonpolar degree-200
+stream produced 20,301 complex value/gradient pairs in 25.109488375019282 s,
+with exact integer components up to 12,076 bits; all homogeneity checks pass.
+Each polar stream also covers 20,301 pairs; the three degree-eight controls
+each compare 45 pairs exactly against the independent expansion. Before
+adding the nonpolar measurement, nine controls passed in 1.31 s. Neither
+focused invocation propagated a spacecraft. Only two preceding degree rows
+plus the current row are retained, not all polynomial values.
+
+This kernel is not normalized gravity, a Tudat parity result, or a bound
+on the complete field's native arithmetic. The conservative initial force
+envelope is unchanged. A 25-second scalar-point polynomial measurement
+does not establish feasibility of repeated full-force certification within
+the mission's 300-second deadline. Production, limits and UI are unchanged.
+
+Completion verification: all 1352 project tests passed in 287.52 s. Ruff,
+strict OpenSpec, diff checks and the unchanged legacy SHA-256 passed.
+The full suite includes the existing four native inventory arcs; the new
+polynomial controls add none. Suite wall time is not a mission-runtime
+certificate and task 3.9 remains open.
+
 Task 3.9 diagnostic harmonic-tail sweep (2026-09-12):
 Measure hypothetical remainders after degree prefixes 2,5,10,20,50,100,120,
 150 up to each model ceiling, also including the ceiling. Reuse the existing

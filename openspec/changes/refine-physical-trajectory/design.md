@@ -1,5 +1,38 @@
 ## Context
 
+### Exact regular-solid-harmonic polynomial kernel (2026-09-12)
+
+The degree sweep requires a scalable route beyond hand-written low-degree
+formulas. Add a test-only exact polynomial kernel, not a second production
+gravity model. For dimensionless rational coordinates, q=x^2+y^2+z^2,
+use Q00=1 and the positive sectoral convention (no Condon-Shortley phase):
+`Q_nn=(2n-1)*(x+i*y)*Q_(n-1,n-1)` and
+`Q_nm=((2n-1)*z*Q_(n-1,m)-(n+m-1)*q*Q_(n-2,m))/(n-m)` for m<n,
+with a missing lower-order term taken as zero. The degree recurrence is
+the Cartesian homogeneous form of [NIST DLMF 14.10.3](https://dlmf.nist.gov/14.10#E3).
+Propagate value and three first derivatives by the exact product rule,
+using separate real/imaginary Fraction tuples rather than native complex
+floats. Stream degree-major results, retaining only the current row and
+two preceding rows; integer sizes still grow with degree and input precision.
+Check the existing deadline between rows and orders, without resetting it.
+
+An independent oracle expands the Rodrigues polynomial and `(x+i*y)^m`
+by factorial/binomial sums, then differentiates those monomials directly
+([Rodrigues formulas](https://dlmf.nist.gov/18.5#ii)). It checks every value
+and gradient through degree eight at three points, including rational mixed
+coordinates and the origin. North/south pole controls through degree 200
+use Q_n0=z^n and the m=1 transverse derivative n(n+1)z^(n-1)/2; higher
+orders' values and first derivatives vanish there. A separate nonpolar
+degree-200 streaming run uses exact stored binary64 inputs, checks Euler's
+homogeneity identity, and measures runtime/integer sizes. Invalid degree,
+boolean/inexact input and a deadline expiring after the first output fail.
+
+These are unnormalized polynomials, not SI acceleration enclosures. Gravity
+normalization, radial factors, matrix/source error composition, native term
+parity and representative full-force runtime still require integration.
+The current conservative force envelope is unchanged and task 3.9 stays
+open. No new dependencies, spacecraft arcs, public APIs or UI changes.
+
 ### Diagnostic harmonic-tail degree sweep (2026-09-12)
 
 Measure the scope of tighter harmonic qualification before implementing a

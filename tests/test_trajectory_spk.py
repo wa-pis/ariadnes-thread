@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ctypes
+from collections.abc import Iterator
 from fractions import Fraction
 from hashlib import file_digest, sha256
 import json
@@ -2472,6 +2473,136 @@ def test_pck_rotation_rates_reject_changed_source(
     with pytest.raises(AssertionError):
         _check_pinned_pck_rotation_rates(budget, 100.0, 200.0)
     assert budget.native_arc_propagations == 0
+
+
+def _regular_solid_harmonic_jets(
+    budget: trajectory._RefinementBudget, coordinates: tuple[Fraction, ...], maximum_degree: int,
+) -> Iterator[tuple[int, int, tuple[Fraction, ...], tuple[Fraction, ...]]]:
+    """Yield unnormalized real/imaginary (value, dx, dy, dz), with no Condon-Shortley phase.
+
+    Coordinates are dimensionless exact rationals; only two preceding degree
+    rows are retained. This polynomial kernel does not yet evaluate a force.
+    """
+    budget.check()
+    assert type(maximum_degree) is int and maximum_degree >= 0
+    assert len(coordinates) == 3 and all(isinstance(value, Fraction) for value in coordinates)
+    x, y, z = coordinates
+    q = sum((value**2 for value in coordinates), Fraction(0))
+    zero = (Fraction(0),) * 4
+    previous: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...]]] = {}
+    older: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...]]] = {}
+    for degree in range(maximum_degree + 1):
+        budget.check()
+        current: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...]]] = {}
+        for order in range(degree + 1):
+            budget.check()
+            if degree == 0:
+                real, imaginary = (Fraction(1), *zero[1:]), zero
+            elif order == degree:
+                re, im = previous[order - 1]
+                # Q_nn=(2n-1)*(x+i*y)*Q_(n-1,n-1), including product-rule gradients.
+                real = tuple((2 * degree - 1) * (x * re[j] - y * im[j]
+                             + (re[0] if j == 1 else 0) - (im[0] if j == 2 else 0)) for j in range(4))
+                imaginary = tuple((2 * degree - 1) * (x * im[j] + y * re[j]
+                                  + (im[0] if j == 1 else 0) + (re[0] if j == 2 else 0)) for j in range(4))
+            else:
+                parts = []
+                for first, second in zip(previous[order], older.get(order, (zero, zero)), strict=True):
+                    parts.append(tuple(((2 * degree - 1) * (z * first[j] + (first[0] if j == 3 else 0))
+                                        - (degree + order - 1) * (q * second[j]
+                                        + (2 * coordinates[j - 1] * second[0] if j else 0))) / (degree - order)
+                                       for j in range(4)))
+                real, imaginary = parts
+            current[order] = (real, imaginary)
+            yield degree, order, real, imaginary
+        older, previous = previous, current
+
+
+@pytest.mark.parametrize("coordinates", [
+    (Fraction(1, 3), Fraction(-2, 5), Fraction(7, 11)),
+    (Fraction(1), Fraction(2), Fraction(-3)), (Fraction(0),) * 3,
+])
+def test_regular_solid_harmonics_match_expanded_rodrigues(coordinates: tuple[Fraction, ...]) -> None:
+    q = sum((value**2 for value in coordinates), Fraction(0))
+    count = 0
+    for degree, order, real, imaginary in _regular_solid_harmonic_jets(
+        trajectory._RefinementBudget("solid-rodrigues", 300.0), coordinates, 8,
+    ):
+        expected = [[Fraction(0)] * 4 for _ in range(2)]
+        # Direct factorial/binomial expansion, independent of the recurrence:
+        # Q_nm=(x+i*y)^m * sum_k a_nmk*z^(n-m-2k)*q^k.
+        for k in range((degree - order) // 2 + 1):
+            for j in range(order + 1):
+                coefficient = Fraction((-1)**(k + j // 2) * math.factorial(2 * degree - 2 * k) * math.comb(order, j),
+                                       2**degree * math.factorial(k) * math.factorial(degree - k)
+                                       * math.factorial(degree - order - 2 * k))
+                powers = (order - j, j, degree - order - 2 * k)
+                monomial = math.prod((value**power for value, power in zip(coordinates, powers, strict=True)), start=Fraction(1))
+                expected[j % 2][0] += coefficient * monomial * q**k
+                for axis in range(3):
+                    derivative = powers[axis] * math.prod((value**(power - int(index == axis))
+                        for index, (value, power) in enumerate(zip(coordinates, powers, strict=True))), start=Fraction(1)) if powers[axis] else Fraction(0)
+                    expected[j % 2][axis + 1] += coefficient * (derivative * q**k
+                        + (2 * k * coordinates[axis] * monomial * q**(k - 1) if k else 0))
+        assert (real, imaginary) == tuple(map(tuple, expected)), (degree, order)
+        for jet in (real, imaginary):
+            assert sum((u * derivative for u, derivative in zip(coordinates, jet[1:], strict=True)), Fraction(0)) == degree * jet[0]
+        count += 1
+    assert count == 45
+
+
+@pytest.mark.parametrize("pole", [Fraction(-1), Fraction(1)])
+def test_regular_solid_harmonics_degree_200_poles(pole: Fraction) -> None:
+    count = 0
+    for degree, order, real, imaginary in _regular_solid_harmonic_jets(
+        trajectory._RefinementBudget("solid-pole-200", 300.0), (Fraction(0), Fraction(0), pole), 200,
+    ):
+        zero = (Fraction(0),) * 4
+        if order == 0:
+            assert real == (pole**degree, 0, 0, degree * pole**(degree - 1)) and imaginary == zero
+        elif order == 1:
+            slope = Fraction(degree * (degree + 1), 2) * pole**(degree - 1)
+            assert real == (0, slope, 0, 0) and imaginary == (0, 0, slope, 0)
+        else:
+            assert real == imaginary == zero
+        count += 1
+    assert count == 20301
+
+
+def test_regular_solid_harmonics_degree_200_nonpolar() -> None:
+    coordinates = tuple(map(Fraction, (0.31, -0.47, 0.83)))
+    budget = trajectory._RefinementBudget("solid-nonpolar-200", 300.0)
+    started_s, count, largest_bits = perf_counter(), 0, 0
+    for degree, _, real, imaginary in _regular_solid_harmonic_jets(budget, coordinates, 200):
+        for jet in (real, imaginary):
+            assert sum((u * derivative for u, derivative in zip(coordinates, jet[1:], strict=True)), Fraction(0)) == degree * jet[0]
+            largest_bits = max(largest_bits, *(max(value.numerator.bit_length(), value.denominator.bit_length()) for value in jet))
+        count += 1
+    budget.check()
+    assert count == 20301
+    assert budget.native_arc_propagations == 0
+    print(json.dumps({"solid_nonpolar_degree_200_seconds": perf_counter() - started_s,
+                      "solid_nonpolar_largest_integer_bits": largest_bits}, sort_keys=True))
+
+
+@pytest.mark.parametrize("invalid", ["degree", "boolean", "coordinate"])
+def test_regular_solid_harmonics_rejects_invalid_input(invalid: str) -> None:
+    with pytest.raises(AssertionError):
+        list(_regular_solid_harmonic_jets(
+            trajectory._RefinementBudget("solid-invalid", 300.0),
+            (0.0 if invalid == "coordinate" else Fraction(0), Fraction(0), Fraction(0)),  # type: ignore[arg-type] -- boundary rejection.
+            -1 if invalid == "degree" else True if invalid == "boolean" else 0,
+        ))
+
+
+def test_regular_solid_harmonics_checks_deadline_between_rows() -> None:
+    clock = iter([0.0, 0.0, 0.0, 0.0, 301.0])
+    stream = _regular_solid_harmonic_jets(
+        trajectory._RefinementBudget("solid-expired", 300.0, lambda: next(clock)), (Fraction(1),) * 3, 2,
+    )
+    assert next(stream)[:2] == (0, 0)
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="shared deadline"):
+        next(stream)
 
 
 def _harmonic_remainder_anchor_error_bound_m_s2(
