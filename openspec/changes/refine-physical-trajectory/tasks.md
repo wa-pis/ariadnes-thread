@@ -51,6 +51,38 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 per-source degree-120/20 qualification (2026-09-12):
+Use degree 120 for each near-body control's central field and degree 20
+for the other source, retaining every remaining term in its source-specific
+tail bound. Verify both allocations, per-term native parity, exact Mars
+ceiling exhaustion, degree-120 polar perturbation controls, composed errors
+and timing under the same deadline. Run focused/full pytest, Ruff, strict
+OpenSpec and legacy checks. Keep production fields and task 3.9 unchanged.
+
+Focused verification: 56 tests passed in 119.60 s. All 30,448 native term
+vectors ((7381 nearby + 231 distant) * four controls) meet the unchanged
+gate. The 54 analytic perturbation combinations include nine new degree-120
+controls. Nearby prefix SPK/PCK/arithmetic L2 errors are bounded by
+2.8786850092714696e-11 m/s^2 for the Moon and
+1.2829335807524715e-11 m/s^2 for Mars. Complete conditional initial-force
+bounds are 2.9133746295600405e-5 m/s^2 and 2.9968731808185163e-10 m/s^2,
+respectively, identical across both integrator profiles. The anchor-only
+error times 1/64 s is below the velocity allocation in both fixtures;
+no interval accuracy or trajectory safety follows from that partial check.
+
+Measured nearby evaluations take 20.02372816693969-20.835984291974455 s,
+distant evaluations 0.12361487513408065-0.12741362513042986 s. The preceding
+uniform-degree-100 focused run took 167.48 s; this comparison does not prove
+full-mission runtime. There are still four native inventory arcs, zero
+portable inventory arcs, and no enlarged deadline or propagation limits.
+The private diagnostic now reports source-specific `qualified_prefix_degrees`;
+public interfaces, production fields, scientific tolerances and UI are unchanged.
+
+Completion verification: all 1426 project tests passed in 378.48 s. Ruff,
+strict OpenSpec validation and diff checks passed. The legacy SHA-256 is
+unchanged and the package does not import it. Suite duration is separate
+from the unchanged 300-second mission deadline. Task 3.9 remains open.
+
 Task 3.9 degree-100 qualification and cost (2026-09-12):
 Extend the existing prefix oracle and composed full-force bound through
 degree 100 without changing production fields or tolerances. Add degrees

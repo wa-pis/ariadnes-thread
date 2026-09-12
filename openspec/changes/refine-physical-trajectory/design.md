@@ -1,5 +1,36 @@
 ## Context
 
+### Per-source degree-120/20 qualification (2026-09-12)
+
+Use the measured degree-100 cost to concentrate this test-only oracle on
+the nearby field: degree 120 for the control's central body and degree 20
+for the other harmonic source. This fixed choice is specific to the two
+existing near-body fixtures, not a production adaptive-truncation policy.
+The production fields remain Moon 200/Mars 120. Every unqualified term
+stays in its source's above-prefix tail enclosure, not a zero-force fallback.
+
+Report the choices in the private inventory output as
+`qualified_prefix_degrees`, replacing its old single-degree diagnostic.
+Index the tail bound by that same source's prefix during composition.
+The Mars degree-120 tail is exactly empty; the lunar tail above 120 is
+not. Extend independent polar shift/dilation checks to degree 120.
+Existing parity, degree ordering, exact tail exhaustion and composed-bound
+checks cover both source allocations and both integrator profiles.
+
+The conditional complete initial-force bounds are
+2.9133746295600405e-5 m/s^2 near the Moon and
+2.9968731808185163e-10 m/s^2 near Mars. The focused invocation takes
+119.60 s compared with the preceding uniform-degree-100 run's 167.48 s;
+this is a local measurement, not a general performance guarantee. Nearby
+generic evaluations take 20.02-20.84 s, distant ones 0.124-0.128 s.
+All four native arcs remain counted under the same deadline.
+
+The anchor bound alone times 1/64 s is below 1e-6 m/s for both controls,
+but it is not an interval velocity-error bound. Force variation, integration
+and full-trajectory safety/runtime still require qualification. No new
+dependencies, physical assumptions, tolerances or public API/UI changes;
+task 3.9 remains open and targeting remains gated.
+
 ### Degree-100 qualification and runtime measurement (2026-09-12)
 
 Raise only the test oracle's checked prefix from 20 to 100, retaining the
