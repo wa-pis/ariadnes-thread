@@ -51,6 +51,25 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 ideal zonal spin symmetry (2026-09-13):
+Verify exact spin invariance for zonal force terms of degree 0..8 using
+the existing solid-harmonic recurrence, rational rotations, three positions
+and two pole tilts. Verify independent monopole/C20 gradients and negative
+controls for tesseral spin and zonal pole motion. Run the focused analytic
+tests, full pytest, Ruff, strict OpenSpec, and legacy isolation. Do not
+change native rotation bounds until coefficient partition, pole-rate and
+arithmetic premises are independently qualified; task 3.9 remains open.
+
+Focused evidence: 24 controls passed in 0.51 s. Each evaluates all 45
+terms through degree 8 at three exact rotations and verifies all nine
+zonal spin equalities with zero arithmetic tolerance. Monopole and C20
+forces match independent Cartesian gradients. Explicit negative controls
+show C22 changes under a quarter-turn spin and C20 changes under pole
+tilt. No native arcs or SPICE calls were added; the existing seven-arc
+inventory and Mars 1/8 s unresolved velocity gate remain unchanged.
+All 1877 tests passed in 511.18 s. Ruff, strict OpenSpec validation,
+diff whitespace checks and legacy checksum/import isolation passed.
+
 Task 3.9 Mars 1/8 s certificate limit probe (2026-09-13):
 Compare the original domain with a separately recomputed 4000 m / 0.5 m/s
 domain at 1/8 s. Verify strict domain closure before native execution,

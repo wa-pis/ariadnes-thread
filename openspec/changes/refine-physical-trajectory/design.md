@@ -1,5 +1,25 @@
 ## Context
 
+### Ideal zonal spin symmetry (2026-09-13)
+
+For each zonal potential term V_n0, rotation Z about the body's z axis
+preserves radius and z, so V_n0(Zr)=V_n0(r). Differentiation gives
+g_n0(Zr)=Z*g_n0(r). Thus for an ideal inertial-to-fixed rotation Q=Z*B,
+Q^T*g_n0(Qr)=B^T*g_n0(Br): the prime-meridian spin cancels, even when
+the pole is tilted. Changing B does not cancel. Terms with order m>0
+are not axisymmetric and retain their spin dependence.
+
+WHEN exact rational proper rotations are applied to degree 0..8 zonal
+force controls, THEN their inertial forces must be unchanged by spin
+with exact equality (zero arithmetic tolerance). Independently verify
+the Cartesian monopole and C20 gradients. Negative controls must show
+that a tesseral term changes under spin and C20 changes under pole tilt.
+The positive normalization factor is common to both compared forces and
+is divided out; the fixture uses GM=1 m^3/s^2 and reference radius 1 m.
+This analytic invariant does not yet partition the production coefficient
+arrays, qualify PCK pole-only rates or remove rounded-matrix allowances.
+No native certificate is tightened by these controls alone; 3.9 stays open.
+
 ### Mars 1/8 s certificate limit probe (2026-09-13)
 
 Add 1/8 s source-motion controls and preserve the original 1000 m /

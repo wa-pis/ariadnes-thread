@@ -47,9 +47,14 @@ harmonics, orientation changes, SRP and relativity remain explicitly bounded;
 this is not a full-force jerk measurement. Exact point-mass curvature controls
 and the existing full-force transport lemma supply the reference enclosure.
 No force, arithmetic allowance, or historical quadratic control was removed.
-Next bounded work within 3.9 is to tighten the remaining-force reference
-variation bounds (higher harmonics and rotation) using independently
-qualified derivatives/remainders before increasing duration further or
+Twenty-four exact analytic controls now verify that ideal zonal force
+terms of degree 0..8 cancel prime-meridian spin, even with a tilted pole.
+Independent monopole/C20 gradients and negative controls retain tesseral
+spin dependence and zonal pole-motion dependence. These controls do not
+yet tighten the native force bounds or qualify rounded PCK arithmetic.
+Next bounded work within 3.9 is to qualify coefficient partition and
+pole-only rotation rates, preserving nonzonal spin and all arithmetic
+allowances, before applying the zonal symmetry to the reference bound or
 attempting mission composition. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
@@ -57,7 +62,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 1853 passing tests; both focused
+The latest completed code check has 1877 passing tests; both focused
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost
