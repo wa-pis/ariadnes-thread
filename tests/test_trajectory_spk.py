@@ -3200,7 +3200,7 @@ def test_stored_matrix_force_rejects_expired_budget() -> None:
         )
 
 
-@pytest.mark.parametrize("degree", [3, 8, 20, 50, 100, 120])
+@pytest.mark.parametrize("degree", [3, 8, 20, 50, 100, 120, 150])
 @pytest.mark.parametrize("scale", [Fraction(127, 128), Fraction(1), Fraction(129, 128)])
 @pytest.mark.parametrize("source_shift_m", [Fraction(-1, 128), Fraction(0), Fraction(1, 128)])
 def test_harmonic_prefix_matrix_and_source_error_composition(
@@ -3758,7 +3758,10 @@ def _check_conditional_full_force_coast_domains(
                     generic_prefix_elapsed_s: dict[str, float] = {}
                     # Test-only allocation: distant high-degree terms remain
                     # enclosed by the tail bound, never omitted from dynamics.
-                    prefix_degrees = {source: 120 if source == center else 20 for source in harmonic_indices}
+                    prefix_degrees = {
+                        "Moon": 150 if center == "Moon" else 20,
+                        "Mars": 120 if center == "Mars" else 20,
+                    }
                     harmonic_offset = 76
                     for index, (source, indices) in enumerate(harmonic_indices.items()):
                         budget.check()
@@ -3936,8 +3939,7 @@ def _check_conditional_full_force_coast_domains(
                         prefix_full_error_m_s2, Fraction(reported_split_relative_variation_m_s2),
                     )
                     assert 0 < split_velocity_error_m_s < relative_velocity_error_m_s
-                    if center == "Mars":
-                        assert split_velocity_error_m_s <= Fraction("0.000001")
+                    assert split_velocity_error_m_s <= Fraction("0.000001")
                     reported_split_velocity_m_s = math.nextafter(float(split_velocity_error_m_s), math.inf)
                     assert math.isfinite(reported_split_velocity_m_s) and Fraction(reported_split_velocity_m_s) >= split_velocity_error_m_s
                     anchor_residual_m_s = _anchored_coast_velocity_error_bound_m_s(

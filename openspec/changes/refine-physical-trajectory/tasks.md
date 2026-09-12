@@ -51,6 +51,28 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 lunar degree-150 qualification (2026-09-12):
+Extend the independent nearby lunar prefix to 150, retain nearby Mars 120
+and distant prefixes 20, and preserve all remainder bounds and dynamics.
+Verify degree-150 analytic matrix/source composition, both real inventories,
+the unchanged velocity gate for all four short native controls, full pytest,
+Ruff, strict OpenSpec, diff and legacy checks. Keep task 3.9 open.
+
+Focused verification passed 65 tests in 168.74 s, including nine additional
+analytic controls. The lunar complete initial-force bound is now
+4.824501711104862e-6 m/s^2. Its conditional 1/64 s endpoint velocity bounds
+are 9.302902660994951e-7 and 9.302738951948632e-7 m/s, below the unchanged
+1e-6 m/s gate. Mars remains at 8.316235170009139e-7 and
+8.316207885168086e-7 m/s. Strengthen the explicit gate to both bodies.
+Lunar generic evaluations took 42.82-43.41 s each; the shared deadline
+passed unchanged. Four native arcs and source requests are unchanged.
+This does not establish long-trajectory or internal-stage safety.
+
+Completion verification: all 1515 project tests passed in 424.33 s,
+including the strengthened Moon/Mars velocity assertions. Ruff, strict
+OpenSpec and diff checks passed; legacy SHA-256 and import isolation are
+unchanged. Suite duration is not a mission-runtime certificate.
+
 Task 3.9 monopole-split operator bound (2026-09-12):
 Compose the exact `2*GM/d^3` C00=1 operator norm with the existing
 nonmonopole Jacobian bound. Verify monopole eigenvalues/point-mass parity,

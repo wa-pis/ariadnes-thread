@@ -1,5 +1,27 @@
 ## Context
 
+### Lunar degree-150 qualification (2026-09-12)
+
+Extend only the nearby Moon's independent initial-force prefix from degree
+120 to 150. Keep nearby Mars at its model ceiling 120 and distant fields
+at 20. All remaining terms retain their existing tail allowance; production
+Moon 200/Mars 120 dynamics, kernels and integration settings are unchanged.
+Reuse the generic normalized harmonic evaluator and existing matrix/source
+error composition, including nine new analytic degree-150 controls.
+
+The complete lunar initial-force error bound decreases from
+2.9133746295600405e-5 to 4.824501711104862e-6 m/s^2. Combined with the
+unchanged monopole-split variation, the conditional 1/64 s endpoint velocity
+bounds become 9.302902660994951e-7 and 9.302738951948632e-7 m/s for nominal
+and tighter profiles. Assert the existing 1e-6 m/s gate for both Moon and
+Mars, rather than Mars alone. Mars bounds remain unchanged.
+
+Focused verification passed 65 tests in 168.74 s. Nearby lunar generic
+evaluations took 42.82-43.41 s each, versus 20.86-20.94 s for nearby Mars;
+the existing shared deadline passed without modification. This remains
+conditional short-coast evidence, not a mission-runtime or native-stage
+safety certificate. Task 3.9 stays open; no UI or production API changes.
+
 ### Monopole-split spatial operator bound (2026-09-12)
 
 Keep the existing full-field Frobenius-based Jacobian bound as a regression.
