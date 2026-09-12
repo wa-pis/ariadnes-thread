@@ -51,6 +51,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 point-mass force-curvature control (2026-09-13):
+Qualify a conservative second-time-derivative bound for point-mass
+acceleration under explicit relative distance/speed/acceleration bounds.
+Verify exact Cartesian chain-rule and circular-motion oracles, radial
+Taylor remainders, invalid inputs, full pytest, Ruff, strict OpenSpec and
+legacy isolation. No native calls or production changes; do not qualify
+full-force cubic references or close 3.9 from this component control.
+
+Focused verification: all 70 tests passed in 0.02 s: 36 exact Cartesian
+chain-rule cases at two gravitational parameters, four circular controls,
+six radial Taylor-remainder controls and 24 invalid-input checks. All
+inequalities use exact rational arithmetic, with no floating tolerance.
+The circular bound is intentionally 26 times its exact force curvature;
+this documents conservatism, not a numerical-accuracy allocation.
+Uniform relative-motion premises and all other force derivatives remain
+unqualified for a native cubic reference; no native or SPICE calls were added.
+
+Completion verification: all 1792 project tests passed in 456.00 s.
+Ruff, strict OpenSpec, diff and unchanged legacy checksum/import isolation
+passed. Full-suite duration is separate from the shared 300-second mission
+operation deadline. Dependencies, production forces, UI and native limits
+are unchanged. This completes only the stated analytic component controls;
+task 3.9 remains open.
+
 Task 3.9 reference-bound diagnosis and analytic cubic control (2026-09-12):
 Report the existing weighted reference enclosure separately from endpoint
 residuals, retaining their exact composition and all prior outputs. Verify

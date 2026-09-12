@@ -1,5 +1,25 @@
 ## Context
 
+### Point-mass force-curvature control (2026-09-13)
+
+For g(r)=-mu*r/|r|^3, differentiate twice in space:
+`D²g[u,w]=3*mu/|r|^5*(u*(r.w)+w*(r.u)+r*(u.w)-5*r*(r.u)*(r.w)/|r|^2)`.
+The triangle inequality gives `||D²g[u,w]|| <= 24*mu*||u||*||w||/d^4`
+for |r|>=d>0; the existing Jacobian bound is 2*mu/d^3.
+Thus along a curve with uniform relative speed V and acceleration A,
+`||d²g/dt²|| <= 24*mu*V²/d^4 + 2*mu*A/d^3`, in m/s^4.
+The factor 24 is conservative, not an optimal constant or changed tolerance.
+These are derivatives of acceleration, not of potential or position.
+
+WHEN prescribed Cartesian and circular curves are checked, THEN the exact
+chain-rule/circular force curvature must fit this bound with no rounding
+slack. WHEN an outward radial affine curve is checked, THEN the exact
+force-minus-linear-Taylor residual must be <= K*t²/2 in m/s². Invalid
+or singular bounds must fail. Use exact Fractions and existing dependencies.
+Native curve closure, relative-motion bounds, initial jerk accuracy,
+harmonics, rotation and other forces are separate unqualified premises;
+do not apply this component result as a full-force cubic certificate.
+
 ### Reference-bound diagnosis and analytic cubic control (2026-09-12)
 
 Separate the existing weighted reference-error enclosure from the saved

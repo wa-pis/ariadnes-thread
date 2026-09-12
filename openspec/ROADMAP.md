@@ -30,16 +30,17 @@ measurement of the native integrator's true error.
 
 Cubic references improve bounds in 16 exact analytic controls only; no
 cubic reference or force-derivative remainder has been qualified for the
-physical model. Next bounded work within 3.9 is to qualify the needed
-force derivatives and reference remainder, starting with independently
-checkable point-mass gravity before composing the full model. WHEN a proposed
+physical model. Point-mass force-curvature and radial force-remainder bounds
+now have 70 exact analytic controls (2026-09-13), without native application.
+Next bounded work within 3.9 is to qualify initial force-derivative accuracy
+and the remaining force-curvature components before composing the full model. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
 application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 1722 passing tests. The native inventory
+The latest completed code check has 1792 passing tests. The native inventory
 runs five spacecraft arcs, the portable inventory zero; each performs 24
 affine source readbacks. These are diagnostic counts, not mission-cost
 estimates. Production limits and the shared 300-second deadline are unchanged.
