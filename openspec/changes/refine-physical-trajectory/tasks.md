@@ -51,6 +51,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conservative complete initial force envelope (2026-09-12):
+Partition Moon/Mars fields into degrees zero, two and the remainder; bound
+unqualified remainder error by the exact saved-remainder L1 norm plus the
+existing ideal norm at the SPK-error chord floor. Compose all force errors
+and both assembly levels once. Verify degree-one/three polar oracles,
+degree-two exclusion, non-mutation, deadline rejection, both inventories,
+full pytest, Ruff, strict OpenSpec and legacy checksum. Do not claim that
+finite bounds are sufficiently narrow; task 3.9 remains open.
+
+Focused verification: 10 tests passed in 30.55 s. Complete conditional
+initial force-error bounds are 0.016305005499436833 m/s^2 near Moon and
+0.012168297081840857 m/s^2 near Mars, identical for both profiles. Local
+harmonic remainders dominate at 0.016305005357877322 and
+0.012168296794982873 m/s^2 respectively. This conservative triangle bound
+does not establish a large actual error. Its E*h contribution alone at
+h=1/64 s is about 2.55e-4 / 1.90e-4 m/s, above the unchanged 1e-6 m/s
+velocity allocation; it cannot resolve that first-order endpoint enclosure.
+Sharper remaining-order arithmetic bounds are needed, not looser tolerances.
+The focused inventory used four native arcs; controls/evaluations/arcs
+remain (4,4,4) or (0,0,0), with no production settings or limits changed.
+
+Completion verification: all 1336 project tests passed in 257.21 s, including
+another four native inventory arcs. Ruff, strict OpenSpec, diff checks and
+the unchanged legacy SHA-256 passed. Passing tests verify the conservative
+bound and reproduce its excessive width; they do not satisfy the mission
+accuracy/runtime gate or complete task 3.9.
+
 Task 3.9 initial Schwarzschild/SPK-state error composition (2026-09-12):
 Carry the qualified Sun velocity error into the existing coast controls;
 combine independent spatial/velocity Jacobian norm bounds with Sun position

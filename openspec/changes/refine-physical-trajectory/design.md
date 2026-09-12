@@ -1,5 +1,42 @@
 ## Context
 
+### Conservative complete initial force-error envelope (2026-09-12)
+
+Partition each declared harmonic field into degree zero, all degree-two
+orders, and every remaining degree. Do not silently discard degree one.
+The first two pieces already have conditional SPK/PCK/arithmetic bounds.
+For the remainder, copy the coefficient matrices and zero only C00 and
+the three C2m/S2m pairs; retain native resources and settings unchanged.
+The existing rotation-invariant harmonic norm bound at the source-position
+chord floor bounds the ideal remainder by B, including source displacement
+and any ideal PCK orientation.
+
+Let h be the exact sum of saved native remainder vectors. Without assuming
+individual high-degree accuracy, `||h - ideal_remainder||_2 <= ||h||_1+B`.
+Compute h as the exact full term sum minus the separately verified (0,0)
+and (2,0..2) vectors, preserving cancellation without another float sum.
+This deliberately loose triangle bound is not a measured numerical error
+or a certificate of individual high-degree native arithmetic. Independent
+degree-one/three polar controls use `(n+1)*sqrt(2n+1)*C_n0`; zero-remainder,
+all-degree-two exclusion, input non-mutation and deadline tests cover the
+partition and reuse of the existing norm bound.
+
+Sum the eight conditional monopole/point errors, two degree-two errors,
+two remainder errors, two harmonic assembly residuals, SRP and Schwarzschild
+errors, and the overall native component-sum residual. This triangle sum
+encloses the complete native initial acceleration against the declared
+ideal model, conditional on the earlier SPK arithmetic premises and fixed
+stored initial spacecraft state. Each component and each assembly level is
+counted once. Report the outward Euclidean bound and remainder contributions
+as `conditional_full_force_anchor_l2_error_upper_m_s2` and
+`conditional_harmonic_remainder_anchor_l2_error_upper_m_s2`.
+
+A finite initial bound is not a useful mission allocation by itself. Record
+its width rather than weaken a force or trajectory tolerance. Uniform force
+and trajectory errors, native internal stages, collision safety and runtime
+qualification remain open under task 3.9. The same four native controls
+suffice; no production model, limits, resources, dependencies or UI change.
+
 ### Conditional Sun-state error for Schwarzschild acceleration (2026-09-12)
 
 Pass the existing conditional Sun chain velocity-error bound into the four

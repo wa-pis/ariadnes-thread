@@ -2474,6 +2474,66 @@ def test_pck_rotation_rates_reject_changed_source(
     assert budget.native_arc_propagations == 0
 
 
+def _harmonic_remainder_anchor_error_bound_m_s2(
+    budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
+    distance_floor_m: float, cosine: np.ndarray, sine: np.ndarray,
+    observed_remainder_m_s2: tuple[Fraction, ...],
+) -> Fraction:
+    """Bound unqualified orders by |saved remainder|_1 + ideal norm; omit only n=0,2."""
+    budget.check()
+    assert len(observed_remainder_m_s2) == 3 and all(isinstance(value, Fraction) for value in observed_remainder_m_s2)
+    assert cosine.shape == sine.shape and cosine.ndim == 2 and len(cosine) >= 3
+    assert all(matrix.dtype == np.float64 and np.all(np.isfinite(matrix)) for matrix in (cosine, sine))
+    remainder_cosine, remainder_sine = cosine.copy(), sine.copy()
+    remainder_cosine[0, 0] = 0.0
+    remainder_cosine[2, :3] = remainder_sine[2, :3] = 0.0
+    # ponytail: triangle bound is intentionally loose; qualify individual
+    # remaining orders before treating this as a useful trajectory allocation.
+    ideal_norm_m_s2 = trajectory._harmonic_acceleration_upper_bound(
+        budget.candidate_id, gm_m3_s2, reference_radius_m, distance_floor_m, remainder_cosine, remainder_sine,
+    )
+    budget.check()
+    return sum(map(abs, observed_remainder_m_s2), Fraction(ideal_norm_m_s2))
+
+
+@pytest.mark.parametrize("degree", [1, 3])
+@pytest.mark.parametrize("observed_m_s2", [Fraction(-1, 8), Fraction(0), Fraction(1, 8)])
+def test_harmonic_remainder_preserves_unqualified_degrees(degree: int, observed_m_s2: Fraction) -> None:
+    cosine, sine = np.zeros((4, 4)), np.zeros((4, 4))
+    cosine[0, 0], cosine[2, 0], cosine[degree, 0] = 1000.0, 1000.0, 0.125
+    original = cosine.copy()
+    bound_m_s2 = _harmonic_remainder_anchor_error_bound_m_s2(
+        trajectory._RefinementBudget("remainder-pole", 300.0), 1.0, 1.0, 1.0, cosine, sine,
+        (Fraction(0), Fraction(0), observed_m_s2),
+    )
+    assert np.array_equal(cosine, original)
+    # At the pole, an isolated zonal force is -(n+1)*sqrt(2n+1)*C_n0.
+    # The bound must enclose either observation sign without using native gravity.
+    assert (bound_m_s2 - abs(observed_m_s2))**2 >= (degree + 1)**2 * (2 * degree + 1) * Fraction(0.125)**2
+    assert bound_m_s2 < 3  # The already qualified, large n=0,2 fields were excluded.
+
+
+def test_harmonic_remainder_excludes_all_degree_two_orders() -> None:
+    cosine, sine = np.zeros((3, 3)), np.zeros((3, 3))
+    cosine[0, 0], cosine[2], sine[2] = 1000.0, (3.0, 4.0, 5.0), (0.0, 6.0, 7.0)
+    original_cosine, original_sine = cosine.copy(), sine.copy()
+    bound_m_s2 = _harmonic_remainder_anchor_error_bound_m_s2(
+        trajectory._RefinementBudget("remainder-zero", 300.0), 1.0, 1.0, 1.0, cosine, sine,
+        (Fraction(1), Fraction(-2), Fraction(3)),
+    )
+    assert bound_m_s2 == 6
+    assert np.array_equal(cosine, original_cosine) and np.array_equal(sine, original_sine)
+
+
+def test_harmonic_remainder_rejects_expired_budget() -> None:
+    clock = iter([0.0, 301.0])
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="shared deadline"):
+        _harmonic_remainder_anchor_error_bound_m_s2(
+            trajectory._RefinementBudget("remainder-expired", 300.0, lambda: next(clock)),
+            1.0, 1.0, 1.0, np.zeros((3, 3)), np.zeros((3, 3)), (Fraction(0),) * 3,
+        )
+
+
 def _stored_matrix_force_error_bound_m_s2(
     budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
     radius_squared_m2: Fraction, matrix_error: Fraction,
@@ -3026,6 +3086,7 @@ def _check_conditional_full_force_coast_domains(
                         assert math.isfinite(reported_combined) and Fraction(reported_combined) >= combined_error
                         conditional_degree_two_spk_pck_error_upper_m_s2[source] = reported_combined
                     harmonic_sum_residual_upper_m_s2: dict[str, float] = {}
+                    conditional_remainder_error_upper_m_s2: dict[str, float] = {}
                     harmonic_offset = 76
                     for index, (source, indices) in enumerate(harmonic_indices.items()):
                         budget.check()
@@ -3044,6 +3105,17 @@ def _check_conditional_full_force_coast_domains(
                         reported_residual_m_s2 = math.nextafter(float(residual_m_s2), math.inf)
                         assert math.isfinite(reported_residual_m_s2) and Fraction(reported_residual_m_s2) >= residual_m_s2
                         harmonic_sum_residual_upper_m_s2[source] = reported_residual_m_s2
+                        observed_remainder_m_s2 = tuple(exact_term_sum[axis] - sum(
+                            (Fraction(terms[term, axis]) for term in (0, 3, 4, 5)), Fraction(0),
+                        ) for axis in range(3))
+                        field = bodies.get(source).gravity_field_model
+                        remainder_error_m_s2 = _harmonic_remainder_anchor_error_bound_m_s2(
+                            budget, field.gravitational_parameter, field.reference_radius, source_error_floors_m[source],
+                            field.cosine_coefficients, field.sine_coefficients, observed_remainder_m_s2,
+                        )
+                        reported_remainder_m_s2 = math.nextafter(float(remainder_error_m_s2), math.inf)
+                        assert math.isfinite(reported_remainder_m_s2) and Fraction(reported_remainder_m_s2) >= remainder_error_m_s2
+                        conditional_remainder_error_upper_m_s2[source] = reported_remainder_m_s2
                     assert harmonic_offset == len(force_values)
                     budget.check()
                     relativity_anchor_error_m_s2 = _schwarzschild_anchor_error_bound_m_s2(
@@ -3064,6 +3136,15 @@ def _check_conditional_full_force_coast_domains(
                     reported_conditional_relativity_error_m_s2 = math.nextafter(float(conditional_relativity_error_m_s2), math.inf)
                     assert math.isfinite(reported_conditional_relativity_error_m_s2)
                     assert Fraction(reported_conditional_relativity_error_m_s2) >= conditional_relativity_error_m_s2
+                    # Disjoint n=0 / n=2 / remainder partition, both assembly levels,
+                    # and the SRP/relativistic components: each is counted once.
+                    full_anchor_error_m_s2 = sum((Fraction(error) for bounds in (
+                        conditional_point_spk_error_upper_m_s2, conditional_degree_two_spk_pck_error_upper_m_s2,
+                        conditional_remainder_error_upper_m_s2, harmonic_sum_residual_upper_m_s2,
+                    ) for error in bounds.values()), conditional_srp_error_m_s2 + conditional_relativity_error_m_s2)
+                    full_anchor_error_m_s2 += sum(map(abs, sum_residual), Fraction(0))
+                    reported_full_anchor_error_m_s2 = math.nextafter(float(full_anchor_error_m_s2), math.inf)
+                    assert math.isfinite(reported_full_anchor_error_m_s2) and Fraction(reported_full_anchor_error_m_s2) >= full_anchor_error_m_s2
                     budget.check()
                     if first_acceleration_m_s2 is None:
                         first_acceleration_m_s2 = anchor_m_s2.copy()
@@ -3103,6 +3184,8 @@ def _check_conditional_full_force_coast_domains(
                         "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,
                         "conditional_sun_velocity_error_upper_m_s": sun_velocity_error_m_s,
                         "conditional_schwarzschild_spk_anchor_l2_error_upper_m_s2": reported_conditional_relativity_error_m_s2,
+                        "conditional_harmonic_remainder_anchor_l2_error_upper_m_s2": conditional_remainder_error_upper_m_s2,
+                        "conditional_full_force_anchor_l2_error_upper_m_s2": reported_full_anchor_error_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,
