@@ -1,5 +1,30 @@
 ## Context
 
+### Fully lit coast state-sensitivity composition (2026-09-12)
+
+Extract the existing fixed-mass, fully lit SRP spatial operator bound
+`2*K/d^3`, where `K=L*A*Cr/(4*pi*c*m)`, retaining the exact source-variation
+wrapper. Verify Cartesian directional derivatives with rational radii and
+unit directions, including area/reflectivity/mass scaling; bound pi outward
+with the existing rational enclosure. Velocity sensitivity is zero for this
+specific cannonball model at fixed mass and fixed epoch.
+
+After whole-domain illumination is proven, sum exactly the six point-mass
+operator bounds, two monopole-split harmonic bounds, SRP and Schwarzschild
+position bounds. Require precisely ten force keys and outward-round each
+component and the sum. Only Schwarzschild contributes velocity sensitivity.
+Time-dependent source positions and ideal orthogonal PCK rotations retain
+their existing uniform domain floors/bounds; this is a fixed-epoch state
+derivative bound, not a bound on time variation or native evaluation error.
+
+Report `k=Lx*h^2/2+Lv*h` and verify k<1 for the pinned declared domains.
+The transport lemma additionally requires domain closure and a continuous
+reference with a qualified acceleration defect. In particular k<1 cannot
+close the unresolved one-second controls. Do not apply these coast bounds
+to mass-changing burns or shadow boundaries. No force allowances, endpoint
+gates, native calls, limits, dependencies or production behavior change;
+task 3.9 remains open.
+
 ### Whole-domain full-illumination geometry (2026-09-12)
 
 Extend the existing apparent-sphere separation proof with a nonnegative

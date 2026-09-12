@@ -2398,17 +2398,47 @@ def test_fully_lit_srp_anchor_rejects_invalid_mass(mass_kg: float) -> None:
         )
 
 
-def _fully_lit_srp_position_variation_bound_m_s2(
+def _fully_lit_srp_position_jacobian_bound_s_inv2(
     luminosity_w: float, area_m2: float, cr: float, mass_kg: float,
-    distance_floor_m: float, displacement_m: Fraction,
+    distance_floor_m: float,
 ) -> Fraction:
-    """Bound SRP source-position effect; caller proves full light and chord floor."""
+    """Bound the fully lit, fixed-mass SRP position operator in s^-2."""
     assert all(type(value) is float and math.isfinite(value) and value > 0
                for value in (luminosity_w, area_m2, cr, mass_kg))
     coefficient_upper_m3_s2 = (Fraction(luminosity_w) * Fraction(area_m2) * Fraction(cr)
                               / (4 * 299792458 * Fraction(mass_kg) * _pi_rational_bounds()[0]))
     # Fully lit SRP has the same inverse-square Jacobian norm as point gravity.
-    return coefficient_upper_m3_s2 * _point_mass_variation_bound_m_s2(1.0, distance_floor_m, displacement_m)
+    return coefficient_upper_m3_s2 * _point_mass_variation_bound_m_s2(1.0, distance_floor_m, Fraction(1))
+
+
+def _fully_lit_srp_position_variation_bound_m_s2(
+    luminosity_w: float, area_m2: float, cr: float, mass_kg: float,
+    distance_floor_m: float, displacement_m: Fraction,
+) -> Fraction:
+    """Bound SRP source-position effect; caller proves full light and chord floor."""
+    assert isinstance(displacement_m, Fraction) and displacement_m >= 0
+    return _fully_lit_srp_position_jacobian_bound_s_inv2(
+        luminosity_w, area_m2, cr, mass_kg, distance_floor_m,
+    ) * displacement_m
+
+
+@pytest.mark.parametrize("position,radius", [((3, 4, 0), 5), ((0, 0, 2), 2)])
+@pytest.mark.parametrize("area_m2,cr,mass_kg", [(1.0, 1.0, 1.0), (2.0, 1.0, 1.0), (1.0, 2.0, 0.5)])
+@pytest.mark.parametrize("direction", [(1, 0, 0), (0, 1, 0), (0, 0, 1), (Fraction(3, 5), Fraction(4, 5), 0)])
+def test_fully_lit_srp_jacobian_encloses_exact_directional_derivative(
+    position: tuple[int, int, int], radius: int, area_m2: float, cr: float, mass_kg: float,
+    direction: tuple[int | Fraction, int | Fraction, int | Fraction],
+) -> None:
+    r, u, d = tuple(map(Fraction, position)), tuple(map(Fraction, direction)), Fraction(radius)
+    assert sum(value**2 for value in r) == d**2 and sum(value**2 for value in u) == 1
+    dot = sum((a * b for a, b in zip(r, u, strict=True)), Fraction(0))
+    scale = Fraction(area_m2) * Fraction(cr) / Fraction(mass_kg)
+    # L=4*c gives a*pi=(A*Cr/m)*r/|r|^3; differentiate exactly.
+    derivative_times_pi = tuple(scale * (u[i] / d**3 - 3 * r[i] * dot / d**5) for i in range(3))
+    bound = _fully_lit_srp_position_jacobian_bound_s_inv2(
+        float(4 * 299792458), area_m2, cr, mass_kg, float(radius),
+    )
+    assert sum(value**2 for value in derivative_times_pi) <= (bound * _pi_rational_bounds()[0])**2
 
 
 @pytest.mark.parametrize("area_m2", [1.0, 2.0])
@@ -3642,6 +3672,32 @@ def _check_conditional_full_force_coast_domains(
                                                       for value in relativity_sensitivities)
             assert all(math.isfinite(reported) and Fraction(reported) >= exact > 0 for reported, exact in
                        zip(reported_relativity_sensitivities, relativity_sensitivities, strict=True))
+            # Fixed epoch and coast mass; the entire position domain is lit.
+            position_sensitivities = dict(split_harmonic_jacobians_s_inv2)
+            for body in point_mass_variation_m_s2:
+                position_sensitivities[body] = _monopole_split_jacobian_bound_s_inv2(
+                    bodies.get(body).gravity_field_model.gravitational_parameter, floors_m[body], Fraction(0),
+                )
+            position_sensitivities["Sun/SRP"] = _fully_lit_srp_position_jacobian_bound_s_inv2(
+                trajectory.SUN_LUMINOSITY_W, spacecraft.srp_area_m2,
+                spacecraft.reflectivity_coefficient, spacecraft.initial_mass_kg, floors_m["Sun"],
+            )
+            position_sensitivities["Sun/Schwarzschild"] = relativity_sensitivities[0]
+            assert set(position_sensitivities) == set(trajectory.PHYSICAL_BODY_NAMES) | {"Sun/SRP", "Sun/Schwarzschild"}
+            reported_position_sensitivities = {body: math.nextafter(float(value), math.inf)
+                                              for body, value in position_sensitivities.items()}
+            assert all(math.isfinite(value) and Fraction(value) >= position_sensitivities[body] > 0
+                       for body, value in reported_position_sensitivities.items())
+            full_position_sensitivity = sum(map(Fraction, reported_position_sensitivities.values()), Fraction(0))
+            reported_full_position_sensitivity = math.nextafter(float(full_position_sensitivity), math.inf)
+            assert math.isfinite(reported_full_position_sensitivity)
+            assert Fraction(reported_full_position_sensitivity) >= full_position_sensitivity
+            # Gravity and fully lit fixed-mass cannonball SRP do not depend on velocity.
+            feedback = (Fraction(reported_full_position_sensitivity) * Fraction(duration_s)**2 / 2
+                        + Fraction(reported_relativity_sensitivities[1]) * Fraction(duration_s))
+            reported_feedback = math.nextafter(float(feedback), math.inf)
+            assert math.isfinite(reported_feedback) and Fraction(reported_feedback) >= feedback > 0
+            assert reported_feedback < 1  # Necessary lemma condition, not domain closure.
             acceleration_m_s2 = trajectory._sum_force_acceleration_bounds(
                 budget, gravity_m_s2, thrust, srp, relativity, thrust_enabled=False,
             )
@@ -4200,6 +4256,10 @@ def _check_conditional_full_force_coast_domains(
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
                 "conditional_domain_fully_lit_by_occultor": domain_clear_by_body,
+                "conditional_position_sensitivities_by_force_s_inv2": reported_position_sensitivities,
+                "conditional_full_force_position_sensitivity_s_inv2": reported_full_position_sensitivity,
+                "conditional_full_force_velocity_sensitivity_s_inv": reported_relativity_sensitivities[1],
+                "conditional_error_transport_feedback_upper": reported_feedback,
                 "conditional_schwarzschild_position_sensitivity_s_inv2": reported_relativity_sensitivities[0],
                 "conditional_schwarzschild_velocity_sensitivity_s_inv": reported_relativity_sensitivities[1],
                 "conditional_pck_rotation_path_rad": {

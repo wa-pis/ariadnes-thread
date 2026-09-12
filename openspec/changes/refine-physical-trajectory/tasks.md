@@ -51,6 +51,31 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 fully lit coast state-sensitivity composition (2026-09-12):
+Extract and independently qualify the existing SRP position operator bound,
+preserving its source-variation wrapper. Compose all ten fixed-epoch coast
+position sensitivities after proving whole-domain illumination; keep only
+Schwarzschild velocity sensitivity. Verify exact force inventory, outward
+rounding and k<1 diagnostics in both inventories, focused/full pytest,
+Ruff, strict OpenSpec and legacy checks. Keep domain closure/reference
+defect prerequisites explicit, limits unchanged and task 3.9 open.
+
+Focused verification: 43 tests passed in 166.92 s, including 24 new SRP
+directional-derivative controls and both inventories. Short-domain Lx is
+1.9268702739140936e-6 s^-2 near the Moon and 1.8171215339974738e-6 s^-2
+near Mars. Corresponding Lv is 2.8050418990982346e-14 s^-1 and
+7.305410983566095e-15 s^-1. Short-domain feedback bounds are
+2.3521409477145077e-10 and 2.2181670765259764e-10. One-second domain
+feedback also remains below one (1.7589339439860222e-6 and
+9.624760840255162e-7), but those trajectory domains remain unclosed.
+Both inventory variants reproduce all values. Four native arcs, source
+queries, initial-force and endpoint allowances are unchanged.
+
+Completion verification: all 1679 project tests passed in 431.74 s.
+Ruff, strict OpenSpec, diff and legacy checksum/import-isolation checks
+passed. No new native calls, dependencies or changed physical tolerances.
+Full-suite time is separate from the unchanged 300-second operation limit.
+
 Task 3.9 whole-domain full-illumination geometry (2026-09-12):
 Include observer-position uncertainty in the existing apparent-sphere
 separation proof. Verify exact tangency, smaller/larger/invalid balls and
