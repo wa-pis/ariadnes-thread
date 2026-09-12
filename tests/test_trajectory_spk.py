@@ -1492,6 +1492,87 @@ def test_coast_velocity_certificate_can_be_unresolved_for_exact_endpoint() -> No
     # An upper bound exceeding a gate is not evidence of actual error.
 
 
+def _anchored_coast_velocity_error_bound_m_s(
+    initial_velocity_m_s: np.ndarray, final_velocity_m_s: np.ndarray,
+    anchor_acceleration_m_s2: np.ndarray, duration_s: float,
+    anchor_error_m_s2: Fraction, force_variation_m_s2: Fraction,
+) -> Fraction:
+    """Bound SI/SSB/J2000 velocity error, conditional on initial/interval force bounds."""
+    for vector in (initial_velocity_m_s, final_velocity_m_s, anchor_acceleration_m_s2):
+        assert vector.shape == (3,) and vector.dtype == np.dtype("float64") and np.all(np.isfinite(vector))
+    assert type(duration_s) is float and math.isfinite(duration_s) and duration_s >= 0
+    assert all(isinstance(value, Fraction) and value >= 0 for value in (anchor_error_m_s2, force_variation_m_s2))
+    duration = Fraction(duration_s)
+    residual_m_s = sum((abs(Fraction(final) - Fraction(initial) - Fraction(acceleration) * duration)
+                        for initial, final, acceleration in zip(initial_velocity_m_s, final_velocity_m_s,
+                                                                anchor_acceleration_m_s2, strict=True)), Fraction(0))
+    return residual_m_s + (anchor_error_m_s2 + force_variation_m_s2) * duration
+
+
+@pytest.mark.parametrize("duration_s", [0.0, 1 / 64, 0.3])
+@pytest.mark.parametrize("anchor_error_m_s2", [Fraction(0), Fraction(1, 8)])
+def test_anchored_velocity_attains_constant_acceleration_error(
+    duration_s: float, anchor_error_m_s2: Fraction,
+) -> None:
+    initial = np.asarray([1e12, 0.0, 0.0])
+    final = np.asarray([1e12 + 2 * duration_s - 0.5, 0.0, 0.0])
+    bound = _anchored_coast_velocity_error_bound_m_s(
+        initial, final, np.asarray([2.0, 0.0, 0.0]), duration_s, anchor_error_m_s2, Fraction(0),
+    )
+    true_final = Fraction(initial[0]) + (2 + anchor_error_m_s2) * Fraction(duration_s)
+    assert bound == abs(Fraction(final[0]) - true_final)
+
+
+@pytest.mark.parametrize("duration_s", [0.25, 0.5])
+@pytest.mark.parametrize("jerk_m_s3", [-2, 2])
+def test_anchored_velocity_encloses_linear_acceleration(duration_s: float, jerk_m_s3: int) -> None:
+    initial = np.asarray([64.0, 0.0, 0.0])
+    final = np.asarray([64.0 + 2 * duration_s - math.copysign(0.125, jerk_m_s3), 0.0, 0.0])
+    variation = abs(jerk_m_s3) * Fraction(duration_s)
+    bound = _anchored_coast_velocity_error_bound_m_s(
+        initial, final, np.asarray([2.0, 0.0, 0.0]), duration_s, Fraction(0), variation,
+    )
+    # Exact integral of a(t)=2+j*t, independent of the bound construction.
+    true_final = 64 + 2 * Fraction(duration_s) + jerk_m_s3 * Fraction(duration_s)**2 / 2
+    assert Fraction(1, 8) < abs(Fraction(final[0]) - true_final) <= bound
+
+
+@pytest.mark.parametrize("axis", [0, 1, 2])
+def test_anchored_velocity_preserves_vector_residual(axis: int) -> None:
+    initial = np.full(3, 1e12)
+    acceleration = np.asarray([2.0, -4.0, 8.0])
+    final = initial + acceleration / 4
+    final[axis] += 0.125
+    assert _anchored_coast_velocity_error_bound_m_s(
+        initial, final, acceleration, 0.25, Fraction(0), Fraction(0),
+    ) == Fraction(1, 8)
+
+
+def test_anchored_velocity_can_resolve_exact_constant_acceleration() -> None:
+    initial, final, acceleration = np.asarray([64.0, 0.0, 0.0]), np.asarray([64.5, 0.0, 0.0]), np.asarray([2.0, 0.0, 0.0])
+    assert _anchored_coast_velocity_error_bound_m_s(initial, final, acceleration, 0.25, Fraction(0), Fraction(0)) == 0
+    assert _coast_endpoint_velocity_error_bound_m_s(initial, final, 0.25, 2.0) > Fraction("0.000001")
+
+
+@pytest.mark.parametrize("invalid", ["nan", "infinity", "shape", "dtype", "duration", "boolean-duration",
+                                      "negative-error", "inexact-error", "negative-variation"])
+def test_anchored_velocity_rejects_invalid_inputs(invalid: str) -> None:
+    acceleration = np.zeros(3)
+    if invalid in {"nan", "infinity"}:
+        acceleration[0] = math.nan if invalid == "nan" else math.inf
+    elif invalid == "shape":
+        acceleration = np.zeros(2)
+    elif invalid == "dtype":
+        acceleration = np.zeros(3, dtype=bool)
+    with pytest.raises(AssertionError):
+        _anchored_coast_velocity_error_bound_m_s(
+            np.zeros(3), np.zeros(3), acceleration,
+            True if invalid == "boolean-duration" else -1.0 if invalid == "duration" else 0.25,
+            0.0 if invalid == "inexact-error" else Fraction(-1 if invalid == "negative-error" else 0),  # type: ignore[arg-type] -- rejection boundary.
+            Fraction(-1 if invalid == "negative-variation" else 0),
+        )
+
+
 def _dyadic_sqrt_bounds(value: Fraction) -> tuple[Fraction, Fraction]:
     """Enclose a positive rational root with 100 relative binary guard bits."""
     assert isinstance(value, Fraction) and value > 0
@@ -3551,6 +3632,19 @@ def _check_conditional_full_force_coast_domains(
                     assert velocity_error_m_s >= velocity_reach_m_s > Fraction("0.000001")
                     reported_velocity_error_m_s = math.nextafter(float(velocity_error_m_s), math.inf)
                     assert Fraction(reported_velocity_error_m_s) >= velocity_error_m_s
+                    anchored_velocity_error_m_s = _anchored_coast_velocity_error_bound_m_s(
+                        state[3:], final_state[3:6], anchor_m_s2, duration_s,
+                        prefix_full_error_m_s2, force_variation_m_s2,
+                    )
+                    assert Fraction("0.000001") < anchored_velocity_error_m_s < velocity_error_m_s
+                    reported_anchored_velocity_m_s = math.nextafter(float(anchored_velocity_error_m_s), math.inf)
+                    assert math.isfinite(reported_anchored_velocity_m_s)
+                    assert Fraction(reported_anchored_velocity_m_s) >= anchored_velocity_error_m_s
+                    anchor_residual_m_s = _anchored_coast_velocity_error_bound_m_s(
+                        state[3:], final_state[3:6], anchor_m_s2, duration_s, Fraction(0), Fraction(0),
+                    )
+                    reported_anchor_residual_m_s = math.nextafter(float(anchor_residual_m_s), math.inf)
+                    assert math.isfinite(reported_anchor_residual_m_s) and Fraction(reported_anchor_residual_m_s) >= anchor_residual_m_s
                     endpoint_controls.append({"tighter": tighter,
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),
                         "initial_shadow_function": shadow,
@@ -3583,6 +3677,9 @@ def _check_conditional_full_force_coast_domains(
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,
+                        "conditional_anchored_endpoint_velocity_error_m_s": reported_anchored_velocity_m_s,
+                        "anchor_velocity_residual_l1_m_s": reported_anchor_residual_m_s,
+                        "anchored_velocity_bound_resolves_1um_s": anchored_velocity_error_m_s <= Fraction("0.000001"),
                         "velocity_bound_resolves_1um_s": velocity_error_m_s <= Fraction("0.000001"),
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,

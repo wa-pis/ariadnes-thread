@@ -51,6 +51,35 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 initial-acceleration velocity enclosure (2026-09-12):
+Add the exact saved Euler residual plus `(initial_force_error +
+interval_force_variation)*duration` velocity bound. Verify constant and
+linear acceleration oracles, three-axis residuals, exact-zero resolution
+and invalid inputs, then compose existing conditional full-force evidence
+on the four saved 1/64 s native coast controls. Preserve the old bound and
+unchanged gate; run focused/full pytest, Ruff, strict OpenSpec and legacy
+checks. A failing upper-bound gate is unresolved, not measured mission error.
+
+Focused verification: 25 tests passed in 117.69 s, including 23 new analytic
+and rejection controls and both inventories. Near-Moon velocity bounds are
+7.911016052555362e-5 m/s (nominal) and 7.911014415464899e-5 m/s (tighter);
+near-Mars bounds are 7.504470858243644e-5 and 7.504470585395234e-5 m/s.
+All improve the old norm-only enclosure and all remain above 1e-6 m/s.
+Saved Euler residuals are respectively 1.448444663828386e-7,
+1.448280954782067e-7, 1.5722520693816621e-7 and
+1.572224784540609e-7 m/s; these alone are not trajectory error bounds.
+The existing force-variation allowance dominates the combined result.
+
+The same four native arcs and shared deadline are used, with no extra
+force queries, dependencies, physical assumptions, public interfaces or UI
+changes. Initial-state, SPK/PCK and closed-domain premises remain conditional;
+the 1-second unresolved domain is not promoted. Task 3.9 stays open.
+
+Completion verification: all 1449 project tests passed in 378.99 s. Ruff,
+strict OpenSpec validation and diff checks passed. The educational model's
+SHA-256 remains unchanged and the package does not import it. Suite wall
+time is not the per-mission deadline; no numerical tolerance or budget changed.
+
 Task 3.9 per-source degree-120/20 qualification (2026-09-12):
 Use degree 120 for each near-body control's central field and degree 20
 for the other source, retaining every remaining term in its source-specific

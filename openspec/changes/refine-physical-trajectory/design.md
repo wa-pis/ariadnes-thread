@@ -1,5 +1,42 @@
 ## Context
 
+### Initial-acceleration velocity enclosure (2026-09-12)
+
+For an exact initial velocity v0, saved final velocity vh and saved initial
+acceleration ah, compute `R=|vh-v0-ah*h|_1` in exact Fraction arithmetic.
+If E bounds `|ah-a(t0)|_2` and C bounds `|a(t)-a(t0)|_2` throughout the
+conditionally closed domain, the integral equation gives
+`|vh-v(t0+h)|_2 <= R+(E+C)*h`. Do not substitute the force norm for C,
+omit E, or mistake the saved Euler residual R for numerical trajectory error.
+Use exact stored binary64 values, reject invalid vectors/durations/bounds,
+and round reported bounds outward. Initial-state and endpoint-time premises
+are unchanged; no additional native force evaluations are needed.
+
+Compose the existing complete degree-120/20 initial-force bound with the
+existing full-force variation bound. The source-reach balls include their
+initial SPK error and interval motion/error, enclosing ideal endpoints and
+their chord; the variation allowance overcounts their displacement.
+PCK rotation uses its ideal angular path, while the initial-force error
+already includes stored-matrix/PCK differences. SRP and relativity retain
+their conservative twice-norm variation allowances. Thus both E and C refer
+to the same conditional ideal force model, not different stored/native
+anchors. Apply this only to the existing closed 1/64 s coast controls.
+
+Independent constant-acceleration controls attain the bound, including a
+wrong acceleration and large stored velocities. Linear-acceleration controls
+use the analytic integral of `a(t)=2+j*t` and require the variation term.
+Three-axis perturbations, exact-zero resolution and invalid inputs cover
+cancellation, units and boundaries. Preserve the earlier force-norm velocity
+bound; separately report `conditional_anchored_endpoint_velocity_error_m_s`,
+`anchor_velocity_residual_l1_m_s`, and its unchanged 1e-6 m/s gate flag.
+
+All four new bounds are smaller than the old ones but still unresolved:
+roughly 7.91e-5 m/s near the Moon and 7.50e-5 m/s near Mars. The dominant
+allowance is force variation, not the approximately 1.45e-7/1.57e-7 m/s
+saved Euler residual. This is not evidence of actual trajectory error or
+safety failure. No tolerances, integrators, production behavior or native
+call limits change; task 3.9 remains open.
+
 ### Per-source degree-120/20 qualification (2026-09-12)
 
 Use the measured degree-100 cost to concentrate this test-only oracle on
