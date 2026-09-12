@@ -4246,17 +4246,23 @@ def _check_conditional_full_force_coast_domains(
                     defect_rate_m_s3 = gravity_variation_m_s2 / Fraction(duration_s)
                     constant_defect_m_s2 = prefix_full_error_m_s2 + 2 * (Fraction(srp) + Fraction(relativity))
                     assert constant_defect_m_s2 + defect_rate_m_s3 * Fraction(duration_s) <= reference_defect_m_s2
-                    weighted_position_error_m, weighted_velocity_error_m_s = _coast_error_envelope(
+                    weighted_reference_position_error_m, weighted_reference_velocity_error_m_s = _coast_error_envelope(
                         duration_s, Fraction(0), Fraction(0), Fraction(reported_full_position_sensitivity),
                         Fraction(reported_relativity_sensitivities[1]), constant_defect_m_s2,
                         acceleration_defect_rate_m_s3=defect_rate_m_s3,
                     )
-                    weighted_position_error_m += reference_position_residual_m
-                    weighted_velocity_error_m_s += anchor_residual_m_s
+                    weighted_position_error_m = weighted_reference_position_error_m + reference_position_residual_m
+                    weighted_velocity_error_m_s = weighted_reference_velocity_error_m_s + anchor_residual_m_s
+                    # A fixed reference enclosure can exceed the gate before the
+                    # nonnegative native-to-reference residual is even added.
+                    assert (weighted_reference_velocity_error_m_s <= Fraction("0.000001")) is short_control
                     assert 0 < weighted_position_error_m < transported_position_error_m <= Fraction("0.001")
                     assert 0 < weighted_velocity_error_m_s < transported_velocity_error_m_s
                     assert (weighted_velocity_error_m_s <= Fraction("0.000001")) is short_control
                     transport_bounds = {
+                        "conditional_weighted_reference_position_error_m": weighted_reference_position_error_m,
+                        "conditional_weighted_reference_velocity_error_m_s": weighted_reference_velocity_error_m_s,
+                        "conditional_reference_endpoint_position_residual_m": reference_position_residual_m,
                         "conditional_linear_reference_defect_constant_m_s2": constant_defect_m_s2,
                         "conditional_linear_reference_defect_rate_m_s3": defect_rate_m_s3,
                         "conditional_weighted_endpoint_position_error_m": weighted_position_error_m,
@@ -4315,6 +4321,7 @@ def _check_conditional_full_force_coast_domains(
                     endpoint_controls.append({"tighter": tighter,
                         **reported_transport_bounds,
                         "weighted_position_bound_resolves_1mm": weighted_position_error_m <= Fraction("0.001"),
+                        "reference_only_velocity_bound_resolves_1um_s": weighted_reference_velocity_error_m_s <= Fraction("0.000001"),
                         "weighted_velocity_bound_resolves_1um_s": weighted_velocity_error_m_s <= Fraction("0.000001"),
                         "conditional_initial_state_ball_controls": initial_ball_controls,
                         "native_arc_elapsed_s": native_elapsed_s,

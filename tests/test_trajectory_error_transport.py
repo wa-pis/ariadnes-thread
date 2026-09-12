@@ -142,6 +142,38 @@ def test_linear_defect_transport_encloses_manufactured_solution(duration_s: floa
     assert position < uniform[0] and velocity < uniform[1]
 
 
+@pytest.mark.parametrize("duration_s", [1 / 64, 1 / 32, 1 / 8, 1 / 4])
+@pytest.mark.parametrize("offset_m", [0, 10**12])
+@pytest.mark.parametrize("direction", [-1, 1])
+def test_cubic_reference_encloses_exact_time_forced_motion(
+    duration_s: float, offset_m: int, direction: int,
+) -> None:
+    # One-metre/one-second fixture: x=b+s/(1-t), x''=2*s/(1-t)^3.
+    # The force depends only on time, so Lx=Lv=0 globally for t<1 s.
+    time = Fraction(duration_s)
+    exact_position_m = offset_m + direction / (1 - time)
+    exact_velocity_m_s = direction / (1 - time)**2
+    bounds: list[tuple[Fraction, Fraction]] = []
+    actual_errors: list[tuple[Fraction, Fraction]] = []
+    for degree in (2, 3):
+        reference_position_m = offset_m + direction * sum((time**n for n in range(degree + 1)), Fraction(0))
+        reference_velocity_m_s = direction * sum((n * time**(n - 1) for n in range(1, degree + 1)), Fraction(0))
+        # f'=6*s/(1-t)^4; f''=24*s/(1-t)^5. Taylor's integral
+        # remainder gives D2<=6*t/(1-h)^4, D3<=12*t^2/(1-h)^5.
+        rate_m_s3 = 6 / (1 - time)**4 if degree == 2 else 12 * time / (1 - time)**5
+        position_m, velocity_m_s = _coast_error_envelope(
+            duration_s, Fraction(0), Fraction(0), Fraction(0), Fraction(0), Fraction(0),
+            acceleration_defect_rate_m_s3=rate_m_s3,
+        )
+        errors = (abs(exact_position_m - reference_position_m), abs(exact_velocity_m_s - reference_velocity_m_s))
+        assert 0 < errors[0] <= position_m and 0 < errors[1] <= velocity_m_s
+        bounds.append((position_m, velocity_m_s))
+        actual_errors.append(errors)
+    assert all(cubic < quadratic for quadratic, cubic in zip(*actual_errors, strict=True))
+    assert all(cubic / quadratic == 2 * time / (1 - time) < 1
+               for quadratic, cubic in zip(*bounds, strict=True))
+
+
 @pytest.mark.parametrize("invalid", [Fraction(-1), 0.0, True, math.nan, math.inf])
 def test_error_transport_rejects_invalid_defect_rate(invalid: object) -> None:
     with pytest.raises(AssertionError):

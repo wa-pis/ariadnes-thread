@@ -1,5 +1,34 @@
 ## Context
 
+### Reference-bound diagnosis and analytic cubic control (2026-09-12)
+
+Separate the existing weighted reference-error enclosure from the saved
+native-to-reference endpoint residual, without changing either. WHEN the
+reference velocity bound alone exceeds 1e-6 m/s, THEN preserve that fact
+as an unresolved certificate even before adding the nonnegative residual.
+This diagnoses a limitation of this reference/bound pair: reducing only
+the residual cannot fix it while the reference enclosure remains fixed.
+Neither contribution measures the native integrator's true trajectory error;
+in particular, a zero native-to-reference residual is not a perfect integrator.
+
+Use a separate one-metre, one-second analytic fixture with dimensionless
+tau=t/(1 s), `x=b+s/(1-tau)` metres, s=+/-1. Its explicit time-dependent
+acceleration is `2*s/(1-tau)^3` m/s^2, so state sensitivities are zero.
+Compare references `b+s*(1+tau+tau^2)` and
+`b+s*(1+tau+tau^2+tau^3)` with their exact derivatives and initial state.
+For numerical h in seconds, on 0<=t<=h<1, force differentiation gives
+quadratic-reference defect <= `6*t/(1-h)^4` and cubic-reference defect
+<= `12*t^2/(1-h)^5 <= 12*h*t/(1-h)^5` in this fixture's SI scales.
+Reuse the qualified linear-defect transport lemma, not a new solver.
+
+WHEN h=1/64, 1/32, 1/8 or 1/4 s, either sign, and b=0 or 1e12 m,
+THEN both position/velocity enclosures must contain the independently
+evaluated rational trajectory errors. The cubic bounds must be strictly
+smaller, with exact ratio `2*h/(1-h)` to the quadratic bounds. This is an
+analytic reference-order control only: it does not qualify a physical
+full-force jerk, cubic SPICE reference, native internal stages or longer
+mission arcs. Existing native gates and unresolved cases remain; 3.9 is open.
+
 ### Doubled-duration coast control (2026-09-12)
 
 Add an explicit 1/32 s diagnostic alongside the preserved 1/64 s and 1 s

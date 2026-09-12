@@ -51,6 +51,40 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 reference-bound diagnosis and analytic cubic control (2026-09-12):
+Report the existing weighted reference enclosure separately from endpoint
+residuals, retaining their exact composition and all prior outputs. Verify
+whether the reference velocity bound alone resolves the unchanged gate.
+Qualify quadratic/cubic reference comparisons on exact time-forced rational
+motion with both signs and large translations; do not transfer those
+analytic gains to the physical model. Verify focused analytic/native tests,
+unchanged five-arc/24-readback counts, full pytest, Ruff, strict OpenSpec
+and legacy isolation. No new native calls or production settings; 3.9 stays open.
+
+Focused verification: 100 tests passed in 198.26 s (98 analytic controls
+and both real inventories). All 16 cubic-reference cases enclose the exact
+rational position/velocity errors. At 1/32 s their enclosure ratio to the
+quadratic reference is exactly 2/31, only for the stated analytic fixture.
+
+For the real doubled Mars control, the weighted reference velocity bound
+alone is 1.3500214429163211e-6 m/s, already above 1e-6 m/s. Its native-to-
+reference endpoint residual is 6.289304896345159e-7 m/s, and the composed
+bound remains 1.978951932550837e-6 m/s. These numbers are outward-rounded
+individually; exact Fraction composition is retained internally. The
+reference-only short bounds are 4.324104195093951e-7 m/s near Moon and
+3.379036770041845e-7 m/s near Mars, unchanged for both native profiles.
+All prior endpoint fields/gates, five arcs in the native inventory (zero
+in portable) and 24 affine readbacks in each inventory are preserved.
+Cubic physical-reference qualification is
+still absent: the analytic force derivatives are not substitutes for it.
+
+Completion verification: all 1722 project tests passed in 462.12 s,
+including the reference-only gate failure in the doubled Mars control.
+Ruff, strict OpenSpec, diff and unchanged legacy checksum/import-isolation
+checks passed. Full-suite duration is not a mission-operation runtime;
+the shared 300-second deadline is unchanged. Existing qualification code
+was reused without dependencies or production changes. Task 3.9 remains open.
+
 Task 3.9 doubled-duration coast control (2026-09-12):
 Add a 1/32 s domain without changing the existing radii or scientific
 settings. Recompute closure and all force bounds before one nominal native
