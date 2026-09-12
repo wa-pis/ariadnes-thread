@@ -6,7 +6,7 @@ import ctypes
 from fractions import Fraction
 from hashlib import file_digest, sha256
 import json
-from itertools import permutations
+from itertools import permutations, product
 import math
 from pathlib import Path
 import platform
@@ -1805,6 +1805,77 @@ def test_trig_enclosure_rejects_inexact_input() -> None:
         _sin_cos_degrees_bounds(0.5)  # type: ignore[arg-type] -- explicit boundary rejection.
 
 
+def _pck_matrix_error_bound(
+    angles_deg: tuple[tuple[Fraction, Fraction], ...], observed: np.ndarray,
+) -> Fraction:
+    """Bound matrix-entry L1 (hence operator) error against ideal RA/DEC/PM intervals."""
+    assert len(angles_deg) == 3
+    assert all(len(pair) == 2 and all(isinstance(value, Fraction) for value in pair)
+               and pair[0] <= pair[1] for pair in angles_deg)
+    assert observed.shape == (3, 3) and observed.dtype == np.float64 and np.all(np.isfinite(observed))
+    ra, dec, pm = angles_deg
+    euler_deg = (pm, (90 - dec[1], 90 - dec[0]), (90 + ra[0], 90 + ra[1]))
+    trig: list[tuple[Fraction, Fraction]] = []
+    for lower, upper in euler_deg:
+        turns = ((lower + upper) / 2 + 180) // 360
+        lower, upper = lower - 360 * turns, upper - 360 * turns
+        # Use a small binary64 midpoint to avoid huge nested rational denominators;
+        # its complete rounding error is retained in the Lipschitz expansion.
+        midpoint = Fraction(float((lower + upper) / 2))
+        error_rad = max(abs(midpoint - lower), abs(midpoint - upper)) * _pi_rational_bounds()[1] / 180
+        # Outward dyadic rounding keeps the corner products cheap; 120 bits is
+        # computational precision, not a new physical tolerance.
+        step = Fraction(2)**-120
+        for lo, hi in _sin_cos_degrees_bounds(midpoint):
+            lower_trig, upper_trig = lo - error_rad, hi + error_rad
+            enclosed = ((lower_trig // step) * step, -((-upper_trig) // step) * step)
+            assert enclosed[0] <= lower_trig <= upper_trig <= enclosed[1]
+            trig.append(enclosed)
+    errors = [Fraction(0)] * 9
+    # Each matrix entry is multi-affine in the six enclosed trig values, so
+    # its extrema over this box occur at the 64 corners. Correlation is not assumed.
+    for sw, cw, sb, cb, sa, ca in product(*trig):
+        matrix = (cw * ca - sw * cb * sa, cw * sa + sw * cb * ca, sw * sb,
+                  -sw * ca - cw * cb * sa, -sw * sa + cw * cb * ca, cw * sb,
+                  sb * sa, -sb * ca, cb)
+        for index, (value, native) in enumerate(zip(matrix, observed.flat, strict=True)):
+            errors[index] = max(errors[index], abs(value - Fraction(native)))
+    return sum(errors, Fraction(0))
+
+
+@pytest.mark.parametrize("error", [0.0, 0.125])
+@pytest.mark.parametrize(("angles", "expected"), [
+    ((-90, 90, 0), ((1, 0, 0), (0, 1, 0), (0, 0, 1))),
+    ((-90, 90, 90), ((0, 1, 0), (-1, 0, 0), (0, 0, 1))),
+    ((-90, 0, 0), ((1, 0, 0), (0, 0, 1), (0, -1, 0))),
+    ((0, 0, 90), ((0, 0, 1), (0, -1, 0), (1, 0, 0))),
+])
+def test_pck_matrix_exact_axis_rotations(
+    error: float, angles: tuple[int, int, int], expected: tuple[tuple[int, ...], ...],
+) -> None:
+    observed = np.asarray(expected, dtype=float)
+    observed[0, 0] += error
+    bound = _pck_matrix_error_bound(tuple((Fraction(a), Fraction(a)) for a in angles), observed)
+    assert Fraction(error) <= bound < Fraction(error) + Fraction(2)**-90
+
+
+def test_pck_matrix_diagonal_and_nonzero_angle_width() -> None:
+    diagonal = _pck_matrix_error_bound(
+        ((Fraction(-45), Fraction(-45)), (Fraction(90), Fraction(90)), (Fraction(0), Fraction(0))), np.zeros((3, 3)),
+    )
+    # Entry L1 norm of R3(45 degrees) is 1+2*sqrt(2).
+    assert diagonal > 1 and 8 <= (diagonal - 1)**2 < 8 + Fraction(2)**-80
+    uncertain = _pck_matrix_error_bound(
+        ((Fraction(-90), Fraction(-90)), (Fraction(90), Fraction(90)), (Fraction(-45), Fraction(45))), np.eye(3),
+    )
+    assert uncertain >= 2  # Exact entry-L1 error at either 45-degree endpoint.
+
+
+def test_pck_matrix_rejects_reversed_interval() -> None:
+    with pytest.raises(AssertionError):
+        _pck_matrix_error_bound(((Fraction(1), Fraction(0)),) * 3, np.eye(3))
+
+
 def _fully_lit_srp_anchor_error_bound_m_s2(
     sun_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
     luminosity_w: float, area_m2: float, cr: float, mass_kg: float,
@@ -2147,7 +2218,7 @@ def test_pck_euler_rate_rejects_invalid_time_unit(time_unit_s: int) -> None:
 
 def _check_pinned_pck_rotation_rates(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
-) -> dict[str, Fraction]:
+) -> tuple[dict[str, Fraction], dict[str, tuple[tuple[Fraction, Fraction], ...]]]:
     """Qualify ideal text-PCK rates; sampled native readbacks are not error bounds."""
     import spiceypy as spice
 
@@ -2172,6 +2243,7 @@ def _check_pinned_pck_rotation_rates(
     epoch_magnitude_s = max(abs(Fraction(start_tdb_s)), abs(Fraction(end_tdb_s)))
     bounds: dict[str, Fraction] = {}
     angle_error_upper_rad: dict[str, dict[str, float]] = {}
+    angle_intervals_deg: dict[str, tuple[tuple[Fraction, Fraction], ...]] = {}
     phase_bounds = [_sin_cos_degrees_bounds(Fraction(offset) + Fraction(rate) * Fraction(start_tdb_s) / century_s)
                     for offset, rate in zip(phases[::2], phases[1::2], strict=True)]
     pi_bounds = _pi_rational_bounds()
@@ -2180,6 +2252,7 @@ def _check_pinned_pck_rotation_rates(
         frame = f"IAU_{name.upper()}"
         assert spice.namfrm(frame) == frame_id and spice.frinfo(frame_id) == (body, 2, body)
         components = []
+        initial_angles_deg: list[tuple[Fraction, Fraction]] = []
         native_angles = spice.bodeul(body, start_tdb_s)
         assert len(native_angles) == 4 and all(math.isfinite(value) for value in native_angles)
         assert native_angles[3] == 0.0  # No long-axis offset in the pinned model.
@@ -2206,6 +2279,7 @@ def _check_pinned_pck_rotation_rates(
                 assert upper_deg // 360 == turns  # Reject a wrap-crossing enclosure.
                 lower_deg -= 360 * turns
                 upper_deg -= 360 * turns
+            initial_angles_deg.append((lower_deg, upper_deg))
             angle_rad = [degree * pi / 180 for degree in (lower_deg, upper_deg) for pi in pi_bounds]
             observed_rad = Fraction(native_angles[len(components) - 1])
             error_rad = max(abs(observed_rad - endpoint) for endpoint in angle_rad)
@@ -2213,6 +2287,7 @@ def _check_pinned_pck_rotation_rates(
             assert math.isfinite(reported_error_rad) and Fraction(reported_error_rad) >= error_rad
             angle_error_upper_rad[name][periodic] = reported_error_rad
         bounds[name] = sum(components, Fraction(0))
+        angle_intervals_deg[name] = tuple(initial_angles_deg)
         # Euler generators have unit operator norm: |omega| <= sum |angle'|.
         for epoch_tdb_s in np.linspace(start_tdb_s, end_tdb_s, 13):
             budget.check()
@@ -2222,7 +2297,7 @@ def _check_pinned_pck_rotation_rates(
     budget.check()
     print(json.dumps({"pck_anchor_epoch_tdb_s": start_tdb_s,
                       "pck_anchor_angle_error_upper_rad": angle_error_upper_rad}, sort_keys=True, allow_nan=False))
-    return bounds
+    return bounds, angle_intervals_deg
 
 
 @pytest.mark.parametrize("changed_source", ["binary", "coefficients", "phase", "frame", "mars-periodic"])
@@ -2354,7 +2429,7 @@ def _check_conditional_full_force_coast_domains(
         flight_time_s=end_tdb_s - start_tdb_s,
     )
     spacecraft = _spacecraft()
-    rotation_rates_rad_s = _check_pinned_pck_rotation_rates(budget, start_tdb_s, end_tdb_s)
+    rotation_rates_rad_s, pck_angles_deg = _check_pinned_pck_rotation_rates(budget, start_tdb_s, end_tdb_s)
     environment = trajectory._build_physical_environment(candidate, spacecraft, budget=budget)
     bodies = environment.bodies
     states = {body: np.asarray(bodies.get(body).ephemeris.cartesian_state(start_tdb_s)).reshape(6)
@@ -2618,11 +2693,18 @@ def _check_conditional_full_force_coast_domains(
 
                     c20_error_upper_m_s2: dict[str, float] = {}
                     degree_two_error_upper_m_s2: dict[str, dict[str, float]] = {}
+                    pck_matrix_error_upper: dict[str, float] = {}
                     for index, source in enumerate(("Moon", "Mars")):
                         field = bodies.get(source).gravity_field_model
                         observed_c20_m_s2 = force_values[40:46].reshape(2, 3)[index]
                         rotation = force_values[46:64].reshape(2, 3, 3)[index]
                         assert np.max(np.abs(rotation - spice.pxform("J2000", f"IAU_{source.upper()}", start_tdb_s))) <= 1e-14
+                        budget.check()
+                        matrix_error = _pck_matrix_error_bound(pck_angles_deg[source], rotation)
+                        reported_matrix_error = math.nextafter(float(matrix_error), math.inf)
+                        assert math.isfinite(reported_matrix_error) and Fraction(reported_matrix_error) >= matrix_error
+                        pck_matrix_error_upper[source] = reported_matrix_error
+                        budget.check()
                         assert field.sine_coefficients[2, 0] == 0.0
                         c20_error_m_s2 = _degree_two_anchor_error_bound_m_s2(
                             field.gravitational_parameter, field.reference_radius, float(field.cosine_coefficients[2, 0]),
@@ -2701,6 +2783,7 @@ def _check_conditional_full_force_coast_domains(
                         "harmonic_monopole_anchor_error_upper_m_s2": harmonic_monopole_error_upper_m_s2,
                         "c20_stored_matrix_anchor_error_upper_m_s2": c20_error_upper_m_s2,
                         "degree_two_stored_matrix_anchor_error_upper_m_s2": degree_two_error_upper_m_s2,
+                        "pck_anchor_matrix_entry_l1_error_upper": pck_matrix_error_upper,
                         "observed_harmonic_sum_residual_l1_upper_m_s2": harmonic_sum_residual_upper_m_s2,
                         "observed_harmonic_term_counts": {source: len(indices) for source, indices in harmonic_indices.items()},
                         "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,

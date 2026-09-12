@@ -51,6 +51,32 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 initial PCK rotation-matrix arithmetic (2026-09-12):
+Reuse the pinned angle intervals and saved native rotations to enclose all
+nine entries of `R3(PM) R1(90 deg - DEC) R3(90 deg + RA)`. Verify exact-axis,
+composition, perturbed, irrational-diagonal, finite-width and rejection
+oracles; preserve all five PCK resource controls. Report outward entry-L1
+errors and check deadlines without adding spacecraft arcs. Verify focused
+and full pytest, Ruff, strict OpenSpec and the unchanged legacy checksum.
+This is an initial ideal-PCK matrix bound, not physical uncertainty or a
+full-force/trajectory certificate; task 3.9 remains open.
+
+Focused verification: 17 tests passed in 30.63 s, versus 76.89 s before
+outward 120-bit dyadic rounding of trig endpoints. Containment is asserted
+exactly; this computational precision is not a scientific tolerance.
+All four native controls report identical dimensionless entry-L1 bounds:
+Moon 2.31447111066898e-13 and Mars 1.6056874336998682e-12, unchanged at
+reported precision by optimization. Controls/evaluations/arcs remain
+(4,4,4) or (0,0,0) per inventory variant. Both focused invocations actually
+ran four native arcs each; no discarded work is treated as free. No
+production settings, physical resources, limits or public APIs changed.
+
+Completion verification: all 1260 project tests passed in 256.89 s; Ruff,
+strict OpenSpec validation and diff checks passed. The legacy SHA-256 is
+unchanged and production does not import the legacy module. The full suite
+also reran the four-control inventory; its total wall time is not evidence
+of a complete mission satisfying the shared 300-second budget.
+
 Task 3.9 initial PCK Euler-angle arithmetic (2026-09-10):
 Evaluate the six initial Euler angles from pinned polynomial/periodic data
 with rational sine/cosine and pi enclosures. Verify quadrant, diagonal,

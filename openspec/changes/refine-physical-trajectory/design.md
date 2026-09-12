@@ -1,5 +1,34 @@
 ## Context
 
+### Initial PCK rotation-matrix enclosure (2026-09-12)
+
+Extend the private PCK rate helper to return its already evaluated RA/DEC/PM
+intervals too. At the same initial epoch, enclose the passive rotation
+`Q = R3(PM) R1(90 deg - DEC) R3(90 deg + RA)` independently of native trig.
+Reduce each interval by an exact common whole turn, evaluate the existing
+rational trig enclosure at a binary64 midpoint, and expand by the complete
+midpoint-to-endpoint angular distance using the unit Lipschitz constant.
+Round trig bounds outward to a 2^-120 dyadic grid, asserting containment;
+this limits rational-product cost without changing a scientific tolerance.
+
+Each matrix entry is multi-affine in six independently enclosed trig values.
+Evaluate its extrema at all 64 box corners, then sum the maximum absolute
+entry discrepancies from the saved native matrix using exact Fractions.
+This dimensionless entry-L1 bound also bounds Frobenius and operator errors.
+Report outward-rounded values as `pck_anchor_matrix_entry_l1_error_upper`:
+Moon 2.31447111066898e-13 and Mars 1.6056874336998682e-12, unchanged at the
+reported precision by the dyadic cost optimization. No angular mission
+allocation is introduced, and the existing native/native 1e-14 parity gate
+is not incorrectly reused for these ideal-model errors.
+
+Reuse the four native coast controls and their saved rotations, with deadline
+checks around enclosure work. Axis/composition, perturbed-matrix, irrational
+diagonal, nonzero-width and reversed-interval controls provide independent
+oracles. These bounds concern one epoch and the pinned ideal PCK, not physical
+orientation uncertainty or uniform native accuracy. They are not yet composed
+with harmonic-force or trajectory errors; task 3.9 remains open. Production,
+public APIs, resources, limits and the Streamlit prototype remain unchanged.
+
 ### Initial PCK Euler-angle arithmetic enclosures (2026-09-10)
 
 Use the already hashed and validated text-PCK inputs to evaluate RA, DEC and
