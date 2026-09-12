@@ -51,6 +51,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 initial SRP/source-position error composition (2026-09-12):
+Reuse exact apparent-disc geometry with spheres enlarged by source-position
+error radii; verify strict clearance, tangency, observer-inside-enlargement,
+translation and invalid-input controls. Only after proving full light for
+every position ball, combine the native SRP arithmetic enclosure with
+`2*K_upper*E/d^3`, using the existing pi and point-force bounds. Verify radial
+source-shift/area-scaling oracles, both native inventories, full pytest,
+Ruff, strict OpenSpec and the unchanged legacy checksum. Keep 3.9 open.
+
+Focused verification: 36 tests passed in 30.09 s. All 12 Sun/occultor pairs
+in the four existing coast controls remain strictly clear after enlargement
+by the conditional SPK errors. The combined initial SRP Euclidean error
+bounds are 1.6427511986196103e-23 m/s^2 near Moon and
+2.578720215592348e-24 m/s^2 near Mars, identical for both profiles. Native
+controls/evaluations/arcs remain (4,4,4) or (0,0,0) by inventory; all four
+focused arcs count as work. These are conditional numerical bounds at one
+epoch with fixed spacecraft position/mass, not full-mission illumination,
+physical uncertainty or a new tolerance. Production settings are unchanged.
+
+Completion verification: all 1310 project tests passed in 257.04 s; the
+full suite also reran four native inventory arcs. Ruff, strict OpenSpec,
+diff checks and the unchanged legacy SHA-256 passed. Suite runtime is not
+a mission-runtime qualification; no production limits or UI changed.
+
 Task 3.9 initial SPK-position/gravity error composition (2026-09-12):
 Pass each qualified initial source-position enclosure into the existing
 coast controls, verify endpoint/core provenance before handoff, and prove

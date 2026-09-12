@@ -1,5 +1,40 @@
 ## Context
 
+### Conditional source-position error for fully lit SRP (2026-09-12)
+
+Extend the existing exact apparent-disc test with optional nonnegative SI
+centre-error radii. A physical sphere of radius R whose centre is within E
+of its stored position lies inside the concentric sphere of radius R+E.
+Add these radii as Fractions and reuse the exact angular-disjointness
+inequality; no trigonometric or new eclipse implementation is required.
+Nominally invalid geometry still fails validation. If an enlarged sphere
+reaches the observer, return unresolved rather than asserting clear or
+classifying an impact. Apparent tangency also remains unresolved. Zero
+errors preserve the previous exact checks.
+
+Require all three enlarged occultor discs to remain disjoint from the
+enlarged solar disc at each initial coast anchor. This proves full light
+for the whole product of the conditional Sun/Moon/Earth/Mars position balls,
+including the Sun comparison chord used for the force bound. It does not
+prove illumination over time or physical ephemeris uncertainty.
+
+For a fully lit cannonball, acceleration is `K*r/||r||^3`, where
+`K=L*A*Cr/(4*pi*c*m)` and c=299792458 m/s. Use the existing rational pi
+lower bound to enclose K upward, then reuse the unit-GM point-force
+variation bound to obtain `2*K_upper*E/d^3`. The source-position chord
+floor d is already qualified; initial spacecraft position/mass are held
+exactly fixed. Add the earlier native SRP arithmetic enclosure and report
+`conditional_fully_lit_srp_spk_anchor_l2_error_upper_m_s2`, with the geometric
+premises in `conditional_apparent_discs_clear_for_position_balls`.
+
+Independent radial source-shift oracles use `125*A/(pi*r^2)` with both
+displacement signs, zero displacement and area scaling. Enlarged-disc
+controls include exact tangency, loss of an external viewpoint, large SSB
+translations and invalid errors. Retain the original native shadow and
+arithmetic-only gates; do not reinterpret their tolerance as a new combined
+error allocation. The four existing native controls suffice. Production,
+resources, limits and UI are unchanged; task 3.9 remains open.
+
 ### Initial gravity error including conditional SPK position bounds (2026-09-12)
 
 Pass each initial sample's already qualified position-error enclosure into

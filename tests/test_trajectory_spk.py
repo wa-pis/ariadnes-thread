@@ -1937,14 +1937,55 @@ def test_fully_lit_srp_anchor_rejects_invalid_mass(mass_kg: float) -> None:
         )
 
 
+def _fully_lit_srp_position_variation_bound_m_s2(
+    luminosity_w: float, area_m2: float, cr: float, mass_kg: float,
+    distance_floor_m: float, displacement_m: Fraction,
+) -> Fraction:
+    """Bound SRP source-position effect; caller proves full light and chord floor."""
+    assert all(type(value) is float and math.isfinite(value) and value > 0
+               for value in (luminosity_w, area_m2, cr, mass_kg))
+    coefficient_upper_m3_s2 = (Fraction(luminosity_w) * Fraction(area_m2) * Fraction(cr)
+                              / (4 * 299792458 * Fraction(mass_kg) * _pi_rational_bounds()[0]))
+    # Fully lit SRP has the same inverse-square Jacobian norm as point gravity.
+    return coefficient_upper_m3_s2 * _point_mass_variation_bound_m_s2(1.0, distance_floor_m, displacement_m)
+
+
+@pytest.mark.parametrize("area_m2", [1.0, 2.0])
+@pytest.mark.parametrize("delta_m", [-0.125, 0.0, 0.125])
+def test_fully_lit_srp_position_variation_radial_oracle(area_m2: float, delta_m: float) -> None:
+    bound_m_s2 = _fully_lit_srp_position_variation_bound_m_s2(
+        float(4 * 299792458 * 125), area_m2, 1.0, 1.0,
+        5.0 - abs(delta_m), Fraction(abs(delta_m)),
+    )
+    # Exact radial acceleration is 125*A/(pi*r^2); only the source moves.
+    exact_times_pi_m_s2 = 125 * Fraction(area_m2) * abs(Fraction(1, 25) - (5 + Fraction(delta_m))**-2)
+    pi_lower, pi_upper = _pi_rational_bounds()
+    assert bound_m_s2 * pi_lower >= exact_times_pi_m_s2
+    if delta_m:
+        assert bound_m_s2 * pi_upper < 2 * exact_times_pi_m_s2
+    else:
+        assert bound_m_s2 == 0
+
+
+@pytest.mark.parametrize(("mass_kg", "error_m"), [
+    (0.0, Fraction(0)), (math.nan, Fraction(0)), (1.0, Fraction(-1)),
+])
+def test_fully_lit_srp_position_variation_rejects_invalid_input(mass_kg: float, error_m: Fraction) -> None:
+    with pytest.raises(AssertionError):
+        _fully_lit_srp_position_variation_bound_m_s2(1.0, 1.0, 1.0, mass_kg, 1.0, error_m)
+
+
 def _apparent_spheres_strictly_disjoint(
     source_position_m: np.ndarray, source_radius_m: float,
     occultor_position_m: np.ndarray, occultor_radius_m: float,
     observer_position_m: np.ndarray,
+    *, source_position_error_m: float = 0.0, occultor_position_error_m: float = 0.0,
 ) -> bool:
-    """Prove disjoint apparent spherical discs at exact stored SI/J2000 inputs."""
+    """Prove clear discs for SI/J2000 position balls; false means unresolved."""
     assert all(type(radius) is float and math.isfinite(radius) and radius > 0
                for radius in (source_radius_m, occultor_radius_m))
+    assert all(type(error) is float and math.isfinite(error) and error >= 0
+               for error in (source_position_error_m, occultor_position_error_m))
     for vector in (source_position_m, occultor_position_m, observer_position_m):
         assert vector.shape == (3,) and vector.dtype == np.float64
         assert np.all(np.isfinite(vector))
@@ -1955,6 +1996,12 @@ def _apparent_spheres_strictly_disjoint(
     occultor_squared_m2 = sum((value**2 for value in occultor), Fraction(0))
     source_radius, occultor_radius = Fraction(source_radius_m), Fraction(occultor_radius_m)
     assert source_squared_m2 > source_radius**2 and occultor_squared_m2 > occultor_radius**2
+    # Every uncertain physical sphere is contained in the concentric sphere
+    # enlarged by its centre-error radius (triangle inequality). Sum exactly.
+    source_radius += Fraction(source_position_error_m)
+    occultor_radius += Fraction(occultor_position_error_m)
+    if source_squared_m2 <= source_radius**2 or occultor_squared_m2 <= occultor_radius**2:
+        return False  # Cannot prove an external viewpoint for the enlarged sphere.
     dot_m2 = sum((s * o for s, o in zip(source, occultor, strict=True)), Fraction(0))
     left_m2 = dot_m2 + source_radius * occultor_radius
     right_squared_m4 = ((source_squared_m2 - source_radius**2)
@@ -1988,6 +2035,33 @@ def test_apparent_spheres_rejects_invalid_geometry(source_radius_m: float) -> No
         _apparent_spheres_strictly_disjoint(
             np.asarray([25.0, 0.0, 0.0]), source_radius_m,
             np.asarray([0.0, 25.0, 0.0]), 1.0, np.zeros(3),
+        )
+
+
+@pytest.mark.parametrize("offset_m", [0.0, 1e12])
+@pytest.mark.parametrize(("source_error_m", "occultor_error_m", "clear"), [
+    (0.0, 0.0, True), (0.25, 0.25, True), (0.0, 1.0, False),
+    (10.0, 0.0, False),  # Enlarged source reaches observer: unresolved, not an impact.
+])
+def test_apparent_spheres_position_balls(
+    offset_m: float, source_error_m: float, occultor_error_m: float, clear: bool,
+) -> None:
+    observer_m = np.full(3, offset_m)
+    assert _apparent_spheres_strictly_disjoint(
+        observer_m + np.asarray([25.0, 0.0, 0.0]), 15.0,
+        observer_m + np.asarray([15.0, 20.0, 0.0]), 6.0, observer_m,
+        source_position_error_m=source_error_m, occultor_position_error_m=occultor_error_m,
+    ) is clear
+    # With zero source error and occultor error 1, enlarged apparent discs
+    # are exactly tangent (480^2=400*576); no small-epsilon "clear" is allowed.
+
+
+@pytest.mark.parametrize("error_m", [-1.0, math.nan, True])
+def test_apparent_spheres_rejects_invalid_position_error(error_m: float) -> None:
+    with pytest.raises(AssertionError):
+        _apparent_spheres_strictly_disjoint(
+            np.asarray([25.0, 0.0, 0.0]), 15.0, np.asarray([0.0, 25.0, 0.0]),
+            6.0, np.zeros(3), source_position_error_m=error_m,
         )
 
 
@@ -2741,6 +2815,7 @@ def _check_conditional_full_force_coast_domains(
                     shadow = float(force_values[33])
                     source_radius_m = bodies.get("Sun").shape_model.average_radius
                     clear_by_body: dict[str, bool] = {}
+                    conditional_clear_by_body: dict[str, bool] = {}
                     for occultor in trajectory.SOLAR_RADIATION_OCCULTING_BODY_NAMES:
                         occultor_radius_m = bodies.get(occultor).shape_model.average_radius
                         clear_by_body[occultor] = _apparent_spheres_strictly_disjoint(
@@ -2748,6 +2823,12 @@ def _check_conditional_full_force_coast_domains(
                             occultor_radius_m, state[:3],
                         )
                         assert clear_by_body[occultor], (center, occultor)
+                        conditional_clear_by_body[occultor] = _apparent_spheres_strictly_disjoint(
+                            states["Sun"][:3], source_radius_m, states[occultor][:3], occultor_radius_m, state[:3],
+                            source_position_error_m=source_position_errors_m["Sun"],
+                            occultor_position_error_m=source_position_errors_m[occultor],
+                        )
+                        assert conditional_clear_by_body[occultor], (center, occultor, "source-position balls")
                         direct_shadow = fundamentals.compute_shadow_function(
                             states["Sun"][:3], source_radius_m, states[occultor][:3],
                             occultor_radius_m, state[:3],
@@ -2764,6 +2845,13 @@ def _check_conditional_full_force_coast_domains(
                     reported_srp_error_m_s2 = math.nextafter(float(srp_anchor_error_m_s2), math.inf)
                     assert math.isfinite(reported_srp_error_m_s2)
                     assert Fraction(reported_srp_error_m_s2) >= srp_anchor_error_m_s2
+                    conditional_srp_error_m_s2 = srp_anchor_error_m_s2 + _fully_lit_srp_position_variation_bound_m_s2(
+                        trajectory.SUN_LUMINOSITY_W, spacecraft.srp_area_m2, spacecraft.reflectivity_coefficient,
+                        spacecraft.initial_mass_kg, source_error_floors_m["Sun"], Fraction(source_position_errors_m["Sun"]),
+                    )
+                    reported_conditional_srp_error_m_s2 = math.nextafter(float(conditional_srp_error_m_s2), math.inf)
+                    assert math.isfinite(reported_conditional_srp_error_m_s2)
+                    assert Fraction(reported_conditional_srp_error_m_s2) >= conditional_srp_error_m_s2
                     exact_sum = [sum(map(Fraction, components_m_s2[:, axis]), Fraction(0)) for axis in range(3)]
                     sum_residual = [Fraction(anchor_m_s2[axis]) - exact_sum[axis] for axis in range(3)]
                     component_norm_sum = float(np.linalg.norm(components_m_s2, axis=1).sum())
@@ -2931,6 +3019,8 @@ def _check_conditional_full_force_coast_domains(
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),
                         "initial_shadow_function": shadow,
                         "fully_lit_srp_anchor_error_upper_m_s2": reported_srp_error_m_s2,
+                        "conditional_fully_lit_srp_spk_anchor_l2_error_upper_m_s2": reported_conditional_srp_error_m_s2,
+                        "conditional_apparent_discs_clear_for_position_balls": conditional_clear_by_body,
                         "initial_apparent_discs_strictly_disjoint": clear_by_body,
                         "point_anchor_error_upper_m_s2": point_anchor_error_upper_m_s2,
                         "harmonic_monopole_anchor_error_upper_m_s2": harmonic_monopole_error_upper_m_s2,
