@@ -51,6 +51,29 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 initial Schwarzschild/SPK-state error composition (2026-09-12):
+Carry the qualified Sun velocity error into the existing coast controls;
+combine independent spatial/velocity Jacobian norm bounds with Sun position
+and velocity errors, then add the native arithmetic enclosure. Prove the
+chord's distance floor and relative-speed cap without rounding subtraction.
+Verify radial-position and radial/transverse-velocity exact oracles, zero
+error, invalid domains, both inventories, full pytest, Ruff, strict OpenSpec
+and the legacy checksum. Keep 3.9 open and all scientific gates unchanged.
+
+Focused verification: 20 tests passed in 30.23 s. The conditional Sun
+velocity error is 6.9538963374104784e-15 m/s. Combined initial Schwarzschild
+Euclidean error bounds are 1.3414766729191487e-25 m/s^2 near Moon and
+1.6302658872133053e-26 m/s^2 near Mars, identical for both profiles.
+Controls/evaluations/arcs remain (4,4,4) or (0,0,0); four native arcs ran in
+the focused inventory. These bounds concern conditional SPK arithmetic
+and the fixed initial spacecraft state, not physical uncertainty or uniform
+trajectory accuracy. Production, resources, limits and UI are unchanged.
+
+Completion verification: all 1328 project tests passed in 256.49 s; the
+full suite reran the four native inventory arcs. Ruff, strict OpenSpec,
+diff checks and the unchanged legacy SHA-256 passed. Full-suite timing
+does not qualify a mission run; task 3.9 remains open.
+
 Task 3.9 initial SRP/source-position error composition (2026-09-12):
 Reuse exact apparent-disc geometry with spheres enlarged by source-position
 error radii; verify strict clearance, tangency, observer-inside-enlargement,

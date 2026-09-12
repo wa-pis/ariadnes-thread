@@ -1312,6 +1312,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         budget, start_tdb_s, end_tdb_s, coast_body_reaches_m, chain_speed_bounds_m_s[10],
         {body: motion_samples[target][0][1] for body, target in body_ids.items()},
         {body: float(motion_samples[target][0][2]) for body, target in body_ids.items()},
+        chain_velocity_bounds_m_s[10],
         run_native_controls=native_record_readback,
     )
 
@@ -1623,6 +1624,59 @@ def test_schwarzschild_anchor_irrational_radius() -> None:
 def test_schwarzschild_anchor_rejects_invalid_state(invalid_state: tuple[float, ...]) -> None:
     with pytest.raises(AssertionError):
         _schwarzschild_anchor_error_bound_m_s2(1.0, np.zeros(6), np.asarray(invalid_state), np.zeros(3))
+
+
+def _schwarzschild_state_variation_bound_m_s2(
+    gm_m3_s2: float, distance_floor_m: float, speed_upper_m_s: Fraction,
+    position_error_m: Fraction, velocity_error_m_s: Fraction,
+) -> Fraction:
+    """Bound PPN=1 source-state effects on a chord with r>=d and |v|<=V."""
+    assert all(type(value) is float and math.isfinite(value) and value > 0
+               for value in (gm_m3_s2, distance_floor_m))
+    assert all(isinstance(value, Fraction) and value >= 0
+               for value in (speed_upper_m_s, position_error_m, velocity_error_m_s))
+    gm, d, v = Fraction(gm_m3_s2), Fraction(distance_floor_m), speed_upper_m_s
+    # Position derivative norms: 12*GM^2/r^4 + (2+4+12)*GM*|v|^2/r^3.
+    position_jacobian_s_inv2 = (12 * gm**2 / d**4 + 18 * gm * v**2 / d**3) / 299792458**2
+    # Velocity derivatives of -|v|^2*r + 4*(r.v)*v contribute 2+4+4.
+    velocity_jacobian_s_inv = 10 * gm * v / (299792458**2 * d**2)
+    return position_jacobian_s_inv2 * position_error_m + velocity_jacobian_s_inv * velocity_error_m_s
+
+
+@pytest.mark.parametrize("speed_m_s", [0, 2])
+@pytest.mark.parametrize("delta_m", [-0.125, 0.0, 0.125])
+def test_schwarzschild_state_variation_radial_position(speed_m_s: int, delta_m: float) -> None:
+    bound_m_s2 = _schwarzschild_state_variation_bound_m_s2(
+        1.0, 10.0 - abs(delta_m), Fraction(speed_m_s), Fraction(abs(delta_m)), Fraction(0),
+    )
+    r0, r1 = Fraction(10), 10 + Fraction(delta_m)
+    # GM=1, radial fixed velocity: a*c^2=4/r^3+3*v^2/r^2.
+    exact_times_c2 = abs(4 / r0**3 + 3 * speed_m_s**2 / r0**2 - 4 / r1**3 - 3 * speed_m_s**2 / r1**2)
+    assert exact_times_c2 <= bound_m_s2 * 299792458**2
+    assert (bound_m_s2 == 0) == (delta_m == 0)
+
+
+@pytest.mark.parametrize("radial", [False, True])
+@pytest.mark.parametrize("delta_m_s", [-0.125, 0.0, 0.125])
+def test_schwarzschild_state_variation_velocity(radial: bool, delta_m_s: float) -> None:
+    bound_m_s2 = _schwarzschild_state_variation_bound_m_s2(
+        1.0, 10.0, 2 + Fraction(abs(delta_m_s)), Fraction(0), Fraction(abs(delta_m_s)),
+    )
+    # At r=(10,0,0), changing a purely radial/transverse speed changes only a_x;
+    # the velocity coefficient is +3/-1 times v^2/(100*c^2).
+    exact_times_c2 = Fraction(3 if radial else 1, 100) * abs((2 + Fraction(delta_m_s))**2 - 4)
+    assert exact_times_c2 <= bound_m_s2 * 299792458**2
+    assert (bound_m_s2 == 0) == (delta_m_s == 0)
+
+
+@pytest.mark.parametrize("invalid", ["gm", "floor", "speed", "position", "velocity", "inexact"])
+def test_schwarzschild_state_variation_rejects_invalid_domain(invalid: str) -> None:
+    with pytest.raises(AssertionError):
+        _schwarzschild_state_variation_bound_m_s2(
+            math.nan if invalid == "gm" else 1.0, 0.0 if invalid == "floor" else 1.0,
+            Fraction(-1 if invalid == "speed" else 1), Fraction(-1 if invalid == "position" else 0),
+            0.0 if invalid == "inexact" else Fraction(-1 if invalid == "velocity" else 0),  # type: ignore[arg-type] -- boundary rejection.
+        )
 
 
 def _degree_two_anchor_error_bound_m_s2(
@@ -2594,6 +2648,7 @@ def _check_conditional_full_force_coast_domains(
     body_reaches_m: dict[float, dict[str, float]], sun_speed_upper_m_s: float,
     position_anchors_m: dict[str, np.ndarray],
     source_position_errors_m: dict[str, float],
+    sun_velocity_error_m_s: float,
     *, run_native_controls: bool,
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
@@ -2617,6 +2672,8 @@ def _check_conditional_full_force_coast_domains(
     assert set(source_position_errors_m) == set(states)
     assert all(type(error) is float and math.isfinite(error) and 0 <= error <= 0.001
                for error in source_position_errors_m.values())
+    assert type(sun_velocity_error_m_s) is float and math.isfinite(sun_velocity_error_m_s)
+    assert 0 <= sun_velocity_error_m_s <= 1e-6
     assert sum((abs(Fraction(value)) for value in states["Sun"][3:]), Fraction(0)) <= Fraction(sun_speed_upper_m_s)
     guards_m = {surface.body: surface.guard_radius_m for surface in environment.collision_resource.surfaces}
     position_radius_m, velocity_radius_m_s = 1000.0, 0.1
@@ -2998,6 +3055,16 @@ def _check_conditional_full_force_coast_domains(
                     reported_relativity_error_m_s2 = math.nextafter(float(relativity_anchor_error_m_s2), math.inf)
                     assert math.isfinite(reported_relativity_error_m_s2)
                     assert Fraction(reported_relativity_error_m_s2) >= relativity_anchor_error_m_s2
+                    relative_speed_bound_m_s = sum((abs(Fraction(ship) - Fraction(sun)) for ship, sun in
+                                                   zip(state[3:], states["Sun"][3:], strict=True)), Fraction(sun_velocity_error_m_s))
+                    conditional_relativity_error_m_s2 = relativity_anchor_error_m_s2 + _schwarzschild_state_variation_bound_m_s2(
+                        bodies.get("Sun").gravity_field_model.gravitational_parameter, source_error_floors_m["Sun"],
+                        relative_speed_bound_m_s, Fraction(source_position_errors_m["Sun"]), Fraction(sun_velocity_error_m_s),
+                    )
+                    reported_conditional_relativity_error_m_s2 = math.nextafter(float(conditional_relativity_error_m_s2), math.inf)
+                    assert math.isfinite(reported_conditional_relativity_error_m_s2)
+                    assert Fraction(reported_conditional_relativity_error_m_s2) >= conditional_relativity_error_m_s2
+                    budget.check()
                     if first_acceleration_m_s2 is None:
                         first_acceleration_m_s2 = anchor_m_s2.copy()
                     else:
@@ -3034,6 +3101,8 @@ def _check_conditional_full_force_coast_domains(
                         "observed_harmonic_sum_residual_l1_upper_m_s2": harmonic_sum_residual_upper_m_s2,
                         "observed_harmonic_term_counts": {source: len(indices) for source, indices in harmonic_indices.items()},
                         "schwarzschild_anchor_error_upper_m_s2": reported_relativity_error_m_s2,
+                        "conditional_sun_velocity_error_upper_m_s": sun_velocity_error_m_s,
+                        "conditional_schwarzschild_spk_anchor_l2_error_upper_m_s2": reported_conditional_relativity_error_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,

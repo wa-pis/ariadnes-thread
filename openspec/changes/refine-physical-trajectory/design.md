@@ -1,5 +1,37 @@
 ## Context
 
+### Conditional Sun-state error for Schwarzschild acceleration (2026-09-12)
+
+Pass the existing conditional Sun chain velocity-error bound into the four
+coast controls, alongside the already passed position bounds. Preserve its
+original 1e-6 m/s qualification gate and endpoint/core provenance. This is
+error relative to the declared SPK state, not physical velocity uncertainty.
+At the exact stored spacecraft state, use the previously proved Sun chord
+distance floor d and `V = L1(v_ship-v_Sun_stored)+E_velocity`; exact Fraction
+subtraction and summation ensure V bounds relative speed throughout the
+source-state comparison chord.
+
+With mu=GM, R=|r| and c=299792458 m/s, split the PPN=1 correction as
+`a = [4*mu^2*r/R^4 + mu*(-|v|^2*r + 4*(r.v)*v)/R^3]/c^2`.
+The spatial Jacobian norm is at most
+`J_r = (12*mu^2/d^4 + 18*mu*V^2/d^3)/c^2`:
+`D(r/R^4)` has norm 3/R^4, `D(r/R^3)` has norm 2/R^3,
+and differentiating `(r.v)*v/R^3` contributes bounds 1+3 before its
+factor 4. The velocity Jacobian norm is at most
+`J_v = 10*mu*V/(c^2*d^2)`, from contributions 2+4+4.
+Thus `J_r*E_position + J_v*E_velocity` encloses the state-input effect.
+All bound arithmetic is rational; add the prior native arithmetic enclosure
+and round only the reported Euclidean acceleration-error bound upward.
+
+Independent radial-position tests use `a*c^2=4/r^3+3*v^2/r^2` for mu=1,
+including v=0 and v=2. Fixed-radius radial/transverse velocity tests use
+coefficients +3/-1 of `v^2/r^2`; test both displacement signs, zero error,
+and invalid domains. Report the velocity premise and
+`conditional_schwarzschild_spk_anchor_l2_error_upper_m_s2` at each anchor.
+Keep the old arithmetic-only force gate distinct; no new allocation,
+physical uncertainty, entire-trajectory or native-stage safety claim is
+introduced. Task 3.9 remains open; no production settings or arcs change.
+
 ### Conditional source-position error for fully lit SRP (2026-09-12)
 
 Extend the existing exact apparent-disc test with optional nonnegative SI
