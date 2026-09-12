@@ -1,5 +1,38 @@
 ## Context
 
+### Conditional initial-error transport lemma (2026-09-12)
+
+Before composing arcs, retain initial position/velocity uncertainty instead
+of resetting every endpoint to an exact state. For a differentiable reference
+with x_bar'=v_bar, require a uniform acceleration defect D and force
+sensitivities Lx/Lv on an already established common domain and all relevant
+state chords. These premises are not supplied by the short endpoint tests.
+
+Let initial norm bounds be p and v, and duration h. The supremum acceleration
+error A satisfies `A <= Lx*(p+h*v+h^2*A/2)+Lv*(v+h*A)+D` by integration and
+the triangle inequality. If `k=Lx*h^2/2+Lv*h < 1`, this gives
+`A <= [Lx*(p+h*v)+Lv*v+D]/(1-k)` and uniform position/velocity bounds
+`p+h*v+h^2*A/2` and `v+h*A`. Use exact rational arithmetic and reject
+nonpositive denominator or invalid inputs; rejection is unresolved proof,
+not evidence that the actual trajectory is unsafe. No clipping or fallback.
+
+Qualify this test-only lemma with constant-acceleration equality, four-step
+uncertainty carryover, and exact nonlinear solutions x=1/(1-t), v=1/(1-t)^2
+for position-dependent, velocity-dependent and coupled acceleration.
+For x''=2*x^3, use Lx=6/(1-h)^2; for x''=2*v^(3/2), use Lv=3/(1-h);
+the sum x''=x^3+v^(3/2) uses half of each constant. Positive reference-to-state
+chords and monotonic exact paths provide the independent analytic domains.
+
+Retain the velocity-only h=0.25 s case as a reproducible unresolved control:
+Lv=4 s^-1 gives k=1, while the exact endpoint is finite (4/3 m, 16/9 m/s).
+The initial focused run exposed this boundary; expect explicit rejection,
+not a relaxed denominator criterion or a fabricated infinite-error result.
+
+This does not yet qualify full-force sensitivities (including shadow
+boundaries), a continuous native reference/defect, or internal-stage safety.
+Do not apply it to the real coast controls until those premises are proven.
+No production code, native calls, dependencies or limits change; 3.9 is open.
+
 ### Short-control tiling cost screen (2026-09-12)
 
 Do not treat passing 1/64 s endpoint controls as a deployable full-flight

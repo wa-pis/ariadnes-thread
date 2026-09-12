@@ -51,6 +51,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional initial-error transport lemma (2026-09-12):
+Derive a rational position/velocity error enclosure from initial errors,
+uniform acceleration defect and position/velocity sensitivities under a
+strict feedback condition. Verify constant-acceleration equality, exact
+nonlinear position/velocity/coupled controls, four-segment carryover,
+near-singular arithmetic and invalid/unresolved input rejection. Run
+focused/full pytest, Ruff, strict OpenSpec, diff and legacy checks.
+Do not use unqualified full-force sensitivities or promote analytic
+controls to real trajectory safety; preserve all limits and keep 3.9 open.
+
+Focused verification: 55 controls passed in 0.02 s. The first run exposed
+the velocity-only nonlinear h=0.25 s boundary: Lv=4 s^-1 gives k=1 even
+though the exact endpoint (4/3 m, 16/9 m/s) is finite. Preserve that input
+as an expected unresolved rejection; the strict criterion is unchanged.
+The remaining nonlinear controls, constant-force equalities, carryover and
+invalid-input checks pass. This is analytic evidence only, not a qualified
+full-force transport or longer native-arc result.
+
+Completion verification: all 1593 project tests passed in 428.43 s,
+including existing real SPICE/native parity controls. Ruff, strict OpenSpec,
+diff checks, legacy SHA-256 and import isolation passed. No new native
+calls, dependencies, scientific tolerances or production changes. Suite
+duration is separate from the unchanged 300-second operation deadline.
+
 Task 3.9 short-control tiling cost screen (2026-09-12):
 Verify the exact number of uniform 1/64 s segments covering the pinned
 candidate interval and compare with the unchanged operation-wide 228-arc
