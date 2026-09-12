@@ -58,9 +58,14 @@ for Mars over the candidate interval. Fifteen exact spherical-derivative
 controls and the reused 26 native pole readbacks per inventory pass;
 corrupted derivative input is rejected. Native sampling is not a uniform
 arithmetic proof. No force bound has yet changed.
-Next bounded work within 3.9 is to qualify coefficient partition,
-preserving nonzonal spin and all arithmetic
-allowances, before applying the zonal symmetry to the reference bound or
+The coefficient partition now reconstructs the pinned Moon 200 / Mars 120
+fields exactly, with no source mutation or dropped degree-one terms.
+Sixteen new synthetic/rejection controls cover disjointness, independence,
+full model sizes and invalid input. Both real inventories agree on the
+nonzero zonal/nonzonal counts. This does not yet tighten a force bound.
+Next bounded work within 3.9 is to compose the zonal pole-only and nonzonal
+full-rotation bounds, preserving all arithmetic allowances and historical
+controls, before applying the result to the reference certificate or
 attempting mission composition. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
@@ -68,7 +73,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 1893 passing tests; both focused
+The latest completed code check has 1909 passing tests; both focused
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost

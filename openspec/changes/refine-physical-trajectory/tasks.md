@@ -51,6 +51,27 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 lossless coefficient partition (2026-09-13):
+Verify exact, disjoint zonal/nonzonal partition through degree 200,
+preservation of degree-one terms, no source mutation or aliasing, and
+invalid-input rejection. Apply the check to both pinned gravity fields
+in both inventories, preserving C00 separately and reporting nonzero
+counts. Verify focused tests, full pytest, Ruff, strict OpenSpec and
+legacy isolation. Do not tighten force bounds from reconstruction alone;
+retain all scientific outcomes and leave task 3.9 open.
+
+Focused evidence: 55 analytic/rejection tests passed in 0.54 s, including
+16 new partition controls, and both real inventories passed in 246.81 s.
+The Moon field has 199 nonzero zonal cosine coefficients and 20099
+nonzero nonzonal coefficients in each of C/S; Mars has 119 and 7259
+respectively. C00=1 is kept separately. All arrays reconstruct exactly
+and both pinned source fields remain byte-for-byte unchanged. The counts
+describe nonzero coefficients, not force evaluations; no extra native arcs
+or SPICE calls were added. All old force/error outcomes, including Mars
+1/8 s unresolved velocity, remain unchanged. Task 3.9 stays open.
+All 1909 tests passed in 513.80 s. Ruff, strict OpenSpec validation,
+diff whitespace and legacy checksum/import-isolation checks passed.
+
 Task 3.9 pole-only PCK rate bounds (2026-09-13):
 Retain RA+DEC separately from the full three-angle rate; verify exact
 spherical-derivative controls, the reused 26 native pole derivative

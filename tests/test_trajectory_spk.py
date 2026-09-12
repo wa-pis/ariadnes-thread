@@ -3621,6 +3621,7 @@ def _check_conditional_full_force_coast_domains(
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint
     from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
+    from test_trajectory_zonal_rotation import _partition_nonmonopole_coefficients
     from test_trajectory_gravity import _candidate, _spacecraft
 
     candidate = _candidate(
@@ -3651,6 +3652,26 @@ def _check_conditional_full_force_coast_domains(
     assert 0 <= sun_velocity_error_m_s <= 1e-6
     assert sum((abs(Fraction(value)) for value in states["Sun"][3:]), Fraction(0)) <= Fraction(sun_speed_upper_m_s)
     guards_m = {surface.body: surface.guard_radius_m for surface in environment.collision_resource.surfaces}
+    coefficient_partitions: dict[str, dict[str, int]] = {}
+    for body, degree in (("Moon", 200), ("Mars", 120)):
+        budget.check()
+        field = bodies.get(body).gravity_field_model
+        cosine, sine = field.cosine_coefficients, field.sine_coefficients
+        original_bytes = cosine.tobytes(), sine.tobytes()
+        assert cosine.shape == (degree + 1, degree + 1) and cosine[0, 0] == 1.0
+        zonal, nonzonal, nonzonal_sine = _partition_nonmonopole_coefficients(cosine, sine)
+        reconstructed = zonal + nonzonal
+        reconstructed[0, 0] = cosine[0, 0]
+        assert np.array_equal(reconstructed, cosine) and np.array_equal(nonzonal_sine, sine)
+        assert not np.any(zonal[:, 1:]) and zonal[0, 0] == 0 and not np.any(nonzonal[:, 0])
+        assert (field.cosine_coefficients.tobytes(), field.sine_coefficients.tobytes()) == original_bytes
+        coefficient_partitions[body] = {
+            "maximum_degree": degree,
+            "zonal_nonzero_cosine_terms": int(np.count_nonzero(zonal)),
+            "nonzonal_nonzero_cosine_terms": int(np.count_nonzero(nonzonal)),
+            "nonzonal_nonzero_sine_terms": int(np.count_nonzero(nonzonal_sine)),
+        }
+    print(json.dumps({"conditional_harmonic_coefficient_partition": coefficient_partitions}, sort_keys=True, allow_nan=False))
     results: list[dict[str, object]] = []
     for center, radius_m in (("Moon", 1_837_400.0), ("Mars", 3_689_500.0)):
         # The stored SI state defines the exact initial condition of this control.

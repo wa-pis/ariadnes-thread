@@ -2,10 +2,78 @@
 
 from fractions import Fraction
 
+import numpy as np
 import pytest
 
 from space_nav import trajectory
 from test_trajectory_spk import _pck_euler_rate_upper_rad_s, _pi_rational_bounds, _regular_solid_harmonic_jets
+
+
+def _partition_nonmonopole_coefficients(
+    cosine: np.ndarray, sine: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Copy dimensionless normalized coefficients into zonal C and nonzonal C/S.
+
+    Degree zero is excluded from both parts and remains with the caller.
+    All degrees n>=1, including degree one, are retained without truncation.
+    """
+    assert cosine.ndim == 2 and cosine.shape == sine.shape and cosine.shape[0] == cosine.shape[1] > 0
+    assert all(matrix.dtype == np.float64 and np.all(np.isfinite(matrix)) and not np.any(np.triu(matrix, 1))
+               for matrix in (cosine, sine))
+    assert not np.any(sine[:, 0])
+    zonal = np.zeros_like(cosine)
+    zonal[1:, 0] = cosine[1:, 0]
+    nonzonal = cosine.copy()
+    nonzonal[:, 0] = 0.0
+    return zonal, nonzonal, sine.copy()
+
+
+@pytest.mark.parametrize("degree", [0, 1, 2, 8, 120, 200])
+def test_coefficient_partition_is_exact_disjoint_and_nonmutating(degree: int) -> None:
+    size = degree + 1
+    cosine = np.tril(np.arange(1, size*size + 1, dtype=np.float64).reshape(size, size))
+    sine = -cosine.copy()
+    sine[:, 0] = 0.0
+    original_bytes = cosine.tobytes(), sine.tobytes()
+    zonal, nonzonal, nonzonal_sine = _partition_nonmonopole_coefficients(cosine, sine)
+    assert np.array_equal(zonal[1:, 0], cosine[1:, 0])
+    assert zonal[0, 0] == 0 and not np.any(zonal[:, 1:])
+    assert not np.any(nonzonal[:, 0]) and not np.any(nonzonal_sine[:, 0])
+    assert np.array_equal(nonzonal[:, 1:], cosine[:, 1:])
+    assert np.array_equal(nonzonal_sine, sine)
+    assert np.count_nonzero(zonal) == degree
+    assert np.count_nonzero(nonzonal) == np.count_nonzero(nonzonal_sine) == degree*(degree + 1)//2
+    reconstructed = zonal + nonzonal
+    reconstructed[0, 0] = cosine[0, 0]
+    assert np.array_equal(reconstructed, cosine)
+    assert (cosine.tobytes(), sine.tobytes()) == original_bytes
+    assert all(not np.shares_memory(part, source) for part in (zonal, nonzonal, nonzonal_sine)
+               for source in (cosine, sine))
+    assert not np.shares_memory(zonal, nonzonal)
+    assert not np.shares_memory(nonzonal, nonzonal_sine)
+
+
+@pytest.mark.parametrize("invalid", ["empty", "nonsquare", "mismatch", "boolean", "float32", "nan", "infinity", "upper-c", "upper-s", "zonal-s"])
+def test_coefficient_partition_rejects_invalid_input(invalid: str) -> None:
+    cosine, sine = np.zeros((3, 3)), np.zeros((3, 3))
+    if invalid == "empty":
+        cosine = sine = np.zeros((0, 0))
+    elif invalid == "nonsquare":
+        cosine = sine = np.zeros((2, 3))
+    elif invalid == "mismatch":
+        sine = np.zeros((2, 2))
+    elif invalid in {"boolean", "float32"}:
+        cosine = cosine.astype(np.bool_ if invalid == "boolean" else np.float32)
+    elif invalid in {"nan", "infinity"}:
+        sine[2, 1] = np.nan if invalid == "nan" else np.inf
+    elif invalid == "upper-c":
+        cosine[0, 1] = 1.0
+    elif invalid == "upper-s":
+        sine[0, 1] = 1.0
+    else:
+        sine[2, 0] = 1.0
+    with pytest.raises(AssertionError):
+        _partition_nonmonopole_coefficients(cosine, sine)
 
 
 @pytest.mark.parametrize("ra_deg_day,dec_deg_day", [(0.0, 0.0), (1.0, 0.0), (0.0, -2.0), (1.0, -2.0), (-1.0, 2.0)])

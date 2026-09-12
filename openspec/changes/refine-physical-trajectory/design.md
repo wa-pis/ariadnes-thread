@@ -1,5 +1,24 @@
 ## Context
 
+### Lossless zonal/nonzonal coefficient partition (2026-09-13)
+
+Partition dimensionless normalized coefficient arrays into disjoint
+nonmonopole zonal C[n,0], n>=1, and nonzonal C/S[n,m], m>=1. Retain C00
+separately; require all S[n,0] to be zero. Copy coefficients without
+renormalization or truncation, including degree one. Reject non-finite,
+non-float64, empty, nonsquare, mismatched or non-triangular inputs.
+WHEN the parts are recombined with C00, THEN every original coefficient
+must be recovered exactly and original arrays must remain byte-for-byte
+unchanged. Test output/source independence and full degree-120/200 sizes.
+
+Apply the same partition to the pinned Moon 200 and Mars 120 fields in
+both existing inventories; report nonzero counts, verify exact reconstruction
+and nonmutation, but do not change any force calculations. The potential
+and its gradient are linear in coefficients, so this disjoint partition
+retains the original ideal field. Combining the separately bounded rotation
+contributions is the next step, not a result of partition checks alone.
+Native arithmetic allowances and the unresolved Mars 1/8 s gate remain.
+
 ### Pole-only PCK rate bounds (2026-09-13)
 
 Retain the individual RA and DEC bounds from the existing exact text-PCK
