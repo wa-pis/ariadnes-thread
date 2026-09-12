@@ -4237,11 +4237,50 @@ def _check_conditional_full_force_coast_domains(
                                                  for key, value in transport_bounds.items()}
                     assert all(math.isfinite(value) and Fraction(value) >= transport_bounds[key] > 0
                                for key, value in reported_transport_bounds.items())
+                    initial_ball_controls: list[dict[str, object]] = []
+                    for initial_velocity_radius_m_s in (0.0, 5e-8, 1e-7):
+                        budget.check()
+                        initial_position_radius_m = 0.0001  # Explicit fixture, not a mission default/allocation.
+                        p, v, h = Fraction(initial_position_radius_m), Fraction(initial_velocity_radius_m_s), Fraction(duration_s)
+                        # First-exit closure around nominal x0/v0, for the whole
+                        # initial-state family. The reference and its defect stay fixed.
+                        family_position_reach_m = p + (initial_speed_m_s + v) * h + Fraction(acceleration_m_s2) * h**2 / 2
+                        family_velocity_reach_m_s = v + Fraction(acceleration_m_s2) * h
+                        assert family_position_reach_m < Fraction(position_radius_m)
+                        assert family_velocity_reach_m_s < Fraction(velocity_radius_m_s)
+                        family_position_error_m, family_velocity_error_m_s = _coast_error_envelope(
+                            duration_s, p, v, Fraction(reported_full_position_sensitivity),
+                            Fraction(reported_relativity_sensitivities[1]), reference_defect_m_s2,
+                        )
+                        family_position_error_m += reference_position_residual_m
+                        family_velocity_error_m_s += anchor_residual_m_s
+                        assert transported_position_error_m < family_position_error_m <= Fraction("0.001")
+                        assert transported_velocity_error_m_s < family_velocity_error_m_s
+                        family_values = {
+                            "position_reach_m": family_position_reach_m,
+                            "velocity_reach_m_s": family_velocity_reach_m_s,
+                            "endpoint_position_error_m": family_position_error_m,
+                            "endpoint_velocity_error_m_s": family_velocity_error_m_s,
+                        }
+                        reported_family = {key: math.nextafter(float(value), math.inf) for key, value in family_values.items()}
+                        assert all(math.isfinite(value) and Fraction(value) >= family_values[key] > 0
+                                   for key, value in reported_family.items())
+                        resolves_velocity = family_velocity_error_m_s <= Fraction("0.000001")
+                        assert resolves_velocity == (center != "Moon" or initial_velocity_radius_m_s < 1e-7)
+                        initial_ball_controls.append({
+                            "initial_position_radius_m": initial_position_radius_m,
+                            "initial_velocity_radius_m_s": initial_velocity_radius_m_s,
+                            "conditional_domain_closed": True,
+                            "within_position_gate": family_position_error_m <= Fraction("0.001"),
+                            "within_velocity_gate": resolves_velocity,
+                            **reported_family,
+                        })
                     control_elapsed_s = perf_counter() - control_started_s
                     assert math.isfinite(control_elapsed_s) and control_elapsed_s >= native_elapsed_s
                     budget.check()
                     endpoint_controls.append({"tighter": tighter,
                         **reported_transport_bounds,
+                        "conditional_initial_state_ball_controls": initial_ball_controls,
                         "native_arc_elapsed_s": native_elapsed_s,
                         "control_verification_elapsed_s": control_elapsed_s,
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),

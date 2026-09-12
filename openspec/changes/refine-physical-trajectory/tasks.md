@@ -51,6 +51,35 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 nonzero initial-state ball controls (2026-09-12):
+Verify first-exit domain closure for explicit initial position/velocity
+balls before applying the existing reference transport. Report both endpoint
+gates for three cases per native control, preserving unresolved outcomes
+without changing inputs or tolerances. Verify analytic transport controls,
+both real inventories, full pytest, Ruff, strict OpenSpec and legacy checks.
+Do not treat fixture radii as mission allocations or measured uncertainties;
+no extra native calls or production changes, and task 3.9 stays open.
+
+Focused verification: 57 tests passed in 167.02 s, including the 55 analytic
+transport controls and both real inventories. All 12 initial-ball cases
+close inside the original domains and pass the 0.001 m position gate;
+position bounds span approximately 0.111-0.1442 mm. With 5e-8 m/s initial
+velocity radius, Moon nominal/tighter bounds are 9.80293277042568e-7 /
+9.802769061379362e-7 m/s, below the unchanged velocity gate.
+
+With 1e-7 m/s initial velocity radius, Moon bounds become
+1.0302932770660895e-6 / 1.0302769061614576e-6 m/s: explicitly unresolved,
+not accepted and not evidence of an actual error exceeding the gate. Mars
+bounds are 9.316263564472676e-7 / 9.316236279631623e-7 m/s and pass.
+Preserve this exact pass/unresolved pattern as a full-suite regression.
+The nominal initial state, reference, four native runs and deadline are unchanged.
+
+Completion verification: all 1679 project tests passed in 435.30 s,
+including the explicit pass/unresolved pattern. Ruff, strict OpenSpec,
+diff checks and legacy checksum/import isolation passed. Full-suite time
+is separate from the unchanged 300-second operation deadline. No native
+calls, dependencies, production changes or relaxed tolerances were added.
+
 Task 3.9 continuous quadratic-reference transport control (2026-09-12):
 Reuse the exact initial-state quadratic reference only after verifying
 its acceleration norm and existing position/velocity domain bounds.

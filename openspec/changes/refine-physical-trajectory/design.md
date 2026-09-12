@@ -1,5 +1,30 @@
 ## Context
 
+### Nonzero initial-state ball controls (2026-09-12)
+
+Use explicit diagnostic initial radii p=0.0001 m and v=0, 5e-8, 1e-7 m/s
+around each short control's nominal stored state. They are exact stored
+binary64 fixture inputs, not scenario defaults, uncertainty estimates from
+observations, covariance values or adopted mission error allocations.
+
+Close the entire initial-state family in the original nominal-centred
+domain before transport: position reach is `p+(|v0|_1+v)*h+A*h^2/2`, and
+velocity reach is `v+A*h`. Verify both are strictly below the existing
+domain radii. Thus the same full-force sensitivity bounds apply between
+the family and the unchanged nominal quadratic reference; its acceleration
+defect is unchanged because the reference itself did not move.
+
+Apply the qualified transport lemma with p/v, add saved nominal endpoint
+residuals and report position/velocity gates independently. Preserve any
+unresolved velocity gate instead of reducing the input uncertainty or
+relaxing 1e-6 m/s. A failed upper-bound gate is not evidence of actual
+trajectory error or impact. No extra family trajectories are integrated.
+
+This qualifies conditional short-interval enclosures for the stated initial
+balls, not multi-arc accumulation, uncertainty estimation or longer native
+segments. Native internal-stage safety remains open. No production data,
+settings, dependencies, call limits or numerical tolerances change; 3.9 is open.
+
 ### Continuous quadratic-reference transport control (2026-09-12)
 
 Define q(t)=x0+v0*t+a_hat*t^2/2 from the exact stored initial state and
