@@ -1432,7 +1432,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert body_reach_checks == 3 * chain_join_checks + 32
     assert set(full_interval_body_reach_m) == set(chain_position_bounds_m)
 
-    coast_durations_s = (1 / 64, 1 / 32, 1.0)
+    coast_durations_s = (1 / 64, 1 / 32, 1 / 16, 1.0)
     coast_body_reaches_m: dict[float, dict[str, float]] = {}
     body_ids = dict(zip(trajectory.PHYSICAL_BODY_NAMES, (10, 1, 2, 399, 301, 499, 599, 699), strict=True))
     affine_links: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...], Fraction]] = {}
@@ -1466,7 +1466,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                             for observed, initial, velocity in zip(native_position, position, slope, strict=True)), Fraction(0))
             assert residual <= curvature * Fraction(duration_s)**2 / 2 + Fraction(chain_position_bounds_m[target]), body
             affine_native_checks += 1
-    assert len(affine_links) == 11 and affine_native_checks == 24
+    assert len(affine_links) == 11 and affine_native_checks == 32
     print(json.dumps({"position_polynomial_acceleration_l1_bound_m_s2": affine_curvature_bounds_m_s2,
                       "affine_native_position_checks": affine_native_checks}, sort_keys=True, allow_nan=False))
     for duration_s in coast_durations_s:
@@ -1531,12 +1531,17 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert not spice.failed()
     assert kernels_before == [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
     budget.check()
-    assert budget.native_arc_propagations == (5 if native_record_readback else 0)
+    assert budget.native_arc_propagations == (6 if native_record_readback else 0)
     # Hypothetical uniform reuse, not proof these controls apply elsewhere.
     control_duration = Fraction(1, 64)
-    assert {(domain["center"], Fraction(domain["duration_s"]))
+    assert len(coast_domains) == 9
+    assert {(domain["center"], Fraction(domain["duration_s"]),
+             domain["position_domain_radius_m"], domain["velocity_domain_radius_m_s"])
             for domain in coast_domains if domain["conditional_domain_closed"]} == {
-        ("Moon", control_duration), ("Mars", control_duration), ("Mars", 2 * control_duration),
+        ("Moon", control_duration, 1000.0, 0.1),
+        ("Mars", control_duration, 1000.0, 0.1),
+        ("Mars", 2 * control_duration, 1000.0, 0.1),
+        ("Mars", 4 * control_duration, 2000.0, 0.25),
     }
     interval_duration = Fraction(end_tdb_s) - Fraction(start_tdb_s)
     uniform_arc_count = math.ceil(interval_duration / control_duration)
@@ -3629,7 +3634,6 @@ def _check_conditional_full_force_coast_domains(
     assert 0 <= sun_velocity_error_m_s <= 1e-6
     assert sum((abs(Fraction(value)) for value in states["Sun"][3:]), Fraction(0)) <= Fraction(sun_speed_upper_m_s)
     guards_m = {surface.body: surface.guard_radius_m for surface in environment.collision_resource.surfaces}
-    position_radius_m, velocity_radius_m_s = 1000.0, 0.1
     results: list[dict[str, object]] = []
     for center, radius_m in (("Moon", 1_837_400.0), ("Mars", 3_689_500.0)):
         # The stored SI state defines the exact initial condition of this control.
@@ -3674,10 +3678,14 @@ def _check_conditional_full_force_coast_domains(
         initial_speed_m_s = sum((abs(Fraction(value)) for value in state[3:]), Fraction(0))
         initial_speed_upper_m_s = math.nextafter(float(initial_speed_m_s), math.inf)
         assert Fraction(initial_speed_upper_m_s) >= initial_speed_m_s
-        relative_speed_m_s = initial_speed_m_s + Fraction(velocity_radius_m_s) + Fraction(sun_speed_upper_m_s)
-        relative_speed_upper_m_s = math.nextafter(float(relative_speed_m_s), math.inf)
-        assert Fraction(relative_speed_upper_m_s) >= relative_speed_m_s
-        for duration_s, reaches_m in body_reaches_m.items():
+        domain_cases = [(duration_s, 1000.0, 0.1) for duration_s in body_reaches_m]
+        if center == "Mars":
+            domain_cases.append((1 / 16, 2000.0, 0.25))
+        for duration_s, position_radius_m, velocity_radius_m_s in domain_cases:
+            reaches_m = body_reaches_m[duration_s]
+            relative_speed_m_s = initial_speed_m_s + Fraction(velocity_radius_m_s) + Fraction(sun_speed_upper_m_s)
+            relative_speed_upper_m_s = math.nextafter(float(relative_speed_m_s), math.inf)
+            assert Fraction(relative_speed_upper_m_s) >= relative_speed_m_s
             budget.check()
             short_control = duration_s == 1 / 64
             floors_m: dict[str, float] = {}
@@ -3833,8 +3841,10 @@ def _check_conditional_full_force_coast_domains(
             mass_floor_kg = trajectory._mass_lower_bound(budget, spacecraft.initial_mass_kg, 0.0, 0.0, duration_s)
             assert mass_floor_kg == spacecraft.initial_mass_kg > spacecraft.dry_mass_kg
             closed = reach_m < position_radius_m and velocity_reach_m_s < Fraction(velocity_radius_m_s)
-            assert closed is (short_control or (center == "Mars" and duration_s == 1 / 32)), (
-                center, duration_s, reach_m, float(velocity_reach_m_s),
+            assert closed is (short_control or (center == "Mars" and (
+                duration_s == 1 / 32 or (duration_s == 1 / 16 and position_radius_m == 2000.0)
+            ))), (
+                center, duration_s, position_radius_m, velocity_radius_m_s, reach_m, float(velocity_reach_m_s),
             )
             relative_reaches_m: dict[str, float] = {}
             reported_relative_variation_m_s2: float | None = None
@@ -4535,6 +4545,8 @@ def _check_conditional_full_force_coast_domains(
                         "velocity_bound_resolves_1um_s": velocity_error_m_s <= Fraction("0.000001"),
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
+                "position_domain_radius_m": position_radius_m,
+                "velocity_domain_radius_m_s": velocity_radius_m_s,
                 "conditional_point_mass_initial_jerk_intervals_m_s3": point_jerk_intervals_m_s3,
                 "conditional_harmonic_monopole_initial_jerk_intervals_m_s3": harmonic_monopole_jerks_m_s3,
                 "conditional_domain_fully_lit_by_occultor": domain_clear_by_body,
@@ -4558,7 +4570,7 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_split_relative_force_variation_m_s2": reported_split_relative_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
-    expected_arcs = 5 if run_native_controls else 0
+    expected_arcs = 6 if run_native_controls else 0
     assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (expected_arcs,) * 3
     return results
 

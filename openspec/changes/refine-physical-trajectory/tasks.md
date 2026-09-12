@@ -51,6 +51,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 longer Mars coast control (2026-09-13):
+Add one 1/16 s Mars control with separately recomputed 2000 m / 0.25 m/s
+domain bounds. Verify the original 1000 m / 0.1 m/s domain remains
+unclosed at that duration, the wider domain closes before native execution,
+and all six native cubic controls satisfy the unchanged endpoint gates.
+Verify both SPK inventories, 32 affine source readbacks per inventory,
+six/zero native arcs, full pytest, Ruff, strict OpenSpec and legacy isolation.
+Record measured outcomes without treating this fixture as mission safety;
+task 3.9 remains open.
+
+Focused evidence: both real inventories passed in 224.61 s. The new Mars
+1/16 s domain has position reach 1907.80735317391 m < 2000 m and velocity
+reach upper bound 0.19935115594347363 m/s < 0.25 m/s. Its conditional
+partial-cubic endpoint bounds are 3.6709789185994044e-5 m and
+4.110326697955418e-7 m/s, below 0.001 m and 1e-6 m/s. The velocity
+reference contribution is 3.935606991272773e-7 m/s; the saved endpoint
+residual allowance is 1.7471970668264503e-8 m/s. All six native cubic
+controls pass. The original Mars domain at the same duration remains
+unclosed: 1907.8073496803258 m > 1000 m and
+0.1992393612495464 m/s > 0.1 m/s. Both inventories retain that outcome
+without running an arc in the unclosed domain. Each inventory performs
+32 affine source readbacks; native/portable inventories run six/zero arcs.
+These diagnostic counts and timings do not establish mission runtime or
+interval safety. No production code, tolerances, or force model changed.
+All 1853 tests passed in 484.94 s. Ruff, strict OpenSpec validation,
+diff whitespace checks, and legacy checksum/import isolation passed.
+
 Task 3.9 partial-jerk cubic reference (2026-09-13):
 Qualify exact cubic endpoint evaluation and omitted-jerk transport on
 analytic force controls, including invalid inputs. Enclose Moon/Mars

@@ -19,9 +19,13 @@ targeting spike. Preserve the UI; scheduling state is managed in the app.
 
 Latest trajectory-envelope evidence (2026-09-13): a partial-jerk cubic
 reference encloses all modeled forces and passes the unchanged 0.001 m /
-1e-6 m/s endpoint gates in all five conditional native controls: four at
-1/64 s and the nominal Mars fixture at 1/32 s. At Mars 1/32 s, the new
-position/velocity upper bounds are 4.9286912327652195e-5 m and
+1e-6 m/s endpoint gates in all six conditional native controls: four at
+1/64 s and nominal Mars fixtures at 1/32 s and 1/16 s. The new 1/16 s
+control uses a separately recomputed 2000 m / 0.25 m/s domain; its
+position/velocity upper bounds are 3.6709789185994044e-5 m and
+4.110326697955418e-7 m/s. The original 1000 m / 0.1 m/s domain remains
+unclosed at that duration. Domain radii are not endpoint error tolerances.
+At Mars 1/32 s, the partial-cubic velocity bound remains
 1.0267213213083907e-7 m/s. The old quadratic velocity upper bound of
 1.978951932550837e-6 m/s remains a regression control, not a measurement
 of the native integrator's true error. The Moon 1/32 s position domain
@@ -43,9 +47,9 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 1853 passing tests; the focused
-partial-cubic check has 195 passing tests. The native inventory
-runs five spacecraft arcs, the portable inventory zero; each performs 24
+The latest completed code check has 1853 passing tests; both focused
+longer-coast inventories pass. The native inventory
+runs six spacecraft arcs, the portable inventory zero; each performs 32
 affine source readbacks. These are diagnostic counts, not mission-cost
 estimates. Production limits and the shared 300-second deadline are unchanged.
 Task 3.9, the remaining finite-burn safety prerequisites and targeting remain

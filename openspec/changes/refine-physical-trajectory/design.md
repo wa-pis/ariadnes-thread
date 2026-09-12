@@ -1,5 +1,22 @@
 ## Context
 
+### Longer Mars coast control (2026-09-13)
+
+Preserve all original 1000 m / 0.1 m/s domains and add the 1/16 s
+duration to their source-motion checks. Separately test a Mars-only
+1/16 s domain with explicit position/velocity radii 2000 m / 0.25 m/s.
+These radii bound the region where forces are enclosed; they are not
+endpoint error tolerances. Recompute every distance floor, full-force
+bound, rotation allowance, lighting check and sensitivity for that domain.
+WHEN both first-exit reach bounds lie strictly inside its declared radii,
+THEN run one nominal native coast and apply the existing partial-cubic
+certificate with unchanged 0.001 m / 1e-6 m/s gates. Preserve the narrower
+domain's non-closure as a separate result; never reuse its force bounds
+for the wider domain. Verify source-polynomial coverage at the new duration,
+retain exact counters and the 300 s diagnostic budget, and report both
+radii with every domain. No new integrator settings, mission composition,
+initial uncertainty qualification or native internal-stage guarantee.
+
 ### Partial-jerk cubic reference (2026-09-13)
 
 Use the initial jerk of all eight monopoles as a selected cubic coefficient,
