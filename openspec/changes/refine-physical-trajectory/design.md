@@ -1,5 +1,28 @@
 ## Context
 
+### Whole-domain full-illumination geometry (2026-09-12)
+
+Extend the existing apparent-sphere separation proof with a nonnegative
+observer-position radius. Relative to the fixed observer anchor, enclose
+each physical sphere by adding both its own centre uncertainty and the
+observer radius. The triangle inequality bounds every possible relative
+sphere; discarding shared-observer correlation only enlarges the cones.
+Sum radii exactly and retain strict separation: tangency or an observer
+inside an enlarged sphere remains unresolved, never automatically clear.
+
+Verify exact tangent enlarged radii 15/7 m at centres (25,0,0)/(15,20,0),
+smaller/larger observer balls, a large common offset and invalid radii.
+For each declared native-control domain, use the existing 1000 m spacecraft
+position ball and full source/occultor motion-and-ephemeris reach allowances.
+Report separation for Moon, Earth and Mars individually without extra SPICE
+calls. This is a whole-domain property, not a sampled-shadow assertion.
+
+Only a separately closed trajectory domain permits an illumination claim
+along its ideal path. Unclosed one-second controls remain unresolved even
+if their declared domains are entirely lit. Preserve old SRP variation
+allowances and endpoint gates; no native internal-stage safety, long-arc
+qualification or production change follows. Task 3.9 stays open.
+
 ### Reusable Schwarzschild state sensitivities (2026-09-12)
 
 Extract the existing PPN=1 state-variation operator bounds without changing

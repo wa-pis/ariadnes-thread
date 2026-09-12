@@ -2441,12 +2441,13 @@ def _apparent_spheres_strictly_disjoint(
     occultor_position_m: np.ndarray, occultor_radius_m: float,
     observer_position_m: np.ndarray,
     *, source_position_error_m: float = 0.0, occultor_position_error_m: float = 0.0,
+    observer_position_error_m: float = 0.0,
 ) -> bool:
     """Prove clear discs for SI/J2000 position balls; false means unresolved."""
     assert all(type(radius) is float and math.isfinite(radius) and radius > 0
                for radius in (source_radius_m, occultor_radius_m))
     assert all(type(error) is float and math.isfinite(error) and error >= 0
-               for error in (source_position_error_m, occultor_position_error_m))
+               for error in (source_position_error_m, occultor_position_error_m, observer_position_error_m))
     for vector in (source_position_m, occultor_position_m, observer_position_m):
         assert vector.shape == (3,) and vector.dtype == np.float64
         assert np.all(np.isfinite(vector))
@@ -2459,8 +2460,10 @@ def _apparent_spheres_strictly_disjoint(
     assert source_squared_m2 > source_radius**2 and occultor_squared_m2 > occultor_radius**2
     # Every uncertain physical sphere is contained in the concentric sphere
     # enlarged by its centre-error radius (triangle inequality). Sum exactly.
-    source_radius += Fraction(source_position_error_m)
-    occultor_radius += Fraction(occultor_position_error_m)
+    # Relative centre uncertainty includes observer motion. Enclose both cones
+    # separately; ignoring their shared observer correlation is conservative.
+    source_radius += Fraction(source_position_error_m) + Fraction(observer_position_error_m)
+    occultor_radius += Fraction(occultor_position_error_m) + Fraction(observer_position_error_m)
     if source_squared_m2 <= source_radius**2 or occultor_squared_m2 <= occultor_radius**2:
         return False  # Cannot prove an external viewpoint for the enlarged sphere.
     dot_m2 = sum((s * o for s, o in zip(source, occultor, strict=True)), Fraction(0))
@@ -2523,6 +2526,30 @@ def test_apparent_spheres_rejects_invalid_position_error(error_m: float) -> None
         _apparent_spheres_strictly_disjoint(
             np.asarray([25.0, 0.0, 0.0]), 15.0, np.asarray([0.0, 25.0, 0.0]),
             6.0, np.zeros(3), source_position_error_m=error_m,
+        )
+
+
+@pytest.mark.parametrize("offset_m", [0.0, 1e12])
+@pytest.mark.parametrize("observer_error_m,clear", [(0.0, True), (0.5, True), (1.0, False), (2.0, False), (11.0, False)])
+def test_apparent_spheres_shared_observer_ball(offset_m: float, observer_error_m: float, clear: bool) -> None:
+    observer = np.full(3, offset_m)
+    assert _apparent_spheres_strictly_disjoint(
+        observer + np.asarray([25.0, 0.0, 0.0]), 14.0,
+        observer + np.asarray([15.0, 20.0, 0.0]), 6.0, observer,
+        observer_position_error_m=observer_error_m,
+    ) is clear
+    # At observer error 1 m, enlarged radii are exactly 15 and 7 m:
+    # dot+R1*R2=375+105=480 and (625-225)*(625-49)=480^2.
+    # Tangency is unresolved; 11 m also loses the external-viewpoint proof.
+
+
+@pytest.mark.parametrize("observer_error_m", [-1.0, math.nan, math.inf, True])
+def test_apparent_spheres_rejects_invalid_observer_ball(observer_error_m: float) -> None:
+    with pytest.raises(AssertionError):
+        _apparent_spheres_strictly_disjoint(
+            np.asarray([25.0, 0.0, 0.0]), 14.0,
+            np.asarray([15.0, 20.0, 0.0]), 6.0, np.zeros(3),
+            observer_position_error_m=observer_error_m,
         )
 
 
@@ -3590,6 +3617,16 @@ def _check_conditional_full_force_coast_domains(
             assert set(frozen_harmonic_variation_m_s2) == {"Moon", "Mars"}
             assert set(arbitrary_rotation_variation_m_s2) == {"Moon", "Mars"}
             assert set(angle_limited_rotation_variation_m_s2) == {"Moon", "Mars"}
+            domain_clear_by_body = {
+                occultor: _apparent_spheres_strictly_disjoint(
+                    states["Sun"][:3], bodies.get("Sun").shape_model.average_radius,
+                    states[occultor][:3], bodies.get(occultor).shape_model.average_radius,
+                    state[:3], source_position_error_m=reaches_m["Sun"],
+                    occultor_position_error_m=reaches_m[occultor], observer_position_error_m=position_radius_m,
+                ) for occultor in trajectory.SOLAR_RADIATION_OCCULTING_BODY_NAMES
+            }
+            assert set(domain_clear_by_body) == {"Moon", "Earth", "Mars"}
+            assert all(domain_clear_by_body.values()), (center, duration_s, domain_clear_by_body)
             thrust, srp = trajectory._thrust_and_srp_upper_bounds(
                 budget.candidate_id, spacecraft, floors_m["Sun"], thrust_enabled=False,
             )
@@ -4162,6 +4199,7 @@ def _check_conditional_full_force_coast_domains(
                         "velocity_bound_resolves_1um_s": velocity_error_m_s <= Fraction("0.000001"),
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
+                "conditional_domain_fully_lit_by_occultor": domain_clear_by_body,
                 "conditional_schwarzschild_position_sensitivity_s_inv2": reported_relativity_sensitivities[0],
                 "conditional_schwarzschild_velocity_sensitivity_s_inv": reported_relativity_sensitivities[1],
                 "conditional_pck_rotation_path_rad": {

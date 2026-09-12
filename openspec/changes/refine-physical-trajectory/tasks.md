@@ -51,6 +51,29 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 whole-domain full-illumination geometry (2026-09-12):
+Include observer-position uncertainty in the existing apparent-sphere
+separation proof. Verify exact tangency, smaller/larger/invalid balls and
+large common offsets. Report per-occultor separation over all four declared
+Moon/Mars domains using existing body reaches and the spacecraft position
+ball; keep domain closure separate. Verify both real inventories, full
+pytest, Ruff, strict OpenSpec, diff and legacy checks. Preserve SRP bounds,
+all native-call limits and production behavior; task 3.9 remains open.
+
+Focused verification: 41 tests passed in 166.63 s, including 14 new observer
+ball controls and both real inventories. All 12 body/domain combinations
+per inventory prove strict separation from Moon, Earth and Mars across the
+entire declared position domain. Assert this pinned-fixture result explicitly
+in the full suite. The two short ideal coasts have separately closed domains;
+the one-second controls still do not, despite their domains being fully lit.
+No force allowance or endpoint tolerance was tightened in this step.
+
+Completion verification: all 1655 project tests passed in 430.70 s,
+including explicit whole-domain separation assertions for all occultors.
+Ruff, strict OpenSpec, diff and legacy checksum/import-isolation checks
+passed. The operation deadline and four native control arcs are unchanged;
+full-suite time does not measure a single mission operation.
+
 Task 3.9 reusable Schwarzschild state sensitivities (2026-09-12):
 Extract existing position/velocity operator bounds and preserve the source
 variation wrapper. Verify exact Cartesian directional derivatives in four
