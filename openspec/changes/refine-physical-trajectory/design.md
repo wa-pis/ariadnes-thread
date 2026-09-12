@@ -1,5 +1,29 @@
 ## Context
 
+### Initial point-mass jerk intervals (2026-09-13)
+
+For the ideal acceleration g=-mu*r/|r|^3, its first time derivative is
+`j=mu*(3*r*(r.v)-(r.r)*v)/(r.r)^(5/2)`, in m/s^3. Enclose each component
+using exact rational numerators and the existing 100-bit dyadic square-root
+bounds, with sign-aware division. WHEN a rational-radius or sqrt(2)-radius
+oracle is supplied, THEN the interval must enclose the exact analytic
+derivative without a floating tolerance. Singular or invalid inputs fail.
+
+Preserve exact initial positions from the qualified SPK position polynomials
+alongside their derivatives. For the six point-mass forces only (excluding
+Moon/Mars harmonics), form r and v from the exact stored spacecraft initial
+state minus these ideal source-polynomial values. Check polynomial positions
+against the existing source-position arithmetic allowances. Do not use the
+independent type-3 velocity series as a position derivative.
+
+WHEN the real inventories run, THEN report finite, outward-rounded component
+intervals for all six sources at both initial fixtures, with unchanged
+five/zero spacecraft-arc counts and 24 affine readbacks per inventory.
+These are conditional derivatives of the ideal supplied-record model, not
+derivatives of rounded native SPICE output, observed Tudat jerks or physical
+ephemeris-uncertainty bounds. Harmonic, SRP and relativistic derivatives and
+uniform cubic-reference closure remain unqualified; 3.9 stays open.
+
 ### Point-mass force-curvature control (2026-09-13)
 
 For g(r)=-mu*r/|r|^3, differentiate twice in space:

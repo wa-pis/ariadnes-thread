@@ -1445,6 +1445,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         affine_links[link] = _spk_position_affine_data(budget, rows, mid, radius, start_tdb_s, 1.0)
     affine_curvature_bounds_m_s2: dict[str, float] = {}
     source_affine_motion: dict[str, tuple[tuple[Fraction, ...], Fraction]] = {}
+    source_affine_positions_m: dict[str, tuple[Fraction, ...]] = {}
     affine_native_checks = 0
     for body, target in body_ids.items():
         center = expected_centers[target]
@@ -1453,6 +1454,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         slope = tuple(sum((affine_links[link][1][axis] for link in chain), Fraction(0)) for axis in range(3))
         curvature = sum((affine_links[link][2] for link in chain), Fraction(0))
         source_affine_motion[body] = (slope, curvature)
+        source_affine_positions_m[body] = position
         reported_curvature = math.nextafter(float(curvature), math.inf)
         assert math.isfinite(reported_curvature) and Fraction(reported_curvature) >= curvature
         affine_curvature_bounds_m_s2[body] = reported_curvature
@@ -1492,6 +1494,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         {body: float(motion_samples[target][0][2]) for body, target in body_ids.items()},
         chain_velocity_bounds_m_s[10],
         source_affine_motion=source_affine_motion, source_affine_coverage_s=1.0,
+        source_affine_positions_m=source_affine_positions_m,
         run_native_controls=native_record_readback,
     )
 
@@ -2585,6 +2588,71 @@ def test_apparent_spheres_rejects_invalid_observer_ball(observer_error_m: float)
         )
 
 
+def _point_mass_jerk_interval_m_s3(
+    gm_m3_s2: float, relative_position_m: tuple[Fraction, ...], relative_velocity_m_s: tuple[Fraction, ...],
+) -> tuple[tuple[Fraction, Fraction], ...]:
+    """Enclose ideal point-mass acceleration's first time derivative in SI/J2000."""
+    assert type(gm_m3_s2) is float and math.isfinite(gm_m3_s2) and gm_m3_s2 > 0
+    assert all(len(vector) == 3 and all(isinstance(value, Fraction) for value in vector)
+               for vector in (relative_position_m, relative_velocity_m_s))
+    squared_m2 = sum((value**2 for value in relative_position_m), Fraction(0))
+    assert squared_m2 > 0, "singular point-mass jerk position"
+    radius_lower_m, radius_upper_m = _dyadic_sqrt_bounds(squared_m2)
+    dot_m2_s = sum((r*v for r, v in zip(relative_position_m, relative_velocity_m_s, strict=True)), Fraction(0))
+    intervals: list[tuple[Fraction, Fraction]] = []
+    for r, v in zip(relative_position_m, relative_velocity_m_s, strict=True):
+        numerator = Fraction(gm_m3_s2) * (3*r*dot_m2_s - squared_m2*v)
+        endpoints = (numerator / (squared_m2**2 * radius_lower_m), numerator / (squared_m2**2 * radius_upper_m))
+        intervals.append((min(endpoints), max(endpoints)))
+    return tuple(intervals)
+
+
+@pytest.mark.parametrize("gm_m3_s2", [1.0, 7.0])
+@pytest.mark.parametrize("position,radius", [((3, 4, 0), 5), ((0, 0, 5), 5), ((0, 0, 10), 10)])
+@pytest.mark.parametrize("velocity", [(0, 0, 0), (1, 0, 0), (0, 0, 2), (-1, 2, -2)])
+def test_point_mass_jerk_exact_rational_radius(
+    gm_m3_s2: float, position: tuple[int, ...], radius: int, velocity: tuple[int, ...],
+) -> None:
+    intervals = _point_mass_jerk_interval_m_s3(gm_m3_s2, tuple(map(Fraction, position)), tuple(map(Fraction, velocity)))
+    dot = sum(r*v for r, v in zip(position, velocity, strict=True))
+    # Differentiate -mu*r(t)/R(t)^3 by the scalar product rule at t=0.
+    for r, v, (lower, upper) in zip(position, velocity, intervals, strict=True):
+        exact = -Fraction(gm_m3_s2)*v / radius**3 + 3*Fraction(gm_m3_s2)*r*dot / radius**5
+        assert lower == exact == upper  # m/s³, exactly representable rational root.
+
+
+@pytest.mark.parametrize("direction", [-1, 1])
+def test_point_mass_jerk_encloses_irrational_radius(direction: int) -> None:
+    intervals = _point_mass_jerk_interval_m_s3(
+        1.0, (Fraction(1), Fraction(1), Fraction(0)), (Fraction(direction), Fraction(0), Fraction(0)),
+    )
+    # Exact components are sign*(1,3,0)/(4*sqrt(2)). Compare squares,
+    # independently of the dyadic-root implementation, including both signs.
+    for numerator, (lower, upper) in zip((1, 3), intervals[:2], strict=True):
+        abs_lower, abs_upper = (lower, upper) if direction > 0 else (-upper, -lower)
+        assert 0 < abs_lower < abs_upper
+        assert abs_lower**2 <= Fraction(numerator**2, 32) <= abs_upper**2
+    assert intervals[2] == (Fraction(0), Fraction(0))
+
+
+@pytest.mark.parametrize("case", ["zero", "gm-zero", "gm-negative", "gm-boolean", "gm-nan", "gm-inf",
+                                  "position-length", "velocity-length", "position-float", "velocity-boolean"])
+def test_point_mass_jerk_rejects_invalid_inputs(case: str) -> None:
+    gm = {"gm-zero": 0.0, "gm-negative": -1.0, "gm-boolean": True, "gm-nan": math.nan, "gm-inf": math.inf}.get(case, 1.0)
+    position = (Fraction(0 if case == "zero" else 1), Fraction(0), Fraction(0))
+    velocity = (Fraction(1), Fraction(0), Fraction(0))
+    if case == "position-length":
+        position = position[:2]
+    elif case == "velocity-length":
+        velocity = velocity[:2]
+    elif case == "position-float":
+        position = (1.0, 0.0, 0.0)  # type: ignore[assignment] -- boundary rejection.
+    elif case == "velocity-boolean":
+        velocity = (True, Fraction(0), Fraction(0))  # type: ignore[assignment] -- boundary rejection.
+    with pytest.raises(AssertionError):
+        _point_mass_jerk_interval_m_s3(gm, position, velocity)
+
+
 def _point_mass_variation_bound_m_s2(
     gm_m3_s2: float, distance_floor_m: float, displacement_m: Fraction,
 ) -> Fraction:
@@ -3525,6 +3593,7 @@ def _check_conditional_full_force_coast_domains(
     source_position_errors_m: dict[str, float],
     sun_velocity_error_m_s: float,
     *, source_affine_motion: dict[str, tuple[tuple[Fraction, ...], Fraction]],
+    source_affine_positions_m: dict[str, tuple[Fraction, ...]],
     source_affine_coverage_s: float, run_native_controls: bool,
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
@@ -3544,12 +3613,17 @@ def _check_conditional_full_force_coast_domains(
     states = {body: np.asarray(bodies.get(body).ephemeris.cartesian_state(start_tdb_s)).reshape(6)
               for body in trajectory.PHYSICAL_BODY_NAMES}
     assert set(source_affine_motion) == set(states)
+    assert set(source_affine_positions_m) == set(states)
     assert all(np.all(np.isfinite(state)) for state in states.values())
     for body, state in states.items():
         assert np.array_equal(state[:3], position_anchors_m[body]), body
     assert set(source_position_errors_m) == set(states)
     assert all(type(error) is float and math.isfinite(error) and 0 <= error <= 0.001
                for error in source_position_errors_m.values())
+    for body, position in source_affine_positions_m.items():
+        assert len(position) == 3 and all(isinstance(value, Fraction) for value in position)
+        assert sum((abs(Fraction(stored) - ideal) for stored, ideal in
+                    zip(states[body][:3], position, strict=True)), Fraction(0)) <= Fraction(source_position_errors_m[body]), body
     assert type(sun_velocity_error_m_s) is float and math.isfinite(sun_velocity_error_m_s)
     assert 0 <= sun_velocity_error_m_s <= 1e-6
     assert sum((abs(Fraction(value)) for value in states["Sun"][3:]), Fraction(0)) <= Fraction(sun_speed_upper_m_s)
@@ -3565,6 +3639,24 @@ def _check_conditional_full_force_coast_domains(
             ) for body in states
         }
         assert all(floor > 0 for floor in source_error_floors_m.values())
+        point_jerk_intervals_m_s3: dict[str, list[list[float]]] = {}
+        for source in trajectory.PHYSICAL_BODY_NAMES:
+            if source in {"Moon", "Mars"}:
+                continue  # Their harmonic derivatives are not qualified here.
+            budget.check()
+            relative_position_m = tuple(Fraction(ship) - ideal for ship, ideal in
+                                        zip(state[:3], source_affine_positions_m[source], strict=True))
+            relative_velocity_m_s = tuple(Fraction(ship) - slope for ship, slope in
+                                          zip(state[3:], source_affine_motion[source][0], strict=True))
+            intervals = _point_mass_jerk_interval_m_s3(
+                bodies.get(source).gravity_field_model.gravitational_parameter, relative_position_m, relative_velocity_m_s,
+            )
+            reported = [[math.nextafter(float(lower), -math.inf) if lower else 0.0,
+                         math.nextafter(float(upper), math.inf) if upper else 0.0] for lower, upper in intervals]
+            assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lower <= upper <= Fraction(b)
+                       for (a, b), (lower, upper) in zip(reported, intervals, strict=True))
+            point_jerk_intervals_m_s3[source] = reported
+        assert set(point_jerk_intervals_m_s3) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
         initial_speed_m_s = sum((abs(Fraction(value)) for value in state[3:]), Fraction(0))
         initial_speed_upper_m_s = math.nextafter(float(initial_speed_m_s), math.inf)
         assert Fraction(initial_speed_upper_m_s) >= initial_speed_m_s
@@ -4368,6 +4460,7 @@ def _check_conditional_full_force_coast_domains(
                         "velocity_bound_resolves_1um_s": velocity_error_m_s <= Fraction("0.000001"),
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
+                "conditional_point_mass_initial_jerk_intervals_m_s3": point_jerk_intervals_m_s3,
                 "conditional_domain_fully_lit_by_occultor": domain_clear_by_body,
                 "conditional_position_sensitivities_by_force_s_inv2": reported_position_sensitivities,
                 "conditional_full_force_position_sensitivity_s_inv2": reported_full_position_sensitivity,

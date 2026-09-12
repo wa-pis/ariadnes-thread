@@ -32,15 +32,18 @@ Cubic references improve bounds in 16 exact analytic controls only; no
 cubic reference or force-derivative remainder has been qualified for the
 physical model. Point-mass force-curvature and radial force-remainder bounds
 now have 70 exact analytic controls (2026-09-13), without native application.
-Next bounded work within 3.9 is to qualify initial force-derivative accuracy
-and the remaining force-curvature components before composing the full model. WHEN a proposed
+Initial jerk intervals for the six pure point-mass sources are also computed
+from the qualified ideal SPK position polynomials at both fixture states.
+They exclude Moon/Mars harmonic derivatives and are not native jerk measurements.
+Next bounded work within 3.9 is to qualify the remaining initial derivatives
+and force-curvature components before composing the full model. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
 application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 1792 passing tests. The native inventory
+The latest completed code check has 1828 passing tests. The native inventory
 runs five spacecraft arcs, the portable inventory zero; each performs 24
 affine source readbacks. These are diagnostic counts, not mission-cost
 estimates. Production limits and the shared 300-second deadline are unchanged.

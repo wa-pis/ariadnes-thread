@@ -51,6 +51,36 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 initial point-mass jerk intervals (2026-09-13):
+Qualify sign-aware rational/root derivative intervals against exact radial,
+transverse and irrational-radius analytic oracles and invalid inputs. Retain
+the ideal SPK position and its derivative for the initial epoch; verify the
+existing position allowance before reporting six point-mass derivative
+intervals in both fixture geometries. Verify both real inventories, unchanged
+native/readback counts, full pytest, Ruff, strict OpenSpec and legacy checks.
+No native jerk measurement, new force model or completed cubic certificate
+is claimed; task 3.9 remains open.
+
+Focused verification: 38 tests passed in 196.66 s, including 36 analytic
+interval/input controls and both real inventories. Ideal initial source
+positions satisfy the existing arithmetic allowances for all eight bodies.
+Both inventories report the same 12 point-mass jerk vectors (six sources
+at two fixtures), each with three finite outward-rounded component intervals.
+For example, the Sun x-component is enclosed by
+[1.1755206120305393e-9, 1.1755206120305397e-9] m/s^3 near Moon and
+[3.5808001683010496e-11, 3.580800168301051e-11] m/s^3 near Mars.
+These are conditional arithmetic enclosures, not physical error allocations.
+The five/zero spacecraft arcs and 24 affine readbacks per inventory remain
+unchanged; no harmonic, radiation-pressure or relativistic jerk is supplied.
+
+Completion verification: all 1828 project tests passed in 457.24 s.
+Ruff, strict OpenSpec, diff and unchanged legacy checksum/import isolation
+passed. The complete test-suite time is not a mission-operation runtime;
+the shared 300-second deadline and native limits remain unchanged. No
+dependencies, production force settings or UI behavior changed. Task 3.9
+remains open; these intervals are initial component data, not a trajectory
+or native internal-stage certificate.
+
 Task 3.9 point-mass force-curvature control (2026-09-13):
 Qualify a conservative second-time-derivative bound for point-mass
 acceleration under explicit relative distance/speed/acceleration bounds.
