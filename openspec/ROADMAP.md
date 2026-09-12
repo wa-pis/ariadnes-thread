@@ -17,6 +17,35 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
+Latest trajectory-envelope evidence (2026-09-12, code commit `4f381dc`):
+four conditional full-force coast controls at 1/64 s meet the unchanged
+0.001 m / 1e-6 m/s endpoint gates. They are diagnostic fixtures, not a
+qualified mission or a native internal-stage safety certificate.
+At 1/32 s the Moon fixture's existing position domain cannot be closed.
+The Mars domain closes, but its velocity-error upper bound is
+1.978951932550837e-6 m/s. Its reference-only contribution is already
+1.3500214429163211e-6 m/s: reducing only the nonnegative endpoint residual
+cannot make this fixed certificate pass. Neither contribution is a
+measurement of the native integrator's true error.
+
+Cubic references improve bounds in 16 exact analytic controls only; no
+cubic reference or force-derivative remainder has been qualified for the
+physical model. Next bounded work within 3.9 is to qualify the needed
+force derivatives and reference remainder, starting with independently
+checkable point-mass gravity before composing the full model. WHEN a proposed
+derivative/remainder bound is tested, THEN it must enclose an independent
+analytic oracle with explicit SI units and tolerances before any native
+application. Native application additionally requires its own closed domain,
+source/rotation coverage, arithmetic allowances and runtime accounting.
+Do not substitute endpoint agreement or sampled differences for that proof.
+
+The latest completed code check has 1722 passing tests. The native inventory
+runs five spacecraft arcs, the portable inventory zero; each performs 24
+affine source readbacks. These are diagnostic counts, not mission-cost
+estimates. Production limits and the shared 300-second deadline are unchanged.
+Task 3.9, the remaining finite-burn safety prerequisites and targeting remain
+open; detailed evidence is in the active change's design and tasks.
+
 Latest mass-label diagnosis (2026-09-10): comparing the same native states
 using Tudat's high-resolution elapsed time makes all 72 isolated controls
 meet the unchanged mass tolerance. Native-time and float-key histories have
