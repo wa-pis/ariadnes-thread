@@ -51,6 +51,37 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 monopole-split operator bound (2026-09-12):
+Compose the exact `2*GM/d^3` C00=1 operator norm with the existing
+nonmonopole Jacobian bound. Verify monopole eigenvalues/point-mass parity,
+mixed degree-4/12 polar derivatives, invalid domains and strict improvement.
+Reuse this only for a separately reported relative spatial variation and
+saved-endpoint velocity bound; preserve all other terms and older bounds.
+Verify the unchanged Mars velocity gate, run focused/full pytest, Ruff,
+strict OpenSpec and legacy checks. Do not close 3.9 from a short control.
+
+Focused verification: 19 tests passed in 117.22 s, including 17 new analytic
+and rejection controls and both inventories. Split force-variation bounds
+are 4.5444029470761146e-5 m/s^2 near the Moon and
+4.316119215669777e-5 m/s^2 near Mars, identical across inventory variants.
+Moon velocity bounds are 1.310122212732238e-6 m/s (nominal) and
+1.3101058418276061e-6 m/s (tighter), still above 1e-6 m/s. Mars bounds are
+8.316235170009139e-7 and 8.316207885168086e-7 m/s, both below that gate.
+The full suite additionally asserts the Mars gate for both native profiles.
+
+The result is conditional on the existing exact-initial-state, source/PCK
+and closed-domain premises and applies only to the two 1/64 s coast
+fixtures. No full-trajectory or internal native-stage safety is claimed.
+Four native arcs, 16 affine ephemeris requests per inventory, production
+settings, numerical tolerances and the shared deadline are unchanged.
+There are no new native calls, dependencies or UI changes. Task 3.9 is open.
+
+Completion verification: all 1506 project tests passed in 378.15 s,
+including the explicit unchanged Mars velocity gate. Ruff, strict OpenSpec
+and diff checks passed. The legacy SHA-256 is unchanged and the package
+does not import it. Suite time is separate from the 300-second mission
+deadline; no physical or numerical acceptance tolerance changed.
+
 Task 3.9 relative-motion composition (2026-09-12):
 Use the qualified source position derivatives and curvatures to bound
 relative displacement by `|v_ship-v_source|_1*h+(A_ship+B_source)*h^2/2`.

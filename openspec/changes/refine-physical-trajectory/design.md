@@ -1,5 +1,38 @@
 ## Context
 
+### Monopole-split spatial operator bound (2026-09-12)
+
+Keep the existing full-field Frobenius-based Jacobian bound as a regression.
+For ideal C00=1 gravity, the monopole Jacobian is
+`GM/r^3 * (3*u*u^T-I)`, with eigenvalues `2,-1,-1` times GM/r^3.
+Its operator norm is therefore exactly `2*GM/r^3`, rather than the generic
+integer-rounded degree-zero allowance `3*GM/r^3`. At the same chord floor d,
+add `2*GM/d^3` to the already computed nonmonopole operator bound. Require
+the resource's C00=1 and S00=0, and validate the scalar domains. The triangle
+sum does not assume cancellation or remove any force from dynamics.
+
+Reuse the existing nonmonopole Jacobian computed for PCK rotation; no
+additional matrix-wide calculation or native query is necessary. Replace
+only the harmonic spatial part in a separately reported relative-force
+variation bound. All distance floors, relative displacement, initial-force
+errors, angular/SRP/relativity allowances and stored endpoints are identical
+to the previous calculation. The earlier full-field and relative-velocity
+bounds remain unchanged. Unclosed one-second controls retain null results.
+
+Independent tests use the monopole's Cartesian eigenvalues and the existing
+point-mass force-change oracle. Mixed monopole/zonal fields at degrees 4
+and 12 have rational polar derivatives because their normalizations are
+sqrt(9) and sqrt(25); test both coefficient signs and two radii against that
+analytic derivative, including strict improvement over the generic bound.
+Invalid scalar/tail domains fail.
+
+The conditional 1/64 s endpoint velocity bounds now reach about 8.316e-7 m/s
+for both Mars profiles, satisfying the unchanged 1e-6 m/s gate; assert that
+gate explicitly. Both Moon bounds remain around 1.310e-6 m/s, unresolved.
+This is a short conditional coast control, not mission closure, native
+internal-stage safety or a full-trajectory/runtime certificate. Task 3.9
+remains open; production, integrators, tolerances, limits and UI are unchanged.
+
 ### Common-motion relative displacement composition (2026-09-12)
 
 For exact initial spacecraft velocity v and source position-polynomial

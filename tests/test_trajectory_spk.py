@@ -2524,6 +2524,54 @@ def test_ephemeris_position_error_encloses_radial_quadrupole(
     assert (bound == 0) == (delta_m == 0)
 
 
+def _monopole_split_jacobian_bound_s_inv2(
+    gm_m3_s2: float, distance_floor_m: float, nonmonopole_bound_s_inv2: Fraction,
+) -> Fraction:
+    """Combine the C00=1 monopole operator norm with a qualified nonmonopole bound."""
+    assert all(type(value) is float and math.isfinite(value) and value > 0 for value in (gm_m3_s2, distance_floor_m))
+    assert isinstance(nonmonopole_bound_s_inv2, Fraction) and nonmonopole_bound_s_inv2 >= 0
+    return 2 * Fraction(gm_m3_s2) / Fraction(distance_floor_m)**3 + nonmonopole_bound_s_inv2
+
+
+@pytest.mark.parametrize("gm_m3_s2", [1.0, 1000.0])
+@pytest.mark.parametrize("radius_m", [1.0, 2.0])
+def test_monopole_split_matches_exact_operator_norm(gm_m3_s2: float, radius_m: float) -> None:
+    unit = Fraction(gm_m3_s2) / Fraction(radius_m)**3
+    # At the pole the Cartesian Jacobian is diag(-unit,-unit,2*unit).
+    eigenvalues = (-unit, -unit, 2*unit)
+    bound = _monopole_split_jacobian_bound_s_inv2(gm_m3_s2, radius_m, Fraction(0))
+    assert bound == max(map(abs, eigenvalues))
+    assert bound * Fraction(1, 8) == _point_mass_variation_bound_m_s2(gm_m3_s2, radius_m, Fraction(1, 8))
+
+
+@pytest.mark.parametrize("degree", [4, 12])
+@pytest.mark.parametrize("radius_m", [1.0, 2.0])
+@pytest.mark.parametrize("coefficient", [-0.125, 0.125])
+def test_monopole_split_encloses_mixed_radial_derivative(degree: int, radius_m: float, coefficient: float) -> None:
+    budget = trajectory._RefinementBudget("split-jacobian", 300.0)
+    cosine, sine = np.zeros((degree+1, degree+1)), np.zeros((degree+1, degree+1))
+    cosine[degree, 0] = coefficient
+    tail_bound = _harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, radius_m, cosine, sine)
+    bound = _monopole_split_jacobian_bound_s_inv2(1.0, radius_m, tail_bound)
+    radius, normalization = Fraction(radius_m), math.isqrt(2*degree+1)
+    assert normalization**2 == 2*degree+1
+    # Differentiate -1/r^2-(n+1)*sqrt(2n+1)*C/r^(n+2) at the pole.
+    radial_derivative = 2/radius**3 + (degree+1)*(degree+2)*normalization*Fraction(coefficient)/radius**(degree+3)
+    assert abs(radial_derivative) <= bound
+    cosine[0, 0] = 1.0
+    assert bound < _harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, radius_m, cosine, sine)
+
+
+@pytest.mark.parametrize("invalid", ["gm", "radius", "boolean", "negative-tail", "inexact-tail"])
+def test_monopole_split_rejects_invalid_domain(invalid: str) -> None:
+    with pytest.raises(AssertionError):
+        _monopole_split_jacobian_bound_s_inv2(
+            True if invalid == "boolean" else 0.0 if invalid == "gm" else 1.0,
+            0.0 if invalid == "radius" else 1.0,
+            0.0 if invalid == "inexact-tail" else Fraction(-1 if invalid == "negative-tail" else 0),  # type: ignore[arg-type] -- rejection boundary.
+        )
+
+
 def _harmonic_arbitrary_rotation_bound_m_s2(
     budget: trajectory._RefinementBudget, gm_m3_s2: float,
     radius_m: float, distance_m: float, cosine: np.ndarray, sine: np.ndarray,
@@ -3325,6 +3373,7 @@ def _check_conditional_full_force_coast_domains(
             arbitrary_rotation_variation_m_s2: dict[str, float] = {}
             angle_limited_rotation_variation_m_s2: dict[str, float] = {}
             harmonic_jacobians_s_inv2: dict[str, Fraction] = {}
+            split_harmonic_jacobians_s_inv2: dict[str, Fraction] = {}
             for body in trajectory.PHYSICAL_BODY_NAMES:
                 floor_m = trajectory._relative_distance_lower_bound(
                     budget, tuple(state[:3]), tuple(states[body][:3]), position_radius_m, reaches_m[body],
@@ -3367,6 +3416,11 @@ def _check_conditional_full_force_coast_domains(
                         budget, field.gravitational_parameter, field.reference_radius,
                         floor_m, nonmonopole_cosine, field.sine_coefficients,
                     )
+                    assert field.cosine_coefficients[0, 0] == 1.0 and field.sine_coefficients[0, 0] == 0.0
+                    split_harmonic_jacobians_s_inv2[body] = _monopole_split_jacobian_bound_s_inv2(
+                        field.gravitational_parameter, floor_m, tail_jacobian_s_inv2,
+                    )
+                    assert split_harmonic_jacobians_s_inv2[body] < jacobian_s_inv2
                     radius_upper_m = sum((abs(Fraction(x) - Fraction(b)) for x, b in
                                           zip(state[:3], states[body][:3], strict=True)), Fraction(0))
                     radius_upper_m += Fraction(position_radius_m) + Fraction(reaches_m[body])
@@ -3420,11 +3474,13 @@ def _check_conditional_full_force_coast_domains(
             assert closed is (duration_s == 1 / 64), (center, duration_s, reach_m, float(velocity_reach_m_s))
             relative_reaches_m: dict[str, float] = {}
             reported_relative_variation_m_s2: float | None = None
+            reported_split_relative_variation_m_s2: float | None = None
             if closed:
                 # First close the original domain; only then use its acceleration
                 # bound to tighten relative displacement, avoiding circular proof.
                 relative_point_m_s2: dict[str, float] = {}
                 relative_harmonic_m_s2: dict[str, float] = {}
+                split_relative_harmonic_m_s2: dict[str, float] = {}
                 for body, (slope, curvature) in source_affine_motion.items():
                     budget.check()
                     displacement_m = _relative_affine_displacement_upper_m(
@@ -3437,6 +3493,10 @@ def _check_conditional_full_force_coast_domains(
                     if body in harmonic_jacobians_s_inv2:
                         change_m_s2 = harmonic_jacobians_s_inv2[body] * displacement_m
                         destination = relative_harmonic_m_s2
+                        split_change_m_s2 = split_harmonic_jacobians_s_inv2[body] * displacement_m
+                        reported_split_change_m_s2 = math.nextafter(float(split_change_m_s2), math.inf)
+                        assert math.isfinite(reported_split_change_m_s2) and Fraction(reported_split_change_m_s2) >= split_change_m_s2
+                        split_relative_harmonic_m_s2[body] = reported_split_change_m_s2
                     else:
                         change_m_s2 = _point_mass_variation_bound_m_s2(
                             bodies.get(body).gravity_field_model.gravitational_parameter, floors_m[body], displacement_m,
@@ -3451,6 +3511,13 @@ def _check_conditional_full_force_coast_domains(
                 assert 0 < relative_variation_m_s2 < force_variation_m_s2
                 reported_relative_variation_m_s2 = math.nextafter(float(relative_variation_m_s2), math.inf)
                 assert math.isfinite(reported_relative_variation_m_s2) and Fraction(reported_relative_variation_m_s2) >= relative_variation_m_s2
+                split_relative_variation_m_s2 = _coast_force_variation_bound_m_s2(
+                    relative_point_m_s2, split_relative_harmonic_m_s2, angle_limited_rotation_variation_m_s2, srp, relativity,
+                )
+                assert 0 < split_relative_variation_m_s2 < relative_variation_m_s2
+                reported_split_relative_variation_m_s2 = math.nextafter(float(split_relative_variation_m_s2), math.inf)
+                assert math.isfinite(reported_split_relative_variation_m_s2)
+                assert Fraction(reported_split_relative_variation_m_s2) >= split_relative_variation_m_s2
             endpoint_controls: list[dict[str, object]] = []
             first_acceleration_m_s2: np.ndarray | None = None
             if run_native_controls and closed:
@@ -3863,6 +3930,16 @@ def _check_conditional_full_force_coast_domains(
                     assert 0 < relative_velocity_error_m_s < anchored_velocity_error_m_s
                     reported_relative_velocity_m_s = math.nextafter(float(relative_velocity_error_m_s), math.inf)
                     assert math.isfinite(reported_relative_velocity_m_s) and Fraction(reported_relative_velocity_m_s) >= relative_velocity_error_m_s
+                    assert reported_split_relative_variation_m_s2 is not None
+                    split_velocity_error_m_s = _anchored_coast_velocity_error_bound_m_s(
+                        state[3:], final_state[3:6], anchor_m_s2, duration_s,
+                        prefix_full_error_m_s2, Fraction(reported_split_relative_variation_m_s2),
+                    )
+                    assert 0 < split_velocity_error_m_s < relative_velocity_error_m_s
+                    if center == "Mars":
+                        assert split_velocity_error_m_s <= Fraction("0.000001")
+                    reported_split_velocity_m_s = math.nextafter(float(split_velocity_error_m_s), math.inf)
+                    assert math.isfinite(reported_split_velocity_m_s) and Fraction(reported_split_velocity_m_s) >= split_velocity_error_m_s
                     anchor_residual_m_s = _anchored_coast_velocity_error_bound_m_s(
                         state[3:], final_state[3:6], anchor_m_s2, duration_s, Fraction(0), Fraction(0),
                     )
@@ -3902,6 +3979,8 @@ def _check_conditional_full_force_coast_domains(
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,
                         "conditional_anchored_endpoint_velocity_error_m_s": reported_anchored_velocity_m_s,
                         "conditional_relative_endpoint_velocity_error_m_s": reported_relative_velocity_m_s,
+                        "conditional_split_endpoint_velocity_error_m_s": reported_split_velocity_m_s,
+                        "split_velocity_bound_resolves_1um_s": split_velocity_error_m_s <= Fraction("0.000001"),
                         "relative_velocity_bound_resolves_1um_s": relative_velocity_error_m_s <= Fraction("0.000001"),
                         "anchor_velocity_residual_l1_m_s": reported_anchor_residual_m_s,
                         "anchored_velocity_bound_resolves_1um_s": anchored_velocity_error_m_s <= Fraction("0.000001"),
@@ -3919,6 +3998,7 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_total_coast_force_variation_m_s2": reported_force_variation_m_s2,
                 "conditional_relative_displacement_upper_m": relative_reaches_m or None,
                 "conditional_relative_force_variation_m_s2": reported_relative_variation_m_s2,
+                "conditional_split_relative_force_variation_m_s2": reported_split_relative_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
     expected_arcs = 4 if run_native_controls else 0
