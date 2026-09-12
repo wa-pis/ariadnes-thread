@@ -51,6 +51,31 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 time-weighted reference defect (2026-09-12):
+Qualify an explicit linear-in-time defect extension of the existing
+test-only transport lemma. Verify exact constant-jerk controls, nonzero
+sensitivity controls, zero-rate compatibility, invalid inputs and feedback
+rejection. Compose the qualified relative-motion and unsaturated rotation
+bounds in the same four native short controls, retaining all old results.
+Verify focused analytic/native tests, full pytest, Ruff, strict OpenSpec,
+diff and legacy isolation. No additional native calls, changed tolerances,
+production settings or longer-interval claims; task 3.9 remains open.
+
+Focused verification: all 84 tests passed in 181.55 s: 82 analytic controls
+and both real inventories. All four weighted endpoint position/velocity
+bounds are strictly below their prior uniform-defect bounds and meet the
+unchanged 0.001 m / 1e-6 m/s gates. The linear rotation-branch assertion
+passes for both bodies in all four declared domains. All old native and
+initial-ball pass/unresolved checks remain unchanged. The duration is still
+1/64 s, and the native spacecraft-arc count is still four; no longer arcs
+or mission-runtime qualification are inferred from this improvement.
+
+Completion verification: all 1706 project tests passed in 458.70 s.
+Ruff, strict OpenSpec, diff checks and unchanged legacy checksum/import
+isolation passed. Full-suite duration is not a measurement of one mission
+operation; its shared 300-second deadline remains unchanged. No dependencies
+or production code changed; the extension reuses the existing exact lemma.
+
 Task 3.9 nonzero initial-state ball controls (2026-09-12):
 Verify first-exit domain closure for explicit initial position/velocity
 balls before applying the existing reference transport. Report both endpoint

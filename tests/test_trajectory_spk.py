@@ -3634,6 +3634,10 @@ def _check_conditional_full_force_coast_domains(
                         tail_jacobian_s_inv2, radius_upper_m,
                     )
                     assert 0 < angle_limited_m_s2 < rotation_m_s2
+                    # The linear branch, not the capped 2*norm branch, permits t/h scaling.
+                    assert angle_limited_m_s2 == rotation_rates_rad_s[body] * Fraction(duration_s) * (
+                        rotation_m_s2 / 2 + tail_jacobian_s_inv2 * radius_upper_m
+                    )
                     reported_angle_limited_m_s2 = math.nextafter(float(angle_limited_m_s2), math.inf)
                     assert math.isfinite(reported_angle_limited_m_s2)
                     assert Fraction(reported_angle_limited_m_s2) >= angle_limited_m_s2
@@ -4226,7 +4230,29 @@ def _check_conditional_full_force_coast_domains(
                     transported_velocity_error_m_s = anchor_residual_m_s + reference_velocity_error_m_s
                     assert anchored_position_error_m < transported_position_error_m <= Fraction("0.001")
                     assert split_velocity_error_m_s < transported_velocity_error_m_s <= Fraction("0.000001")
+                    # Relative reaches are a*t+b*t^2, a,b>=0, hence <=t/h times
+                    # their endpoint bounds. Rotation uses the verified linear branch.
+                    gravity_variation_m_s2 = sum((Fraction(value) for partition in (
+                        relative_point_m_s2, split_relative_harmonic_m_s2,
+                        angle_limited_rotation_variation_m_s2,
+                    ) for value in partition.values()), Fraction(0))
+                    defect_rate_m_s3 = gravity_variation_m_s2 / Fraction(duration_s)
+                    constant_defect_m_s2 = prefix_full_error_m_s2 + 2 * (Fraction(srp) + Fraction(relativity))
+                    assert constant_defect_m_s2 + defect_rate_m_s3 * Fraction(duration_s) <= reference_defect_m_s2
+                    weighted_position_error_m, weighted_velocity_error_m_s = _coast_error_envelope(
+                        duration_s, Fraction(0), Fraction(0), Fraction(reported_full_position_sensitivity),
+                        Fraction(reported_relativity_sensitivities[1]), constant_defect_m_s2,
+                        acceleration_defect_rate_m_s3=defect_rate_m_s3,
+                    )
+                    weighted_position_error_m += reference_position_residual_m
+                    weighted_velocity_error_m_s += anchor_residual_m_s
+                    assert 0 < weighted_position_error_m < transported_position_error_m <= Fraction("0.001")
+                    assert 0 < weighted_velocity_error_m_s < transported_velocity_error_m_s <= Fraction("0.000001")
                     transport_bounds = {
+                        "conditional_linear_reference_defect_constant_m_s2": constant_defect_m_s2,
+                        "conditional_linear_reference_defect_rate_m_s3": defect_rate_m_s3,
+                        "conditional_weighted_endpoint_position_error_m": weighted_position_error_m,
+                        "conditional_weighted_endpoint_velocity_error_m_s": weighted_velocity_error_m_s,
                         "conditional_quadratic_reference_defect_m_s2": reference_defect_m_s2,
                         "conditional_quadratic_reference_position_error_m": reference_position_error_m,
                         "conditional_quadratic_reference_velocity_error_m_s": reference_velocity_error_m_s,

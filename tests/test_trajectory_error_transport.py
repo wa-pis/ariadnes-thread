@@ -10,28 +10,33 @@ def _coast_error_envelope(
     duration_s: float, position_error_m: Fraction, velocity_error_m_s: Fraction,
     position_sensitivity_s_inv2: Fraction, velocity_sensitivity_s_inv: Fraction,
     acceleration_defect_m_s2: Fraction,
+    *, acceleration_defect_rate_m_s3: Fraction = Fraction(0),
 ) -> tuple[Fraction, Fraction]:
     """Bound SI position/velocity errors given a closed domain and uniform sensitivities.
 
     Reference position must differentiate to reference velocity. Its acceleration
-    defect and force sensitivities must hold throughout both paths and chords.
+    defect must be <= D+J*t, where D/J are the supplied acceleration defect/rate.
+    Force sensitivities must hold throughout both paths and chords.
     Returned bounds alone do not establish those premises or domain closure.
     """
     assert type(duration_s) is float and math.isfinite(duration_s) and duration_s >= 0
     assert all(isinstance(value, Fraction) and value >= 0 for value in (
         position_error_m, velocity_error_m_s, position_sensitivity_s_inv2,
-        velocity_sensitivity_s_inv, acceleration_defect_m_s2,
+        velocity_sensitivity_s_inv, acceleration_defect_m_s2, acceleration_defect_rate_m_s3,
     ))
     duration = Fraction(duration_s)
     feedback = position_sensitivity_s_inv2 * duration**2 / 2 + velocity_sensitivity_s_inv * duration
     assert feedback < 1, "unresolved error-envelope feedback; no enclosure returned"
+    defect_position_m = acceleration_defect_rate_m_s3 * duration**3 / 6
+    defect_velocity_m_s = acceleration_defect_rate_m_s3 * duration**2 / 2
+    # Bound the time-independent part Lx*P+Lv*V+D, integrating J*t exactly.
     acceleration_error = (
-        position_sensitivity_s_inv2 * (position_error_m + duration * velocity_error_m_s)
-        + velocity_sensitivity_s_inv * velocity_error_m_s + acceleration_defect_m_s2
+        position_sensitivity_s_inv2 * (position_error_m + duration * velocity_error_m_s + defect_position_m)
+        + velocity_sensitivity_s_inv * (velocity_error_m_s + defect_velocity_m_s) + acceleration_defect_m_s2
     ) / (1 - feedback)
     return (
-        position_error_m + duration * velocity_error_m_s + duration**2 * acceleration_error / 2,
-        velocity_error_m_s + duration * acceleration_error,
+        position_error_m + duration * velocity_error_m_s + duration**2 * acceleration_error / 2 + defect_position_m,
+        velocity_error_m_s + duration * acceleration_error + defect_velocity_m_s,
     )
 
 
@@ -91,6 +96,67 @@ def test_error_transport_carries_errors_across_four_segments() -> None:
         0.25, Fraction(1, 1000), Fraction(1, 1000000), Fraction(0), Fraction(0), defect,
     )
     assert position > reset_position and velocity > reset_velocity
+
+
+@pytest.mark.parametrize("duration_s", [0.0, 1 / 64, 0.3])
+@pytest.mark.parametrize("initial_position,initial_velocity,defect", [
+    (Fraction(0), Fraction(0), Fraction(0)),
+    (Fraction(1, 1000), Fraction(1, 1000000), Fraction(1, 1000)),
+])
+@pytest.mark.parametrize("rate", [Fraction(0), Fraction(3, 2)])
+def test_error_transport_attains_constant_jerk(
+    duration_s: float, initial_position: Fraction, initial_velocity: Fraction,
+    defect: Fraction, rate: Fraction,
+) -> None:
+    position, velocity = _coast_error_envelope(
+        duration_s, initial_position, initial_velocity, Fraction(0), Fraction(0), defect,
+        acceleration_defect_rate_m_s3=rate,
+    )
+    time = Fraction(duration_s)
+    # Independent exact trajectory x''=D+J*t relative to a zero reference.
+    assert position == initial_position + initial_velocity * time + defect * time**2 / 2 + rate * time**3 / 6
+    assert velocity == initial_velocity + defect * time + rate * time**2 / 2
+    uniform = _coast_error_envelope(
+        duration_s, initial_position, initial_velocity, Fraction(0), Fraction(0), defect + rate * time,
+    )
+    assert position <= uniform[0] and velocity <= uniform[1]
+    assert ((position, velocity) == uniform) == (rate == 0 or time == 0)
+
+
+@pytest.mark.parametrize("duration_s", [1 / 64, 1 / 8, 1 / 4])
+@pytest.mark.parametrize("lx,lv", [(1, 0), (0, 1), (1, 1)])
+def test_linear_defect_transport_encloses_manufactured_solution(duration_s: float, lx: int, lv: int) -> None:
+    time = Fraction(duration_s)
+    # x=t^3/6 solves x''=Lx*x+Lv*x'+t-Lx*t^3/6-Lv*t^2/2.
+    # At the zero reference the force lies in [0,t] on the entire interval.
+    assert 0 <= lx * time**2 / 6 + lv * time / 2 < 1
+    position, velocity = _coast_error_envelope(
+        duration_s, Fraction(0), Fraction(0), Fraction(lx), Fraction(lv), Fraction(0),
+        acceleration_defect_rate_m_s3=Fraction(1),
+    )
+    assert time**3 / 6 < position  # m; strict positive feedback above the exact oracle.
+    assert time**2 / 2 < velocity  # m/s
+    uniform = _coast_error_envelope(
+        duration_s, Fraction(0), Fraction(0), Fraction(lx), Fraction(lv), time,
+    )
+    assert position < uniform[0] and velocity < uniform[1]
+
+
+@pytest.mark.parametrize("invalid", [Fraction(-1), 0.0, True, math.nan, math.inf])
+def test_error_transport_rejects_invalid_defect_rate(invalid: object) -> None:
+    with pytest.raises(AssertionError):
+        _coast_error_envelope(
+            0.25, Fraction(0), Fraction(0), Fraction(0), Fraction(0), Fraction(0),
+            acceleration_defect_rate_m_s3=invalid,  # type: ignore[arg-type] -- boundary rejection.
+        )
+
+
+def test_linear_defect_transport_rejects_unresolved_feedback() -> None:
+    with pytest.raises(AssertionError, match="unresolved error-envelope"):
+        _coast_error_envelope(
+            1.0, Fraction(0), Fraction(0), Fraction(0), Fraction(1), Fraction(0),
+            acceleration_defect_rate_m_s3=Fraction(1),
+        )
 
 
 @pytest.mark.parametrize("position_sensitivity,velocity_sensitivity", [(2, 0), (0, 1), (1, 1)])

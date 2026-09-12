@@ -1,5 +1,38 @@
 ## Context
 
+### Time-weighted reference defect (2026-09-12)
+
+Keep the uniform-defect controls unchanged as regressions. Extend their
+test-only transport lemma to an explicit defect bound `D + J*t`, with
+nonnegative exact D (m/s^2) and J (m/s^3), over an already closed interval
+of duration h. Zero J must reproduce every existing result exactly.
+J is a slope of a defect upper bound, not a qualified physical jerk or
+native force-derivative measurement.
+
+For uniform position/velocity error bounds P/V, define B=Lx*P+Lv*V+D.
+Integration gives `P <= p+h*v+h^2*B/2+J*h^3/6` and
+`V <= v+h*B+J*h^2/2`. With unchanged `k=Lx*h^2/2+Lv*h < 1`, use
+`B <= [Lx*(p+h*v+J*h^3/6)+Lv*(v+J*h^2/2)+D]/(1-k)`.
+Nonnegative coefficients make the endpoint expressions uniform in time.
+This lemma still requires prior domain closure and uniform sensitivities.
+
+In the same four native short controls, relative displacements have the
+form a*t+b*t^2, with a,b nonnegative, so their spatial gravity variations
+are bounded by t/h times the qualified endpoint variation. Verify that
+the existing angle-limited rotation bounds use the linear, unsaturated
+branch before applying the same scaling. Sum all eight gravity spatial
+terms and both rotation terms into J. Keep the initial force error and
+the unchanged 2*SRP/2*Schwarzschild norm allowances in D. Add the same
+saved nominal endpoint residuals after transport; preserve all earlier
+uniform-defect and initial-ball results.
+
+WHEN zero sensitivity and a linearly growing force defect are supplied,
+THEN exact constant-jerk trajectories must attain the bounds. WHEN the
+four native controls are checked, THEN report outward-rounded weighted
+bounds, compare them against the unchanged gates and older bounds, and
+retain unresolved cases without changing tolerances. This is not a longer
+interval, mission-runtime or native internal-stage qualification; 3.9 stays open.
+
 ### Nonzero initial-state ball controls (2026-09-12)
 
 Use explicit diagnostic initial radii p=0.0001 m and v=0, 5e-8, 1e-7 m/s
