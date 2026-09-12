@@ -51,6 +51,26 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 sharp isolated-C20 spatial sensitivity (2026-09-13):
+Verify the Cartesian/meridional Jacobian identities and the factored
+positive-semidefinite bounds over the full angular domain. Verify exact
+polar eigenvalue enclosure, signed/zero coefficients, physical scaling,
+strict improvement over the generic isolated-term bound, and invalid-input
+rejection. Run focused tests, full pytest, Ruff, strict OpenSpec and legacy
+isolation. Do not apply an isolated-term result to the full field without
+separately bounding the remainder; retain all native outcomes and 3.9 open.
+
+Focused evidence: 50 exact analytic/rejection tests passed in 0.42 s:
+eight orientation/matrix controls, 24 polar-eigenvalue/scaling controls,
+and 18 invalid-input controls. The operator norm bound is attained at a
+pole and improves the generic isolated-C20 bound for every nonzero tested
+coefficient. The zero coefficient produces exactly zero sensitivity.
+All calculations retain exact rational arithmetic with outward square-root
+enclosure; no native arcs, SPICE calls, physical parameters or trajectory
+certificate changes are introduced by this step.
+All 1979 tests passed in 521.76 s. Ruff, strict OpenSpec validation,
+diff whitespace checks and legacy checksum/import isolation passed.
+
 Task 3.9 composed rotation allowance (2026-09-13):
 Verify the sum of zonal pole-only and nonzonal full-rotation allowances on
 exact mixed-quadrupole and pure-zonal controls, including invalid bounds.

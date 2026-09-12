@@ -73,9 +73,13 @@ Sixteen new synthetic/rejection controls cover disjointness, independence,
 full model sizes and invalid input. Both real inventories agree on the
 nonzero zonal/nonzonal counts. Twenty new composition controls qualify the
 rotation-bound sum against exact mixed-quadrupole and pure-zonal controls.
-Next bounded work within 3.9 is to qualify sharper harmonic spatial
-variation or force-derivative remainders, preserving all arithmetic
-allowances and historical controls, before increasing duration or
+Fifty new analytic controls qualify the sharp isolated-C20 spatial
+operator bound 12*sqrt(5)*|C20|*GM*R^2/d^5 (s^-2), including exact
+angular matrix identities, polar attainment, scaling and invalid inputs.
+No native force bound has changed from this isolated-term result.
+Next bounded work within 3.9 is to compose that C20 bound with an
+independently enclosed remainder field and compare spatial variation,
+preserving all arithmetic allowances and historical controls, before increasing duration or
 attempting mission composition. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
@@ -83,7 +87,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 1929 passing tests; both focused
+The latest completed code check has 1979 passing tests; both focused
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost

@@ -1,5 +1,32 @@
 ## Context
 
+### Sharp isolated-C20 spatial sensitivity (2026-09-13)
+
+For normalized C20, let K=sqrt(5)*C20*GM*R^2/2. Its potential is
+V=K*(3*z^2-r^2)/r^5 and acceleration is
+g=K/r^4*[3*(1-5*u_z^2)*u+6*u_z*e_z], u=r_vector/r.
+Differentiate in Cartesian coordinates. After factoring K/r^5, the
+meridional 2x2 Jacobian block has a=-12+36*t, d=9-21*t,
+b=-24*u_z*sqrt(1-t), t=u_z^2; the azimuthal eigenvalue is 3-15*t.
+For 0<=t<=1, the diagonal entries of 24I +/- this block are nonnegative,
+and their determinants factor as 180*(1-t)*(3+t) and
+36*(11+10*t-5*t^2), both nonnegative. The azimuthal eigenvalue lies
+between -12 and 3. Therefore the Euclidean operator norm is <=24*|K|/r^5,
+or 12*sqrt(5)*|C20|*GM*R^2/d^5 over r>=d. Equality occurs at a pole.
+Ideal proper rotations preserve this norm.
+
+WHEN exact rational orientation controls are supplied, THEN the Cartesian
+matrix must match that block and its factored principal-minor identities.
+WHEN physical scales and signed C20 are supplied, THEN the bound must
+enclose the exact polar eigenvalue squared in s^-4; the excess is limited
+to scale^2*2^-90 using the existing 100-bit root enclosure. This arithmetic
+check is not a mission tolerance. Invalid scales/coefficients must fail.
+Compare against the existing generic isolated-C20 bound, preserving it.
+No full-field bound can simply subtract C20 from a degree-wise coefficient
+norm: the remaining coefficients require a separate valid enclosure.
+Native application, other harmonics, and all arithmetic allowances remain
+future qualification work within 3.9; no trajectory certificate changes here.
+
 ### Composed zonal/nonzonal rotation allowance (2026-09-13)
 
 Use the lossless nonmonopole partition to compute independent norm and
