@@ -6,6 +6,60 @@ import math
 import pytest
 
 
+def _cubic_reference_endpoint(
+    initial_state_m_m_s: tuple[Fraction, ...], acceleration_m_s2: tuple[Fraction, ...],
+    jerk_m_s3: tuple[Fraction, ...], duration_s: float,
+) -> tuple[Fraction, ...]:
+    """Return exact reference position (m), velocity (m/s); elapsed time in seconds."""
+    assert type(duration_s) is float and math.isfinite(duration_s) and duration_s >= 0
+    assert all(len(vector) == size and all(isinstance(value, Fraction) for value in vector)
+               for vector, size in ((initial_state_m_m_s, 6), (acceleration_m_s2, 3), (jerk_m_s3, 3)))
+    time = Fraction(duration_s)
+    position_m = tuple(p + v*time + a*time**2/2 + j*time**3/6 for p, v, a, j in
+                       zip(initial_state_m_m_s[:3], initial_state_m_m_s[3:], acceleration_m_s2, jerk_m_s3, strict=True))
+    velocity_m_s = tuple(v + a*time + j*time**2/2 for v, a, j in
+                         zip(initial_state_m_m_s[3:], acceleration_m_s2, jerk_m_s3, strict=True))
+    return position_m + velocity_m_s
+
+
+@pytest.mark.parametrize("duration_s", [0.0, 1 / 64, 1 / 32])
+@pytest.mark.parametrize("selected_jerk,omitted_jerk", [(-1, -2), (-1, 2), (1, -2), (1, 2)])
+def test_partial_cubic_reference_retains_omitted_force(
+    duration_s: float, selected_jerk: int, omitted_jerk: int,
+) -> None:
+    initial = tuple(map(Fraction, (10**12, -10**12, 0, 2, 0, 0)))
+    acceleration = (Fraction(1, 4), Fraction(0), Fraction(0))
+    reference = _cubic_reference_endpoint(initial, acceleration, (Fraction(selected_jerk), Fraction(0), Fraction(0)), duration_s)
+    time = Fraction(duration_s)
+    # Independent integration of f(t)=a0+(selected+omitted)*t along x.
+    total_jerk = selected_jerk + omitted_jerk
+    exact_position = initial[0] + time*(initial[3] + time*(acceleration[0]/2 + total_jerk*time/6))
+    exact_velocity = initial[3] + time*(acceleration[0] + total_jerk*time/2)
+    bound_m, bound_m_s = _coast_error_envelope(
+        duration_s, Fraction(0), Fraction(0), Fraction(0), Fraction(0), Fraction(0),
+        acceleration_defect_rate_m_s3=Fraction(abs(omitted_jerk)),
+    )
+    assert abs(exact_position - reference[0]) == bound_m
+    assert abs(exact_velocity - reference[3]) == bound_m_s
+    assert reference[1:3] == initial[1:3] and reference[4:] == initial[4:]
+
+
+@pytest.mark.parametrize("duration_s", [-1.0, True, math.nan, math.inf])
+def test_cubic_reference_rejects_invalid_duration(duration_s: float) -> None:
+    with pytest.raises(AssertionError):
+        _cubic_reference_endpoint((Fraction(0),)*6, (Fraction(0),)*3, (Fraction(0),)*3, duration_s)
+
+
+@pytest.mark.parametrize("field", range(3))
+@pytest.mark.parametrize("invalid", ["length", "boolean", "float"])
+def test_cubic_reference_rejects_invalid_vectors(field: int, invalid: str) -> None:
+    vectors: list[tuple[object, ...]] = [(Fraction(0),)*6, (Fraction(0),)*3, (Fraction(0),)*3]
+    vector = vectors[field]
+    vectors[field] = vector[:-1] if invalid == "length" else (True if invalid == "boolean" else 0.0,) + vector[1:]
+    with pytest.raises(AssertionError):
+        _cubic_reference_endpoint(*vectors, 0.25)  # type: ignore[arg-type] -- boundary rejection.
+
+
 def _coast_error_envelope(
     duration_s: float, position_error_m: Fraction, velocity_error_m_s: Fraction,
     position_sensitivity_s_inv2: Fraction, velocity_sensitivity_s_inv: Fraction,

@@ -51,6 +51,34 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 partial-jerk cubic reference (2026-09-13):
+Qualify exact cubic endpoint evaluation and omitted-jerk transport on
+analytic force controls, including invalid inputs. Enclose Moon/Mars
+monopole jerks separately, prove reference domain containment, and compose
+all monopole curvature and remaining-force variation allowances in the
+same five native controls. Verify independent point-mass curvature/jerk
+oracles, both real inventories, unchanged source/native counts and gates,
+full pytest, Ruff, strict OpenSpec and legacy isolation. Preserve unresolved
+outcomes and all historical quadratic controls; do not complete 3.9.
+
+Focused evidence: 195 tests passed in 205.82 s (123 error-transport,
+70 force-curvature, two real inventories). All five conditional cubic
+endpoint controls meet 0.001 m and 1e-6 m/s. At Moon 1/64 s, nominal/tight
+velocity upper bounds are 1.4236746145776514e-7 / 1.4235654752134386e-7 m/s;
+at Mars 1/64 s they are 2.62472696064519e-8 / 2.624454112234658e-8 m/s.
+At Mars 1/32 s the position/velocity upper bounds are
+4.9286912327652195e-5 m / 1.0267213213083907e-7 m/s, versus the retained
+quadratic velocity upper bound 1.978951932550837e-6 m/s. The new reference
+contribution is 9.832488212025998e-8 m/s and the endpoint residual allowance
+is 4.347250010579102e-9 m/s; neither is an observed integration error.
+The reported values are outward-rounded upper bounds. Moon 1/32 s remains
+unclosed. Native/portable inventories still run five/zero spacecraft arcs
+and 24 affine source readbacks each. These are diagnostic counts and timings,
+not mission-cost estimates or a new runtime allocation. After adding the
+explicit all-five velocity-gate assertion, all 1853 tests passed in 471.03 s.
+Ruff, strict OpenSpec validation, diff whitespace checks, and the unchanged
+legacy checksum/import isolation also passed. Task 3.9 remains open.
+
 Task 3.9 initial point-mass jerk intervals (2026-09-13):
 Qualify sign-aware rational/root derivative intervals against exact radial,
 transverse and irrational-radius analytic oracles and invalid inputs. Retain

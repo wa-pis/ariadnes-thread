@@ -17,33 +17,34 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest trajectory-envelope evidence (2026-09-12, code commit `4f381dc`):
-four conditional full-force coast controls at 1/64 s meet the unchanged
-0.001 m / 1e-6 m/s endpoint gates. They are diagnostic fixtures, not a
-qualified mission or a native internal-stage safety certificate.
-At 1/32 s the Moon fixture's existing position domain cannot be closed.
-The Mars domain closes, but its velocity-error upper bound is
-1.978951932550837e-6 m/s. Its reference-only contribution is already
-1.3500214429163211e-6 m/s: reducing only the nonnegative endpoint residual
-cannot make this fixed certificate pass. Neither contribution is a
-measurement of the native integrator's true error.
+Latest trajectory-envelope evidence (2026-09-13): a partial-jerk cubic
+reference encloses all modeled forces and passes the unchanged 0.001 m /
+1e-6 m/s endpoint gates in all five conditional native controls: four at
+1/64 s and the nominal Mars fixture at 1/32 s. At Mars 1/32 s, the new
+position/velocity upper bounds are 4.9286912327652195e-5 m and
+1.0267213213083907e-7 m/s. The old quadratic velocity upper bound of
+1.978951932550837e-6 m/s remains a regression control, not a measurement
+of the native integrator's true error. The Moon 1/32 s position domain
+still cannot be closed; no native arc is run there. These are diagnostic
+fixtures, not a qualified mission or native internal-stage safety certificate.
 
-Cubic references improve bounds in 16 exact analytic controls only; no
-cubic reference or force-derivative remainder has been qualified for the
-physical model. Point-mass force-curvature and radial force-remainder bounds
-now have 70 exact analytic controls (2026-09-13), without native application.
-Initial jerk intervals for the six pure point-mass sources are also computed
-from the qualified ideal SPK position polynomials at both fixture states.
-They exclude Moon/Mars harmonic derivatives and are not native jerk measurements.
-Next bounded work within 3.9 is to qualify the remaining initial derivatives
-and force-curvature components before composing the full model. WHEN a proposed
+The cubic coefficient uses initial jerk intervals for all eight monopoles,
+derived from qualified ideal SPK position polynomials. Moon/Mars higher
+harmonics, orientation changes, SRP and relativity remain explicitly bounded;
+this is not a full-force jerk measurement. Exact point-mass curvature controls
+and the existing full-force transport lemma supply the reference enclosure.
+No force, arithmetic allowance, or historical quadratic control was removed.
+Next bounded work within 3.9 is to test whether larger, explicitly closed
+domains and these reference bounds support longer coast controls before
+attempting mission composition. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
 application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 1828 passing tests. The native inventory
+The latest completed code check has 1853 passing tests; the focused
+partial-cubic check has 195 passing tests. The native inventory
 runs five spacecraft arcs, the portable inventory zero; each performs 24
 affine source readbacks. These are diagnostic counts, not mission-cost
 estimates. Production limits and the shared 300-second deadline are unchanged.

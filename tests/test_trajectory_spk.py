@@ -3597,7 +3597,8 @@ def _check_conditional_full_force_coast_domains(
     source_affine_coverage_s: float, run_native_controls: bool,
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
-    from test_trajectory_error_transport import _coast_error_envelope
+    from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint
+    from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
     from test_trajectory_gravity import _candidate, _spacecraft
 
     candidate = _candidate(
@@ -3640,9 +3641,12 @@ def _check_conditional_full_force_coast_domains(
         }
         assert all(floor > 0 for floor in source_error_floors_m.values())
         point_jerk_intervals_m_s3: dict[str, list[list[float]]] = {}
+        harmonic_monopole_jerks_m_s3: dict[str, list[list[float]]] = {}
+        exact_monopole_jerks_m_s3: dict[str, tuple[tuple[Fraction, Fraction], ...]] = {}
         for source in trajectory.PHYSICAL_BODY_NAMES:
             if source in {"Moon", "Mars"}:
-                continue  # Their harmonic derivatives are not qualified here.
+                field = bodies.get(source).gravity_field_model
+                assert field.cosine_coefficients[0, 0] == 1.0 and field.sine_coefficients[0, 0] == 0.0
             budget.check()
             relative_position_m = tuple(Fraction(ship) - ideal for ship, ideal in
                                         zip(state[:3], source_affine_positions_m[source], strict=True))
@@ -3655,8 +3659,18 @@ def _check_conditional_full_force_coast_domains(
                          math.nextafter(float(upper), math.inf) if upper else 0.0] for lower, upper in intervals]
             assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lower <= upper <= Fraction(b)
                        for (a, b), (lower, upper) in zip(reported, intervals, strict=True))
-            point_jerk_intervals_m_s3[source] = reported
+            exact_monopole_jerks_m_s3[source] = intervals
+            if source in {"Moon", "Mars"}:
+                harmonic_monopole_jerks_m_s3[source] = reported
+            else:
+                point_jerk_intervals_m_s3[source] = reported
         assert set(point_jerk_intervals_m_s3) == set(trajectory.PHYSICAL_BODY_NAMES) - {"Moon", "Mars"}
+        assert set(harmonic_monopole_jerks_m_s3) == {"Moon", "Mars"}
+        assert set(exact_monopole_jerks_m_s3) == set(trajectory.PHYSICAL_BODY_NAMES)
+        reference_jerk_m_s3 = tuple(sum((intervals[axis][0] + intervals[axis][1]
+                                       for intervals in exact_monopole_jerks_m_s3.values()), Fraction(0)) / 2 for axis in range(3))
+        reference_jerk_error_m_s3 = sum((upper - lower for intervals in exact_monopole_jerks_m_s3.values()
+                                       for lower, upper in intervals), Fraction(0)) / 2
         initial_speed_m_s = sum((abs(Fraction(value)) for value in state[3:]), Fraction(0))
         initial_speed_upper_m_s = math.nextafter(float(initial_speed_m_s), math.inf)
         assert Fraction(initial_speed_upper_m_s) >= initial_speed_m_s
@@ -4351,6 +4365,62 @@ def _check_conditional_full_force_coast_domains(
                     assert 0 < weighted_position_error_m < transported_position_error_m <= Fraction("0.001")
                     assert 0 < weighted_velocity_error_m_s < transported_velocity_error_m_s
                     assert (weighted_velocity_error_m_s <= Fraction("0.000001")) is short_control
+                    # Selected monopole jerk only; bound every other force's variation.
+                    h = Fraction(duration_s)
+                    reference_acceleration_m_s2 = (sum(map(abs, map(Fraction, anchor_m_s2)), Fraction(0))
+                                                  + h * sum(map(abs, reference_jerk_m_s3), Fraction(0)))
+                    assert reference_acceleration_m_s2 <= Fraction(acceleration_m_s2)
+                    monopole_curvature_m_s4 = Fraction(0)
+                    for source, (slope, source_curvature) in source_affine_motion.items():
+                        budget.check()
+                        relative_acceleration_m_s2 = Fraction(acceleration_m_s2) + source_curvature
+                        relative_speed_m_s = sum((abs(Fraction(ship) - v) for ship, v in
+                                                  zip(state[3:], slope, strict=True)), Fraction(0)) + relative_acceleration_m_s2*h
+                        monopole_curvature_m_s4 += _point_mass_force_curvature_bound_m_s4(
+                            bodies.get(source).gravity_field_model.gravitational_parameter, floors_m[source],
+                            relative_speed_m_s, relative_acceleration_m_s2,
+                        )
+                    remaining_variation_rate_m_s3 = sum(map(Fraction, angle_limited_rotation_variation_m_s2.values()), Fraction(0)) / h
+                    for source in ("Moon", "Mars"):
+                        monopole_jacobian = 2 * Fraction(bodies.get(source).gravity_field_model.gravitational_parameter) / Fraction(floors_m[source])**3
+                        nonmonopole_jacobian = split_harmonic_jacobians_s_inv2[source] - monopole_jacobian
+                        assert nonmonopole_jacobian >= 0
+                        remaining_variation_rate_m_s3 += nonmonopole_jacobian * Fraction(relative_reaches_m[source]) / h
+                    cubic_defect_rate_m_s3 = reference_jerk_error_m_s3 + remaining_variation_rate_m_s3 + monopole_curvature_m_s4*h/2
+                    cubic_reference_position_m, cubic_reference_velocity_m_s = _coast_error_envelope(
+                        duration_s, Fraction(0), Fraction(0), Fraction(reported_full_position_sensitivity),
+                        Fraction(reported_relativity_sensitivities[1]), constant_defect_m_s2,
+                        acceleration_defect_rate_m_s3=cubic_defect_rate_m_s3,
+                    )
+                    cubic_endpoint = _cubic_reference_endpoint(
+                        tuple(map(Fraction, state)), tuple(map(Fraction, anchor_m_s2)), reference_jerk_m_s3, duration_s,
+                    )
+                    cubic_position_residual_m = sum((abs(Fraction(native) - reference) for native, reference in
+                                                    zip(final_state[:3], cubic_endpoint[:3], strict=True)), Fraction(0))
+                    cubic_velocity_residual_m_s = sum((abs(Fraction(native) - reference) for native, reference in
+                                                      zip(final_state[3:6], cubic_endpoint[3:], strict=True)), Fraction(0))
+                    cubic_position_error_m = cubic_reference_position_m + cubic_position_residual_m
+                    cubic_velocity_error_m_s = cubic_reference_velocity_m_s + cubic_velocity_residual_m_s
+                    assert cubic_reference_position_m < weighted_reference_position_error_m
+                    assert cubic_reference_velocity_m_s < weighted_reference_velocity_error_m_s
+                    assert cubic_position_error_m <= Fraction("0.001")
+                    assert cubic_velocity_error_m_s < weighted_velocity_error_m_s
+                    assert cubic_velocity_error_m_s <= Fraction("0.000001")
+                    cubic_values = {
+                        "reference_acceleration_upper_m_s2": reference_acceleration_m_s2,
+                        "monopole_jerk_error_m_s3": reference_jerk_error_m_s3,
+                        "monopole_force_curvature_m_s4": monopole_curvature_m_s4,
+                        "remaining_variation_rate_m_s3": remaining_variation_rate_m_s3,
+                        "reference_defect_rate_m_s3": cubic_defect_rate_m_s3,
+                        "reference_position_error_m": cubic_reference_position_m,
+                        "reference_velocity_error_m_s": cubic_reference_velocity_m_s,
+                        "endpoint_position_residual_m": cubic_position_residual_m,
+                        "endpoint_velocity_residual_m_s": cubic_velocity_residual_m_s,
+                        "endpoint_position_error_m": cubic_position_error_m,
+                        "endpoint_velocity_error_m_s": cubic_velocity_error_m_s,
+                    }
+                    reported_cubic = {key: math.nextafter(float(value), math.inf) if value else 0.0 for key, value in cubic_values.items()}
+                    assert all(math.isfinite(value) and Fraction(value) >= cubic_values[key] >= 0 for key, value in reported_cubic.items())
                     transport_bounds = {
                         "conditional_weighted_reference_position_error_m": weighted_reference_position_error_m,
                         "conditional_weighted_reference_velocity_error_m_s": weighted_reference_velocity_error_m_s,
@@ -4412,6 +4482,11 @@ def _check_conditional_full_force_coast_domains(
                     budget.check()
                     endpoint_controls.append({"tighter": tighter,
                         **reported_transport_bounds,
+                        "conditional_partial_cubic_control": {
+                            **reported_cubic,
+                            "within_position_gate": cubic_position_error_m <= Fraction("0.001"),
+                            "within_velocity_gate": cubic_velocity_error_m_s <= Fraction("0.000001"),
+                        },
                         "weighted_position_bound_resolves_1mm": weighted_position_error_m <= Fraction("0.001"),
                         "reference_only_velocity_bound_resolves_1um_s": weighted_reference_velocity_error_m_s <= Fraction("0.000001"),
                         "weighted_velocity_bound_resolves_1um_s": weighted_velocity_error_m_s <= Fraction("0.000001"),
@@ -4461,6 +4536,7 @@ def _check_conditional_full_force_coast_domains(
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
                 "conditional_point_mass_initial_jerk_intervals_m_s3": point_jerk_intervals_m_s3,
+                "conditional_harmonic_monopole_initial_jerk_intervals_m_s3": harmonic_monopole_jerks_m_s3,
                 "conditional_domain_fully_lit_by_occultor": domain_clear_by_body,
                 "conditional_position_sensitivities_by_force_s_inv2": reported_position_sensitivities,
                 "conditional_full_force_position_sensitivity_s_inv2": reported_full_position_sensitivity,

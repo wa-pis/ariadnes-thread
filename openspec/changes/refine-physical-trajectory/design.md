@@ -1,5 +1,37 @@
 ## Context
 
+### Partial-jerk cubic reference (2026-09-13)
+
+Use the initial jerk of all eight monopoles as a selected cubic coefficient,
+not as a claim about the full-force jerk. For Moon/Mars verify C00=1 and
+S00=0; the ideal monopole is rotation-invariant. Preserve the six pure
+point-mass diagnostics and report the two harmonic monopoles separately.
+Take the exact midpoint of the summed jerk intervals, with an L1 interval
+radius Ej. Let `q=x0+v0*t+a_hat*t²/2+j_hat*t³/6`, with q' its derivative.
+WHEN `|a_hat|_1+|j_hat|_1*h <= A`, THEN the previously closed position and
+velocity domains also contain this reference through the same reach proof.
+Otherwise no new reference certificate is returned for the fixture.
+
+Within those domains, each relative speed is bounded by
+`|v0-source_slope|_1+(A+source_curvature)*h`. Apply the qualified point-mass
+force-curvature bound with relative acceleration A+source_curvature and
+the unchanged distance floor. Sum these into K in m/s^4. Bound remaining
+harmonic spatial variation using only the nonmonopole Jacobian, and retain
+the existing unsaturated rotation-rate bounds. Their endpoint bounds
+divided by h give a linear variation coefficient H in m/s^3.
+
+The full reference defect is bounded by `D+(Ej+H)*t+K*t²/2`, where D retains
+the entire initial force-error allowance and both 2*SRP/2*Schwarzschild norm
+allowances. Use `t²<=h*t` to feed `D+(Ej+H+K*h/2)*t` into the existing
+full-sensitivity transport lemma. No force is discarded. Add exact saved
+native-to-cubic endpoint residuals, and report position/velocity gates
+separately. WHEN a selected-jerk analytic control omits a known force slope,
+THEN its exact trajectory errors must equal the transported omitted slope.
+Invalid reference inputs must fail. Retain all old quadratic and initial-
+ball outcomes, even if the new bound improves. No extra native arcs or
+changed tolerances; initial-condition uncertainty and native internal-stage
+safety are not qualified by this zero-initial-error control. Task 3.9 stays open.
+
 ### Initial point-mass jerk intervals (2026-09-13)
 
 For the ideal acceleration g=-mu*r/|r|^3, its first time derivative is
