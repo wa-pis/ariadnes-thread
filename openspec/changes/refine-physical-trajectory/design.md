@@ -1,5 +1,28 @@
 ## Context
 
+### Reusable Schwarzschild state sensitivities (2026-09-12)
+
+Extract the existing PPN=1 state-variation operator bounds without changing
+their arithmetic: `Lx=(12*GM^2/d^4+18*GM*V^2/d^3)/c^2` in s^-2 and
+`Lv=10*GM*V/(c^2*d^2)` in s^-1. Require positive GM/d and nonnegative V.
+The source-state variation wrapper still returns `Lx*position_error +
+Lv*velocity_error`, so earlier ephemeris-error allowances are unchanged.
+At a fixed epoch these same operators bound spacecraft-state derivatives
+because the force depends on source-relative position and velocity.
+
+Independently differentiate the Cartesian acceleration in rational
+directions at two exact-radius points with zero, axial and mixed velocities.
+Compare squared directional norms against the squared operator allowance;
+retain existing finite state-difference and invalid-input controls. Report
+outward-rounded Lx/Lv for each declared Moon/Mars coast domain using its
+existing Sun distance floor and relative-speed ceiling. These are conditional
+domain properties, including for the still-unclosed one-second controls.
+
+This qualifies only one force component. It does not establish a total-force
+transport bound, shadow regularity, reference acceleration defect or native
+internal-stage safety. No production equations, native calls, resource
+queries, limits or dependencies change; task 3.9 stays open.
+
 ### Conditional initial-error transport lemma (2026-09-12)
 
 Before composing arcs, retain initial position/velocity uncertainty instead

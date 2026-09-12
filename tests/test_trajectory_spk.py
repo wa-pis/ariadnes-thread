@@ -1991,21 +1991,63 @@ def test_schwarzschild_anchor_rejects_invalid_state(invalid_state: tuple[float, 
         _schwarzschild_anchor_error_bound_m_s2(1.0, np.zeros(6), np.asarray(invalid_state), np.zeros(3))
 
 
-def _schwarzschild_state_variation_bound_m_s2(
+def _schwarzschild_state_jacobian_bounds(
     gm_m3_s2: float, distance_floor_m: float, speed_upper_m_s: Fraction,
-    position_error_m: Fraction, velocity_error_m_s: Fraction,
-) -> Fraction:
-    """Bound PPN=1 source-state effects on a chord with r>=d and |v|<=V."""
+) -> tuple[Fraction, Fraction]:
+    """Bound PPN=1 position/velocity operators in s^-2/s^-1 for r>=d, |v|<=V."""
     assert all(type(value) is float and math.isfinite(value) and value > 0
                for value in (gm_m3_s2, distance_floor_m))
-    assert all(isinstance(value, Fraction) and value >= 0
-               for value in (speed_upper_m_s, position_error_m, velocity_error_m_s))
+    assert isinstance(speed_upper_m_s, Fraction) and speed_upper_m_s >= 0
     gm, d, v = Fraction(gm_m3_s2), Fraction(distance_floor_m), speed_upper_m_s
     # Position derivative norms: 12*GM^2/r^4 + (2+4+12)*GM*|v|^2/r^3.
     position_jacobian_s_inv2 = (12 * gm**2 / d**4 + 18 * gm * v**2 / d**3) / 299792458**2
     # Velocity derivatives of -|v|^2*r + 4*(r.v)*v contribute 2+4+4.
     velocity_jacobian_s_inv = 10 * gm * v / (299792458**2 * d**2)
+    return position_jacobian_s_inv2, velocity_jacobian_s_inv
+
+
+def _schwarzschild_state_variation_bound_m_s2(
+    gm_m3_s2: float, distance_floor_m: float, speed_upper_m_s: Fraction,
+    position_error_m: Fraction, velocity_error_m_s: Fraction,
+) -> Fraction:
+    """Bound PPN=1 source-state effects on a chord with r>=d and |v|<=V."""
+    assert all(isinstance(value, Fraction) and value >= 0 for value in (position_error_m, velocity_error_m_s))
+    position_jacobian_s_inv2, velocity_jacobian_s_inv = _schwarzschild_state_jacobian_bounds(
+        gm_m3_s2, distance_floor_m, speed_upper_m_s,
+    )
     return position_jacobian_s_inv2 * position_error_m + velocity_jacobian_s_inv * velocity_error_m_s
+
+
+@pytest.mark.parametrize("position,radius", [((3, 4, 0), 5), ((0, 0, 2), 2)])
+@pytest.mark.parametrize("velocity,speed", [((0, 0, 0), 0), ((2, 0, 0), 2), ((1, -2, 2), 3)])
+@pytest.mark.parametrize("kind", ["position", "velocity"])
+@pytest.mark.parametrize("direction", [(1, 0, 0), (0, 1, 0), (0, 0, 1), (Fraction(3, 5), Fraction(4, 5), 0)])
+def test_schwarzschild_jacobians_enclose_exact_directional_derivatives(
+    position: tuple[int, int, int], radius: int, velocity: tuple[int, int, int], speed: int,
+    kind: str, direction: tuple[int | Fraction, int | Fraction, int | Fraction],
+) -> None:
+    r, v, u = tuple(map(Fraction, position)), tuple(map(Fraction, velocity)), tuple(map(Fraction, direction))
+    d = Fraction(radius)
+    assert sum(value**2 for value in r) == d**2
+    assert sum(value**2 for value in v) == speed**2
+    assert sum(value**2 for value in u) == 1
+    rv, ru, vu = (sum((a * b for a, b in zip(left, right, strict=True)), Fraction(0))
+                  for left, right in ((r, v), (r, u), (v, u)))
+    # Direct Cartesian differentiation at GM=1, without finite differences.
+    # a*c^2 = 4*r/|r|^4 - |v|^2*r/|r|^3 + 4*(r.v)*v/|r|^3.
+    if kind == "position":
+        derivative = tuple((
+            4 * (u[i] / d**4 - 4 * r[i] * ru / d**6)
+            - speed**2 * (u[i] / d**3 - 3 * r[i] * ru / d**5)
+            + 4 * (vu * v[i] / d**3 - 3 * rv * v[i] * ru / d**5)
+        ) / 299792458**2 for i in range(3))
+    else:
+        derivative = tuple((-2 * vu * r[i] + 4 * ru * v[i] + 4 * rv * u[i])
+                           / (299792458**2 * d**3) for i in range(3))
+    position_bound, velocity_bound = _schwarzschild_state_jacobian_bounds(1.0, float(radius), Fraction(speed))
+    bound = position_bound if kind == "position" else velocity_bound
+    assert sum(value**2 for value in derivative) <= bound**2
+    assert position_bound > 0 and (velocity_bound == 0) == (speed == 0)
 
 
 @pytest.mark.parametrize("speed_m_s", [0, 2])
@@ -3555,6 +3597,14 @@ def _check_conditional_full_force_coast_domains(
                 budget.candidate_id, bodies.get("Sun").gravity_field_model.gravitational_parameter,
                 floors_m["Sun"], relative_speed_upper_m_s,
             )
+            relativity_sensitivities = _schwarzschild_state_jacobian_bounds(
+                bodies.get("Sun").gravity_field_model.gravitational_parameter,
+                floors_m["Sun"], Fraction(relative_speed_upper_m_s),
+            )
+            reported_relativity_sensitivities = tuple(math.nextafter(float(value), math.inf)
+                                                      for value in relativity_sensitivities)
+            assert all(math.isfinite(reported) and Fraction(reported) >= exact > 0 for reported, exact in
+                       zip(reported_relativity_sensitivities, relativity_sensitivities, strict=True))
             acceleration_m_s2 = trajectory._sum_force_acceleration_bounds(
                 budget, gravity_m_s2, thrust, srp, relativity, thrust_enabled=False,
             )
@@ -4112,6 +4162,8 @@ def _check_conditional_full_force_coast_domains(
                         "velocity_bound_resolves_1um_s": velocity_error_m_s <= Fraction("0.000001"),
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
+                "conditional_schwarzschild_position_sensitivity_s_inv2": reported_relativity_sensitivities[0],
+                "conditional_schwarzschild_velocity_sensitivity_s_inv": reported_relativity_sensitivities[1],
                 "conditional_pck_rotation_path_rad": {
                     body: math.nextafter(float(rate * Fraction(duration_s)), math.inf)
                     for body, rate in rotation_rates_rad_s.items()},

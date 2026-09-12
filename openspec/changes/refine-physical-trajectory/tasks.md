@@ -51,6 +51,29 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 reusable Schwarzschild state sensitivities (2026-09-12):
+Extract existing position/velocity operator bounds and preserve the source
+variation wrapper. Verify exact Cartesian directional derivatives in four
+directions at two positions and three velocities, prior variation/rejection
+controls, and outward conditional sensitivity diagnostics in both real
+inventories. Run focused/full pytest, Ruff, strict OpenSpec, diff and legacy
+checks. Do not label this one-component result a full-force transport or
+safety certificate; keep task 3.9 open and production unchanged.
+
+Focused verification: 79 tests passed in 164.71 s, including 48 exact
+directional-derivative controls and both real inventories. For the short
+Moon domain, Lx=1.9115340404949474e-20 s^-2 and
+Lv=2.8050418990982346e-14 s^-1; the short Mars domain gives
+2.2335261462366957e-21 s^-2 and 7.305410983566095e-15 s^-1.
+Both inventory variants agree on all four domain diagnostics. Existing
+source-state allowances, endpoint gates and four native arcs are unchanged.
+The one-second domains remain unclosed; these numbers do not close them.
+
+Completion verification: all 1641 project tests passed in 429.42 s.
+Ruff, strict OpenSpec, diff checks and legacy checksum/import isolation
+passed. No new native calls or physical changes; the 300-second operation
+deadline is unchanged and is distinct from full-suite duration.
+
 Task 3.9 conditional initial-error transport lemma (2026-09-12):
 Derive a rational position/velocity error enclosure from initial errors,
 uniform acceleration defect and position/velocity sensitivities under a
