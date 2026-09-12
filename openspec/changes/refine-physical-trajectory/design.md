@@ -1,5 +1,34 @@
 ## Context
 
+### Diagnostic harmonic-tail degree sweep (2026-09-12)
+
+Measure the scope of tighter harmonic qualification before implementing a
+new evaluator. Reuse the same remainder-bound helper with an explicitly
+diagnostic optional exclusion of all degrees through k. The original
+default still excludes only degrees zero and two, and the complete initial
+force envelope continues using that unchanged default. Never substitute
+the hypothetical prefix-excluded result for a qualified force error.
+
+At k=2,5,10,20,50,100,120,150 up to the declared ceiling (Moon 200, Mars 120),
+also including that ceiling,
+copy/zero the coefficient prefix and subtract the corresponding requested
+native degree-major prefix from the exact term sum. Advance one summation
+cursor so each saved term is visited once per sweep, with deadline checks
+between cutoffs. Check triangular index endpoints and exact zero remaining
+sum at the model ceiling. Reuse `|saved tail|_1 + ideal tail norm` on the
+same conditional source-distance floor; do not assume monotonicity of the
+observed tail norm because cancellation can change with a prefix.
+
+Report `diagnostic_unqualified_prefix_tail_error_upper_m_s2` separately from
+the unchanged full-force bound. Prefix filtering, zero tail, input
+non-mutation and invalid cutoff tests accompany existing remainder oracles.
+The requested native ordering is used for diagnosis; this sweep does not
+independently qualify the excluded terms' mapping or arithmetic. A small
+tail is only a possible budget after those terms have been qualified; other
+force errors and time variation still remain. This is not permission to
+truncate the production model or revise scientific tolerances. No new arcs,
+dependencies, public behavior or UI changes; task 3.9 remains open.
+
 ### Conservative complete initial force-error envelope (2026-09-12)
 
 Partition each declared harmonic field into degree zero, all degree-two

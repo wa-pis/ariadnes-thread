@@ -51,6 +51,40 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 diagnostic harmonic-tail sweep (2026-09-12):
+Measure hypothetical remainders after degree prefixes 2,5,10,20,50,100,120,
+150 up to each model ceiling, also including the ceiling. Reuse the existing
+bound and saved native terms with one exact summation cursor; verify prefix
+filtering, zero remaining sum, non-mutation, invalid cutoffs and deadlines.
+Keep the original full-force envelope unchanged. Run both inventories,
+focused/full pytest, Ruff, strict OpenSpec and legacy checks; keep 3.9 open.
+
+Focused verification: 16 tests passed in 32.77 s. An earlier coarse sweep
+passed in 32.29 s; each invocation used four native arcs, including the
+superseded coarse run. Prefix-tail bounds for the local body (m/s^2):
+
+| Excluded through degree | Near-Moon lunar tail | Near-Mars Martian tail |
+|---|---|---|
+| 50 | 0.0016033175640343855 | 0.00015999384208418237 |
+| 100 | 9.090473165602382e-5 | 1.643003417723087e-6 |
+| 120 | 2.9133575949243407e-5 | 0 (model ceiling) |
+| 150 | 4.824331142727141e-6 | Not in the declared model |
+
+At h=1/64 s, the lunar tail contribution after degree 100 alone exceeds
+1e-6 m/s, while after 120 it is about 4.55e-7 m/s; the Martian tail after
+100 contributes about 2.57e-8 m/s. These are hypothetical tail-only budgets,
+not proof that either prefix is qualified, sufficient, or minimal. Temporal
+force variation and other contributions remain. Both native profiles agree;
+the complete initial force bounds stay exactly 0.016305005499436833 and
+0.012168297081840857 m/s^2. No production truncation, tolerance, limit or
+model changes; counts remain (4,4,4) or (0,0,0) per inventory variant.
+
+Completion verification: all 1342 project tests passed in 259.80 s, including
+another four native inventory arcs. Ruff, strict OpenSpec, diff checks and
+the unchanged legacy SHA-256 passed. This additional diagnostic work consumes
+the existing shared deadline; no timer is reset and suite time is not a
+mission-runtime certificate. Task 3.9 remains open.
+
 Task 3.9 conservative complete initial force envelope (2026-09-12):
 Partition Moon/Mars fields into degrees zero, two and the remainder; bound
 unqualified remainder error by the exact saved-remainder L1 norm plus the

@@ -2478,8 +2478,9 @@ def _harmonic_remainder_anchor_error_bound_m_s2(
     budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
     distance_floor_m: float, cosine: np.ndarray, sine: np.ndarray,
     observed_remainder_m_s2: tuple[Fraction, ...],
+    *, excluded_through_degree: int | None = None,
 ) -> Fraction:
-    """Bound unqualified orders by |saved remainder|_1 + ideal norm; omit only n=0,2."""
+    """Bound a remainder; optional prefix exclusion is diagnostic, not qualification."""
     budget.check()
     assert len(observed_remainder_m_s2) == 3 and all(isinstance(value, Fraction) for value in observed_remainder_m_s2)
     assert cosine.shape == sine.shape and cosine.ndim == 2 and len(cosine) >= 3
@@ -2487,6 +2488,9 @@ def _harmonic_remainder_anchor_error_bound_m_s2(
     remainder_cosine, remainder_sine = cosine.copy(), sine.copy()
     remainder_cosine[0, 0] = 0.0
     remainder_cosine[2, :3] = remainder_sine[2, :3] = 0.0
+    if excluded_through_degree is not None:
+        assert type(excluded_through_degree) is int and 2 <= excluded_through_degree < len(cosine)
+        remainder_cosine[:excluded_through_degree + 1] = remainder_sine[:excluded_through_degree + 1] = 0.0
     # ponytail: triangle bound is intentionally loose; qualify individual
     # remaining orders before treating this as a useful trajectory allocation.
     ideal_norm_m_s2 = trajectory._harmonic_acceleration_upper_bound(
@@ -2531,6 +2535,32 @@ def test_harmonic_remainder_rejects_expired_budget() -> None:
         _harmonic_remainder_anchor_error_bound_m_s2(
             trajectory._RefinementBudget("remainder-expired", 300.0, lambda: next(clock)),
             1.0, 1.0, 1.0, np.zeros((3, 3)), np.zeros((3, 3)), (Fraction(0),) * 3,
+        )
+
+
+@pytest.mark.parametrize("cutoff", [2, 3, 4])
+def test_harmonic_remainder_diagnostic_prefix(cutoff: int) -> None:
+    cosine, sine = np.zeros((5, 5)), np.zeros((5, 5))
+    cosine[0, 0], cosine[1, 0], cosine[2, 0], cosine[3, 0] = 1000.0, 1000.0, 1000.0, 0.125
+    original = cosine.copy()
+    bound_m_s2 = _harmonic_remainder_anchor_error_bound_m_s2(
+        trajectory._RefinementBudget("tail-prefix", 300.0), 1.0, 1.0, 1.0, cosine, sine,
+        (Fraction(0),) * 3, excluded_through_degree=cutoff,
+    )
+    assert np.array_equal(cosine, original)
+    if cutoff == 2:
+        # Only C30 remains: norm bound (2n+1)*sqrt(n+1)*|C30|=7/4.
+        assert Fraction(7, 4) <= bound_m_s2 < Fraction(7, 4) + Fraction(2)**-45
+    else:
+        assert bound_m_s2 == 0
+
+
+@pytest.mark.parametrize("cutoff", [1, 5, True])
+def test_harmonic_remainder_rejects_invalid_prefix(cutoff: int) -> None:
+    with pytest.raises(AssertionError):
+        _harmonic_remainder_anchor_error_bound_m_s2(
+            trajectory._RefinementBudget("tail-prefix-invalid", 300.0), 1.0, 1.0, 1.0,
+            np.zeros((5, 5)), np.zeros((5, 5)), (Fraction(0),) * 3, excluded_through_degree=cutoff,
         )
 
 
@@ -3087,6 +3117,7 @@ def _check_conditional_full_force_coast_domains(
                         conditional_degree_two_spk_pck_error_upper_m_s2[source] = reported_combined
                     harmonic_sum_residual_upper_m_s2: dict[str, float] = {}
                     conditional_remainder_error_upper_m_s2: dict[str, float] = {}
+                    diagnostic_tail_profiles_m_s2: dict[str, dict[str, float]] = {}
                     harmonic_offset = 76
                     for index, (source, indices) in enumerate(harmonic_indices.items()):
                         budget.check()
@@ -3116,6 +3147,29 @@ def _check_conditional_full_force_coast_domains(
                         reported_remainder_m_s2 = math.nextafter(float(remainder_error_m_s2), math.inf)
                         assert math.isfinite(reported_remainder_m_s2) and Fraction(reported_remainder_m_s2) >= remainder_error_m_s2
                         conditional_remainder_error_upper_m_s2[source] = reported_remainder_m_s2
+                        # Hypothetically exclude successive degree prefixes; this
+                        # never substitutes for qualifying their native arithmetic.
+                        tail_sum_m_s2, cursor = list(exact_term_sum), 0
+                        diagnostic_tail_profiles_m_s2[source] = {}
+                        maximum_degree = len(field.cosine_coefficients) - 1
+                        for cutoff in sorted({degree for degree in (2, 5, 10, 20, 50, 100, 120, 150, maximum_degree)
+                                              if degree <= maximum_degree}):
+                            budget.check()
+                            stop = (cutoff + 1) * (cutoff + 2) // 2
+                            assert indices[stop - 1] == (cutoff, cutoff)
+                            for axis in range(3):
+                                tail_sum_m_s2[axis] -= sum(map(Fraction, terms[cursor:stop, axis]), Fraction(0))
+                            cursor = stop
+                            tail_error_m_s2 = _harmonic_remainder_anchor_error_bound_m_s2(
+                                budget, field.gravitational_parameter, field.reference_radius, source_error_floors_m[source],
+                                field.cosine_coefficients, field.sine_coefficients, tuple(tail_sum_m_s2),
+                                excluded_through_degree=cutoff,
+                            )
+                            reported_tail_m_s2 = math.nextafter(float(tail_error_m_s2), math.inf) if tail_error_m_s2 else 0.0
+                            assert math.isfinite(reported_tail_m_s2) and Fraction(reported_tail_m_s2) >= tail_error_m_s2
+                            diagnostic_tail_profiles_m_s2[source][str(cutoff)] = reported_tail_m_s2
+                        assert cursor == len(indices) and tail_sum_m_s2 == [Fraction(0)] * 3
+                        assert diagnostic_tail_profiles_m_s2[source][str(maximum_degree)] == 0.0
                     assert harmonic_offset == len(force_values)
                     budget.check()
                     relativity_anchor_error_m_s2 = _schwarzschild_anchor_error_bound_m_s2(
@@ -3186,6 +3240,7 @@ def _check_conditional_full_force_coast_domains(
                         "conditional_schwarzschild_spk_anchor_l2_error_upper_m_s2": reported_conditional_relativity_error_m_s2,
                         "conditional_harmonic_remainder_anchor_l2_error_upper_m_s2": conditional_remainder_error_upper_m_s2,
                         "conditional_full_force_anchor_l2_error_upper_m_s2": reported_full_anchor_error_m_s2,
+                        "diagnostic_unqualified_prefix_tail_error_upper_m_s2": diagnostic_tail_profiles_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,
