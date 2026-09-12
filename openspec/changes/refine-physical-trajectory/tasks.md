@@ -51,6 +51,29 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 initial-acceleration position remainder (2026-09-12):
+Bound saved-endpoint position error by its exact quadratic-reference L1
+residual plus `(E+C)*h^2/2`, reusing qualified initial-force and interval
+variation bounds. Verify analytic constant/linear acceleration controls,
+vector residuals, exact zero and invalid inputs; compare all four short
+native controls to the prior ballistic bound under the unchanged 0.001 m
+gate. Run focused/full pytest, Ruff, strict OpenSpec and legacy checks.
+Do not promote this conditional endpoint result to native-stage or
+long-trajectory safety; keep task 3.9 open and all operational limits intact.
+
+Focused verification: 25 tests passed in 165.78 s (23 analytic/rejection
+controls and both inventories). Nominal/tighter conditional position
+bounds are 1.0985449532489367e-5 / 4.4191011726853996e-5 m near the Moon
+and 4.090019426766702e-5 / 2.9855559747165934e-5 m near Mars. All four
+improve on the retained ballistic bound and pass 0.001 m without changing
+velocity gates, native arc count, source requests or the shared deadline.
+These are conditional upper bounds, not observed true trajectory errors.
+
+Completion verification: all 1538 project tests passed in 430.59 s. Ruff,
+strict OpenSpec, diff checks, unchanged legacy SHA-256 and package import
+isolation passed. Full-suite duration is separate from the unchanged
+300-second operation budget. No native calls or dependencies were added.
+
 Task 3.9 lunar degree-150 qualification (2026-09-12):
 Extend the independent nearby lunar prefix to 150, retain nearby Mars 120
 and distant prefixes 20, and preserve all remainder bounds and dynamics.

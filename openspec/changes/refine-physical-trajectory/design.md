@@ -1,5 +1,34 @@
 ## Context
 
+### Initial-acceleration position remainder (2026-09-12)
+
+Given exact stored initial x0/v0, saved acceleration a_hat, initial force
+error E and a uniform ideal force variation C in the already closed domain,
+twice integrating the acceleration gives
+`|x(h)-x0-v0*h-a_hat*h^2/2|_2 <= (E+C)*h^2/2`.
+Add the exact rational L1 residual of the saved endpoint against that
+quadratic reference. This bounds endpoint position error without assuming
+that a small residual alone proves accuracy. It does not enclose native
+internal stages or propagate initial-state uncertainty between arcs.
+
+Reuse the qualified degree-150/120/20 initial-force bound and monopole-split
+relative-force variation from the velocity control. Preserve the previous
+ballistic position bound as a regression; report the new result separately
+and verify improvement within the unchanged 0.001 m gate for all four short
+native controls. Constant-acceleration equality, a twice-integrated linear
+acceleration oracle, vector residuals, exact zero and invalid-input controls
+independently verify the formula. No extra native calls, resource queries,
+dependencies or production changes; task 3.9 remains open.
+
+Focused verification passed 25 tests in 165.78 s: 23 analytic/rejection
+controls and both inventories. Conditional position bounds are
+1.0985449532489367e-5 m and 4.4191011726853996e-5 m near the Moon;
+4.090019426766702e-5 m and 2.9855559747165934e-5 m near Mars, respectively
+for nominal and tighter profiles. All improve on the prior 0.367-0.813 mm
+ballistic allowances and meet 0.001 m. A tighter integrator need not give
+a smaller saved-endpoint residual; these are upper bounds, not measured
+true trajectory errors. One-second unclosed controls remain unresolved.
+
 ### Lunar degree-150 qualification (2026-09-12)
 
 Extend only the nearby Moon's independent initial-force prefix from degree
