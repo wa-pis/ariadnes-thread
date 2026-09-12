@@ -17,7 +17,16 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest trajectory-envelope evidence (2026-09-13): a partial-jerk cubic
+Latest trajectory-envelope evidence (2026-09-13): composing zonal pole-only
+and nonzonal full-rotation allowances improves the cubic reference bounds
+without changing the model or tolerances. Mars 1/8 s still does not resolve
+the velocity gate: 1.6096184185581396e-6 m/s versus 1e-6 m/s, including
+a reference-only contribution of 1.5391143947558078e-6 m/s. Position
+passes at 3.2142329309394564e-5 m. All six shorter controls still pass;
+Mars 1/16 s now has a velocity bound of 3.930278975682486e-7 m/s.
+These remain conditional diagnostic bounds, not measured integration errors.
+
+Retained baseline trajectory-envelope evidence: a partial-jerk cubic
 reference encloses all modeled forces and passes the unchanged 0.001 m /
 1e-6 m/s endpoint gates in six conditional native controls: four at
 1/64 s and nominal Mars fixtures at 1/32 s and 1/16 s. The new 1/16 s
@@ -50,22 +59,23 @@ No force, arithmetic allowance, or historical quadratic control was removed.
 Twenty-four exact analytic controls now verify that ideal zonal force
 terms of degree 0..8 cancel prime-meridian spin, even with a tilted pole.
 Independent monopole/C20 gradients and negative controls retain tesseral
-spin dependence and zonal pole-motion dependence. These controls do not
-yet tighten the native force bounds or qualify rounded PCK arithmetic.
+spin dependence and zonal pole-motion dependence. They support the ideal
+rotation partition, not a qualification of rounded PCK arithmetic.
 Separate ideal pole-only PCK rate upper bounds now retain RA+DEC without
 PM: 7.911311791211134e-9 rad/s for Moon and 9.239844018154159e-13 rad/s
 for Mars over the candidate interval. Fifteen exact spherical-derivative
 controls and the reused 26 native pole readbacks per inventory pass;
 corrupted derivative input is rejected. Native sampling is not a uniform
-arithmetic proof. No force bound has yet changed.
+arithmetic proof. The full-rate diagnostics remain unchanged.
 The coefficient partition now reconstructs the pinned Moon 200 / Mars 120
 fields exactly, with no source mutation or dropped degree-one terms.
 Sixteen new synthetic/rejection controls cover disjointness, independence,
 full model sizes and invalid input. Both real inventories agree on the
-nonzero zonal/nonzonal counts. This does not yet tighten a force bound.
-Next bounded work within 3.9 is to compose the zonal pole-only and nonzonal
-full-rotation bounds, preserving all arithmetic allowances and historical
-controls, before applying the result to the reference certificate or
+nonzero zonal/nonzonal counts. Twenty new composition controls qualify the
+rotation-bound sum against exact mixed-quadrupole and pure-zonal controls.
+Next bounded work within 3.9 is to qualify sharper harmonic spatial
+variation or force-derivative remainders, preserving all arithmetic
+allowances and historical controls, before increasing duration or
 attempting mission composition. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
@@ -73,7 +83,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 1909 passing tests; both focused
+The latest completed code check has 1929 passing tests; both focused
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost

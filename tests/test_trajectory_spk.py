@@ -3621,7 +3621,7 @@ def _check_conditional_full_force_coast_domains(
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint
     from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
-    from test_trajectory_zonal_rotation import _partition_nonmonopole_coefficients
+    from test_trajectory_zonal_rotation import _partition_nonmonopole_coefficients, _partitioned_rotation_bound_m_s2
     from test_trajectory_gravity import _candidate, _spacecraft
 
     candidate = _candidate(
@@ -3653,6 +3653,7 @@ def _check_conditional_full_force_coast_domains(
     assert sum((abs(Fraction(value)) for value in states["Sun"][3:]), Fraction(0)) <= Fraction(sun_speed_upper_m_s)
     guards_m = {surface.body: surface.guard_radius_m for surface in environment.collision_resource.surfaces}
     coefficient_partitions: dict[str, dict[str, int]] = {}
+    partition_arrays: dict[str, tuple[np.ndarray, np.ndarray, np.ndarray]] = {}
     for body, degree in (("Moon", 200), ("Mars", 120)):
         budget.check()
         field = bodies.get(body).gravity_field_model
@@ -3660,6 +3661,7 @@ def _check_conditional_full_force_coast_domains(
         original_bytes = cosine.tobytes(), sine.tobytes()
         assert cosine.shape == (degree + 1, degree + 1) and cosine[0, 0] == 1.0
         zonal, nonzonal, nonzonal_sine = _partition_nonmonopole_coefficients(cosine, sine)
+        partition_arrays[body] = zonal, nonzonal, nonzonal_sine
         reconstructed = zonal + nonzonal
         reconstructed[0, 0] = cosine[0, 0]
         assert np.array_equal(reconstructed, cosine) and np.array_equal(nonzonal_sine, sine)
@@ -3732,6 +3734,7 @@ def _check_conditional_full_force_coast_domains(
             frozen_harmonic_variation_m_s2: dict[str, float] = {}
             arbitrary_rotation_variation_m_s2: dict[str, float] = {}
             angle_limited_rotation_variation_m_s2: dict[str, float] = {}
+            partitioned_rotation_variation_m_s2: dict[str, float] = {}
             harmonic_jacobians_s_inv2: dict[str, Fraction] = {}
             split_harmonic_jacobians_s_inv2: dict[str, Fraction] = {}
             for body in trajectory.PHYSICAL_BODY_NAMES:
@@ -3797,6 +3800,28 @@ def _check_conditional_full_force_coast_domains(
                     assert math.isfinite(reported_angle_limited_m_s2)
                     assert Fraction(reported_angle_limited_m_s2) >= angle_limited_m_s2
                     angle_limited_rotation_variation_m_s2[body] = reported_angle_limited_m_s2
+                    zonal, nonzonal, nonzonal_sine = partition_arrays[body]
+                    partition_norms, partition_jacobians = [], []
+                    for cosine_part, sine_part in ((zonal, np.zeros_like(zonal)), (nonzonal, nonzonal_sine)):
+                        partition_norms.append(_harmonic_arbitrary_rotation_bound_m_s2(
+                            budget, field.gravitational_parameter, field.reference_radius, floor_m, cosine_part, sine_part,
+                        ) / 2)
+                        partition_jacobians.append(_harmonic_spatial_jacobian_bound_s_inv2(
+                            budget, field.gravitational_parameter, field.reference_radius, floor_m, cosine_part, sine_part,
+                        ))
+                    partitioned_rotation = _partitioned_rotation_bound_m_s2(
+                        pole_rates_rad_s[body]*Fraction(duration_s), rotation_rates_rad_s[body]*Fraction(duration_s),
+                        partition_norms[0], partition_jacobians[0], partition_norms[1], partition_jacobians[1], radius_upper_m,
+                    )
+                    # Both branches must be linear in elapsed time before t/h scaling.
+                    assert partitioned_rotation == Fraction(duration_s) * (
+                        pole_rates_rad_s[body]*(partition_norms[0]+partition_jacobians[0]*radius_upper_m)
+                        + rotation_rates_rad_s[body]*(partition_norms[1]+partition_jacobians[1]*radius_upper_m)
+                    )
+                    reported_partitioned = math.nextafter(float(partitioned_rotation), math.inf)
+                    assert math.isfinite(reported_partitioned) and Fraction(reported_partitioned) >= partitioned_rotation > 0
+                    # Either valid enclosure may be tighter; retain the old diagnostic.
+                    partitioned_rotation_variation_m_s2[body] = min(reported_partitioned, reported_angle_limited_m_s2)
                 gravity_m_s2[body] = trajectory._harmonic_acceleration_upper_bound(
                     budget.candidate_id, field.gravitational_parameter,
                     field.reference_radius if harmonic else floor_m, floor_m,
@@ -4473,6 +4498,34 @@ def _check_conditional_full_force_coast_domains(
                     }
                     reported_cubic = {key: math.nextafter(float(value), math.inf) if value else 0.0 for key, value in cubic_values.items()}
                     assert all(math.isfinite(value) and Fraction(value) >= cubic_values[key] >= 0 for key, value in reported_cubic.items())
+                    rotation_reduction_m_s3 = sum((Fraction(angle_limited_rotation_variation_m_s2[body])
+                                                  - Fraction(partitioned_rotation_variation_m_s2[body])
+                                                  for body in ("Moon", "Mars")), Fraction(0)) / h
+                    partitioned_defect_rate_m_s3 = cubic_defect_rate_m_s3 - rotation_reduction_m_s3
+                    assert rotation_reduction_m_s3 > 0
+                    assert 0 <= partitioned_defect_rate_m_s3 <= cubic_defect_rate_m_s3
+                    partitioned_reference_m, partitioned_reference_m_s = _coast_error_envelope(
+                        duration_s, Fraction(0), Fraction(0), Fraction(reported_full_position_sensitivity),
+                        Fraction(reported_relativity_sensitivities[1]), constant_defect_m_s2,
+                        acceleration_defect_rate_m_s3=partitioned_defect_rate_m_s3,
+                    )
+                    partitioned_position_m = partitioned_reference_m + cubic_position_residual_m
+                    partitioned_velocity_m_s = partitioned_reference_m_s + cubic_velocity_residual_m_s
+                    assert 0 <= partitioned_position_m <= cubic_position_error_m <= Fraction("0.001")
+                    assert 0 <= partitioned_velocity_m_s <= cubic_velocity_error_m_s
+                    assert (partitioned_reference_m_s <= Fraction("0.000001")) is (duration_s < 1 / 8)
+                    assert (partitioned_velocity_m_s <= Fraction("0.000001")) is (duration_s < 1 / 8)
+                    partitioned_values = {
+                        "reference_defect_rate_m_s3": partitioned_defect_rate_m_s3,
+                        "reference_position_error_m": partitioned_reference_m,
+                        "reference_velocity_error_m_s": partitioned_reference_m_s,
+                        "endpoint_position_error_m": partitioned_position_m,
+                        "endpoint_velocity_error_m_s": partitioned_velocity_m_s,
+                    }
+                    reported_partitioned_values = {key: math.nextafter(float(value), math.inf) if value else 0.0
+                                                   for key, value in partitioned_values.items()}
+                    assert all(math.isfinite(value) and Fraction(value) >= partitioned_values[key] >= 0
+                               for key, value in reported_partitioned_values.items())
                     transport_bounds = {
                         "conditional_weighted_reference_position_error_m": weighted_reference_position_error_m,
                         "conditional_weighted_reference_velocity_error_m_s": weighted_reference_velocity_error_m_s,
@@ -4539,6 +4592,12 @@ def _check_conditional_full_force_coast_domains(
                             "reference_within_velocity_gate": cubic_reference_velocity_m_s <= Fraction("0.000001"),
                             "within_position_gate": cubic_position_error_m <= Fraction("0.001"),
                             "within_velocity_gate": cubic_velocity_error_m_s <= Fraction("0.000001"),
+                        },
+                        "conditional_partitioned_rotation_cubic_control": {
+                            **reported_partitioned_values,
+                            "reference_within_velocity_gate": partitioned_reference_m_s <= Fraction("0.000001"),
+                            "within_position_gate": partitioned_position_m <= Fraction("0.001"),
+                            "within_velocity_gate": partitioned_velocity_m_s <= Fraction("0.000001"),
                         },
                         "weighted_position_bound_resolves_1mm": weighted_position_error_m <= Fraction("0.001"),
                         "reference_only_velocity_bound_resolves_1um_s": weighted_reference_velocity_error_m_s <= Fraction("0.000001"),
@@ -4610,6 +4669,7 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_frozen_harmonic_variation_m_s2": frozen_harmonic_variation_m_s2,
                 "conditional_arbitrary_rotation_variation_m_s2": arbitrary_rotation_variation_m_s2,
                 "conditional_angle_limited_rotation_variation_m_s2": angle_limited_rotation_variation_m_s2,
+                "conditional_partitioned_rotation_variation_m_s2": partitioned_rotation_variation_m_s2,
                 "conditional_total_coast_force_variation_m_s2": reported_force_variation_m_s2,
                 "conditional_relative_displacement_upper_m": relative_reaches_m or None,
                 "conditional_relative_force_variation_m_s2": reported_relative_variation_m_s2,

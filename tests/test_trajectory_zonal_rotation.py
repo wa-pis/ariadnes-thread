@@ -6,7 +6,71 @@ import numpy as np
 import pytest
 
 from space_nav import trajectory
-from test_trajectory_spk import _pck_euler_rate_upper_rad_s, _pi_rational_bounds, _regular_solid_harmonic_jets
+from test_trajectory_spk import (
+    _angle_limited_rotation_bound_m_s2, _harmonic_arbitrary_rotation_bound_m_s2,
+    _harmonic_spatial_jacobian_bound_s_inv2, _pck_euler_rate_upper_rad_s,
+    _pi_rational_bounds, _regular_solid_harmonic_jets,
+)
+
+
+def _partitioned_rotation_bound_m_s2(
+    pole_angle_rad: Fraction, full_angle_rad: Fraction,
+    zonal_norm_m_s2: Fraction, zonal_jacobian_s_inv2: Fraction,
+    nonzonal_norm_m_s2: Fraction, nonzonal_jacobian_s_inv2: Fraction,
+    radius_upper_m: Fraction,
+) -> Fraction:
+    """Compose ideal zonal pole motion and nonzonal full rotation allowances."""
+    assert all(isinstance(value, Fraction) and value >= 0 for value in (
+        pole_angle_rad, full_angle_rad, zonal_norm_m_s2, zonal_jacobian_s_inv2,
+        nonzonal_norm_m_s2, nonzonal_jacobian_s_inv2, radius_upper_m,
+    ))
+    assert pole_angle_rad <= full_angle_rad and radius_upper_m > 0
+    return (_angle_limited_rotation_bound_m_s2(pole_angle_rad, zonal_norm_m_s2, zonal_jacobian_s_inv2, radius_upper_m)
+            + _angle_limited_rotation_bound_m_s2(full_angle_rad, nonzonal_norm_m_s2, nonzonal_jacobian_s_inv2, radius_upper_m))
+
+
+@pytest.mark.parametrize("tangent", [Fraction(0), Fraction(1, 1000), Fraction(1, 2), Fraction(1)])
+def test_partitioned_rotation_encloses_mixed_quadrupole(tangent: Fraction) -> None:
+    budget = trajectory._RefinementBudget("split-rotation", 300.0)
+    zonal, nonzonal, zero = np.zeros((3, 3)), np.zeros((3, 3)), np.zeros((3, 3))
+    zonal[2, 0], nonzonal[2, 2] = 0.125, 0.03125
+    norms = [_harmonic_arbitrary_rotation_bound_m_s2(budget, 1.0, 1.0, 1.0, field, zero) / 2
+             for field in (zonal, nonzonal)]
+    jacobians = [_harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, 1.0, field, zero)
+                 for field in (zonal, nonzonal)]
+    bound = _partitioned_rotation_bound_m_s2(Fraction(0), 2*tangent, norms[0], jacobians[0], norms[1], jacobians[1], Fraction(1))
+    c, s = (1 - tangent**2)/(1 + tangent**2), 2*tangent/(1 + tangent**2)
+    # At r=(1,0,0) m the zonal term cancels under z spin. Independently
+    # differentiate V22=sqrt(15)*C22*(x^2-y^2)/(2*r^5), GM=R=1 SI.
+    coefficient = Fraction(0.03125)/2
+    fixed_over_sqrt15 = (coefficient*(2*c - 5*(c*c-s*s)*c), coefficient*(-2*s - 5*(c*c-s*s)*s))
+    delta_over_sqrt15 = (c*fixed_over_sqrt15[0] + s*fixed_over_sqrt15[1] + 3*coefficient,
+                         -s*fixed_over_sqrt15[0] + c*fixed_over_sqrt15[1])
+    assert 15*sum((value**2 for value in delta_over_sqrt15), Fraction(0)) <= bound**2
+    old = _angle_limited_rotation_bound_m_s2(2*tangent,
+        _harmonic_arbitrary_rotation_bound_m_s2(budget, 1.0, 1.0, 1.0, zonal+nonzonal, zero)/2,
+        _harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, 1.0, zonal+nonzonal, zero), Fraction(1))
+    assert bound <= old and (bound < old) is (tangent > 0)
+    assert _partitioned_rotation_bound_m_s2(2*tangent, 2*tangent+10, norms[0], jacobians[0], Fraction(0), Fraction(0), Fraction(1)) == (
+        _angle_limited_rotation_bound_m_s2(2*tangent, norms[0], jacobians[0], Fraction(1))
+    )
+
+
+@pytest.mark.parametrize("field", range(7))
+@pytest.mark.parametrize("invalid", [Fraction(-1), True])
+def test_partitioned_rotation_rejects_invalid_bounds(field: int, invalid: object) -> None:
+    values: list[object] = [Fraction(1)]*7
+    values[field] = invalid
+    with pytest.raises(AssertionError):
+        _partitioned_rotation_bound_m_s2(*values)  # type: ignore[arg-type] -- boundary rejection.
+
+
+@pytest.mark.parametrize("case", ["pole-exceeds-full", "zero-radius"])
+def test_partitioned_rotation_rejects_inconsistent_domain(case: str) -> None:
+    values = [Fraction(1)]*7
+    values[0 if case == "pole-exceeds-full" else 6] = Fraction(2 if case == "pole-exceeds-full" else 0)
+    with pytest.raises(AssertionError):
+        _partitioned_rotation_bound_m_s2(*values)
 
 
 def _partition_nonmonopole_coefficients(

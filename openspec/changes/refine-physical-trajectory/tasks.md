@@ -51,6 +51,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 composed rotation allowance (2026-09-13):
+Verify the sum of zonal pole-only and nonzonal full-rotation allowances on
+exact mixed-quadrupole and pure-zonal controls, including invalid bounds.
+Apply it to the existing domains and seven native endpoints, preserving
+all old outcomes. Verify linear-branch premises, outward reporting,
+non-increasing reference bounds, both inventories, full pytest, Ruff,
+strict OpenSpec and legacy isolation. Record numerical gate outcomes and
+leave task 3.9 open; do not infer native internal-stage or mission safety.
+
+Focused evidence: 75 analytic/rejection tests passed in 0.54 s, including
+20 new composition controls; both real inventories passed in 260.39 s.
+The selected rotation allowance decreases in every native fixture.
+At Mars 1/8 s its near-Mars rotation contribution decreases from
+4.037921815261115e-6 to 2.875919981958958e-6 m/s^2. The new endpoint
+position/velocity upper bounds are 3.2142329309394564e-5 m and
+1.6096184185581396e-6 m/s; the reference-only velocity contribution is
+1.5391143947558078e-6 m/s. Both velocity bounds still exceed 1e-6 m/s,
+and all six shorter controls still pass. The original cubic endpoint
+bound 1.6822435338333072e-6 m/s remains a regression control. At Mars
+1/16 s the new velocity bound is 3.930278975682486e-7 m/s. No tolerance,
+initial error, source/matrix allowance or native residual changed; counts
+remain seven/zero native arcs and 40 affine source readbacks per inventory.
+The residual reference defect requires further work, not a looser gate.
+After adding strict improvement and explicit reference/endpoint gate
+regressions, all 1929 tests passed in 521.43 s. Ruff, strict OpenSpec,
+diff whitespace and legacy checksum/import-isolation checks passed.
+
 Task 3.9 lossless coefficient partition (2026-09-13):
 Verify exact, disjoint zonal/nonzonal partition through degree 200,
 preservation of degree-one terms, no source mutation or aliasing, and

@@ -1,5 +1,26 @@
 ## Context
 
+### Composed zonal/nonzonal rotation allowance (2026-09-13)
+
+Use the lossless nonmonopole partition to compute independent norm and
+spatial-Jacobian bounds for each part. Apply the existing angle-limited
+rotation lemma with the pole-only PCK path to the zonal part and the full
+PCK path to the nonzonal part; add the allowances by the triangle inequality.
+WHEN exact mixed C20/C22 spin controls are supplied, THEN their independent
+Cartesian force-change norms must be enclosed without a numerical tolerance.
+Pure-zonal controls must retain pole motion; invalid bounds must fail.
+
+For each existing domain recompute both parts at its unchanged distance
+floor and radius upper bound. Verify both capped bounds are on their linear
+branches before scaling by t/h. The minimum of the old and composed linear
+enclosures is valid; retain both the historical method and the selected
+new allowance. Replace only the old rotation-rate contribution in a separate
+cubic-reference certificate. Preserve its reference coefficients, native
+endpoint residuals, initial-force errors, spatial variation, SRP/relativity,
+source/PCK arithmetic allowances and full-force sensitivities unchanged.
+Report reference-only and endpoint gates, retaining any unresolved outcome.
+No new arcs, integrator settings, tolerances or mission qualification.
+
 ### Lossless zonal/nonzonal coefficient partition (2026-09-13)
 
 Partition dimensionless normalized coefficient arrays into disjoint
