@@ -51,6 +51,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 normalized harmonic acceleration pilot (2026-09-12):
+Reuse exact polynomial jets with geodesy normalization, radial factors and
+stored-matrix projection. Verify monopole and degree-two independent oracles,
+degree-three axis formulas, invalid inputs and expiry, then compare all
+degree-zero-through-three terms with existing native output. Run focused/full
+pytest, Ruff, strict OpenSpec and legacy checks; keep 3.9 open.
+
+Focused verification: 22 tests passed in 32.61 s, including both inventories
+and 20 new analytic/error controls. All 80 native term vectors meet the
+unchanged force gate. The largest degree-three L1 error bounds are
+1.7166233711916968e-19 m/s^2 for the near-Moon lunar field and
+1.684109681893384e-19 m/s^2 for the near-Mars Martian field, identical across
+the two integrator profiles. These are errors against exact stored states
+and matrices, not total physical force errors. The four existing native arcs
+are reused; there are no additional propagation calls. The full-force bound,
+production model, tolerances and UI remain unchanged. High-degree normalized
+force runtime and PCK/SPK composition remain unqualified.
+
+Completion verification: all 1372 project tests passed in 287.68 s. Ruff,
+strict OpenSpec validation and diff checks passed. The legacy SHA-256 stays
+`4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf`,
+and the package does not import the legacy model. Suite duration is not a
+300-second mission-runtime certificate; task 3.9 remains open.
+
 Task 3.9 exact solid-harmonic polynomial kernel (2026-09-12):
 Implement a streamed Fraction recurrence for unnormalized regular solid
 harmonics and Cartesian first derivatives, with positive sectoral phase

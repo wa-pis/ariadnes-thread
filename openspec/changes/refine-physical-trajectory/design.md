@@ -1,5 +1,34 @@
 ## Context
 
+### Normalized harmonic acceleration pilot (2026-09-12)
+
+Reuse the exact solid-harmonic jets to enclose individual native acceleration
+terms at the exact stored SSB/J2000 positions and body-fixed rotation matrix.
+For an exact power-of-two length scale s, let u=A*(r_ship-r_body)/s,
+q=u dot u and H=C_nm*Re(Q_nm)+S_nm*Im(Q_nm). The inertial term is
+`A^T * GM/s^2 * (R/s)^n * N_nm * (q*grad(H)-(2n+1)*H*u) / q^(n+3/2)`.
+Use the geodesy normalization
+`N_nm^2=(2-delta_m0)*(2n+1)*(n-m)!/(n+m)!`, matching
+[Tudat's normalization contract](https://py.api.tudat.space/en/latest/astro/gravitation.html).
+All arithmetic except the two square roots is exact Fraction arithmetic;
+reuse the existing outward dyadic square-root enclosures. Project with the
+stored matrix transpose without assuming that rounded matrix is orthogonal.
+Sum componentwise error bounds to enclose each term's L1 error in m/s^2.
+
+Independent checks cover the 3-4-5 monopole, all degree-two orders against
+the existing Cartesian oracle (including a nonorthogonal matrix), and
+degree-three zonal/sectoral axis formulas at two radii. Invalid inputs and
+expired budgets fail. In the existing four native controls, compare all
+ten terms through degree three for both bodies: 80 vectors meet the existing
+`max(1e-15 m/s^2, 1e-12*term_norm)` gate. Report degree-three bounds separately
+as `generic_degree_three_stored_matrix_term_l1_error_upper_m_s2`.
+
+This pilot adds no native arcs or dependencies. It does not yet compose
+these general terms with PCK/SPK errors, replace the conservative complete
+force envelope, qualify high-degree force runtime, or establish trajectory
+accuracy. Production degrees, tolerances and the 300-second deadline remain
+unchanged; task 3.9 stays open.
+
 ### Exact regular-solid-harmonic polynomial kernel (2026-09-12)
 
 The degree sweep requires a scalable route beyond hand-written low-degree

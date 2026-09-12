@@ -2605,6 +2605,123 @@ def test_regular_solid_harmonics_checks_deadline_between_rows() -> None:
         next(stream)
 
 
+def _generic_harmonic_term_errors_m_s2(
+    budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
+    cosine: np.ndarray, sine: np.ndarray, body_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
+    inertial_to_fixed: np.ndarray, observed_terms_m_s2: np.ndarray,
+) -> dict[tuple[int, int], Fraction]:
+    """Enclose each normalized term's L1 error at exact stored SI states/matrix."""
+    budget.check()
+    assert all(type(value) is float and math.isfinite(value) and value > 0 for value in (gm_m3_s2, reference_radius_m))
+    assert cosine.ndim == 2 and cosine.shape == sine.shape and cosine.shape[0] == cosine.shape[1] > 0
+    assert all(matrix.dtype == np.float64 and np.all(np.isfinite(matrix)) and not np.any(np.triu(matrix, 1))
+               for matrix in (cosine, sine))
+    assert not np.any(sine[:, 0])
+    maximum_degree = len(cosine) - 1
+    term_count = (maximum_degree + 1) * (maximum_degree + 2) // 2
+    for array, shape in ((body_position_m, (3,)), (spacecraft_position_m, (3,)),
+                         (inertial_to_fixed, (3, 3)), (observed_terms_m_s2, (term_count, 3))):
+        assert array.shape == shape and array.dtype == np.float64 and np.all(np.isfinite(array))
+    relative_m = [Fraction(ship) - Fraction(body) for ship, body in zip(spacecraft_position_m, body_position_m, strict=True)]
+    matrix = [tuple(map(Fraction, row)) for row in inertial_to_fixed]
+    fixed_m = [sum((a * r for a, r in zip(row, relative_m, strict=True)), Fraction(0)) for row in matrix]
+    magnitude_m = max(map(abs, fixed_m))
+    assert magnitude_m > 0
+    # Any exact positive scale is valid; a power of two keeps coordinates near unity.
+    scale_m = Fraction(2)**(magnitude_m.numerator.bit_length() - magnitude_m.denominator.bit_length())
+    coordinates = tuple(value / scale_m for value in fixed_m)
+    q = sum((value**2 for value in coordinates), Fraction(0))
+    root_lower, root_upper = _dyadic_sqrt_bounds(q)
+    radial_factor_m_s2 = Fraction(gm_m3_s2) / (scale_m**2 * q)
+    radial_ratio = Fraction(reference_radius_m) / (scale_m * q)
+    errors: dict[tuple[int, int], Fraction] = {}
+    for index, (degree, order, real, imaginary) in enumerate(_regular_solid_harmonic_jets(budget, coordinates, maximum_degree)):
+        if degree and order == 0:
+            radial_factor_m_s2 *= radial_ratio
+        c, s = Fraction(cosine[degree, order]), Fraction(sine[degree, order])
+        jet = tuple(c * re + s * im for re, im in zip(real, imaginary, strict=True))
+        normalization_squared = Fraction((2 if order else 1) * (2 * degree + 1) * math.factorial(degree - order),
+                                         math.factorial(degree + order))
+        norm_lower, norm_upper = _dyadic_sqrt_bounds(normalization_squared)
+        polynomial_m_s2 = [radial_factor_m_s2 * (q * derivative - (2 * degree + 1) * jet[0] * u)
+                           for derivative, u in zip(jet[1:], coordinates, strict=True)]
+        error_m_s2 = Fraction(0)
+        for axis, observed in enumerate(observed_terms_m_s2[index]):
+            projected_m_s2 = sum((matrix[row][axis] * polynomial_m_s2[row] for row in range(3)), Fraction(0))
+            endpoints_m_s2 = (projected_m_s2 * norm_lower / root_upper, projected_m_s2 * norm_upper / root_lower)
+            error_m_s2 += max(abs(Fraction(observed) - value) for value in endpoints_m_s2)
+        errors[degree, order] = error_m_s2
+    budget.check()
+    assert len(errors) == term_count
+    return errors
+
+
+@pytest.mark.parametrize("error_m_s2", [0.0, 0.125])
+def test_generic_harmonic_monopole_matches_point_oracle(error_m_s2: float) -> None:
+    body_m = np.full(3, 1e12)
+    observed_m_s2 = np.asarray([[-3.0, 4.0, error_m_s2]])
+    errors = _generic_harmonic_term_errors_m_s2(
+        trajectory._RefinementBudget("generic-monopole", 300.0), 125.0, 1.0, np.ones((1, 1)), np.zeros((1, 1)),
+        body_m, body_m + np.asarray([3.0, -4.0, 0.0]), np.eye(3), observed_m_s2,
+    )
+    assert errors == {(0, 0): Fraction(error_m_s2)}
+
+
+@pytest.mark.parametrize("order", [0, 1, 2])
+@pytest.mark.parametrize("distorted", [False, True])
+def test_generic_harmonic_degree_two_matches_cartesian_oracle(order: int, distorted: bool) -> None:
+    cosine, sine = np.zeros((3, 3)), np.zeros((3, 3))
+    cosine[2, order], sine[2, order] = 0.125, -0.25 if order else 0.0
+    matrix = np.diag([1.125, 0.875, 1.0]) if distorted else np.eye(3)
+    body_m, ship_m = np.full(3, 1e12), np.full(3, 1e12) + np.asarray([1.0, -2.0, 3.0])
+    general = _generic_harmonic_term_errors_m_s2(
+        trajectory._RefinementBudget("generic-degree-two", 300.0), 1.0, 1.0, cosine, sine,
+        body_m, ship_m, matrix, np.zeros((6, 3)),
+    )[2, order]
+    cartesian = _degree_two_anchor_error_bound_m_s2(
+        1.0, 1.0, float(cosine[2, order]), float(sine[2, order]), order, body_m, ship_m, matrix, np.zeros(3),
+    )
+    assert abs(general - cartesian) <= max(Fraction(1), cartesian) * Fraction(2)**-90
+
+
+@pytest.mark.parametrize("radius_m", [1.0, 2.0])
+@pytest.mark.parametrize("kind", ["zonal", "cosine", "sine", "mixed"])
+def test_generic_harmonic_degree_three_axis_oracles(radius_m: float, kind: str) -> None:
+    cosine, sine = np.zeros((4, 4)), np.zeros((4, 4))
+    order = 0 if kind == "zonal" else 3
+    cosine[3, order] = 0.0 if kind == "sine" else 0.125
+    sine[3, order] = -0.25 if kind in {"sine", "mixed"} else 0.0
+    position_m = np.asarray([0.0, 0.0, radius_m]) if order == 0 else np.asarray([radius_m, 0.0, 0.0])
+    bound_m_s2 = _generic_harmonic_term_errors_m_s2(
+        trajectory._RefinementBudget("generic-degree-three", 300.0), 1.0, 1.0, cosine, sine,
+        np.zeros(3), position_m, np.eye(3), np.zeros((10, 3)),
+    )[3, order]
+    # C30 at the pole: -4*sqrt(7)*C/r^5. At x-axis, C33/S33 give
+    # (-sqrt(70)*C, 3*sqrt(70)*S/4, 0)/r^5.
+    expected_squared = (112 * Fraction(0.125)**2 if order == 0 else
+                        70 * (abs(Fraction(cosine[3, 3])) + Fraction(3, 4) * abs(Fraction(sine[3, 3])))**2) / Fraction(radius_m)**10
+    assert expected_squared <= bound_m_s2**2 < expected_squared * (1 + Fraction(2)**-90)
+
+
+@pytest.mark.parametrize("invalid", ["gm", "singularity", "sine"])
+def test_generic_harmonic_rejects_invalid_input(invalid: str) -> None:
+    with pytest.raises(AssertionError):
+        _generic_harmonic_term_errors_m_s2(
+            trajectory._RefinementBudget("generic-invalid", 300.0), math.nan if invalid == "gm" else 1.0, 1.0,
+            np.ones((1, 1)), np.asarray([[1.0 if invalid == "sine" else 0.0]]), np.zeros(3),
+            np.zeros(3) if invalid == "singularity" else np.ones(3), np.eye(3), np.zeros((1, 3)),
+        )
+
+
+def test_generic_harmonic_rejects_expired_budget() -> None:
+    clock = iter([0.0, 301.0])
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="shared deadline"):
+        _generic_harmonic_term_errors_m_s2(
+            trajectory._RefinementBudget("generic-expired", 300.0, lambda: next(clock)), 1.0, 1.0,
+            np.ones((1, 1)), np.zeros((1, 1)), np.zeros(3), np.ones(3), np.eye(3), np.zeros((1, 3)),
+        )
+
+
 def _harmonic_remainder_anchor_error_bound_m_s2(
     budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
     distance_floor_m: float, cosine: np.ndarray, sine: np.ndarray,
@@ -3249,6 +3366,7 @@ def _check_conditional_full_force_coast_domains(
                     harmonic_sum_residual_upper_m_s2: dict[str, float] = {}
                     conditional_remainder_error_upper_m_s2: dict[str, float] = {}
                     diagnostic_tail_profiles_m_s2: dict[str, dict[str, float]] = {}
+                    generic_degree_three_errors_m_s2: dict[str, dict[str, float]] = {}
                     harmonic_offset = 76
                     for index, (source, indices) in enumerate(harmonic_indices.items()):
                         budget.check()
@@ -3271,6 +3389,21 @@ def _check_conditional_full_force_coast_domains(
                             (Fraction(terms[term, axis]) for term in (0, 3, 4, 5)), Fraction(0),
                         ) for axis in range(3))
                         field = bodies.get(source).gravity_field_model
+                        generic_errors = _generic_harmonic_term_errors_m_s2(
+                            budget, field.gravitational_parameter, field.reference_radius,
+                            field.cosine_coefficients[:4, :4], field.sine_coefficients[:4, :4],
+                            states[source][:3], state[:3], force_values[46:64].reshape(2, 3, 3)[index], terms[:10],
+                        )
+                        assert list(generic_errors) == indices[:10]
+                        for term_index, ((degree, order), error_m_s2) in enumerate(generic_errors.items()):
+                            gate_m_s2 = max(1e-15, 1e-12 * float(np.linalg.norm(terms[term_index])))
+                            assert error_m_s2 <= Fraction(gate_m_s2), (center, source, degree, order, float(error_m_s2))
+                        generic_degree_three_errors_m_s2[source] = {}
+                        for order in range(4):
+                            error_m_s2 = generic_errors[3, order]
+                            reported_generic_m_s2 = math.nextafter(float(error_m_s2), math.inf) if error_m_s2 else 0.0
+                            assert math.isfinite(reported_generic_m_s2) and Fraction(reported_generic_m_s2) >= error_m_s2
+                            generic_degree_three_errors_m_s2[source][str(order)] = reported_generic_m_s2
                         remainder_error_m_s2 = _harmonic_remainder_anchor_error_bound_m_s2(
                             budget, field.gravitational_parameter, field.reference_radius, source_error_floors_m[source],
                             field.cosine_coefficients, field.sine_coefficients, observed_remainder_m_s2,
@@ -3372,6 +3505,7 @@ def _check_conditional_full_force_coast_domains(
                         "conditional_harmonic_remainder_anchor_l2_error_upper_m_s2": conditional_remainder_error_upper_m_s2,
                         "conditional_full_force_anchor_l2_error_upper_m_s2": reported_full_anchor_error_m_s2,
                         "diagnostic_unqualified_prefix_tail_error_upper_m_s2": diagnostic_tail_profiles_m_s2,
+                        "generic_degree_three_stored_matrix_term_l1_error_upper_m_s2": generic_degree_three_errors_m_s2,
                         "observed_acceleration_sum_residual_l1_m_s2": float(sum(map(abs, sum_residual), Fraction(0))),
                         "conditional_endpoint_position_error_m": reported_error_m,
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,
