@@ -19,7 +19,7 @@ targeting spike. Preserve the UI; scheduling state is managed in the app.
 
 Latest trajectory-envelope evidence (2026-09-13): a partial-jerk cubic
 reference encloses all modeled forces and passes the unchanged 0.001 m /
-1e-6 m/s endpoint gates in all six conditional native controls: four at
+1e-6 m/s endpoint gates in six conditional native controls: four at
 1/64 s and nominal Mars fixtures at 1/32 s and 1/16 s. The new 1/16 s
 control uses a separately recomputed 2000 m / 0.25 m/s domain; its
 position/velocity upper bounds are 3.6709789185994044e-5 m and
@@ -32,14 +32,24 @@ of the native integrator's true error. The Moon 1/32 s position domain
 still cannot be closed; no native arc is run there. These are diagnostic
 fixtures, not a qualified mission or native internal-stage safety certificate.
 
+A seventh control at Mars 1/8 s closes its separately recomputed
+4000 m / 0.5 m/s domain but does not resolve the velocity gate:
+1.6822435338333072e-6 m/s versus 1e-6 m/s. Its reference-only bound is
+already 1.6117395100309755e-6 m/s, so reducing only the nonnegative
+endpoint residual cannot make this fixed certificate pass. Position
+passes with 3.2145355355878815e-5 m. Retain this counterexample; it does
+not show actual integrator error, physical infeasibility or a general
+upper limit on usable coast duration.
+
 The cubic coefficient uses initial jerk intervals for all eight monopoles,
 derived from qualified ideal SPK position polynomials. Moon/Mars higher
 harmonics, orientation changes, SRP and relativity remain explicitly bounded;
 this is not a full-force jerk measurement. Exact point-mass curvature controls
 and the existing full-force transport lemma supply the reference enclosure.
 No force, arithmetic allowance, or historical quadratic control was removed.
-Next bounded work within 3.9 is to test whether larger, explicitly closed
-domains and these reference bounds support longer coast controls before
+Next bounded work within 3.9 is to tighten the remaining-force reference
+variation bounds (higher harmonics and rotation) using independently
+qualified derivatives/remainders before increasing duration further or
 attempting mission composition. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
@@ -48,9 +58,9 @@ source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
 The latest completed code check has 1853 passing tests; both focused
-longer-coast inventories pass. The native inventory
-runs six spacecraft arcs, the portable inventory zero; each performs 32
-affine source readbacks. These are diagnostic counts, not mission-cost
+1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
+The native inventory runs seven spacecraft arcs, the portable inventory
+zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost
 estimates. Production limits and the shared 300-second deadline are unchanged.
 Task 3.9, the remaining finite-burn safety prerequisites and targeting remain
 open; detailed evidence is in the active change's design and tasks.

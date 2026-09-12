@@ -51,6 +51,34 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 Mars 1/8 s certificate limit probe (2026-09-13):
+Compare the original domain with a separately recomputed 4000 m / 0.5 m/s
+domain at 1/8 s. Verify strict domain closure before native execution,
+unchanged position/velocity gates, separate reference-only and total
+velocity outcomes, seven/zero native arcs and 40 affine source readbacks
+per inventory. Preserve all six passing cubic controls. Verify both real
+inventories, full pytest, Ruff, strict OpenSpec, and legacy isolation;
+record an unresolved gate without weakening it or completing task 3.9.
+
+Focused evidence: both real inventories passed in 251.89 s. At Mars
+1/8 s the expanded domain closes with reach 3815.627237953201 m < 4000 m
+and velocity reach upper bound 0.39985684203823313 m/s < 0.5 m/s.
+The original domain remains unclosed (3815.6271958527004 m > 1000 m,
+0.3991832340270511 m/s > 0.1 m/s). The new conditional cubic position
+upper bound 3.2145355355878815e-5 m passes 0.001 m. Its velocity upper
+bound 1.6822435338333072e-6 m/s does not resolve the 1e-6 m/s gate;
+the reference-only contribution is already 1.6117395100309755e-6 m/s,
+before adding the 7.05040238023318e-8 m/s endpoint residual allowance.
+This fixed certificate cannot pass merely by reducing that nonnegative
+residual. Neither term measures true integration error. Preserve this
+outcome with explicit assertions for both velocity gates; all six earlier
+cubic controls still pass. Native/portable counts are seven/zero arcs and
+40 affine source readbacks each. These are diagnostic measurements, not
+mission-cost estimates, and do not complete 3.9.
+After adding explicit reference-only and total velocity-gate regression
+assertions, all 1853 tests passed in 513.37 s. Ruff, strict OpenSpec,
+diff whitespace and legacy checksum/import-isolation checks passed.
+
 Task 3.9 longer Mars coast control (2026-09-13):
 Add one 1/16 s Mars control with separately recomputed 2000 m / 0.25 m/s
 domain bounds. Verify the original 1000 m / 0.1 m/s domain remains

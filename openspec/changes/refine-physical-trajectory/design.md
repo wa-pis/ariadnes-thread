@@ -1,5 +1,21 @@
 ## Context
 
+### Mars 1/8 s certificate limit probe (2026-09-13)
+
+Add 1/8 s source-motion controls and preserve the original 1000 m /
+0.1 m/s domain at that duration. Separately recompute a Mars 1/8 s
+domain with radii 4000 m / 0.5 m/s, retaining every force, source, rotation,
+lighting, and reference-containment check. WHEN that domain closes,
+THEN one nominal native endpoint is compared with the unchanged partial-
+cubic certificate and 0.001 m / 1e-6 m/s gates. Report reference-only
+and total velocity gates separately: a reference upper bound above the
+gate cannot be repaired merely by reducing its nonnegative endpoint
+residual. This is a limit of that certificate, not evidence of actual
+integration error or physical infeasibility. Preserve all six earlier
+passing cubic controls and any new unresolved outcome. Verify seven/zero
+native arcs, 40 source readbacks per inventory, and the unchanged 300 s
+diagnostic budget; do not infer mission cost or internal-stage safety.
+
 ### Longer Mars coast control (2026-09-13)
 
 Preserve all original 1000 m / 0.1 m/s domains and add the 1/16 s

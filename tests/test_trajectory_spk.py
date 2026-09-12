@@ -1432,7 +1432,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert body_reach_checks == 3 * chain_join_checks + 32
     assert set(full_interval_body_reach_m) == set(chain_position_bounds_m)
 
-    coast_durations_s = (1 / 64, 1 / 32, 1 / 16, 1.0)
+    coast_durations_s = (1 / 64, 1 / 32, 1 / 16, 1 / 8, 1.0)
     coast_body_reaches_m: dict[float, dict[str, float]] = {}
     body_ids = dict(zip(trajectory.PHYSICAL_BODY_NAMES, (10, 1, 2, 399, 301, 499, 599, 699), strict=True))
     affine_links: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...], Fraction]] = {}
@@ -1466,7 +1466,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                             for observed, initial, velocity in zip(native_position, position, slope, strict=True)), Fraction(0))
             assert residual <= curvature * Fraction(duration_s)**2 / 2 + Fraction(chain_position_bounds_m[target]), body
             affine_native_checks += 1
-    assert len(affine_links) == 11 and affine_native_checks == 32
+    assert len(affine_links) == 11 and affine_native_checks == 40
     print(json.dumps({"position_polynomial_acceleration_l1_bound_m_s2": affine_curvature_bounds_m_s2,
                       "affine_native_position_checks": affine_native_checks}, sort_keys=True, allow_nan=False))
     for duration_s in coast_durations_s:
@@ -1531,10 +1531,10 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert not spice.failed()
     assert kernels_before == [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
     budget.check()
-    assert budget.native_arc_propagations == (6 if native_record_readback else 0)
+    assert budget.native_arc_propagations == (7 if native_record_readback else 0)
     # Hypothetical uniform reuse, not proof these controls apply elsewhere.
     control_duration = Fraction(1, 64)
-    assert len(coast_domains) == 9
+    assert len(coast_domains) == 12
     assert {(domain["center"], Fraction(domain["duration_s"]),
              domain["position_domain_radius_m"], domain["velocity_domain_radius_m_s"])
             for domain in coast_domains if domain["conditional_domain_closed"]} == {
@@ -1542,6 +1542,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         ("Mars", control_duration, 1000.0, 0.1),
         ("Mars", 2 * control_duration, 1000.0, 0.1),
         ("Mars", 4 * control_duration, 2000.0, 0.25),
+        ("Mars", 8 * control_duration, 4000.0, 0.5),
     }
     interval_duration = Fraction(end_tdb_s) - Fraction(start_tdb_s)
     uniform_arc_count = math.ceil(interval_duration / control_duration)
@@ -3680,7 +3681,7 @@ def _check_conditional_full_force_coast_domains(
         assert Fraction(initial_speed_upper_m_s) >= initial_speed_m_s
         domain_cases = [(duration_s, 1000.0, 0.1) for duration_s in body_reaches_m]
         if center == "Mars":
-            domain_cases.append((1 / 16, 2000.0, 0.25))
+            domain_cases.extend(((1 / 16, 2000.0, 0.25), (1 / 8, 4000.0, 0.5)))
         for duration_s, position_radius_m, velocity_radius_m_s in domain_cases:
             reaches_m = body_reaches_m[duration_s]
             relative_speed_m_s = initial_speed_m_s + Fraction(velocity_radius_m_s) + Fraction(sun_speed_upper_m_s)
@@ -3843,6 +3844,7 @@ def _check_conditional_full_force_coast_domains(
             closed = reach_m < position_radius_m and velocity_reach_m_s < Fraction(velocity_radius_m_s)
             assert closed is (short_control or (center == "Mars" and (
                 duration_s == 1 / 32 or (duration_s == 1 / 16 and position_radius_m == 2000.0)
+                or (duration_s == 1 / 8 and position_radius_m == 4000.0)
             ))), (
                 center, duration_s, position_radius_m, velocity_radius_m_s, reach_m, float(velocity_reach_m_s),
             )
@@ -4415,7 +4417,10 @@ def _check_conditional_full_force_coast_domains(
                     assert cubic_reference_velocity_m_s < weighted_reference_velocity_error_m_s
                     assert cubic_position_error_m <= Fraction("0.001")
                     assert cubic_velocity_error_m_s < weighted_velocity_error_m_s
-                    assert cubic_velocity_error_m_s <= Fraction("0.000001")
+                    # At 1/8 s this fixed reference bound alone exceeds the
+                    # gate; reducing only its endpoint residual cannot resolve it.
+                    assert (cubic_reference_velocity_m_s <= Fraction("0.000001")) is (duration_s < 1 / 8)
+                    assert (cubic_velocity_error_m_s <= Fraction("0.000001")) is (duration_s < 1 / 8)
                     cubic_values = {
                         "reference_acceleration_upper_m_s2": reference_acceleration_m_s2,
                         "monopole_jerk_error_m_s3": reference_jerk_error_m_s3,
@@ -4494,6 +4499,7 @@ def _check_conditional_full_force_coast_domains(
                         **reported_transport_bounds,
                         "conditional_partial_cubic_control": {
                             **reported_cubic,
+                            "reference_within_velocity_gate": cubic_reference_velocity_m_s <= Fraction("0.000001"),
                             "within_position_gate": cubic_position_error_m <= Fraction("0.001"),
                             "within_velocity_gate": cubic_velocity_error_m_s <= Fraction("0.000001"),
                         },
@@ -4570,7 +4576,7 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_split_relative_force_variation_m_s2": reported_split_relative_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
-    expected_arcs = 6 if run_native_controls else 0
+    expected_arcs = 7 if run_native_controls else 0
     assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (expected_arcs,) * 3
     return results
 
