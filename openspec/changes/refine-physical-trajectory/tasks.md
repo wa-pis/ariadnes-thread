@@ -51,6 +51,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 short-control tiling cost screen (2026-09-12):
+Verify the exact number of uniform 1/64 s segments covering the pinned
+candidate interval and compare with the unchanged operation-wide 228-arc
+limit. Report excluded work explicitly; do not claim a lower bound for
+adaptive methods or mission infeasibility. Measure the existing four
+native calls and their complete control-verification time separately,
+preserving deadline checks and counters. Verify both inventory variants,
+full pytest, Ruff, strict OpenSpec, diff and legacy checks. Keep 3.9 open.
+
+Focused verification: both inventory variants passed in 166.80 s. Both
+report exactly 1,611,124,364 hypothetical uniform arcs versus 228 available;
+all 228 would cover only 3.5625 s of the 25,173,818.181818128 s interval.
+Measured native-call times for Moon nominal/tighter were 0.156/0.409 s and
+Mars 0.152/0.373 s. Complete per-control verification took 45.71/46.63 s
+and 22.84/23.12 s respectively, excluding shared resource preparation.
+Only four native calls ran; no projected calls were scheduled. The
+operation deadline passed unchanged. These timings cannot be extrapolated
+into a certified mission-runtime bound.
+
+Completion verification: all 1538 project tests passed in 431.24 s; Ruff,
+strict OpenSpec, diff checks and unchanged legacy checksum/import isolation
+passed. Full-suite duration is separate from the operation deadline.
+No limits or scientific tolerances changed; task 3.9 remains open.
+
 Task 3.9 initial-acceleration position remainder (2026-09-12):
 Bound saved-endpoint position error by its exact quadratic-reference L1
 residual plus `(E+C)*h^2/2`, reusing qualified initial-force and interval

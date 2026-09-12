@@ -1,5 +1,30 @@
 ## Context
 
+### Short-control tiling cost screen (2026-09-12)
+
+Do not treat passing 1/64 s endpoint controls as a deployable full-flight
+subdivision strategy. For the pinned candidate interval, exact rational
+epoch subtraction and integer ceiling require 1,611,124,364 native arcs
+if each uniform coast segment spans at most 1/64 s. Verify the ceiling by
+both covering and one-fewer-segment inequalities. Even allocating all 228
+operation-wide arcs to a single coast covers only 3.5625 s. Actual limits
+also reserve work for burns, retries, discarded parents, targeting and
+independent diagnostics; excluding those is deliberately optimistic.
+
+This rejects only uniform repetition of the current short-control length.
+It neither proves that the controls remain valid elsewhere nor bounds the
+cost of an adaptive or higher-order method. It does not establish mission
+infeasibility, native-stage safety or accumulated-error control. Preserve
+all limits and keep task 3.9 open. Next qualification must address longer
+intervals and initial-error propagation before any production subdivision.
+
+Measure native-call wall time and complete control-verification wall time
+separately for the existing four controls. Setup and force-oracle work are
+included in the latter; shared environment/SPK preparation precedes it.
+All work remains under the existing operation deadline. Timings are local
+observations, not deterministic scientific values or full-mission runtime
+predictions. No additional native calls, dependencies or UI changes.
+
 ### Initial-acceleration position remainder (2026-09-12)
 
 Given exact stored initial x0/v0, saved acceleration a_hat, initial force

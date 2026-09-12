@@ -1529,9 +1529,27 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert kernels_before == [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
     budget.check()
     assert budget.native_arc_propagations == (4 if native_record_readback else 0)
+    # Hypothetical uniform reuse, not proof these controls apply elsewhere.
+    control_duration = Fraction(1, 64)
+    assert all(Fraction(domain["duration_s"]) == control_duration
+               for domain in coast_domains if domain["conditional_domain_closed"])
+    interval_duration = Fraction(end_tdb_s) - Fraction(start_tdb_s)
+    uniform_arc_count = math.ceil(interval_duration / control_duration)
+    assert (uniform_arc_count - 1) * control_duration < interval_duration <= uniform_arc_count * control_duration
+    assert uniform_arc_count == 1611124364 > 228
+    assert 228 * control_duration == Fraction(57, 16)  # Even granting all operation arcs to one coast.
     print(json.dumps({
         "candidate_id": evidence["candidate_id"], "time": "TDB seconds since J2000",
         "candidate_interval_tdb_s": [start_tdb_s, end_tdb_s],
+        "hypothetical_uniform_control_tiling": {
+            "scope": "One native arc per equal short coast; not a safety certificate or adaptive-method lower bound",
+            "control_duration_s": float(control_duration),
+            "minimum_native_arcs_for_this_uniform_strategy": uniform_arc_count,
+            "production_operation_native_arc_limit": 228,
+            "covered_duration_at_operation_limit_s": float(228 * control_duration),
+            "fits_operation_arc_limit": False,
+            "excludes": ["retries", "discarded_parents", "burns", "targeting", "independent_diagnostics"],
+        },
         "spk_files": [Path(entry[0]).name for entry in files],
         "spk_registration_count": len(registrations),
         "total_segments": total_segments, "overlapping_chain_segments": segment_counts,
@@ -3613,6 +3631,7 @@ def _check_conditional_full_force_coast_domains(
                 from tudatpy.dynamics import propagation_setup
 
                 for tighter in (False, True):
+                    control_started_s = perf_counter()
                     budget.begin_control()
                     models = trajectory._build_arc_force_models(budget.candidate_id, environment)
                     final_tdb_s = start_tdb_s + duration_s
@@ -3668,7 +3687,10 @@ def _check_conditional_full_force_coast_domains(
                         processing_settings=original_settings.processing_settings,
                     )
                     assert np.array_equal(settings.initial_states, original_settings.initial_states)
+                    native_started_s = perf_counter()
                     simulator = trajectory._run_native_arc(budget, bodies, settings, first_in_evaluation=True)
+                    native_elapsed_s = perf_counter() - native_started_s
+                    assert math.isfinite(native_elapsed_s) and native_elapsed_s > 0
                     assert simulator.integration_completed_successfully
                     history = simulator.state_history_time_object
                     first_epoch, last_epoch = min(history), max(history)
@@ -4042,7 +4064,12 @@ def _check_conditional_full_force_coast_domains(
                     )
                     reported_anchor_residual_m_s = math.nextafter(float(anchor_residual_m_s), math.inf)
                     assert math.isfinite(reported_anchor_residual_m_s) and Fraction(reported_anchor_residual_m_s) >= anchor_residual_m_s
+                    control_elapsed_s = perf_counter() - control_started_s
+                    assert math.isfinite(control_elapsed_s) and control_elapsed_s >= native_elapsed_s
+                    budget.check()
                     endpoint_controls.append({"tighter": tighter,
+                        "native_arc_elapsed_s": native_elapsed_s,
+                        "control_verification_elapsed_s": control_elapsed_s,
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),
                         "initial_shadow_function": shadow,
                         "fully_lit_srp_anchor_error_upper_m_s2": reported_srp_error_m_s2,
