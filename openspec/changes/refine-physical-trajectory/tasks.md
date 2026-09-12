@@ -51,6 +51,38 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 relative-motion composition (2026-09-12):
+Use the qualified source position derivatives and curvatures to bound
+relative displacement by `|v_ship-v_source|_1*h+(A_ship+B_source)*h^2/2`.
+Verify independent opposing-acceleration/common-velocity controls, vector
+norms, zero motion and invalid/coverage rejection. After original-domain
+closure only, reuse existing distance floors/Jacobians to refine gravity
+variation and the saved-endpoint velocity bound. Retain all other force
+allowances, old bounds and the 1e-6 m/s gate. Run focused/full pytest,
+Ruff, strict OpenSpec and legacy checks; keep 3.9 open.
+
+Focused verification: 19 tests passed in 117.11 s, including 17 new
+kinematic/domain controls and both inventories. Central-body displacement
+bounds are 23.43768259540861 m near the Moon and 23.43788914719493 m near
+Mars. Complete relative force-variation bounds are
+6.402457168954275e-5 and 6.317737501360288e-5 m/s^2, respectively.
+Both inventories reproduce these values. The one-second domains remain
+unresolved and have null relative-motion diagnostics.
+
+Combined velocity bounds in m/s are Moon nominal 1.6004431849007004e-6,
+Moon tighter 1.6004268139960685e-6, Mars nominal 1.1443763741400563e-6,
+and Mars tighter 1.144373645655951e-6. All are strictly below the preceding
+anchored bounds and all remain above 1e-6 m/s; acceptance flags remain
+false. These are conditional upper bounds, not actual errors.
+The four native arcs, 16 affine ephemeris queries per inventory, shared
+deadline and production settings are unchanged. No new dependencies or UI
+changes; the result does not close interval safety or permit targeting.
+
+Completion verification: all 1489 project tests passed in 377.72 s. Ruff,
+strict OpenSpec validation and diff checks passed. The legacy SHA-256 is
+unchanged and the package does not import the educational model. Suite
+duration is not the unchanged 300-second mission deadline. Task 3.9 is open.
+
 Task 3.9 SPK affine source-motion prerequisite (2026-09-12):
 Evaluate exact initial position derivatives and uniform second-derivative
 L1 bounds from position coefficients, including type-3 records without

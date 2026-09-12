@@ -45,6 +45,65 @@ def test_spk_record_selector_matches_inspected_binary() -> None:
             assert binary.read(4) == bytes.fromhex(instruction["bytes"]), instruction["instruction"]
 
 
+def _relative_affine_displacement_upper_m(
+    spacecraft_velocity_m_s: np.ndarray, source_slope_m_s: tuple[Fraction, ...],
+    duration_s: float, spacecraft_acceleration_m_s2: float,
+    source_curvature_m_s2: Fraction, source_coverage_s: float,
+) -> Fraction:
+    """Bound change of ideal relative position in SI/J2000 within a qualified interval."""
+    assert spacecraft_velocity_m_s.shape == (3,) and spacecraft_velocity_m_s.dtype == np.dtype("float64")
+    assert np.all(np.isfinite(spacecraft_velocity_m_s))
+    assert len(source_slope_m_s) == 3 and all(isinstance(value, Fraction) for value in source_slope_m_s)
+    assert all(type(value) is float and math.isfinite(value) and value >= 0
+               for value in (duration_s, spacecraft_acceleration_m_s2, source_coverage_s))
+    assert duration_s <= source_coverage_s
+    assert isinstance(source_curvature_m_s2, Fraction) and source_curvature_m_s2 >= 0
+    relative_speed_m_s = sum((abs(Fraction(ship) - source) for ship, source in
+                              zip(spacecraft_velocity_m_s, source_slope_m_s, strict=True)), Fraction(0))
+    return (relative_speed_m_s * Fraction(duration_s)
+            + (Fraction(spacecraft_acceleration_m_s2) + source_curvature_m_s2) * Fraction(duration_s)**2 / 2)
+
+
+@pytest.mark.parametrize("boost_m_s", [0.0, 1e12])
+@pytest.mark.parametrize("duration_s", [0.0, 1 / 64, 0.3])
+def test_relative_affine_attains_opposing_acceleration_bound(boost_m_s: float, duration_s: float) -> None:
+    ship = np.asarray([boost_m_s + 3.0, -2.0, 1.0])
+    source = (Fraction(boost_m_s) + 1, Fraction(-2), Fraction(1))
+    bound = _relative_affine_displacement_upper_m(ship, source, duration_s, 2.0, Fraction(1), 1.0)
+    t, offset = Fraction(duration_s), Fraction(10**15)
+    # Independent exact trajectories: ship acceleration +2, source -1 along x.
+    ship_final = offset + Fraction(ship[0])*t + t*t
+    source_final = offset + source[0]*t - t*t/2
+    assert bound == abs(ship_final - source_final) == 2*t + 3*t*t/2
+
+
+def test_relative_affine_preserves_three_dimensional_bound() -> None:
+    bound = _relative_affine_displacement_upper_m(np.asarray([1.0, 2.0, -2.0]), (Fraction(0),)*3, 0.5, 0.0, Fraction(0), 1.0)
+    assert bound == Fraction(5, 2)
+    assert Fraction(9, 4) <= bound**2  # Exact squared L2 displacement.
+
+
+def test_relative_affine_cancels_identical_uniform_motion() -> None:
+    velocity = np.asarray([1e12, -1e12, 1.0])
+    assert _relative_affine_displacement_upper_m(velocity, tuple(map(Fraction, velocity)), 1.0, 0.0, Fraction(0), 1.0) == 0
+
+
+@pytest.mark.parametrize("invalid", ["nonfinite", "source", "shape", "duration", "coverage", "boolean",
+                                      "negative-ship", "negative-source", "inexact-source"])
+def test_relative_affine_rejects_invalid_domains(invalid: str) -> None:
+    ship = np.zeros(2 if invalid == "shape" else 3)
+    if invalid == "nonfinite":
+        ship[0] = math.nan
+    with pytest.raises(AssertionError):
+        _relative_affine_displacement_upper_m(
+            ship, (0.0,)*3 if invalid == "source" else (Fraction(0),)*3,  # type: ignore[arg-type] -- boundary rejection.
+            True if invalid == "boolean" else -1.0 if invalid == "duration" else 0.25,
+            -1.0 if invalid == "negative-ship" else 0.0,
+            0.0 if invalid == "inexact-source" else Fraction(-1 if invalid == "negative-source" else 0),  # type: ignore[arg-type] -- boundary rejection.
+            0.125 if invalid == "coverage" else 1.0,
+        )
+
+
 def _spk_position_affine_data(
     budget: trajectory._RefinementBudget, rows_km: tuple[tuple[float, ...], ...],
     midpoint_tdb_s: float, radius_s: float, start_tdb_s: float, duration_s: float,
@@ -1385,6 +1444,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         mid, radius, rows = selected[0]
         affine_links[link] = _spk_position_affine_data(budget, rows, mid, radius, start_tdb_s, 1.0)
     affine_curvature_bounds_m_s2: dict[str, float] = {}
+    source_affine_motion: dict[str, tuple[tuple[Fraction, ...], Fraction]] = {}
     affine_native_checks = 0
     for body, target in body_ids.items():
         center = expected_centers[target]
@@ -1392,6 +1452,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         position = tuple(sum((affine_links[link][0][axis] for link in chain), Fraction(0)) for axis in range(3))
         slope = tuple(sum((affine_links[link][1][axis] for link in chain), Fraction(0)) for axis in range(3))
         curvature = sum((affine_links[link][2] for link in chain), Fraction(0))
+        source_affine_motion[body] = (slope, curvature)
         reported_curvature = math.nextafter(float(curvature), math.inf)
         assert math.isfinite(reported_curvature) and Fraction(reported_curvature) >= curvature
         affine_curvature_bounds_m_s2[body] = reported_curvature
@@ -1430,6 +1491,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         {body: motion_samples[target][0][1] for body, target in body_ids.items()},
         {body: float(motion_samples[target][0][2]) for body, target in body_ids.items()},
         chain_velocity_bounds_m_s[10],
+        source_affine_motion=source_affine_motion, source_affine_coverage_s=1.0,
         run_native_controls=native_record_readback,
     )
 
@@ -3208,7 +3270,8 @@ def _check_conditional_full_force_coast_domains(
     position_anchors_m: dict[str, np.ndarray],
     source_position_errors_m: dict[str, float],
     sun_velocity_error_m_s: float,
-    *, run_native_controls: bool,
+    *, source_affine_motion: dict[str, tuple[tuple[Fraction, ...], Fraction]],
+    source_affine_coverage_s: float, run_native_controls: bool,
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_gravity import _candidate, _spacecraft
@@ -3225,6 +3288,7 @@ def _check_conditional_full_force_coast_domains(
     bodies = environment.bodies
     states = {body: np.asarray(bodies.get(body).ephemeris.cartesian_state(start_tdb_s)).reshape(6)
               for body in trajectory.PHYSICAL_BODY_NAMES}
+    assert set(source_affine_motion) == set(states)
     assert all(np.all(np.isfinite(state)) for state in states.values())
     for body, state in states.items():
         assert np.array_equal(state[:3], position_anchors_m[body]), body
@@ -3260,6 +3324,7 @@ def _check_conditional_full_force_coast_domains(
             frozen_harmonic_variation_m_s2: dict[str, float] = {}
             arbitrary_rotation_variation_m_s2: dict[str, float] = {}
             angle_limited_rotation_variation_m_s2: dict[str, float] = {}
+            harmonic_jacobians_s_inv2: dict[str, Fraction] = {}
             for body in trajectory.PHYSICAL_BODY_NAMES:
                 floor_m = trajectory._relative_distance_lower_bound(
                     budget, tuple(state[:3]), tuple(states[body][:3]), position_radius_m, reaches_m[body],
@@ -3282,6 +3347,7 @@ def _check_conditional_full_force_coast_domains(
                         budget, field.gravitational_parameter, field.reference_radius,
                         floor_m, field.cosine_coefficients, field.sine_coefficients,
                     )
+                    harmonic_jacobians_s_inv2[body] = jacobian_s_inv2
                     variation_m_s2 = jacobian_s_inv2 * (Fraction(position_radius_m) + Fraction(reaches_m[body]))
                     reported_variation_m_s2 = math.nextafter(float(variation_m_s2), math.inf)
                     assert math.isfinite(reported_variation_m_s2)
@@ -3352,6 +3418,39 @@ def _check_conditional_full_force_coast_domains(
             assert mass_floor_kg == spacecraft.initial_mass_kg > spacecraft.dry_mass_kg
             closed = reach_m < position_radius_m and velocity_reach_m_s < Fraction(velocity_radius_m_s)
             assert closed is (duration_s == 1 / 64), (center, duration_s, reach_m, float(velocity_reach_m_s))
+            relative_reaches_m: dict[str, float] = {}
+            reported_relative_variation_m_s2: float | None = None
+            if closed:
+                # First close the original domain; only then use its acceleration
+                # bound to tighten relative displacement, avoiding circular proof.
+                relative_point_m_s2: dict[str, float] = {}
+                relative_harmonic_m_s2: dict[str, float] = {}
+                for body, (slope, curvature) in source_affine_motion.items():
+                    budget.check()
+                    displacement_m = _relative_affine_displacement_upper_m(
+                        state[3:], slope, duration_s, acceleration_m_s2, curvature, source_affine_coverage_s,
+                    )
+                    assert displacement_m < Fraction(position_radius_m) + Fraction(reaches_m[body])
+                    reported_displacement_m = math.nextafter(float(displacement_m), math.inf)
+                    assert math.isfinite(reported_displacement_m) and Fraction(reported_displacement_m) >= displacement_m
+                    relative_reaches_m[body] = reported_displacement_m
+                    if body in harmonic_jacobians_s_inv2:
+                        change_m_s2 = harmonic_jacobians_s_inv2[body] * displacement_m
+                        destination = relative_harmonic_m_s2
+                    else:
+                        change_m_s2 = _point_mass_variation_bound_m_s2(
+                            bodies.get(body).gravity_field_model.gravitational_parameter, floors_m[body], displacement_m,
+                        )
+                        destination = relative_point_m_s2
+                    reported_change_m_s2 = math.nextafter(float(change_m_s2), math.inf)
+                    assert math.isfinite(reported_change_m_s2) and Fraction(reported_change_m_s2) >= change_m_s2
+                    destination[body] = reported_change_m_s2
+                relative_variation_m_s2 = _coast_force_variation_bound_m_s2(
+                    relative_point_m_s2, relative_harmonic_m_s2, angle_limited_rotation_variation_m_s2, srp, relativity,
+                )
+                assert 0 < relative_variation_m_s2 < force_variation_m_s2
+                reported_relative_variation_m_s2 = math.nextafter(float(relative_variation_m_s2), math.inf)
+                assert math.isfinite(reported_relative_variation_m_s2) and Fraction(reported_relative_variation_m_s2) >= relative_variation_m_s2
             endpoint_controls: list[dict[str, object]] = []
             first_acceleration_m_s2: np.ndarray | None = None
             if run_native_controls and closed:
@@ -3756,6 +3855,14 @@ def _check_conditional_full_force_coast_domains(
                     reported_anchored_velocity_m_s = math.nextafter(float(anchored_velocity_error_m_s), math.inf)
                     assert math.isfinite(reported_anchored_velocity_m_s)
                     assert Fraction(reported_anchored_velocity_m_s) >= anchored_velocity_error_m_s
+                    assert reported_relative_variation_m_s2 is not None
+                    relative_velocity_error_m_s = _anchored_coast_velocity_error_bound_m_s(
+                        state[3:], final_state[3:6], anchor_m_s2, duration_s,
+                        prefix_full_error_m_s2, Fraction(reported_relative_variation_m_s2),
+                    )
+                    assert 0 < relative_velocity_error_m_s < anchored_velocity_error_m_s
+                    reported_relative_velocity_m_s = math.nextafter(float(relative_velocity_error_m_s), math.inf)
+                    assert math.isfinite(reported_relative_velocity_m_s) and Fraction(reported_relative_velocity_m_s) >= relative_velocity_error_m_s
                     anchor_residual_m_s = _anchored_coast_velocity_error_bound_m_s(
                         state[3:], final_state[3:6], anchor_m_s2, duration_s, Fraction(0), Fraction(0),
                     )
@@ -3794,6 +3901,8 @@ def _check_conditional_full_force_coast_domains(
                         "conditional_endpoint_position_error_m": reported_error_m,
                         "conditional_endpoint_velocity_error_m_s": reported_velocity_error_m_s,
                         "conditional_anchored_endpoint_velocity_error_m_s": reported_anchored_velocity_m_s,
+                        "conditional_relative_endpoint_velocity_error_m_s": reported_relative_velocity_m_s,
+                        "relative_velocity_bound_resolves_1um_s": relative_velocity_error_m_s <= Fraction("0.000001"),
                         "anchor_velocity_residual_l1_m_s": reported_anchor_residual_m_s,
                         "anchored_velocity_bound_resolves_1um_s": anchored_velocity_error_m_s <= Fraction("0.000001"),
                         "velocity_bound_resolves_1um_s": velocity_error_m_s <= Fraction("0.000001"),
@@ -3808,6 +3917,8 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_arbitrary_rotation_variation_m_s2": arbitrary_rotation_variation_m_s2,
                 "conditional_angle_limited_rotation_variation_m_s2": angle_limited_rotation_variation_m_s2,
                 "conditional_total_coast_force_variation_m_s2": reported_force_variation_m_s2,
+                "conditional_relative_displacement_upper_m": relative_reaches_m or None,
+                "conditional_relative_force_variation_m_s2": reported_relative_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
     expected_arcs = 4 if run_native_controls else 0

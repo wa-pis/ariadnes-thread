@@ -1,5 +1,43 @@
 ## Context
 
+### Common-motion relative displacement composition (2026-09-12)
+
+For exact initial spacecraft velocity v and source position-polynomial
+derivative w, uniform spacecraft acceleration norm A and source curvature
+bound B, integration gives
+`|[x(t)-p(t)]-[x0-p0]|_2 <= |v-w|_1*h + (A+B)*h^2/2`.
+Subtract the exact stored/rational velocities before taking their norm.
+This cancels common translation without assuming equal accelerations or
+discarding either remainder. Require h within the explicitly supplied
+source-affine coverage. The derivative is from position coefficients, not
+the type-3 velocity series. Initial source position error is already in the
+initial-force enclosure; it does not enter the change between two ideal
+relative positions, where the constant initial position cancels.
+
+Pass the previously qualified slopes/curvatures and one-second coverage
+to the existing coast-domain diagnostic. First close the original position,
+velocity and mass domain using its unchanged force-norm bound. Only then
+reuse that acceleration bound in the relative-displacement formula. Keep
+the original conservative chord-distance floors and harmonic Jacobian
+bounds. Replace only the point/frozen-harmonic spatial displacement factor;
+retain the PCK angular variation and SRP/relativity twice-norm allowances.
+The one-second unresolved domain receives null relative diagnostics, not a
+new closure or a propagated result. No circular domain proof is introduced.
+
+Independent kinematic controls attain the bound with opposing accelerations
+and a large common velocity, check three-dimensional norms and exact zero
+for identical uniform motion, and reject malformed or uncovered domains.
+Both existing short controls reduce central-body relative displacement to
+about 23.44 m. Reuse the same four saved native endpoints to combine the
+new variation bound with the unchanged initial-force error and saved Euler
+residual. Preserve both earlier velocity bounds as regressions.
+
+The new conditional velocity bounds are about 1.60e-6 m/s near the Moon
+and 1.14e-6 m/s near Mars: tighter, but still above the unchanged 1e-6 m/s
+gate. No measured trajectory-error or safety-failure claim follows.
+Task 3.9, targeting and interval-native safety remain gated. Production,
+resources, integrators, limits and UI are unchanged; no new native calls.
+
 ### SPK position-polynomial affine enclosure (2026-09-12)
 
 Before cancelling common source/spacecraft translation, qualify the source's
