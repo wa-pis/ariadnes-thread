@@ -3526,6 +3526,7 @@ def _check_conditional_full_force_coast_domains(
     source_affine_coverage_s: float, run_native_controls: bool,
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
+    from test_trajectory_error_transport import _coast_error_envelope
     from test_trajectory_gravity import _candidate, _spacecraft
 
     candidate = _candidate(
@@ -4207,10 +4208,40 @@ def _check_conditional_full_force_coast_domains(
                     )
                     reported_anchor_residual_m_s = math.nextafter(float(anchor_residual_m_s), math.inf)
                     assert math.isfinite(reported_anchor_residual_m_s) and Fraction(reported_anchor_residual_m_s) >= anchor_residual_m_s
+                    # q(t)=x0+v0*t+a_hat*t^2/2, q'=v0+a_hat*t exactly.
+                    # The same acceleration/reach bounds contain q and its velocity;
+                    # hence the existing relative-motion force variation also covers q.
+                    assert closed and reach_m < position_radius_m
+                    assert velocity_reach_m_s < Fraction(velocity_radius_m_s)
+                    assert sum((Fraction(value)**2 for value in anchor_m_s2), Fraction(0)) <= Fraction(acceleration_m_s2)**2
+                    reference_defect_m_s2 = prefix_full_error_m_s2 + Fraction(reported_split_relative_variation_m_s2)
+                    reference_position_error_m, reference_velocity_error_m_s = _coast_error_envelope(
+                        duration_s, Fraction(0), Fraction(0), Fraction(reported_full_position_sensitivity),
+                        Fraction(reported_relativity_sensitivities[1]), reference_defect_m_s2,
+                    )
+                    reference_position_residual_m = _anchored_coast_position_error_bound_m(
+                        state, final_state[:3], anchor_m_s2, duration_s, Fraction(0), Fraction(0),
+                    )
+                    transported_position_error_m = reference_position_residual_m + reference_position_error_m
+                    transported_velocity_error_m_s = anchor_residual_m_s + reference_velocity_error_m_s
+                    assert anchored_position_error_m < transported_position_error_m <= Fraction("0.001")
+                    assert split_velocity_error_m_s < transported_velocity_error_m_s <= Fraction("0.000001")
+                    transport_bounds = {
+                        "conditional_quadratic_reference_defect_m_s2": reference_defect_m_s2,
+                        "conditional_quadratic_reference_position_error_m": reference_position_error_m,
+                        "conditional_quadratic_reference_velocity_error_m_s": reference_velocity_error_m_s,
+                        "conditional_transport_endpoint_position_error_m": transported_position_error_m,
+                        "conditional_transport_endpoint_velocity_error_m_s": transported_velocity_error_m_s,
+                    }
+                    reported_transport_bounds = {key: math.nextafter(float(value), math.inf)
+                                                 for key, value in transport_bounds.items()}
+                    assert all(math.isfinite(value) and Fraction(value) >= transport_bounds[key] > 0
+                               for key, value in reported_transport_bounds.items())
                     control_elapsed_s = perf_counter() - control_started_s
                     assert math.isfinite(control_elapsed_s) and control_elapsed_s >= native_elapsed_s
                     budget.check()
                     endpoint_controls.append({"tighter": tighter,
+                        **reported_transport_bounds,
                         "native_arc_elapsed_s": native_elapsed_s,
                         "control_verification_elapsed_s": control_elapsed_s,
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),

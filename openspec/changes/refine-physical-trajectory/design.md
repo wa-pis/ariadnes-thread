@@ -1,5 +1,35 @@
 ## Context
 
+### Continuous quadratic-reference transport control (2026-09-12)
+
+Define q(t)=x0+v0*t+a_hat*t^2/2 from the exact stored initial state and
+saved initial acceleration; q'=v0+a_hat*t and q''=a_hat exactly. Before
+reusing any force bound, verify |a_hat|^2<=A^2 with exact fractions. The
+already established position reach |v0|*h+A*h^2/2 and velocity reach A*h
+then contain q and q' inside the same declared domain as the ideal coast.
+Convexity contains the intervening state chords as well.
+
+The relative-motion estimate used to obtain C requires initial x0/v0,
+acceleration norm at most A and the qualified source polynomial bounds,
+not that the spacecraft curve solves the equations of motion. Thus it
+also bounds ideal-force variation along q. Together with the initial
+force error E, D=E+C bounds |f(t,q,q')-q''| throughout this short interval.
+Preserve angular, SRP and relativistic allowances without tightening them.
+
+Apply the previously qualified transport lemma with zero initial errors,
+the composed full-force state sensitivities and D. Its uniform position
+and velocity errors bound the ideal solution relative to q, not the native
+internal interpolation. Add exact saved-endpoint L1 residuals relative to
+q/q' and verify the unchanged 0.001 m and 1e-6 m/s gates for all four
+short native controls. Retain the prior direct endpoint bounds; the new
+transport bounds are slightly wider because of positive feedback.
+
+This composes real short-control premises, not a longer-interval or
+nonzero-initial-error qualification. No claim about native internal stages,
+multi-arc accumulated error or full mission runtime follows. Unclosed
+one-second domains are not evaluated. Task 3.9 stays open; no new native
+calls, dependencies, limits or production changes.
+
 ### Fully lit coast state-sensitivity composition (2026-09-12)
 
 Extract the existing fixed-mass, fully lit SRP spatial operator bound

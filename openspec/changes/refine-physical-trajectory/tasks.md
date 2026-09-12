@@ -51,6 +51,37 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 continuous quadratic-reference transport control (2026-09-12):
+Reuse the exact initial-state quadratic reference only after verifying
+its acceleration norm and existing position/velocity domain bounds.
+Compose initial-force error and uniform reference-force variation into
+an acceleration defect; apply the qualified transport lemma and add exact
+native endpoint residuals. Verify all four short controls meet unchanged
+position/velocity gates, retain older bounds, run analytic transport and
+both inventory checks, full pytest, Ruff, strict OpenSpec and legacy checks.
+Keep one-second/initial-uncertainty/internal-stage qualification open; do
+not change production settings, limits or the status of task 3.9.
+
+Focused verification: 57 tests passed in 169.73 s (55 analytic transport
+controls and both inventories). Quadratic-reference defect bounds are
+5.026853118186602e-5 m/s^2 near the Moon and 4.3161491844015855e-5 m/s^2
+near Mars. Uniform reference-relative errors are 6.1362953117297215e-9 m /
+7.854457999014044e-7 m/s and 5.268736798533911e-9 m /
+6.743983102123406e-7 m/s respectively. These enclose the ideal solution
+relative to the mathematical reference, not native internal stages.
+
+After saved-endpoint residuals, nominal/tighter Moon position bounds are
+1.098544953249081e-5 / 4.419101172685544e-5 m and velocity bounds
+9.302902662842429e-7 / 9.30273895379611e-7 m/s. Mars bounds are
+4.090019426766819e-5 / 2.9855559747167103e-5 m and
+8.316235171505068e-7 / 8.316207886664015e-7 m/s. All satisfy the unchanged
+gates. Four native arcs and all earlier bounds remain unchanged.
+
+Completion verification: all 1679 project tests passed in 430.74 s.
+Ruff, strict OpenSpec, diff checks and unchanged legacy checksum/import
+isolation passed. Full-suite duration is distinct from the unchanged
+300-second operation deadline; no native calls or dependencies were added.
+
 Task 3.9 fully lit coast state-sensitivity composition (2026-09-12):
 Extract and independently qualify the existing SRP position operator bound,
 preserving its source-variation wrapper. Compose all ten fixed-epoch coast
