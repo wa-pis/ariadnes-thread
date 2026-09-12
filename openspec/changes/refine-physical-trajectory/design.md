@@ -1,5 +1,40 @@
 ## Context
 
+### SPK position-polynomial affine enclosure (2026-09-12)
+
+Before cancelling common source/spacecraft translation, qualify the source's
+position derivative and curvature directly from the coordinate polynomial.
+Do not substitute a type-3 stored velocity series for that derivative.
+A test-only helper evaluates exact position and first derivative at the
+initial epoch using Fraction Chebyshev recurrences. Convert coefficient km
+to m once, and divide derivatives by the record's time radius in seconds.
+
+On normalized time [-1,1], `|T''_n| <= n^2*(n^2-1)/3`. This follows from
+[T'_n=n*U_(n-1)](https://dlmf.nist.gov/18.9#E21), the positive Chebyshev expansion
+of U, and `|T'_k| <= k^2`; summing the resulting parity sequence gives the
+endpoint value. Thus `B=1000/radius_s^2 * sum_axis,n |c_axis,n|*n^2*(n^2-1)/3`
+bounds the coordinate polynomial's acceleration in L1 m/s^2, and
+`|p(t0+h)-p(t0)-p'(t0)*h|_1 <= B*h^2/2`. Reject an interval outside its
+record, invalid coefficients/time parameters and expired budgets.
+
+For all 11 source links, require the full first second to fit one existing
+qualified core, excluding its 16-ULP boundary strips. Sum exact initial
+positions/slopes and curvature bounds along the eight SSB/J2000 chains.
+Check the two short endpoints against direct SPICE with allowance
+`B*h^2/2 + existing_chain_position_error`; the latter covers native endpoint
+arithmetic and SI conversion, not physical ephemeris uncertainty. Both
+inventory variants make 16 additional ephemeris requests, no additional
+spacecraft propagation calls. Report the outward curvature bounds separately.
+
+Independent expanded cubics verify position, slope and integrated remainder
+at two epoch origins, two time radii and three normalized initial positions.
+Single-mode endpoint checks through degree 120 use a separate parity-sum
+second-derivative identity. The interval and source-selection scope is
+deliberately local: this is not a cross-record affine model or permission
+to replace direct SPICE. Existing relative-motion/force-variation and
+trajectory-error bounds are unchanged pending their explicit composition.
+Task 3.9 stays open; production, tolerances and limits are unchanged.
+
 ### Initial-acceleration velocity enclosure (2026-09-12)
 
 For an exact initial velocity v0, saved final velocity vh and saved initial

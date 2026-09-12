@@ -45,6 +45,92 @@ def test_spk_record_selector_matches_inspected_binary() -> None:
             assert binary.read(4) == bytes.fromhex(instruction["bytes"]), instruction["instruction"]
 
 
+def _spk_position_affine_data(
+    budget: trajectory._RefinementBudget, rows_km: tuple[tuple[float, ...], ...],
+    midpoint_tdb_s: float, radius_s: float, start_tdb_s: float, duration_s: float,
+) -> tuple[tuple[Fraction, ...], tuple[Fraction, ...], Fraction]:
+    """Exact record position/slope in SI and an L1 acceleration bound; no join crossing."""
+    budget.check()
+    assert len(rows_km) == 3 and rows_km[0] and all(len(row) == len(rows_km[0]) for row in rows_km)
+    assert all(type(value) is float and math.isfinite(value) for row in rows_km for value in row)
+    assert all(type(value) is float and math.isfinite(value) for value in (midpoint_tdb_s, radius_s, start_tdb_s, duration_s))
+    assert radius_s > 0 and duration_s >= 0
+    radius = Fraction(radius_s)
+    x = (Fraction(start_tdb_s) - Fraction(midpoint_tdb_s)) / radius
+    assert -1 <= x <= x + Fraction(duration_s) / radius <= 1
+    basis, derivative = [Fraction(1), x], [Fraction(0), Fraction(1)]
+    for degree in range(2, len(rows_km[0])):
+        budget.check()
+        derivative.append(2 * basis[-1] + 2 * x * derivative[-1] - derivative[-2])
+        basis.append(2 * x * basis[-1] - basis[-2])
+    position_m = tuple(1000 * sum((Fraction(c) * basis[n] for n, c in enumerate(row)), Fraction(0)) for row in rows_km)
+    slope_m_s = tuple(1000 * sum((Fraction(c) * derivative[n] for n, c in enumerate(row)), Fraction(0)) / radius for row in rows_km)
+    # On [-1,1], |T''_n| <= T''_n(1) = n^2*(n^2-1)/3.
+    acceleration_m_s2 = 1000 * sum((abs(Fraction(c)) * Fraction(n**2 * (n**2 - 1), 3)
+                                   for row in rows_km for n, c in enumerate(row)), Fraction(0)) / radius**2
+    budget.check()
+    return position_m, slope_m_s, acceleration_m_s2
+
+
+@pytest.mark.parametrize("midpoint_tdb_s", [0.0, 1e9])
+@pytest.mark.parametrize("radius_s", [16.0, 32.0])
+@pytest.mark.parametrize("x0", [-0.5, 0.0, 0.5])
+def test_spk_affine_matches_expanded_cubic(midpoint_tdb_s: float, radius_s: float, x0: float) -> None:
+    rows = ((1e8, 2.0, -0.5, 0.125), (0.0, -1.0, 0.25, -0.5), (1.0, 0.0, 0.0, 0.0))
+    start = midpoint_tdb_s + x0 * radius_s
+    position, slope, curvature = _spk_position_affine_data(
+        trajectory._RefinementBudget("affine-cubic", 300.0), rows, midpoint_tdb_s, radius_s, start, 1.0,
+    )
+    x, radius = Fraction(x0), Fraction(radius_s)
+    for axis, row in enumerate(rows):
+        a, b, c, d = map(Fraction, row)
+        assert position[axis] == 1000 * (a + b*x + c*(2*x*x-1) + d*(4*x**3-3*x))
+        assert slope[axis] == 1000 * (b + 4*c*x + d*(12*x*x-3)) / radius
+    assert curvature == 1000 * sum((4*abs(Fraction(row[2])) + 24*abs(Fraction(row[3])) for row in rows), Fraction(0)) / radius**2
+    for elapsed in (Fraction(0), Fraction(1, 2), Fraction(1)):
+        u = x + elapsed / radius
+        exact_final = [1000 * (Fraction(a) + Fraction(b)*u + Fraction(c)*(2*u*u-1) + Fraction(d)*(4*u**3-3*u))
+                       for a, b, c, d in rows]
+        residual = sum((abs(final - initial - velocity*elapsed) for final, initial, velocity in
+                        zip(exact_final, position, slope, strict=True)), Fraction(0))
+        assert residual <= curvature * elapsed**2 / 2
+
+
+@pytest.mark.parametrize("degree", [0, 1, 2, 19, 120])
+def test_spk_affine_endpoint_single_mode(degree: int) -> None:
+    row = (0.0,) * degree + (1.0,)
+    position, slope, curvature = _spk_position_affine_data(
+        trajectory._RefinementBudget("affine-mode", 300.0), (row, (0.0,) * len(row), (0.0,) * len(row)),
+        0.0, 1.0, 1.0, 0.0,
+    )
+    assert position == (1000, 0, 0) and slope == (1000 * degree**2, 0, 0)
+    # Differentiate T'=n*U and expand U in positive Chebyshev modes.
+    endpoint_second = 2 * degree * sum(k*k for k in range(degree - 1, 0, -2))
+    assert curvature == 1000 * endpoint_second
+
+
+@pytest.mark.parametrize("invalid", ["nan", "rows", "radius", "outside", "crossing"])
+def test_spk_affine_rejects_invalid_record_interval(invalid: str) -> None:
+    rows = ((math.nan if invalid == "nan" else 1.0,), (0.0,), (0.0,))
+    if invalid == "rows":
+        rows = ((1.0,), (0.0, 0.0), (0.0,))
+    with pytest.raises(AssertionError):
+        _spk_position_affine_data(
+            trajectory._RefinementBudget("affine-invalid", 300.0), rows, 0.0,
+            0.0 if invalid == "radius" else 1.0, -2.0 if invalid == "outside" else 0.0,
+            2.0 if invalid == "crossing" else 0.25,
+        )
+
+
+def test_spk_affine_rejects_expired_budget() -> None:
+    clock = iter([0.0, 301.0])
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="shared deadline"):
+        _spk_position_affine_data(
+            trajectory._RefinementBudget("affine-expired", 300.0, lambda: next(clock)),
+            ((0.0,),) * 3, 0.0, 1.0, 0.0, 0.25,
+        )
+
+
 def _replay_spk_series(
     coefficients: tuple[float, ...], midpoint_tdb_s: float,
     radius_s: float, epoch_tdb_s: float,
@@ -1290,6 +1376,36 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     coast_durations_s = (1 / 64, 1.0)
     coast_body_reaches_m: dict[float, dict[str, float]] = {}
     body_ids = dict(zip(trajectory.PHYSICAL_BODY_NAMES, (10, 1, 2, 399, 301, 499, 599, 699), strict=True))
+    affine_links: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...], Fraction]] = {}
+    for link, records in position_records.items():
+        selected = [(mid, radius, rows) for mid, radius, rows in records
+                    if Fraction(mid) - Fraction(radius) + 16 * Fraction(math.ulp(mid)) <= Fraction(start_tdb_s)
+                    and Fraction(start_tdb_s) + 1 <= Fraction(mid) + Fraction(radius) - 16 * Fraction(math.ulp(mid))]
+        assert len(selected) == 1, (link, "affine interval must fit one qualified core")
+        mid, radius, rows = selected[0]
+        affine_links[link] = _spk_position_affine_data(budget, rows, mid, radius, start_tdb_s, 1.0)
+    affine_curvature_bounds_m_s2: dict[str, float] = {}
+    affine_native_checks = 0
+    for body, target in body_ids.items():
+        center = expected_centers[target]
+        chain = [target] if center == 0 else [target, center]
+        position = tuple(sum((affine_links[link][0][axis] for link in chain), Fraction(0)) for axis in range(3))
+        slope = tuple(sum((affine_links[link][1][axis] for link in chain), Fraction(0)) for axis in range(3))
+        curvature = sum((affine_links[link][2] for link in chain), Fraction(0))
+        reported_curvature = math.nextafter(float(curvature), math.inf)
+        assert math.isfinite(reported_curvature) and Fraction(reported_curvature) >= curvature
+        affine_curvature_bounds_m_s2[body] = reported_curvature
+        for duration_s in coast_durations_s:
+            budget.check()
+            native_position = spice.spkssb(target, start_tdb_s + duration_s, "J2000")[:3] * 1000
+            assert np.all(np.isfinite(native_position))
+            residual = sum((abs(Fraction(observed) - initial - velocity * Fraction(duration_s))
+                            for observed, initial, velocity in zip(native_position, position, slope, strict=True)), Fraction(0))
+            assert residual <= curvature * Fraction(duration_s)**2 / 2 + Fraction(chain_position_bounds_m[target]), body
+            affine_native_checks += 1
+    assert len(affine_links) == 11 and affine_native_checks == 16
+    print(json.dumps({"position_polynomial_acceleration_l1_bound_m_s2": affine_curvature_bounds_m_s2,
+                      "affine_native_position_checks": affine_native_checks}, sort_keys=True, allow_nan=False))
     for duration_s in coast_durations_s:
         assert start_tdb_s + duration_s <= end_tdb_s
         assert Fraction(start_tdb_s + duration_s) - Fraction(start_tdb_s) == Fraction(duration_s)

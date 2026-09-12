@@ -51,6 +51,37 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 SPK affine source-motion prerequisite (2026-09-12):
+Evaluate exact initial position derivatives and uniform second-derivative
+L1 bounds from position coefficients, including type-3 records without
+using their separate velocity series. Verify expanded cubic controls,
+single-mode endpoints, invalid inputs/intervals and deadlines. Select one
+qualified core covering the first second for every source link, compose
+SSB chains, and check direct-SPICE endpoints with the existing arithmetic
+error allowance. Run focused/full pytest, Ruff, strict OpenSpec and legacy
+checks; do not yet replace the force-variation bound or close 3.9.
+
+Focused verification: 25 tests passed in 117.76 s, including 23 new analytic
+and rejection controls and both inventories. Each inventory qualifies 11
+links and makes 16 additional SPICE position queries: eight bodies at
+1/64 s and 1 s. The source-polynomial acceleration L1 bounds in m/s^2 are
+Sun 2.6261703387877057e-7, Mercury 0.062409018596834606,
+Venus 0.019380598627597605, Earth 0.009777611384210193,
+Moon 0.01494818190424113, Mars 0.002778410201880391,
+Jupiter 0.003466485629056375 and Saturn 0.00015720062924796832.
+Both inventories reproduce the same values. These are polynomial bounds,
+not measured physical accelerations or new ephemeris uncertainty estimates.
+
+The four existing native spacecraft arcs and zero portable arcs are
+unchanged. No new dependencies, resources, production/UI behavior, budgets
+or scientific tolerances. Existing anchored velocity bounds stay unresolved;
+relative source/spacecraft motion composition is the next prerequisite.
+
+Completion verification: all 1472 project tests passed in 378.90 s. Ruff,
+strict OpenSpec validation and diff checks passed. The educational model's
+SHA-256 remains unchanged and the package does not import it. Full-suite
+duration is separate from the unchanged 300-second mission deadline.
+
 Task 3.9 initial-acceleration velocity enclosure (2026-09-12):
 Add the exact saved Euler residual plus `(initial_force_error +
 interval_force_variation)*duration` velocity bound. Verify constant and
