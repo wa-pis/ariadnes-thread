@@ -2767,6 +2767,35 @@ def test_point_mass_jerk_rejects_invalid_inputs(case: str) -> None:
         _point_mass_jerk_interval_m_s3(gm, position, velocity)
 
 
+def _fresh_point_gravity_intervals_m_s2(
+    budget: trajectory._RefinementBudget, epoch_tdb_s: float, end_tdb_s: float,
+    source_epoch_tdb_s: float, source_end_tdb_s: float,
+    nominal_state: tuple[Fraction, ...], source_states: dict[str, tuple[Fraction, ...]],
+    gravitational_parameters_m3_s2: dict[str, float],
+) -> dict[str, tuple[tuple[Fraction, Fraction], ...]]:
+    """Bind six nominal point-force vectors to exact same-epoch SI/SSB/J2000 sources.
+
+    Source positions are ideal SPK polynomials; source arithmetic, incoming
+    state errors and whole-interval force variation remain separate.
+    """
+    budget.check()
+    assert all(type(value) is float and math.isfinite(value) for value in
+               (epoch_tdb_s, end_tdb_s, source_epoch_tdb_s, source_end_tdb_s))
+    assert epoch_tdb_s == source_epoch_tdb_s and epoch_tdb_s <= end_tdb_s <= source_end_tdb_s
+    bodies = tuple(body for body in trajectory.PHYSICAL_BODY_NAMES if body not in {"Moon", "Mars"})
+    assert set(source_states) == set(gravitational_parameters_m3_s2) == set(bodies)
+    assert all(len(state) == 6 and all(isinstance(value, Fraction) for value in state)
+               for state in (nominal_state, *source_states.values()))
+    result: dict[str, tuple[tuple[Fraction, Fraction], ...]] = {}
+    for body in bodies:
+        budget.check()
+        relative_m = tuple(source - ship for source, ship in
+                           zip(source_states[body][:3], nominal_state[:3], strict=True))
+        result[body] = _point_gravity_intervals_m_s2(gravitational_parameters_m3_s2[body], relative_m)
+    budget.check()
+    return result
+
+
 def _fresh_monopole_jerk_intervals_m_s3(
     budget: trajectory._RefinementBudget, epoch_tdb_s: float, end_tdb_s: float,
     source_epoch_tdb_s: float, source_end_tdb_s: float,
@@ -5066,13 +5095,41 @@ def _check_conditional_full_force_coast_domains(
                         assert Fraction(handoff_epoch) - Fraction(start_tdb_s) == Fraction(offset_s)
                         if longer_control:
                             preserved_handoff = selected_handoff
+                            fresh_gm_m3_s2 = {body: bodies.get(body).gravity_field_model.gravitational_parameter
+                                             for body in trajectory.PHYSICAL_BODY_NAMES}
                             fresh_jerks = _fresh_monopole_jerk_intervals_m_s3(
                                 budget, handoff_epoch, handoff_epoch+next_s,
                                 fresh_source_epoch_tdb_s, fresh_source_end_tdb_s, handoff_state,
                                 fresh_source_states,
-                                {body: bodies.get(body).gravity_field_model.gravitational_parameter
-                                 for body in trajectory.PHYSICAL_BODY_NAMES},
+                                fresh_gm_m3_s2,
                             )
+                            point_started_s = perf_counter()
+                            point_bodies = tuple(body for body in trajectory.PHYSICAL_BODY_NAMES if body not in {"Moon", "Mars"})
+                            point_counts = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                            fresh_point_intervals = _fresh_point_gravity_intervals_m_s2(
+                                budget, handoff_epoch, handoff_epoch+next_s,
+                                fresh_source_epoch_tdb_s, fresh_source_end_tdb_s, handoff_state,
+                                {body: fresh_source_states[body] for body in point_bodies},
+                                {body: fresh_gm_m3_s2[body] for body in point_bodies},
+                            )
+                            point_report = {body: [[math.nextafter(float(lo), -math.inf) if lo else 0.0,
+                                                   math.nextafter(float(hi), math.inf) if hi else 0.0]
+                                                  for lo, hi in bounds]
+                                            for body, bounds in fresh_point_intervals.items()}
+                            assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lo <= hi <= Fraction(b)
+                                       for body, bounds in fresh_point_intervals.items()
+                                       for (a, b), (lo, hi) in zip(point_report[body], bounds, strict=True))
+                            assert point_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                            assert selected_handoff == preserved_handoff
+                            print(json.dumps({"fresh_point_gravity_intervals": {
+                                "epoch_tdb_s": handoff_epoch, "source_coverage_end_tdb_s": fresh_source_end_tdb_s,
+                                "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+                                "acceleration_unit": "m/s^2", "body_intervals_m_s2": point_report,
+                                "elapsed_s": perf_counter()-point_started_s, "additional_native_queries": 0,
+                                "additional_native_arcs": 0,
+                                "qualification": "Six nominal ideal-polynomial point forces only; source arithmetic, state-ball, other forces and full-force qualification excluded",
+                            }}, sort_keys=True, allow_nan=False))
+                            budget.check()
                             assert set(fresh_jerks) == set(trajectory.PHYSICAL_BODY_NAMES)
                             midpoint = tuple(sum((bounds[axis][0]+bounds[axis][1] for bounds in fresh_jerks.values()), Fraction(0))/2
                                              for axis in range(3))

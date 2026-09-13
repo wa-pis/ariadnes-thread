@@ -1,0 +1,31 @@
+{
+  "base_commit": "f617b93",
+  "verified_local_date": "2026-09-14",
+  "candidate_id": "d0001-t0035",
+  "epoch_tdb_s": 978995455.2929223,
+  "source_coverage_end_tdb_s": 978995455.3554223,
+  "origin": "SSB",
+  "orientation": "J2000",
+  "time_scale": "TDB seconds since J2000",
+  "acceleration_unit": "m/s^2",
+  "body_intervals_m_s2": {
+    "Earth": [[7.292433769720266e-9, 7.292433769720268e-9], [3.418577050759634e-9, 3.418577050759635e-9], [1.2062303665990385e-9, 1.206230366599039e-9]],
+    "Jupiter": [[-3.2108608223009205e-9, -3.2108608223009197e-9], [-1.8360183516750645e-7, -1.836018351675064e-7], [-7.90441205257894e-8, -7.904412052578938e-8]],
+    "Mercury": [[5.265944407703563e-10, 5.265944407703565e-10], [-1.6706357636303462e-10, -1.6706357636303456e-10], [-8.353081361030346e-11, -8.353081361030344e-11]],
+    "Saturn": [[1.0039710640636923e-8, 1.0039710640636926e-8], [1.4392011383171782e-8, 1.4392011383171786e-8], [5.5421002426014135e-9, 5.542100242601415e-9]],
+    "Sun": [[0.002119446624576136, 0.002119446624576137], [-0.0003036602292390363, -0.0003036602292390362], [-0.00019643188280186216, -0.0001964318828018621]],
+    "Venus": [[2.5026724239533547e-9, 2.5026724239533555e-9], [-5.403169804822813e-10, -5.403169804822811e-10], [-3.3894761683131127e-10, -3.3894761683131116e-10]]
+  },
+  "elapsed_s": 0.0007207081653177738,
+  "additional_native_queries": 0,
+  "additional_native_arcs": 0,
+  "native_inventory_arcs": 13,
+  "native_inventory_call_s": 149.77,
+  "portable_inventory_call_s": 46.18,
+  "focused_tests_passed": 74,
+  "focused_elapsed_s": 0.66,
+  "full_tests_passed": 2879,
+  "full_tests_failed": 0,
+  "full_elapsed_s": 500.09,
+  "qualification": "Six nominal ideal-polynomial point forces only; source arithmetic, state-ball, other forces and full-force qualification excluded"
+}

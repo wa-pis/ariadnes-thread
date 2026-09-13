@@ -5,8 +5,11 @@ from fractions import Fraction
 import numpy as np
 import pytest
 
+from space_nav import trajectory
+
 from test_trajectory_spk import (
-    _dyadic_sqrt_bounds, _point_gravity_anchor_error_bound_m_s2, _point_gravity_intervals_m_s2,
+    _dyadic_sqrt_bounds, _fresh_point_gravity_intervals_m_s2,
+    _point_gravity_anchor_error_bound_m_s2, _point_gravity_intervals_m_s2,
 )
 
 
@@ -64,3 +67,76 @@ def test_point_vector_rejects_invalid_gm(gm: float) -> None:
 def test_point_vector_rejects_invalid_geometry(relative: tuple[Fraction, ...]) -> None:
     with pytest.raises(AssertionError):
         _point_gravity_intervals_m_s2(1.0, relative)
+
+
+@pytest.mark.parametrize("epoch0", [0.0, 1e9])
+@pytest.mark.parametrize("elapsed_s", [0.0, 1/16, 2.0])
+def test_fresh_point_binding_moving_sources(epoch0: float, elapsed_s: float) -> None:
+    epoch = epoch0 + elapsed_s
+    offset = Fraction(elapsed_s)
+    ship = (Fraction(10**12)+2*offset, Fraction(-10**12)-offset, Fraction(3*10**12))
+    velocity = (Fraction(2), Fraction(-1), Fraction(0))
+    sources = tuple(body for body in trajectory.PHYSICAL_BODY_NAMES if body not in {"Moon", "Mars"})
+    states = {body: tuple(x + u*(index+1+offset) for x, u in zip(ship, (3, 4, 0), strict=True))
+              + (Fraction(5), Fraction(3), Fraction(0)) for index, body in enumerate(sources)}
+    gm = dict.fromkeys(sources, 125.0)
+    result = _fresh_point_gravity_intervals_m_s2(
+        trajectory._RefinementBudget("fresh-point", 300.0), epoch, epoch+1.0, epoch, epoch+1.0,
+        ship+velocity, states, gm,
+    )
+    assert tuple(result) == sources
+    for index, body in enumerate(sources):
+        expected = tuple(Fraction(value)/(index+1+offset)**2 for value in (3, 4, 0))
+        assert all(lo <= value <= hi for (lo, hi), value in zip(result[body], expected, strict=True))
+
+
+@pytest.mark.parametrize("invalid", ["epoch", "coverage", "reverse", "nan", "bool", "nominal-shape",
+    "nominal-float", "missing-source", "extra-source", "missing-gm", "extra-gm", "source-shape",
+    "source-float", "bad-gm"])
+def test_fresh_point_binding_rejects_mismatch(invalid: str) -> None:
+    bodies = tuple(body for body in trajectory.PHYSICAL_BODY_NAMES if body not in {"Moon", "Mars"})
+    nominal = (Fraction(0),)*6
+    states = dict.fromkeys(bodies, (Fraction(1),)*6)
+    gm = dict.fromkeys(bodies, 1.0)
+    if invalid == "nominal-shape":
+        nominal = nominal[:5]
+    elif invalid == "nominal-float":
+        nominal = (0.0, *nominal[1:])  # type: ignore[assignment] -- exact-input boundary.
+    elif invalid == "missing-source":
+        del states["Sun"]
+    elif invalid == "extra-source":
+        states["Moon"] = (Fraction(1),)*6
+    elif invalid == "missing-gm":
+        del gm["Sun"]
+    elif invalid == "extra-gm":
+        gm["Moon"] = 1.0
+    elif invalid == "source-shape":
+        states["Sun"] = (Fraction(1),)*5
+    elif invalid == "source-float":
+        states["Sun"] = (1.0,)*6  # type: ignore[assignment] -- exact-input boundary.
+    elif invalid == "bad-gm":
+        gm["Sun"] = float("nan")
+    with pytest.raises(AssertionError):
+        _fresh_point_gravity_intervals_m_s2(
+            trajectory._RefinementBudget("fresh-point-invalid", 300.0),
+            True if invalid == "bool" else float("nan") if invalid == "nan" else 1.0,
+            0.0 if invalid == "reverse" else 2.0,
+            0.0 if invalid == "epoch" else 1.0, 1.5 if invalid == "coverage" else 2.0,
+            nominal, states, gm,
+        )
+
+
+@pytest.mark.parametrize("expire_after", [0, 3])
+def test_fresh_point_binding_checks_shared_deadline(expire_after: int) -> None:
+    calls = [-1]
+
+    def clock() -> float:
+        calls[0] += 1
+        return 301.0 if calls[0] > expire_after else 0.0
+
+    bodies = tuple(body for body in trajectory.PHYSICAL_BODY_NAMES if body not in {"Moon", "Mars"})
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="shared deadline"):
+        _fresh_point_gravity_intervals_m_s2(
+            trajectory._RefinementBudget("fresh-point-expired", 300.0, clock), 1.0, 2.0, 1.0, 2.0,
+            (Fraction(0),)*6, dict.fromkeys(bodies, (Fraction(1),)*6), dict.fromkeys(bodies, 1.0),
+        )

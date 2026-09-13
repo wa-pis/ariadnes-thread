@@ -51,6 +51,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 fresh six-source point-force binding (started 2026-09-13):
+Bind exact fresh polynomials and existing GM values at the preserved handoff,
+excluding Moon/Mars double counting. Verify epoch/coverage, state shape/types,
+body/GM sets, moving-source analytic controls and expired budgets. All 74
+focused checks pass in 0.66 s; all 2879 tests pass in 500.09 s (2026-09-14 local).
+Native inventory 149.77 s, portable 46.18 s; thirteen/zero arcs and ten cache
+hits retained. New six-vector calculation/report preparation takes about
+0.000721 s; no native queries/arcs added. Ruff, strict OpenSpec and legacy
+isolation pass. Decision0007 and its JSON retain intervals, units and scope.
+Next prove same-epoch source-position allowance binding and nonsingular chord
+force effects before combining stored harmonic and ideal-polynomial forces.
+Reject missing coverage and unproved old radius-floor reuse. No full-force,
+state-ball, SRP/relativity or domain qualification follows; 3.9 stays open.
+
 Task 3.9 pure signed point-gravity intervals (2026-09-13):
 Decision0005's ledger selected six missing fresh point-force components.
 Expose the old point-force arithmetic as exact signed intervals, preserving

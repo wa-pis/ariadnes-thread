@@ -1,5 +1,27 @@
 ## Context
 
+### Fresh six-source point-gravity binding (2026-09-13)
+
+Bind `_point_gravity_intervals_m_s2` to Sun, Mercury, Venus, Earth, Jupiter
+and Saturn only; Moon/Mars degree-zero terms remain inside their harmonic
+fields. Require identical source/reference epochs, finite binary64 TDB time
+labels, requested end within source coverage, exact six-component rational
+states and exactly matching body/GM sets. Keep input positions rational;
+source-state velocity entries are not used to evaluate instantaneous gravity.
+
+WHEN bound to manufactured moving-source states, THEN each component must
+enclose the independent analytic acceleration. WHEN metadata, body sets,
+state shape/types or budget are invalid, THEN fail without returning a
+partial assembly. Check the budget before, between bodies and after assembly.
+
+The existing nominal Mars handoff supplies the already reanchored source
+polynomials and GM values already read for its monopole-jerk probe. Report
+outward component intervals and zero added native queries/arcs; preserve
+incoming handoff radii and all old reference certificates. These intervals
+enclose ideal-polynomial point forces at the nominal state only. They do not
+bridge source arithmetic to stored harmonic geometry, cover the incoming
+state ball, bound variation over the interval or qualify other forces.
+
 ### Signed point-gravity interval contract (2026-09-13)
 
 The existing point-force comparison now reduces signed component intervals

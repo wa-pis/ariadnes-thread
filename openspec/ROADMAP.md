@@ -465,12 +465,20 @@ from the old error oracle, preserving its reduction exactly. All 42 focused
 checks and 2857 full-suite tests pass (466.49 s); native inventory is 139.06 s
 with unchanged thirteen/zero native arcs. No production/scientific inputs changed.
 
-Next bind the pure point-gravity helper to the six non-harmonic sources at the
-existing fresh handoff using exact polynomial positions and the preserved
-nominal state. WHEN epoch/coverage, state shape or body/GM sets mismatch, THEN
-reject before assembly; verify independent moving-source controls and expired
-budget paths. Use existing source data without new SPICE queries or arcs,
-silent binary64 rounding or duplicate Moon/Mars monopoles. Source arithmetic,
+The six non-harmonic point forces are now bound to the preserved fresh handoff
+using exact polynomial positions and existing GM values. Decision0007 and
+`tests/data/m3_fresh_point_gravity_intervals.json` retain all six outward
+vectors. Epoch/coverage, shape, body/GM-set and deadline rejection checks pass,
+including independent moving-source controls. All 2879 tests pass in 500.09 s;
+native inventory is 149.77 s with unchanged thirteen/zero arcs. The added pure
+calculation/report preparation takes 0.0007207081653177738 s, with zero new
+native queries. No source/state errors or full-force certificate are claimed.
+
+Next establish a same-handoff source-geometry bridge before combining point
+and harmonic forces. WHEN reusing a chain-position allowance, THEN prove its
+fresh-epoch coverage and native/ideal input binding, verify nonsingular chord
+floors and bound the induced force difference. Reject missing coverage; do not
+copy an older epoch's radius floor. Use existing data and no extra native query.
 SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
@@ -486,7 +494,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2857 passing tests; both inventories
+The latest completed code check has 2879 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs thirteen spacecraft arcs, the portable inventory
