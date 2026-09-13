@@ -1531,7 +1531,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert not spice.failed()
     assert kernels_before == [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
     budget.check()
-    assert budget.native_arc_propagations == (9 if native_record_readback else 0)
+    assert budget.native_arc_propagations == (10 if native_record_readback else 0)
     # Hypothetical uniform reuse, not proof these controls apply elsewhere.
     control_duration = Fraction(1, 64)
     assert len(coast_domains) == 12
@@ -3942,6 +3942,7 @@ def _check_conditional_full_force_coast_domains(
             adjacent_prerequisites: dict[str, object] | None = None
             shifted_reference_control: dict[str, object] | None = None
             adjacent_native_control: dict[str, object] | None = None
+            doubled_native_control: dict[str, object] | None = None
             adjacent_tighter_control: dict[str, object] | None = None
             adjacent_comparison: dict[str, object] | None = None
             doubled_control = center == "Mars" and duration_s == 1 / 16 and position_radius_m == 2000.0
@@ -4785,77 +4786,81 @@ def _check_conditional_full_force_coast_domains(
                             "scope": "Conditional ideal-state error relative to shifted cubic; no adjacent native endpoint residual",
                             **reported_shifted,
                         }
-                        if not doubled_control:
-                            adjacent_results: list[dict[str, object]] = []
-                            adjacent_endpoints: list[tuple[Fraction, ...]] = []
-                            adjacent_error_bounds: list[tuple[Fraction, Fraction]] = []
-                            for adjacent_tighter in (False, True):
-                                adjacent_started_s = perf_counter()
-                                counts_before = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
-                                budget.begin_control()
-                                assert adjacent_prerequisites["conditional_prerequisites_pass"]
-                                assert shifted_reference_control["references_and_chords_in_domain"]
-                                assert (environment.origin, environment.orientation) == ("SSB", "J2000")
-                                adjacent_models = trajectory._build_arc_force_models(budget.candidate_id, environment)
-                                adjacent_initial_state = np.asarray(tuple(map(float, handoff_state)))
-                                assert tuple(map(Fraction, adjacent_initial_state)) == handoff_state
-                                adjacent_final_tdb_s = handoff_epoch + next_s
-                                assert Fraction(adjacent_final_tdb_s) - Fraction(handoff_epoch) == Fraction(next_s)
-                                adjacent_settings = trajectory._build_coupled_arc_settings(
-                                    budget.candidate_id, bodies, adjacent_models, adjacent_initial_state,
-                                    spacecraft.initial_mass_kg, handoff_epoch,
-                                    trajectory._build_arc_integrator(budget.candidate_id, "coast", tighter=adjacent_tighter),
-                                    propagation_setup.propagator.time_termination(adjacent_final_tdb_s, terminate_exactly_on_final_condition=True),
-                                    thrust_enabled=False,
-                                )
-                                adjacent_native_started_s = perf_counter()
-                                adjacent_simulator = trajectory._run_native_arc(budget, bodies, adjacent_settings, first_in_evaluation=True)
-                                adjacent_native_elapsed_s = perf_counter() - adjacent_native_started_s
-                                assert adjacent_simulator.integration_completed_successfully
-                                adjacent_history = adjacent_simulator.state_history_time_object
-                                adjacent_first, adjacent_last = min(adjacent_history), max(adjacent_history)
-                                assert (adjacent_first - Time(handoff_epoch)).to_float() == 0.0
-                                assert (adjacent_last - Time(adjacent_final_tdb_s)).to_float() == 0.0
-                                assert (adjacent_last - adjacent_first).to_float() == next_s
-                                adjacent_initial = np.asarray(adjacent_history[adjacent_first]).reshape(7)
-                                assert np.array_equal(adjacent_initial[:6], adjacent_initial_state)
-                                assert adjacent_initial[6] == spacecraft.initial_mass_kg
-                                adjacent_final = np.asarray(adjacent_history[adjacent_last]).reshape(7)
-                                assert np.all(np.isfinite(adjacent_final)) and adjacent_final[6] == spacecraft.initial_mass_kg
-                                assert all(np.asarray(value).reshape(7)[6] == spacecraft.initial_mass_kg for value in adjacent_history.values())
-                                residual_p = sum((abs(Fraction(value)-reference) for value, reference in
-                                                  zip(adjacent_final[:3], shifted_endpoint[:3], strict=True)), Fraction(0))
-                                residual_v = sum((abs(Fraction(value)-reference) for value, reference in
-                                                  zip(adjacent_final[3:6], shifted_endpoint[3:], strict=True)), Fraction(0))
-                                endpoint_p, endpoint_v = shifted_p + residual_p, shifted_v + residual_v
-                                counts_after = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
-                                assert tuple(a-b for a, b in zip(counts_after, counts_before, strict=True)) == (1, 1, 1)
-                                adjacent_elapsed_s = perf_counter() - adjacent_started_s
-                                assert math.isfinite(adjacent_elapsed_s) and 0 < adjacent_native_elapsed_s <= adjacent_elapsed_s
-                                budget.check()
-                                adjacent_native_values = {
-                                    "endpoint_position_residual_m": residual_p, "endpoint_velocity_residual_m_s": residual_v,
-                                    "endpoint_position_error_m": endpoint_p, "endpoint_velocity_error_m_s": endpoint_v,
-                                }
-                                reported_adjacent_native = {key: math.nextafter(float(value), math.inf) if value else 0.0
-                                                           for key, value in adjacent_native_values.items()}
-                                assert all(math.isfinite(value) and Fraction(value) >= adjacent_native_values[key] >= 0
-                                           for key, value in reported_adjacent_native.items())
-                                adjacent_result = {
-                                    "start_epoch_tdb_s": handoff_epoch, "end_epoch_tdb_s": adjacent_final_tdb_s,
-                                    "duration_s": next_s, "origin": "SSB", "orientation": "J2000",
-                                    "time_scale": "TDB seconds since J2000", "state_units": ["m", "m/s"],
-                                    "mass_kg": spacecraft.initial_mass_kg, "tighter": adjacent_tighter,
-                                    "within_position_gate": endpoint_p <= Fraction("0.001"),
-                                    "within_velocity_gate": endpoint_v <= Fraction("0.000001"),
-                                    "additional_control_attempts": 1, "additional_evaluations": 1, "additional_native_arcs": 1,
-                                    "native_arc_elapsed_s": adjacent_native_elapsed_s, "control_elapsed_s": adjacent_elapsed_s,
-                                    "scope": "Conditional two-segment ideal-state endpoint bound; no native-stage or mission safety certificate",
-                                    **reported_adjacent_native,
-                                }
-                                adjacent_results.append(adjacent_result)
-                                adjacent_endpoints.append(tuple(map(Fraction, adjacent_final[:6])))
-                                adjacent_error_bounds.append((endpoint_p, endpoint_v))
+                        adjacent_results: list[dict[str, object]] = []
+                        adjacent_endpoints: list[tuple[Fraction, ...]] = []
+                        adjacent_error_bounds: list[tuple[Fraction, Fraction]] = []
+                        for adjacent_tighter in ((False,) if doubled_control else (False, True)):
+                            adjacent_started_s = perf_counter()
+                            counts_before = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                            budget.begin_control()
+                            assert adjacent_prerequisites["conditional_prerequisites_pass"]
+                            assert shifted_reference_control["references_and_chords_in_domain"]
+                            assert (environment.origin, environment.orientation) == ("SSB", "J2000")
+                            adjacent_models = trajectory._build_arc_force_models(budget.candidate_id, environment)
+                            adjacent_initial_state = np.asarray(tuple(map(float, handoff_state)))
+                            assert tuple(map(Fraction, adjacent_initial_state)) == handoff_state
+                            adjacent_final_tdb_s = handoff_epoch + next_s
+                            assert Fraction(adjacent_final_tdb_s) - Fraction(handoff_epoch) == Fraction(next_s)
+                            adjacent_settings = trajectory._build_coupled_arc_settings(
+                                budget.candidate_id, bodies, adjacent_models, adjacent_initial_state,
+                                spacecraft.initial_mass_kg, handoff_epoch,
+                                trajectory._build_arc_integrator(budget.candidate_id, "coast", tighter=adjacent_tighter),
+                                propagation_setup.propagator.time_termination(adjacent_final_tdb_s, terminate_exactly_on_final_condition=True),
+                                thrust_enabled=False,
+                            )
+                            adjacent_native_started_s = perf_counter()
+                            adjacent_simulator = trajectory._run_native_arc(budget, bodies, adjacent_settings, first_in_evaluation=True)
+                            adjacent_native_elapsed_s = perf_counter() - adjacent_native_started_s
+                            assert adjacent_simulator.integration_completed_successfully
+                            adjacent_history = adjacent_simulator.state_history_time_object
+                            adjacent_first, adjacent_last = min(adjacent_history), max(adjacent_history)
+                            assert (adjacent_first - Time(handoff_epoch)).to_float() == 0.0
+                            assert (adjacent_last - Time(adjacent_final_tdb_s)).to_float() == 0.0
+                            assert (adjacent_last - adjacent_first).to_float() == next_s
+                            adjacent_initial = np.asarray(adjacent_history[adjacent_first]).reshape(7)
+                            assert np.array_equal(adjacent_initial[:6], adjacent_initial_state)
+                            assert adjacent_initial[6] == spacecraft.initial_mass_kg
+                            adjacent_final = np.asarray(adjacent_history[adjacent_last]).reshape(7)
+                            assert np.all(np.isfinite(adjacent_final)) and adjacent_final[6] == spacecraft.initial_mass_kg
+                            assert all(np.asarray(value).reshape(7)[6] == spacecraft.initial_mass_kg for value in adjacent_history.values())
+                            residual_p = sum((abs(Fraction(value)-reference) for value, reference in
+                                              zip(adjacent_final[:3], shifted_endpoint[:3], strict=True)), Fraction(0))
+                            residual_v = sum((abs(Fraction(value)-reference) for value, reference in
+                                              zip(adjacent_final[3:6], shifted_endpoint[3:], strict=True)), Fraction(0))
+                            endpoint_p, endpoint_v = shifted_p + residual_p, shifted_v + residual_v
+                            counts_after = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                            assert tuple(a-b for a, b in zip(counts_after, counts_before, strict=True)) == (1, 1, 1)
+                            adjacent_elapsed_s = perf_counter() - adjacent_started_s
+                            assert math.isfinite(adjacent_elapsed_s) and 0 < adjacent_native_elapsed_s <= adjacent_elapsed_s
+                            budget.check()
+                            adjacent_native_values = {
+                                "endpoint_position_residual_m": residual_p, "endpoint_velocity_residual_m_s": residual_v,
+                                "endpoint_position_error_m": endpoint_p, "endpoint_velocity_error_m_s": endpoint_v,
+                            }
+                            reported_adjacent_native = {key: math.nextafter(float(value), math.inf) if value else 0.0
+                                                       for key, value in adjacent_native_values.items()}
+                            assert all(math.isfinite(value) and Fraction(value) >= adjacent_native_values[key] >= 0
+                                       for key, value in reported_adjacent_native.items())
+                            adjacent_result = {
+                                "start_epoch_tdb_s": handoff_epoch, "end_epoch_tdb_s": adjacent_final_tdb_s,
+                                "duration_s": next_s, "origin": "SSB", "orientation": "J2000",
+                                "time_scale": "TDB seconds since J2000", "state_units": ["m", "m/s"],
+                                "mass_kg": spacecraft.initial_mass_kg, "tighter": adjacent_tighter,
+                                "within_position_gate": endpoint_p <= Fraction("0.001"),
+                                "within_velocity_gate": endpoint_v <= Fraction("0.000001"),
+                                "additional_control_attempts": 1, "additional_evaluations": 1, "additional_native_arcs": 1,
+                                "native_arc_elapsed_s": adjacent_native_elapsed_s, "control_elapsed_s": adjacent_elapsed_s,
+                                "scope": ("Conditional three-segment ideal-state endpoint bound; no native-stage or mission safety certificate"
+                                      if doubled_control else "Conditional two-segment ideal-state endpoint bound; no native-stage or mission safety certificate"),
+                                **reported_adjacent_native,
+                            }
+                            adjacent_results.append(adjacent_result)
+                            adjacent_endpoints.append(tuple(map(Fraction, adjacent_final[:6])))
+                            adjacent_error_bounds.append((endpoint_p, endpoint_v))
+                        if doubled_control:
+                            assert len(adjacent_results) == 1
+                            doubled_native_control = adjacent_results[0]
+                        else:
                             adjacent_native_control, adjacent_tighter_control = adjacent_results
                             comparison_values: dict[str, Fraction] = {}
                             for start_axis, unit in ((0, "m"), (3, "m_s")):
@@ -5170,6 +5175,7 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_shifted_reference_control": None if doubled_control else shifted_reference_control,
                 "conditional_doubled_coast_prerequisites": adjacent_prerequisites if doubled_control else None,
                 "conditional_doubled_reference_control": shifted_reference_control if doubled_control else None,
+                "conditional_doubled_native_control": doubled_native_control,
                 "conditional_adjacent_native_control": adjacent_native_control,
                 "conditional_adjacent_tighter_control": adjacent_tighter_control,
                 "conditional_adjacent_comparison": adjacent_comparison,
@@ -5202,7 +5208,8 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_split_relative_force_variation_m_s2": reported_split_relative_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
-    expected_arcs = 9 if run_native_controls else 0
+    expected_arcs = 10 if run_native_controls else 0
+    assert sum(result["conditional_doubled_native_control"] is not None for result in results) == (1 if run_native_controls else 0)
     assert sum(result["conditional_doubled_coast_prerequisites"] is not None for result in results) == (1 if run_native_controls else 0)
     assert sum(result["conditional_doubled_reference_control"] is not None for result in results) == (1 if run_native_controls else 0)
     assert sum(result["conditional_adjacent_coast_prerequisites"] is not None for result in results) == (2 if run_native_controls else 0)

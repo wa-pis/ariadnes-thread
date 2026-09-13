@@ -51,6 +51,32 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 nominal doubled continuation (2026-09-13):
+Reuse the existing counted native loop for one nominal 1/32 s continuation
+after the doubled domain/reference checks. Verify exact state/epoch handoff,
+constant saved mass, finite endpoint, native-to-reference residual added
+once, outward accuracy gates and per-call counters/timing. Retain all nine
+prior controls and 40 source checks per inventory; verify ten/zero native
+counts, focused budget/integrator/transport tests, full pytest, Ruff, strict
+OpenSpec validation and legacy isolation. Preserve all scientific tolerances,
+production caps and the shared deadline. Task 3.9 remains open.
+
+Measured verification: 374 focused tests pass in 0.78 s and all 2402 tests
+pass in 532.16 s, including ten/zero native controls/evaluations/arcs and
+40 affine source readbacks per inventory. Native-to-reference residuals
+round outward to 2.8453441633054935e-5 m and 1.3121537426229194e-8 m/s;
+adding them once gives endpoint bounds 0.00010529778787867129 m and
+2.3227467748483292e-7 m/s. Both unchanged 0.001 m / 0.000001 m/s gates
+pass. Native-time endpoints equal 978995455.2616723 and 978995455.2929223
+TDB seconds since J2000; exact initial-state handoff and 2000 kg at every
+saved state pass. The warm native call takes 0.009299166966229677 s and
+its control 0.022462582914158702 s, excluding shared qualification setup;
+do not sum nested cumulative-control timings. Each counter increases by
+one. Reference-only values and all earlier controls are retained. Ruff,
+strict OpenSpec validation, whitespace and unchanged legacy SHA-256/import
+checks pass. No dependencies, force parameters, tolerances or production
+limits changed. This is not mission safety or unsaved-stage qualification.
+
 Task 3.9 doubled continuation assessment (2026-09-13):
 Reuse the saved nominal two-segment endpoint and both exact incoming error
 radii for the 1/32 s continuation. Verify cumulative-domain coverage, strict

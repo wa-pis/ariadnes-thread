@@ -1,5 +1,21 @@
 ## Context
 
+### One nominal doubled Mars continuation (2026-09-13)
+
+After the qualified doubled-reference prerequisites pass, reuse the counted
+native loop for exactly one nominal 1/32 s coast from the saved nominal
+two-segment endpoint. Preserve exact incoming error radii, reference, full
+forces, mass, SSB/J2000/TDB conventions and integrator configuration.
+WHEN the run completes, THEN verify exact native-time/state continuity,
+finite output, constant mass at every saved state and counters increasing
+by (1,1,1). Add its exact native-to-reference L1 residual once to each
+transported radius; report outward endpoint bounds and unchanged gates.
+Keep separate doubled-native diagnostics, all nine earlier controls and
+their comparison; verify ten native controls/evaluations/arcs and portable
+zero. Record warm native/control runtime under the same shared 300-second
+deadline and unchanged production caps. This is a conditional three-segment
+endpoint certificate, not native-stage safety or mission qualification.
+
 ### Doubled continuation reference assessment (2026-09-13)
 
 Reuse the existing prerequisite and shifted-reference checks for a 1/32 s
