@@ -1,0 +1,38 @@
+diff --git a/tests/test_trajectory_spk.py b/tests/test_trajectory_spk.py
+index 0102415..c8aabf0 100644
+--- a/tests/test_trajectory_spk.py
++++ b/tests/test_trajectory_spk.py
+@@ -5228,6 +5228,33 @@ def _check_conditional_full_force_coast_domains(
+                                                     "qualification": "Stored-geometry tail-only budget screen; neither a whole-interval bound nor sufficient trajectory certification",
+                                                 }}, sort_keys=True, allow_nan=False))
+                                                 budget.check()
++                                                prefix_started_s = perf_counter()
++                                                prefix_intervals, prefix_tail = _harmonic_prefix_vector_enclosure_m_s2(
++                                                    budget, field.gravitational_parameter, field.reference_radius,
++                                                    field.cosine_coefficients, field.sine_coefficients,
++                                                    source_position, probe_state[:3], rotation, 100,
++                                                )
++                                                assert tail_rows[4]["prefix_degree"] == 100 and prefix_tail == exact_tails[4]
++                                                assert 0 < prefix_tail < tail
++                                                assert all(old_lo <= lo <= hi <= old_hi for (old_lo, old_hi), (lo, hi) in
++                                                           zip(intervals, prefix_intervals, strict=True))
++                                                prefix_outward = [[math.nextafter(float(lo), -math.inf) if lo else 0.0,
++                                                                   math.nextafter(float(hi), math.inf) if hi else 0.0]
++                                                                  for lo, hi in prefix_intervals]
++                                                assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lo <= hi <= Fraction(b)
++                                                           for (a, b), (lo, hi) in zip(prefix_outward, prefix_intervals, strict=True))
++                                                prefix_elapsed_s = perf_counter()-prefix_started_s
++                                                assert math.isfinite(prefix_elapsed_s) and prefix_elapsed_s >= 0
++                                                print(json.dumps({"fresh_mars_degree100_enclosure": {
++                                                    "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
++                                                    "time_scale": "TDB seconds since J2000", "acceleration_unit": "m/s^2",
++                                                    "evaluated_through_degree": 100, "maximum_degree": 120,
++                                                    "component_intervals_m_s2": prefix_outward,
++                                                    "tail_upper_m_s2": tail_rows[4]["tail_upper_m_s2"],
++                                                    "elapsed_s": prefix_elapsed_s, "additional_native_evaluations": 0,
++                                                    "qualification": "Stored-geometry harmonic enclosure only; source/PCK and remaining forces excluded",
++                                                }}, sort_keys=True, allow_nan=False))
++                                                budget.check()
+                                             harmonic_reports[source] = {
+                                                 "evaluated_through_degree": cutoff, "maximum_degree": len(field.cosine_coefficients)-1,
+                                                 "body_position_m": source_position.tolist(), "inertial_to_fixed": rotation.tolist(),

@@ -1,5 +1,33 @@
 ## Context
 
+### Measured Mars degree100 prefix experiment (2026-09-13)
+
+At the same stored geometry as the retained degree20 control and cutoff
+ledger, evaluate one independent degree0..100 vector sum. Keep degrees
+101..120 in the existing rigorous remainder. WHEN the computation finishes
+under the original shared deadline, THEN its exact tail must equal the
+ledger's degree100 entry, its intervals must nest in the coarse degree20
+enclosure and diagnostic values must round outward. Report elapsed time
+for the entire prefix/tail computation; do not extrapolate from ledger cost.
+No native evaluation or propagation is added. Preserve all earlier evidence,
+including the failed degree120 experiment. Source/PCK and remaining force
+errors are still excluded; do not promote this as a full-force reference.
+
+Outcome: the cumulative diagnostic's unchanged 300 s deadline was reached
+inside harmonic jets after 12 controls/evaluations/arcs. No degree100 vector
+was returned; tail parity, nesting and standalone prefix runtime were NOT
+verified. Full pytest reported 2765 passed and one failure in 577.52 s.
+This is not proof that a standalone degree100 evaluation takes 300 s or
+that all adaptive approaches fail. Preserve the precise experiment in
+`tests/data/m3_degree100_runtime_failure.patch` and its adjacent JSON record.
+The patch applies to the unchanged test at base f19a957; check it with
+`git apply --check`, then apply only in a disposable copy and run the
+native-readback inventory named in the JSON with the pinned environment.
+The unqualified experiment is removed from default regression execution;
+all previously verified checks remain byte-for-byte unchanged. Do not
+retry a different high cutoff before separating its cost from accumulated
+diagnostic work. Do not reset the shared timer to claim success.
+
 ### Mars remainder cutoff ledger (2026-09-13)
 
 Extract the same stored-geometry tail calculation for reuse without exact

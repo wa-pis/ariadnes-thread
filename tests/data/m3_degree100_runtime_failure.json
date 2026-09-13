@@ -1,0 +1,22 @@
+{
+  "status": "unresolved-shared-deadline",
+  "base_commit": "f19a957",
+  "patch": "m3_degree100_runtime_failure.patch",
+  "test": "tests/test_trajectory_spk.py::test_loaded_spk_chain_coverage_contains_candidate_interval[native-readback]",
+  "candidate_id": "d0001-t0035",
+  "epoch_tdb_s": 978995455.2929223,
+  "origin": "SSB",
+  "orientation": "J2000",
+  "prefix_degree": 100,
+  "retained_tail_degrees": [101, 120],
+  "runtime_limit_s": 300,
+  "failure_location": "_regular_solid_harmonic_jets -> budget.check",
+  "control_attempts": 12,
+  "propagation_evaluations": 12,
+  "native_arc_propagations": 12,
+  "full_suite_passed": 2765,
+  "full_suite_failed": 1,
+  "full_suite_elapsed_s": 577.52,
+  "fresh_interval_returned": false,
+  "scope": "Cumulative diagnostic deadline, not standalone prefix runtime or a mission-cost lower bound"
+}

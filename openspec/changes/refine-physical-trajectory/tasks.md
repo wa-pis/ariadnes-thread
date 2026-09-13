@@ -51,6 +51,35 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 measured Mars degree100 prefix (2026-09-13):
+Evaluate one exact degree0..100 harmonic vector with all degrees101..120
+retained as a tail at the existing stored handoff geometry. Verify tail
+parity with the ledger, nesting in the degree20 enclosure, outward reporting
+and measured runtime under the unchanged shared deadline. Run focused
+tests, full pytest, Ruff, strict OpenSpec and legacy isolation. Preserve
+all earlier evidence and report deadline failure without relaxing limits;
+no new native evaluations or full-force/reference promotion.
+
+Measured failure: 52 focused tests passed in 0.52 s, but the full experiment
+returned 2765 passed and one native-inventory failure in 577.52 s. The
+unchanged 300 s cumulative deadline was reached in harmonic jets after 12
+controls/evaluations/arcs, before the new vector returned. No successful
+prefix timing, interval or nesting check is claimed. Store the exact
+replay patch and JSON metadata under `tests/data/m3_degree100_runtime_failure.*`.
+Verify patch applicability without executing it, remove only its addition
+from default tests and rerun the original suite. No earlier test, tolerance,
+coefficient, model or production limit is changed. This completed experiment
+does not complete the requested numerical qualification or task 3.9.
+
+Verification of retained state: executable test code matches f19a957
+byte-for-byte; the replay patch passes `git apply --check` and its metadata
+parses as JSON. All 2766 original tests pass in 560.34 s after removal of
+the unqualified insertion. Ruff, strict OpenSpec, whitespace and unchanged
+legacy SHA-256/import checks pass. Default thirteen/zero arc counts and
+all previous certificates are preserved; the failed experiment's counter12
+is retained only as failure evidence. No change to scientific tolerances,
+production caps, runtime limit, forces, dependencies or interface.
+
 Task 3.9 Mars remainder cutoff ledger (2026-09-13):
 Reuse the existing stored-geometry tail bound without exact prefix work;
 verify independent pole controls, unchanged degree20 tail, monotonicity

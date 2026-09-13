@@ -361,15 +361,21 @@ velocity screen: 4.892361745559266e-7 m/s over1/16 s. Degree80 still needs
 3.2527946958121953e-6 m/s. This is neither the minimum over all degrees nor
 a complete trajectory certificate; exact-prefix runtime was not measured.
 
-Next bounded work within 3.9 is to measure one exact Mars degree100 prefix
-at the same stored handoff geometry, retaining degrees101..120 as a tail.
-WHEN its independent vector sum and remainder complete within the original
-shared deadline, THEN report intervals, parity of the tail with the ledger
-and measured cost without replacing the old reference. Retain degree20
-evidence and the failed degree120 runtime experiment. If degree100 also
-exceeds budget, preserve that failure rather than raising caps or returning
-a partial certificate. Source/PCK input errors, other forces and fresh
-domain closure remain prerequisites. Keep task 3.9 open.
+The degree100 experiment also reached the unchanged 300 s cumulative
+diagnostic deadline inside harmonic jets after 12 arcs. No new interval
+was returned. Its exact replay patch and JSON failure metadata are retained
+in tests/data; default executable tests are restored unchanged. This does
+not measure standalone prefix runtime or prove mission infeasibility.
+
+Next bounded work within 3.9 is to capture a replayable, provenance-labelled
+snapshot of the existing fresh nominal handoff geometry and harmonic input
+identities, using the already running probe without extra propagation.
+WHEN the snapshot reproduces the exact stored state/matrices and pinned
+coefficient identities, THEN use it to plan isolated cost profiling that
+separates high-degree arithmetic from preceding diagnostic work. Profiling
+must not reset the shared operation timer to claim qualification. Do not
+retry another high cutoff before that cost evidence. Source/PCK errors,
+other forces and fresh domain closure remain prerequisites; task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
