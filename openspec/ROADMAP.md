@@ -515,6 +515,12 @@ explicit once-only scalar channels and the existing midpoint helper. Target:
 ideal source polynomials, fixed nominal state and stored harmonic matrices.
 Next bind independent fresh SRP/Schwarzschild vectors and their source/
 illumination conventions; PCK, native arithmetic and state/domain gaps remain.
+Decision0016 audits the missing inputs. Fully lit SRP can scale the existing
+ideal-source Sun gravity intervals, but first re-prove three-body full light
+at the fresh source balls and retain actual optical radii/spacecraft parameters.
+Retain the already available cached Sun velocity and audit its selected SPK
+representation/coverage before Schwarzschild binding. No new force or query
+in this audit; next capture/verify these prerequisites inside the existing probe.
 SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or

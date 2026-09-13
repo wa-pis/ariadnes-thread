@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0016 audits fresh SRP/Schwarzschild prerequisites: reuse Sun gravity
+intervals for fully lit SRP only after new source-ball illumination checks;
+retain optical radii/spacecraft parameters and the already available full Sun
+state. Audit Sun velocity representation and fresh coverage before its bridge.
+Next capture/verify these inputs in the existing probe without new queries.
+Only documentation changes; links and strict OpenSpec pass, no pytest rerun.
+Latest implementation remains 2946 passed; no full-force certificate or 3.9 closure.
+
 Decision0015 implements the common-source gravity-only aggregate using exact
 retained box sums and three named scalar allowances, each once. The 58
 focused assembly/midpoint checks pass in 0.53 s, including cancellation,
