@@ -319,15 +319,22 @@ sixteen fresh comparisons reuse the forty existing native readbacks.
 Twelve expanded polynomial cases independently check changed slopes,
 rebased remainders and uncovered-interval rejection. No new native query.
 
-Next bounded work within 3.9 is to bind these fresh source values to the
-saved nominal Mars three-segment handoff. WHEN epochs and guarded coverage
-match, THEN calculate eight fresh ideal monopole jerk intervals with the
-existing oracle, retaining interval arithmetic and all nonmonopole terms
-as unqualified for a fresh full-force anchor. Verify source derivatives
-come from position polynomials, not type-3 stored velocity, and preserve
-incoming state radii. This does not yet replace the full-force reference:
-fresh acceleration, omitted-force allowances and new cubic domain closure
-remain required. Add no spacecraft native calls or mission extension;
+Fresh source values are now bound to the saved nominal Mars handoff for
+eight ideal monopole jerk intervals, with same-epoch/coverage checks,
+moving-source analytic controls and outward reporting including roundoff.
+Both incoming radii and the existing reference remain unchanged. This
+does not qualify the full-force derivative or the incoming error ball.
+
+Next bounded work within 3.9 is the fresh acceleration anchor at that
+same nominal state and epoch. WHEN the existing instantaneous force and
+independent arithmetic oracles can be evaluated without a new propagation,
+THEN assemble and time a complete acceleration enclosure, explicitly
+including both harmonic fields, SRP/illumination, relativity and source/PCK
+allowances. Do not reuse original anchor-error numbers or omit terms.
+If any component cannot yet be enclosed, report that missing premise
+without substituting an approximate full-force certificate. Keep fresh
+jerk's omitted-force allowances and new cubic domain closure open. Add no
+spacecraft native calls or mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
 caps and the shared 300-second deadline. Keep Moon unresolved and 3.9 open.
 Keep all previous certificates. Preserve all
@@ -339,7 +346,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2738 passing tests; both inventories
+The latest completed code check has 2748 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs thirteen spacecraft arcs, the portable inventory

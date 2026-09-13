@@ -1487,6 +1487,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     source_affine_positions_m: dict[str, tuple[Fraction, ...]] = {}
     affine_native_checks = 0
     fresh_native_comparisons = 0
+    fresh_source_states: dict[str, tuple[Fraction, ...]] = {}
     for body, target in body_ids.items():
         center = expected_centers[target]
         chain = [target] if center == 0 else [target, center]
@@ -1495,6 +1496,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         curvature = sum((affine_links[link][2] for link in chain), Fraction(0))
         fresh_position = tuple(sum((fresh_affine_links[link][0][axis] for link in chain), Fraction(0)) for axis in range(3))
         fresh_slope = tuple(sum((fresh_affine_links[link][1][axis] for link in chain), Fraction(0)) for axis in range(3))
+        fresh_source_states[body] = fresh_position + fresh_slope
         assert sum((fresh_affine_links[link][2] for link in chain), Fraction(0)) == curvature
         assert sum((abs(b-a-v*handoff_offset_s) for a, b, v in zip(position, fresh_position, slope, strict=True)), Fraction(0)) <= curvature*handoff_offset_s**2/2
         assert sum((abs(b-a) for a, b in zip(slope, fresh_slope, strict=True)), Fraction(0)) <= curvature*handoff_offset_s
@@ -1557,6 +1559,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         chain_velocity_bounds_m_s[10],
         source_affine_motion=source_affine_motion, source_affine_coverage_s=1.0,
         source_affine_positions_m=source_affine_positions_m,
+        fresh_source_states=fresh_source_states, fresh_source_epoch_tdb_s=handoff_tdb_s,
+        fresh_source_end_tdb_s=handoff_tdb_s+float(handoff_offset_s),
         run_native_controls=native_record_readback,
     )
 
@@ -2721,6 +2725,72 @@ def test_point_mass_jerk_rejects_invalid_inputs(case: str) -> None:
         _point_mass_jerk_interval_m_s3(gm, position, velocity)
 
 
+def _fresh_monopole_jerk_intervals_m_s3(
+    budget: trajectory._RefinementBudget, epoch_tdb_s: float, end_tdb_s: float,
+    source_epoch_tdb_s: float, source_end_tdb_s: float,
+    nominal_state: tuple[Fraction, ...], source_states: dict[str, tuple[Fraction, ...]],
+    gravitational_parameters_m3_s2: dict[str, float],
+) -> dict[str, tuple[tuple[Fraction, Fraction], ...]]:
+    """Bind ideal monopole jerk to same-epoch SI/SSB/J2000 polynomial states.
+
+    Source last three components MUST be position-polynomial derivatives,
+    not independently stored SPK velocities. No full-force or error-ball bound.
+    """
+    budget.check()
+    assert all(type(value) is float and math.isfinite(value) for value in
+               (epoch_tdb_s, end_tdb_s, source_epoch_tdb_s, source_end_tdb_s))
+    assert epoch_tdb_s == source_epoch_tdb_s and epoch_tdb_s <= end_tdb_s <= source_end_tdb_s
+    assert source_states and set(source_states) == set(gravitational_parameters_m3_s2)
+    assert all(len(state) == 6 and all(isinstance(value, Fraction) for value in state)
+               for state in (nominal_state, *source_states.values()))
+    result: dict[str, tuple[tuple[Fraction, Fraction], ...]] = {}
+    for body, state in source_states.items():
+        budget.check()
+        relative = tuple(a-b for a, b in zip(nominal_state, state, strict=True))
+        result[body] = _point_mass_jerk_interval_m_s3(gravitational_parameters_m3_s2[body], relative[:3], relative[3:])
+    budget.check()
+    return result
+
+
+@pytest.mark.parametrize("epoch_tdb_s", [0.0, 1e9])
+def test_fresh_jerk_binding_uses_moving_source(epoch_tdb_s: float) -> None:
+    source = {"test": tuple(map(Fraction, (0, 0, 0, 0, 1, 0)))}
+    nominal = tuple(map(Fraction, (3, 4, 0, 1, 2, 0)))
+    actual = _fresh_monopole_jerk_intervals_m_s3(
+        trajectory._RefinementBudget("fresh-jerk", 300.0), epoch_tdb_s, epoch_tdb_s+1/16,
+        epoch_tdb_s, epoch_tdb_s+1/16, nominal, source, {"test": 1.0},
+    )
+    # Independent derivative of -r/|r|^3: r=(3,4,0), r'=(1,1,0).
+    exact = tuple(-Fraction(v, 125)+Fraction(3*r*7, 3125) for r, v in ((3, 1), (4, 1), (0, 0)))
+    assert actual["test"] == tuple((value, value) for value in exact)
+    assert source["test"] == tuple(map(Fraction, (0, 0, 0, 0, 1, 0)))
+    assert nominal == tuple(map(Fraction, (3, 4, 0, 1, 2, 0)))
+
+
+@pytest.mark.parametrize("invalid", ["epoch", "coverage", "reverse", "nan", "boolean", "body", "state"])
+def test_fresh_jerk_binding_rejects_mismatched_inputs(invalid: str) -> None:
+    nominal = tuple(map(Fraction, (3, 4, 0, 1, 2, 0)))
+    with pytest.raises(AssertionError):
+        _fresh_monopole_jerk_intervals_m_s3(
+            trajectory._RefinementBudget("fresh-jerk-invalid", 300.0),
+            math.nan if invalid == "nan" else True if invalid == "boolean" else 1.0,
+            0.0 if invalid == "reverse" else 1.125,
+            0.0 if invalid == "epoch" else 1.0, 1.0625 if invalid == "coverage" else 1.125,
+            nominal[:3] if invalid == "state" else nominal,
+            {"test": (Fraction(0),)*6}, {"other" if invalid == "body" else "test": 1.0},
+        )
+
+
+def test_fresh_jerk_binding_rejects_expired_budget() -> None:
+    clock = iter([0.0, 301.0])
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="shared deadline"):
+        _fresh_monopole_jerk_intervals_m_s3(
+            trajectory._RefinementBudget("fresh-jerk-expired", 300.0, lambda: next(clock)),
+            1.0, 1.125, 1.0, 1.125, tuple(map(Fraction, (3, 4, 0, 0, 0, 0))),
+            {"test": (Fraction(0),)*6}, {"test": 1.0},
+        )
+
+
 def _point_mass_variation_bound_m_s2(
     gm_m3_s2: float, distance_floor_m: float, displacement_m: Fraction,
 ) -> Fraction:
@@ -3696,6 +3766,8 @@ def _check_conditional_full_force_coast_domains(
     *, source_affine_motion: dict[str, tuple[tuple[Fraction, ...], Fraction]],
     source_affine_positions_m: dict[str, tuple[Fraction, ...]],
     source_affine_coverage_s: float, run_native_controls: bool,
+    fresh_source_states: dict[str, tuple[Fraction, ...]],
+    fresh_source_epoch_tdb_s: float, fresh_source_end_tdb_s: float,
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint, _initial_velocity_interval_m_s
@@ -3725,6 +3797,7 @@ def _check_conditional_full_force_coast_domains(
               for body in trajectory.PHYSICAL_BODY_NAMES}
     assert set(source_affine_motion) == set(states)
     assert set(source_affine_positions_m) == set(states)
+    assert set(fresh_source_states) == set(states)
     assert all(np.all(np.isfinite(state)) for state in states.values())
     for body, state in states.items():
         assert np.array_equal(state[:3], position_anchors_m[body]), body
@@ -4796,6 +4869,45 @@ def _check_conditional_full_force_coast_domains(
                         handoff_state, handoff_p_m, handoff_v_m_s, handoff_epoch = selected_handoff
                         offset_s = next_s = duration_s / 2
                         assert Fraction(handoff_epoch) - Fraction(start_tdb_s) == Fraction(offset_s)
+                        if longer_control:
+                            preserved_handoff = selected_handoff
+                            fresh_jerks = _fresh_monopole_jerk_intervals_m_s3(
+                                budget, handoff_epoch, handoff_epoch+next_s,
+                                fresh_source_epoch_tdb_s, fresh_source_end_tdb_s, handoff_state,
+                                fresh_source_states,
+                                {body: bodies.get(body).gravity_field_model.gravitational_parameter
+                                 for body in trajectory.PHYSICAL_BODY_NAMES},
+                            )
+                            assert set(fresh_jerks) == set(trajectory.PHYSICAL_BODY_NAMES)
+                            midpoint = tuple(sum((bounds[axis][0]+bounds[axis][1] for bounds in fresh_jerks.values()), Fraction(0))/2
+                                             for axis in range(3))
+                            error = sum((upper-lower for bounds in fresh_jerks.values() for lower, upper in bounds), Fraction(0))/2
+                            assert error >= 0 and midpoint != reference_jerk_m_s3
+                            reported = {body: [[math.nextafter(float(lo), -math.inf) if lo else 0.0,
+                                               math.nextafter(float(hi), math.inf) if hi else 0.0]
+                                              for lo, hi in bounds] for body, bounds in fresh_jerks.items()}
+                            assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lo <= hi <= Fraction(b)
+                                       for body, bounds in fresh_jerks.items()
+                                       for (a, b), (lo, hi) in zip(reported[body], bounds, strict=True))
+                            reported_midpoint = [float(value) for value in midpoint]
+                            assert all(math.isfinite(value) for value in reported_midpoint)
+                            rounded_error = error+sum((abs(Fraction(a)-b) for a, b in zip(reported_midpoint, midpoint, strict=True)), Fraction(0))
+                            reported_bounds = [math.nextafter(float(value), math.inf) if value else 0.0
+                                               for value in (rounded_error, handoff_p_m, handoff_v_m_s)]
+                            assert all(math.isfinite(a) and Fraction(a) >= b >= 0 for a, b in
+                                       zip(reported_bounds, (rounded_error, handoff_p_m, handoff_v_m_s), strict=True))
+                            print(json.dumps({"fresh_mars_monopole_jerk": {
+                                "epoch_tdb_s": handoff_epoch, "source_coverage_end_tdb_s": fresh_source_end_tdb_s,
+                                "origin": "SSB", "orientation": "J2000", "jerk_unit": "m/s^3",
+                                "body_intervals_m_s3": reported,
+                                "midpoint_m_s3": reported_midpoint,
+                                "midpoint_l1_error_upper_m_s3": reported_bounds[0],
+                                "incoming_position_error_upper_m": reported_bounds[1],
+                                "incoming_velocity_error_upper_m_s": reported_bounds[2],
+                                "qualification": "Nominal-state ideal monopoles only; not full-force jerk or trajectory safety",
+                            }}, sort_keys=True, allow_nan=False))
+                            assert selected_handoff == preserved_handoff
+                            budget.check()
                         reference_at_handoff = _cubic_reference_endpoint(
                             tuple(map(Fraction, state)), tuple(map(Fraction, anchor_m_s2)), reference_jerk_m_s3, offset_s,
                         )

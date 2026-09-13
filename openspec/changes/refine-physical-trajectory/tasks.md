@@ -51,6 +51,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 fresh nominal Mars monopole jerk (2026-09-13):
+Bind fresh polynomial-source states to the saved nominal handoff, reject
+mismatched epoch/coverage and expired budget, and verify the moving-source
+chain rule independently. Compute eight ideal monopole intervals, retain
+outward reporting and both exact incoming radii without replacing the old
+reference. Run focused checks, full pytest, Ruff, strict OpenSpec and legacy
+isolation. No new SPICE queries or spacecraft runs; full-force qualification
+and task 3.9 remain open.
+
+Verification: 69 focused source/jerk tests pass in 0.47 s; all 2748 tests
+pass in 532.83 s. Ten new binding cases cover two absolute epochs, a
+moving source with an independent exact chain-rule oracle, seven invalid
+inputs and an expired shared deadline. At the native inventory's saved
+978995455.2929223 TDB s nominal Mars handoff, all eight fresh monopole
+intervals and their rounded sum enclosure pass; the fresh midpoint differs
+from the original one. Exact incoming radii and old reference certificates
+are unchanged. The portable inventory creates no spacecraft handoff and
+makes no such native-handoff claim. Thirteen/zero native counts and forty
+source readbacks per inventory remain unchanged. Ruff, strict OpenSpec,
+whitespace and unchanged legacy SHA-256/import checks pass. No force model,
+dependency, tolerance, production cap or shared deadline changed. These
+intervals enclose only ideal nominal-state monopole jerk, not all forces,
+native source arithmetic or the incoming state-error ball.
+
 Task 3.9 source polynomial reanchoring (2026-09-13):
 Check fresh position and position-polynomial derivative at start+1/16 s
 for eleven guarded links and eight chains, preserving arithmetic allowances.

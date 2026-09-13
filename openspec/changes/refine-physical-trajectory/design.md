@@ -1,5 +1,27 @@
 ## Context
 
+### Fresh nominal Mars monopole jerk (2026-09-13)
+
+Bind the fresh eight-body position-polynomial states to the existing saved
+nominal three-segment Mars handoff. WHEN source and handoff epochs match
+and the next interval is covered, THEN the existing exact interval oracle
+computes each ideal monopole's acceleration derivative using relative
+nominal velocity minus source position-polynomial derivative. Count Moon
+and Mars monopoles once using their harmonic gravitational parameters.
+Reject epoch/coverage mismatch, malformed values and expired shared budget.
+Independent rational-radius moving-source controls verify the binding.
+
+Report eight outward-rounded component intervals and the sum midpoint
+with an L1 error including its reporting roundoff; preserve both exact
+incoming handoff radii and round their diagnostic copies outward. This is
+the derivative at the nominal state of the ideal polynomial-source model,
+not a bound over the incoming error ball or native arithmetic. Source
+arithmetic allowances, higher harmonics, radiation pressure and relativity
+still require inclusion before a fresh full-force reference is certified.
+Do not replace the existing reference or any old endpoint certificate.
+No additional spacecraft propagation or SPICE query is required; all new
+oracle work checks and consumes the existing shared budget.
+
 ### Source polynomial reanchoring (2026-09-13)
 
 At original start+1/16 s, reuse `_spk_position_affine_data` on the same
