@@ -1,5 +1,19 @@
 ## Context
 
+### Doubled continuation reference assessment (2026-09-13)
+
+Reuse the existing prerequisite and shifted-reference checks for a 1/32 s
+continuation from the nominal two-segment endpoint at t0+1/32 s. Carry its
+exact position and velocity radii, including both previous native residuals,
+without resetting or counting them again. Use the existing cumulative 1/16 s
+Mars domain (2000 m / 0.25 m/s), its source/PCK coverage and cubic reference.
+WHEN the ideal path, both references and their convex chords remain inside
+that domain, THEN derive the rebased D/J and report reference-only error
+gates of 0.001 m and 0.000001 m/s. Verify the exact shifted endpoint identity.
+Keep separate diagnostic fields and all previous controls. Add no native
+call: verify nine native arcs, zero portable arcs and unchanged budget caps.
+This assessment does not certify a third native endpoint or mission safety.
+
 ### Tighter adjacent Mars control with frozen handoff (2026-09-13)
 
 Reuse the nominal adjacent-control loop for nominal and tighter settings.

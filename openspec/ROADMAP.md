@@ -220,16 +220,24 @@ tighter differences are bounded by 1.0789593218788875e-5 m and
 8.147468573574279e-12 m/s, consistent with both certificates. This is
 neither a tighter rerun of the first arc nor an independent error proof.
 
-Next bounded work within 3.9 is to assess a doubled 1/32 s continuation
-from the saved nominal two-segment endpoint to t0+1/16 s. Reuse the
-already qualified cumulative 1/16 s Mars domain (2000 m / 0.25 m/s),
-source/PCK coverage and cubic reference; carry both incoming radii. WHEN
-the shifted reference and ideal path/chords stay in that domain, THEN
-derive the rebased defect and report reference-only accuracy gates before
-any new native call. Do not introduce new radii or discard accumulated
-error. Retain all nine controls and the portable zero count, unchanged
+Doubled continuation assessment (2026-09-13): the 1/32 s continuation
+from the nominal two-segment endpoint closes in the existing cumulative
+1/16 s Mars domain (2000 m / 0.25 m/s). Ideal-path reaches are bounded by
+1907.8073796223553 m and 0.19830989705603871 m/s. Both references and
+their convex chords close; transported reference-only error bounds are
+7.684434624561636e-5 m and 2.1915314005860373e-7 m/s, within unchanged
+gates. Both incoming radii are preserved; no native call was added.
+
+Next bounded work within 3.9 is one counted nominal 1/32 s continuation
+from that same saved nominal endpoint to t0+1/16 s, conditional on all
+current domain/reference prerequisites. WHEN it completes, THEN verify
+exact state/time/mass handoff, add its native-to-reference residual once,
+and report unchanged endpoint gates and runtime. Reuse the existing
+adapters and qualified domain, forces and source/PCK coverage; do not
+introduce new radii or discard accumulated error. Retain all nine prior
+controls, count the additional call explicitly, and preserve portable zero,
 production caps and the shared 300-second operation budget. Keep Moon
-unresolved; this assessment is not mission or native-stage qualification.
+unresolved; this is not mission or native-stage qualification.
 Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add unqualified native controls or attempt mission composition
 yet. WHEN a proposed

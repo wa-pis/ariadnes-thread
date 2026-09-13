@@ -51,6 +51,35 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 doubled continuation assessment (2026-09-13):
+Reuse the saved nominal two-segment endpoint and both exact incoming error
+radii for the 1/32 s continuation. Verify cumulative-domain coverage, strict
+path/reference/chord closure, rebased D/J, exact endpoint translation and
+outward reference-only accuracy gates using the existing analytic helpers.
+Preserve nine/zero native counts and 40 source checks per inventory; run
+focused budget/integrator/transport tests, full pytest, Ruff, strict OpenSpec
+validation and legacy checks. No additional native integration is authorized
+by this assessment, and task 3.9 remains open.
+
+Measured reference-only result: exact incoming radii report outward as
+7.684027797138391e-5 m and 5.87273990686923e-8 m/s. The interval is
+[978995455.2616723, 978995455.2929223] TDB seconds since J2000. Source/PCK,
+initial-ball and strict path closure pass; ideal-path reaches are bounded by
+1907.8073796223553 m and 0.19830989705603871 m/s within 2000 m / 0.25 m/s.
+Shifted-reference reaches are 1907.8072865194013 m and 0.19726914451762262 m/s.
+Both references and their convex chords close. Rebased D2 and J2 are bounded
+by 3.452428691569523e-6 m/s^2 and 0.00010758751181110584 m/s^3.
+Reference-only errors are bounded by 7.684434624561636e-5 m and
+2.1915314005860373e-7 m/s: both unchanged accuracy gates pass. These
+outward values are conditional enclosures, not measured physical error or
+a third native endpoint certificate. No new native calls or dependencies.
+
+Verification: 374 focused tests pass in 0.78 s and all 2402 tests pass in
+531.76 s, including both inventories and nine/zero native counts. Ruff,
+strict OpenSpec validation, whitespace and unchanged legacy SHA-256/import
+checks pass. Full-suite wall time covers multiple independent operations;
+the per-operation 300-second deadline and production caps remain unchanged.
+
 Task 3.9 tighter adjacent Mars control (2026-09-13):
 Reuse the counted adjacent loop with unchanged nominal handoff, incoming
 radii, reference and forces, adding one tighter call. Verify independent
