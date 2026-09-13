@@ -1,5 +1,22 @@
 ## Context
 
+### Tighter doubled Mars continuation (2026-09-13)
+
+Reuse the native loop and exact Euclidean comparison for nominal and tighter
+1/32 s continuations. Both start from the same nominal two-segment endpoint
+with identical incoming error radii, mass, epoch, reference, domain and forces.
+Only the existing integrator configuration differs. WHEN each completes,
+THEN retain its own native-to-reference residual and endpoint certificate,
+verify exact time/state/mass continuity and report unchanged accuracy gates.
+WHEN comparing the endpoints, THEN verify exact squared Euclidean differences
+against squared sums of certificates and report outward square-root bounds.
+Use separate doubled tighter/comparison fields, retaining all prior results.
+This is observed agreement, not a tighter rerun of the preceding two arcs
+or an independent proof of accuracy. Count the added attempt/evaluation/arc
+and its warm runtime: the inventories have eleven native arcs and zero
+portable arcs. Preserve production caps and the shared 300-second deadline;
+do not qualify unsaved native stages, mission safety or targeting.
+
 ### One nominal doubled Mars continuation (2026-09-13)
 
 After the qualified doubled-reference prerequisites pass, reuse the counted

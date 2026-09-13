@@ -51,6 +51,36 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 tighter doubled continuation (2026-09-13):
+Reuse the nominal loop and comparison for one tighter 1/32 s call with the
+same frozen nominal handoff and incoming radii. Verify native continuity,
+mass, independent residual/certificate, exact squared Euclidean comparison,
+outward reporting and unchanged gates. Preserve ten prior controls; verify
+eleven/zero counts, 40 source readbacks per inventory, per-call timing,
+focused budget/integrator/transport tests, complete pytest, Ruff, strict
+OpenSpec and legacy isolation. Task 3.9 and mission qualification stay open.
+
+Measured tighter endpoint: native-to-reference residuals round outward to
+1.6121425809087463e-5 m and 1.312199217358008e-8 m/s. Conditional endpoint
+bounds are 9.296577205470382e-5 m and 2.322751322321838e-7 m/s, both within
+the unchanged 0.001 m / 0.000001 m/s gates. Nominal scientific values remain
+unchanged. Exact squared Euclidean comparison passes; outward differences
+are 3.168725533644896e-5 m and 2.2282620193436745e-11 m/s versus combined
+certificates 0.00019826355993337512 m and 4.6454980971701673e-7 m/s.
+Both calls use the same nominal two-segment state, exact native-time
+boundaries and 2000 kg at every saved output. Tighter warm native/control
+times are 0.011175292078405619 s / 0.02411929192021489 s, excluding shared
+qualification preparation. Do not sum nested timing fields. The extra call
+increments each counter once. Agreement is not an independent accuracy
+proof and does not requalify preceding arcs with the tighter configuration.
+
+Verification: 374 focused tests pass in 0.78 s and all 2402 tests pass in
+531.76 s, including eleven/zero native controls/evaluations/arcs and 40
+source readbacks per inventory. Ruff, strict OpenSpec validation, whitespace
+and unchanged legacy SHA-256/import checks pass. Scientific tolerances,
+force settings, dependencies and production caps are unchanged; all work
+stays under the existing per-operation cooperative 300-second deadline.
+
 Task 3.9 nominal doubled continuation (2026-09-13):
 Reuse the existing counted native loop for one nominal 1/32 s continuation
 after the doubled domain/reference checks. Verify exact state/epoch handoff,

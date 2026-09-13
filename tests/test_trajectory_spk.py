@@ -1531,7 +1531,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     assert not spice.failed()
     assert kernels_before == [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
     budget.check()
-    assert budget.native_arc_propagations == (10 if native_record_readback else 0)
+    assert budget.native_arc_propagations == (11 if native_record_readback else 0)
     # Hypothetical uniform reuse, not proof these controls apply elsewhere.
     control_duration = Fraction(1, 64)
     assert len(coast_domains) == 12
@@ -3942,7 +3942,6 @@ def _check_conditional_full_force_coast_domains(
             adjacent_prerequisites: dict[str, object] | None = None
             shifted_reference_control: dict[str, object] | None = None
             adjacent_native_control: dict[str, object] | None = None
-            doubled_native_control: dict[str, object] | None = None
             adjacent_tighter_control: dict[str, object] | None = None
             adjacent_comparison: dict[str, object] | None = None
             doubled_control = center == "Mars" and duration_s == 1 / 16 and position_radius_m == 2000.0
@@ -4789,7 +4788,7 @@ def _check_conditional_full_force_coast_domains(
                         adjacent_results: list[dict[str, object]] = []
                         adjacent_endpoints: list[tuple[Fraction, ...]] = []
                         adjacent_error_bounds: list[tuple[Fraction, Fraction]] = []
-                        for adjacent_tighter in ((False,) if doubled_control else (False, True)):
+                        for adjacent_tighter in (False, True):
                             adjacent_started_s = perf_counter()
                             counts_before = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
                             budget.begin_control()
@@ -4857,29 +4856,27 @@ def _check_conditional_full_force_coast_domains(
                             adjacent_results.append(adjacent_result)
                             adjacent_endpoints.append(tuple(map(Fraction, adjacent_final[:6])))
                             adjacent_error_bounds.append((endpoint_p, endpoint_v))
-                        if doubled_control:
-                            assert len(adjacent_results) == 1
-                            doubled_native_control = adjacent_results[0]
-                        else:
-                            adjacent_native_control, adjacent_tighter_control = adjacent_results
-                            comparison_values: dict[str, Fraction] = {}
-                            for start_axis, unit in ((0, "m"), (3, "m_s")):
-                                squared_difference = sum(((a-b)**2 for a, b in zip(
-                                    adjacent_endpoints[0][start_axis:start_axis+3], adjacent_endpoints[1][start_axis:start_axis+3], strict=True)), Fraction(0))
-                                combined_bound = sum((bound[start_axis // 3] for bound in adjacent_error_bounds), Fraction(0))
-                                assert squared_difference <= combined_bound**2
-                                root_upper = _dyadic_sqrt_bounds(squared_difference)[1] if squared_difference else Fraction(0)
-                                comparison_values[f"observed_difference_upper_{unit}"] = root_upper
-                                comparison_values[f"combined_certificate_{unit}"] = combined_bound
-                            reported_comparison = {key: math.nextafter(float(value), math.inf) if value else 0.0
-                                                   for key, value in comparison_values.items()}
-                            assert all(math.isfinite(value) and Fraction(value) >= comparison_values[key] >= 0
-                                       for key, value in reported_comparison.items())
-                            adjacent_comparison = {
-                                "same_nominal_handoff_state": True, "within_combined_certificates": True,
-                                "scope": "Observed adjacent-arc agreement, not a tighter rerun of the first arc or an independent error proof",
-                                **reported_comparison,
-                            }
+                        adjacent_native_control, adjacent_tighter_control = adjacent_results
+                        comparison_values: dict[str, Fraction] = {}
+                        for start_axis, unit in ((0, "m"), (3, "m_s")):
+                            squared_difference = sum(((a-b)**2 for a, b in zip(
+                                adjacent_endpoints[0][start_axis:start_axis+3], adjacent_endpoints[1][start_axis:start_axis+3], strict=True)), Fraction(0))
+                            combined_bound = sum((bound[start_axis // 3] for bound in adjacent_error_bounds), Fraction(0))
+                            assert squared_difference <= combined_bound**2
+                            root_upper = _dyadic_sqrt_bounds(squared_difference)[1] if squared_difference else Fraction(0)
+                            comparison_values[f"observed_difference_upper_{unit}"] = root_upper
+                            comparison_values[f"combined_certificate_{unit}"] = combined_bound
+                        reported_comparison = {key: math.nextafter(float(value), math.inf) if value else 0.0
+                                               for key, value in comparison_values.items()}
+                        assert all(math.isfinite(value) and Fraction(value) >= comparison_values[key] >= 0
+                                   for key, value in reported_comparison.items())
+                        adjacent_comparison = {
+                            "same_nominal_handoff_state": True, "within_combined_certificates": True,
+                            "scope": ("Observed doubled-arc agreement, not a tighter rerun of preceding arcs or an independent error proof"
+                                  if doubled_control else "Observed adjacent-arc agreement, not a tighter rerun of the first arc or an independent error proof"),
+                            **reported_comparison,
+                        }
+                        if not doubled_control:
                             assert two_segment_handoff is None
                             two_segment_handoff = (
                                 adjacent_endpoints[0], *adjacent_error_bounds[0], adjacent_final_tdb_s,
@@ -5175,10 +5172,12 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_shifted_reference_control": None if doubled_control else shifted_reference_control,
                 "conditional_doubled_coast_prerequisites": adjacent_prerequisites if doubled_control else None,
                 "conditional_doubled_reference_control": shifted_reference_control if doubled_control else None,
-                "conditional_doubled_native_control": doubled_native_control,
-                "conditional_adjacent_native_control": adjacent_native_control,
-                "conditional_adjacent_tighter_control": adjacent_tighter_control,
-                "conditional_adjacent_comparison": adjacent_comparison,
+                "conditional_doubled_native_control": adjacent_native_control if doubled_control else None,
+                "conditional_doubled_tighter_control": adjacent_tighter_control if doubled_control else None,
+                "conditional_doubled_comparison": adjacent_comparison if doubled_control else None,
+                "conditional_adjacent_native_control": None if doubled_control else adjacent_native_control,
+                "conditional_adjacent_tighter_control": None if doubled_control else adjacent_tighter_control,
+                "conditional_adjacent_comparison": None if doubled_control else adjacent_comparison,
                 "position_domain_radius_m": position_radius_m,
                 "velocity_domain_radius_m_s": velocity_radius_m_s,
                 "conditional_point_mass_initial_jerk_intervals_m_s3": point_jerk_intervals_m_s3,
@@ -5208,7 +5207,9 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_split_relative_force_variation_m_s2": reported_split_relative_variation_m_s2,
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
-    expected_arcs = 10 if run_native_controls else 0
+    expected_arcs = 11 if run_native_controls else 0
+    assert sum(result["conditional_doubled_tighter_control"] is not None for result in results) == (1 if run_native_controls else 0)
+    assert sum(result["conditional_doubled_comparison"] is not None for result in results) == (1 if run_native_controls else 0)
     assert sum(result["conditional_doubled_native_control"] is not None for result in results) == (1 if run_native_controls else 0)
     assert sum(result["conditional_doubled_coast_prerequisites"] is not None for result in results) == (1 if run_native_controls else 0)
     assert sum(result["conditional_doubled_reference_control"] is not None for result in results) == (1 if run_native_controls else 0)

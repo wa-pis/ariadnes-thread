@@ -236,14 +236,21 @@ unchanged gates. Native-to-reference residuals are included exactly once.
 The warm call takes 0.009299166966229677 s; its control takes
 0.022462582914158702 s excluding the shared qualification preparation.
 
-Next bounded work within 3.9 is one counted tighter 1/32 s continuation
-from the same nominal two-segment endpoint, with unchanged incoming radii,
-reference and domain. WHEN it completes, THEN verify native time/state/mass,
-its own residual and endpoint gates, and exact squared Euclidean differences
-against the combined nominal/tighter certificates. Reuse the existing loop
-and adapters; this is not a tighter rerun of the whole three-segment chain
-or an independent error proof. Retain all ten prior controls, count the
-additional call and timing explicitly, preserve portable zero, production
+Tighter doubled continuation (2026-09-13): the same nominal two-segment
+handoff gives conditional endpoint bounds 9.296577205470382e-5 m and
+2.322751322321838e-7 m/s, both within unchanged gates. Observed Euclidean
+nominal/tighter differences are bounded by 3.168725533644896e-5 m and
+2.2282620193436745e-11 m/s, consistent with both certificates. This is
+neither a tighter rerun of preceding arcs nor an independent error proof.
+
+Next bounded work within 3.9 is to assess a 1/16 s continuation from the
+nominal three-segment endpoint at t0+1/16 s to t0+1/8 s. Reuse the already
+qualified cumulative 1/8 s Mars domain (4000 m / 0.5 m/s), its source/PCK
+coverage and cubic reference. Carry both incoming radii unchanged. WHEN
+the ideal path, shifted reference and chords remain in the domain, THEN
+derive the rebased D/J and report reference-only accuracy gates before any
+new native call. Preserve failures rather than widening radii or dropping
+error. Retain all eleven controls and portable zero, unchanged production
 caps and the shared 300-second budget. Keep Moon unresolved; do not claim
 mission or native-stage qualification.
 Keep all previous certificates. Preserve all
@@ -258,7 +265,7 @@ Do not substitute endpoint agreement or sampled differences for that proof.
 The latest completed code check has 2402 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
-The native inventory runs ten spacecraft arcs, the portable inventory
+The native inventory runs eleven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost
 estimates. Production limits and the shared 300-second deadline are unchanged.
 Task 3.9, the remaining finite-burn safety prerequisites and targeting remain
