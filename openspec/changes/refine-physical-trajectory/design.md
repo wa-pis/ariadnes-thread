@@ -1,5 +1,25 @@
 ## Context
 
+### Trace-free remainder composition (2026-09-13)
+
+The generic Hessian addition theorem already encloses the Frobenius norm:
+||sum(c_k*H_k)||F <= sqrt(sum(c_k^2))*sqrt(sum(||H_k||F^2)). Apply
+the triangle inequality over degrees; upward coefficient weights and the
+directed Decimal sum retain this property. It is stronger provenance than
+an arbitrary operator-only bound. Independent polar C21/S21/C22/S22
+Hessians verify the complete Frobenius norm and corrected directional action.
+A polar C20 counterexample explicitly forbids multiplying its sharp
+operator-only bound by sqrt(2/3).
+
+WHEN composing the selected nonmonopole partition, THEN keep C20 unchanged
+and apply the qualified trace-free factor only to its generic remainder
+(or an unsplit generic winner). Replace only spatial reference variation in
+an additional cubic certificate at the existing seven native controls.
+Keep full-force sensitivities, initial-force arithmetic allowances, rotation,
+domain closure, reference coefficients, native residuals and all old results.
+Verify strict reduction, outward SI reporting and separate reference/endpoint
+gates without assuming the longest control passes. No force or tolerance changes.
+
 ### Symmetric trace-free Hessian norm lemma (2026-09-13)
 
 For any unit direction choose an orthonormal basis with that direction first.

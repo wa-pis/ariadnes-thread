@@ -17,14 +17,25 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest analytic prerequisite (2026-09-13): the symmetric trace-free Hessian
+Latest native bound comparison (2026-09-13): applying the trace-free factor
+only to generic Frobenius-derived spatial partitions strictly improves all
+seven cubic controls. Mars 1/8 s endpoint velocity falls from
+1.4619986809939294e-6 to 1.2803291799227853e-6 m/s; reference-only
+velocity is 1.2098251561204536e-6 m/s, so both still exceed 1e-6 m/s.
+Position passes at 3.212860892438589e-5 m. All six shorter controls pass;
+Mars 1/16 s velocity is 3.125623325187028e-7 m/s. These remain conditional
+upper bounds, not measured integration errors. C20, native arithmetic,
+rotation, full-force state sensitivities and all prior certificates remain intact.
+
+Retained analytic prerequisite: the symmetric trace-free Hessian
 lemma ||J||2 <= sqrt(2/3)*||J||F has an exact directional sum-of-squares
 proof. Twenty-eight independent matrix/rounding-bound/rejection controls
 pass, including rotated known spectra, monopole/polar-C20 attainment and
 counterexamples when either premise is absent. Ideal exterior harmonic
 potentials have symmetric Hessians with zero Laplacian; native arithmetic,
-other forces and arbitrary operator-only bounds are not covered. No native
-or existing remainder bound has changed from this analytic result.
+other forces and arbitrary operator-only bounds are not covered. The isolated
+lemma alone did not change native bounds; the separately qualified composition
+above now applies it only to eligible partitions.
 
 Retained degree diagnosis: exact degree enclosures and an explicit
 nonnegative arithmetic slack reconstruct the unchanged Mars 1/8 s remainder.
@@ -127,11 +138,12 @@ Forty-six additional mixed-field/rejection controls verify independent polar
 Hessians and the C20/remainder composition. Native application changes only
 the reference spatial-variation bound; full-force state sensitivities,
 rotation allowances, arithmetic bounds and historical controls remain intact.
-Next bounded work within 3.9 is to verify the generic remainder bound's
-Frobenius provenance and compose the qualified trace-free factor with that
-bound in the existing native controls. Do not apply it to the sharp C20
-operator-only bound or native arithmetic allowances. Keep the previous
-certificates and no particular final gate passage is assumed. Preserve all
+Next bounded work within 3.9 is to qualify the per-degree coefficient-to-
+Hessian map norm using its polar Gram matrix and rotational invariance,
+instead of bounding that map by the sum of all basis squared norms. Verify
+independent low-degree Hessians and all-degree identities before any native
+application; this is an analytic hypothesis, not an assumed improvement or
+gate passage. Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
@@ -140,7 +152,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2094 passing tests; both
+The latest completed code check has 2114 passing tests; both
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost

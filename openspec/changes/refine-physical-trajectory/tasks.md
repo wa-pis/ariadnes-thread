@@ -51,6 +51,28 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 trace-free remainder composition (2026-09-13):
+Verify generic Frobenius provenance against independent mixed quadrupole
+Hessians, corrected directional action and the sharp-C20 misuse counterexample.
+Compose only eligible generic partitions in the existing seven native controls;
+retain old certificates and verify strict reduction, gates and outward SI
+reporting. Run focused trace-free tests, full pytest including both inventories,
+Ruff, strict OpenSpec and legacy isolation. Keep task 3.9 open where unresolved.
+
+Verification: 48 focused tests pass in 0.44 s, including twenty new
+Frobenius-provenance/directional and sharp-C20 misuse controls. All 2114
+tests pass in 525.30 s, including both inventories. All seven native bounds
+strictly decrease without additional spacecraft arcs or source queries.
+Mars 1/8 s endpoint position/velocity are 3.212860892438589e-5 m and
+1.2803291799227853e-6 m/s; reference-only velocity is
+1.2098251561204536e-6 m/s. The latter two remain above 1e-6 m/s.
+Mars 1/16 s endpoint velocity is 3.125623325187028e-7 m/s; all six
+shorter controls pass. Old C20, rotation-composed and cubic/quadratic
+certificates retain their original gates. No native arithmetic allowance,
+reference coefficient, residual, rotation bound, full-force sensitivity,
+domain, physical setting, tolerance or operation budget changes. Ruff,
+strict OpenSpec, diff checks and legacy isolation pass. Task 3.9 stays open.
+
 Task 3.9 symmetric trace-free norm lemma (2026-09-13):
 Verify the universal directional sum-of-squares proof and independently
 known exact rotated spectra, including monopole/C20 attainment. Verify

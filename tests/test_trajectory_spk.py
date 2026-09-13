@@ -2712,7 +2712,7 @@ def _harmonic_spatial_jacobian_bound_s_inv2(
     radius_m: float, distance_m: float, cosine: np.ndarray, sine: np.ndarray,
     *, degree_parts_s_inv2: dict[str, Fraction] | None = None,
 ) -> Fraction:
-    """Bound the ideal spatial Jacobian in s^-2, at a fixed field orientation."""
+    """Bound the ideal spatial Jacobian's Frobenius norm in s^-2 at fixed orientation."""
     scaled: list[list[list[float]]] = []
     for matrix in (cosine, sine):
         assert matrix.ndim == 2 and matrix.dtype == np.dtype("float64")
@@ -3638,6 +3638,7 @@ def _check_conditional_full_force_coast_domains(
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint
     from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
+    from test_trajectory_tracefree import _tracefree_operator_bound_s_inv2
     from test_trajectory_c20 import (
         _c20_remainder_jacobian_bound_s_inv2, _c20_spatial_jacobian_bound_s_inv2,
         _selected_c20_jacobian_parts_s_inv2,
@@ -3760,6 +3761,7 @@ def _check_conditional_full_force_coast_domains(
             split_harmonic_jacobians_s_inv2: dict[str, Fraction] = {}
             c20_nonmonopole_jacobians_s_inv2: dict[str, Fraction] = {}
             c20_spatial_parts_s_inv2: dict[str, dict[str, Fraction]] = {}
+            tracefree_nonmonopole_s_inv2: dict[str, Fraction] = {}
             for body in trajectory.PHYSICAL_BODY_NAMES:
                 floor_m = trajectory._relative_distance_lower_bound(
                     budget, tuple(state[:3]), tuple(states[body][:3]), position_radius_m, reaches_m[body],
@@ -3814,6 +3816,11 @@ def _check_conditional_full_force_coast_domains(
                         isolated_c20, c20_remainder_bound, tail_jacobian_s_inv2,
                     )
                     assert sum(c20_spatial_parts_s_inv2[body].values(), Fraction(0)) == c20_nonmonopole_jacobians_s_inv2[body]
+                    tracefree_nonmonopole_s_inv2[body] = sum((
+                        value if name == "C20" else _tracefree_operator_bound_s_inv2(value)
+                        for name, value in c20_spatial_parts_s_inv2[body].items()
+                    ), Fraction(0))
+                    assert tracefree_nonmonopole_s_inv2[body] <= c20_nonmonopole_jacobians_s_inv2[body]
                     assert field.cosine_coefficients[0, 0] == 1.0 and field.sine_coefficients[0, 0] == 0.0
                     split_harmonic_jacobians_s_inv2[body] = _monopole_split_jacobian_bound_s_inv2(
                         field.gravitational_parameter, floor_m, tail_jacobian_s_inv2,
@@ -4591,6 +4598,33 @@ def _check_conditional_full_force_coast_domains(
                     }
                     reported_c20_values = {key: math.nextafter(float(value), math.inf) if value else 0.0 for key, value in c20_values.items()}
                     assert all(math.isfinite(value) and Fraction(value) >= c20_values[key] >= 0 for key, value in reported_c20_values.items())
+                    tracefree_reduction_m_s3 = sum(((c20_nonmonopole_jacobians_s_inv2[body]-tracefree_nonmonopole_s_inv2[body])
+                                               * Fraction(relative_reaches_m[body])/h for body in ("Moon", "Mars")), Fraction(0))
+                    assert tracefree_reduction_m_s3 > 0
+                    tracefree_rate_m_s3 = c20_defect_rate_m_s3 - tracefree_reduction_m_s3
+                    assert 0 <= tracefree_rate_m_s3 < c20_defect_rate_m_s3
+                    tracefree_reference_m, tracefree_reference_m_s = _coast_error_envelope(
+                        duration_s, Fraction(0), Fraction(0), Fraction(reported_full_position_sensitivity),
+                        Fraction(reported_relativity_sensitivities[1]), constant_defect_m_s2,
+                        acceleration_defect_rate_m_s3=tracefree_rate_m_s3,
+                    )
+                    tracefree_position_m = tracefree_reference_m + cubic_position_residual_m
+                    tracefree_velocity_m_s = tracefree_reference_m_s + cubic_velocity_residual_m_s
+                    assert 0 <= tracefree_position_m < c20_position_m <= Fraction("0.001")
+                    assert 0 <= tracefree_velocity_m_s < c20_velocity_m_s
+                    assert (tracefree_reference_m_s <= Fraction("0.000001")) is (duration_s < 1 / 8)
+                    assert (tracefree_velocity_m_s <= Fraction("0.000001")) is (duration_s < 1 / 8)
+                    tracefree_values = {
+                        "reference_defect_rate_m_s3": tracefree_rate_m_s3,
+                        "reference_position_error_m": tracefree_reference_m,
+                        "reference_velocity_error_m_s": tracefree_reference_m_s,
+                        "endpoint_position_error_m": tracefree_position_m,
+                        "endpoint_velocity_error_m_s": tracefree_velocity_m_s,
+                    }
+                    reported_tracefree = {key: math.nextafter(float(value), math.inf) if value else 0.0
+                                          for key, value in tracefree_values.items()}
+                    assert all(math.isfinite(value) and Fraction(value) >= tracefree_values[key] >= 0
+                               for key, value in reported_tracefree.items())
                     # Attribute this bound, not physical uncertainty or measured
                     # integration error. Use identical feedback for every channel.
                     constant_parts = {"initial_force": prefix_full_error_m_s2,
@@ -4735,6 +4769,12 @@ def _check_conditional_full_force_coast_domains(
                             "reference_within_velocity_gate": c20_reference_m_s <= Fraction("0.000001"),
                             "within_position_gate": c20_position_m <= Fraction("0.001"),
                             "within_velocity_gate": c20_velocity_m_s <= Fraction("0.000001"),
+                        },
+                        "conditional_tracefree_cubic_control": {
+                            **reported_tracefree,
+                            "reference_within_velocity_gate": tracefree_reference_m_s <= Fraction("0.000001"),
+                            "within_position_gate": tracefree_position_m <= Fraction("0.001"),
+                            "within_velocity_gate": tracefree_velocity_m_s <= Fraction("0.000001"),
                         },
                         "weighted_position_bound_resolves_1mm": weighted_position_error_m <= Fraction("0.001"),
                         "reference_only_velocity_bound_resolves_1um_s": weighted_reference_velocity_error_m_s <= Fraction("0.000001"),
