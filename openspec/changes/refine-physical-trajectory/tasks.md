@@ -51,6 +51,20 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 exact separate-tail midpoint application (2026-09-13):
+Verified in the existing isolated degree100 evaluation, without additional
+harmonic evaluations or arcs. Exact Fraction expansion/recovery round-trips,
+midpoint equality, independent corner/vector checks, tail counted once and
+strictly tighter L2 allowance pass. The bound is 7.82777879292353e-6 m/s^2;
+prefix/rounding contributes 2.8705264613615397e-17 m/s^2. See decision0004.
+All 38 focused tests pass in 30.37 s; all 2823 tests pass in 475.24 s.
+Ruff, strict OpenSpec and legacy isolation pass. Native inventory 141.62 s,
+13 arcs, 10 oracle hits; isolated degree100 test 24.40 s, no native arcs.
+Scientific inputs, production code, budgets and tolerances are unchanged.
+Next compile a same-epoch full-force ledger with explicit epoch/frame/norm,
+provenance and missing allowances before combining terms; no new native
+evaluations, degree120 work or coast extension. Task 3.9 remains open.
+
 Task 3.9 fresh midpoint norm contract (2026-09-13):
 Identify Euclidean transport/tail norms; derive a rounded midpoint error
 for a prefix box plus a separately bounded L2 tail. Verify independent

@@ -448,16 +448,23 @@ full-suite gate is satisfied without changing formulas or tolerances.
 See decision0003 and `tests/data/m3_harmonic_reuse_verification.json`.
 One observed runtime is not a stability guarantee or mission-cost estimate.
 
-Next bounded work within 3.9 is to apply the separate-prefix/tail form
-during the existing isolated degree100 evaluation, with no extra harmonic
-evaluation or native arc. WHEN exact pre-expansion intervals and the exact
-tail are available, THEN verify the rounded midpoint/L2 bound, no tail
-double counting, and consistency with the conservative whole-box result.
-Do not recover prefix intervals by subtracting a rounded JSON tail.
-Preserve the original diagnostic budget and report the norm allowance
-without promoting it to full-force or mission qualification. Source/PCK,
-remaining forces and fresh domain closure stay separate prerequisites;
-do not evaluate degree120 or extend the coast. Task 3.9 stays open.
+The isolated degree100 calculation now verifies the exact separate-prefix/tail
+midpoint form without extra evaluations or native arcs. The outward L2 bound is
+7.82777879292353e-6 m/s^2, with prefix/rounding allowance
+2.8705264613615397e-17 m/s^2. Exact expansion round-trip, identical midpoint,
+independent corner/vector controls and whole-box consistency pass. No rounded
+JSON tail is subtracted. See decision0004 and its measured evidence.
+All 2823 tests pass in 475.24 s; native inventory is 141.62 s with the same
+13 arcs and 10 oracle hits. The isolated degree100 test takes 24.40 s;
+this remains stored-geometry evidence, not a full-force or mission certificate.
+
+Next bounded work within 3.9 is a same-epoch full-force error ledger using
+existing evidence, without new native evaluations. WHEN listing each force,
+source/PCK allowance and domain premise, THEN identify epoch/frame/norm,
+provenance and whether a bound is available at this exact handoff. Mark absent
+bounds explicitly; do not reuse an older epoch's allowance or treat omissions
+as zero. Use the ledger to select the next missing proof before summing forces.
+Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

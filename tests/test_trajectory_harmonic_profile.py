@@ -3,6 +3,7 @@
 from cProfile import Profile
 from fractions import Fraction
 from hashlib import sha256
+from itertools import product
 import json
 import math
 from pathlib import Path
@@ -13,6 +14,7 @@ import numpy as np
 import pytest
 
 from space_nav import trajectory
+from test_trajectory_midpoint import _midpoint_acceleration_l2_bound_m_s2
 from test_trajectory_spk import _harmonic_prefix_vector_enclosure_m_s2
 
 
@@ -69,6 +71,28 @@ def test_stored_mars_harmonic_profile(cutoff: int) -> None:
                    zip(baseline["component_intervals_m_s2"], outward, strict=True))
         assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lo <= hi <= Fraction(b)
                    for (a, b), (lo, hi) in zip(outward, intervals, strict=True))
+        # Undo only the helper's EXACT Fraction tail expansion, never JSON rounding.
+        prefix = tuple((lo + tail, hi - tail) for lo, hi in intervals)
+        assert all(lo <= hi for lo, hi in prefix)
+        assert tuple((lo - tail, hi + tail) for lo, hi in prefix) == intervals
+        midpoint, separate_bound = _midpoint_acceleration_l2_bound_m_s2(prefix, tail)
+        prefix_midpoint, prefix_bound = _midpoint_acceleration_l2_bound_m_s2(prefix, Fraction(0))
+        box_midpoint, box_bound = _midpoint_acceleration_l2_bound_m_s2(intervals, Fraction(0))
+        assert midpoint == prefix_midpoint == box_midpoint
+        assert separate_bound == prefix_bound + tail
+        assert tail <= separate_bound < box_bound
+        directions = ((Fraction(0),) * 3, (Fraction(1), Fraction(0), Fraction(0)),
+                      (Fraction(3, 5), Fraction(4, 5), Fraction(0)),
+                      (Fraction(-3, 5), Fraction(-4, 5), Fraction(0)))
+        for corner, direction in product(product(*prefix), directions):
+            assert sum(value**2 for value in direction) <= 1
+            error_squared = sum((value + tail * unit - Fraction(mid))**2 for value, unit, mid
+                                in zip(corner, direction, midpoint, strict=True))
+            assert error_squared <= separate_bound**2
+        reported_bounds = [math.nextafter(float(value), math.inf)
+                           for value in (prefix_bound, separate_bound, box_bound)]
+        assert all(math.isfinite(reported) and Fraction(reported) >= exact for reported, exact
+                   in zip(reported_bounds, (prefix_bound, separate_bound, box_bound), strict=True))
         assert budget.deadline_monotonic_s == deadline_s
         assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
         assert math.isfinite(elapsed_s) and elapsed_s >= 0
@@ -77,6 +101,12 @@ def test_stored_mars_harmonic_profile(cutoff: int) -> None:
             "setup_elapsed_s": setup_elapsed_s, "unprofiled_elapsed_s": elapsed_s,
             "evaluations": 1, "component_intervals_m_s2": outward,
             "tail_upper_m_s2": math.nextafter(float(tail), math.inf),
+            "midpoint_m_s2": midpoint,
+            "prefix_midpoint_l2_error_upper_m_s2": reported_bounds[0],
+            "separate_tail_l2_error_upper_m_s2": reported_bounds[1],
+            "whole_box_l2_error_upper_m_s2": reported_bounds[2],
+            "origin": snapshot["origin"], "orientation": snapshot["orientation"],
+            "epoch_tdb_s": snapshot["epoch_tdb_s"], "time_scale": snapshot["time_scale"],
             "profiling_deadline_s": 300.0, "native_coefficient_loads": 1, "native_arcs": 0,
             "qualification": "One isolated stored-input evaluation; no profiler/repeats, no shared mission-budget or source/PCK qualification",
         }}, sort_keys=True, allow_nan=False))

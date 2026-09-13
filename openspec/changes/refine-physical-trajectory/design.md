@@ -2,6 +2,23 @@
 
 ### Fresh midpoint norm contract (2026-09-13)
 
+The isolated degree100 evaluation now applies this contract to its exact
+Fraction prefix and separate tail. The existing helper returns
+`(prefix_lo - tail, prefix_hi + tail)` with that exact tail; undoing this
+expansion in Fraction arithmetic is verified by exact round-trip equality.
+It does not reconstruct anything from rounded JSON. All prefix corners
+with independent rational unit-vector tails satisfy the squared L2 bound,
+and the rounded midpoint matches the whole-box midpoint exactly.
+
+The separate-tail bound is 7.82777879292353e-6 m/s^2, comprising the tail
+plus a prefix/rounding bound of 2.8705264613615397e-17 m/s^2. The same
+exact intervals treated as a whole box give 1.355811057972088e-5 m/s^2;
+the older rounded JSON box gives 1.3558110579856195e-5 m/s^2. These two
+whole-box figures differ because one includes serialization rounding.
+All reported bounds are outward rounded. The force midpoint is unchanged.
+No source/PCK, other-force, closed-domain or mission qualification follows.
+The existing one evaluation and 300 s diagnostic budget are retained.
+
 The existing coast transport uses Euclidean vector errors and compatible
 induced force sensitivities. Its conservative L1 residual sums also bound
 L2; this does not allow treating an L2 bound as an L1 bound. The harmonic
