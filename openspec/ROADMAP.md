@@ -394,15 +394,28 @@ not an asymptotic or high-degree runtime bound. The warmed degree40 setup
 took 0.00676 s, not comparable to degree20's first-import setup 0.60464 s.
 The record is `tests/data/m3_mars_degree40_profile.json`; native arcs stay zero.
 
-Next bounded work within 3.9 is one unprofiled isolated degree100 evaluation
-at these verified inputs to resolve its previously unmeasured standalone
-cost. Use one 300 s profiling budget including setup, without resets or
-extra repeats, and preserve any failure. WHEN it completes, THEN compare
-the tail to the existing degree100 ledger and its enclosure to degree40,
-report elapsed time without promoting it to a shared mission-budget pass.
-Do not also evaluate degree120 or extend the native coast. Source/PCK
-errors, remaining forces and fresh domain closure stay open prerequisites;
-task 3.9 remains open.
+One isolated degree100 evaluation completed in 22.227337000193074 s,
+without profiler or repeats in that invocation, matching the retained tail
+7.827778792894826e-6 m/s^2 and nesting strictly in the degree40 box.
+The record is `tests/data/m3_mars_degree100_evaluation.json`. Warmed setup
+took 0.00763 s. This resolves the standalone measurement only; the earlier
+cumulative-deadline failure remains valid and is not replaced by this pass.
+
+The first full suite with this separate test also observed a deadline in
+the unchanged native inventory after 13 arcs (2768 passed/1 failed).
+One unchanged repeat passed all 2769 tests, with native inventory 282.16 s.
+Both observations are retained; timing stability is not established and
+expensive work must not be appended to that inventory without accounting.
+
+Next bounded work within 3.9 is to establish the norm/error contract needed
+to use a midpoint of this harmonic enclosure as a fresh force reference.
+WHEN the transport norm and available harmonic-tail norm are explicitly
+identified, THEN derive and test a compatible midpoint error bound including
+binary64 rounding and any required norm conversion against an independent
+vector oracle. A per-component interval width is not automatically the
+whole-vector error allowance. Reuse the stored evidence; do not evaluate
+degree120 or extend the native coast. Source/PCK errors, remaining forces
+and fresh domain closure remain separate prerequisites; task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

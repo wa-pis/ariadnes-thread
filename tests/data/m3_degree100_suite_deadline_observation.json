@@ -1,0 +1,28 @@
+{
+  "observation_date": "2026-09-13",
+  "base_commit": "dc007dc",
+  "command": "conda run -n space-nav python -m pytest -q --tb=short -p no:cacheprovider",
+  "failed_test": "tests/test_trajectory_spk.py::test_loaded_spk_chain_coverage_contains_candidate_interval[native-readback]",
+  "failure_location": "tests/test_trajectory_spk.py:1600 budget.check() after coverage and kernel-state checks",
+  "failure": "TrajectoryRefinementError: shared deadline reached; no partial result returned",
+  "runtime_limit_s": 300,
+  "control_attempts": 13,
+  "propagation_evaluations": 13,
+  "native_arc_propagations": 13,
+  "full_suite_passed": 2768,
+  "full_suite_failed": 1,
+  "full_suite_elapsed_s": 630.48,
+  "native_test_and_production_code_unchanged": true,
+  "isolated_degree100_passed": true,
+  "cause_of_slowdown": "Unresolved; do not infer from a passing isolated evaluation",
+  "policy": "Keep failure evidence and unchanged limits; one full diagnostic repeat with duration reporting",
+  "repeat": {
+    "command": "conda run -n space-nav python -m pytest -q --tb=short --durations=5 -p no:cacheprovider",
+    "passed": 2769,
+    "failed": 0,
+    "elapsed_s": 592.08,
+    "native_inventory_elapsed_s": 282.16,
+    "isolated_degree100_test_elapsed_s": 22.83,
+    "interpretation": "Observed pass with unchanged tests and limits; original failure retained, no runtime stability guarantee"
+  }
+}

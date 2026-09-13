@@ -1,0 +1,29 @@
+{
+  "observation_date": "2026-09-13",
+  "base_commit": "dc007dc",
+  "test": "tests/test_trajectory_harmonic_profile.py::test_stored_mars_harmonic_profile[100]",
+  "snapshot_sha256": "e401d88cbdd0110ac6c0357612b0053a34f87f8953856ac3372360e5ea3dca99",
+  "prefix_degree": 100,
+  "setup_elapsed_s": 0.007630666950717568,
+  "unprofiled_elapsed_s": 22.227337000193074,
+  "evaluations": 1,
+  "component_intervals_m_s2": [
+    [
+      -3.149878175039091,
+      -3.1498625194815046
+    ],
+    [
+      0.0032747891778048192,
+      0.0032904447353906095
+    ],
+    [
+      -0.005318085543697321,
+      -0.00530242998611153
+    ]
+  ],
+  "tail_upper_m_s2": 0.000007827778792894826,
+  "profiling_deadline_s": 300,
+  "native_coefficient_loads": 1,
+  "native_arcs": 0,
+  "qualification": "One isolated synthetic stored-input evaluation; setup follows lower cutoffs in a warmed process, no profiler/repeats, no shared mission-budget or source/PCK qualification"
+}

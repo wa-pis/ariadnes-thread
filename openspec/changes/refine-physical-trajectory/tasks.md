@@ -51,6 +51,25 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 one isolated Mars degree100 evaluation (2026-09-13):
+Run one unprofiled degree100 evaluation per invocation on pinned replay
+inputs; verify the ledger tail, strict nesting in degree40, finite outward
+rounding, unchanged diagnostic deadline and zero native arcs. Preserve
+failure without weakening criteria. Verify focused cases, full pytest,
+Ruff, strict OpenSpec and legacy isolation; do not promote standalone
+completion to a mission-budget or full-force qualification.
+
+Verification: all three focused cases passed in 28.18 s; degree100 took
+22.227337000193074 s and matched its ledger tail with strict degree40
+nesting. The first full run had 2768 passes and one unchanged native-test
+deadline failure after 13 arcs (630.48 s overall). Preserve it in
+`tests/data/m3_degree100_suite_deadline_observation.json`. A single full
+repeat without code/limit changes passed all 2769 tests in 592.08 s;
+native-readback took 282.16 s and the isolated degree100 test 22.83 s.
+This does not establish timing stability or explain the slowdown. Ruff,
+strict OpenSpec, whitespace and legacy isolation pass. Source/PCK and
+full-force qualification remain open; no tolerances or budgets changed.
+
 Task 3.9 isolated Mars degree40 growth profile (2026-09-13):
 Extend the same bounded replay for degree40; verify repeated exact equality,
 the retained ledger tail and strict containment in the reported degree20

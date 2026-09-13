@@ -19,7 +19,7 @@ from test_trajectory_spk import _harmonic_prefix_vector_enclosure_m_s2
 ROOT = Path(__file__).resolve().parents[1]
 
 
-@pytest.mark.parametrize("cutoff", [20, 40])
+@pytest.mark.parametrize("cutoff", [20, 40, 100])
 def test_stored_mars_harmonic_profile(cutoff: int) -> None:
     """Replay pinned SI/J2000 inputs without ephemeris queries or propagation."""
     started_s = perf_counter()
@@ -51,6 +51,37 @@ def test_stored_mars_harmonic_profile(cutoff: int) -> None:
             np.asarray(recorded["body_position_m"]), np.asarray(snapshot["spacecraft_position_m"]),
             np.asarray(recorded["inertial_to_fixed"]), cutoff)
     setup_elapsed_s = perf_counter()-started_s
+    if cutoff == 100:
+        run_started_s = perf_counter()
+        intervals, tail = _harmonic_prefix_vector_enclosure_m_s2(*args)
+        elapsed_s = perf_counter()-run_started_s
+        budget.check()
+        baseline = json.loads((ROOT / "tests/data/m3_mars_degree40_profile.json").read_text())
+        assert baseline["snapshot_sha256"] == sha256(snapshot_bytes).hexdigest()
+        assert baseline["prefix_degree"] == 40
+        assert math.nextafter(float(tail), math.inf) == 7.827778792894826e-6
+        assert 0 < tail < Fraction(baseline["tail_upper_m_s2"])
+        outward = [[math.nextafter(float(lo), -math.inf), math.nextafter(float(hi), math.inf)]
+                    for lo, hi in intervals]
+        assert all(Fraction(a) < lo <= hi < Fraction(b) for (a, b), (lo, hi) in
+                   zip(baseline["component_intervals_m_s2"], intervals, strict=True))
+        assert all(a < lo <= hi < b for (a, b), (lo, hi) in
+                   zip(baseline["component_intervals_m_s2"], outward, strict=True))
+        assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lo <= hi <= Fraction(b)
+                   for (a, b), (lo, hi) in zip(outward, intervals, strict=True))
+        assert budget.deadline_monotonic_s == deadline_s
+        assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+        assert math.isfinite(elapsed_s) and elapsed_s >= 0
+        print(json.dumps({"isolated_mars_degree100_evaluation": {
+            "snapshot_sha256": sha256(snapshot_bytes).hexdigest(), "prefix_degree": 100,
+            "setup_elapsed_s": setup_elapsed_s, "unprofiled_elapsed_s": elapsed_s,
+            "evaluations": 1, "component_intervals_m_s2": outward,
+            "tail_upper_m_s2": math.nextafter(float(tail), math.inf),
+            "profiling_deadline_s": 300.0, "native_coefficient_loads": 1, "native_arcs": 0,
+            "qualification": "One isolated stored-input evaluation; no profiler/repeats, no shared mission-budget or source/PCK qualification",
+        }}, sort_keys=True, allow_nan=False))
+        budget.check()
+        return
     timings_s: list[float] = []
     results: list[tuple[tuple[tuple[Fraction, Fraction], ...], Fraction]] = []
     for _ in range(3):

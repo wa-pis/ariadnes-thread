@@ -1,5 +1,48 @@
 ## Context
 
+### One isolated Mars degree100 evaluation (2026-09-13)
+
+Use the same verified snapshot and coefficient setup with a single
+unprofiled degree100 evaluation per test invocation. WHEN it returns
+under one unchanged 300 s diagnostic budget including setup and checks,
+THEN require the retained outward degree100 ledger tail
+7.827778792894826e-6 m/s^2 and strict containment of exact and outward
+component boxes in the recorded degree40 enclosure for the same snapshot.
+Check finite outward rounding, unchanged deadline and zero propagation
+counters. Do not add a profiler, repeat loop, degree120 evaluation or native
+coast extension. Record standalone elapsed time without treating success
+as a pass of the earlier cumulative diagnostic or mission budget. Preserve
+any deadline failure; source/PCK errors and full-force closure stay open.
+
+The focused three-case run passed in 28.18 s. Its one degree100 evaluation
+took 22.227337000193074 s after warmed setup of 0.007630666950717568 s.
+The observed component intervals are retained in
+`tests/data/m3_mars_degree100_evaluation.json`, with the snapshot hash.
+The tail matched the prior ledger and the exact/outward boxes nested
+strictly in the recorded degree40 box. No claim is made that these
+22.23 s fit the remaining time in the failed cumulative native inventory.
+Full-suite regression independently invokes the one-evaluation test again;
+neither invocation resets a mission timer or combines their work into a
+mission feasibility claim. Before using a midpoint as a fresh anchor,
+qualify its vector-norm error and rounding rather than interpreting the
+per-component interval width as a complete force-error allocation.
+
+The first full regression run returned 2768 passed and one failure in
+630.48 s: the unchanged native-readback inventory reached its 300 s
+deadline at its final coverage/kernel-state budget check after 13 arcs.
+The isolated degree100 case passed. Preserve this distinct observation in
+`tests/data/m3_degree100_suite_deadline_observation.json`; it is neither
+the earlier 12-arc high-prefix failure nor a failed standalone evaluation.
+The source of the slowdown is unresolved. One full diagnostic repeat with
+duration reporting is permitted without changing code, limits or test order;
+any repeat outcome must be reported alongside, not replace, this failure.
+
+The one repeat passed all 2769 tests in 592.08 s with unchanged code and
+limits. Its native-readback inventory took 282.16 s; the isolated degree100
+test took 22.83 s. The failure record includes both outcomes. These are
+observations, not a timing-stability qualification; do not add expensive
+work to the already near-deadline inventory without new cost accounting.
+
 ### Isolated Mars degree40 growth profile (2026-09-13)
 
 Parameterize the existing isolated replay test for degrees20 and40. WHEN
