@@ -259,16 +259,25 @@ gates but with limited velocity margin. Native-to-reference residuals are
 added once. Warm native/control times are 0.009076250018551946 s and
 0.024772708071395755 s, excluding shared qualification preparation.
 
-Next bounded work within 3.9 is one counted tighter 1/16 s continuation
-from the same nominal three-segment endpoint, retaining incoming radii,
-reference, domain and forces. WHEN it completes, THEN verify exact native
-state/time/mass, its own residual and endpoint gates, and exact squared
-Euclidean differences against combined nominal/tighter certificates. Reuse
-the existing loop/comparison; do not call agreement an independent proof
-or a tighter rerun of preceding arcs. Retain all twelve earlier controls,
-explicitly count the added call and timing, preserve portable zero, unchanged
-production caps and the shared 300-second budget. Keep Moon unresolved;
-do not claim mission or native-stage qualification.
+Tighter longer continuation (2026-09-13): conditional four-segment endpoint
+bounds are 0.00014951220569742958 m and 9.436421070445403e-7 m/s, both
+within unchanged gates. Stored positions coincide exactly; observed velocity
+difference is bounded by 1.1148268342486758e-11 m/s. The exact Euclidean
+comparison fits both certificates. Stored-position agreement is not zero
+physical error; this is not a tighter rerun of preceding arcs or an
+independent accuracy proof. The velocity margin remains limited.
+
+Next bounded work within 3.9 is to attribute the final 1/16 s endpoint
+certificate before proposing another extension. Reuse exact error transport
+to separate incoming-state, rebased constant-defect, defect-rate and native
+residual contributions for nominal/tighter controls. WHEN decomposed, THEN
+their exact sums must equal each complete position/velocity bound; report
+outward SI contributions and the remaining 0.001 m / 0.000001 m/s margins.
+Use the measured dominant bound contribution to choose the next refinement,
+not observed integrator agreement. Do not extrapolate expired domain/source
+bounds beyond t0+1/8 s or reset incoming error. Add no native calls: retain
+all thirteen controls and portable zero, unchanged production caps and the
+shared 300-second budget. Keep Moon unresolved and task 3.9 open.
 Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add unqualified native controls or attempt mission composition
 yet. WHEN a proposed
@@ -281,7 +290,7 @@ Do not substitute endpoint agreement or sampled differences for that proof.
 The latest completed code check has 2402 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
-The native inventory runs twelve spacecraft arcs, the portable inventory
+The native inventory runs thirteen spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost
 estimates. Production limits and the shared 300-second deadline are unchanged.
 Task 3.9, the remaining finite-burn safety prerequisites and targeting remain

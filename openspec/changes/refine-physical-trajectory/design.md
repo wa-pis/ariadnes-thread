@@ -1,5 +1,22 @@
 ## Context
 
+### Tighter longer Mars continuation (2026-09-13)
+
+Reuse the counted native loop and exact Euclidean comparison for nominal
+and tighter 1/16 s continuations. Freeze the same nominal three-segment
+handoff, incoming error radii, mass, epoch, reference, domain and full forces.
+WHEN each completes, THEN verify exact native time/state continuity,
+finite output, constant saved mass, independent residual/certificate and
+unchanged endpoint gates. WHEN compared, THEN exact squared Euclidean
+differences must fit the squared sums of certificates; report outward
+square-root bounds, including zero. Preserve all previous diagnostic fields
+and add separate longer tighter/comparison fields. This is observed agreement,
+not a tighter rerun of preceding arcs or an independent accuracy proof.
+Count the additional attempt/evaluation/native arc and warm runtime under
+the shared 300-second deadline: thirteen native controls/evaluations/arcs,
+portable zero, no changed production caps, tolerances or forces. Do not
+qualify unsaved native stages, mission safety or targeting.
+
 ### One nominal longer Mars continuation (2026-09-13)
 
 Reuse the counted native loop for one nominal 1/16 s coast after the longer

@@ -51,6 +51,37 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 tighter longer continuation (2026-09-13):
+Reuse the counted nominal loop/comparison for one tighter 1/16 s call from
+the same frozen nominal three-segment handoff. Verify native continuity,
+constant mass, separate residual/certificate, exact squared Euclidean
+comparison, outward/zero reporting and unchanged gates. Preserve twelve
+earlier controls; verify thirteen/zero counts, 40 source readbacks per
+inventory, per-call timing, focused budget/integrator/transport tests,
+full pytest, Ruff, strict OpenSpec and legacy isolation. Do not weaken
+limits or claim whole-chain tighter, native-stage or mission qualification.
+
+Measured result: tighter residuals round outward to 4.41815941505782e-5 m
+and 5.3040693333734134e-8 m/s, giving conditional endpoint bounds
+0.00014951220569742958 m and 9.436421070445403e-7 m/s. Both unchanged
+0.001 m / 0.000001 m/s gates pass; nominal scientific values are retained.
+Stored positions coincide exactly (the zero-root reporting branch passes);
+this does not imply zero physical error. Observed velocity difference is
+bounded by 1.1148268342486758e-11 m/s. Combined certificates round outward
+to 0.00029902441139485915 m and 1.8872919447940457e-6 m/s, and exact squared
+Euclidean comparison passes. Both calls retain identical nominal handoff,
+native-time boundaries and 2000 kg mass at every saved output. Tighter warm
+native/control times are 0.026083583012223244 s / 0.04246916715055704 s,
+excluding shared preparation; do not sum nested timings. Each counter
+increases once. Agreement is not an independent error or safety proof.
+
+Verification: 374 focused tests pass in 0.89 s; all 2402 tests pass in
+559.62 s, including thirteen/zero native controls/evaluations/arcs and 40
+source readbacks per inventory. Ruff, strict OpenSpec, whitespace and
+unchanged legacy SHA-256/import checks pass. No tolerances, forces,
+dependencies, production caps or shared per-operation 300-second deadline
+changed. The full suite spans multiple independent budgeted operations.
+
 Task 3.9 nominal longer continuation (2026-09-13):
 Run one counted nominal 1/16 s coast from the same nominal three-segment
 endpoint after the qualified longer-reference/domain checks. Verify exact
