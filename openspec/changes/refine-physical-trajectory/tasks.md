@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0012 adds a test-local stored-matrix harmonic source bound using the
+existing square-root and full-field Jacobian bounds. It retains both matrix
+factors and rejects unresolved transformed chords. All 36 focused analytic/
+rejection cases pass in 0.50 s, including an anisotropic missing-factor
+counterexample. This is not fresh Moon/Mars application: next bind the full
+arrays, positions, matrices and allowances without new native calls.
+Full verification: 2923 passed in 457.16 s; native inventory 141.40 s,
+portable 45.28 s, unchanged thirteen/zero arcs. Ruff, strict OpenSpec and
+legacy isolation pass. No production or tolerance changes; task3.9 stays open.
+
 Decision0011 binds six point-source position errors to force allowances using
 the existing same-epoch chord floors and 2*GM*epsilon/d^3. Exact endpoint
 interval differences must fit independently; outward reporting, body set,

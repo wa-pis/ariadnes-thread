@@ -493,6 +493,11 @@ using the existing 2*GM*epsilon/d^3 bound and an independent endpoint-interval
 cross-check. GM, epsilon, floors and outward L2 force allowances are retained;
 no extra native work or full-force sum. Next qualify Moon/Mars harmonic
 source effects with the appropriate spatial and stored-matrix factors.
+Decision0012 supplies the pure stored-matrix source bound q^2*J*epsilon,
+with a positive transformed-chord floor and no orthogonality assumption.
+Scaled zonal controls and an anisotropic missing-factor counterexample
+verify its composition. Next bind it to the existing fresh full Moon/Mars
+coefficient arrays and matrices; the analytic lemma is not that application.
 SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
