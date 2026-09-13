@@ -51,6 +51,29 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 degree-map initial-state families (2026-09-13):
+Verify exact initial-error/linear-defect superposition, zero cases and an
+independent analytic integration. Reprove family first-exit closure for
+0.0001 m and 0/5e-8/1e-7 m/s fixtures at all seven controls; report measured
+gates and preserve old quadratic/nominal controls. Run focused transport
+tests and real inventories, full pytest, Ruff, strict OpenSpec and legacy
+isolation before recording outcomes. No new native arcs or mission claim.
+
+Measured verification: 151 focused transport tests pass in 0.05 s, including
+sixteen new initial/linear-defect controls. Both inventories pass in 264.91 s
+combined; after recording the measured gates as regressions, all 2212 tests
+pass in 531.61 s. All 21 family domains close and all position gates pass;
+19 velocity gates pass. At Mars 1/8 s with p=0.0001 m, velocity bounds
+for v=0,5e-8,1e-7 m/s are 9.520238237331104e-7,
+1.0020238251660502e-6,1.0520238265989898e-6 m/s. Corresponding
+position bounds are 0.0001321149300121259,0.00013212118001221544,
+0.000132127430012305 m. The latter two velocity gates remain unresolved;
+this does not classify every nonzero initial radius. All eighteen shorter
+families pass. The seven nominal and twelve old quadratic family controls
+retain their original outcomes. Ruff, strict OpenSpec, diff checks and legacy
+isolation pass. No model, tolerance, native count, source query, domain or
+operation-budget changes. Task 3.9 and mission/native-stage safety stay open.
+
 Task 3.9 whole-field degree-map composition (2026-09-13):
 Verify exact all-coefficient degree sums, independent mixed polar Hessians,
 cosine/sine coupling, zero, nonmutation and invalid fields. Apply only spatial

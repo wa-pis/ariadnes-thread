@@ -4741,7 +4741,8 @@ def _check_conditional_full_force_coast_domains(
                     assert all(math.isfinite(value) and Fraction(value) >= transport_bounds[key] > 0
                                for key, value in reported_transport_bounds.items())
                     initial_ball_controls: list[dict[str, object]] = []
-                    for initial_velocity_radius_m_s in ((0.0, 5e-8, 1e-7) if short_control else ()):
+                    degree_initial_ball_controls: list[dict[str, object]] = []
+                    for initial_velocity_radius_m_s in (0.0, 5e-8, 1e-7):
                         budget.check()
                         initial_position_radius_m = 0.0001  # Explicit fixture, not a mission default/allocation.
                         p, v, h = Fraction(initial_position_radius_m), Fraction(initial_velocity_radius_m_s), Fraction(duration_s)
@@ -4751,6 +4752,39 @@ def _check_conditional_full_force_coast_domains(
                         family_velocity_reach_m_s = v + Fraction(acceleration_m_s2) * h
                         assert family_position_reach_m < Fraction(position_radius_m)
                         assert family_velocity_reach_m_s < Fraction(velocity_radius_m_s)
+                        degree_family_position_m, degree_family_velocity_m_s = _coast_error_envelope(
+                            duration_s, p, v, Fraction(reported_full_position_sensitivity),
+                            Fraction(reported_relativity_sensitivities[1]), constant_defect_m_s2,
+                            acceleration_defect_rate_m_s3=degree_rate_m_s3,
+                        )
+                        degree_family_position_m += cubic_position_residual_m
+                        degree_family_velocity_m_s += cubic_velocity_residual_m_s
+                        assert degree_position_m < degree_family_position_m <= Fraction("0.001")
+                        assert degree_velocity_m_s < degree_family_velocity_m_s
+                        degree_family_values = {
+                            "position_reach_m": family_position_reach_m,
+                            "velocity_reach_m_s": family_velocity_reach_m_s,
+                            "endpoint_position_error_m": degree_family_position_m,
+                            "endpoint_velocity_error_m_s": degree_family_velocity_m_s,
+                        }
+                        reported_degree_family = {key: math.nextafter(float(value), math.inf)
+                                                  for key, value in degree_family_values.items()}
+                        assert all(math.isfinite(value) and Fraction(value) >= degree_family_values[key] > 0
+                                   for key, value in reported_degree_family.items())
+                        degree_resolves_velocity = degree_family_velocity_m_s <= Fraction("0.000001")
+                        # Measured family controls: Mars 1/8 s loses its nominal
+                        # margin at both nonzero velocity radii, despite closure.
+                        assert degree_resolves_velocity == (duration_s < 1 / 8 or initial_velocity_radius_m_s == 0.0)
+                        degree_initial_ball_controls.append({
+                            "initial_position_radius_m": initial_position_radius_m,
+                            "initial_velocity_radius_m_s": initial_velocity_radius_m_s,
+                            "conditional_domain_closed": True,
+                            "within_position_gate": degree_family_position_m <= Fraction("0.001"),
+                            "within_velocity_gate": degree_resolves_velocity,
+                            **reported_degree_family,
+                        })
+                        if not short_control:
+                            continue  # Preserve the original quadratic family controls at 1/64 s only.
                         family_position_error_m, family_velocity_error_m_s = _coast_error_envelope(
                             duration_s, p, v, Fraction(reported_full_position_sensitivity),
                             Fraction(reported_relativity_sensitivities[1]), reference_defect_m_s2,
@@ -4778,6 +4812,7 @@ def _check_conditional_full_force_coast_domains(
                             "within_velocity_gate": resolves_velocity,
                             **reported_family,
                         })
+                    assert len(degree_initial_ball_controls) == 3 and len(initial_ball_controls) == (3 if short_control else 0)
                     control_elapsed_s = perf_counter() - control_started_s
                     assert math.isfinite(control_elapsed_s) and control_elapsed_s >= native_elapsed_s
                     budget.check()
@@ -4820,6 +4855,7 @@ def _check_conditional_full_force_coast_domains(
                         "reference_only_velocity_bound_resolves_1um_s": weighted_reference_velocity_error_m_s <= Fraction("0.000001"),
                         "weighted_velocity_bound_resolves_1um_s": weighted_velocity_error_m_s <= Fraction("0.000001"),
                         "conditional_initial_state_ball_controls": initial_ball_controls,
+                        "conditional_degree_initial_state_ball_controls": degree_initial_ball_controls,
                         "native_arc_elapsed_s": native_elapsed_s,
                         "control_verification_elapsed_s": control_elapsed_s,
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),

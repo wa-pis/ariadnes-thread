@@ -17,7 +17,17 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest native comparison (2026-09-13): whole-degree composition resolves
+Latest initial-error qualification (2026-09-13): all 21 degree-map families
+close inside the unchanged domains and pass position; 19 pass velocity.
+With p=0.0001 m at Mars 1/8 s, velocity bounds for initial velocity radii
+0, 5e-8 and 1e-7 m/s are respectively 9.520238237331104e-7,
+1.0020238251660502e-6 and 1.0520238265989898e-6 m/s. The last two
+do not resolve the 1e-6 m/s gate. All eighteen shorter families pass.
+This diagnoses three explicit radii; it does not imply every nonzero velocity
+radius fails, nor define a mission or measurement-error allocation. The seven
+nominal controls and twelve old quadratic families remain unchanged.
+
+Retained native comparison: whole-degree composition resolves
 both endpoint gates in all seven existing zero-initial-error controls.
 Mars 1/8 s position/velocity bounds are 3.21149285791862e-5 m and
 9.520008966984693e-7 m/s, below 0.001 m / 1e-6 m/s. Reference-only
@@ -158,13 +168,14 @@ Forty-six additional mixed-field/rejection controls verify independent polar
 Hessians and the C20/remainder composition. Native application changes only
 the reference spatial-variation bound; full-force state sensitivities,
 rotation allowances, arithmetic bounds and historical controls remain intact.
-Next bounded work within 3.9 is to qualify nonzero initial-state balls
-under the degree-map cubic certificate before longer or adjacent arcs.
-Reuse explicit 0.0001 m position and 0 / 5e-8 / 1e-7 m/s velocity fixtures;
-reprove family inclusion in each unchanged domain and transport the initial
-errors with the same force sensitivities, defect and native residuals.
-Measure every gate: the small Mars 1/8 s margin is not an initial-error
-budget or a guarantee of passage. Keep all previous certificates. Preserve all
+Next bounded work within 3.9 is to derive and verify the admissible initial
+velocity-radius interval at fixed position radius under the same affine
+error transport and strict domain-closure inequalities. Check its boundary
+against the existing passing/failing fixtures before any adjacent arc.
+Distinguish inclusive accuracy limits from strict closure limits; do not
+clip an infeasible interval into a safe result or introduce hidden defaults.
+The derived interval is conditional, not a mission allocation. Keep all
+previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
@@ -173,7 +184,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2196 passing tests; both inventories
+The latest completed code check has 2212 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs seven spacecraft arcs, the portable inventory

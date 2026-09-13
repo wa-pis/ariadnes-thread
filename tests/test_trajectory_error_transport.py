@@ -116,6 +116,25 @@ def test_zero_initial_error_transport_is_additive(
         assert combined == (d*h**2/2 + j*h**3/6, d*h + j*h**2/2)
 
 
+@pytest.mark.parametrize("duration_s", [0.0, 1 / 8])
+@pytest.mark.parametrize("p", [Fraction(0), Fraction(1, 1000)])
+@pytest.mark.parametrize("v", [Fraction(0), Fraction(1, 10**7)])
+@pytest.mark.parametrize("sensitivity", [Fraction(0), Fraction(1, 10)])
+def test_error_transport_adds_initial_ball_to_linear_defect(
+    duration_s: float, p: Fraction, v: Fraction, sensitivity: Fraction,
+) -> None:
+    d, j = Fraction(1, 1000), Fraction(2, 1000)  # m/s^2 and m/s^3.
+    total = _coast_error_envelope(duration_s, p, v, sensitivity, sensitivity, d, acceleration_defect_rate_m_s3=j)
+    initial = _coast_error_envelope(duration_s, p, v, sensitivity, sensitivity, Fraction(0))
+    forcing = _coast_error_envelope(duration_s, Fraction(0), Fraction(0), sensitivity, sensitivity, d,
+                                    acceleration_defect_rate_m_s3=j)
+    assert total == tuple(a+b for a, b in zip(initial, forcing, strict=True))
+    if sensitivity == 0:
+        h = Fraction(duration_s)
+        # Independent integration of x''=D+J*t with x(0)=p m, v(0)=v m/s.
+        assert total == (p+v*h+d*h*h/2+j*h**3/6, v+d*h+j*h*h/2)
+
+
 @pytest.mark.parametrize("duration_s", [0.0, 1 / 64, 0.3])
 @pytest.mark.parametrize("initial_position,initial_velocity,defect", [
     (Fraction(0), Fraction(0), Fraction(0)),

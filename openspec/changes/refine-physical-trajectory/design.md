@@ -1,5 +1,25 @@
 ## Context
 
+### Initial-state balls under the degree-map certificate (2026-09-13)
+
+Use explicit diagnostic radii p=0.0001 m and v=0,5e-8,1e-7 m/s around
+each stored nominal initial state, not mission defaults or Gaussian noise.
+WHEN p+(|v0|+v)*h+A*h^2/2 and v+A*h are strictly inside the existing
+position/velocity domain radii, THEN the first-exit proof contains the entire
+initial-state family. Keep all source domains, force bounds and reference
+coefficients fixed. Apply the same degree-map D+J*t transport with initial
+radii p,v and add the unchanged nominal native-to-cubic residuals.
+This bounds ideal family endpoints relative to the nominal native endpoint;
+it does not rerun native dynamics for each perturbed initial state.
+
+Verify exact additivity of initial-error and forcing contributions at fixed
+sensitivities, including zero cases and independent integration of D+J*t.
+Report 21 closed-family checks across the existing seven controls, with
+outward SI values and separate gates. Preserve the twelve original quadratic
+family controls and every zero-initial-error result. Do not assume nominal
+gate passage survives nonzero initial error; no adjacent arc, covariance,
+native-stage or full-mission qualification is implied.
+
 ### Whole-field degree-map composition (2026-09-13)
 
 WHEN supplied validated lower-triangular finite float64 coefficients with
