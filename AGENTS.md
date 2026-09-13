@@ -54,6 +54,9 @@
 
 ## Git
 
+- Record consequential scientific, performance and architectural decisions in `docs/decisions/` using its lightweight record structure. Separate observations, hypotheses and conditional mathematical arguments; link evidence and the measured code revision, including failures and unresolved checks.
+- Evidence-only/documentation commits may preserve failed experiments after checking accuracy, links and artifact syntax. Explicitly label incomplete implementation; exclude unverified code and do not treat such commits as satisfying implementation test or milestone gates. Preserve earlier evidence when a later decision supersedes it.
+
 - Work on `dev` unless the user specifies another branch.
 - Use small logical Conventional Commits. Commit completed units after checks pass.
 - Never commit secrets, caches, virtual environments, editable-install metadata, or generated build artifacts.

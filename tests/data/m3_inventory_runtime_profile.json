@@ -1,0 +1,31 @@
+{
+  "base_commit": "fd4dafd",
+  "profiler": "Python stdlib cProfile around one pytest.main invocation",
+  "test": "tests/test_trajectory_spk.py::test_loaded_spk_chain_coverage_contains_candidate_interval[native-readback]",
+  "scope": "Includes pytest setup and an incomplete native inventory; not an unprofiled speed measurement",
+  "runtime_limit_s": 300,
+  "elapsed_s": 301.1392669591587,
+  "pytest_elapsed_s": 300.93,
+  "pytest_exit_code": 1,
+  "failure": "shared deadline reached inside _regular_solid_harmonic_jets",
+  "control_attempts": 8,
+  "propagation_evaluations": 8,
+  "native_arc_propagations": 8,
+  "native_test_and_production_unchanged": true,
+  "observations": [
+    {"function": "math.gcd", "calls": 40118235, "self_s": 141.666194816, "inclusive_s": 141.666194816},
+    {"function": "_generic_harmonic_term_errors_m_s2", "calls": 12, "self_s": 0.14692622500000002, "inclusive_s": 204.19506875200003},
+    {"function": "_generic_harmonic_term_intervals_m_s2", "generator_resumptions": 51315, "self_s": 0.733478723, "inclusive_s": 178.168306414},
+    {"function": "_regular_solid_harmonic_jets", "generator_resumptions": 51315, "self_s": 0.26078893400000003, "inclusive_s": 51.823600422000005},
+    {"function": "_harmonic_spatial_jacobian_bound_s_inv2", "calls": 156, "self_s": 6.009280338, "inclusive_s": 45.353119999},
+    {"function": "_coast_error_envelope", "calls": 128, "self_s": 0.0009532830000000001, "inclusive_s": 0.633813211}
+  ],
+  "limitations": [
+    "Profiling overhead changes how much work fits before the unchanged deadline; the unprofiled failure reached 12 arcs.",
+    "Inclusive times overlap and generator counts are resumptions, not completed evaluations.",
+    "Native binding attribution included suspicious near-identical 23.65 s self times in several setup wrappers. These observations are not an additive wall-time decomposition or reliable native setup benchmark.",
+    "Repeated calls are established; identical scientific inputs and achievable speedup are not yet measured.",
+    "No optimization, scientific qualification, full-suite pass, or new trajectory result is claimed."
+  ],
+  "next_check": "Measure exact duplicate keys within this invocation; consider local reuse only for byte-identical coefficients, positions, rotation, observed terms and identical GM/radius. Preserve validation, budget checks and all native controls."
+}

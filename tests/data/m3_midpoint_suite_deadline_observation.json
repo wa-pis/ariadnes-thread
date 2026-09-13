@@ -1,0 +1,18 @@
+{
+  "base_commit": "fd4dafd",
+  "passed": 2803,
+  "failed": 1,
+  "elapsed_s": 623.04,
+  "failed_test": "tests/test_trajectory_spk.py::test_loaded_spk_chain_coverage_contains_candidate_interval[native-readback]",
+  "failure_location": "tests/test_trajectory_spk.py:5339 budget.check()",
+  "failure": "shared deadline reached; no partial result returned",
+  "runtime_limit_s": 300,
+  "native_test_elapsed_s": 300.02,
+  "control_attempts": 12,
+  "propagation_evaluations": 12,
+  "native_arc_propagations": 12,
+  "native_test_and_production_unchanged": true,
+  "focused_tests_passed": 712,
+  "focused_elapsed_s": 0.43,
+  "status": "Full verification incomplete; investigate diagnostic cost without weakening limits"
+}
