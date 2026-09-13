@@ -1,0 +1,24 @@
+{
+  "reviewed_commit": "d7f7afe",
+  "epoch_tdb_s": 978995455.2929223,
+  "origin": "SSB",
+  "orientation": "J2000",
+  "acceleration_unit": "m/s^2",
+  "target_source_convention": "exact position polynomials at fixed nominal spacecraft state",
+  "harmonic_matrix_convention": "stored binary64 matrices held fixed",
+  "scope": "Assembly input inventory only; no assembled gravity or full-force bound",
+  "moon_stored_component_intervals_m_s2": [
+    [8.961377220000648e-11, 8.96137722000065e-11],
+    [4.220212558579171e-11, 4.2202125585791725e-11],
+    [1.488963161111479e-11, 1.4889631611114797e-11]
+  ],
+  "moon_box_includes_tail": true,
+  "moon_evaluated_through_degree": 20,
+  "moon_maximum_degree": 200,
+  "input_sha256": {
+    "m3_fresh_point_gravity_intervals.json": "999c3e42ada06ae568485f66adf0d62dae8e71120c400495381053120dd4beac",
+    "m3_separate_tail_midpoint_verification.json": "3f92897bc0242c68501ea8c7ede291ecd3f580eb59d7f85c6f11ee2b67fdda74",
+    "m3_fresh_harmonic_source_errors.json": "f647c2b3de1b0b9b7102d7367fac152ca4b2eaf9cc2622cc22121e3d91be9948",
+    "m3_fresh_harmonic_replay.json": "e401d88cbdd0110ac6c0357612b0053a34f87f8953856ac3372360e5ea3dca99"
+  }
+}

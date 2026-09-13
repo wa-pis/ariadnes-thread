@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0014 fixes the gravity assembly target: exact source polynomials,
+stored harmonic matrices and nominal spacecraft state. Retain/pin the input
+artifacts and latest Moon box; add Moon/Mars source bridges once, not the
+six point-source bridges for this target, and never duplicate stored tails.
+No aggregate or executable change yet. Artifact/hash/link and strict OpenSpec
+checks validate this audit; no full pytest rerun. Next implement exact box
+sum and explicit scalar error channels with independent controls. 3.9 stays open.
+
 Decision0013 applies the stored-matrix source bound to the full fresh Moon
 200x200 and Mars 120x120 arrays inside the existing harmonic control. Exact
 handoff/source, resource identity, full shape, outward error reporting and

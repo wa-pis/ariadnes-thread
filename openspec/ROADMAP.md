@@ -503,6 +503,13 @@ Decision0013 applies it inside the existing fresh harmonic control with full
 No new native query, derivative, arc or high-degree vector evaluation.
 Next audit a common same-epoch gravity ledger and count source allowances
 once; matrix/native arithmetic and other force terms remain separate gaps.
+Decision0014 selects exact source polynomials with stored harmonic matrices
+for a gravity-only target. Retain the six point boxes, Moon box and Mars
+midpoint; add only Moon/Mars source bridges and the existing Mars midpoint
+bound, each once. The Moon box already includes its tail. Pinned assembly
+inputs preserve the latest Moon output; no aggregate is yet implemented.
+Next verify exact box summation, final rounding, identity rejection and
+independent composition controls before reporting a gravity-only aggregate.
 SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
