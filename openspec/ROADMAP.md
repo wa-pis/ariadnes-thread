@@ -521,6 +521,11 @@ at the fresh source balls and retain actual optical radii/spacecraft parameters.
 Retain the already available cached Sun velocity and audit its selected SPK
 representation/coverage before Schwarzschild binding. No new force or query
 in this audit; next capture/verify these prerequisites inside the existing probe.
+Decision0017 captures those inputs in the existing probe and requires all
+three fresh source-ball disc-disjointness predicates. The SRP configuration,
+shape radii and full cached Sun state are retained without another query.
+Sun velocity remains readback-only pending its representation/error bridge.
+Next qualify signed SRP scaling of the existing solar-gravity intervals.
 SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or

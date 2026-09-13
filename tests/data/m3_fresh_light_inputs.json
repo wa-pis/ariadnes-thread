@@ -1,0 +1,36 @@
+{
+  "additional_native_arcs": 0,
+  "additional_native_queries": 0,
+  "elapsed_s": 0.000185416080057621,
+  "fresh_light_inputs": {
+    "epoch_tdb_s": 978995455.2929223,
+    "full_light_by_occultor": {"Earth": true, "Mars": true, "Moon": true},
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "optical_radii_m": {"Earth": 6371008.366666666, "Mars": 3389526.6666666665, "Moon": 1737400.0000000002, "Sun": 696000000.0},
+    "orientation": "J2000",
+    "origin": "SSB",
+    "pck_sha256": "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2",
+    "scope": "Full light at fixed nominal observer for conditional source-position balls; Sun velocity is cached readback only, not a qualified velocity bridge",
+    "source_position_allowances_m": {"Earth": 6.0187747349184116e-05, "Mars": 0.0001648618821045329, "Moon": 8.934704095652991e-05, "Sun": 1.4595070471278306e-07},
+    "source_positions_m": {
+      "Earth": [-46948913716.35798, 128131115019.08472, 55552327450.20176],
+      "Mars": [-245060528075.4266, 35261268330.50904, 22783597232.70358],
+      "Moon": [-47126474532.15059, 128473303533.69559, 55670397251.351845],
+      "Sun": [-152759301.5470408, 173039265.02940723, 85705792.6458708]
+    },
+    "spacecraft_mass_kg": 2000.0,
+    "spacecraft_state_m_m_s": [-245056838575.43283, 35261268424.25906, 22783597232.703575, -3128.28194638288, -18367.951868652242, -9028.78105009038],
+    "srp_resource": {
+      "acceleration_type": "cannonball-radiation-pressure",
+      "initial_mass_kg": 2000.0,
+      "luminosity_w": 3.828e+26,
+      "occulting_bodies": ["Moon", "Earth", "Mars"],
+      "reference_area_m2": 20.0,
+      "reflectivity_coefficient": 1.3,
+      "source_body": "Sun",
+      "target_body": "Spacecraft",
+      "uses_current_body_mass": true
+    },
+    "sun_state_m_m_s": [-152759301.5470408, 173039265.02940723, 85705792.6458708, -8.567768598269868, 1.785854797514042, 0.9495327247306723]
+  }
+}

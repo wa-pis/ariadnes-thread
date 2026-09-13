@@ -5286,13 +5286,17 @@ def _check_conditional_full_force_coast_domains(
                                         assert handoff_epoch <= adjacent_final_tdb_s <= fresh_source_end_tdb_s
                                         assert (environment.origin, environment.orientation) == ("SSB", "J2000")
                                         source_binding: dict[str, object] = {}
+                                        fresh_sun_state: np.ndarray | None = None
                                         point_source_errors: dict[str, object] = {}
                                         source_error_started_s = perf_counter()
                                         source_error_counts = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
                                         for source in trajectory.PHYSICAL_BODY_NAMES:
                                             # Read cached environment state after the existing
                                             # derivative call; do not issue another SPICE query.
-                                            consumer = tuple(map(Fraction, np.asarray(bodies.get(source).state).reshape(6)[:3]))
+                                            cached_state = np.asarray(bodies.get(source).state).reshape(6)
+                                            consumer = tuple(map(Fraction, cached_state[:3]))
+                                            if source == "Sun":
+                                                fresh_sun_state = cached_state.copy()
                                             assert consumer == fresh_native_positions_m[source], source
                                             residual_m = sum((abs(a-b) for a, b in zip(
                                                 consumer, fresh_source_states[source][:3], strict=True)), Fraction(0))
@@ -5342,6 +5346,46 @@ def _check_conditional_full_force_coast_domains(
                                             "scope": "Same-epoch cached positions only; no force-error or mission certificate",
                                         }}, sort_keys=True, allow_nan=False))
                                         harmonic_started_s = perf_counter()
+                                        assert fresh_sun_state is not None and np.all(np.isfinite(fresh_sun_state))
+                                        light_started_s = perf_counter()
+                                        light_counts = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                        srp_resource = environment.solar_radiation_pressure
+                                        assert srp_resource.luminosity_w == trajectory.SUN_LUMINOSITY_W
+                                        assert srp_resource.reference_area_m2 == spacecraft.srp_area_m2
+                                        assert srp_resource.reflectivity_coefficient == spacecraft.reflectivity_coefficient
+                                        assert srp_resource.initial_mass_kg == float(probe_state[6]) == spacecraft.initial_mass_kg
+                                        assert srp_resource.occulting_bodies == trajectory.SOLAR_RADIATION_OCCULTING_BODY_NAMES
+                                        optical_bodies = ("Sun", *srp_resource.occulting_bodies)
+                                        optical_radii = {body: bodies.get(body).shape_model.average_radius for body in optical_bodies}
+                                        optical_positions = {body: np.asarray(tuple(map(float, fresh_native_positions_m[body]))) for body in optical_bodies}
+                                        assert np.array_equal(fresh_sun_state[:3], optical_positions["Sun"])
+                                        fresh_clear = {body: _apparent_spheres_strictly_disjoint(
+                                            optical_positions["Sun"], optical_radii["Sun"],
+                                            optical_positions[body], optical_radii[body], probe_state[:3],
+                                            source_position_error_m=source_position_errors_m["Sun"],
+                                            occultor_position_error_m=source_position_errors_m[body], observer_position_error_m=0.0,
+                                        ) for body in srp_resource.occulting_bodies}
+                                        assert set(fresh_clear) == {"Moon", "Earth", "Mars"} and all(fresh_clear.values()), fresh_clear
+                                        assert selected_handoff == preserved_handoff
+                                        assert light_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                        light_snapshot = {
+                                            "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
+                                            "model_id": trajectory.PHYSICAL_MODEL_IDENTIFIER,
+                                            "srp_resource": asdict(srp_resource), "spacecraft_state_m_m_s": probe_state[:6].tolist(),
+                                            "spacecraft_mass_kg": float(probe_state[6]), "sun_state_m_m_s": fresh_sun_state.tolist(),
+                                            "optical_radii_m": optical_radii,
+                                            "source_positions_m": {body: position.tolist() for body, position in optical_positions.items()},
+                                            "source_position_allowances_m": {body: source_position_errors_m[body] for body in optical_bodies},
+                                            "full_light_by_occultor": fresh_clear,
+                                            "pck_sha256": environment.collision_resource.actual_sha256,
+                                            "scope": "Full light at fixed nominal observer for conditional source-position balls; Sun velocity is cached readback only, not a qualified velocity bridge",
+                                        }
+                                        encoded_light = json.dumps(light_snapshot, sort_keys=True, allow_nan=False)
+                                        decoded_light = json.loads(encoded_light)
+                                        assert np.asarray(decoded_light["sun_state_m_m_s"], dtype="<f8").tobytes() == fresh_sun_state.astype("<f8").tobytes()
+                                        print(json.dumps({"fresh_light_inputs": light_snapshot, "elapsed_s": perf_counter()-light_started_s,
+                                                          "additional_native_queries": 0, "additional_native_arcs": 0}, sort_keys=True, allow_nan=False))
+                                        budget.check()
                                         harmonic_reports: dict[str, object] = {}
                                         replay_fields: dict[str, object] = {}
                                         # Full Mars degree120 exceeded the shared deadline
