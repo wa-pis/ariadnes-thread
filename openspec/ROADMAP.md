@@ -332,17 +332,25 @@ force parity and preserved endpoint histories. Four derivative evaluations
 run and add zero propagation arcs. Internal ephemeris work is not excluded.
 The fresh value is only a native observation, not an acceleration enclosure.
 
-Next bounded work within 3.9 is to obtain fresh component/harmonic-term
-values and source/PCK geometry for independent acceleration error assembly.
-WHEN the installed instantaneous dependent-variable interface or existing
-arithmetic oracles provide them without a new propagation, THEN verify
-their ordering and sum against the observed total and retain each missing
-arithmetic allowance explicitly. Include both full harmonic fields, SRP
-and illumination, relativity and source/PCK terms. Do not reuse original
-anchor-error numbers or omit terms; report unresolved premises instead of
-promoting a partial bound. Keep fresh jerk's omitted-force allowances and
-new cubic domain closure open. Count and time every additional derivative
-or dependent-variable evaluation. Add no spacecraft propagation arcs or
+Installed dependent-variable retrieval is not an instantaneous fresh-state
+evaluator. Instead, the existing independent harmonic calculation now
+exposes signed vector intervals, with the old comparison API consuming
+the same intervals. Independent monopole and degree-three component checks
+and the original error controls verify the extraction; source/PCK errors
+remain separate. No additional native evaluations were introduced.
+
+Next bounded work within 3.9 is fresh harmonic acceleration interval
+assembly at the saved nominal Mars handoff using this independent oracle.
+WHEN fresh source positions and rotation matrices are fixed at the correct
+epoch, THEN sum qualified term intervals and retain every unevaluated
+degree in an explicit remainder. Include fresh source rounding/PCK bounds
+or mark the result conditional on exact stored geometry. Time the work
+within the shared budget; do not reuse old numerical anchor-error values.
+Compare with native total only after the remaining point gravity, SRP,
+illumination and relativity components and allowances are included. Keep
+full-force certification, fresh jerk's omitted-force allowances and new
+cubic domain closure open. Count every added native evaluation. Add no
+spacecraft propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
 caps and the shared 300-second deadline. Keep Moon unresolved and 3.9 open.
@@ -355,7 +363,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2748 passing tests; both inventories
+The latest completed code check has 2751 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs thirteen spacecraft arcs, the portable inventory

@@ -1,5 +1,29 @@
 ## Context
 
+### Independent harmonic vector intervals (2026-09-13)
+
+Installed `DependentVariablesInterface` exposes no public callable members;
+the result property's documentation describes retrieval/interpolation of
+recorded output. It is not an instantaneous evaluator at a different
+nominal state. Do not substitute those historical values for fresh terms.
+
+The existing generic harmonic oracle already forms component intervals
+before reducing them to errors against observed terms. Extract that exact
+calculation as a streaming interval iterator, retaining normalization,
+coefficient order, all zero terms, dyadic roots and shared-budget checks.
+The original error function consumes those intervals using the same L1
+maximum-endpoint error formula. WHEN tested on monopole and degree-three
+axis solutions, THEN signed component intervals must enclose independent
+exact rational or squared-irrational oracles; ordering and original error
+checks must remain valid, including degree-two and full native controls.
+Reject malformed observations and retain existing input/deadline failures.
+
+These intervals are at exact stored source positions and rotation matrices;
+fresh source/PCK allowances are NOT included. No fresh full-force reference
+or acceleration certificate is produced by this extraction. It makes the
+needed vector information available without an instantaneous native term
+getter or additional propagation. Fresh-state assembly remains next.
+
 ### Instantaneous full-force accessor prerequisite (2026-09-13)
 
 Installed TudatPy exposes `SingleArcSimulator.state_derivative_function`

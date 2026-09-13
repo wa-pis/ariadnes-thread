@@ -51,6 +51,32 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 independent harmonic vector intervals (2026-09-13):
+Inspect installed dependent-variable API; do not use historical interpolation
+as a fresh-state readback. Expose the existing exact harmonic component
+intervals through a streaming iterator and retain the old comparison API.
+Verify signed monopole/degree-three independent oracles, term ordering,
+invalid observations and all previous harmonic/error/deadline controls.
+Run focused tests, full pytest, Ruff, strict OpenSpec and legacy isolation.
+No extra native evaluations or propagation; fresh-state/source/PCK/full-force
+assembly remains unresolved and task 3.9 remains open.
+
+Verification: 110 focused harmonic tests pass in 30.49 s; all 2751 tests
+pass in 559.28 s. Two monopole and eight degree-three controls now check
+signed component intervals independently (exact rational values or squared
+irrational enclosures), preserving zero components and degree/order order.
+Three new invalid-observation cases reject shape, nonfinite data and dtype.
+Existing degree-two comparisons, degree-200 controls, error/deadline tests
+and both scientific inventories pass without changed tolerances. Original
+error reduction is algebraically identical: sum of maximum absolute errors
+to each interval endpoint. No force coefficients or reference values changed.
+Thirteen/zero native arcs, forty explicit source readbacks per inventory
+and the prior four-evaluation accessor probe are retained. Ruff, strict
+OpenSpec, whitespace and unchanged legacy SHA-256/import checks pass.
+Full-suite time is not a single operation; every operation retains its
+300-second shared deadline. Fresh source/PCK/full-force composition remains
+open, and no new native evaluation was introduced in this step.
+
 Task 3.9 instantaneous full-force accessor (2026-09-13):
 Check the installed derivative API on existing simulators with exact
 original force parity, kinematic/mass identities, environment restoration,

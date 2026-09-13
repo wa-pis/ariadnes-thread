@@ -3357,12 +3357,15 @@ def test_regular_solid_harmonics_checks_deadline_between_rows() -> None:
         next(stream)
 
 
-def _generic_harmonic_term_errors_m_s2(
+def _generic_harmonic_term_intervals_m_s2(
     budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
     cosine: np.ndarray, sine: np.ndarray, body_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
-    inertial_to_fixed: np.ndarray, observed_terms_m_s2: np.ndarray,
-) -> dict[tuple[int, int], Fraction]:
-    """Enclose each normalized term's L1 error at exact stored SI states/matrix."""
+    inertial_to_fixed: np.ndarray,
+) -> Iterator[tuple[tuple[int, int], tuple[tuple[Fraction, Fraction], ...]]]:
+    """Yield normalized force-component intervals at exact stored SI states/matrix.
+
+    Inertial J2000 acceleration in m/s^2; source/PCK input error is separate.
+    """
     budget.check()
     assert all(type(value) is float and math.isfinite(value) and value > 0 for value in (gm_m3_s2, reference_radius_m))
     assert cosine.ndim == 2 and cosine.shape == sine.shape and cosine.shape[0] == cosine.shape[1] > 0
@@ -3372,7 +3375,7 @@ def _generic_harmonic_term_errors_m_s2(
     maximum_degree = len(cosine) - 1
     term_count = (maximum_degree + 1) * (maximum_degree + 2) // 2
     for array, shape in ((body_position_m, (3,)), (spacecraft_position_m, (3,)),
-                         (inertial_to_fixed, (3, 3)), (observed_terms_m_s2, (term_count, 3))):
+                         (inertial_to_fixed, (3, 3))):
         assert array.shape == shape and array.dtype == np.float64 and np.all(np.isfinite(array))
     relative_m = [Fraction(ship) - Fraction(body) for ship, body in zip(spacecraft_position_m, body_position_m, strict=True)]
     matrix = [tuple(map(Fraction, row)) for row in inertial_to_fixed]
@@ -3386,8 +3389,8 @@ def _generic_harmonic_term_errors_m_s2(
     root_lower, root_upper = _dyadic_sqrt_bounds(q)
     radial_factor_m_s2 = Fraction(gm_m3_s2) / (scale_m**2 * q)
     radial_ratio = Fraction(reference_radius_m) / (scale_m * q)
-    errors: dict[tuple[int, int], Fraction] = {}
-    for index, (degree, order, real, imaginary) in enumerate(_regular_solid_harmonic_jets(budget, coordinates, maximum_degree)):
+    yielded_terms = 0
+    for degree, order, real, imaginary in _regular_solid_harmonic_jets(budget, coordinates, maximum_degree):
         if degree and order == 0:
             radial_factor_m_s2 *= radial_ratio
         c, s = Fraction(cosine[degree, order]), Fraction(sine[degree, order])
@@ -3397,13 +3400,34 @@ def _generic_harmonic_term_errors_m_s2(
         norm_lower, norm_upper = _dyadic_sqrt_bounds(normalization_squared)
         polynomial_m_s2 = [radial_factor_m_s2 * (q * derivative - (2 * degree + 1) * jet[0] * u)
                            for derivative, u in zip(jet[1:], coordinates, strict=True)]
-        error_m_s2 = Fraction(0)
-        for axis, observed in enumerate(observed_terms_m_s2[index]):
+        intervals: list[tuple[Fraction, Fraction]] = []
+        for axis in range(3):
             projected_m_s2 = sum((matrix[row][axis] * polynomial_m_s2[row] for row in range(3)), Fraction(0))
             endpoints_m_s2 = (projected_m_s2 * norm_lower / root_upper, projected_m_s2 * norm_upper / root_lower)
-            error_m_s2 += max(abs(Fraction(observed) - value) for value in endpoints_m_s2)
-        errors[degree, order] = error_m_s2
+            intervals.append((min(endpoints_m_s2), max(endpoints_m_s2)))
+        yielded_terms += 1
+        yield (degree, order), tuple(intervals)
     budget.check()
+    assert yielded_terms == term_count
+
+
+def _generic_harmonic_term_errors_m_s2(
+    budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
+    cosine: np.ndarray, sine: np.ndarray, body_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
+    inertial_to_fixed: np.ndarray, observed_terms_m_s2: np.ndarray,
+) -> dict[tuple[int, int], Fraction]:
+    """Enclose each normalized term's L1 error at exact stored SI states/matrix."""
+    budget.check()
+    assert cosine.ndim == 2 and cosine.shape[0] > 0
+    term_count = cosine.shape[0]*(cosine.shape[0]+1)//2
+    assert observed_terms_m_s2.shape == (term_count, 3) and observed_terms_m_s2.dtype == np.float64
+    assert np.all(np.isfinite(observed_terms_m_s2))
+    errors: dict[tuple[int, int], Fraction] = {}
+    for index, (key, intervals) in enumerate(_generic_harmonic_term_intervals_m_s2(
+        budget, gm_m3_s2, reference_radius_m, cosine, sine, body_position_m, spacecraft_position_m, inertial_to_fixed,
+    )):
+        errors[key] = sum((max(abs(Fraction(observed)-lo), abs(Fraction(observed)-hi))
+                           for observed, (lo, hi) in zip(observed_terms_m_s2[index], intervals, strict=True)), Fraction(0))
     assert len(errors) == term_count
     return errors
 
@@ -3417,6 +3441,11 @@ def test_generic_harmonic_monopole_matches_point_oracle(error_m_s2: float) -> No
         body_m, body_m + np.asarray([3.0, -4.0, 0.0]), np.eye(3), observed_m_s2,
     )
     assert errors == {(0, 0): Fraction(error_m_s2)}
+    intervals = dict(_generic_harmonic_term_intervals_m_s2(
+        trajectory._RefinementBudget("generic-monopole-interval", 300.0), 125.0, 1.0,
+        np.ones((1, 1)), np.zeros((1, 1)), body_m, body_m+np.asarray([3.0, -4.0, 0.0]), np.eye(3),
+    ))
+    assert intervals == {(0, 0): ((Fraction(-3), Fraction(-3)), (Fraction(4), Fraction(4)), (Fraction(0), Fraction(0)))}
 
 
 @pytest.mark.parametrize("order", [0, 1, 2])
@@ -3453,6 +3482,34 @@ def test_generic_harmonic_degree_three_axis_oracles(radius_m: float, kind: str) 
     expected_squared = (112 * Fraction(0.125)**2 if order == 0 else
                         70 * (abs(Fraction(cosine[3, 3])) + Fraction(3, 4) * abs(Fraction(sine[3, 3])))**2) / Fraction(radius_m)**10
     assert expected_squared <= bound_m_s2**2 < expected_squared * (1 + Fraction(2)**-90)
+    terms = list(_generic_harmonic_term_intervals_m_s2(
+        trajectory._RefinementBudget("generic-degree-three-interval", 300.0), 1.0, 1.0, cosine, sine,
+        np.zeros(3), position_m, np.eye(3),
+    ))
+    assert [key for key, _ in terms] == [(n, m) for n in range(4) for m in range(n+1)]
+    components = (Fraction(0), Fraction(0), -4*Fraction(cosine[3, 0])) if order == 0 else (
+        -Fraction(cosine[3, 3]), 3*Fraction(sine[3, 3])/4, Fraction(0),
+    )
+    for coefficient, (lo, hi) in zip(components, dict(terms)[3, order], strict=True):
+        assert lo <= hi
+        if coefficient == 0:
+            assert lo == hi == 0
+        else:
+            lower, upper = (lo, hi) if coefficient > 0 else (-hi, -lo)
+            exact_squared = (7 if order == 0 else 70)*coefficient**2/Fraction(radius_m)**10
+            assert 0 < lower <= upper and lower**2 <= exact_squared <= upper**2
+
+
+@pytest.mark.parametrize("invalid", ["shape", "nan", "dtype"])
+def test_generic_harmonic_rejects_invalid_observations(invalid: str) -> None:
+    observed = np.zeros((2 if invalid == "shape" else 1, 3), dtype=np.int64 if invalid == "dtype" else np.float64)
+    if invalid == "nan":
+        observed[0, 0] = math.nan
+    with pytest.raises(AssertionError):
+        _generic_harmonic_term_errors_m_s2(
+            trajectory._RefinementBudget("generic-observed-invalid", 300.0), 1.0, 1.0,
+            np.ones((1, 1)), np.zeros((1, 1)), np.zeros(3), np.ones(3), np.eye(3), observed,
+        )
 
 
 @pytest.mark.parametrize("invalid", ["gm", "singularity", "sine"])
