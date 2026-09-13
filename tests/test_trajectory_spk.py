@@ -4002,6 +4002,7 @@ def _check_conditional_full_force_coast_domains(
     from test_trajectory_error_transport import _shifted_reference_defect_m_s2_m_s3
     from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
     from test_trajectory_tracefree import _tracefree_operator_bound_s_inv2
+    from test_trajectory_harmonic_source import _stored_harmonic_source_error_bound_m_s2
     from test_trajectory_degree_map import _nonmonopole_degree_map_bound_s_inv2
     from test_trajectory_c20 import (
         _c20_remainder_jacobian_bound_s_inv2, _c20_spatial_jacobian_bound_s_inv2,
@@ -5369,6 +5370,33 @@ def _check_conditional_full_force_coast_domains(
                                             decoded_field = json.loads(json.dumps(replay_fields[source], allow_nan=False))
                                             assert np.asarray(decoded_field["body_position_m"], dtype="<f8").tobytes() == source_position.astype("<f8").tobytes()
                                             assert np.asarray(decoded_field["inertial_to_fixed"], dtype="<f8").tobytes() == rotation.astype("<f8").tobytes()
+                                            source_started_s = perf_counter()
+                                            source_counts = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                            full_degree = 200 if source == "Moon" else 120
+                                            assert resource.degree == resource.order == full_degree
+                                            assert field.cosine_coefficients.shape == field.sine_coefficients.shape == (full_degree+1, full_degree+1)
+                                            assert tuple(map(Fraction, probe_state[:3])) == handoff_state[:3]
+                                            source_relative_m = tuple(a-Fraction(b) for a, b in zip(handoff_state[:3], source_position, strict=True))
+                                            harmonic_source_error = _stored_harmonic_source_error_bound_m_s2(
+                                                budget, field.gravitational_parameter, field.reference_radius,
+                                                field.cosine_coefficients, field.sine_coefficients,
+                                                source_relative_m, rotation, Fraction(source_position_errors_m[source]),
+                                            )
+                                            source_reported_error = math.nextafter(float(harmonic_source_error), math.inf)
+                                            assert math.isfinite(source_reported_error) and Fraction(source_reported_error) >= harmonic_source_error > 0
+                                            assert source_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                            assert selected_handoff == preserved_handoff
+                                            print(json.dumps({"fresh_harmonic_source_error": {
+                                                "body": source, "epoch_tdb_s": handoff_epoch,
+                                                "origin": "SSB", "orientation": "J2000", "degree": full_degree,
+                                                "source_position_allowance_m": source_position_errors_m[source],
+                                                "acceleration_l2_allowance_m_s2": source_reported_error,
+                                                "coefficient_sha256": resource.actual_sha256,
+                                                "elapsed_s": perf_counter()-source_started_s,
+                                                "additional_native_queries": 0, "additional_native_arcs": 0,
+                                                "scope": "Full stored harmonic field source-position effect at fixed nominal state and matrix; no PCK, native arithmetic or interval certificate",
+                                            }}, sort_keys=True, allow_nan=False))
+                                            budget.check()
                                             intervals, tail = _harmonic_prefix_vector_enclosure_m_s2(
                                                 budget, field.gravitational_parameter, field.reference_radius,
                                                 field.cosine_coefficients, field.sine_coefficients,

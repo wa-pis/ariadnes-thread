@@ -498,6 +498,11 @@ with a positive transformed-chord floor and no orthogonality assumption.
 Scaled zonal controls and an anisotropic missing-factor counterexample
 verify its composition. Next bind it to the existing fresh full Moon/Mars
 coefficient arrays and matrices; the analytic lemma is not that application.
+Decision0013 applies it inside the existing fresh harmonic control with full
+200x200/120x120 arrays, pinned resources and exact handoff/source bindings.
+No new native query, derivative, arc or high-degree vector evaluation.
+Next audit a common same-epoch gravity ledger and count source allowances
+once; matrix/native arithmetic and other force terms remain separate gaps.
 SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or

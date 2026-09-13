@@ -1,0 +1,32 @@
+{
+  "fresh_harmonic_source_errors": [
+    {
+      "acceleration_l2_allowance_m_s2": 2.4557651586452085e-24,
+      "additional_native_arcs": 0,
+      "additional_native_queries": 0,
+      "body": "Moon",
+      "coefficient_sha256": "3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d",
+      "degree": 200,
+      "elapsed_s": 0.8963999168481678,
+      "epoch_tdb_s": 978995455.2929223,
+      "orientation": "J2000",
+      "origin": "SSB",
+      "scope": "Full stored harmonic field source-position effect at fixed nominal state and matrix; no PCK, native arithmetic or interval certificate",
+      "source_position_allowance_m": 8.934704095652991e-05
+    },
+    {
+      "acceleration_l2_allowance_m_s2": 1.0237541896858474e-08,
+      "additional_native_arcs": 0,
+      "additional_native_queries": 0,
+      "body": "Mars",
+      "coefficient_sha256": "d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980",
+      "degree": 120,
+      "elapsed_s": 0.32460795785300434,
+      "epoch_tdb_s": 978995455.2929223,
+      "orientation": "J2000",
+      "origin": "SSB",
+      "scope": "Full stored harmonic field source-position effect at fixed nominal state and matrix; no PCK, native arithmetic or interval certificate",
+      "source_position_allowance_m": 0.0001648618821045329
+    }
+  ]
+}
