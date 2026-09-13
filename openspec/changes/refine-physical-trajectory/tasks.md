@@ -51,6 +51,35 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 nominal longer continuation (2026-09-13):
+Run one counted nominal 1/16 s coast from the same nominal three-segment
+endpoint after the qualified longer-reference/domain checks. Verify exact
+state/time/mass handoff, finite output, constant saved mass, residual added
+once, outward gates and per-call counters/timing. Preserve eleven earlier
+controls and 40 source checks per inventory; verify twelve/zero counts,
+focused budget/integrator/transport tests, full pytest, Ruff, strict OpenSpec
+and legacy isolation. Retain failures and all tolerances, resources, caps
+and shared deadline. Task 3.9 and native-stage/mission qualification stay open.
+
+Measured result: native-to-reference residuals round outward to
+4.41815941505782e-5 m and 5.3048424038699204e-8 m/s. Adding each once gives
+conditional four-segment endpoint bounds 0.00014951220569742958 m and
+9.436498377495054e-7 m/s, both within unchanged 0.001 m / 0.000001 m/s
+gates. Velocity margin is limited; this does not qualify longer intervals.
+Exact native-time endpoints are 978995455.2929223 and 978995455.3554223
+TDB seconds since J2000. Exact state handoff, finite endpoint and constant
+2000 kg mass at every saved output pass. Warm native/control times are
+0.009076250018551946 s and 0.024772708071395755 s, excluding shared
+qualification preparation; do not sum nested timing fields. Counters
+increase by (1,1,1); prior controls and reference-only values are retained.
+
+Verification: 374 focused tests pass in 1.05 s and all 2402 tests pass in
+532.54 s, including twelve/zero native controls/evaluations/arcs and 40
+source readbacks per inventory. Ruff, strict OpenSpec, whitespace and
+unchanged legacy SHA-256/import checks pass. No scientific tolerances,
+force settings, dependencies or production caps changed. The shared
+per-operation cooperative 300-second deadline remains unchanged.
+
 Task 3.9 longer continuation assessment (2026-09-13):
 Carry the saved nominal three-segment state and both exact error radii into
 the existing cumulative 1/8 s domain. Verify source/PCK and initial-ball

@@ -1,5 +1,21 @@
 ## Context
 
+### One nominal longer Mars continuation (2026-09-13)
+
+Reuse the counted native loop for one nominal 1/16 s coast after the longer
+domain/reference prerequisites. Start from the saved nominal three-segment
+endpoint with unchanged incoming radii, mass, reference, domain and forces.
+WHEN native integration completes, THEN verify exact state/time continuity,
+finite endpoint, constant mass at every saved state and counter increments
+(1,1,1). Add each exact native-to-reference L1 residual once to its
+transported reference error and report outward SI bounds and unchanged
+0.001 m / 0.000001 m/s gates. Preserve a failed gate as unresolved.
+Keep separate longer-native diagnostics and all eleven previous controls;
+verify twelve native controls/evaluations/arcs, portable zero and unchanged
+production caps. Record warm native/control time under the existing shared
+300-second deadline, without summing nested timing fields. This is only a
+conditional four-segment endpoint bound, not native-stage or mission safety.
+
 ### Longer continuation reference assessment (2026-09-13)
 
 Reuse the existing closure and shifted-reference checks for a 1/16 s
