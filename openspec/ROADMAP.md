@@ -17,7 +17,16 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest trajectory-envelope evidence (2026-09-13): composing zonal pole-only
+Latest trajectory-envelope evidence (2026-09-13): composing the sharp C20
+spatial bound with a separately enclosed remainder further reduces all
+seven cubic-reference bounds. Mars 1/8 s endpoint velocity improves from
+1.6096184185581396e-6 to 1.4619986809939294e-6 m/s but still exceeds
+1e-6 m/s; the reference-only bound is 1.3914946571915977e-6 m/s.
+Position passes at 3.213617848696668e-5 m. All six shorter controls pass;
+Mars 1/16 s velocity is 3.5638249872724224e-7 m/s. These are conditional
+upper bounds, not measured errors. No native dynamics or tolerances changed.
+
+Retained rotation-composition evidence: composing zonal pole-only
 and nonzonal full-rotation allowances improves the cubic reference bounds
 without changing the model or tolerances. Mars 1/8 s still does not resolve
 the velocity gate: 1.6096184185581396e-6 m/s versus 1e-6 m/s, including
@@ -76,18 +85,20 @@ rotation-bound sum against exact mixed-quadrupole and pure-zonal controls.
 Fifty new analytic controls qualify the sharp isolated-C20 spatial
 operator bound 12*sqrt(5)*|C20|*GM*R^2/d^5 (s^-2), including exact
 angular matrix identities, polar attainment, scaling and invalid inputs.
-No native force bound has changed from this isolated-term result.
-Next bounded work within 3.9 is to compose that C20 bound with an
-independently enclosed remainder field and compare spatial variation,
-preserving all arithmetic allowances and historical controls, before increasing duration or
-attempting mission composition. WHEN a proposed
+Forty-six additional mixed-field/rejection controls verify independent polar
+Hessians and the C20/remainder composition. Native application changes only
+the reference spatial-variation bound; full-force state sensitivities,
+rotation allowances, arithmetic bounds and historical controls remain intact.
+Next bounded work within 3.9 is to identify the dominant remaining
+reference-defect contribution at Mars 1/8 s before choosing another analytic
+bound; do not add longer controls or attempt mission composition yet. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
 application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 1979 passing tests; both focused
+The latest completed code check has 2025 passing tests; both focused
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost

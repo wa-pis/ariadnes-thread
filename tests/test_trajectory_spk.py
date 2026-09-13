@@ -3621,6 +3621,7 @@ def _check_conditional_full_force_coast_domains(
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint
     from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
+    from test_trajectory_c20 import _c20_remainder_jacobian_bound_s_inv2
     from test_trajectory_zonal_rotation import _partition_nonmonopole_coefficients, _partitioned_rotation_bound_m_s2
     from test_trajectory_gravity import _candidate, _spacecraft
 
@@ -3737,6 +3738,7 @@ def _check_conditional_full_force_coast_domains(
             partitioned_rotation_variation_m_s2: dict[str, float] = {}
             harmonic_jacobians_s_inv2: dict[str, Fraction] = {}
             split_harmonic_jacobians_s_inv2: dict[str, Fraction] = {}
+            c20_nonmonopole_jacobians_s_inv2: dict[str, Fraction] = {}
             for body in trajectory.PHYSICAL_BODY_NAMES:
                 floor_m = trajectory._relative_distance_lower_bound(
                     budget, tuple(state[:3]), tuple(states[body][:3]), position_radius_m, reaches_m[body],
@@ -3779,6 +3781,11 @@ def _check_conditional_full_force_coast_domains(
                         budget, field.gravitational_parameter, field.reference_radius,
                         floor_m, nonmonopole_cosine, field.sine_coefficients,
                     )
+                    c20_remainder_bound = _c20_remainder_jacobian_bound_s_inv2(
+                        budget, field.gravitational_parameter, field.reference_radius,
+                        floor_m, nonmonopole_cosine, field.sine_coefficients,
+                    )
+                    c20_nonmonopole_jacobians_s_inv2[body] = min(tail_jacobian_s_inv2, c20_remainder_bound)
                     assert field.cosine_coefficients[0, 0] == 1.0 and field.sine_coefficients[0, 0] == 0.0
                     split_harmonic_jacobians_s_inv2[body] = _monopole_split_jacobian_bound_s_inv2(
                         field.gravitational_parameter, floor_m, tail_jacobian_s_inv2,
@@ -4526,6 +4533,36 @@ def _check_conditional_full_force_coast_domains(
                                                    for key, value in partitioned_values.items()}
                     assert all(math.isfinite(value) and Fraction(value) >= partitioned_values[key] >= 0
                                for key, value in reported_partitioned_values.items())
+                    spatial_reduction_m_s3 = Fraction(0)
+                    for body in ("Moon", "Mars"):
+                        old_nonmonopole = split_harmonic_jacobians_s_inv2[body] - 2*Fraction(
+                            bodies.get(body).gravity_field_model.gravitational_parameter)/Fraction(floors_m[body])**3
+                        reduction = old_nonmonopole - c20_nonmonopole_jacobians_s_inv2[body]
+                        assert reduction >= 0
+                        spatial_reduction_m_s3 += reduction*Fraction(relative_reaches_m[body])/h
+                    c20_defect_rate_m_s3 = partitioned_defect_rate_m_s3 - spatial_reduction_m_s3
+                    assert spatial_reduction_m_s3 > 0
+                    assert 0 <= c20_defect_rate_m_s3 <= partitioned_defect_rate_m_s3
+                    c20_reference_m, c20_reference_m_s = _coast_error_envelope(
+                        duration_s, Fraction(0), Fraction(0), Fraction(reported_full_position_sensitivity),
+                        Fraction(reported_relativity_sensitivities[1]), constant_defect_m_s2,
+                        acceleration_defect_rate_m_s3=c20_defect_rate_m_s3,
+                    )
+                    c20_position_m = c20_reference_m + cubic_position_residual_m
+                    c20_velocity_m_s = c20_reference_m_s + cubic_velocity_residual_m_s
+                    assert 0 <= c20_position_m <= partitioned_position_m <= Fraction("0.001")
+                    assert 0 <= c20_velocity_m_s <= partitioned_velocity_m_s
+                    assert (c20_reference_m_s <= Fraction("0.000001")) is (duration_s < 1 / 8)
+                    assert (c20_velocity_m_s <= Fraction("0.000001")) is (duration_s < 1 / 8)
+                    c20_values = {
+                        "reference_defect_rate_m_s3": c20_defect_rate_m_s3,
+                        "reference_position_error_m": c20_reference_m,
+                        "reference_velocity_error_m_s": c20_reference_m_s,
+                        "endpoint_position_error_m": c20_position_m,
+                        "endpoint_velocity_error_m_s": c20_velocity_m_s,
+                    }
+                    reported_c20_values = {key: math.nextafter(float(value), math.inf) if value else 0.0 for key, value in c20_values.items()}
+                    assert all(math.isfinite(value) and Fraction(value) >= c20_values[key] >= 0 for key, value in reported_c20_values.items())
                     transport_bounds = {
                         "conditional_weighted_reference_position_error_m": weighted_reference_position_error_m,
                         "conditional_weighted_reference_velocity_error_m_s": weighted_reference_velocity_error_m_s,
@@ -4598,6 +4635,12 @@ def _check_conditional_full_force_coast_domains(
                             "reference_within_velocity_gate": partitioned_reference_m_s <= Fraction("0.000001"),
                             "within_position_gate": partitioned_position_m <= Fraction("0.001"),
                             "within_velocity_gate": partitioned_velocity_m_s <= Fraction("0.000001"),
+                        },
+                        "conditional_c20_spatial_cubic_control": {
+                            **reported_c20_values,
+                            "reference_within_velocity_gate": c20_reference_m_s <= Fraction("0.000001"),
+                            "within_position_gate": c20_position_m <= Fraction("0.001"),
+                            "within_velocity_gate": c20_velocity_m_s <= Fraction("0.000001"),
                         },
                         "weighted_position_bound_resolves_1mm": weighted_position_error_m <= Fraction("0.001"),
                         "reference_only_velocity_bound_resolves_1um_s": weighted_reference_velocity_error_m_s <= Fraction("0.000001"),

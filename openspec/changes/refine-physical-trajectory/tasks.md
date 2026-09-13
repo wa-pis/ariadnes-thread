@@ -51,6 +51,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 C20 plus remainder composition (2026-09-13):
+Verify independent mixed-field polar Hessians, exact reconstruction and
+nonmutation, invalid-input rejection, and min-selection of valid bounds.
+Apply the composed nonmonopole bound to existing reference spatial
+variation only; retain all prior certificates. Verify both inventories,
+unchanged native counts, all reported gates, focused tests, full pytest,
+Ruff, strict OpenSpec and legacy isolation. Record unresolved outcomes;
+do not close task 3.9 or infer full-mission safety.
+
+Measured result: 96 focused C20 tests pass; both real/portable inventories
+pass in 262.00 s combined, retaining seven/zero native arcs and 40 affine
+source readbacks each. Spatial-defect reduction is positive in all seven
+native controls. All position gates and six shorter velocity gates pass.
+Mars 1/8 s endpoint velocity is 1.4619986809939294e-6 m/s, down from
+1.6096184185581396e-6 m/s, but still above 1e-6 m/s. Its reference-only
+bound is 1.3914946571915977e-6 m/s and endpoint position bound is
+3.213617848696668e-5 m. Mars 1/16 s velocity is
+3.5638249872724224e-7 m/s. Explicit regressions retain the unresolved
+1/8 s reference/endpoint gates. No production, kernel, tolerance, native
+call-limit or deadline changes. All 2025 tests pass in 528.49 s; Ruff,
+strict OpenSpec validation, diff checks and legacy checksum/import isolation
+pass. Suite duration covers multiple operations, not one mission's unchanged
+300-second budget. Task 3.9 remains open.
+
 Task 3.9 sharp isolated-C20 spatial sensitivity (2026-09-13):
 Verify the Cartesian/meridional Jacobian identities and the factored
 positive-semidefinite bounds over the full angular domain. Verify exact

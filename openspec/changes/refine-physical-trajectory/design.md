@@ -1,5 +1,25 @@
 ## Context
 
+### C20 plus independently enclosed remainder (2026-09-13)
+
+Copy the nonmonopole coefficient array and remove only C20. Verify exact
+reconstruction, bound the remainder with the existing generic Jacobian
+method, and add the sharp C20 bound by the operator-norm triangle inequality.
+Never subtract an isolated bound from a degree-wise norm. The minimum of
+the old and composed bounds is also valid. WHEN mixed C20/C22/C30 fields
+are supplied, THEN this selected bound must enclose the independent polar
+Hessian eigenvalues, including signed coefficients and different radii.
+Invalid arrays and a nonzero C00 must be rejected without mutating inputs.
+
+Recompute the bound at each unchanged native domain's distance floor.
+In a separate cubic-reference certificate, replace only the nonmonopole
+spatial-variation coefficient times its existing relative reach / duration.
+Preserve full-force state sensitivities, closure, rotation bounds, every
+arithmetic allowance, reference coefficients and native endpoint residuals.
+Report position and reference/endpoint velocity gates separately, retaining
+all historical controls and unresolved outcomes. No additional native arcs,
+force-model changes, tolerance changes or native-stage safety claims.
+
 ### Sharp isolated-C20 spatial sensitivity (2026-09-13)
 
 For normalized C20, let K=sqrt(5)*C20*GM*R^2/2. Its potential is
