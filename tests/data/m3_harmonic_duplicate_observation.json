@@ -1,0 +1,16 @@
+{
+  "base_commit": "d5cf251",
+  "native_test_and_production_unchanged_from": "fd4dafd973d81a0c773112145d8da4ff3b16675d",
+  "test": "tests/test_trajectory_spk.py::test_loaded_spk_chain_coverage_contains_candidate_interval[native-readback]",
+  "runtime_limit_s": 300,
+  "pytest_elapsed_s": 72.32,
+  "pytest_exit_code": 1,
+  "stop_reason": "Intentional DIAGNOSTIC_STOP before evaluating the first exact duplicate",
+  "key": "GM and radius float.hex(); shape, dtype.str and C-order bytes of cosine, sine, source position, spacecraft position, rotation and observed terms; same budget object asserted",
+  "observations": [
+    {"call": 1, "prefix_degree": 150, "gm_m3_s2": 4902800121846.8, "reference_radius_m": 1738000.0, "native_arc_propagations": 1, "duplicate_of": null, "uncached_elapsed_s": 52.590835167095065},
+    {"call": 2, "prefix_degree": 20, "gm_m3_s2": 42828375815756.1, "reference_radius_m": 3396000.0, "native_arc_propagations": 1, "duplicate_of": null, "uncached_elapsed_s": 0.15060662501491606},
+    {"call": 3, "prefix_degree": 150, "gm_m3_s2": 4902800121846.8, "reference_radius_m": 1738000.0, "native_arc_propagations": 2, "duplicate_of": 1}
+  ],
+  "limitations": "No cached result returned, no repeated-result parity comparison, no full inventory completion, no measured speedup. Dirty midpoint code remains outside this evidence commit."
+}

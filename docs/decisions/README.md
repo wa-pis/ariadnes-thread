@@ -30,3 +30,4 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 ## Records
 
 - [0001 — Investigate the inventory deadline before optimization](0001-inventory-runtime-investigation.md)
+- [0002 — Exact harmonic input duplication is observed](0002-exact-harmonic-input-duplicate.md)
