@@ -510,6 +510,11 @@ bound, each once. The Moon box already includes its tail. Pinned assembly
 inputs preserve the latest Moon output; no aggregate is yet implemented.
 Next verify exact box summation, final rounding, identity rejection and
 independent composition controls before reporting a gravity-only aggregate.
+Decision0015 implements that retained-data assembly with exact box sums,
+explicit once-only scalar channels and the existing midpoint helper. Target:
+ideal source polynomials, fixed nominal state and stored harmonic matrices.
+Next bind independent fresh SRP/Schwarzschild vectors and their source/
+illumination conventions; PCK, native arithmetic and state/domain gaps remain.
 SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or

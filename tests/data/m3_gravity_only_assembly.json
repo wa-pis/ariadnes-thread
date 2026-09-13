@@ -1,0 +1,20 @@
+{
+  "gravity_only_assembly": {
+    "acceleration_l2_allowance_m_s2": 7.8380163348378e-06,
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "epoch_tdb_s": 978995455.2929223,
+    "error_channels_m_s2": {
+      "box_midpoint": 1.7409561796984135e-17,
+      "mars_midpoint": 7.827778792923532e-06,
+      "mars_source": 1.0237541896858476e-08,
+      "moon_source": 2.455765158645209e-24
+    },
+    "harmonic_matrix_convention": "stored matrices held fixed",
+    "midpoint_m_s2": [-3.1477508833955574, 0.0029787902709335133, -0.005506762351085002],
+    "orientation": "J2000",
+    "origin": "SSB",
+    "scope": "Gravity only at nominal state; no PCK, native arithmetic, other forces or interval certificate",
+    "source_convention": "exact position polynomials"
+  }
+}

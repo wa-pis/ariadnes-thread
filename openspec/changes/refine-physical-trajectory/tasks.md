@@ -52,6 +52,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0015 implements the common-source gravity-only aggregate using exact
+retained box sums and three named scalar allowances, each once. The 58
+focused assembly/midpoint checks pass in 0.53 s, including cancellation,
+corner/direction controls and identity/invalid-data rejection. No new native
+query, propagation or high-degree evaluation. Next bind independent fresh
+SRP/Schwarzschild terms; PCK/native arithmetic and state/domain remain open.
+Full verification: 2946 passed in 483.22 s, native inventory 156.21 s,
+portable 56.27 s; unchanged thirteen/zero arcs. Gravity-only L2 allowance
+7.8380163348378e-6 m/s^2 and its four channels match captured output exactly.
+Ruff, strict OpenSpec and legacy isolation pass. Task3.9 remains open.
+
 Decision0014 fixes the gravity assembly target: exact source polynomials,
 stored harmonic matrices and nominal spacecraft state. Retain/pin the input
 artifacts and latest Moon box; add Moon/Mars source bridges once, not the
