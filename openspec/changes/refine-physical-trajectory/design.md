@@ -1,5 +1,31 @@
 ## Context
 
+### Isolated Mars degree40 growth profile (2026-09-13)
+
+Parameterize the existing isolated replay test for degrees20 and40. WHEN
+degree40 completes under its single 300 s profiling budget including setup
+and all repeats, THEN require exact agreement between the three unprofiled
+and one profiled result, the retained outward ledger tail
+0.0020034676779043326 m/s^2, and strict containment of both exact component
+intervals and their outward reporting in the retained degree20 reported box.
+Keep all coefficients above the cutoff as a rigorous tail, verify their
+identities, and retain zero propagation counters. Compare measured costs
+with degree20; do not extrapolate to higher degrees or mission runtime.
+The parameterized test is now `test_stored_mars_harmonic_profile[20/40]`;
+the historical degree20 observation records its original test name.
+
+The focused two-case run passed in 5.47 s. Degree40 unprofiled median was
+1.0140784580726177 s, compared with 0.13586887484416366 s for degree20
+in that process. Profiled elapsed time was 1.1584256251808256 s; inclusive
+interval/jet/tail times were 0.953157078/0.290190506/0.03343625 s, and
+232,171 GCD calls consumed 0.708936503 s. Inclusive times overlap.
+Setup 0.006757708033546805 s was measured after the degree20 case had
+already imported Tudat; it is not a cold-start speed improvement.
+`tests/data/m3_mars_degree40_profile.json` retains this observation and the
+same-process degree20 reference. All four degree40 results agree exactly;
+the tail matches the ledger and both exact/outward boxes nest strictly.
+No runtime or scientific conclusion for degree100 follows from this ratio.
+
 ### Isolated Mars degree20 profiling (2026-09-13)
 
 Use the replay snapshot and existing Tudat coefficient loader, verifying

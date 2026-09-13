@@ -385,14 +385,24 @@ These overlap, include profiler effects, and must not be summed. The
 observed overhead difference of 0.04854 s is noisy, not a guarantee.
 The full record is `tests/data/m3_mars_degree20_profile.json`.
 
-Next bounded work within 3.9 is one isolated degree40 Mars growth profile
-on the same verified inputs, using the existing bounded profiling path.
-WHEN it completes without resetting the profiling deadline, THEN verify
-its tail against the existing cutoff ledger and enclosure nesting in the
-degree20 box, and compare measured arithmetic costs without extrapolating
-to degrees100/120 or mission runtime. Preserve deadline failure if any;
-no native arcs or mission extension. Source/PCK errors, remaining forces
-and fresh domain closure remain prerequisites; task 3.9 stays open.
+The isolated degree40 profile completed with the retained ledger tail
+0.0020034676779043326 m/s^2 and strict enclosure nesting in the reported
+degree20 box. Its unprofiled median was 1.01408 s versus 0.13587 s for
+degree20 in the same process (about 7.46x), with profiled elapsed 1.15843 s.
+GCD calls increased to 232,171 (0.70894 s). This is measured local growth,
+not an asymptotic or high-degree runtime bound. The warmed degree40 setup
+took 0.00676 s, not comparable to degree20's first-import setup 0.60464 s.
+The record is `tests/data/m3_mars_degree40_profile.json`; native arcs stay zero.
+
+Next bounded work within 3.9 is one unprofiled isolated degree100 evaluation
+at these verified inputs to resolve its previously unmeasured standalone
+cost. Use one 300 s profiling budget including setup, without resets or
+extra repeats, and preserve any failure. WHEN it completes, THEN compare
+the tail to the existing degree100 ledger and its enclosure to degree40,
+report elapsed time without promoting it to a shared mission-budget pass.
+Do not also evaluate degree120 or extend the native coast. Source/PCK
+errors, remaining forces and fresh domain closure stay open prerequisites;
+task 3.9 remains open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

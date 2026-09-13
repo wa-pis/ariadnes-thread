@@ -51,6 +51,25 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 isolated Mars degree40 growth profile (2026-09-13):
+Extend the same bounded replay for degree40; verify repeated exact equality,
+the retained ledger tail and strict containment in the reported degree20
+box. Record setup and arithmetic costs without extrapolating, preserving
+all higher coefficients as a tail and zero native arcs. Run both focused
+cases, full pytest, Ruff, strict OpenSpec and legacy isolation. Preserve
+deadline failure if encountered; no mission qualification or cap changes.
+
+Verification: both focused cases passed in 5.47 s and all 2768 tests passed
+in 568.46 s. Degree40 unprofiled median was 1.0140784580726177 s, profiled
+elapsed 1.1584256251808256 s; the same-process degree20 median was
+0.13586887484416366 s. All four degree40 results agree exactly, the
+outward tail matches 0.0020034676779043326 m/s^2, and exact/reported boxes
+nest strictly in the retained degree20 box. The observation is recorded
+in `tests/data/m3_mars_degree40_profile.json`; no higher-degree cost is
+inferred. Ruff, strict OpenSpec, whitespace and legacy isolation pass.
+Each profile keeps one unchanged 300 s budget and zero propagation
+counters; existing native inventories remain thirteen/zero. Task 3.9 stays open.
+
 Task 3.9 isolated Mars degree20 profiling (2026-09-13):
 Verify pinned replay geometry and coefficient identities, then compare
 three unprofiled runs and one profiled run with the retained native

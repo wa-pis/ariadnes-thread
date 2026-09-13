@@ -1,0 +1,72 @@
+{
+  "observation_date": "2026-09-13",
+  "base_commit": "2e91e9b",
+  "test": "tests/test_trajectory_harmonic_profile.py::test_stored_mars_harmonic_profile[40]",
+  "snapshot_sha256": "e401d88cbdd0110ac6c0357612b0053a34f87f8953856ac3372360e5ea3dca99",
+  "prefix_degree": 40,
+  "setup_elapsed_s": 0.006757708033546805,
+  "unprofiled_elapsed_s": [
+    1.0112633749376982,
+    1.0150924590416253,
+    1.0140784580726177
+  ],
+  "profiled_elapsed_s": 1.1584256251808256,
+  "profiled_minus_unprofiled_median_s": 0.14434716710820794,
+  "profile_rows": [
+    {
+      "calls": 232171,
+      "function": "<built-in method math.gcd>",
+      "inclusive_s": 0.708936503,
+      "self_s": 0.708936503
+    },
+    {
+      "calls": 862,
+      "function": "_generic_harmonic_term_intervals_m_s2",
+      "inclusive_s": 0.953157078,
+      "self_s": 0.007762507
+    },
+    {
+      "calls": 1,
+      "function": "_harmonic_prefix_vector_enclosure_m_s2",
+      "inclusive_s": 1.1583347910000001,
+      "self_s": 0.0014394710000000001
+    },
+    {
+      "calls": 862,
+      "function": "_regular_solid_harmonic_jets",
+      "inclusive_s": 0.290190506,
+      "self_s": 0.0020418100000000002
+    },
+    {
+      "calls": 1,
+      "function": "_stored_harmonic_tail_bound_m_s2",
+      "inclusive_s": 0.03343625,
+      "self_s": 0.000033917
+    }
+  ],
+  "component_intervals_m_s2": [
+    [
+      -3.151875700366659,
+      -3.1478687650108497
+    ],
+    [
+      0.0012798561632906302,
+      0.0052867915190992956
+    ],
+    [
+      -0.007312569406483195,
+      -0.0033056340506745297
+    ]
+  ],
+  "tail_upper_m_s2": 0.0020034676779043326,
+  "profiling_deadline_s": 300,
+  "native_coefficient_loads": 1,
+  "native_arcs": 0,
+  "degree20_same_process_unprofiled_elapsed_s": [
+    0.1368136249948293,
+    0.13586887484416366,
+    0.13496012496761978
+  ],
+  "degree20_same_process_setup_elapsed_s": 0.6046427502296865,
+  "qualification": "Synthetic stored-input timing only; degree40 setup follows degree20 in a warmed process, inclusive times overlap, overhead is noisy, no high-degree or mission-cost extrapolation"
+}
