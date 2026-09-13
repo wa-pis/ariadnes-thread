@@ -1,5 +1,21 @@
 ## Context
 
+### Nonlinear fresh-reference control (2026-09-13)
+
+Use manufactured SI x''=2*x^3 with independent x=1/(1-t), v=1/(1-t)^2.
+Start the cubic at a signed-error nominal handoff with fresh acceleration
+and jerk anchors. On the convex product domain |x|<3 m, |v|<3 m/s,
+A=54 m/s^2 and Lx=54 s^-2. WHEN both strict first-exit reaches and cubic
+coefficient reaches close, THEN the whole interval and all chords qualify.
+Bound force curvature ALONG REFERENCE q by
+K=12*R*V^2+6*R^2*(|a|+|j|*h), using q''=a+j*tau, not true acceleration.
+Residual anchors are -ea and -ej; Taylor gives D=|ea|, J=|ej|+K*h/2.
+Verify exact rational state enclosures at 0,h/2,h with inherited radii
+1e-4 m and 1e-7 m/s. Cover two offsets, three durations and signed/zero
+state and anchor errors. Failed first-exit closure returns no certificate,
+even when exact truth stays inside. This qualifies only this manufactured
+control, not the full force model, native arithmetic or mission trajectory.
+
 ### Fresh-reference curvature remainder (2026-09-13)
 
 Extend the existing analytic control to acceleration u*(2+3*t+C*t^2/2),

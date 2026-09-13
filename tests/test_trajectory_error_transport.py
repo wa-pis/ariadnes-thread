@@ -379,6 +379,68 @@ def test_fresh_quadratic_force_anchor_preserves_incoming_error(
         assert abs(curvature_m_s4)*beyond_s**2/2 > d+j*beyond_s
 
 
+@pytest.mark.parametrize("offset_s", [0.0, 1 / 16])
+@pytest.mark.parametrize("duration_s", [1 / 128, 1 / 64, 1 / 16])
+@pytest.mark.parametrize("state_signs", [(0, 0), (1, 1), (-1, -1), (1, -1)])
+@pytest.mark.parametrize("anchor_signs", [(0, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)])
+def test_fresh_nonlinear_reference_requires_closed_domain(
+    offset_s: float, duration_s: float, state_signs: tuple[int, int], anchor_signs: tuple[int, int],
+) -> None:
+    # Manufactured SI force f(x)=c*x^3 with c=2 m^-2 s^-2;
+    # independent truth x=1 m/(1-t/1 s), v=1 m/s/(1-t/1 s)^2.
+    t, h = Fraction(offset_s), Fraction(duration_s)
+    p_m, v_m_s = Fraction(1, 10000), Fraction(1, 10**7)
+    n_m = 1/(1-t)-state_signs[0]*p_m
+    nv_m_s = 1/(1-t)**2-state_signs[1]*v_m_s
+    ea_m_s2, ej_m_s3 = Fraction(anchor_signs[0], 10**6), Fraction(anchor_signs[1], 50000)
+    a_m_s2 = 2*n_m**3+ea_m_s2
+    jerk_m_s3 = 6*n_m**2*nv_m_s+ej_m_s3
+    radius_m, speed_m_s = Fraction(3), Fraction(3)
+    acceleration_bound_m_s2 = 2*radius_m**3
+    lx_s_inv2 = 6*radius_m**2
+    # Polynomial coefficient bounds enclose the WHOLE cubic reference.
+    assert abs(n_m)+abs(nv_m_s)*h+abs(a_m_s2)*h**2/2+abs(jerk_m_s3)*h**3/6 < radius_m
+    assert abs(nv_m_s)+abs(a_m_s2)*h+abs(jerk_m_s3)*h**2/2 < speed_m_s
+    true_reaches = _recentered_coast_reaches_m_m_s(
+        duration_s, abs(n_m), abs(nv_m_s), abs(nv_m_s), p_m, v_m_s, acceleration_bound_m_s2,
+    )
+    closed = true_reaches[0] < radius_m and true_reaches[1] < speed_m_s
+    assert closed == (h < Fraction(1, 16))
+    # Exact truth is monotone and inside the domain even in unresolved cases:
+    # failure of this conservative first-exit test is NOT a physical exit.
+    assert 1/(1-t-h) < radius_m and 1/(1-t-h)**2 < speed_m_s
+    if not closed:
+        assert true_reaches[1] >= speed_m_s
+        return  # No conditional error certificate without first-exit closure.
+    # Convex product domain also contains all true/reference chords.
+    # Along REFERENCE q, (f(q))''=12*q*q'^2+6*q^2*q''.
+    # q''=a+j*tau, not f(q) or the true acceleration. This coefficient
+    # bound is uniform on [0,h]; Taylor's remainder gives |r|<=D+J*tau.
+    reference_acceleration_m_s2 = abs(a_m_s2)+abs(jerk_m_s3)*h
+    curvature_m_s4 = 12*radius_m*speed_m_s**2+6*radius_m**2*reference_acceleration_m_s2
+    d_m_s2 = abs(ea_m_s2)
+    j_m_s3 = abs(ej_m_s3)+curvature_m_s4*h/2
+    assert 2*n_m**3-a_m_s2 == -ea_m_s2
+    assert 6*n_m**2*nv_m_s-jerk_m_s3 == -ej_m_s3
+    zero = Fraction(0)
+    for tau in (zero, h/2, h):
+        q = _cubic_reference_endpoint(
+            (n_m, zero, zero, nv_m_s, zero, zero),
+            (a_m_s2, zero, zero), (jerk_m_s3, zero, zero), float(tau),
+        )
+        qa_m_s2 = a_m_s2+jerk_m_s3*tau
+        assert abs(12*q[0]*q[3]**2+6*q[0]**2*qa_m_s2) <= curvature_m_s4
+        assert abs(2*q[0]**3-qa_m_s2) <= d_m_s2+j_m_s3*tau
+        bounds = _coast_error_envelope(
+            float(tau), p_m, v_m_s, lx_s_inv2, zero, d_m_s2,
+            acceleration_defect_rate_m_s3=j_m_s3,
+        )
+        assert abs(1/(1-t-tau)-q[0]) <= bounds[0]
+        assert abs(1/(1-t-tau)**2-q[3]) <= bounds[1]
+        if tau == 0:
+            assert bounds == (p_m, v_m_s)
+
+
 @pytest.mark.parametrize("duration_s", [0.0, 1 / 64, 1 / 8])
 @pytest.mark.parametrize("sensitivity", [Fraction(0), Fraction(1, 10)])
 @pytest.mark.parametrize("zero_part", [False, True])

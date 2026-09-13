@@ -51,6 +51,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 nonlinear fresh-reference control (2026-09-13):
+Verify independent rational truth for x''=2*x^3, strict first-exit and
+whole-reference domain closure, reference-path curvature and fresh D/J
+anchors with unchanged incoming radii. Retain failed domains as unresolved.
+Run focused tests, full pytest, Ruff, strict OpenSpec and legacy isolation.
+No native changes or full-force promotion; task 3.9 remains open.
+
+Verification: all 120 combinations pass with exact rational arithmetic:
+two offsets (0,1/16 s), three durations (1/128,1/64,1/16 s), four
+signed/zero incoming states and five signed/zero anchor-error pairs.
+All 80 short cases close and enclose exact state errors; all 40 longest
+cases fail the velocity first-exit bound and return before error transport,
+despite the independent truth staying inside. Cubic coefficient bounds
+and the reference-path chain rule establish the whole-interval premises;
+0,h/2,h readbacks are checks, not the proof of unsampled coverage.
+Both inherited radii remain 1e-4 m and 1e-7 m/s, including exact handoffs.
+
+710 focused tests pass in 0.92 s; all 2738 tests pass in 532.36 s.
+Ruff, strict OpenSpec, whitespace and unchanged legacy SHA-256/import
+checks pass. Both scientific inventories retain thirteen/zero native
+arcs and 40 source readbacks each. No production code, dependencies,
+scientific tolerances, native caps or shared 300-second deadline changed.
+Full-force fresh-reference qualification remains open.
+
 Task 3.9 analytic fresh-reference curvature (2026-09-13):
 Extend the fresh-anchor control with signed/zero acceleration curvature,
 retaining all affine cases. Verify independent quartic truth, exact residual

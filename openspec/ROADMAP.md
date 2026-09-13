@@ -300,15 +300,21 @@ on h=1/16 s with unchanged incoming radii. Perfect-anchor counterexamples
 show that omitting nonzero curvature underbounds; the same local envelope
 can fail at 2*h. No real full-force reference or native endpoint changed.
 
-Next bounded work within 3.9 is a fresh-reference analytic control with
-nonlinear position-dependent force, using the existing x''=2*x^3 /
-x=1/(1-t) manufactured case in SI. WHEN both true/reference paths and
-their chords close in an explicit domain, THEN independently bound the
-second time derivative of force ALONG THE CUBIC REFERENCE, combine fresh
-anchor errors with the fixed-h curvature allowance and verify exact true
-state errors with nonzero incoming radii. Keep domain failures unresolved;
-do not substitute a derivative bound along the true trajectory. This is
-not full-force qualification. Add no native calls or mission extension;
+The nonlinear fresh-reference control now checks x''=2*x^3 against exact
+x=1/(1-t) in SI. Of 120 signed/zero cases, 80 close both paths and verify
+reference-path curvature plus transported errors with exact arithmetic;
+40 fail the conservative first-exit gate and return no certificate, even
+though exact truth stays inside. No real full-force reference changed.
+
+Next bounded work within 3.9 is to inventory the existing Mars handoff
+anchor and derivative oracles for a fresh full-force reference. WHEN an
+existing nominal endpoint is selected, THEN identify separately which
+acceleration/jerk errors, reference-path curvature, source/rotation domains
+and arithmetic allowances are already qualified and which remain missing.
+Use that evidence to choose one concrete missing bound; do not replace a
+reference derivative by a true-path derivative or reuse an expired bound.
+Do not claim analytic controls qualify real full-force anchors. Add no
+spacecraft native calls or mission extension during this inventory;
 retain thirteen controls, portable zero, unchanged tolerances, production
 caps and the shared 300-second deadline. Keep Moon unresolved and 3.9 open.
 Keep all previous certificates. Preserve all
@@ -320,7 +326,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2618 passing tests; both inventories
+The latest completed code check has 2738 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs thirteen spacecraft arcs, the portable inventory
