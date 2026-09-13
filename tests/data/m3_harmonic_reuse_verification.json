@@ -1,0 +1,24 @@
+{
+  "base_commit": "d964ed8",
+  "scope": "Working-tree midpoint and invocation-local harmonic oracle reuse changes, committed with this evidence",
+  "passed": 2823,
+  "failed": 0,
+  "elapsed_s": 444.18,
+  "focused_passed": 735,
+  "focused_elapsed_s": 0.77,
+  "native_inventory_call_s": 135.28,
+  "portable_inventory_call_s": 38.85,
+  "runtime_limit_s": 300,
+  "native": {"requests": 14, "uncached_evaluations": 4, "hits": 10, "native_arc_propagations": 13},
+  "portable": {"requests": 0, "uncached_evaluations": 0, "hits": 0, "native_arc_propagations": 0},
+  "production_and_scientific_inputs_unchanged": true,
+  "midpoint_whole_box_l2_upper_m_s2": 0.000013558110579856195,
+  "earlier_development_run": {
+    "outcome": "Intentionally interrupted after review found an existing parametrization decorator attached to the new helper; fixed and original four cases verified before complete rerun",
+    "passed_before_interrupt": 1611,
+    "elapsed_s": 104.87,
+    "exit_code": 2,
+    "qualification": "Incomplete development run, not a scientific failure or passing suite"
+  },
+  "limitations": "One complete timing sample, not a controlled performance guarantee; no new full-force domain, stage safety or mission certificate"
+}

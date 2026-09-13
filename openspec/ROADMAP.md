@@ -407,15 +407,57 @@ One unchanged repeat passed all 2769 tests, with native inventory 282.16 s.
 Both observations are retained; timing stability is not established and
 expensive work must not be appended to that inventory without accounting.
 
-Next bounded work within 3.9 is to establish the norm/error contract needed
-to use a midpoint of this harmonic enclosure as a fresh force reference.
-WHEN the transport norm and available harmonic-tail norm are explicitly
-identified, THEN derive and test a compatible midpoint error bound including
-binary64 rounding and any required norm conversion against an independent
-vector oracle. A per-component interval width is not automatically the
-whole-vector error allowance. Reuse the stored evidence; do not evaluate
-degree120 or extend the native coast. Source/PCK errors, remaining forces
-and fresh domain closure remain separate prerequisites; task 3.9 stays open.
+The midpoint contract now explicitly uses Euclidean vector errors:
+sqrt(sum(e_i^2))+T for exact per-axis distances from the rounded midpoint
+to a prefix box and a separately qualified L2 tail T. Independent vector
+controls verify corner/rounding errors, exact (3,4,0) alignment and tail
+counting. Applying the whole-box form to the already expanded degree100
+record gives 1.3558110579856195e-5 m/s^2, conservatively including its tail
+and binary64 rounding. This is not a source/PCK or trajectory certificate.
+
+Historical pre-reuse failure: 712 focused controls passed, but full pytest
+returned 2803 passed/1 failed (623.04 s). The unchanged native inventory
+reached its 300 s deadline after 12 arcs. Preserve the failure JSON under
+tests/data/m3_midpoint_suite_deadline_observation.json. Immediate next
+work was diagnostic cost investigation, not retries solely for a green run.
+The midpoint unit remained incomplete until the verified reuse run below.
+
+One bounded cProfile investigation is recorded in
+`tests/data/m3_inventory_runtime_profile.json`: the profiled inventory
+reached the unchanged deadline after 8 arcs (300.93 s pytest elapsed).
+Generic harmonic error checks were called 12 times and account for
+204.20 s inclusive profiler time; math.gcd records 141.67 s self time.
+These overlapping, instrumented times are not an unprofiled speedup or
+an additive native/Python cost decomposition. No calculation was changed.
+The subsequent experiment measured duplicate exact inputs. WHEN considering
+invocation-local reuse, THEN prove byte-identical coefficients, positions,
+rotation and observed terms, identical GM/radius, changed-input misses,
+uncached result parity and preserved deadline checks/native controls.
+Only implement reuse if duplication is established; no global/stale cache.
+Full verification remains required before committing the midpoint unit.
+
+The bounded duplicate check now confirms call3 exactly matches call1
+(Moon degree150, including observed native terms); it stopped intentionally
+after two arcs in 72.32 s, before returning any reused result. See
+`docs/decisions/0002-exact-harmonic-input-duplicate.md` and its replay driver.
+Invocation-local reuse now passes the parity, key-miss, mutation and deadline
+checks above. All 2823 tests pass in 444.18 s; native inventory is 135.28 s,
+with 14 requests, 4 uncached evaluations and 10 hits. All 13 native arcs
+remain; the portable inventory has zero requests/arcs. The midpoint unit's
+full-suite gate is satisfied without changing formulas or tolerances.
+See decision0003 and `tests/data/m3_harmonic_reuse_verification.json`.
+One observed runtime is not a stability guarantee or mission-cost estimate.
+
+Next bounded work within 3.9 is to apply the separate-prefix/tail form
+during the existing isolated degree100 evaluation, with no extra harmonic
+evaluation or native arc. WHEN exact pre-expansion intervals and the exact
+tail are available, THEN verify the rounded midpoint/L2 bound, no tail
+double counting, and consistency with the conservative whole-box result.
+Do not recover prefix intervals by subtracting a rounded JSON tail.
+Preserve the original diagnostic budget and report the norm allowance
+without promoting it to full-force or mission qualification. Source/PCK,
+remaining forces and fresh domain closure stay separate prerequisites;
+do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
@@ -429,7 +471,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2766 passing tests; both inventories
+The latest completed code check has 2823 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs thirteen spacecraft arcs, the portable inventory

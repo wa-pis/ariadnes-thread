@@ -25,6 +25,11 @@ It does not cache or return a substituted scientific result.
 
 Reproduce from the repository root:
 
+Use the native test from the measured base revision above in a separate checkout,
+with the archived driver supplied alongside it. Later local-reuse changes bypass
+repeated oracle calls, so this early-stop driver is not a current-dev regression
+test and need not find the same duplicate on newer code.
+
 ```sh
 conda run --no-capture-output -n space-nav python docs/decisions/experiments/0002-check-duplicates.py
 ```

@@ -51,6 +51,50 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 fresh midpoint norm contract (2026-09-13):
+Identify Euclidean transport/tail norms; derive a rounded midpoint error
+for a prefix box plus a separately bounded L2 tail. Verify independent
+corner/unit-vector oracles, exact alignment, rounding, zero and invalid
+inputs. Apply only the conservative whole-box form to stored degree100
+evidence, with no tail double counting or native calls. Run focused tests,
+full pytest, Ruff, strict OpenSpec and legacy isolation. Keep 3.9 open.
+
+Historical partial verification: 712 focused controls passed in 0.43 s, but the full
+suite returned 2803 passed and one failure in 623.04 s. The unchanged
+native inventory reached its 300 s deadline after 12 arcs at line5339.
+Preserve `tests/data/m3_midpoint_suite_deadline_observation.json`. This
+unit remained incomplete pending runtime investigation before further application,
+without changing limits or repeated attempts solely to obtain a pass.
+
+Runtime investigation: one unchanged inventory under cProfile failed at
+the shared deadline after 8 arcs (300.93 s). Preserve
+`tests/data/m3_inventory_runtime_profile.json`; profiling adds overhead
+and is not qualification. Twelve generic harmonic error calls consumed
+204.20 s inclusive profile time, with expensive exact rational arithmetic.
+Next bounded check: establish exact duplicate inputs before local reuse;
+verify changed-input misses, uncached exact parity, deadline checks and
+unchanged native controls. Do not infer identical inputs from call counts
+or claim a speedup before measuring an unprofiled run. Task 3.9 stays open.
+
+Exact duplicate inputs are observed in decision0002 (call3 equals call1,
+Moon degree150). The opt-in driver intentionally stopped after two arcs;
+no cache result or speedup is qualified. Proceed to local reuse only with
+the stated parity, changed-input, mutation and budget checks, then full
+verification. Preserve the experiment and leave this task open.
+
+Verified bounded unit (decision0003): 735 focused checks pass in 0.77 s,
+and all 2823 tests pass in 444.18 s with test-local exact-input reuse.
+Native inventory takes 135.28 s: 14 requests, 4 uncached evaluations,
+10 hits, unchanged 13 arcs; portable requests/arcs remain zero. Nineteen
+reuse controls verify exact oracle parity, independent monopole error,
+each input's miss behavior, invalid inputs, mutation isolation and budgets.
+The 35 midpoint controls and full-suite gate now pass. Ruff, legacy
+isolation and strict OpenSpec pass; the early stopped development run is
+retained as an interrupted run, not scientific failure or completion.
+Keep 3.9 open. Next apply the exact separate-prefix/tail midpoint form
+only during the existing isolated degree100 evaluation; no extra arc,
+degree120 evaluation, relaxed tolerance or mission qualification follows.
+
 Task 3.9 one isolated Mars degree100 evaluation (2026-09-13):
 Run one unprofiled degree100 evaluation per invocation on pinned replay
 inputs; verify the ledger tail, strict nesting in degree40, finite outward

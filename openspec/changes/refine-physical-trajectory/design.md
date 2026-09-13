@@ -1,5 +1,36 @@
 ## Context
 
+### Fresh midpoint norm contract (2026-09-13)
+
+The existing coast transport uses Euclidean vector errors and compatible
+induced force sensitivities. Its conservative L1 residual sums also bound
+L2; this does not allow treating an L2 bound as an L1 bound. The harmonic
+addition-theorem/Frobenius remainder bounds Euclidean acceleration, and
+the stored-matrix transpose factor preserves that L2 interpretation.
+
+For a prefix box [l_i,u_i], select binary64 m_i=round((l_i+u_i)/2).
+Set e_i=max(abs(m_i-l_i),abs(m_i-u_i)) in exact arithmetic. WHEN a separately
+qualified tail has L2 norm at most T, THEN sqrt(sum(e_i^2))+T bounds the
+full vector's L2 error about m. Enclose the root upward with the existing
+dyadic helper. Verify all corners against independent rational unit-vector
+tails, exact (3,4,0) alignment, zero width/tail, rounding and invalid inputs.
+This counts a vector-norm tail once, not once per coordinate.
+
+The saved degree100 boxes already include the tail. Apply the whole-box
+formula with T=0; never subtract the rounded recorded tail to reconstruct
+unavailable prefix bounds. Report the conservative midpoint/error only.
+No new native evaluations or trajectory certificate follow; source/PCK,
+remaining forces and closed-domain premises remain separate prerequisites.
+
+The stored degree100 whole-box midpoint is
+(-3.149870347260298, 0.0032826169565977146, -0.005310257764904425) m/s^2
+in SSB/J2000 at 978995455.2929223 TDB seconds since J2000. Its outward
+Euclidean error bound is 1.3558110579856195e-5 m/s^2. The fixture verifies
+the original input snapshot SHA before reporting its epoch/frame. This
+conservative box bound loses the original tail's vector-ball correlation;
+a future application may use exact prefix intervals plus the exact tail
+once, but not subtract rounded recorded tails to invent tighter intervals.
+
 ### One isolated Mars degree100 evaluation (2026-09-13)
 
 Use the same verified snapshot and coefficient setup with a single
@@ -5040,3 +5071,32 @@ The stable `mass-infeasible` / `preflight-m2-propellant-shortfall` pair denotes 
 5. Run focused scientific checks, the full pinned suite, legacy isolation, reference/feasible completion gates, and strict OpenSpec validation.
 
 Rollback removes the additive M3 module, exports, command, fixture, and tests. Existing M1/M2 scenario parsing and commands remain valid throughout.
+
+### Invocation-local harmonic oracle reuse (2026-09-13)
+
+Decision0002 establishes an exact repeated input, not a cached result or speedup.
+The inventory may reuse successful `_generic_harmonic_term_errors_m_s2` results
+inside one `_check_conditional_full_force_coast_domains` call. The key includes
+GM/radius binary64 representations and the shapes, dtypes and complete C-order
+bytes of both coefficient arrays, both positions, the rotation matrix and observed
+native terms. The oracle depends on these explicit values, not live SPICE state.
+No epoch-only or approximate matching, global cache or persistent scientific data
+fallback is permitted.
+
+Unseen keys execute the unchanged oracle and its validation. Only successfully
+validated results can populate the local dictionary. Exact matching therefore
+preserves its value-dependent checks; scalar type checks also precede key creation.
+Entries are immutable tuples of exact Fraction errors; callers receive new dicts.
+Budget checks occur before lookup, after a miss calculation and before return;
+failed or expired calculations are not inserted. All native controls still run.
+
+WHEN any scientific input changes, THEN a new evaluation must match the uncached
+oracle exactly. WHEN a caller mutates its returned dict, THEN subsequent results
+remain unchanged. WHEN the deadline expires, THEN hits and completed misses must
+fail rather than bypass the budget. Verify these boundaries, an independent exact
+monopole control, full-suite scientific assertions and native counts. Report
+requests, uncached evaluations and hits separately; instrumented prefix elapsed
+fields measure the wrapper call, not necessarily an uncached calculation.
+
+This test-only optimization changes no scientific formulas, production dynamics,
+coefficients, tolerances, native caps or milestone acceptance criteria.

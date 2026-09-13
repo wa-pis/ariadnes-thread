@@ -24,6 +24,8 @@ from space_nav import ephemeris, trajectory
 
 ROOT = Path(__file__).resolve().parents[1]
 
+_HarmonicErrorCache = dict[tuple[object, ...], tuple[tuple[tuple[int, int], Fraction], ...]]
+
 
 def test_spk_record_selector_matches_inspected_binary() -> None:
     """Pin the inspected reader instructions, not live dispatch or CPU modes."""
@@ -1967,6 +1969,31 @@ def _point_gravity_anchor_error_bound_m_s2(
                      for radius in (lower_m, upper_m)]
         error_m_s2 += max(abs(Fraction(observed) - endpoint) for endpoint in endpoints)
     return error_m_s2
+
+
+def _reused_harmonic_term_errors_m_s2(
+    cache: _HarmonicErrorCache,
+    budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
+    cosine: np.ndarray, sine: np.ndarray, body_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
+    inertial_to_fixed: np.ndarray, observed_terms_m_s2: np.ndarray,
+) -> dict[tuple[int, int], Fraction]:
+    """Reuse exact SI/J2000 term errors only within the caller's inventory.
+
+    Successful keys encode all inputs checked by the uncached oracle; failures
+    are never retained. Immutable entries and fresh result dicts prevent aliasing.
+    """
+    budget.check()
+    assert type(gm_m3_s2) is float and type(reference_radius_m) is float
+    arrays = (cosine, sine, body_position_m, spacecraft_position_m, inertial_to_fixed, observed_terms_m_s2)
+    key = (gm_m3_s2.hex(), reference_radius_m.hex(),
+           *((array.shape, array.dtype.str, array.tobytes(order="C")) for array in arrays))
+    if key not in cache:
+        errors = _generic_harmonic_term_errors_m_s2(budget, gm_m3_s2, reference_radius_m, *arrays)
+        budget.check()
+        cache[key] = tuple(errors.items())
+    result = dict(cache[key])
+    budget.check()
+    return result
 
 
 @pytest.mark.parametrize("offset_m", [0.0, 1e12])
@@ -3986,6 +4013,8 @@ def _check_conditional_full_force_coast_domains(
         }
     print(json.dumps({"conditional_harmonic_coefficient_partition": coefficient_partitions}, sort_keys=True, allow_nan=False))
     results: list[dict[str, object]] = []
+    harmonic_error_cache: _HarmonicErrorCache = {}
+    harmonic_error_requests = 0
     for center, radius_m in (("Moon", 1_837_400.0), ("Mars", 3_689_500.0)):
         short_handoff: tuple[tuple[Fraction, ...], Fraction, Fraction, float] | None = None
         two_segment_handoff: tuple[tuple[Fraction, ...], Fraction, Fraction, float] | None = None
@@ -4628,8 +4657,9 @@ def _check_conditional_full_force_coast_domains(
                         prefix_cosine = field.cosine_coefficients[:prefix_degree + 1, :prefix_degree + 1].copy()
                         prefix_sine = field.sine_coefficients[:prefix_degree + 1, :prefix_degree + 1].copy()
                         prefix_started_s = perf_counter()
-                        generic_errors = _generic_harmonic_term_errors_m_s2(
-                            budget, field.gravitational_parameter, field.reference_radius,
+                        harmonic_error_requests += 1
+                        generic_errors = _reused_harmonic_term_errors_m_s2(
+                            harmonic_error_cache, budget, field.gravitational_parameter, field.reference_radius,
                             prefix_cosine, prefix_sine,
                             states[source][:3], state[:3], force_values[46:64].reshape(2, 3, 3)[index], terms[:prefix_count],
                         )
@@ -5784,6 +5814,11 @@ def _check_conditional_full_force_coast_domains(
     assert sum(result["conditional_adjacent_tighter_control"] is not None for result in results) == (1 if run_native_controls else 0)
     assert sum(result["conditional_adjacent_comparison"] is not None for result in results) == (1 if run_native_controls else 0)
     assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (expected_arcs,) * 3
+    print(json.dumps({"harmonic_error_reuse": {
+        "requests": harmonic_error_requests, "uncached_evaluations": len(harmonic_error_cache),
+        "hits": harmonic_error_requests - len(harmonic_error_cache),
+        "native_arc_propagations": budget.native_arc_propagations,
+    }}, sort_keys=True))
     return results
 
 

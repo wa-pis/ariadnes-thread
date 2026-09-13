@@ -277,6 +277,8 @@ def _coast_error_envelope(
 ) -> tuple[Fraction, Fraction]:
     """Bound SI position/velocity errors given a closed domain and uniform sensitivities.
 
+    Vector errors use Euclidean (L2) norms and compatible induced force
+    sensitivities. An L1 upper bound conservatively bounds L2, not conversely.
     Reference position must differentiate to reference velocity. Its acceleration
     defect must be <= D+J*t, where D/J are the supplied acceleration defect/rate.
     Force sensitivities must hold throughout both paths and chords.
