@@ -51,6 +51,31 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 shifted-reference force defect (2026-09-13):
+Derive D2,J2 with time rebasing and both reference shifts; verify exact
+manufactured-force coefficients, signed/zero/attainment and invalid cases.
+Apply to the passing Mars case only after both reference/chord domain
+checks and the exact cubic translation identity. Carry incoming radii
+unchanged, report reference-only gates, and retain all previous allowances.
+Run focused/full pytest, Ruff, strict OpenSpec and legacy isolation. Do not
+add a native arc or mark 3.9 complete.
+
+Measured verification: 341 focused transport tests pass in 0.11 s, including
+55 new manufactured-force/zero/rejection cases. All 2402 tests pass in
+530.17 s, including both real/portable inventories. For the shifted Mars
+reference, D2=1.7425477995296341e-6 m/s^2 and
+J2=0.00010574685550976585 m/s^3. Reference shifts are
+4.089573879025579e-5 m and 1.0793970321820255e-9 m/s.
+The reference-only transported errors are 4.089633601148173e-5 m and
+5.5459546090295223e-8 m/s, both within unchanged gates. Shifted-reference
+reach is 953.9021073986532 m / 0.09863472821236893 m/s; both old and
+new reference/chord domain checks and exact endpoint translation pass.
+Reported values round outward. The adjacent native endpoint/residual is
+still absent, so these are not final native-trajectory error bounds.
+Ruff, strict OpenSpec, diff checks and legacy isolation pass. All old
+controls, seven/zero native counts, force/arithmetic allowances, resources,
+tolerances and operation budget are unchanged. Task 3.9 remains open.
+
 Task 3.9 adjacent short-coast prerequisites (2026-09-13):
 Verify re-centred first-exit reach against exact signed constant acceleration,
 zero/large-origin and invalid-input controls. Retain nominal short native

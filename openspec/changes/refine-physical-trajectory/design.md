@@ -1,5 +1,41 @@
 ## Context
 
+### Time- and state-shifted reference defect (2026-09-13)
+
+Let q1 have reference acceleration defect <=D+J*t on the cumulative
+interval. Define q2(tau)=q1(t1+tau)+delta_p+delta_v*tau. Its acceleration
+is unchanged at the corresponding absolute time. If both references and
+their chords share the qualified domain, the state-sensitivity inequality
+gives the affine bound `|f(q2)-q2''| <= D2+J2*tau`.
+Use D2=D+J*t1+Lx*Rp+Lv*Rv and J2=J+Lx*Rv,
+with norm bounds Rp,Rv, retaining every previous force/arithmetic allowance.
+These reference shifts are not the incoming ideal-state error radii.
+
+WHEN applied to an independent manufactured force with q1=t^3/6, THEN
+the signed affine residual coefficients must be enclosed exactly, including
+same-sign attainment, cancellation, zero sensitivities/shifts and time zero.
+Check force evaluations against those coefficients. Omitted time rebasing
+or nonzero sensitivity shifts must demonstrably underbound aligned cases;
+negative/nonfraction/nonfinite inputs must fail. Coefficient inequalities
+and the Lipschitz/triangle derivation establish the interval, not sampled
+agreement alone.
+
+For the passing nominal Mars adjacent control only, use the existing
+cumulative 1/32 s cubic and its force defect/sensitivities. Evaluate q1 at
+t1=1/64 s, subtract it from the saved native endpoint, and form q2 with
+that native position/velocity, acceleration a+j*t1 and unchanged jerk j.
+Verify the exact endpoint translation identity. Bound both references'
+accelerations and recheck their position/velocity reach against the same
+1000 m / 0.1 m/s domain. Convexity then encloses their fixed-time chords;
+the preceding adjacent assessment encloses the ideal path separately.
+
+Transport the saved native-relative incoming radii over the next 1/64 s
+with D2,J2. WHEN reported, THEN label the bounds as ideal-state errors
+relative to q2 only. No adjacent native endpoint has been computed, so its
+native-to-reference residual is still missing. Preserve Moon's unresolved
+domain, all old controls and seven/zero native arc counts; no accuracy claim
+for an actual adjacent propagation or a mission follows from this step.
+
 ### Adjacent short-coast prerequisites (2026-09-13)
 
 Retain the nominal Moon/Mars 1/64 s native endpoint n and its degree-map

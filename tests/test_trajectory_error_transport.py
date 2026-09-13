@@ -6,6 +6,77 @@ import math
 import pytest
 
 
+def _shifted_reference_defect_m_s2_m_s3(
+    offset_s: float, position_sensitivity_s_inv2: Fraction, velocity_sensitivity_s_inv: Fraction,
+    defect_m_s2: Fraction, defect_rate_m_s3: Fraction,
+    position_shift_m: Fraction, velocity_shift_m_s: Fraction,
+) -> tuple[Fraction, Fraction]:
+    """Bound shifted-reference defect by D2+J2*tau in SI.
+
+    q2(tau)=q1(offset+tau)+delta_p+delta_v*tau. Old defect and state
+    sensitivities must hold on both references/chords over the entire interval.
+    Shift arguments bound vector norms, not signed error or incoming uncertainty.
+    """
+    assert type(offset_s) is float and math.isfinite(offset_s) and offset_s >= 0
+    assert all(isinstance(value, Fraction) and value >= 0 for value in (
+        position_sensitivity_s_inv2, velocity_sensitivity_s_inv, defect_m_s2,
+        defect_rate_m_s3, position_shift_m, velocity_shift_m_s,
+    ))
+    return (defect_m_s2 + defect_rate_m_s3*Fraction(offset_s)
+            + position_sensitivity_s_inv2*position_shift_m + velocity_sensitivity_s_inv*velocity_shift_m_s,
+            defect_rate_m_s3 + position_sensitivity_s_inv2*velocity_shift_m_s)
+
+
+@pytest.mark.parametrize("offset_s", [0.0, 0.125])
+@pytest.mark.parametrize("lx,lv", [(0, 0), (1, 0), (0, 1), (1, 1)])
+@pytest.mark.parametrize("force_sign,p_sign,v_sign", [(1, 1, 1), (1, -1, 1), (-1, 1, -1), (-1, -1, -1)])
+def test_shifted_defect_encloses_manufactured_force(
+    offset_s: float, lx: int, lv: int, force_sign: int, p_sign: int, v_sign: int,
+) -> None:
+    d, j, p, v = map(Fraction, ("0.001", "0.002", "0.0001", "0.00001"))
+    shifted_d, shifted_j = _shifted_reference_defect_m_s2_m_s3(offset_s, Fraction(lx), Fraction(lv), d, j, p, v)
+    # Independent force f(t,x,v)=t+s*(D+J*t)+Lx*(x-t^3/6)+Lv*(v-t^2/2).
+    # q1=t^3/6; q2=q1(offset+tau)+signed shifts. Its residual is affine
+    # in tau, so bounding both exact coefficients proves the whole interval.
+    constant = force_sign*(d+j*Fraction(offset_s)) + lx*p_sign*p + lv*v_sign*v
+    slope = force_sign*j + lx*v_sign*v
+    assert abs(constant) <= shifted_d and abs(slope) <= shifted_j
+    for tau in (Fraction(0), Fraction(1, 128), Fraction(1, 64)):
+        t = Fraction(offset_s) + tau
+        q2 = t**3/6 + p_sign*p + v_sign*v*tau
+        q2_velocity = t**2/2 + v_sign*v
+        force = t + force_sign*(d+j*t) + lx*(q2-t**3/6) + lv*(q2_velocity-t**2/2)
+        assert force - t == constant + slope*tau
+        assert abs(force - t) <= shifted_d + shifted_j*tau
+        if force_sign == p_sign == v_sign:
+            assert abs(force - t) == shifted_d + shifted_j*tau
+    if force_sign == p_sign == v_sign == 1 and offset_s > 0:
+        assert constant > d + lx*p + lv*v  # Omitting time rebasing underbounds.
+        if lx or lv:
+            assert constant > d + j*Fraction(offset_s)  # Omitting reference shifts underbounds.
+
+
+def test_shifted_defect_preserves_zero_shift_and_zero_field() -> None:
+    assert _shifted_reference_defect_m_s2_m_s3(0.0, Fraction(2), Fraction(3), Fraction(4), Fraction(5),
+                                             Fraction(0), Fraction(0)) == (4, 5)
+    assert _shifted_reference_defect_m_s2_m_s3(0.125, *(Fraction(0),)*6) == (0, 0)
+
+
+@pytest.mark.parametrize("field", range(6))
+@pytest.mark.parametrize("invalid", [Fraction(-1), True, math.nan])
+def test_shifted_defect_rejects_invalid_bound(field: int, invalid: object) -> None:
+    values: list[object] = [Fraction(1)] * 6
+    values[field] = invalid
+    with pytest.raises(AssertionError):
+        _shifted_reference_defect_m_s2_m_s3(0.125, *values)  # type: ignore[arg-type] -- boundary rejection.
+
+
+@pytest.mark.parametrize("offset_s", [-1.0, True, math.nan, math.inf])
+def test_shifted_defect_rejects_invalid_offset(offset_s: float) -> None:
+    with pytest.raises(AssertionError):
+        _shifted_reference_defect_m_s2_m_s3(offset_s, *(Fraction(1),)*6)
+
+
 def _recentered_coast_reaches_m_m_s(
     duration_s: float, position_offset_m: Fraction, velocity_offset_m_s: Fraction,
     nominal_speed_m_s: Fraction, position_error_m: Fraction, velocity_error_m_s: Fraction,

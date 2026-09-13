@@ -201,15 +201,24 @@ Mars reaches 953.9021517983934 m / 0.09908321511137594 m/s, so both
 strict closure gates pass. No new native arc was run. These are conditional
 domain prerequisites, not adjacent-arc accuracy or collision classifications.
 
-Next bounded work within 3.9 is to derive and verify the shifted-reference
-force defect for the passing Mars case. Reuse the qualified cumulative
-cubic reference only with explicit time rebasing and position/velocity
-reference-centre shifts through the existing state sensitivities. WHEN
-transferred to the shifted reference, THEN its defect bound must enclose
-an independent analytic oracle, retaining every old allowance and proving
-both references/chords stay in the same qualified domain before native use.
-Keep Moon unresolved and do not launch another native arc until the next
-reference defect is qualified. No mission composition is implied.
+The shifted Mars reference now has a qualified conditional defect
+D2=1.7425477995296341e-6 m/s^2, J2=0.00010574685550976585 m/s^3,
+with time/state shifts and every old allowance retained. Exact cubic
+translation and both reference/chord domain checks pass. Its reference-only
+position/velocity bounds are 4.089633601148173e-5 m and
+5.5459546090295223e-8 m/s. No adjacent native endpoint exists yet.
+
+Next bounded work within 3.9 is one nominal adjacent Mars 1/64 s native
+coast from the saved native endpoint. Recheck the qualified domain/reference
+premises before the call, preserve PPN/frame/time/mass settings and carry
+both incoming error radii. WHEN its endpoint is available, THEN add its
+exact native-to-shifted-reference residual once and measure the unchanged
+1 mm / 1 micrometre-per-second gates. Count this as an additional native
+control/evaluation/arc (eight total if it completes), retain all seven old
+controls and the portable zero count, and report elapsed time under the
+same 300-second operation budget. Do not revise production caps or discard
+failed attempts. Keep Moon unresolved; no mission or native-stage safety
+qualification follows from this local endpoint experiment.
 Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
@@ -219,7 +228,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2347 passing tests; both inventories
+The latest completed code check has 2402 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs seven spacecraft arcs, the portable inventory

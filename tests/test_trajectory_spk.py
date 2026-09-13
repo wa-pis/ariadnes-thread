@@ -3638,6 +3638,7 @@ def _check_conditional_full_force_coast_domains(
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint, _initial_velocity_interval_m_s
     from test_trajectory_error_transport import _recentered_coast_reaches_m_m_s
+    from test_trajectory_error_transport import _shifted_reference_defect_m_s2_m_s3
     from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
     from test_trajectory_tracefree import _tracefree_operator_bound_s_inv2
     from test_trajectory_degree_map import _nonmonopole_degree_map_bound_s_inv2
@@ -3938,6 +3939,7 @@ def _check_conditional_full_force_coast_domains(
             assert Fraction(acceleration_m_s2) >= sum(map(Fraction, (*gravity_m_s2.values(), thrust, srp, relativity)))
             assert thrust == 0.0
             adjacent_prerequisites: dict[str, object] | None = None
+            shifted_reference_control: dict[str, object] | None = None
             if run_native_controls and duration_s == 1 / 32:
                 assert short_handoff is not None
                 native_state, incoming_p_m, incoming_v_m_s, handoff_tdb_s = short_handoff
@@ -4717,6 +4719,66 @@ def _check_conditional_full_force_coast_domains(
                                        for key, value in degree_values.items()}
                     assert all(math.isfinite(value) and Fraction(value) >= degree_values[key] >= 0
                                for key, value in reported_degree.items())
+                    if center == "Mars" and duration_s == 1 / 32:
+                        assert short_handoff is not None and not tighter
+                        assert adjacent_prerequisites is not None and adjacent_prerequisites["conditional_prerequisites_pass"]
+                        handoff_state, handoff_p_m, handoff_v_m_s, handoff_epoch = short_handoff
+                        offset_s, next_s = 1 / 64, 1 / 64
+                        assert Fraction(handoff_epoch) - Fraction(start_tdb_s) == Fraction(offset_s)
+                        reference_at_handoff = _cubic_reference_endpoint(
+                            tuple(map(Fraction, state)), tuple(map(Fraction, anchor_m_s2)), reference_jerk_m_s3, offset_s,
+                        )
+                        reference_shift = tuple(a-b for a, b in zip(handoff_state, reference_at_handoff, strict=True))
+                        shift_p_m = sum(map(abs, reference_shift[:3]), Fraction(0))
+                        shift_v_m_s = sum(map(abs, reference_shift[3:]), Fraction(0))
+                        shifted_acceleration = tuple(Fraction(a) + j*Fraction(offset_s) for a, j in
+                                                     zip(anchor_m_s2, reference_jerk_m_s3, strict=True))
+                        shifted_acceleration_bound = (sum(map(abs, shifted_acceleration), Fraction(0))
+                                                      + Fraction(next_s)*sum(map(abs, reference_jerk_m_s3), Fraction(0)))
+                        assert shifted_acceleration_bound <= reference_acceleration_m_s2 <= Fraction(acceleration_m_s2)
+                        old_reference_reaches = _recentered_coast_reaches_m_m_s(
+                            duration_s, Fraction(0), Fraction(0), initial_speed_m_s, Fraction(0), Fraction(0),
+                            reference_acceleration_m_s2,
+                        )
+                        shifted_reference_reaches = _recentered_coast_reaches_m_m_s(
+                            next_s, position_offset_m, velocity_offset_m_s,
+                            sum(map(abs, handoff_state[3:]), Fraction(0)), Fraction(0), Fraction(0), shifted_acceleration_bound,
+                        )
+                        assert all(p < Fraction(position_radius_m) and v < Fraction(velocity_radius_m_s)
+                                   for p, v in (old_reference_reaches, shifted_reference_reaches))
+                        # Product position/velocity balls are convex: both references
+                        # and their fixed-time chords stay in the qualified domain.
+                        shifted_d, shifted_j = _shifted_reference_defect_m_s2_m_s3(
+                            offset_s, Fraction(reported_full_position_sensitivity), Fraction(reported_relativity_sensitivities[1]),
+                            constant_defect_m_s2, degree_rate_m_s3, shift_p_m, shift_v_m_s,
+                        )
+                        shifted_endpoint = _cubic_reference_endpoint(handoff_state, shifted_acceleration, reference_jerk_m_s3, next_s)
+                        assert shifted_endpoint == tuple(cubic_endpoint[axis] + reference_shift[axis]
+                            + (Fraction(next_s)*reference_shift[axis+3] if axis < 3 else 0) for axis in range(6))
+                        shifted_p, shifted_v = _coast_error_envelope(
+                            next_s, handoff_p_m, handoff_v_m_s, Fraction(reported_full_position_sensitivity),
+                            Fraction(reported_relativity_sensitivities[1]), shifted_d, acceleration_defect_rate_m_s3=shifted_j,
+                        )
+                        shifted_values = {
+                            "reference_position_shift_m": shift_p_m, "reference_velocity_shift_m_s": shift_v_m_s,
+                            "reference_defect_m_s2": shifted_d, "reference_defect_rate_m_s3": shifted_j,
+                            "shifted_reference_position_reach_m": shifted_reference_reaches[0],
+                            "shifted_reference_velocity_reach_m_s": shifted_reference_reaches[1],
+                            "reference_position_error_m": shifted_p, "reference_velocity_error_m_s": shifted_v,
+                        }
+                        reported_shifted = {key: math.nextafter(float(value), math.inf) if value else 0.0
+                                            for key, value in shifted_values.items()}
+                        assert all(math.isfinite(value) and Fraction(value) >= shifted_values[key] >= 0
+                                   for key, value in reported_shifted.items())
+                        shifted_reference_control = {
+                            "offset_s": offset_s, "duration_s": next_s,
+                            "references_and_chords_in_domain": True,
+                            "reference_within_position_gate": shifted_p <= Fraction("0.001"),
+                            "reference_within_velocity_gate": shifted_v <= Fraction("0.000001"),
+                            "additional_native_arcs": 0,
+                            "scope": "Conditional ideal-state error relative to shifted cubic; no adjacent native endpoint residual",
+                            **reported_shifted,
+                        }
                     # Attribute this bound, not physical uncertainty or measured
                     # integration error. Use identical feedback for every channel.
                     constant_parts = {"initial_force": prefix_full_error_m_s2,
@@ -5005,6 +5067,7 @@ def _check_conditional_full_force_coast_domains(
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
                 "conditional_adjacent_coast_prerequisites": adjacent_prerequisites,
+                "conditional_shifted_reference_control": shifted_reference_control,
                 "position_domain_radius_m": position_radius_m,
                 "velocity_domain_radius_m_s": velocity_radius_m_s,
                 "conditional_point_mass_initial_jerk_intervals_m_s3": point_jerk_intervals_m_s3,
@@ -5036,6 +5099,7 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
     expected_arcs = 7 if run_native_controls else 0
     assert sum(result["conditional_adjacent_coast_prerequisites"] is not None for result in results) == (2 if run_native_controls else 0)
+    assert sum(result["conditional_shifted_reference_control"] is not None for result in results) == (1 if run_native_controls else 0)
     assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (expected_arcs,) * 3
     return results
 
