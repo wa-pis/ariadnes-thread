@@ -51,6 +51,34 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 existing-bound contribution diagnosis (2026-09-13):
+Verify exact zero-initial-error transport additivity, zero channels/duration,
+and independent constant-plus-linear force integration. Attribute the existing
+C20-composed endpoint bound with unchanged sensitivities and residuals;
+verify exact D/J and endpoint reconstruction and outward SI reporting at all
+seven native controls. Run focused transport checks, both inventories in the
+full suite, Ruff, strict OpenSpec and legacy isolation. Record the dominant
+remaining contribution without changing any scientific allowance or declaring
+task 3.9 complete.
+
+Measured result: 135 focused transport tests and all 2037 tests pass
+(full suite 525.74 s, including both inventories). Exact nonnegative
+constant/rate and endpoint reconstruction holds at all seven native controls;
+reported totals and gates remain unchanged. At Mars 1/8 s, velocity-bound
+contributions in m/s are: Mars spatial 1.1916224390190391e-6, Mars rotation
+1.7974500058952665e-7, native/reference residual 7.05040238023318e-8,
+SRP variation 1.1205379699111423e-8, monopole curvature
+8.854865947766966e-9, initial force 3.74609152970238e-11,
+relativity variation 2.951102085655046e-11; the remaining Moon and jerk
+channels are retained explicitly in diagnostics. The spatial allowance alone
+exceeds the 1e-6 m/s gate. Near Moon at 1/64 s, initial force contributes
+7.538283925374458e-8 m/s and Moon spatial 6.239408478197981e-8 m/s;
+do not transfer Mars dominance to a different fixture. These are contributions
+to a fixed bound, not measured physical errors. Ruff, strict validation,
+diff checks and legacy isolation pass. Native counts, force settings,
+domains, arithmetic allowances, tolerances and budgets are unchanged.
+Task 3.9 remains open.
+
 Task 3.9 C20 plus remainder composition (2026-09-13):
 Verify independent mixed-field polar Hessians, exact reconstruction and
 nonmutation, invalid-input rejection, and min-selection of valid bounds.

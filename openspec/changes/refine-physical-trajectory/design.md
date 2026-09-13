@@ -1,5 +1,21 @@
 ## Context
 
+### Exact attribution of the existing C20-composed bound (2026-09-13)
+
+The zero-initial-error transport formula is linear in its constant D and
+linear-in-time J defect allowances for fixed duration, Lx and Lv. WHEN its
+nonnegative channels are evaluated separately with those same sensitivities,
+THEN their exact rational position/velocity sum must reproduce the existing
+bound; include the unchanged native-to-reference residual as a final channel.
+Report outward-rounded SI contributions for initial force, SRP, relativity,
+monopole jerk uncertainty/curvature, Moon/Mars rotation and spatial variation.
+Check D/J reconstruction before transport and exact endpoint reconstruction
+after it. Zero-duration and zero-channel controls plus independent integration
+of D+J*t without feedback qualify the diagnostic use of additivity.
+This ranks terms in one conservative certificate, not true physical errors or
+independent uncertainties. No force, domain, tolerance, native-call count or
+arithmetic allowance is changed or dropped. Full-mission safety remains open.
+
 ### C20 plus independently enclosed remainder (2026-09-13)
 
 Copy the nonmonopole coefficient array and remove only C20. Verify exact

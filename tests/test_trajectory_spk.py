@@ -4563,6 +4563,35 @@ def _check_conditional_full_force_coast_domains(
                     }
                     reported_c20_values = {key: math.nextafter(float(value), math.inf) if value else 0.0 for key, value in c20_values.items()}
                     assert all(math.isfinite(value) and Fraction(value) >= c20_values[key] >= 0 for key, value in reported_c20_values.items())
+                    # Attribute this bound, not physical uncertainty or measured
+                    # integration error. Use identical feedback for every channel.
+                    constant_parts = {"initial_force": prefix_full_error_m_s2,
+                                      "srp_variation": 2*Fraction(srp),
+                                      "relativity_variation": 2*Fraction(relativity)}
+                    rate_parts = {"monopole_jerk_error": reference_jerk_error_m_s3,
+                                  "monopole_curvature": monopole_curvature_m_s4*h/2}
+                    for body in ("Moon", "Mars"):
+                        rate_parts[f"{body}_rotation"] = Fraction(partitioned_rotation_variation_m_s2[body])/h
+                        rate_parts[f"{body}_spatial"] = c20_nonmonopole_jacobians_s_inv2[body]*Fraction(relative_reaches_m[body])/h
+                    assert sum(constant_parts.values(), Fraction(0)) == constant_defect_m_s2
+                    assert sum(rate_parts.values(), Fraction(0)) == c20_defect_rate_m_s3
+                    contributions: dict[str, tuple[Fraction, Fraction]] = {}
+                    for name in (*constant_parts, *rate_parts):
+                        contributions[name] = _coast_error_envelope(
+                            duration_s, Fraction(0), Fraction(0), Fraction(reported_full_position_sensitivity),
+                            Fraction(reported_relativity_sensitivities[1]), constant_parts.get(name, Fraction(0)),
+                            acceleration_defect_rate_m_s3=rate_parts.get(name, Fraction(0)),
+                        )
+                    contributions["native_reference_residual"] = (cubic_position_residual_m, cubic_velocity_residual_m_s)
+                    assert tuple(sum((part[index] for part in contributions.values()), Fraction(0))
+                                 for index in (0, 1)) == (c20_position_m, c20_velocity_m_s)
+                    reported_contributions: dict[str, dict[str, float]] = {}
+                    for name, part in contributions.items():
+                        reported_contributions[name] = {}
+                        for unit, value in zip(("position_m", "velocity_m_s"), part, strict=True):
+                            reported = math.nextafter(float(value), math.inf) if value else 0.0
+                            assert math.isfinite(reported) and Fraction(reported) >= value >= 0
+                            reported_contributions[name][unit] = reported
                     transport_bounds = {
                         "conditional_weighted_reference_position_error_m": weighted_reference_position_error_m,
                         "conditional_weighted_reference_velocity_error_m_s": weighted_reference_velocity_error_m_s,
@@ -4638,6 +4667,7 @@ def _check_conditional_full_force_coast_domains(
                         },
                         "conditional_c20_spatial_cubic_control": {
                             **reported_c20_values,
+                            "bound_contributions": reported_contributions,
                             "reference_within_velocity_gate": c20_reference_m_s <= Fraction("0.000001"),
                             "within_position_gate": c20_position_m <= Fraction("0.001"),
                             "within_velocity_gate": c20_velocity_m_s <= Fraction("0.000001"),

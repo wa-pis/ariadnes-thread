@@ -94,6 +94,28 @@ def _coast_error_envelope(
     )
 
 
+@pytest.mark.parametrize("duration_s", [0.0, 1 / 64, 1 / 8])
+@pytest.mark.parametrize("sensitivity", [Fraction(0), Fraction(1, 10)])
+@pytest.mark.parametrize("zero_part", [False, True])
+def test_zero_initial_error_transport_is_additive(
+    duration_s: float, sensitivity: Fraction, zero_part: bool,
+) -> None:
+    # SI: independent forcing channels D_i + J_i*t; identical feedback
+    # constants and zero initial error are essential for this attribution.
+    parts = [(Fraction(1, 1000), Fraction(2, 1000)),
+             (Fraction(0), Fraction(0)) if zero_part else (Fraction(3, 1000), Fraction(4, 1000))]
+    bounds = [_coast_error_envelope(duration_s, Fraction(0), Fraction(0), sensitivity, sensitivity, d,
+                                   acceleration_defect_rate_m_s3=j) for d, j in parts]
+    d, j = (sum((part[index] for part in parts), Fraction(0)) for index in (0, 1))
+    combined = _coast_error_envelope(duration_s, Fraction(0), Fraction(0), sensitivity, sensitivity, d,
+                                     acceleration_defect_rate_m_s3=j)
+    assert tuple(sum((bound[index] for bound in bounds), Fraction(0)) for index in (0, 1)) == combined
+    if sensitivity == 0:
+        h = Fraction(duration_s)
+        # Independent exact integration of D+J*t, without feedback.
+        assert combined == (d*h**2/2 + j*h**3/6, d*h + j*h**2/2)
+
+
 @pytest.mark.parametrize("duration_s", [0.0, 1 / 64, 0.3])
 @pytest.mark.parametrize("initial_position,initial_velocity,defect", [
     (Fraction(0), Fraction(0), Fraction(0)),
