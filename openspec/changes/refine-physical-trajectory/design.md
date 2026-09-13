@@ -1,5 +1,19 @@
 ## Context
 
+### Source polynomial reanchoring (2026-09-13)
+
+At original start+1/16 s, reuse `_spk_position_affine_data` on the same
+eleven guarded position records for a next 1/16 s horizon. WHEN coverage
+holds, THEN exact fresh position/slope must differ from old affine anchors
+by at most C*offset^2/2 and C*offset in L1 SI norms, at both link and
+eight-body chain levels. Retain the original chain arithmetic allowances.
+Reuse the existing native position readbacks at cumulative 1/16 and 1/8 s
+for sixteen fresh-anchor/remainder comparisons; make no extra SPICE query
+or spacecraft propagation. Twelve expanded cubic controls independently
+check fresh positions, changed slopes and local remainders, and reject an
+interval extending beyond its record. This source-only control does not
+update any spacecraft reference, full-force anchor or safety certificate.
+
 ### Fresh Mars reference prerequisite inventory (2026-09-13)
 
 Select the already saved nominal `three_segment_handoff` at

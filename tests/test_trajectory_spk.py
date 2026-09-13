@@ -146,6 +146,30 @@ def test_spk_affine_matches_expanded_cubic(midpoint_tdb_s: float, radius_s: floa
         assert position[axis] == 1000 * (a + b*x + c*(2*x*x-1) + d*(4*x**3-3*x))
         assert slope[axis] == 1000 * (b + 4*c*x + d*(12*x*x-3)) / radius
     assert curvature == 1000 * sum((4*abs(Fraction(row[2])) + 24*abs(Fraction(row[3])) for row in rows), Fraction(0)) / radius**2
+    offset = Fraction(1, 16)
+    fresh_position, fresh_slope, fresh_curvature = _spk_position_affine_data(
+        trajectory._RefinementBudget("affine-reanchor", 300.0), rows,
+        midpoint_tdb_s, radius_s, start + float(offset), float(offset),
+    )
+    u = x + offset/radius
+    assert fresh_curvature == curvature
+    for axis, row in enumerate(rows):
+        a, b, c, d = map(Fraction, row)
+        assert fresh_position[axis] == 1000*(a+b*u+c*(2*u*u-1)+d*(4*u**3-3*u))
+        assert fresh_slope[axis] == 1000*(b+4*c*u+d*(12*u*u-3))/radius
+    assert fresh_slope != slope  # Reusing the original slope is not reanchoring.
+    assert sum((abs(b-a-v*offset) for a, b, v in zip(position, fresh_position, slope, strict=True)), Fraction(0)) <= curvature*offset**2/2
+    assert sum((abs(b-a) for a, b in zip(slope, fresh_slope, strict=True)), Fraction(0)) <= curvature*offset
+    for elapsed in (Fraction(0), offset/2, offset):
+        z = u+elapsed/radius
+        exact = [1000*(Fraction(a)+Fraction(b)*z+Fraction(c)*(2*z*z-1)+Fraction(d)*(4*z**3-3*z))
+                 for a, b, c, d in rows]
+        assert sum((abs(b-a-v*elapsed) for a, b, v in zip(fresh_position, exact, fresh_slope, strict=True)), Fraction(0)) <= fresh_curvature*elapsed**2/2
+    with pytest.raises(AssertionError):
+        _spk_position_affine_data(
+            trajectory._RefinementBudget("affine-reanchor-outside", 300.0), rows,
+            midpoint_tdb_s, radius_s, midpoint_tdb_s+radius_s, float(offset),
+        )
     for elapsed in (Fraction(0), Fraction(1, 2), Fraction(1)):
         u = x + elapsed / radius
         exact_final = [1000 * (Fraction(a) + Fraction(b)*u + Fraction(c)*(2*u*u-1) + Fraction(d)*(4*u**3-3*u))
@@ -1436,6 +1460,10 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     coast_body_reaches_m: dict[float, dict[str, float]] = {}
     body_ids = dict(zip(trajectory.PHYSICAL_BODY_NAMES, (10, 1, 2, 399, 301, 499, 599, 699), strict=True))
     affine_links: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...], Fraction]] = {}
+    fresh_affine_links: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...], Fraction]] = {}
+    handoff_offset_s = Fraction(1, 16)
+    handoff_tdb_s = start_tdb_s + float(handoff_offset_s)
+    assert Fraction(handoff_tdb_s)-Fraction(start_tdb_s) == handoff_offset_s
     for link, records in position_records.items():
         selected = [(mid, radius, rows) for mid, radius, rows in records
                     if Fraction(mid) - Fraction(radius) + 16 * Fraction(math.ulp(mid)) <= Fraction(start_tdb_s)
@@ -1443,16 +1471,33 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         assert len(selected) == 1, (link, "affine interval must fit one qualified core")
         mid, radius, rows = selected[0]
         affine_links[link] = _spk_position_affine_data(budget, rows, mid, radius, start_tdb_s, 1.0)
+        # Fresh data must fit the SAME guarded core, not merely a nearby record.
+        assert Fraction(mid)-Fraction(radius)+16*Fraction(math.ulp(mid)) <= Fraction(handoff_tdb_s)
+        assert Fraction(handoff_tdb_s)+handoff_offset_s <= Fraction(mid)+Fraction(radius)-16*Fraction(math.ulp(mid))
+        fresh_affine_links[link] = _spk_position_affine_data(
+            budget, rows, mid, radius, handoff_tdb_s, float(handoff_offset_s),
+        )
+        old_p, old_v, old_c = affine_links[link]
+        fresh_p, fresh_v, fresh_c = fresh_affine_links[link]
+        assert fresh_c == old_c
+        assert sum((abs(b-a-v*handoff_offset_s) for a, b, v in zip(old_p, fresh_p, old_v, strict=True)), Fraction(0)) <= old_c*handoff_offset_s**2/2
+        assert sum((abs(b-a) for a, b in zip(old_v, fresh_v, strict=True)), Fraction(0)) <= old_c*handoff_offset_s
     affine_curvature_bounds_m_s2: dict[str, float] = {}
     source_affine_motion: dict[str, tuple[tuple[Fraction, ...], Fraction]] = {}
     source_affine_positions_m: dict[str, tuple[Fraction, ...]] = {}
     affine_native_checks = 0
+    fresh_native_comparisons = 0
     for body, target in body_ids.items():
         center = expected_centers[target]
         chain = [target] if center == 0 else [target, center]
         position = tuple(sum((affine_links[link][0][axis] for link in chain), Fraction(0)) for axis in range(3))
         slope = tuple(sum((affine_links[link][1][axis] for link in chain), Fraction(0)) for axis in range(3))
         curvature = sum((affine_links[link][2] for link in chain), Fraction(0))
+        fresh_position = tuple(sum((fresh_affine_links[link][0][axis] for link in chain), Fraction(0)) for axis in range(3))
+        fresh_slope = tuple(sum((fresh_affine_links[link][1][axis] for link in chain), Fraction(0)) for axis in range(3))
+        assert sum((fresh_affine_links[link][2] for link in chain), Fraction(0)) == curvature
+        assert sum((abs(b-a-v*handoff_offset_s) for a, b, v in zip(position, fresh_position, slope, strict=True)), Fraction(0)) <= curvature*handoff_offset_s**2/2
+        assert sum((abs(b-a) for a, b in zip(slope, fresh_slope, strict=True)), Fraction(0)) <= curvature*handoff_offset_s
         source_affine_motion[body] = (slope, curvature)
         source_affine_positions_m[body] = position
         reported_curvature = math.nextafter(float(curvature), math.inf)
@@ -1465,8 +1510,25 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             residual = sum((abs(Fraction(observed) - initial - velocity * Fraction(duration_s))
                             for observed, initial, velocity in zip(native_position, position, slope, strict=True)), Fraction(0))
             assert residual <= curvature * Fraction(duration_s)**2 / 2 + Fraction(chain_position_bounds_m[target]), body
+            if handoff_offset_s <= Fraction(duration_s) <= 2*handoff_offset_s:
+                local_s = Fraction(duration_s)-handoff_offset_s
+                fresh_residual = sum((abs(Fraction(observed)-p-v*local_s) for observed, p, v in
+                                      zip(native_position, fresh_position, fresh_slope, strict=True)), Fraction(0))
+                # Same native readback and chain arithmetic allowance; no extra
+                # query, and no substitution of SPK type-3 stored velocity.
+                assert fresh_residual <= curvature*local_s**2/2+Fraction(chain_position_bounds_m[target]), body
+                fresh_native_comparisons += 1
             affine_native_checks += 1
     assert len(affine_links) == 11 and affine_native_checks == 40
+    assert len(fresh_affine_links) == 11 and fresh_native_comparisons == 16
+    print(json.dumps({"fresh_source_affine_control": {
+        "epoch_tdb_s": handoff_tdb_s, "duration_s": float(handoff_offset_s),
+        "origin": "SSB", "orientation": "J2000", "position_unit": "m", "slope_unit": "m/s",
+        "links": len(fresh_affine_links), "bodies": len(body_ids),
+        "reused_native_position_comparisons": fresh_native_comparisons,
+        "additional_native_queries": 0,
+        "qualification": "Source polynomial reanchor only; no fresh full-force or mission certificate",
+    }}, sort_keys=True, allow_nan=False))
     print(json.dumps({"position_polynomial_acceleration_l1_bound_m_s2": affine_curvature_bounds_m_s2,
                       "affine_native_position_checks": affine_native_checks}, sort_keys=True, allow_nan=False))
     for duration_s in coast_durations_s:

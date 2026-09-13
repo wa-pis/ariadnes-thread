@@ -51,6 +51,28 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 source polynomial reanchoring (2026-09-13):
+Check fresh position and position-polynomial derivative at start+1/16 s
+for eleven guarded links and eight chains, preserving arithmetic allowances.
+Verify old-to-fresh Taylor bounds and sixteen comparisons using existing
+native position readbacks. Extend twelve expanded cubic controls with
+independent rebasing, changed-slope, remainder and uncovered-interval checks.
+Run focused checks, full pytest, Ruff, strict OpenSpec and legacy isolation.
+No additional native queries or spacecraft arcs; full-force anchors remain
+unchanged and task 3.9 stays open.
+
+Verification: 23 focused affine tests pass in 0.48 s, including twelve
+extended cubic cases with exact rational SI comparisons and coverage
+rejection. All 2738 tests pass in 532.39 s. Both scientific inventories
+reanchor eleven links/eight chains at 978995455.2929223 TDB s with
+1/16 s duration. Each checks sixteen fresh residuals using the unchanged
+forty native position readbacks and unchanged chain arithmetic allowances.
+Source polynomial position and slope changes satisfy C*offset^2/2 m and
+C*offset m/s bounds; no floating tolerance was introduced or loosened.
+Thirteen/zero spacecraft native counts are preserved. Ruff, strict OpenSpec,
+whitespace and unchanged legacy SHA-256/import checks pass. No production
+code, kernels, forces, dependencies, caps or shared deadline changed.
+
 Task 3.9 fresh Mars reference inventory (2026-09-13):
 Inspect the existing saved handoffs, source polynomial and force derivative
 oracles, initial-force readbacks, shifted-reference domain gates and runtime

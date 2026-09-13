@@ -312,15 +312,22 @@ the available oracles and missing fresh source/force anchors and domain
 checks. Existing continuation shifts the old cubic; it is not freshly
 anchored. Original reference curvature already checks q''<=domain A.
 
-Next bounded work within 3.9 is fresh source polynomial position/slope
-evaluation at this handoff. WHEN all original guarded records cover the
-selected interval, THEN reevaluate eleven links forming eight body chains and check exact
-position/slope changes against original curvature bounds. Preserve source
-arithmetic allowances, reject uncovered intervals, and independently test
-rebasing with a changing polynomial slope. Do not substitute type-3 stored
-velocity for a position derivative. This source-only step does not qualify
-fresh full-force acceleration/jerk or a new cubic domain. Add no spacecraft
-native calls or mission extension;
+Fresh source polynomial evaluation now covers eleven guarded links and
+eight body chains at original start+1/16 s, with next 1/16 s coverage.
+Exact position/slope rebasing bounds preserve chain arithmetic allowances;
+sixteen fresh comparisons reuse the forty existing native readbacks.
+Twelve expanded polynomial cases independently check changed slopes,
+rebased remainders and uncovered-interval rejection. No new native query.
+
+Next bounded work within 3.9 is to bind these fresh source values to the
+saved nominal Mars three-segment handoff. WHEN epochs and guarded coverage
+match, THEN calculate eight fresh ideal monopole jerk intervals with the
+existing oracle, retaining interval arithmetic and all nonmonopole terms
+as unqualified for a fresh full-force anchor. Verify source derivatives
+come from position polynomials, not type-3 stored velocity, and preserve
+incoming state radii. This does not yet replace the full-force reference:
+fresh acceleration, omitted-force allowances and new cubic domain closure
+remain required. Add no spacecraft native calls or mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
 caps and the shared 300-second deadline. Keep Moon unresolved and 3.9 open.
 Keep all previous certificates. Preserve all
