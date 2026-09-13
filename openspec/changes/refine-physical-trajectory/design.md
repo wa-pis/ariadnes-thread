@@ -1,5 +1,21 @@
 ## Context
 
+### Selected spatial-bound provenance (2026-09-13)
+
+WHEN the composed C20-plus-remainder bound wins the existing minimum (ties
+included), THEN report C20 and its independently enclosed remainder; their
+exact rational sum must equal the selected bound. Recover the remainder only
+from that explicitly additive composed sum, never from the generic norm.
+WHEN the generic bound wins, THEN report a single `generic_unsplit` channel;
+do not invent C20/remainder shares of a degree-wise coefficient norm.
+Verify both choices, tie, zero, invalid and inconsistent inputs; compare the
+recovered remainder directly to its separate generic calculation in mixed
+analytic fixtures. At native controls, scale each selected component by the
+same spatial transport multiplier and verify exact reconstruction of the old
+velocity contribution. Report outward-rounded SI sub-contributions separately
+from the parent ledger so they are not double counted. This changes no bound,
+gate, physical model, domain, native call or safety qualification.
+
 ### Exact attribution of the existing C20-composed bound (2026-09-13)
 
 The zero-initial-error transport formula is linear in its constant D and

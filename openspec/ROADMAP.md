@@ -17,7 +17,17 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest diagnosis (2026-09-13): exact additive attribution reproduces the
+Latest spatial diagnosis (2026-09-13): the composed C20/remainder choice
+wins for both bodies at all seven native endpoint controls. At Mars 1/8 s,
+C20 contributes 2.0161635635530162e-7 m/s and the independently enclosed
+remainder 9.900060826637374e-7 m/s. Their exact sum reconstructs the
+existing spatial allowance. Even removing the C20 allowance entirely from
+this fixed certificate would leave about 1.26038e-6 m/s, above the 1e-6 m/s
+gate; this hypothetical screen is not permission to drop a force or allowance.
+The next improvement must address the remainder or another sufficient
+combination of bounds. No totals or historical gates changed.
+
+Retained diagnosis: exact additive attribution reproduces the
 unchanged C20-composed bounds at all seven native controls. At Mars 1/8 s,
 the spatial nonmonopole allowance contributes 1.1916224390190391e-6 m/s
 (about 81.5% of the total bound), already above the 1e-6 m/s gate by itself.
@@ -98,10 +108,10 @@ Forty-six additional mixed-field/rejection controls verify independent polar
 Hessians and the C20/remainder composition. Native application changes only
 the reference spatial-variation bound; full-force state sensitivities,
 rotation allowances, arithmetic bounds and historical controls remain intact.
-Next bounded work within 3.9 is to resolve the dominant Mars spatial
-allowance into its selected C20/remainder contributions, retaining generic
-versus composed min-selection provenance, before choosing a sharper
-derivative bound. Do not add longer controls or attempt mission composition
+Next bounded work within 3.9 is to attribute the selected Mars remainder
+bound by harmonic degree and identify dominant terms before choosing a
+sharper derivative/reference treatment. Verify reconstruction and retain
+every coefficient; this is not force truncation. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
@@ -109,7 +119,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2037 passing tests; both
+The latest completed code check has 2048 passing tests; both
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost

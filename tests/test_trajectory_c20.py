@@ -46,6 +46,43 @@ def _c20_remainder_jacobian_bound_s_inv2(
     )
 
 
+def _selected_c20_jacobian_parts_s_inv2(
+    c20: Fraction, composed: Fraction, generic: Fraction,
+) -> dict[str, Fraction]:
+    """Attribute the selected bound; never split a generic degree-wise norm."""
+    assert all(isinstance(value, Fraction) and value >= 0 for value in (c20, composed, generic))
+    assert composed >= c20
+    return {"C20": c20, "remainder": composed-c20} if composed <= generic else {"generic_unsplit": generic}
+
+
+@pytest.mark.parametrize("c20,composed,generic,expected", [
+    (2, 5, 7, {"C20": Fraction(2), "remainder": Fraction(3)}),
+    (2, 5, 5, {"C20": Fraction(2), "remainder": Fraction(3)}),
+    (2, 5, 4, {"generic_unsplit": Fraction(4)}),
+    (0, 0, 0, {"C20": Fraction(0), "remainder": Fraction(0)}),
+])
+def test_selected_c20_parts_preserve_minimum_provenance(
+    c20: int, composed: int, generic: int, expected: dict[str, Fraction],
+) -> None:
+    parts = _selected_c20_jacobian_parts_s_inv2(Fraction(c20), Fraction(composed), Fraction(generic))
+    assert parts == expected
+    assert sum(parts.values(), Fraction(0)) == min(composed, generic)
+
+
+@pytest.mark.parametrize("field", range(3))
+@pytest.mark.parametrize("invalid", [Fraction(-1), True])
+def test_selected_c20_parts_reject_invalid_bounds(field: int, invalid: object) -> None:
+    values = [Fraction(2), Fraction(5), Fraction(7)]
+    values[field] = invalid  # type: ignore[assignment] -- intentional boundary rejection.
+    with pytest.raises(AssertionError):
+        _selected_c20_jacobian_parts_s_inv2(*values)
+
+
+def test_selected_c20_parts_reject_inconsistent_sum() -> None:
+    with pytest.raises(AssertionError):
+        _selected_c20_jacobian_parts_s_inv2(Fraction(5), Fraction(2), Fraction(7))
+
+
 @pytest.mark.parametrize("c20", [-0.125, 0.125])
 @pytest.mark.parametrize("c22", [0.0, 0.03125, 0.25])
 @pytest.mark.parametrize("c30", [-0.0625, 0.0, 0.0625])
@@ -58,6 +95,13 @@ def test_c20_remainder_encloses_mixed_polar_hessian(c20: float, c22: float, c30:
     composed = _c20_remainder_jacobian_bound_s_inv2(budget, 1.0, 1.0, distance_m, cosine, sine)
     generic = _harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, distance_m, cosine, sine)
     selected = min(composed, generic)
+    isolated = _c20_spatial_jacobian_bound_s_inv2(1.0, 1.0, distance_m, c20)
+    parts = _selected_c20_jacobian_parts_s_inv2(isolated, composed, generic)
+    assert sum(parts.values(), Fraction(0)) == selected
+    if "remainder" in parts:
+        remainder = cosine.copy()
+        remainder[2, 0] = 0.0
+        assert parts["remainder"] == _harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, distance_m, remainder, sine)
     # Independent diagonal polar Hessian: GM=R=1 SI. Jzz from C20/C30;
     # C22 adds +/-sqrt(15)*C22/r^5 to Jxx/Jyy, leaving Jzz unchanged.
     r = Fraction(distance_m)

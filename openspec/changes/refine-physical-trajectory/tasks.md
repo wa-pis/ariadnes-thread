@@ -51,6 +51,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 selected spatial-bound partition (2026-09-13):
+Verify composed/generic selection provenance, ties, zero and rejected invalid
+bounds, and direct equality to the independently calculated remainder in
+mixed analytic fields. In the seven native controls, verify exact selected
+bound and velocity-subcontribution reconstruction plus outward SI reporting.
+Run focused C20 tests, full pytest including both inventories, Ruff, strict
+OpenSpec and legacy isolation. Record which sub-contribution limits the
+existing Mars 1/8 s certificate; do not alter tolerances or close task 3.9.
+
+Measured result: 107 focused C20 tests pass, including eleven new selection
+and rejection controls; all 2048 tests pass in 524.17 s, including both
+inventories. Both bodies select the composed bound at all seven native
+endpoint controls. Mars 1/8 s velocity sub-contributions are
+2.0161635635530162e-7 m/s (C20) and 9.900060826637374e-7 m/s
+(remainder), exactly reconstructing the unchanged spatial parent before
+outward rounding. The total remains 1.4619986809939294e-6 m/s. Even
+discarding C20 hypothetically would leave about 1.26038e-6 m/s, so a C20-only
+improvement cannot resolve this fixed gate; no allowance is actually dropped.
+Moon 1/64 s contributions are 3.173514725988106e-10 m/s (C20) and
+6.2076733309381e-8 m/s (remainder). SI reports keep sub-contributions
+separate from the parent ledger to prevent double counting. Ruff, strict
+OpenSpec, diff checks and unchanged legacy isolation pass. No production,
+kernel, tolerance, domain, native-count or budget change. Task 3.9 stays open.
+
 Task 3.9 existing-bound contribution diagnosis (2026-09-13):
 Verify exact zero-initial-error transport additivity, zero channels/duration,
 and independent constant-plus-linear force integration. Attribute the existing

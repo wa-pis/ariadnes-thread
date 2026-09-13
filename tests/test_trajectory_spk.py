@@ -3621,7 +3621,10 @@ def _check_conditional_full_force_coast_domains(
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint
     from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
-    from test_trajectory_c20 import _c20_remainder_jacobian_bound_s_inv2
+    from test_trajectory_c20 import (
+        _c20_remainder_jacobian_bound_s_inv2, _c20_spatial_jacobian_bound_s_inv2,
+        _selected_c20_jacobian_parts_s_inv2,
+    )
     from test_trajectory_zonal_rotation import _partition_nonmonopole_coefficients, _partitioned_rotation_bound_m_s2
     from test_trajectory_gravity import _candidate, _spacecraft
 
@@ -3739,6 +3742,7 @@ def _check_conditional_full_force_coast_domains(
             harmonic_jacobians_s_inv2: dict[str, Fraction] = {}
             split_harmonic_jacobians_s_inv2: dict[str, Fraction] = {}
             c20_nonmonopole_jacobians_s_inv2: dict[str, Fraction] = {}
+            c20_spatial_parts_s_inv2: dict[str, dict[str, Fraction]] = {}
             for body in trajectory.PHYSICAL_BODY_NAMES:
                 floor_m = trajectory._relative_distance_lower_bound(
                     budget, tuple(state[:3]), tuple(states[body][:3]), position_radius_m, reaches_m[body],
@@ -3786,6 +3790,13 @@ def _check_conditional_full_force_coast_domains(
                         floor_m, nonmonopole_cosine, field.sine_coefficients,
                     )
                     c20_nonmonopole_jacobians_s_inv2[body] = min(tail_jacobian_s_inv2, c20_remainder_bound)
+                    isolated_c20 = _c20_spatial_jacobian_bound_s_inv2(
+                        field.gravitational_parameter, field.reference_radius, floor_m, float(nonmonopole_cosine[2, 0]),
+                    )
+                    c20_spatial_parts_s_inv2[body] = _selected_c20_jacobian_parts_s_inv2(
+                        isolated_c20, c20_remainder_bound, tail_jacobian_s_inv2,
+                    )
+                    assert sum(c20_spatial_parts_s_inv2[body].values(), Fraction(0)) == c20_nonmonopole_jacobians_s_inv2[body]
                     assert field.cosine_coefficients[0, 0] == 1.0 and field.sine_coefficients[0, 0] == 0.0
                     split_harmonic_jacobians_s_inv2[body] = _monopole_split_jacobian_bound_s_inv2(
                         field.gravitational_parameter, floor_m, tail_jacobian_s_inv2,
@@ -4592,6 +4603,20 @@ def _check_conditional_full_force_coast_domains(
                             reported = math.nextafter(float(value), math.inf) if value else 0.0
                             assert math.isfinite(reported) and Fraction(reported) >= value >= 0
                             reported_contributions[name][unit] = reported
+                    # Subdivision of spatial channels only, not extra contributions
+                    # to the total. Fixed-feedback transport is homogeneous in J.
+                    reported_spatial_velocity_parts: dict[str, dict[str, float]] = {}
+                    for body, parts in c20_spatial_parts_s_inv2.items():
+                        selected_bound = c20_nonmonopole_jacobians_s_inv2[body]
+                        assert selected_bound > 0  # Both pinned fields have nonzero nonmonopole terms.
+                        parent_velocity = contributions[f"{body}_spatial"][1]
+                        velocity_parts = {name: parent_velocity*bound/selected_bound for name, bound in parts.items()}
+                        assert sum(velocity_parts.values(), Fraction(0)) == parent_velocity
+                        reported_spatial_velocity_parts[body] = {}
+                        for name, value in velocity_parts.items():
+                            reported = math.nextafter(float(value), math.inf) if value else 0.0
+                            assert math.isfinite(reported) and Fraction(reported) >= value >= 0
+                            reported_spatial_velocity_parts[body][name] = reported
                     transport_bounds = {
                         "conditional_weighted_reference_position_error_m": weighted_reference_position_error_m,
                         "conditional_weighted_reference_velocity_error_m_s": weighted_reference_velocity_error_m_s,
@@ -4668,6 +4693,7 @@ def _check_conditional_full_force_coast_domains(
                         "conditional_c20_spatial_cubic_control": {
                             **reported_c20_values,
                             "bound_contributions": reported_contributions,
+                            "spatial_velocity_subcontributions_m_s": reported_spatial_velocity_parts,
                             "reference_within_velocity_gate": c20_reference_m_s <= Fraction("0.000001"),
                             "within_position_gate": c20_position_m <= Fraction("0.001"),
                             "within_velocity_gate": c20_velocity_m_s <= Fraction("0.000001"),
