@@ -2,12 +2,41 @@
 
 from decimal import Inexact, ROUND_CEILING, localcontext
 from fractions import Fraction
+import json
 import math
+from pathlib import Path
 
 import pytest
 
 from space_nav import trajectory
 from space_nav.errors import TrajectoryRefinementError
+
+
+@pytest.mark.parametrize("body", trajectory.PHYSICAL_BODY_NAMES)
+def test_fresh_source_comparison_chord_has_positive_floor(body: str) -> None:
+    data = Path(__file__).parent / "data"
+    binding = json.loads((data / "m3_fresh_source_consumer_binding.json").read_text())["fresh_source_consumer_binding"]
+    replay = json.loads((data / "m3_fresh_harmonic_replay.json").read_text())
+    assert binding["epoch_tdb_s"] == replay["epoch_tdb_s"]
+    assert binding["epoch_tdb_s"] <= binding["coverage_end_tdb_s"]
+    assert binding["origin"] == replay["origin"] == "SSB"
+    assert binding["orientation"] == replay["orientation"] == "J2000"
+    assert set(binding["sources"]) == set(trajectory.PHYSICAL_BODY_NAMES)
+    source = binding["sources"][body]
+    assert source["exact_readback_match"] is True
+    ship, anchor = tuple(replay["spacecraft_position_m"]), tuple(source["position_m"])
+    epsilon = source["conditional_l1_allowance_m"]
+    budget = trajectory._RefinementBudget("fresh-source-chord", 300.0)
+    floor = trajectory._relative_distance_lower_bound(budget, ship, anchor, 0.0, epsilon)
+    assert floor > 0
+    # Independent exact squared inequality: d + epsilon <= |ship - anchor|.
+    # Reverse triangle inequality then covers EVERY point in the source ball,
+    # hence the entire readback-to-ideal chord, not only its endpoints.
+    radius = Fraction(floor) + Fraction(epsilon)
+    squared = sum(((Fraction(a)-Fraction(b))**2 for a, b in zip(ship, anchor, strict=True)), Fraction(0))
+    assert radius > 0 and radius**2 <= squared
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+    print(json.dumps({"fresh_source_chord_floor": {"body": body, "distance_floor_m": floor}}, sort_keys=True))
 
 
 @pytest.mark.parametrize("duration_s,expected_inclusion", [(0.1, True), (0.25, False), (0.75, False)])

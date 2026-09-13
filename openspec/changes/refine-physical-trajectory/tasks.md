@@ -52,6 +52,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0010 derives stored-anchor ball containment for the entire source
+comparison chord and reuses the existing distance helper. Eight fresh replay
+cases verify positive floors with independent exact squared inequalities.
+The focused distance suite passes all 73 cases in 0.05 s. No new helper,
+native query or arc; this covers neither incoming spacecraft error nor
+motion over an interval. Next compose point-force source errors, with
+harmonic/PCK/SRP/relativity and state/domain obligations still separate.
+Full verification: 2887 passed in 475.30 s, native 143.06 s and portable
+43.40 s. Existing thirteen/zero arcs remain; all eight recorded floors match
+captured output. Ruff, strict OpenSpec and legacy isolation pass. 3.9 stays open.
+
 Decision0009 consumer binding verification: both focused inventories pass in
 169.37 s; full pytest 2879 passed in 457.53 s, native 139.79 s and portable
 41.44 s. All eight cached positions exactly match retained source readbacks;

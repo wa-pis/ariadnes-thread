@@ -484,6 +484,12 @@ inputs, including stored harmonic positions, without extra queries. WHEN coverag
 body/frame/epoch or readback identity mismatches, THEN reject rather than
 inflate epsilon. Independently qualify positive chord floors before applying
 point or harmonic force sensitivity; do not reuse an old radius floor.
+Decision0010 reuses the existing position-ball helper at the fresh stored
+anchors. Eight replay cases independently verify positive floors with exact
+squared inequalities, avoiding conversion of ideal polynomial coordinates.
+These are fixed-epoch source-error chords, not motion/state-ball domains.
+Next bind six point-force source errors using these floors, then qualify
+harmonic source effects with the appropriate spatial and matrix factors.
 SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
