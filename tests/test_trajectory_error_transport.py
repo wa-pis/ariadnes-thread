@@ -307,11 +307,13 @@ def _coast_error_envelope(
 @pytest.mark.parametrize("acceleration_error_sign", [-1, 0, 1])
 @pytest.mark.parametrize("jerk_error_sign", [-1, 0, 1])
 @pytest.mark.parametrize("state_signs", [(0, 0), (1, 1), (-1, -1), (1, -1)])
-def test_fresh_affine_force_anchor_preserves_incoming_error(
+@pytest.mark.parametrize("curvature_m_s4", [-2, 0, 2])
+def test_fresh_quadratic_force_anchor_preserves_incoming_error(
     offset_s: float, acceleration_error_sign: int, jerk_error_sign: int, state_signs: tuple[int, int],
+    curvature_m_s4: int,
 ) -> None:
-    # Manufactured 3-D acceleration u*(2+3*(epoch-epoch0)) m/s^2.
-    # Its exact primitive is independent of the cubic-reference helper.
+    # Manufactured acceleration u*(2+3*t+C*t^2/2) m/s^2, t=epoch-epoch0.
+    # Its exact quartic primitive is independent of the reference helper.
     epoch0_tdb_s = Fraction(10**9)
     origin_m = tuple(map(Fraction, (10**12, -2*10**12, 3*10**12)))
     direction = (Fraction(3, 5), Fraction(4, 5), Fraction(0))
@@ -319,8 +321,8 @@ def test_fresh_affine_force_anchor_preserves_incoming_error(
 
     def exact_state(epoch_tdb_s: Fraction) -> tuple[Fraction, ...]:
         elapsed_s = epoch_tdb_s - epoch0_tdb_s
-        position_m = 1500*elapsed_s + elapsed_s**2 + elapsed_s**3/2
-        velocity_m_s = 1500 + 2*elapsed_s + 3*elapsed_s**2/2
+        position_m = 1500*elapsed_s + elapsed_s**2 + elapsed_s**3/2 + curvature_m_s4*elapsed_s**4/24
+        velocity_m_s = 1500 + 2*elapsed_s + 3*elapsed_s**2/2 + curvature_m_s4*elapsed_s**3/6
         return (tuple(origin + unit*position_m for origin, unit in zip(origin_m, direction, strict=True))
                 + tuple(unit*velocity_m_s for unit in direction))
 
@@ -330,26 +332,33 @@ def test_fresh_affine_force_anchor_preserves_incoming_error(
     nominal_state = tuple(value-error for value, error in zip(exact_state(handoff_epoch_tdb_s), incoming_error, strict=True))
     acceleration_error_m_s2 = Fraction(acceleration_error_sign, 10**6)
     jerk_error_m_s3 = Fraction(jerk_error_sign, 50000)
-    acceleration_m_s2 = tuple(unit*(2+3*Fraction(offset_s)+acceleration_error_m_s2) for unit in direction)
-    jerk_m_s3 = tuple(unit*(3+jerk_error_m_s3) for unit in direction)
-    assert sum((anchor-unit*(2+3*Fraction(offset_s)))**2 for anchor, unit in
+    anchor_acceleration_m_s2 = 2+3*Fraction(offset_s)+curvature_m_s4*Fraction(offset_s)**2/2
+    anchor_jerk_m_s3 = 3+curvature_m_s4*Fraction(offset_s)
+    acceleration_m_s2 = tuple(unit*(anchor_acceleration_m_s2+acceleration_error_m_s2) for unit in direction)
+    jerk_m_s3 = tuple(unit*(anchor_jerk_m_s3+jerk_error_m_s3) for unit in direction)
+    assert sum((anchor-unit*anchor_acceleration_m_s2)**2 for anchor, unit in
                zip(acceleration_m_s2, direction, strict=True)) == acceleration_error_m_s2**2
-    assert sum((anchor-3*unit)**2 for anchor, unit in zip(jerk_m_s3, direction, strict=True)) == jerk_error_m_s3**2
+    assert sum((anchor-anchor_jerk_m_s3*unit)**2 for anchor, unit in zip(jerk_m_s3, direction, strict=True)) == jerk_error_m_s3**2
+    horizon_s = Fraction(1, 16)
+    d = abs(acceleration_error_m_s2)
+    j = abs(jerk_error_m_s3) + abs(curvature_m_s4)*horizon_s/2
     for local_s in (0.0, 1 / 32, 1 / 16):
         tau = Fraction(local_s)
+        assert 0 <= tau <= horizon_s
         reference = _cubic_reference_endpoint(nominal_state, acceleration_m_s2, jerk_m_s3, local_s)
         truth = exact_state(handoff_epoch_tdb_s + tau)
         difference = tuple(a-b for a, b in zip(truth, reference, strict=True))
-        scalar_p = p_m+v_m_s*tau-acceleration_error_m_s2*tau**2/2-jerk_error_m_s3*tau**3/6
-        scalar_v = v_m_s-acceleration_error_m_s2*tau-jerk_error_m_s3*tau**2/2
+        scalar_p = p_m+v_m_s*tau-acceleration_error_m_s2*tau**2/2-jerk_error_m_s3*tau**3/6+curvature_m_s4*tau**4/24
+        scalar_v = v_m_s-acceleration_error_m_s2*tau-jerk_error_m_s3*tau**2/2+curvature_m_s4*tau**3/6
         assert difference == tuple(unit*error for error in (scalar_p, scalar_v) for unit in direction)
-        force = tuple(unit*(2+3*(Fraction(offset_s)+tau)) for unit in direction)
+        elapsed_s = Fraction(offset_s)+tau
+        force = tuple(unit*(2+3*elapsed_s+curvature_m_s4*elapsed_s**2/2) for unit in direction)
         defect = tuple(value-a-j*tau for value, a, j in zip(force, acceleration_m_s2, jerk_m_s3, strict=True))
-        # Exact affine coefficients prove |defect(tau)| <= D+J*tau for
-        # EVERY nonnegative tau, not just these readback points. No stale J*t1
-        # is dropped: fresh acceleration and jerk each have independent bounds.
-        assert defect == tuple(-unit*(acceleration_error_m_s2+jerk_error_m_s3*tau) for unit in direction)
-        d, j = abs(acceleration_error_m_s2), abs(jerk_error_m_s3)
+        # Exact coefficients and tau^2 <= horizon*tau prove this bound on
+        # the WHOLE fixed interval, not just these readback points. Fresh
+        # anchors alone do not remove the quadratic acceleration remainder.
+        assert defect == tuple(unit*(curvature_m_s4*tau**2/2-acceleration_error_m_s2-jerk_error_m_s3*tau)
+                               for unit in direction)
         assert sum(value**2 for value in defect) <= (d+j*tau)**2
         bounds = _coast_error_envelope(local_s, abs(p_m), abs(v_m_s), Fraction(0), Fraction(0), d,
                                       acceleration_defect_rate_m_s3=j)
@@ -359,6 +368,15 @@ def test_fresh_affine_force_anchor_preserves_incoming_error(
         assert sum(value**2 for value in difference[3:]) <= bounds[1]**2
         if d == j == 0:
             assert bounds == (abs(p_m)+abs(v_m_s)*tau, abs(v_m_s))
+        if curvature_m_s4 and acceleration_error_sign == jerk_error_sign == 0 and state_signs == (0, 0) and tau > 0:
+            omitted = _coast_error_envelope(local_s, *(Fraction(0),)*5)
+            assert omitted == (0, 0)
+            assert sum(value**2 for value in difference[:3]) > omitted[0]**2
+            assert sum(value**2 for value in difference[3:]) > omitted[1]**2
+    if curvature_m_s4 and acceleration_error_sign == jerk_error_sign == 0:
+        # The local affine defect bound expires: reusing it at 2*h fails.
+        beyond_s = 2*horizon_s
+        assert abs(curvature_m_s4)*beyond_s**2/2 > d+j*beyond_s
 
 
 @pytest.mark.parametrize("duration_s", [0.0, 1 / 64, 1 / 8])

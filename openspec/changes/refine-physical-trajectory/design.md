@@ -1,5 +1,20 @@
 ## Context
 
+### Fresh-reference curvature remainder (2026-09-13)
+
+Extend the existing analytic control to acceleration u*(2+3*t+C*t^2/2),
+retaining every affine case at C=0. The independent exact trajectory is
+quartic. With fresh acceleration/jerk errors ea/ej, the residual is
+u*(C*tau^2/2-ea-ej*tau). On the fixed h=1/16 s interval, K=abs(C) and
+tau^2<=h*tau give D=abs(ea), J=abs(ej)+K*h/2. WHEN transported with the
+existing envelope, THEN exact polynomial and squared Euclidean checks must
+enclose both state errors while retaining incoming radii. Cover C=-2,0,2
+m/s^4 with all previous signed/zero anchor and handoff cases. With exact
+anchors and zero incoming error, omitting nonzero curvature falsely returns
+zero bounds; verify the counterexample. Also verify reusing the same D/J
+at 2*h can fail. This is a manufactured state-independent force proof,
+not fresh full-force derivative qualification or a native mission extension.
+
 ### Analytic fresh-reference anchors (2026-09-13)
 
 Use manufactured 3-D acceleration u*(2+3*(epoch-epoch0)) m/s^2 with exact

@@ -293,16 +293,24 @@ incoming radii retained. Exact anchors remove only the new forcing defect.
 Stale-anchor clock-reset counterexamples remain. No real force reference or
 native endpoint certificate has changed.
 
-Next bounded work within 3.9 is an analytic quadratic-in-time acceleration
-control with a known curvature bound K (m/s^4). WHEN fresh anchor errors are
-bounded, THEN verify the Taylor remainder against an independent quartic
-trajectory and a conservative D+J*tau envelope on a fixed interval h.
-Reuse existing transport with D=abs(ea), J=abs(ej)+K*h/2; include signed/zero
-curvature, inherited radii and a perfect-anchor counterexample showing that
-omitting curvature underbounds. This qualifies only the manufactured case;
-real full-force derivative coverage and cost remain open. Add no native
-calls or domain extension; retain thirteen controls, portable zero, unchanged
-tolerances, production caps and the shared 300-second budget. Keep 3.9 open.
+Fresh-reference curvature control (2026-09-13): 216 exact analytic cases
+pass, preserving 72 affine cases and adding 144 signed-curvature cases.
+An independent quartic trajectory verifies D=abs(ea), J=abs(ej)+K*h/2
+on h=1/16 s with unchanged incoming radii. Perfect-anchor counterexamples
+show that omitting nonzero curvature underbounds; the same local envelope
+can fail at 2*h. No real full-force reference or native endpoint changed.
+
+Next bounded work within 3.9 is a fresh-reference analytic control with
+nonlinear position-dependent force, using the existing x''=2*x^3 /
+x=1/(1-t) manufactured case in SI. WHEN both true/reference paths and
+their chords close in an explicit domain, THEN independently bound the
+second time derivative of force ALONG THE CUBIC REFERENCE, combine fresh
+anchor errors with the fixed-h curvature allowance and verify exact true
+state errors with nonzero incoming radii. Keep domain failures unresolved;
+do not substitute a derivative bound along the true trajectory. This is
+not full-force qualification. Add no native calls or mission extension;
+retain thirteen controls, portable zero, unchanged tolerances, production
+caps and the shared 300-second deadline. Keep Moon unresolved and 3.9 open.
 Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add unqualified native controls or attempt mission composition
 yet. WHEN a proposed
@@ -312,7 +320,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2474 passing tests; both inventories
+The latest completed code check has 2618 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs thirteen spacecraft arcs, the portable inventory

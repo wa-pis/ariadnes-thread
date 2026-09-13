@@ -51,6 +51,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 analytic fresh-reference curvature (2026-09-13):
+Extend the fresh-anchor control with signed/zero acceleration curvature,
+retaining all affine cases. Verify independent quartic truth, exact residual
+coefficients, the fixed-h D/J envelope, unchanged incoming radii and exact
+Euclidean enclosures. Verify perfect anchors cannot omit nonzero curvature
+and the bound cannot silently extend to 2*h. Run focused transport/budget/
+integrator tests, full pytest, Ruff, strict OpenSpec and legacy isolation;
+no new native calls, full-force promotion or changed tolerances/caps.
+
+Verification: all 216 combinations pass with exact rational arithmetic,
+including the 72 original affine cases (C=0) and 144 cases with C=-2 or
+2 m/s^4. The independent quartic primitive retains absolute epochs, large
+translated coordinates and signed/zero incoming and anchor errors. On
+h=1/16 s, exact defect coefficients and tau^2<=h*tau establish the D/J
+bound throughout the interval; local 0, 1/32 and 1/16 s readbacks check
+exact state identities and Euclidean enclosures. With nonzero C and perfect
+anchors, omitting curvature falsely returns zero errors for the exact
+initial state, and extending the same defect envelope to 2*h fails.
+No tolerance is used or relaxed. Zero-curvature behavior is preserved.
+
+590 focused tests pass in 0.88 s and all 2618 tests pass in 532.89 s,
+including both scientific inventories, thirteen/zero native counts and
+40 source readbacks each. Ruff, strict OpenSpec, whitespace and unchanged
+legacy SHA-256/import checks pass. No native code, dependencies, force
+settings, production caps or shared 300-second deadline changed. Nonlinear
+state-dependent and real full-force reference qualification remain open.
+
 Task 3.9 analytic fresh-reference anchors (2026-09-13):
 Add exact 3-D affine-force controls with zero/nonzero absolute-time offsets,
 signed/zero acceleration and jerk anchor errors, and signed/zero incoming
