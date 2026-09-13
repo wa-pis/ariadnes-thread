@@ -3636,7 +3636,7 @@ def _check_conditional_full_force_coast_domains(
     source_affine_coverage_s: float, run_native_controls: bool,
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
-    from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint
+    from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint, _initial_velocity_interval_m_s
     from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
     from test_trajectory_tracefree import _tracefree_operator_bound_s_inv2
     from test_trajectory_degree_map import _nonmonopole_degree_map_bound_s_inv2
@@ -4742,6 +4742,7 @@ def _check_conditional_full_force_coast_domains(
                                for key, value in reported_transport_bounds.items())
                     initial_ball_controls: list[dict[str, object]] = []
                     degree_initial_ball_controls: list[dict[str, object]] = []
+                    degree_zero_velocity_bounds: tuple[Fraction, Fraction] | None = None
                     for initial_velocity_radius_m_s in (0.0, 5e-8, 1e-7):
                         budget.check()
                         initial_position_radius_m = 0.0001  # Explicit fixture, not a mission default/allocation.
@@ -4759,6 +4760,8 @@ def _check_conditional_full_force_coast_domains(
                         )
                         degree_family_position_m += cubic_position_residual_m
                         degree_family_velocity_m_s += cubic_velocity_residual_m_s
+                        if v == 0:
+                            degree_zero_velocity_bounds = degree_family_position_m, degree_family_velocity_m_s
                         assert degree_position_m < degree_family_position_m <= Fraction("0.001")
                         assert degree_velocity_m_s < degree_family_velocity_m_s
                         degree_family_values = {
@@ -4813,6 +4816,41 @@ def _check_conditional_full_force_coast_domains(
                             **reported_family,
                         })
                     assert len(degree_initial_ball_controls) == 3 and len(initial_ball_controls) == (3 if short_control else 0)
+                    assert degree_zero_velocity_bounds is not None
+                    position_closure_margin_m = Fraction(position_radius_m) - p - initial_speed_m_s*h - Fraction(acceleration_m_s2)*h**2/2
+                    velocity_closure_margin_m_s = Fraction(velocity_radius_m_s) - Fraction(acceleration_m_s2)*h
+                    frontier = _initial_velocity_interval_m_s(
+                        duration_s, Fraction(reported_full_position_sensitivity), Fraction(reported_relativity_sensitivities[1]),
+                        Fraction("0.001") - degree_zero_velocity_bounds[0],
+                        Fraction("0.000001") - degree_zero_velocity_bounds[1],
+                        position_closure_margin_m, velocity_closure_margin_m_s,
+                    )
+                    assert frontier is not None
+                    frontier_upper, frontier_included = frontier
+                    assert frontier_upper > 0
+                    lower_m_s = math.nextafter(float(frontier_upper), -math.inf)
+                    upper_m_s = math.nextafter(float(frontier_upper), math.inf)
+                    assert math.isfinite(lower_m_s) and math.isfinite(upper_m_s)
+                    assert 0 <= Fraction(lower_m_s) < frontier_upper < Fraction(upper_m_s)
+                    # Independently re-evaluate original gates at the exact boundary
+                    # and both rounded brackets; an outward upper is NOT admitted.
+                    for probe_m_s, admitted in ((frontier_upper, frontier_included),
+                                               (Fraction(lower_m_s), True), (Fraction(upper_m_s), False)):
+                        probe_p_m, probe_v_m_s = _coast_error_envelope(
+                            duration_s, p, probe_m_s, Fraction(reported_full_position_sensitivity),
+                            Fraction(reported_relativity_sensitivities[1]), constant_defect_m_s2,
+                            acceleration_defect_rate_m_s3=degree_rate_m_s3,
+                        )
+                        assert (probe_p_m + cubic_position_residual_m <= Fraction("0.001")
+                                and probe_v_m_s + cubic_velocity_residual_m_s <= Fraction("0.000001")
+                                and probe_m_s*h < position_closure_margin_m
+                                and probe_m_s < velocity_closure_margin_m_s) == admitted
+                    for family in degree_initial_ball_controls:
+                        radius = family["initial_velocity_radius_m_s"]
+                        assert isinstance(radius, float)
+                        assert (Fraction(radius) < frontier_upper or
+                                (Fraction(radius) == frontier_upper and frontier_included)) == (
+                                    family["within_position_gate"] and family["within_velocity_gate"])
                     control_elapsed_s = perf_counter() - control_started_s
                     assert math.isfinite(control_elapsed_s) and control_elapsed_s >= native_elapsed_s
                     budget.check()
@@ -4856,6 +4894,14 @@ def _check_conditional_full_force_coast_domains(
                         "weighted_velocity_bound_resolves_1um_s": weighted_velocity_error_m_s <= Fraction("0.000001"),
                         "conditional_initial_state_ball_controls": initial_ball_controls,
                         "conditional_degree_initial_state_ball_controls": degree_initial_ball_controls,
+                        "conditional_initial_velocity_frontier": {
+                            "initial_position_radius_m": initial_position_radius_m,
+                            "boundary_lower_m_s": lower_m_s,
+                            "boundary_upper_m_s": upper_m_s,
+                            "exact_upper_included": frontier_included,
+                            "lower_is_admissible": True,
+                            "upper_is_admissible": False,
+                        },
                         "native_arc_elapsed_s": native_elapsed_s,
                         "control_verification_elapsed_s": control_elapsed_s,
                         "observed_initial_acceleration_m_s2": anchor_m_s2.tolist(),

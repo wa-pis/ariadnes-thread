@@ -6,6 +6,92 @@ import math
 import pytest
 
 
+def _initial_velocity_interval_m_s(
+    duration_s: float, position_sensitivity_s_inv2: Fraction, velocity_sensitivity_s_inv: Fraction,
+    position_accuracy_margin_m: Fraction, velocity_accuracy_margin_m_s: Fraction,
+    position_closure_margin_m: Fraction, velocity_closure_margin_m_s: Fraction,
+) -> tuple[Fraction, bool] | None:
+    """Return conditional [0, upper] / [0, upper) in m/s, or an empty interval.
+
+    Margins are evaluated at zero initial velocity radius and fixed position
+    radius. Accuracy gates are inclusive; first-exit closure gates are strict.
+    This inverts the existing affine envelope, not the physical dynamics.
+    """
+    assert type(duration_s) is float and math.isfinite(duration_s) and duration_s > 0
+    assert all(isinstance(value, Fraction) for value in (
+        position_accuracy_margin_m, velocity_accuracy_margin_m_s,
+        position_closure_margin_m, velocity_closure_margin_m_s,
+    ))
+    position_gain_s, velocity_gain = _coast_error_envelope(
+        duration_s, Fraction(0), Fraction(1), position_sensitivity_s_inv2,
+        velocity_sensitivity_s_inv, Fraction(0),
+    )
+    limits = ((position_accuracy_margin_m / position_gain_s, True),
+              (velocity_accuracy_margin_m_s / velocity_gain, True),
+              (position_closure_margin_m / Fraction(duration_s), False),
+              (velocity_closure_margin_m_s, False))
+    upper = min(value for value, _ in limits)
+    included = all(closed for value, closed in limits if value == upper)
+    return None if upper < 0 or (upper == 0 and not included) else (upper, included)
+
+
+@pytest.mark.parametrize("margins,expected", [
+    ((1, 2, 3, 4), (Fraction(1), True)),
+    ((2, 1, 3, 4), (Fraction(1), True)),
+    ((2, 3, 1, 4), (Fraction(1), False)),
+    ((2, 3, 4, 1), (Fraction(1), False)),
+    ((1, 1, 2, 2), (Fraction(1), True)),
+    ((1, 2, 1, 2), (Fraction(1), False)),
+    ((0, 1, 2, 2), (Fraction(0), True)),
+    ((1, 1, 0, 2), None),
+    ((-1, 1, 2, 2), None),
+    ((1, 1, 2, -1), None),
+])
+def test_initial_velocity_interval_uniform_motion(
+    margins: tuple[int, ...], expected: tuple[Fraction, bool] | None,
+) -> None:
+    # Independent x(t)=x0+v*t: at h=1 s, both endpoint gains are one.
+    assert _initial_velocity_interval_m_s(1.0, Fraction(0), Fraction(0), *map(Fraction, margins)) == expected
+
+
+@pytest.mark.parametrize("active", range(4))
+def test_initial_velocity_interval_matches_original_envelope(active: int) -> None:
+    h = 0.125
+    p, lx, lv, d, j = map(Fraction, ("0.0001", "0.1", "0.2", "0.001", "0.002"))
+    base = _coast_error_envelope(h, p, Fraction(0), lx, lv, d, acceleration_defect_rate_m_s3=j)
+    margins = [Fraction(1)] * 4
+    margins[active] = Fraction(1, 1000)
+    interval = _initial_velocity_interval_m_s(h, lx, lv, *margins)
+    assert interval is not None
+    upper, included = interval
+    for v, expected in ((upper / 2, True), (upper, included), (upper * 2, False)):
+        actual = _coast_error_envelope(h, p, v, lx, lv, d, acceleration_defect_rate_m_s3=j)
+        assert (actual[0] <= base[0] + margins[0] and actual[1] <= base[1] + margins[1]
+                and v * Fraction(h) < margins[2] and v < margins[3]) == expected
+    assert included == (active < 2)
+
+
+@pytest.mark.parametrize("duration_s", [0.0, -1.0, True, math.nan, math.inf])
+def test_initial_velocity_interval_rejects_duration(duration_s: float) -> None:
+    with pytest.raises(AssertionError):
+        _initial_velocity_interval_m_s(duration_s, Fraction(0), Fraction(0), *(Fraction(1),) * 4)
+
+
+@pytest.mark.parametrize("field", range(6))
+@pytest.mark.parametrize("invalid", [True, 1.0, math.nan])
+def test_initial_velocity_interval_rejects_nonfractions(field: int, invalid: object) -> None:
+    values: list[object] = [Fraction(0), Fraction(0), *(Fraction(1),) * 4]
+    values[field] = invalid
+    with pytest.raises(AssertionError):
+        _initial_velocity_interval_m_s(1.0, *values)  # type: ignore[arg-type] -- invalid boundary inputs.
+
+
+@pytest.mark.parametrize("lx,lv", [(-1, 0), (0, -1), (2, 0), (0, 1)])
+def test_initial_velocity_interval_rejects_sensitivity(lx: int, lv: int) -> None:
+    with pytest.raises(AssertionError):
+        _initial_velocity_interval_m_s(1.0, Fraction(lx), Fraction(lv), *(Fraction(1),) * 4)
+
+
 def _cubic_reference_endpoint(
     initial_state_m_m_s: tuple[Fraction, ...], acceleration_m_s2: tuple[Fraction, ...],
     jerk_m_s3: tuple[Fraction, ...], duration_s: float,

@@ -1,5 +1,35 @@
 ## Context
 
+### Conditional initial-velocity frontier (2026-09-13)
+
+At fixed initial position radius, D, J, h and sensitivities, the existing
+envelope is affine in initial velocity radius v. Let P0,V0 include the
+unchanged native-to-reference residual at v=0. Evaluate the same envelope
+with p=D=J=0 and v=1 m/s to obtain gains Cp (s) and Cv (dimensionless).
+Equivalently k=Lx*h^2/2+Lv*h<1, b=(Lx*h+Lv)/(1-k),
+Cp=h+h^2*b/2 and Cv=1+h*b. Require h>0; both gains are positive.
+
+The admissible nonnegative v interval has upper bound equal to the minimum
+of (0.001 m-P0)/Cp, (0.000001 m/s-V0)/Cv, position-closure-margin/h,
+and velocity-closure-margin. Accuracy limits are inclusive, closure limits
+strict. WHEN the minimum is negative, or zero with any tied strict limit,
+THEN return an empty interval, never a clipped safe zero. WHEN several limits
+tie, THEN include the exact upper endpoint only if every tied limit is
+inclusive. Verify each active constraint, ties, isolated zero, empty cases,
+invalid input and k>=1, plus independent uniform-motion integration and
+exact substitution into the original nonzero-sensitivity D+J*t envelope.
+
+Apply only to the seven existing native controls at p=0.0001 m. Check all
+21 existing family classifications and substitute the exact frontier into
+the original accuracy and closure inequalities. Report a binary64 bracket
+strictly enclosing the exact rational frontier, along with exact endpoint
+inclusion. WHEN the reported lower/upper bracket is substituted, THEN the
+lower must be admissible and the upper inadmissible. An outward upper bound
+must never be advertised as an admitted radius. Preserve every prior gate,
+native count, resource, domain, force allowance and the operation deadline.
+This is a conditional diagnostic budget, not physical initial uncertainty,
+an operational mission allocation or qualification of adjacent arcs.
+
 ### Initial-state balls under the degree-map certificate (2026-09-13)
 
 Use explicit diagnostic radii p=0.0001 m and v=0,5e-8,1e-7 m/s around

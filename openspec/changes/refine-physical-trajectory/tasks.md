@@ -51,6 +51,32 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 conditional initial-velocity frontier (2026-09-13):
+Invert the existing affine envelope at fixed position radius, preserving
+inclusive accuracy and strict closure. Verify all four active limits, ties,
+empty/isolated-zero intervals, invalid inputs and feedback rejection against
+uniform-motion and original-envelope oracles. At all seven existing native
+controls, check the exact frontier and rounded brackets against original
+inequalities and preserve all 21 family classifications. Run focused/full
+pytest, Ruff, strict OpenSpec and legacy isolation; keep task 3.9 open.
+
+Measured verification: 192 focused transport tests pass in 0.06 s, including
+41 new interval/oracle/rejection cases. All 2253 tests pass in 529.54 s,
+including both real/portable inventories. All seven exact frontier endpoints
+are inclusive; all lower brackets pass and upper brackets fail the original
+combined gates. All 21 prior family classifications remain unchanged.
+At Mars 1/8 s and p=0.0001 m, the exact boundary lies strictly between
+4.797617489195039e-8 and 4.7976174891950404e-8 m/s. This explains the
+existing passing v=0 and unresolved v=5e-8/1e-7 m/s controls, without
+classifying every positive initial radius as unresolved. Other lower brackets
+are Moon 1/64 nominal/tighter 8.886681792700461e-7/8.886790932064623e-7,
+Mars 1/64 nominal/tighter 9.846746374297763e-7/9.846773659138806e-7,
+Mars 1/32 9.411947704395207e-7 and Mars 1/16 7.667485901538538e-7 m/s.
+These are conditional admitted lower brackets, not estimated uncertainties.
+Ruff, strict OpenSpec, diff checks and legacy isolation pass. No native arc,
+source query, domain, force, dependency, tolerance or operation-budget change.
+Task 3.9, native-stage safety and full-mission qualification remain open.
+
 Task 3.9 degree-map initial-state families (2026-09-13):
 Verify exact initial-error/linear-defect superposition, zero cases and an
 independent analytic integration. Reprove family first-exit closure for

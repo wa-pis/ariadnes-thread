@@ -168,14 +168,25 @@ Forty-six additional mixed-field/rejection controls verify independent polar
 Hessians and the C20/remainder composition. Native application changes only
 the reference spatial-variation bound; full-force state sensitivities,
 rotation allowances, arithmetic bounds and historical controls remain intact.
-Next bounded work within 3.9 is to derive and verify the admissible initial
-velocity-radius interval at fixed position radius under the same affine
-error transport and strict domain-closure inequalities. Check its boundary
-against the existing passing/failing fixtures before any adjacent arc.
-Distinguish inclusive accuracy limits from strict closure limits; do not
-clip an infeasible interval into a safe result or introduce hidden defaults.
-The derived interval is conditional, not a mission allocation. Keep all
-previous certificates. Preserve all
+The initial-velocity frontier uses the existing affine error envelope at
+fixed position radius, inclusive accuracy and strict domain closure.
+Its exact boundary and strictly enclosing rounded brackets are checked
+against the original inequalities and all existing family classifications.
+An empty interval is never clipped into a safe zero. The interval is
+conditional, not a mission allocation or an estimate of physical uncertainty.
+At p=0.0001 m, the Mars 1/8 s frontier is strictly bracketed by
+4.797617489195039e-8 and 4.7976174891950404e-8 m/s, with the exact
+endpoint included. All seven boundary checks and all 21 prior family
+classifications pass unchanged.
+
+Next bounded work within 3.9 is to verify error handoff on an independent
+two-segment analytic motion control, carrying both endpoint error radii into
+the next segment without resetting them. WHEN the first segment's enclosure
+is handed off, THEN the composed bound must enclose the independently
+integrated endpoint and reject any failed closure/accuracy premise. This is
+an analytic prerequisite only: no adjacent native arc or mission composition
+until source/rotation coverage and arithmetic/runtime accounting are qualified.
+Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
@@ -184,7 +195,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2212 passing tests; both inventories
+The latest completed code check has 2253 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs seven spacecraft arcs, the portable inventory
