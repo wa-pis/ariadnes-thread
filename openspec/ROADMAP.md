@@ -325,16 +325,25 @@ moving-source analytic controls and outward reporting including roundoff.
 Both incoming radii and the existing reference remain unchanged. This
 does not qualify the full-force derivative or the incoming error ball.
 
-Next bounded work within 3.9 is the fresh acceleration anchor at that
-same nominal state and epoch. WHEN the existing instantaneous force and
-independent arithmetic oracles can be evaluated without a new propagation,
-THEN assemble and time a complete acceleration enclosure, explicitly
-including both harmonic fields, SRP/illumination, relativity and source/PCK
-allowances. Do not reuse original anchor-error numbers or omit terms.
-If any component cannot yet be enclosed, report that missing premise
-without substituting an approximate full-force certificate. Keep fresh
-jerk's omitted-force allowances and new cubic domain closure open. Add no
-spacecraft native calls or mission extension;
+Instantaneous full-force readback is now verified through the installed
+state-derivative accessor on existing simulators, including exact original
+force parity and preserved endpoint histories. Four derivative evaluations
+(including environment restores) take 0.0076931670773774385 s in the measured
+run and add zero propagation arcs. Internal ephemeris work is not excluded.
+The fresh value is only a native observation, not an acceleration enclosure.
+
+Next bounded work within 3.9 is to obtain fresh component/harmonic-term
+values and source/PCK geometry for independent acceleration error assembly.
+WHEN the installed instantaneous dependent-variable interface or existing
+arithmetic oracles provide them without a new propagation, THEN verify
+their ordering and sum against the observed total and retain each missing
+arithmetic allowance explicitly. Include both full harmonic fields, SRP
+and illumination, relativity and source/PCK terms. Do not reuse original
+anchor-error numbers or omit terms; report unresolved premises instead of
+promoting a partial bound. Keep fresh jerk's omitted-force allowances and
+new cubic domain closure open. Count and time every additional derivative
+or dependent-variable evaluation. Add no spacecraft propagation arcs or
+mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
 caps and the shared 300-second deadline. Keep Moon unresolved and 3.9 open.
 Keep all previous certificates. Preserve all

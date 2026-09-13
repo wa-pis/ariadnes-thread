@@ -51,6 +51,29 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 instantaneous full-force accessor (2026-09-13):
+Check the installed derivative API on existing simulators with exact
+original force parity, kinematic/mass identities, environment restoration,
+unchanged endpoint histories/counters and explicit four-evaluation timing.
+Read fresh acceleration without propagating; do not claim the missing
+independent component/source/PCK enclosure. Run focused tests, full pytest,
+Ruff, strict OpenSpec and legacy isolation. Keep task 3.9 open and all old
+certificates, tolerances and caps unchanged.
+
+Verification: 33 focused budget/integrator tests pass in 0.65 s; all 2748
+tests pass in 532.25 s, including exact original-force readback parity,
+kinematic and mass identities, endpoint-history preservation and unchanged
+operation counters. At 978995455.2929223 TDB s the observed fresh acceleration
+is (-3.147750890395473, 0.002978796195723602, -0.005506764365930771) m/s^2,
+SSB/J2000. This is a native observation, NOT an independent baseline or
+error enclosure. Four derivative evaluations including final-environment
+restoration take 0.0076931670773774385 s in this run and add zero arcs.
+These calls can do internal SPICE work; only the explicit forty source
+readbacks and thirteen/zero propagated arcs are unchanged. Ruff, strict
+OpenSpec, whitespace and legacy SHA-256/import checks pass. Complete fresh
+component/harmonic-term values, source/PCK allowances and independent force
+error composition remain missing; no fresh reference was promoted.
+
 Task 3.9 fresh nominal Mars monopole jerk (2026-09-13):
 Bind fresh polynomial-source states to the saved nominal handoff, reject
 mismatched epoch/coverage and expired budget, and verify the moving-source

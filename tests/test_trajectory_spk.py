@@ -4999,6 +4999,45 @@ def _check_conditional_full_force_coast_domains(
                             adjacent_final = np.asarray(adjacent_history[adjacent_last]).reshape(7)
                             assert np.all(np.isfinite(adjacent_final)) and adjacent_final[6] == spacecraft.initial_mass_kg
                             assert all(np.asarray(value).reshape(7)[6] == spacecraft.initial_mass_kg for value in adjacent_history.values())
+                            if longer_control and not adjacent_tighter:
+                                probe_started_s = perf_counter()
+                                probe_counts = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                acceleration_probes: dict[str, list[float]] = {}
+                                # Single derivative evaluations, NOT integrations. First
+                                # verify the accessor against the recorded original force.
+                                for label, probe_simulator, probe_epoch, probe_state, restore_epoch, restore_state in (
+                                    ("original", simulator, first_epoch, np.asarray(history[first_epoch]).reshape(7),
+                                     max(history), np.asarray(history[max(history)]).reshape(7)),
+                                    ("fresh", adjacent_simulator, adjacent_first, adjacent_initial,
+                                     adjacent_last, adjacent_final),
+                                ):
+                                    budget.check()
+                                    trajectory._set_general_relativity_ppn_parameters(budget.candidate_id, bodies)
+                                    derivative = np.asarray(probe_simulator.state_derivative_function(probe_epoch, probe_state)).reshape(7)
+                                    budget.check()
+                                    assert np.all(np.isfinite(derivative))
+                                    assert np.array_equal(derivative[:3], probe_state[3:6]) and derivative[6] == 0.0
+                                    acceleration_probes[label] = derivative[3:6].tolist()
+                                    if label == "original":
+                                        assert np.array_equal(derivative[3:6], anchor_m_s2)
+                                    restored = np.asarray(probe_simulator.state_derivative_function(restore_epoch, restore_state)).reshape(7)
+                                    budget.check()
+                                    assert np.all(np.isfinite(restored)) and restored[6] == 0.0
+                                    assert np.array_equal(restored[:3], restore_state[3:6])
+                                assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                assert np.array_equal(np.asarray(adjacent_simulator.state_history_time_object[adjacent_first]).reshape(7), adjacent_initial)
+                                assert np.array_equal(np.asarray(adjacent_simulator.state_history_time_object[adjacent_last]).reshape(7), adjacent_final)
+                                probe_elapsed_s = perf_counter()-probe_started_s
+                                assert math.isfinite(probe_elapsed_s) and probe_elapsed_s >= 0
+                                print(json.dumps({"fresh_acceleration_accessor_probe": {
+                                    "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
+                                    "time_scale": "TDB seconds since J2000", "acceleration_unit": "m/s^2",
+                                    "observed_accelerations_m_s2": acceleration_probes,
+                                    "additional_derivative_evaluations": 4, "additional_native_arcs": 0,
+                                    "elapsed_s": probe_elapsed_s,
+                                    "qualification": "Native full-force readback only; fresh independent component/source/PCK error enclosure unresolved",
+                                }}, sort_keys=True, allow_nan=False))
+                                budget.check()
                             residual_p = sum((abs(Fraction(value)-reference) for value, reference in
                                               zip(adjacent_final[:3], shifted_endpoint[:3], strict=True)), Fraction(0))
                             residual_v = sum((abs(Fraction(value)-reference) for value, reference in

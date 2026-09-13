@@ -1,5 +1,28 @@
 ## Context
 
+### Instantaneous full-force accessor prerequisite (2026-09-13)
+
+Installed TudatPy exposes `SingleArcSimulator.state_derivative_function`
+as a callable accepting Time and propagated state. Body.state is read-only
+and AccelerationModel exposes no public evaluation member. Existing force
+arithmetic helpers bound errors against supplied observed components; they
+do not by themselves construct a fresh full-force vector enclosure.
+
+Probe the derivative accessor on already completed simulators, without a
+new integration. WHEN it reproduces original recorded total acceleration
+exactly, preserves position derivative=velocity and coast mass derivative=0,
+THEN read the fresh nominal Mars acceleration and restore each simulator's
+final environment through another derivative evaluation. Verify saved
+endpoint histories and operation counters unchanged. Charge all four
+evaluations (including restores), PPN reset and reporting to the shared
+timer; report probe wall time. Native derivative calls may internally query
+SPICE; zero extra arcs does not mean zero internal ephemeris work.
+
+This checks API availability and readback, not an independent full-force
+certificate. Fresh ten-component/harmonic-term values, PCK matrices and
+source/rotation arithmetic allowances are still missing from that assembly.
+Keep the observed vector out of the reference and all safety certificates.
+
 ### Fresh nominal Mars monopole jerk (2026-09-13)
 
 Bind the fresh eight-body position-polynomial states to the existing saved
