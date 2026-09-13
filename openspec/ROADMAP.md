@@ -526,6 +526,11 @@ three fresh source-ball disc-disjointness predicates. The SRP configuration,
 shape radii and full cached Sun state are retained without another query.
 Sun velocity remains readback-only pending its representation/error bridge.
 Next qualify signed SRP scaling of the existing solar-gravity intervals.
+Decision0018 implements the fully lit signed scaling with rational pi bounds,
+parameter/sign/rounding controls and rechecked pinned illumination inputs.
+The result uses ideal source polynomials and needs no second source bridge.
+Next audit/bind the cached Sun velocity representation and fresh coverage
+before Schwarzschild vector/error composition; no full-force certificate yet.
 SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or

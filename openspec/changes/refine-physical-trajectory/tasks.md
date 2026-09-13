@@ -52,6 +52,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0018 implements signed SRP interval scaling of the existing Sun
+gravity box. All 79 focused SRP/midpoint checks pass in 0.50 s, including
+direct-formula parity, parameter scaling, GM cancellation, sign crossing,
+invalid inputs and deadlines. Pinned fresh state/configuration/illumination
+checks pass without native calls. Next qualify the Sun velocity binding for
+Schwarzschild; PCK/native arithmetic and state/interval domains remain open.
+Full verification: 2990 passed in 474.67 s; native inventory 151.39 s,
+portable 53.84 s, unchanged thirteen/zero arcs. Retained SRP vector and
+5.890205713199613e-24 m/s^2 L2 arithmetic allowance match captured output.
+Ruff, strict OpenSpec and legacy isolation pass; task3.9 remains open.
+
 Decision0017 retains fresh SRP configuration, actual optical radii and full
 cached Sun state in the existing probe. Three exact source-ball clear-disc
 checks must pass at the nominal observer; state/configuration/counter and

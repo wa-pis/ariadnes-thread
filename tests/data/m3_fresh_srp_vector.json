@@ -1,0 +1,19 @@
+{
+  "fresh_srp_vector": {
+    "acceleration_l2_allowance_m_s2": 5.890205713199613e-24,
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "component_intervals_m_s2": [
+      [-2.109577885891018e-08, -2.1095778858910163e-08],
+      [3.0224630193524157e-09, 3.0224630193524174e-09],
+      [1.955172407918585e-09, 1.9551724079185863e-09]
+    ],
+    "epoch_tdb_s": 978995455.2929223,
+    "full_light_by_occultor": {"Earth": true, "Mars": true, "Moon": true},
+    "midpoint_m_s2": [-2.109577885891017e-08, 3.0224630193524166e-09, 1.955172407918586e-09],
+    "orientation": "J2000",
+    "origin": "SSB",
+    "scope": "Fully lit SRP at fixed nominal state and parameters; no native arithmetic, state/time domain or full-force certificate",
+    "source_convention": "exact position polynomials"
+  }
+}
