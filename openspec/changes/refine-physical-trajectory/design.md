@@ -1,5 +1,35 @@
 ## Context
 
+### Analytic two-segment error handoff (2026-09-13)
+
+Reuse the existing transport envelope; do not add a production propagator.
+WHEN a first segment supplies position and velocity error radii, THEN use
+both unchanged as the next segment's initial radii. For the independent
+global force s*(D+J*t), s=+/-1, the second local defect is D+J*t1+J*tau,
+not D+J*tau. Exact rational integration must match the composed enclosure
+in metres and metres/second. Negative controls must show that resetting
+initial error underbounds both outputs, and a stale force clock underbounds
+both outputs when J>0. Include constant force and unequal segment lengths.
+
+For x=1/(1-t), v=1/(1-t)^2, reuse the three independent position-,
+velocity- and coupled-force ODEs. On positive paths and reference chords
+inside x<=3 m, v<=3 m/s, use A=54 m/s^2 and (Lx,Lv)=(54,0), (0,6),
+or (27,3) in s^-2 and s^-1 respectively. Positivity follows from the exact
+solution; the reference remains zero. Before each envelope, require
+p+v*h+A*h^2/2<3 m and v+A*h<3 m/s. WHEN a carried enclosure does not
+close the next domain, THEN stop without a second envelope or safe result,
+even if the exact trajectory remains inside. Preserve the three measured
+unresolved cases at the original 1/64+1/32 s controls. Independently test
+both orders of 1/128+1/64 s without relabelling the longer controls safe.
+
+At a two-segment constant-force handoff, independently check each accuracy
+and closure constraint just below, at and above its boundary. WHEN a
+constraint fails, THEN the incoming velocity radius must be outside the
+previously qualified interval; accuracy equality passes, closure equality
+does not. A zero-radius reset would falsely admit these rejected cases.
+These tests qualify analytic error bookkeeping only, not a real adjacent
+native arc, perturbed-state family, native arithmetic, or mission safety.
+
 ### Conditional initial-velocity frontier (2026-09-13)
 
 At fixed initial position radius, D, J, h and sensitivities, the existing

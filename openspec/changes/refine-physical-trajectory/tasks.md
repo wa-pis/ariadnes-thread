@@ -51,6 +51,30 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 analytic two-segment error handoff (2026-09-13):
+Verify both carried radii and the rebased linear-force clock against exact
+global integration, including signed/constant-force and unequal-duration
+controls. Verify nonlinear analytic endpoints only after strict domain
+closure, preserving failed closure as unresolved. Check all four handoff
+constraints below/at/above their boundary using the existing frontier.
+Run focused/full pytest, Ruff, strict OpenSpec and legacy isolation. Do not
+add native arcs or mark 3.9/production arc composition complete.
+
+Measured verification: 224 focused transport tests pass in 0.07 s, including
+32 new cases: eight signed time-force controls, twelve nonlinear handoffs
+and twelve constraint boundaries. Nine nonlinear cases close both segments.
+Three original controls cannot close the second velocity domain:
+position-force for both orders of 1/64+1/32 s and coupled-force for
+1/64 then 1/32 s. Their exact trajectories remain inside; these failures
+are preserved as unresolved, without relaxing the 3 m / 3 m/s domains,
+changing A=54 m/s^2 or applying the second envelope after failed closure.
+Both orders of 1/128+1/64 s pass for all three ODEs. Analytic constant/
+linear-force endpoint comparisons are exact rational equalities in SI.
+All 2285 tests pass in 529.48 s, including both real/portable inventories.
+Ruff, strict OpenSpec, diff checks and legacy isolation pass. No production
+code, native count, scientific tolerance, resource or operation budget changes.
+Task 3.9, native-stage safety, and production arc composition remain open.
+
 Task 3.9 conditional initial-velocity frontier (2026-09-13):
 Invert the existing affine envelope at fixed position radius, preserving
 inclusive accuracy and strict closure. Verify all four active limits, ties,

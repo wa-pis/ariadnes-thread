@@ -265,6 +265,91 @@ def test_error_transport_checks_exact_nonlinear_motion(duration_s: float, model:
     assert Fraction(1) < 1 / (1 - time)**2 <= velocity  # m/s
 
 
+@pytest.mark.parametrize("first_s,second_s,rate", [
+    (1 / 64, 1 / 32, Fraction(0)), (1 / 32, 1 / 64, Fraction(1, 100000)),
+    (1 / 64, 1 / 8, Fraction(1, 100000)), (1 / 8, 1 / 64, Fraction(1, 100000)),
+])
+@pytest.mark.parametrize("direction", [-1, 1])
+def test_two_segment_transport_rebases_linear_force(
+    first_s: float, second_s: float, rate: Fraction, direction: int,
+) -> None:
+    p, v, d = Fraction(1, 10000), Fraction(1, 10**7), Fraction(1, 100000)
+    first_p, first_v = _coast_error_envelope(
+        first_s, p, v, Fraction(0), Fraction(0), d, acceleration_defect_rate_m_s3=rate,
+    )
+    second_d = d + rate * Fraction(first_s)  # Global force D+J*t, not D+J*(t-t1).
+    result = _coast_error_envelope(
+        second_s, first_p, first_v, Fraction(0), Fraction(0), second_d, acceleration_defect_rate_m_s3=rate,
+    )
+    total_s = Fraction(first_s) + Fraction(second_s)
+    # Independent global integration of x''=s*(D+J*t), x0=s*p, v0=s*v.
+    exact_p = direction * (p + v*total_s + d*total_s**2/2 + rate*total_s**3/6)
+    exact_v = direction * (v + d*total_s + rate*total_s**2/2)
+    assert result == (abs(exact_p), abs(exact_v))
+    reset = _coast_error_envelope(
+        second_s, p, v, Fraction(0), Fraction(0), second_d, acceleration_defect_rate_m_s3=rate,
+    )
+    assert reset[0] < abs(exact_p) and reset[1] < abs(exact_v)
+    stale_clock = _coast_error_envelope(
+        second_s, first_p, first_v, Fraction(0), Fraction(0), d, acceleration_defect_rate_m_s3=rate,
+    )
+    assert (stale_clock == result) == (rate == 0)
+    if rate > 0:
+        assert stale_clock[0] < abs(exact_p) and stale_clock[1] < abs(exact_v)
+
+
+@pytest.mark.parametrize("durations_s", [(1 / 64, 1 / 32), (1 / 32, 1 / 64), (1 / 128, 1 / 64), (1 / 64, 1 / 128)])
+@pytest.mark.parametrize("model", ["position", "velocity", "coupled"])
+def test_two_segment_nonlinear_transport_closes_domains(
+    durations_s: tuple[float, float], model: str,
+) -> None:
+    # x=1/(1-t), v=1/(1-t)^2, relative to the zero reference.
+    # All three ODEs from the single-arc oracle have |f|<=54 m/s^2
+    # on 0<=x<=3 m, 0<=v<=3 m/s; these constants cover entire chords.
+    lx = Fraction(0 if model == "velocity" else 54 if model == "position" else 27)
+    lv = Fraction(0 if model == "position" else 6 if model == "velocity" else 3)
+    p, v, elapsed_s = Fraction(1), Fraction(1), Fraction(0)
+    expected_unresolved = (model == "position" and sum(durations_s) > 1 / 32
+                           or model == "coupled" and durations_s == (1 / 64, 1 / 32))
+    for duration_s in durations_s:
+        h = Fraction(duration_s)
+        closed = p + v*h + 54*h**2/2 < 3 and v + 54*h < 3  # m and m/s, strict first-exit closure.
+        if not closed:
+            # Retain measured failures: a broad enclosure cannot certify the
+            # next segment even though the exact positive trajectory stays inside.
+            assert expected_unresolved and elapsed_s > 0
+            assert 1 / (1 - elapsed_s - h) < 3
+            assert 1 / (1 - elapsed_s - h)**2 < 3
+            return  # No second envelope or safe classification without closure.
+        p, v = _coast_error_envelope(duration_s, p, v, lx, lv, Fraction(0))
+        elapsed_s += h
+        assert 1 / (1 - elapsed_s) <= p < 3  # m.
+        assert 1 / (1 - elapsed_s)**2 <= v < 3  # m/s.
+    assert not expected_unresolved
+
+
+@pytest.mark.parametrize("active", range(4))
+@pytest.mark.parametrize("offset", [-1, 0, 1])
+def test_two_segment_handoff_rejects_failed_gate(active: int, offset: int) -> None:
+    h = 0.125
+    p, v = _coast_error_envelope(h, Fraction(0), Fraction(0), Fraction(0), Fraction(0), Fraction(1, 1000))
+    base_p, base_v = _coast_error_envelope(h, p, Fraction(0), Fraction(0), Fraction(0), Fraction(1, 1000))
+    second_p, second_v = _coast_error_envelope(h, p, v, Fraction(0), Fraction(0), Fraction(1, 1000))
+    # SI endpoint gates, then margins left after the v=0 first-exit reach.
+    gains = (Fraction(h), Fraction(1), Fraction(h), Fraction(1))
+    margins = [Fraction(1)] * 4
+    margins[active] = gains[active] * v * Fraction(2 + offset, 2)
+    interval = _initial_velocity_interval_m_s(h, Fraction(0), Fraction(0), *margins)
+    assert interval is not None
+    upper, included = interval
+    admitted = v < upper or (v == upper and included)
+    assert admitted == (second_p <= base_p + margins[0] and second_v <= base_v + margins[1]
+                        and v*Fraction(h) < margins[2] and v < margins[3])
+    assert admitted == (offset > 0 or (offset == 0 and active < 2))
+    # A reset to zero would falsely admit every failed handoff in this fixture.
+    assert 0 < upper
+
+
 def test_error_transport_carries_errors_across_four_segments() -> None:
     position, velocity = Fraction(1, 1000), Fraction(1, 1000000)
     defect = Fraction(1, 1000)
