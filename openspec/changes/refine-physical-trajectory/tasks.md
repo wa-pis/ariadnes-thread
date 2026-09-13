@@ -51,6 +51,38 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 longer continuation assessment (2026-09-13):
+Carry the saved nominal three-segment state and both exact error radii into
+the existing cumulative 1/8 s domain. Verify source/PCK and initial-ball
+coverage, strict ideal-path/reference/chord closure, rebased D/J, exact
+shifted endpoint identity and outward reference-only accuracy gates for
+the following 1/16 s. Preserve eleven/zero native counts and 40 source
+readbacks per inventory; run focused budget/integrator/transport tests,
+full pytest, Ruff, strict OpenSpec and legacy isolation. No new native
+call, domain radii, force settings, dependencies or tolerance changes.
+Task 3.9 and native-stage/mission qualification remain open.
+
+Measured reference-only result: incoming radii round outward to
+0.00010529778787867129 m and 2.3227467748483292e-7 m/s. The interval is
+[978995455.2929223, 978995455.3554223] TDB seconds since J2000. Source/PCK,
+initial-ball and strict ideal-path closure pass, with reaches bounded by
+3815.627094157525 m and 0.3971959264759999 m/s inside 4000 m / 0.5 m/s.
+Shifted-reference reaches are 3815.626905762323 m / 0.39453704150364544 m/s;
+both references and their convex chords close. Rebased D/J round outward
+to 7.052136533339981e-6 m/s^2 and 0.00011138873768934326 m/s^3.
+Reference-only error bounds are 0.00010533061154685136 m and
+8.906014137108062e-7 m/s, within unchanged 0.001 m / 0.000001 m/s gates.
+The velocity margin is limited: a future native residual must still be
+added and checked independently. No fourth native endpoint is certified.
+
+Verification: 374 focused tests pass in 0.79 s; all 2402 tests pass in
+532.64 s, including both inventories, eleven/zero native counts and 40
+source readbacks per inventory. Ruff, strict OpenSpec, whitespace and
+unchanged legacy SHA-256/import checks pass. No force settings, native
+calls, dependencies, domain radii, tolerances or production limits changed.
+The full suite covers multiple operations; the shared per-operation
+300-second cooperative deadline remains unchanged.
+
 Task 3.9 tighter doubled continuation (2026-09-13):
 Reuse the nominal loop and comparison for one tighter 1/32 s call with the
 same frozen nominal handoff and incoming radii. Verify native continuity,

@@ -1,5 +1,20 @@
 ## Context
 
+### Longer continuation reference assessment (2026-09-13)
+
+Reuse the existing closure and shifted-reference checks for a 1/16 s
+continuation from the nominal three-segment endpoint at t0+1/16 s. Preserve
+both exact incoming radii, including prior native residuals once. Reuse the
+qualified cumulative 1/8 s Mars domain (4000 m / 0.5 m/s), its full force
+bounds, source/PCK coverage and cubic reference. WHEN the ideal path and
+both references/chords close in this domain, THEN derive the rebased D/J,
+verify exact endpoint translation and report outward reference-only gates
+at 0.001 m / 0.000001 m/s. Keep separate longer-continuation diagnostics.
+Do not add native calls: retain all eleven controls and portable zero,
+unchanged production caps and the shared 300-second operation deadline.
+Failure is unresolved, not permission to widen radii or discard error.
+This does not qualify a fourth native endpoint, native stages or a mission.
+
 ### Tighter doubled Mars continuation (2026-09-13)
 
 Reuse the native loop and exact Euclidean comparison for nominal and tighter

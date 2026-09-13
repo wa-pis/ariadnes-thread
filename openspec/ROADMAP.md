@@ -243,16 +243,23 @@ nominal/tighter differences are bounded by 3.168725533644896e-5 m and
 2.2282620193436745e-11 m/s, consistent with both certificates. This is
 neither a tighter rerun of preceding arcs nor an independent error proof.
 
-Next bounded work within 3.9 is to assess a 1/16 s continuation from the
-nominal three-segment endpoint at t0+1/16 s to t0+1/8 s. Reuse the already
-qualified cumulative 1/8 s Mars domain (4000 m / 0.5 m/s), its source/PCK
-coverage and cubic reference. Carry both incoming radii unchanged. WHEN
-the ideal path, shifted reference and chords remain in the domain, THEN
-derive the rebased D/J and report reference-only accuracy gates before any
-new native call. Preserve failures rather than widening radii or dropping
-error. Retain all eleven controls and portable zero, unchanged production
-caps and the shared 300-second budget. Keep Moon unresolved; do not claim
-mission or native-stage qualification.
+Longer continuation assessment (2026-09-13): the 1/16 s continuation from
+the nominal three-segment endpoint closes in the existing cumulative 1/8 s
+Mars domain (4000 m / 0.5 m/s). Ideal-path reaches are bounded by
+3815.627094157525 m and 0.3971959264759999 m/s. Both references/chords
+close; reference-only error bounds are 0.00010533061154685136 m and
+8.906014137108062e-7 m/s. Both gates pass, with limited remaining velocity
+margin; no new native call was added and both incoming radii were retained.
+
+Next bounded work within 3.9 is one counted nominal 1/16 s continuation
+from the same nominal three-segment endpoint to t0+1/8 s. Reuse the current
+qualified reference, domain, forces and source/PCK coverage. WHEN the run
+completes, THEN verify exact state/time/mass handoff, add its exact native
+residual once, and report endpoint gates and warm runtime. Preserve a failed
+gate rather than widening radii or dropping error. Retain all eleven prior
+controls, explicitly count the extra call, preserve portable zero, unchanged
+production caps and the shared 300-second budget. Keep Moon unresolved;
+do not claim mission or native-stage qualification.
 Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add unqualified native controls or attempt mission composition
 yet. WHEN a proposed
