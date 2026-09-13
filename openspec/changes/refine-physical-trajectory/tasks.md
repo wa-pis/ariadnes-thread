@@ -51,6 +51,26 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 per-degree Hessian map qualification (2026-09-13):
+Verify expanded Rodrigues polar derivatives, pairwise Frobenius column
+orthogonality, diagonal Gram spectrum and factored all-degree inequalities.
+Verify exact low-degree coefficient rotation invariance and the universal
+sphere argument, polar zonal attainment, old-bound comparison, zero and
+invalid inputs. Run focused degree-map tests, full pytest, Ruff, strict
+OpenSpec and legacy isolation. Do not apply to native bounds in this step.
+
+Verification: all 49 focused controls pass in 0.75 s; all 2163 tests pass
+in 525.45 s. Eight exact Rodrigues/Gram controls cover degrees
+0,1,2,3,8,19,120,200. Three rational rotation cases independently recover
+degree-one/two coefficient norms; sixteen polar zonal controls verify sharp
+attainment and strict improvement over the old generic bound. Root excess
+is checked in s^-4 against scale^2/2^90, an arithmetic check,
+not a mission-tolerance change. Zero and invalid degree/norm/scale cases pass.
+The factored all-degree inequalities and sphere-norm invariance establish
+the universal argument; finite controls do not replace it. Ruff, strict
+OpenSpec, diff checks and legacy isolation pass. No native bound, force,
+coefficient, resource, tolerance, domain or budget changed. Task 3.9 stays open.
+
 Task 3.9 trace-free remainder composition (2026-09-13):
 Verify generic Frobenius provenance against independent mixed quadrupole
 Hessians, corrected directional action and the sharp-C20 misuse counterexample.

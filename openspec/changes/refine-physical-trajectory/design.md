@@ -1,5 +1,41 @@
 ## Context
 
+### Per-degree coefficient-to-Hessian map (2026-09-13)
+
+At the unit north pole, only orders m=0,1,2 have nonzero Cartesian Hessians:
+higher orders contain transverse monomials of degree at least three. From
+P_n(1)=1, P_n'(1)=n(n+1)/2 and P_n''(1)=(n-1)n(n+1)(n+2)/8,
+the unnormalized m0 diagonal is (-(n+1)-P_n', -(n+1)-P_n', (n+1)(n+2));
+m1 cosine/sine have xz/yz entries -(n+2)*P_n'; m2 cosine has xx/yy
+entries +/-2*P_n'' and sine has xy/yx entries 2*P_n''.
+Multiply by the real 4pi normalization whose square is
+(2-delta_m0)*(2*n+1)*(n-m)!/(n+m)!. The five Frobenius-space columns
+are pairwise orthogonal, with squared norms
+A0=(3/2)*(2n+1)*(n+1)^2*(n+2)^2,
+A1=(2n+1)*n*(n+1)*(n+2)^2 twice, and
+A2=(2n+1)*(n-1)*n*(n+1)*(n+2)/4 twice (absent orders omitted).
+A0-A1=(2n+1)*(n+1)*(n+2)^2*(n+3)/2>0 and
+A0-A2=(2n+1)*(n+1)*(n+2)*(5n+4)*(n+3)/4>0 for every n>=0.
+Their sum reproduces the previous Hessian addition theorem. Thus the
+coefficient-to-Hessian map norm is sqrt(A0), not the square root of that sum.
+
+Rotation preserves degree-n homogeneous harmonic polynomials and sphere
+area. The complete real 4pi basis has equal orthogonal sphere norms, so its
+coefficient transformation is orthogonal. Hessian Frobenius norms are also
+rotation invariant. The polar map bound therefore holds at every direction.
+Apply the separately proved trace-free lemma to obtain the ideal degree bound
+GM/d^3*(R/d)^n*(n+1)*(n+2)*sqrt((2n+1)*q_n) in s^-2, where q_n is
+the exact coefficient squared norm. A polar pure zonal field attains it.
+This is a bound for a whole degree, not permission to change coefficients.
+
+WHEN evaluated, THEN exact rational scales and an upper dyadic root must
+enclose the polar zonal limit; compare to the old generic bound. Independent
+expanded Rodrigues derivatives verify polar Gram matrices through degree 200;
+explicit vector/quadrupole coefficient recovery verifies rotations at low
+degree. The factored inequalities and sphere-change-of-variables argument
+provide the universal proof, not finite sampling. Verify zero and invalid
+inputs. No native bound or mission claim changes in this analytic step.
+
 ### Trace-free remainder composition (2026-09-13)
 
 The generic Hessian addition theorem already encloses the Frobenius norm:

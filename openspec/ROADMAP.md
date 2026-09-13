@@ -17,7 +17,16 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest native bound comparison (2026-09-13): applying the trace-free factor
+Latest analytic prerequisite (2026-09-13): the coefficient-to-Hessian map
+has orthogonal polar columns and a largest squared norm
+(3/2)*(2n+1)*(n+1)^2*(n+2)^2. Combining its map norm with the trace-free
+lemma gives the ideal whole-degree operator bound
+GM/d^3*(R/d)^n*(n+1)*(n+2)*sqrt((2n+1)*q_n), attained by a polar zonal
+field. Forty-nine analytic/rejection controls pass, including exact Rodrigues
+Gram calculations at degrees 0,1,2,3,8,19,120,200 and low-degree rotation
+invariance. The universal proof is documented; no native bound changed yet.
+
+Retained native bound comparison: applying the trace-free factor
 only to generic Frobenius-derived spatial partitions strictly improves all
 seven cubic controls. Mars 1/8 s endpoint velocity falls from
 1.4619986809939294e-6 to 1.2803291799227853e-6 m/s; reference-only
@@ -138,12 +147,13 @@ Forty-six additional mixed-field/rejection controls verify independent polar
 Hessians and the C20/remainder composition. Native application changes only
 the reference spatial-variation bound; full-force state sensitivities,
 rotation allowances, arithmetic bounds and historical controls remain intact.
-Next bounded work within 3.9 is to qualify the per-degree coefficient-to-
-Hessian map norm using its polar Gram matrix and rotational invariance,
-instead of bounding that map by the sum of all basis squared norms. Verify
-independent low-degree Hessians and all-degree identities before any native
-application; this is an analytic hypothesis, not an assumed improvement or
-gate passage. Keep all previous certificates. Preserve all
+Next bounded work within 3.9 is to sum the qualified degree-map bounds
+over the exact pinned nonmonopole coefficient norms and compare spatial
+reference variation at the existing seven native controls. Exclude C00 only;
+retain C20 inside its degree without double counting it or applying a second
+trace-free factor. Verify lossless coefficient coverage, full-field bound
+composition, outward SI reporting and measured gates. Keep all previous
+certificates and assume no gate passage in advance. Preserve all
 coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
@@ -152,7 +162,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2114 passing tests; both
+The latest completed code check has 2163 passing tests; both
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost
