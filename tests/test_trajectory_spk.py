@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ctypes
 from collections.abc import Iterator
+from dataclasses import asdict
 from fractions import Fraction
 from hashlib import file_digest, sha256
 import json
@@ -5173,6 +5174,7 @@ def _check_conditional_full_force_coast_domains(
                                     else:
                                         harmonic_started_s = perf_counter()
                                         harmonic_reports: dict[str, object] = {}
+                                        replay_fields: dict[str, object] = {}
                                         # Full Mars degree120 exceeded the shared deadline
                                         # after 12 arcs. Keep all higher degrees as a tail;
                                         # this coarse enclosure is not a trajectory allocation.
@@ -5182,6 +5184,22 @@ def _check_conditional_full_force_coast_domains(
                                             source_position = np.asarray(bodies.get(source).state).reshape(6)[:3].copy()
                                             rotation = np.asarray(bodies.get(source).rotation_model.inertial_to_body_fixed_rotation(handoff_epoch))
                                             budget.check()
+                                            resource = next(item for item in environment.harmonic_fields if item.body == source)
+                                            assert resource.actual_sha256 == resource.expected_sha256
+                                            assert field.gravitational_parameter == resource.gravitational_parameter_m3_s2
+                                            assert field.reference_radius == resource.normalization_radius_m
+                                            replay_fields[source] = {
+                                                "resource": asdict(resource),
+                                                "body_position_m": source_position.tolist(),
+                                                "inertial_to_fixed": rotation.tolist(),
+                                                "coefficient_encoding": "IEEE-754 binary64 little-endian, C order",
+                                                "coefficient_shape": list(field.cosine_coefficients.shape),
+                                                "cosine_sha256": sha256(field.cosine_coefficients.astype("<f8").tobytes()).hexdigest(),
+                                                "sine_sha256": sha256(field.sine_coefficients.astype("<f8").tobytes()).hexdigest(),
+                                            }
+                                            decoded_field = json.loads(json.dumps(replay_fields[source], allow_nan=False))
+                                            assert np.asarray(decoded_field["body_position_m"], dtype="<f8").tobytes() == source_position.astype("<f8").tobytes()
+                                            assert np.asarray(decoded_field["inertial_to_fixed"], dtype="<f8").tobytes() == rotation.astype("<f8").tobytes()
                                             intervals, tail = _harmonic_prefix_vector_enclosure_m_s2(
                                                 budget, field.gravitational_parameter, field.reference_radius,
                                                 field.cosine_coefficients, field.sine_coefficients,
@@ -5236,6 +5254,28 @@ def _check_conditional_full_force_coast_domains(
                                             }
                                         harmonic_elapsed_s = perf_counter()-harmonic_started_s
                                         assert math.isfinite(harmonic_elapsed_s) and harmonic_elapsed_s >= 0
+                                        replay: dict[str, object] = {
+                                            "candidate_id": budget.candidate_id, "model_id": environment.model_id,
+                                            "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
+                                            "time_scale": "TDB seconds since J2000",
+                                            "spacecraft_position_m": probe_state[:3].tolist(),
+                                            "spacecraft_velocity_m_s": probe_state[3:6].tolist(),
+                                            "spacecraft_mass_kg": float(probe_state[6]),
+                                            "fields": replay_fields,
+                                            "pck_sha256": environment.collision_resource.actual_sha256,
+                                            "environment_yml_sha256": sha256((ROOT / "environment.yml").read_bytes()).hexdigest(),
+                                            "qualification": "Exact stored inputs for isolated harmonic cost profiling; not source/PCK error bounds or mission qualification",
+                                        }
+                                        encoded_replay = json.dumps(replay, sort_keys=True, allow_nan=False)
+                                        decoded_replay = json.loads(encoded_replay)
+                                        assert decoded_replay == replay
+                                        stored_replay = json.loads((ROOT / "tests/data/m3_fresh_harmonic_replay.json").read_text())
+                                        assert json.dumps(stored_replay, sort_keys=True, allow_nan=False) == encoded_replay
+                                        assert float(decoded_replay["epoch_tdb_s"]).hex() == handoff_epoch.hex()
+                                        assert np.asarray(decoded_replay["spacecraft_position_m"] + decoded_replay["spacecraft_velocity_m_s"]
+                                                          + [decoded_replay["spacecraft_mass_kg"]], dtype="<f8").tobytes() == probe_state.astype("<f8").tobytes()
+                                        print('{"fresh_harmonic_replay": ' + encoded_replay + '}')
+                                        budget.check()
                                         print(json.dumps({"fresh_harmonic_vector_enclosure": {
                                             "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
                                             "time_scale": "TDB seconds since J2000", "acceleration_unit": "m/s^2",

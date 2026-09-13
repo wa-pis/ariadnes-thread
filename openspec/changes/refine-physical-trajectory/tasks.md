@@ -51,6 +51,24 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 fresh harmonic replay snapshot (2026-09-13):
+Capture existing native handoff inputs without additional native calls;
+verify binary64 JSON round-trip, pinned resource/array identities and exact
+agreement with a saved snapshot on repeat. Run focused checks, full pytest,
+Ruff, strict OpenSpec and legacy isolation. Keep scientific qualification
+and standalone high-degree timing unresolved; do not change the deadline.
+
+Verification: the initial capture inventory passed in 264.73 s. With the
+saved fixture enforced, 52 focused tests passed in 0.52 s and all 2766
+tests passed in 563.15 s. Exact canonical JSON comparison reproduced the
+state, epoch, matrices, resource identities and loaded coefficient hashes;
+byte checks preserved signed binary64 values. Native arc counts remain
+thirteen/zero, with the same four derivative/two rotation probes and the
+original shared 300 s deadline. No high-degree prefix was attempted.
+Ruff, strict OpenSpec, whitespace, legacy isolation and the retained failed
+experiment's patch applicability pass. These whole-test runtimes are not
+standalone harmonic timings, and task 3.9 remains open.
+
 Task 3.9 measured Mars degree100 prefix (2026-09-13):
 Evaluate one exact degree0..100 harmonic vector with all degrees101..120
 retained as a tail at the existing stored handoff geometry. Verify tail

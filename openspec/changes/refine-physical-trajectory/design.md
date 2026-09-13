@@ -1,5 +1,27 @@
 ## Context
 
+### Replayable fresh harmonic inputs (2026-09-13)
+
+Capture the existing nominal Mars handoff state and both harmonic-source
+positions/matrices during the existing derivative probe. WHEN encoded as
+JSON, THEN decoding must preserve every binary64 state/matrix byte and
+the exact epoch. Identify the model, SI/frame/time conventions, pinned
+environment and PCK, coefficient-file hashes, and loaded coefficient-array
+hashes with explicit byte encoding and shape. Keep the captured fixture
+separate from timings and verify it against a repeated native probe.
+This adds no derivative, rotation or propagation calls. All capture work
+uses the original shared deadline. The fixture enables isolated arithmetic
+profiling only; it is neither a force-error certificate nor permission to
+reset a mission timer. Do not retry high-degree prefixes in this step.
+
+The captured fixture is `tests/data/m3_fresh_harmonic_replay.json`, at
+978995455.2929223 TDB seconds since J2000 for candidate d0001-t0035.
+The initial capture inventory passed in 264.73 s; the repeated snapshot
+comparison passed in the complete 2766-test suite (563.15 s). Both times
+cover their full test scopes, not isolated harmonic computation. Coefficient
+hashes encode loaded binary64 arrays in little-endian C order; the PCK hash
+identifies the pinned pck00010.tpc file, not an orientation-error bound.
+
 ### Measured Mars degree100 prefix experiment (2026-09-13)
 
 At the same stored geometry as the retained degree20 control and cutoff

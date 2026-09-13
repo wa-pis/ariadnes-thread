@@ -367,15 +367,24 @@ was returned. Its exact replay patch and JSON failure metadata are retained
 in tests/data; default executable tests are restored unchanged. This does
 not measure standalone prefix runtime or prove mission infeasibility.
 
-Next bounded work within 3.9 is to capture a replayable, provenance-labelled
-snapshot of the existing fresh nominal handoff geometry and harmonic input
-identities, using the already running probe without extra propagation.
-WHEN the snapshot reproduces the exact stored state/matrices and pinned
-coefficient identities, THEN use it to plan isolated cost profiling that
-separates high-degree arithmetic from preceding diagnostic work. Profiling
-must not reset the shared operation timer to claim qualification. Do not
-retry another high cutoff before that cost evidence. Source/PCK errors,
-other forces and fresh domain closure remain prerequisites; task 3.9 stays open.
+The existing native probe now captures the complete fresh nominal state,
+Moon/Mars source positions and rotation matrices in
+`tests/data/m3_fresh_harmonic_replay.json`. JSON round-trip preserves their
+binary64 bytes; canonical comparison checks the repeated native snapshot.
+Provenance includes the force-model identity, PCK/environment hashes, both
+coefficient-file identities and loaded-array hashes with explicit encoding.
+The first capture inventory passed in 264.73 s; this is whole-test elapsed
+time, not standalone harmonic runtime. No native calls were added.
+
+Next bounded work within 3.9 is an isolated degree20 Mars baseline profile
+using the stored geometry and coefficient arrays verified against those
+identities. WHEN replay reproduces the retained enclosure and tail, THEN
+report coefficient setup, exact harmonic arithmetic and tail costs
+separately, including profiling overhead and a bounded profiling deadline.
+Use the existing implementation and standard-library profiler. Do not
+retry high cutoffs before this cost evidence; profiling must not reset
+the shared mission timer to claim qualification. Source/PCK errors, other
+forces and fresh domain closure remain prerequisites; task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
