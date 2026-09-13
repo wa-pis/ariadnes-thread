@@ -1949,6 +1949,26 @@ def _dyadic_sqrt_bounds(value: Fraction) -> tuple[Fraction, Fraction]:
     return lower, upper
 
 
+def _point_gravity_intervals_m_s2(
+    gm_m3_s2: float, relative_m: tuple[Fraction, ...],
+) -> tuple[tuple[Fraction, Fraction], ...]:
+    """Enclose acceleration at exact source-minus-spacecraft coordinates.
+
+    SI/J2000 components; source/state uncertainty and epoch binding are separate.
+    """
+    assert type(gm_m3_s2) is float and math.isfinite(gm_m3_s2) and gm_m3_s2 > 0
+    assert len(relative_m) == 3 and all(isinstance(value, Fraction) for value in relative_m)
+    squared_m2 = sum((value**2 for value in relative_m), Fraction(0))
+    assert squared_m2 > 0
+    lower_m, upper_m = _dyadic_sqrt_bounds(squared_m2)
+    intervals: list[tuple[Fraction, Fraction]] = []
+    for relative in relative_m:
+        endpoints = tuple(Fraction(gm_m3_s2) * relative / (squared_m2 * radius)
+                          for radius in (lower_m, upper_m))
+        intervals.append((min(endpoints), max(endpoints)))
+    return tuple(intervals)
+
+
 def _point_gravity_anchor_error_bound_m_s2(
     gm_m3_s2: float, body_position_m: np.ndarray,
     spacecraft_position_m: np.ndarray, observed_acceleration_m_s2: np.ndarray,
@@ -1958,17 +1978,11 @@ def _point_gravity_anchor_error_bound_m_s2(
     for vector in (body_position_m, spacecraft_position_m, observed_acceleration_m_s2):
         assert vector.shape == (3,) and vector.dtype == np.float64
         assert np.all(np.isfinite(vector))
-    relative_m = [Fraction(body) - Fraction(ship) for body, ship in
-                  zip(body_position_m, spacecraft_position_m, strict=True)]
-    squared_m2 = sum((value**2 for value in relative_m), Fraction(0))
-    assert squared_m2 > 0
-    lower_m, upper_m = _dyadic_sqrt_bounds(squared_m2)
-    error_m_s2 = Fraction(0)
-    for relative, observed in zip(relative_m, observed_acceleration_m_s2, strict=True):
-        endpoints = [Fraction(gm_m3_s2) * relative / (squared_m2 * radius)
-                     for radius in (lower_m, upper_m)]
-        error_m_s2 += max(abs(Fraction(observed) - endpoint) for endpoint in endpoints)
-    return error_m_s2
+    relative_m = tuple(Fraction(body) - Fraction(ship) for body, ship in
+                       zip(body_position_m, spacecraft_position_m, strict=True))
+    intervals = _point_gravity_intervals_m_s2(gm_m3_s2, relative_m)
+    return sum((max(abs(Fraction(observed) - endpoint) for endpoint in bounds)
+                for observed, bounds in zip(observed_acceleration_m_s2, intervals, strict=True)), Fraction(0))
 
 
 def _reused_harmonic_term_errors_m_s2(

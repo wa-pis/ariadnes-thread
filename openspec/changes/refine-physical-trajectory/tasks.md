@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 pure signed point-gravity intervals (2026-09-13):
+Decision0005's ledger selected six missing fresh point-force components.
+Expose the old point-force arithmetic as exact signed intervals, preserving
+the comparison API and its exact L1 reduction. Verify signed/zero components,
+rational/irrational radii, extreme and non-dyadic scales, invalid GM/geometry
+and singularity. All 42 focused checks pass in 0.62 s; all 2857 tests pass in
+466.49 s. Native inventory 139.06 s, portable 40.51 s; existing thirteen/zero
+arc assertions pass. Ruff, strict OpenSpec and legacy isolation pass.
+Decision0006 records proof and scope. This completes only the pure helper;
+next bind six same-epoch source polynomials with epoch/coverage/body-set,
+shape, independent moving-source and deadline checks. No new native query,
+arc, rounded source substitution or full-force certificate. Task 3.9 stays open.
+
 Task 3.9 exact separate-tail midpoint application (2026-09-13):
 Verified in the existing isolated degree100 evaluation, without additional
 harmonic evaluations or arcs. Exact Fraction expansion/recovery round-trips,

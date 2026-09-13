@@ -33,3 +33,5 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 - [0002 — Exact harmonic input duplication is observed](0002-exact-harmonic-input-duplicate.md)
 - [0003 — Reuse exact harmonic errors within one inventory](0003-local-harmonic-reuse.md)
 - [0004 — Count the harmonic tail once in the midpoint norm](0004-separate-harmonic-tail.md)
+- [0005 — Fresh-handoff full-force evidence ledger](0005-fresh-full-force-ledger.md)
+- [0006 — Expose signed point-gravity intervals](0006-point-gravity-intervals.md)

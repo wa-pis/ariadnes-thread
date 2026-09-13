@@ -1,5 +1,27 @@
 ## Context
 
+### Signed point-gravity interval contract (2026-09-13)
+
+The existing point-force comparison now reduces signed component intervals
+from `_point_gravity_intervals_m_s2`. Its relative vector is exactly
+source position minus spacecraft position, in SI/J2000. Keep rational inputs
+exact, including future source-polynomial positions; no binary64 conversion
+occurs in this pure helper. GM remains an explicit positive finite binary64
+parameter interpreted exactly. For s=sum(r_i^2)>0 and a guarded enclosure
+[l,u] of sqrt(s), enclose each GM*r_i/(s*sqrt(s)) using both endpoints and
+sign-aware min/max. Zero coordinates retain exact zero intervals.
+
+WHEN reducing these intervals around an observed vector, THEN the L1 error
+must equal the previous implementation exactly. Verify rational-radius
+analytic values, signed squared identities for irrational radii, scales
+2^600 and 2^-600, non-dyadic rational geometry, invalid GM/coordinates and
+the singular origin. The squared identity a_i^2*s^3=GM^2*r_i^2 supplies an
+independent oracle without another square-root implementation.
+
+This helper has no epoch, live SPICE state or source-uncertainty contract.
+Binding it to six fresh sources must separately validate epoch/coverage,
+state shape and body/GM sets. It is not yet a full-force reference.
+
 ### Fresh midpoint norm contract (2026-09-13)
 
 The isolated degree100 evaluation now applies this contract to its exact

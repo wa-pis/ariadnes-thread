@@ -458,12 +458,20 @@ All 2823 tests pass in 475.24 s; native inventory is 141.62 s with the same
 13 arcs and 10 oracle hits. The isolated degree100 test takes 24.40 s;
 this remains stored-geometry evidence, not a full-force or mission certificate.
 
-Next bounded work within 3.9 is a same-epoch full-force error ledger using
-existing evidence, without new native evaluations. WHEN listing each force,
-source/PCK allowance and domain premise, THEN identify epoch/frame/norm,
-provenance and whether a bound is available at this exact handoff. Mark absent
-bounds explicitly; do not reuse an older epoch's allowance or treat omissions
-as zero. Use the ledger to select the next missing proof before summing forces.
+The same-epoch ledger is recorded in decision0005; it identifies missing
+fresh acceleration components, source/PCK bridges and domain premises without
+treating them as zero. Decision0006 exposes signed exact point-gravity intervals
+from the old error oracle, preserving its reduction exactly. All 42 focused
+checks and 2857 full-suite tests pass (466.49 s); native inventory is 139.06 s
+with unchanged thirteen/zero native arcs. No production/scientific inputs changed.
+
+Next bind the pure point-gravity helper to the six non-harmonic sources at the
+existing fresh handoff using exact polynomial positions and the preserved
+nominal state. WHEN epoch/coverage, state shape or body/GM sets mismatch, THEN
+reject before assembly; verify independent moving-source controls and expired
+budget paths. Use existing source data without new SPICE queries or arcs,
+silent binary64 rounding or duplicate Moon/Mars monopoles. Source arithmetic,
+SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
@@ -478,7 +486,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2823 passing tests; both inventories
+The latest completed code check has 2857 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs thirteen spacecraft arcs, the portable inventory
