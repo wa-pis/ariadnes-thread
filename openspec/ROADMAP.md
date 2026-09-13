@@ -339,18 +339,31 @@ the same intervals. Independent monopole and degree-three component checks
 and the original error controls verify the extraction; source/PCK errors
 remain separate. No additional native evaluations were introduced.
 
-Next bounded work within 3.9 is fresh harmonic acceleration interval
-assembly at the saved nominal Mars handoff using this independent oracle.
-WHEN fresh source positions and rotation matrices are fixed at the correct
-epoch, THEN sum qualified term intervals and retain every unevaluated
-degree in an explicit remainder. Include fresh source rounding/PCK bounds
-or mark the result conditional on exact stored geometry. Time the work
-within the shared budget; do not reuse old numerical anchor-error values.
-Compare with native total only after the remaining point gravity, SRP,
-illumination and relativity components and allowances are included. Keep
-full-force certification, fresh jerk's omitted-force allowances and new
-cubic domain closure open. Count every added native evaluation. Add no
-spacecraft propagation arcs or
+Fresh harmonic vectors are now assembled conditionally on exact stored
+positions and rotation matrices at the saved nominal Mars handoff. The
+lunar degree20 prefix retains degrees21..200 as a norm remainder; the Mars
+degree20 prefix retains degrees21..120. A full Mars120 attempt exhausted
+the unchanged shared 300 s deadline after 12 arcs; no result was returned.
+The shorter exact sum preserves all omitted terms as wider explicit tails,
+with no trajectory-accuracy claim. Tail transformation accounts for the stored
+matrix without assuming exact orthogonality. Independent signed/zero
+pole controls verify partial/full prefixes and scaled matrices.
+
+The retained two-prefix assembly takes 0.33370641712099314 s. Its Mars
+tail is 0.014624902702398076 m/s^2; integrating that allowance alone over
+1/16 s gives about 9.14e-4 m/s, above the unchanged 1e-6 m/s gate. This is
+certificate conservatism, not measured error. It is not a viable fresh
+trajectory reference yet, despite mathematical enclosure tests passing.
+
+Next bounded work within 3.9 is a cheap Mars remainder-versus-cutoff ledger
+at this same stored geometry. WHEN each candidate prefix retains every
+higher-degree coefficient in a rigorous tail, THEN report its necessary
+velocity-budget contribution over 1/16 s before spending time on exact
+high-degree summation. Use measured tail/cost evidence to choose the next
+bounded experiment; no extrapolated runtime or lowered tolerance. Source/
+PCK input errors, remaining forces and fresh domain closure stay open and
+must be included before a full-force certificate. Keep task 3.9 open.
+Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
 caps and the shared 300-second deadline. Keep Moon unresolved and 3.9 open.
@@ -363,7 +376,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2751 passing tests; both inventories
+The latest completed code check has 2766 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs thirteen spacecraft arcs, the portable inventory

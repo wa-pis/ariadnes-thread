@@ -51,6 +51,42 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 fresh stored-geometry harmonic assembly (2026-09-13):
+Sum independent lunar and Martian degree0..20 intervals at the existing
+fresh handoff, retain all higher degrees of both fields as explicit tails,
+and account for the stored matrix transpose without assumed orthogonality.
+Verify independent signed/zero C00+C30 controls for full/partial prefixes,
+scaled matrices, preserved coefficients and invalid cutoffs. Report scope,
+geometry, intervals and elapsed time; retain missing source/PCK allowances.
+Run focused tests, full pytest, Ruff, strict OpenSpec and legacy isolation.
+Keep all old certificates and task 3.9 open; no new propagation or derivative
+evaluation, with two extra rotation evaluations explicitly counted.
+
+Failed runtime experiment: Moon20/Mars120 hit the existing 300 s shared
+deadline in harmonic jets after 12 controls/evaluations/arcs; full pytest
+returned 2765 passed, one failed in 577.57 s. No fresh interval result was
+returned. Retain this evidence and reproduce with Mars cutoff120 in the
+fresh probe's body/cutoff loop. The next measured attempt uses degree20
+for both exact prefixes while bounding every higher coefficient, not
+raising the budget or claiming the resulting width meets mission accuracy.
+
+Verification of retained Moon20/Mars20 attempt: 52 focused tests pass in
+0.51 s; all 2766 tests pass in 554.12 s. Fifteen new cases cover signed/zero
+C30 tails, complete/partial prefixes, scaled matrices and invalid cutoffs.
+The real stored-geometry assembly at 978995455.2929223 TDB s takes
+0.33370641712099314 s, including two rotation evaluations. Reported norm
+tails are 2.7021574876745438e-120 m/s^2 (Moon) and
+0.014624902702398076 m/s^2 (Mars). The latter alone contributes about
+9.14e-4 m/s over 1/16 s if used as a constant-defect allowance, far above
+the unchanged 1e-6 m/s gate. This is a bound-budget comparison, NOT an
+observed trajectory error or proof that the physical trajectory is unsafe.
+Thus the coarse enclosure passes its mathematical checks but is not a
+qualified fresh trajectory reference. Source/PCK errors also remain open.
+Ruff, strict OpenSpec, whitespace and legacy SHA-256/import checks pass;
+thirteen/zero arcs and forty explicit source readbacks per inventory remain
+unchanged. The previous four derivative evaluations now include the nested
+harmonic work in their timer; do not add overlapping timings together.
+
 Task 3.9 independent harmonic vector intervals (2026-09-13):
 Inspect installed dependent-variable API; do not use historical interpolation
 as a fresh-state readback. Expose the existing exact harmonic component

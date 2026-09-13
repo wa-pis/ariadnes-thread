@@ -3557,6 +3557,80 @@ def _harmonic_remainder_anchor_error_bound_m_s2(
     return sum(map(abs, observed_remainder_m_s2), Fraction(ideal_norm_m_s2))
 
 
+def _harmonic_prefix_vector_enclosure_m_s2(
+    budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
+    cosine: np.ndarray, sine: np.ndarray, body_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
+    inertial_to_fixed: np.ndarray, cutoff: int,
+) -> tuple[tuple[tuple[Fraction, Fraction], ...], Fraction]:
+    """Enclose full harmonic vector at exact stored geometry, including tail.
+
+    Output is J2000 m/s^2. Source/PCK input error is NOT included. The
+    stored matrix need not be orthogonal: bound its transpose on the tail.
+    """
+    budget.check()
+    assert cosine.ndim == 2 and cosine.shape == sine.shape
+    assert type(cutoff) is int and 2 <= cutoff < len(cosine)
+    lower, upper = [Fraction(0)]*3, [Fraction(0)]*3
+    for _, intervals in _generic_harmonic_term_intervals_m_s2(
+        budget, gm_m3_s2, reference_radius_m, cosine[:cutoff+1, :cutoff+1], sine[:cutoff+1, :cutoff+1],
+        body_position_m, spacecraft_position_m, inertial_to_fixed,
+    ):
+        for axis, (lo, hi) in enumerate(intervals):
+            lower[axis] += lo
+            upper[axis] += hi
+    relative = tuple(Fraction(a)-Fraction(b) for a, b in zip(spacecraft_position_m, body_position_m, strict=True))
+    fixed = tuple(sum((Fraction(a)*b for a, b in zip(row, relative, strict=True)), Fraction(0)) for row in inertial_to_fixed)
+    radius_lower = _dyadic_sqrt_bounds(sum((x*x for x in fixed), Fraction(0)))[0]
+    radius_floor_m = math.nextafter(float(radius_lower), -math.inf)
+    assert math.isfinite(radius_floor_m) and 0 < Fraction(radius_floor_m) <= radius_lower
+    tail_fixed_m_s2 = _harmonic_remainder_anchor_error_bound_m_s2(
+        budget, gm_m3_s2, reference_radius_m, radius_floor_m, cosine, sine, (Fraction(0),)*3,
+        excluded_through_degree=cutoff,
+    )
+    # ||Q^T||_2 <= ||Q||_F <= sum(abs(Q_ij)); no orthogonality assumption.
+    tail_m_s2 = tail_fixed_m_s2*sum((abs(Fraction(x)) for row in inertial_to_fixed for x in row), Fraction(0))
+    budget.check()
+    return tuple((lo-tail_m_s2, hi+tail_m_s2) for lo, hi in zip(lower, upper, strict=True)), tail_m_s2
+
+
+@pytest.mark.parametrize("cutoff", [2, 3])
+@pytest.mark.parametrize("scale", [1.0, 2.0])
+@pytest.mark.parametrize("coefficient", [-0.125, 0.0, 0.125])
+def test_harmonic_vector_enclosure_retains_tail(cutoff: int, scale: float, coefficient: float) -> None:
+    cosine, sine = np.zeros((4, 4)), np.zeros((4, 4))
+    cosine[0, 0], cosine[3, 0] = 1.0, coefficient
+    original = cosine.copy()
+    intervals, tail = _harmonic_prefix_vector_enclosure_m_s2(
+        trajectory._RefinementBudget("harmonic-vector", 300.0), 1.0, 1.0, cosine, sine,
+        np.zeros(3), np.asarray([0.0, 0.0, 2.0]), scale*np.eye(3), cutoff,
+    )
+    assert np.array_equal(cosine, original) and not np.any(sine)
+    # Independent pole force for stored Q=s*I: -1/(4*s) minus
+    # C30*sqrt(7)/(8*s^4). Q^T must act on the omitted field too.
+    monopole = -1/(4*Fraction(scale))
+    exact_tail_squared = 7*Fraction(coefficient)**2/(64*Fraction(scale)**8)
+    lo, hi = intervals[2][0]-monopole, intervals[2][1]-monopole
+    assert all(a <= b for a, b in intervals)
+    assert all(a <= 0 <= b for a, b in intervals[:2])
+    if cutoff == 2:
+        assert lo == -tail and hi == tail and tail**2 >= exact_tail_squared
+    elif coefficient:
+        low, high = (-hi, -lo) if coefficient > 0 else (lo, hi)
+        assert 0 < low <= high and low**2 <= exact_tail_squared <= high**2
+    else:
+        assert lo == hi == tail == 0
+    assert (tail == 0) == (cutoff == 3 or coefficient == 0)
+
+
+@pytest.mark.parametrize("cutoff", [True, 1, 4])
+def test_harmonic_vector_enclosure_rejects_cutoff(cutoff: int) -> None:
+    with pytest.raises(AssertionError):
+        _harmonic_prefix_vector_enclosure_m_s2(
+            trajectory._RefinementBudget("harmonic-vector-invalid", 300.0), 1.0, 1.0,
+            np.eye(4), np.zeros((4, 4)), np.zeros(3), np.ones(3), np.eye(3), cutoff,
+        )
+
+
 @pytest.mark.parametrize("degree", [1, 3])
 @pytest.mark.parametrize("observed_m_s2", [Fraction(-1, 8), Fraction(0), Fraction(1, 8)])
 def test_harmonic_remainder_preserves_unqualified_degrees(degree: int, observed_m_s2: Fraction) -> None:
@@ -5077,6 +5151,46 @@ def _check_conditional_full_force_coast_domains(
                                     acceleration_probes[label] = derivative[3:6].tolist()
                                     if label == "original":
                                         assert np.array_equal(derivative[3:6], anchor_m_s2)
+                                    else:
+                                        harmonic_started_s = perf_counter()
+                                        harmonic_reports: dict[str, object] = {}
+                                        # Full Mars degree120 exceeded the shared deadline
+                                        # after 12 arcs. Keep all higher degrees as a tail;
+                                        # this coarse enclosure is not a trajectory allocation.
+                                        for source, cutoff in (("Moon", 20), ("Mars", 20)):
+                                            budget.check()
+                                            field = bodies.get(source).gravity_field_model
+                                            source_position = np.asarray(bodies.get(source).state).reshape(6)[:3].copy()
+                                            rotation = np.asarray(bodies.get(source).rotation_model.inertial_to_body_fixed_rotation(handoff_epoch))
+                                            budget.check()
+                                            intervals, tail = _harmonic_prefix_vector_enclosure_m_s2(
+                                                budget, field.gravitational_parameter, field.reference_radius,
+                                                field.cosine_coefficients, field.sine_coefficients,
+                                                source_position, probe_state[:3], rotation, cutoff,
+                                            )
+                                            outward = [[math.nextafter(float(lo), -math.inf) if lo else 0.0,
+                                                        math.nextafter(float(hi), math.inf) if hi else 0.0] for lo, hi in intervals]
+                                            reported_tail = math.nextafter(float(tail), math.inf) if tail else 0.0
+                                            assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lo <= hi <= Fraction(b)
+                                                       for (a, b), (lo, hi) in zip(outward, intervals, strict=True))
+                                            assert math.isfinite(reported_tail) and Fraction(reported_tail) >= tail >= 0
+                                            assert tail > 0
+                                            harmonic_reports[source] = {
+                                                "evaluated_through_degree": cutoff, "maximum_degree": len(field.cosine_coefficients)-1,
+                                                "body_position_m": source_position.tolist(), "inertial_to_fixed": rotation.tolist(),
+                                                "body_fixed_frame": bodies.get(source).rotation_model.body_fixed_frame_name,
+                                                "component_intervals_m_s2": outward, "tail_upper_m_s2": reported_tail,
+                                            }
+                                        harmonic_elapsed_s = perf_counter()-harmonic_started_s
+                                        assert math.isfinite(harmonic_elapsed_s) and harmonic_elapsed_s >= 0
+                                        print(json.dumps({"fresh_harmonic_vector_enclosure": {
+                                            "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
+                                            "time_scale": "TDB seconds since J2000", "acceleration_unit": "m/s^2",
+                                            "fields": harmonic_reports, "elapsed_s": harmonic_elapsed_s,
+                                            "additional_rotation_evaluations": 2, "additional_native_arcs": 0,
+                                            "qualification": "Conditional on exact stored source positions and matrices; source/PCK errors and remaining forces excluded",
+                                        }}, sort_keys=True, allow_nan=False))
+                                        budget.check()
                                     restored = np.asarray(probe_simulator.state_derivative_function(restore_epoch, restore_state)).reshape(7)
                                     budget.check()
                                     assert np.all(np.isfinite(restored)) and restored[6] == 0.0

@@ -1,5 +1,37 @@
 ## Context
 
+### Fresh stored-geometry harmonic assembly (2026-09-13)
+
+While the existing fresh derivative probe has updated the environment,
+copy Moon/Mars positions and evaluate their rotations at the exact handoff
+epoch. Stream and sum independent vector intervals through degree20 for
+both fields. Retain lunar degrees21..200 and Martian degrees21..120 as
+rigorous norm tails. Use the exact transformed position to
+derive a downward-rounded radius floor and multiply the fixed-frame tail
+by an upper bound on the stored matrix transpose's operator norm. Do not
+assume a rounded matrix is exactly orthogonal. Enlarge each component by
+the tail and report outward intervals with the stored geometry and scope.
+
+WHEN checked on C00 plus signed/zero C30 at a pole, THEN partial/full
+prefixes with identity and scaled nonorthogonal matrices must enclose the
+independent analytic force, preserving coefficients and rejecting invalid
+cutoffs. Charge both extra rotation evaluations and all rational work to
+the shared timer. No new derivative evaluation or propagation is added.
+This is conditional on exact stored positions/matrices: source/PCK input
+errors, other forces and full-force certification remain open. Do not
+compare the two-field sum alone with native total or alter the reference.
+
+Measured failed experiment: Moon20/Mars120 in this same diagnostic reached
+the shared 300 s deadline in `_regular_solid_harmonic_jets`, with control,
+evaluation and arc counters all 12. Full pytest reported 2765 passed and
+one native-inventory failure in 577.57 s. No partial certificate was returned.
+Reproduce by selecting Mars cutoff120 in the fresh harmonic probe and
+running the native-readback inventory with its unchanged shared budget.
+The retained Moon20/Mars20 experiment reduces exact work, NOT model degree:
+all omitted coefficients remain in explicit tails. Its wider conditional
+intervals have no claimed trajectory accuracy allocation. No old tolerance,
+certificate or production cap is weakened, and no new budget is introduced.
+
 ### Independent harmonic vector intervals (2026-09-13)
 
 Installed `DependentVariablesInterface` exposes no public callable members;
