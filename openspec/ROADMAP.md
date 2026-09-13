@@ -17,14 +17,25 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest analytic prerequisite (2026-09-13): the coefficient-to-Hessian map
+Latest native comparison (2026-09-13): whole-degree composition resolves
+both endpoint gates in all seven existing zero-initial-error controls.
+Mars 1/8 s position/velocity bounds are 3.21149285791862e-5 m and
+9.520008966984693e-7 m/s, below 0.001 m / 1e-6 m/s. Reference-only
+velocity is 8.814968728961376e-7 m/s. Mars 1/16 s velocity is
+2.3324000568729125e-7 m/s. C00 alone is excluded, C20 is retained once,
+and no second trace-free factor is applied. All old certificates, including
+their unresolved Mars 1/8 s gates, remain regressions. These are conditional
+short-control bounds, not measured errors, mission accuracy or native-stage safety.
+
+Retained analytic prerequisite: the coefficient-to-Hessian map
 has orthogonal polar columns and a largest squared norm
 (3/2)*(2n+1)*(n+1)^2*(n+2)^2. Combining its map norm with the trace-free
 lemma gives the ideal whole-degree operator bound
 GM/d^3*(R/d)^n*(n+1)*(n+2)*sqrt((2n+1)*q_n), attained by a polar zonal
 field. Forty-nine analytic/rejection controls pass, including exact Rodrigues
 Gram calculations at degrees 0,1,2,3,8,19,120,200 and low-degree rotation
-invariance. The universal proof is documented; no native bound changed yet.
+invariance. The universal proof is documented; native use is separately
+verified by the whole-degree composition above.
 
 Retained native bound comparison: applying the trace-free factor
 only to generic Frobenius-derived spatial partitions strictly improves all
@@ -147,13 +158,13 @@ Forty-six additional mixed-field/rejection controls verify independent polar
 Hessians and the C20/remainder composition. Native application changes only
 the reference spatial-variation bound; full-force state sensitivities,
 rotation allowances, arithmetic bounds and historical controls remain intact.
-Next bounded work within 3.9 is to sum the qualified degree-map bounds
-over the exact pinned nonmonopole coefficient norms and compare spatial
-reference variation at the existing seven native controls. Exclude C00 only;
-retain C20 inside its degree without double counting it or applying a second
-trace-free factor. Verify lossless coefficient coverage, full-field bound
-composition, outward SI reporting and measured gates. Keep all previous
-certificates and assume no gate passage in advance. Preserve all
+Next bounded work within 3.9 is to qualify nonzero initial-state balls
+under the degree-map cubic certificate before longer or adjacent arcs.
+Reuse explicit 0.0001 m position and 0 / 5e-8 / 1e-7 m/s velocity fixtures;
+reprove family inclusion in each unchanged domain and transport the initial
+errors with the same force sensitivities, defect and native residuals.
+Measure every gate: the small Mars 1/8 s margin is not an initial-error
+budget or a guarantee of passage. Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
@@ -162,8 +173,9 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2163 passing tests; both
-1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
+The latest completed code check has 2196 passing tests; both inventories
+pass. Historical 1/8 s velocity gates remain unresolved; only the new
+degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost
 estimates. Production limits and the shared 300-second deadline are unchanged.

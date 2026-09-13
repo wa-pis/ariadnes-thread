@@ -51,6 +51,29 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 whole-field degree-map composition (2026-09-13):
+Verify exact all-coefficient degree sums, independent mixed polar Hessians,
+cosine/sine coupling, zero, nonmutation and invalid fields. Apply only spatial
+reference variation at the seven existing native controls, preserving old
+certificates; measure gates before fixing their regressions. Run focused
+analytic tests and real inventories, full pytest, Ruff, strict OpenSpec and
+legacy isolation. No later milestone or native-stage safety claim follows.
+
+Measured verification: 82 focused degree-map tests pass in 0.78 s,
+including 33 new composition/rejection controls. Both real/portable inventories
+pass in 264.17 s combined. After measuring all seven passing gates, explicit
+reference/endpoint velocity regressions were added; all 2196 tests then pass
+in 529.63 s. Mars 1/8 s position/velocity are 3.21149285791862e-5 m and
+9.520008966984693e-7 m/s; reference velocity is 8.814968728961376e-7 m/s.
+Mars 1/16 s velocity is 2.3324000568729125e-7 m/s; all seven controls
+strictly improve over trace-free composition. Old unresolved controls remain
+unchanged. Ruff, strict OpenSpec, diff checks and legacy isolation pass.
+This qualifies only the existing zero-initial-error short fixtures. It does
+not qualify accumulated initial error, a complete mission, native stages or
+finite-burn safety. No coefficients, physical settings, tolerances, initial
+force allowances, rotation bounds, state sensitivities, native counts or
+operation budget changed. Task 3.9 remains open.
+
 Task 3.9 per-degree Hessian map qualification (2026-09-13):
 Verify expanded Rodrigues polar derivatives, pairwise Frobenius column
 orthogonality, diagonal Gram spectrum and factored all-degree inequalities.

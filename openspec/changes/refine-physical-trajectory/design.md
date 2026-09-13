@@ -1,5 +1,24 @@
 ## Context
 
+### Whole-field degree-map composition (2026-09-13)
+
+WHEN supplied validated lower-triangular finite float64 coefficients with
+C00=0 and all unused sine orders zero, THEN form each exact rational squared
+coefficient norm from every cosine and sine entry and sum the qualified
+degree-map bounds. C20 stays inside degree two; never add it separately or
+multiply the result by another trace-free factor. The triangle inequality
+over degrees gives the ideal full nonmonopole operator bound. Verify mixed
+signed zonal polar Hessians, coupled cosine/sine norms, zero fields including
+the full lunar size, nonmutation and invalid input rejection.
+
+Evaluate at existing Moon/Mars domain floors with row-wise deadline checks.
+Select the minimum with the historical trace-free bound, then replace only
+the spatial reference variation in a separate cubic certificate. Keep the
+same initial force allowances, full-force sensitivities, rotation bounds,
+domain closure, cubic coefficients and endpoint residuals. Report measured
+reference/endpoint gates; keep all old certificates and native counts.
+No field truncation, force change or full-mission safety claim is permitted.
+
 ### Per-degree coefficient-to-Hessian map (2026-09-13)
 
 At the unit north pole, only orders m=0,1,2 have nonzero Cartesian Hessians:
