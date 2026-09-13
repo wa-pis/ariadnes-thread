@@ -51,6 +51,42 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 rebased constant-defect sources (2026-09-13):
+Split D2 into original D, J*t1 and position/velocity recentering allowances
+with the existing exact identity. Verify their sum equals D2 and their
+separately transported contributions equal the parent constant-defect
+position/velocity bounds. Report a nested upward SI ledger without double
+counting; retain original contributions, margins, endpoints and thirteen/zero
+counts. Run focused budget/integrator/transport analytic checks, full pytest,
+Ruff, strict OpenSpec and legacy isolation; no new native calls, force or
+domain changes. Task 3.9 remains open and no extension is qualified.
+
+Measured nested sources (identical for nominal/tighter; upward SI bounds):
+
+| Source | Acceleration defect (m/s^2) | Position contribution (m) | Velocity contribution (m/s) |
+|---|---:|---:|---:|
+| Original D | 9.017881178991194e-8 | 1.7613049240813274e-10 | 5.636175757060248e-9 |
+| Elapsed-reference J*t1 | 6.961796103581416e-6 | 1.3597258063517585e-8 | 4.351122580325627e-7 |
+| Position recentering | 1.6161796865356654e-10 | 3.1566009615730197e-13 | 1.0101123077033663e-11 |
+| Velocity recentering | 1.276183463086456e-22 | 2.492545835269905e-25 | 7.976146672863695e-24 |
+
+Both exact acceleration sums equal D2, and exact transported sums equal
+the parent constant-defect contribution. The elapsed-reference term supplies
+about 98.7% of that parent velocity bound. Original top-level contributions,
+margins and endpoint certificates remain unchanged. This motivates testing
+fresh reference anchors, not deleting the elapsed-time allowance or resetting
+the physical uncertainty. Native application still requires qualified fresh
+force/derivative bounds, domain/source coverage and runtime accounting.
+
+Verification: 374 focused tests pass in 0.78 s and all 2402 tests pass in
+531.16 s, including exact parent/source identities for both final controls,
+thirteen/zero native counts and 40 source readbacks per inventory. Existing
+shifted-reference and additivity tests retain signed, zero and invalid-input
+controls. Ruff, strict OpenSpec, whitespace and unchanged legacy SHA-256/
+import checks pass. No calls, domains, force settings, dependencies,
+tolerances or production caps added; ledger work remains within existing
+control timing and the shared per-operation 300-second deadline.
+
 Task 3.9 final continuation bound attribution (2026-09-13):
 Reuse exact transport for incoming-state, constant-defect, defect-rate and
 native-residual contributions in both existing final 1/16 s controls. Verify

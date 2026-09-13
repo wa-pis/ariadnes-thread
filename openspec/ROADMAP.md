@@ -277,16 +277,24 @@ changes the residual. This partitions a conservative certificate, not
 measured physical error. Remaining nominal velocity margin is at least
 5.635016225049474e-8 m/s; no extension is qualified by that margin alone.
 
-Next bounded work within 3.9 is to decompose the dominant rebased constant
-defect into original D, elapsed-reference J*t1, Lx*position-shift and
-Lv*velocity-shift contributions using the existing exact shift identity.
-WHEN transported separately, THEN their exact sums must equal the current
-constant-defect position/velocity contribution; report outward SI values
-and identify the dominant source before changing the reference construction.
-Do not extrapolate expired domain/source bounds beyond t0+1/8 s, reset
-incoming error or infer physical uncertainty from the ledger. Add no native
-calls: retain thirteen controls and portable zero, unchanged production caps
-and the shared 300-second budget. Keep Moon unresolved and task 3.9 open.
+Constant-defect attribution (2026-09-13): elapsed-reference J*t1 contributes
+4.351122580325627e-7 m/s, about 98.7% of the parent constant-defect bound.
+Original D contributes 5.636175757060248e-9 m/s, position recentering
+1.0101123077033663e-11 m/s and velocity recentering 7.976146672863695e-24 m/s.
+Exact acceleration and transported sums match the parent; all earlier
+certificates and margins remain unchanged. These are bound contributions,
+not measured physical errors; simply removing J*t1 is invalid.
+
+Next bounded work within 3.9 is an analytic fresh-reference control with
+affine-in-absolute-time acceleration. Reuse cubic reference and exact error
+transport. WHEN acceleration/jerk are freshly anchored with known errors,
+THEN verify local D/J against the independent analytic trajectory while
+carrying both incoming radii unchanged. Cover signed/zero anchor errors and
+nonzero time offsets; retain the stale-anchor clock-reset counterexample.
+This only qualifies the manufactured case: real full-force anchor/derivative
+coverage and cost remain open. No new native calls or domain extension;
+retain thirteen controls, portable zero, unchanged tolerances, production
+caps and the shared 300-second budget. Keep Moon unresolved and 3.9 open.
 Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add unqualified native controls or attempt mission composition
 yet. WHEN a proposed

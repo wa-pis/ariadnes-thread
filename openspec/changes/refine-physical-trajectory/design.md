@@ -1,5 +1,21 @@
 ## Context
 
+### Rebased constant-defect source attribution (2026-09-13)
+
+Reuse the exact shifted-reference identity D2=D+J*t1+Lx*Rp+Lv*Rv.
+Partition the existing final 1/16 s constant allowance into these four
+nonnegative sources without changing the reference or any scientific bound.
+WHEN summed, THEN their exact acceleration allowances must equal D2; WHEN
+transported with the same duration and sensitivities, THEN their exact
+position/velocity sums must equal the parent constant-defect contribution.
+Report upward SI acceleration and endpoint values in a nested source ledger,
+not as additional top-level contributions. Preserve the original four-part
+ledger, margins and endpoint bounds. Existing shifted-defect analytic and
+transport-additivity tests qualify these identities; native controls verify
+their application to both frozen-handoff integrator settings. Include this
+work in the existing deadline/timing, with thirteen/zero native counts and
+no new calls, domains, force settings, tolerances or production caps.
+
 ### Final continuation endpoint-bound attribution (2026-09-13)
 
 For both existing 1/16 s native controls, partition the conditional endpoint

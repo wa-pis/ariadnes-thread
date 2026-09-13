@@ -4850,8 +4850,28 @@ def _check_conditional_full_force_coast_domains(
                                 parts["native_reference_residual"] = (residual_p, residual_v)
                                 assert tuple(sum((part[index] for part in parts.values()), Fraction(0))
                                              for index in (0, 1)) == (endpoint_p, endpoint_v)
+                                constant_sources = {
+                                    "original_defect": constant_defect_m_s2,
+                                    "elapsed_reference": degree_rate_m_s3 * Fraction(offset_s),
+                                    "position_shift": Fraction(reported_full_position_sensitivity) * shift_p_m,
+                                    "velocity_shift": Fraction(reported_relativity_sensitivities[1]) * shift_v_m_s,
+                                }
+                                assert sum(constant_sources.values(), Fraction(0)) == shifted_d
+                                source_parts: dict[str, tuple[Fraction, Fraction]] = {}
+                                for name, defect in constant_sources.items():
+                                    budget.check()
+                                    source_parts[name] = _coast_error_envelope(
+                                        next_s, Fraction(0), Fraction(0), Fraction(reported_full_position_sensitivity),
+                                        Fraction(reported_relativity_sensitivities[1]), defect,
+                                    )
+                                assert tuple(sum((part[index] for part in source_parts.values()), Fraction(0))
+                                             for index in (0, 1)) == parts["constant_defect"]
+                                reported_defects = {name: math.nextafter(float(value), math.inf) if value else 0.0
+                                                    for name, value in constant_sources.items()}
+                                assert all(math.isfinite(value) and Fraction(value) >= constant_sources[name] >= 0
+                                           for name, value in reported_defects.items())
                                 reported_parts: dict[str, dict[str, float]] = {}
-                                for name, part in parts.items():
+                                for name, part in (parts | source_parts).items():
                                     reported_parts[name] = {}
                                     for unit, value in zip(("position_m", "velocity_m_s"), part, strict=True):
                                         reported = math.nextafter(float(value), math.inf) if value else 0.0
@@ -4864,7 +4884,13 @@ def _check_conditional_full_force_coast_domains(
                                 assert all(math.isfinite(value) and Fraction(value) <= margins[name]
                                            for name, value in reported_margins.items())
                                 endpoint_attribution = {
-                                    "contributions": reported_parts, "remaining_accuracy_margin": reported_margins,
+                                    "contributions": {name: reported_parts[name] for name in parts},
+                                    "constant_defect_sources": {
+                                        name: {"acceleration_defect_m_s2": reported_defects[name], **reported_parts[name]}
+                                        for name in constant_sources
+                                    },
+                                    "constant_sources_sum_matches_parent": True,
+                                    "remaining_accuracy_margin": reported_margins,
                                     "exact_sum_matches_endpoint_bound": True,
                                     "scope": "Conditional bound attribution, not measured physical error or permission to extend the domain",
                                 }
