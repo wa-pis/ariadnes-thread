@@ -5285,6 +5285,9 @@ def _check_conditional_full_force_coast_domains(
                                         assert handoff_epoch <= adjacent_final_tdb_s <= fresh_source_end_tdb_s
                                         assert (environment.origin, environment.orientation) == ("SSB", "J2000")
                                         source_binding: dict[str, object] = {}
+                                        point_source_errors: dict[str, object] = {}
+                                        source_error_started_s = perf_counter()
+                                        source_error_counts = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
                                         for source in trajectory.PHYSICAL_BODY_NAMES:
                                             # Read cached environment state after the existing
                                             # derivative call; do not issue another SPICE query.
@@ -5298,6 +5301,39 @@ def _check_conditional_full_force_coast_domains(
                                                 "conditional_l1_allowance_m": source_position_errors_m[source],
                                                 "exact_readback_match": True,
                                             }
+                                            if source in point_bodies:
+                                                floor_m = trajectory._relative_distance_lower_bound(
+                                                    budget, tuple(map(float, handoff_state[:3])), tuple(map(float, consumer)),
+                                                    0.0, source_position_errors_m[source],
+                                                )
+                                                assert floor_m > 0
+                                                relative = tuple(a-b for a, b in zip(consumer, handoff_state[:3], strict=True))
+                                                epsilon_m = Fraction(source_position_errors_m[source])
+                                                assert (Fraction(floor_m)+epsilon_m)**2 <= sum(value**2 for value in relative)
+                                                error_m_s2 = _point_mass_variation_bound_m_s2(fresh_gm_m3_s2[source], floor_m, epsilon_m)
+                                                stored_force = _point_gravity_intervals_m_s2(fresh_gm_m3_s2[source], relative)
+                                                # Independent endpoint interval comparison, with all
+                                                # arithmetic widths retained, not fitted to epsilon.
+                                                difference_squared = sum((max(abs(a-d), abs(b-c))**2
+                                                    for (a, b), (c, d) in zip(stored_force, fresh_point_intervals[source], strict=True)), Fraction(0))
+                                                assert difference_squared <= error_m_s2**2, source
+                                                reported_error = math.nextafter(float(error_m_s2), math.inf)
+                                                assert math.isfinite(reported_error) and Fraction(reported_error) >= error_m_s2 > 0
+                                                point_source_errors[source] = {
+                                                    "gm_m3_s2": fresh_gm_m3_s2[source], "distance_floor_m": floor_m,
+                                                    "source_position_allowance_m": float(epsilon_m),
+                                                    "acceleration_l2_allowance_m_s2": reported_error,
+                                                }
+                                        assert set(point_source_errors) == set(point_bodies) == set(fresh_point_intervals)
+                                        assert source_error_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                        assert selected_handoff == preserved_handoff
+                                        budget.check()
+                                        print(json.dumps({"fresh_point_source_errors": {
+                                            "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
+                                            "sources": point_source_errors, "elapsed_s": perf_counter()-source_error_started_s,
+                                            "additional_native_queries": 0, "additional_native_arcs": 0,
+                                            "scope": "Conditional source-position effect on six ideal point forces at fixed nominal spacecraft state; no native force arithmetic or other forces",
+                                        }}, sort_keys=True, allow_nan=False))
                                         print(json.dumps({"fresh_source_consumer_binding": {
                                             "epoch_tdb_s": handoff_epoch, "coverage_end_tdb_s": fresh_source_end_tdb_s,
                                             "origin": "SSB", "orientation": "J2000", "sources": source_binding,

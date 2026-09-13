@@ -1,0 +1,19 @@
+{
+  "fresh_point_source_errors": {
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "elapsed_s": 0.0009616250172257423,
+    "epoch_tdb_s": 978995455.2929223,
+    "orientation": "J2000",
+    "origin": "SSB",
+    "scope": "Conditional source-position effect on six ideal point forces at fixed nominal spacecraft state; no native force arithmetic or other forces",
+    "sources": {
+      "Earth": {"acceleration_l2_allowance_m_s2": 4.431071211359233e-24, "distance_floor_m": 221235955438.04004, "gm_m3_s2": 398600441500000.0, "source_position_allowance_m": 6.0187747349184116e-05},
+      "Jupiter": {"acceleration_l2_allowance_m_s2": 2.1503459217019415e-22, "distance_floor_m": 796044507652.3591, "gm_m3_s2": 1.266865341960128e+17, "source_position_allowance_m": 0.0004281144922474497},
+      "Mercury": {"acceleration_l2_allowance_m_s2": 2.4504968158917994e-25, "distance_floor_m": 198573435578.0432, "gm_m3_s2": 22031868691090.8, "source_position_allowance_m": 4.3544796122872e-05},
+      "Saturn": {"acceleration_l2_allowance_m_s2": 1.867357253627726e-23, "distance_floor_m": 1435701713894.6316, "gm_m3_s2": 3.79313226256016e+16, "source_position_allowance_m": 0.0007284371515436439},
+      "Sun": {"acceleration_l2_allowance_m_s2": 2.526170485809471e-21, "distance_floor_m": 248443929582.4009, "gm_m3_s2": 1.327124400420322e+20, "source_position_allowance_m": 1.4595070471278306e-07},
+      "Venus": {"acceleration_l2_allowance_m_s2": 9.528460710989253e-25, "distance_floor_m": 354660245735.4243, "gm_m3_s2": 324858592079000.0, "source_position_allowance_m": 6.542382417808617e-05}
+    }
+  }
+}

@@ -52,6 +52,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0011 binds six point-source position errors to force allowances using
+the existing same-epoch chord floors and 2*GM*epsilon/d^3. Exact endpoint
+interval differences must fit independently; outward reporting, body set,
+handoff and native-counter checks remain explicit. No full-force composition,
+native force-arithmetic bound or spacecraft/time domain claim. Next qualify
+Moon/Mars harmonic source effects with stored-matrix factors.
+Verification: 137 focused checks pass in 0.62 s; all 2887 tests pass in
+467.80 s. Native inventory 141.88 s, portable 47.90 s; thirteen/zero arcs and
+forty readbacks retained. Added calculation about 0.000962 s, no new native
+work. Ruff, strict OpenSpec and legacy isolation pass. Diagnostic JSON exactly
+matches full-run output; 3.9 remains open, not a full-force certificate.
+
 Decision0010 derives stored-anchor ball containment for the entire source
 comparison chord and reuses the existing distance helper. Eight fresh replay
 cases verify positive floors with independent exact squared inequalities.
