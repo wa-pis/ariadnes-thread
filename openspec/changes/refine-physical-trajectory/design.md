@@ -1,5 +1,31 @@
 ## Context
 
+### Symmetric trace-free Hessian norm lemma (2026-09-13)
+
+For any unit direction choose an orthonormal basis with that direction first.
+A symmetric trace-free 3x3 matrix then has rows (a,b,c), (b,d,e),
+(c,e,-a-d). Exactly,
+(2/3)*||J||F^2-||J*e1||2^2=((a+2*d)^2+b^2+c^2+4*e^2)/3 >= 0.
+Orthogonal changes preserve both norms, so ||J||2 <= sqrt(2/3)*||J||F
+for every direction, not merely sampled ones. Equality is attained by
+diag(2,-1,-1); symmetry and zero trace alone cannot improve this factor.
+
+Exterior harmonic gravity qualifies in ideal arithmetic: its acceleration
+Jacobian is the symmetric Hessian of a twice-differentiable scalar potential,
+with trace equal to its zero Laplacian. For a homogeneous harmonic polynomial
+P_n, Euler's identity gives Laplacian(P_n*r^-k) =
+k*(k-1-2*n)*P_n*r^(-k-2), hence zero for k=2*n+1 away from r=0.
+Finite sums, subsets and ideal proper rotations preserve these properties.
+This argument does not cover SRP, relativity, material interiors, arbitrary
+operator bounds, or rounded native matrices/accelerations.
+
+WHEN supplied a proven Frobenius upper bound in s^-2, THEN the private
+helper multiplies it by the existing outward dyadic root of 2/3. Verify
+exact sum-of-squares identities, independently known rotated spectra,
+monopole/polar-C20 attainment, zero and invalid inputs. Negative matrices
+demonstrate that dropping either premise invalidates the factor. This turn
+qualifies only the lemma; no native or remainder bound is changed.
+
 ### Degree-wise remainder attribution (2026-09-13)
 
 Reuse the generic Jacobian helper's already outward-weighted coefficients.

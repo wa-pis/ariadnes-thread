@@ -17,7 +17,16 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest degree diagnosis (2026-09-13): exact degree enclosures and an explicit
+Latest analytic prerequisite (2026-09-13): the symmetric trace-free Hessian
+lemma ||J||2 <= sqrt(2/3)*||J||F has an exact directional sum-of-squares
+proof. Twenty-eight independent matrix/rounding-bound/rejection controls
+pass, including rotated known spectra, monopole/polar-C20 attainment and
+counterexamples when either premise is absent. Ideal exterior harmonic
+potentials have symmetric Hessians with zero Laplacian; native arithmetic,
+other forces and arbitrary operator-only bounds are not covered. No native
+or existing remainder bound has changed from this analytic result.
+
+Retained degree diagnosis: exact degree enclosures and an explicit
 nonnegative arithmetic slack reconstruct the unchanged Mars 1/8 s remainder.
 Degrees 2..10 contribute about 22.27%, 11..30 52.82%, 31..60 22.24%,
 and 61..120 2.66%. The largest single degree is 2 (excluding C20), only
@@ -118,11 +127,11 @@ Forty-six additional mixed-field/rejection controls verify independent polar
 Hessians and the C20/remainder composition. Native application changes only
 the reference spatial-variation bound; full-force state sensitivities,
 rotation allowances, arithmetic bounds and historical controls remain intact.
-Next bounded work within 3.9 is to qualify a general symmetric trace-free
-Hessian operator/Frobenius inequality for exterior harmonic fields, including
-independent analytic matrix controls, before any application to the existing
-remainder bound. The distributed degree ranking motivates a field-wide bound;
-no particular improvement or final gate passage is assumed. Preserve all
+Next bounded work within 3.9 is to verify the generic remainder bound's
+Frobenius provenance and compose the qualified trace-free factor with that
+bound in the existing native controls. Do not apply it to the sharp C20
+operator-only bound or native arithmetic allowances. Keep the previous
+certificates and no particular final gate passage is assumed. Preserve all
 coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
@@ -131,7 +140,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2066 passing tests; both
+The latest completed code check has 2094 passing tests; both
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost

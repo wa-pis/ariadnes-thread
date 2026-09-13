@@ -51,6 +51,24 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 symmetric trace-free norm lemma (2026-09-13):
+Verify the universal directional sum-of-squares proof and independently
+known exact rotated spectra, including monopole/C20 attainment. Verify
+zero/invalid norm inputs and counterexamples when symmetry or zero trace
+is absent. Run focused lemma tests, full pytest, Ruff, strict OpenSpec and
+legacy isolation. Preserve all native bounds and record that this is only
+an ideal exterior-harmonic prerequisite, not a mission certificate.
+
+Verification: all 28 focused lemma tests pass in 0.42 s; all 2094 tests
+pass in 524.77 s. Ruff, strict OpenSpec, diff checks and unchanged legacy
+checksum/import isolation pass. The rational sum-of-squares identity is
+universal; finite matrix cases independently check its implementation, not
+replace the proof. Exact eigenvectors/spectra verify rotation invariance and
+sharp attainment, with outward dyadic roots for the helper's s^-2 result.
+The helper requires a proven Frobenius upper bound and cannot validate the
+caller's physical premises. No native force, remainder, tolerance, resource,
+domain, call count or budget changed; task 3.9 remains open.
+
 Task 3.9 degree-wise remainder diagnosis (2026-09-13):
 Verify exact reconstruction of the existing remainder from enclosed degree
 terms and nonnegative arithmetic slack; check single-degree analytic squared
