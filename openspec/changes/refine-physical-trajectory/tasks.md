@@ -51,6 +51,28 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 analytic reference-centre bridge (2026-09-13):
+Verify the exact vector identity and Euclidean triangle bound separately
+for position and velocity; carry the bridge once through a second segment.
+Use signed 3D aligned/opposed/orthogonal, zero and single-component bridges,
+large origins, independent exact integration and omitted/duplicated negative
+controls. Run focused/full pytest, Ruff, strict OpenSpec and legacy isolation.
+Keep 3.9 open and do not add production or adjacent native propagation.
+
+Measured verification: 248 focused transport tests pass in 0.08 s, including
+24 new signed/reference-origin/bridge controls. Vector identities, squared
+Euclidean enclosures and opposed-case attainment are exact rational
+equalities/inequalities in m^2 and m^2/s^2, with no floating tolerance.
+Omitted opposed bridges underbound position in all nonzero cases and
+velocity when its bridge is nonzero. Double counting adds exactly
+Rp+h*Rv to position and Rv to velocity in these controls; no hidden
+cancellation or subtraction of unknown error directions is assumed.
+All 2309 tests pass in 529.55 s, including both real/portable inventories.
+Ruff, strict OpenSpec, diff checks and legacy isolation pass. Production,
+scientific tolerances, domains, resources, native counts and the shared
+operation deadline are unchanged. Task 3.9 remains open; no real adjacent
+arc, native arithmetic or full-mission safety qualification is implied.
+
 Task 3.9 analytic two-segment error handoff (2026-09-13):
 Verify both carried radii and the rebased linear-force clock against exact
 global integration, including signed/constant-force and unequal-duration

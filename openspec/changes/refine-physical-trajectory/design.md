@@ -1,5 +1,34 @@
 ## Context
 
+### Reference-centre bridge at an analytic handoff (2026-09-13)
+
+At the common boundary let y be the ideal state, q the old reference and n
+the handed-off native state. The exact vector identity is y-n=(y-q)+(q-n),
+separately for position and velocity in the same SI frame and epoch.
+WHEN E bounds the Euclidean norm of y-q and R bounds q-n, THEN E+R bounds
+y-n by the triangle inequality. If the stored endpoint certificate already
+bounds y-n, and the next reference starts exactly at n, pass that certificate
+unchanged: the bridge has already been counted. A different next reference
+needs its own new bridge. Never infer the error's signed direction from a
+radius, or subtract R from E to claim cancellation.
+
+Verify 3D signed analytic motion x''=u*(D+J*t) with exact rational unit
+vectors. Include aligned/opposed/orthogonal bridges, zero bridge, position-
+only and velocity-only shifts, and origins 0 and 10^12 m. WHEN the bridge
+is applied once and both resulting radii are transported, THEN squared
+Euclidean endpoint errors must not exceed the squared SI bounds; opposed
+controls must attain the bound exactly. WHEN a nonzero opposed bridge is
+omitted, THEN position is underbounded, and velocity is underbounded exactly
+when its bridge is nonzero. WHEN a previously included bridge is added
+again, THEN the extra position/velocity allowance is exactly Rp+h*Rv and
+Rv in this zero-sensitivity control. This remains conservative but may
+unnecessarily fail an otherwise inclusive accuracy gate.
+
+These are exact bookkeeping controls, not a model of native rounding, a
+proof of state/frame/epoch compatibility for real adjacent arcs, or a
+qualification of source coverage, domain closure, full-force arithmetic or
+mission safety. No production adapter or new native arc is introduced.
+
 ### Analytic two-segment error handoff (2026-09-13)
 
 Reuse the existing transport envelope; do not add a production propagator.

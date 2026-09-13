@@ -350,6 +350,68 @@ def test_two_segment_handoff_rejects_failed_gate(active: int, offset: int) -> No
     assert 0 < upper
 
 
+@pytest.mark.parametrize("bridge", ["aligned", "opposed", "orthogonal", "zero", "position_only", "velocity_only"])
+@pytest.mark.parametrize("direction", [-1, 1])
+@pytest.mark.parametrize("offset_m", [0, 10**12])
+def test_reference_recentring_carries_bridge_exactly_once(bridge: str, direction: int, offset_m: int) -> None:
+    # Exact 3D motion x''=u*(D+J*t). Both u and the nonzero bridge
+    # direction have unit Euclidean norm; use squared norms, not rounded roots.
+    u = (direction * Fraction(3, 5), direction * Fraction(4, 5), Fraction(0))
+    bridge_axis = ((-u[1], u[0], Fraction(0)) if bridge == "orthogonal" else
+                   u if bridge == "aligned" else tuple(-value for value in u))
+    assert sum(value**2 for value in u) == sum(value**2 for value in bridge_axis) == 1
+    first_s, second_s = 1 / 64, 1 / 32
+    d, j = Fraction(1, 1000), Fraction(1, 10000)  # m/s^2, m/s^3.
+    first_p, first_v = _coast_error_envelope(
+        first_s, Fraction(0), Fraction(0), Fraction(0), Fraction(0), d, acceleration_defect_rate_m_s3=j,
+    )
+    delta_p = Fraction(0) if bridge in ("zero", "velocity_only") else first_p / 2
+    delta_v = Fraction(0) if bridge in ("zero", "position_only") else first_v / 2
+    old_reference_p = (Fraction(offset_m), Fraction(-offset_m), Fraction(offset_m))
+    native_p = tuple(value + delta_p*axis for value, axis in zip(old_reference_p, bridge_axis, strict=True))
+    native_v = tuple(delta_v*axis for axis in bridge_axis)
+    total_s = Fraction(first_s) + Fraction(second_s)
+    exact_p = tuple(value + axis*(d*total_s**2/2 + j*total_s**3/6)
+                    for value, axis in zip(old_reference_p, u, strict=True))
+    exact_v = tuple(axis*(d*total_s + j*total_s**2/2) for axis in u)
+    new_reference_p = tuple(p + Fraction(second_s)*v for p, v in zip(native_p, native_v, strict=True))
+    actual_p_squared = sum((truth - reference)**2 for truth, reference in zip(exact_p, new_reference_p, strict=True))
+    actual_v_squared = sum((truth - reference)**2 for truth, reference in zip(exact_v, native_v, strict=True))
+    # At the handoff: (truth-native)=(truth-old_reference)+(old_reference-native).
+    for raw, delta, old_centre, centre in (
+        (first_p, delta_p, old_reference_p, native_p), (first_v, delta_v, (Fraction(0),)*3, native_v),
+    ):
+        true_boundary = tuple(value + raw*axis for value, axis in zip(old_centre, u, strict=True))
+        bridge_vector = tuple(a-b for a, b in zip(old_centre, centre, strict=True))
+        assert sum(value**2 for value in bridge_vector) == delta**2
+        new_error = tuple(a-b for a, b in zip(true_boundary, centre, strict=True))
+        assert new_error == tuple(raw*axis + shift for axis, shift in zip(u, bridge_vector, strict=True))
+        assert sum(value**2 for value in new_error) <= (raw + delta)**2
+    # Convert a raw reference-relative bound once. A native-relative bound
+    # already contains this bridge and is passed unchanged to q2(0)=native.
+    native_relative = first_p + delta_p, first_v + delta_v
+    second_d = d + j*Fraction(first_s)
+    final_p, final_v = _coast_error_envelope(
+        second_s, *native_relative, Fraction(0), Fraction(0), second_d, acceleration_defect_rate_m_s3=j,
+    )
+    assert actual_p_squared <= final_p**2 and actual_v_squared <= final_v**2
+    if bridge in ("opposed", "zero", "position_only", "velocity_only"):
+        assert (actual_p_squared, actual_v_squared) == (final_p**2, final_v**2)
+    omitted = _coast_error_envelope(
+        second_s, first_p, first_v, Fraction(0), Fraction(0), second_d, acceleration_defect_rate_m_s3=j,
+    )
+    if bridge in ("opposed", "position_only", "velocity_only"):
+        assert actual_p_squared > omitted[0]**2
+        assert (actual_v_squared > omitted[1]**2) == (delta_v > 0)
+    duplicated = _coast_error_envelope(
+        second_s, native_relative[0] + delta_p, native_relative[1] + delta_v,
+        Fraction(0), Fraction(0), second_d, acceleration_defect_rate_m_s3=j,
+    )
+    # Double counting is conservative, but can falsely lose an inclusive gate.
+    assert duplicated == (final_p + delta_p + Fraction(second_s)*delta_v, final_v + delta_v)
+    assert (duplicated[0] > final_p) == (bridge != "zero")
+
+
 def test_error_transport_carries_errors_across_four_segments() -> None:
     position, velocity = Fraction(1, 1000), Fraction(1, 1000000)
     defect = Fraction(1, 1000)

@@ -186,15 +186,22 @@ close both domains; three original longer controls remain unresolved despite
 their exact paths staying inside. All four handoff gates are checked below,
 at and above the boundary, retaining strict closure and inclusive accuracy.
 
-Next bounded work within 3.9 is to qualify reference re-centring at an arc
-boundary: distinguish an error relative to the first reference endpoint
-from an error already relative to the handed-off native endpoint. WHEN
-reference centres differ, THEN explicit position/velocity bridge residuals
-must bound the new initial error without omission or double counting.
-Verify the identity and triangle bound on independent signed analytic
-controls before any adjacent native arc. No mission composition follows;
-native application still needs source/rotation coverage, domain closure,
-arithmetic allowances and runtime accounting.
+Reference re-centring now verifies y-n=(y-q)+(q-n) separately for 3D
+position and velocity, with exact squared Euclidean checks. Opposed bridges
+attain the triangle bound; omitting them underbounds the result. An error
+already relative to the handed-off native endpoint includes that bridge,
+so adding it again is conservative but unnecessarily consumes accuracy margin.
+
+Next bounded work within 3.9 is to assess one adjacent 1/64 s coast's
+prerequisites from the existing nominal Moon/Mars 1/64 s native endpoints,
+without launching a new native arc. Carry the existing native-relative
+endpoint radii unchanged, verify frame/epoch compatibility and source/PCK
+coverage over the shifted interval, and recheck strict first-exit closure
+inside the already qualified domains. WHEN any premise fails, THEN record
+the case as unresolved without enlarging its domain or discarding incoming
+error. Measure which premises pass before attempting another propagation;
+this assessment alone does not qualify a next-arc force defect, native
+arithmetic or mission composition.
 Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
@@ -204,7 +211,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2285 passing tests; both inventories
+The latest completed code check has 2309 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs seven spacecraft arcs, the portable inventory
