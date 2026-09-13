@@ -52,13 +52,21 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0009 consumer binding verification: both focused inventories pass in
+169.37 s; full pytest 2879 passed in 457.53 s, native 139.79 s and portable
+41.44 s. All eight cached positions exactly match retained source readbacks;
+Moon/Mars harmonic inputs match separately. No new queries/arcs; existing
+thirteen/zero arcs and forty readbacks remain. Ruff, strict OpenSpec and legacy
+isolation pass. Retained diagnostic JSON matches captured output. Task 3.9
+remains open; positive chord floors and force-error bridging are next.
+
 Decision0008 traces per-record uniform arithmetic, chain addition/scaling,
 guarded fresh cores and the sixteen existing local readback comparisons.
 Retained eight bounds match prior captured output; no new native query/arc.
 This documentation identifies conditional reuse, not completed consumer or
-force binding. Next retain existing fresh positions/chain bounds, verify
-exact consumer identity and epoch/coverage/body/frame binding, reject mismatch
-without epsilon inflation, and qualify nonsingular chord floors independently.
+force binding. Decision0009 implements retention of existing fresh positions,
+exact cached consumer identity and epoch/coverage/body/frame assertions, with
+unchanged chain allowances. Independently qualify nonsingular chord floors next.
 JSON/link checks and strict OpenSpec verify the audit; no pytest rerun or
 new scientific baseline. Latest implementation remains 2879 passed; 3.9 open.
 

@@ -477,9 +477,10 @@ native queries. No source/state errors or full-force certificate are claimed.
 Decision0008 audits same-handoff source allowance coverage. The existing L1
 chain arithmetic bounds cover the fresh guarded cores conditionally, and
 sixteen existing readback comparisons already use them. This is not yet a
-consumer/force bridge. Next retain existing fresh native source positions and
-chain bounds with explicit epoch/coverage binding; compare exact polynomial
-anchors and stored harmonic positions without extra queries. WHEN coverage,
+consumer/force bridge by itself. Decision0009 adds the consumer binding:
+retain existing fresh native source positions and chain bounds with explicit
+epoch/coverage binding; compare exact polynomial anchors and cached force
+inputs, including stored harmonic positions, without extra queries. WHEN coverage,
 body/frame/epoch or readback identity mismatches, THEN reject rather than
 inflate epsilon. Independently qualify positive chord floors before applying
 point or harmonic force sensitivity; do not reuse an old radius floor.

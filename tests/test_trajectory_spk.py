@@ -1491,6 +1491,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     affine_native_checks = 0
     fresh_native_comparisons = 0
     fresh_source_states: dict[str, tuple[Fraction, ...]] = {}
+    fresh_native_positions_m: dict[str, tuple[Fraction, ...]] = {}
     for body, target in body_ids.items():
         center = expected_centers[target]
         chain = [target] if center == 0 else [target, center]
@@ -1522,10 +1523,13 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                 # Same native readback and chain arithmetic allowance; no extra
                 # query, and no substitution of SPK type-3 stored velocity.
                 assert fresh_residual <= curvature*local_s**2/2+Fraction(chain_position_bounds_m[target]), body
+                if local_s == 0:
+                    fresh_native_positions_m[body] = tuple(map(Fraction, native_position))
                 fresh_native_comparisons += 1
             affine_native_checks += 1
     assert len(affine_links) == 11 and affine_native_checks == 40
     assert len(fresh_affine_links) == 11 and fresh_native_comparisons == 16
+    assert set(fresh_native_positions_m) == set(body_ids)
     print(json.dumps({"fresh_source_affine_control": {
         "epoch_tdb_s": handoff_tdb_s, "duration_s": float(handoff_offset_s),
         "origin": "SSB", "orientation": "J2000", "position_unit": "m", "slope_unit": "m/s",
@@ -1564,6 +1568,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         source_affine_positions_m=source_affine_positions_m,
         fresh_source_states=fresh_source_states, fresh_source_epoch_tdb_s=handoff_tdb_s,
         fresh_source_end_tdb_s=handoff_tdb_s+float(handoff_offset_s),
+        fresh_native_positions_m=fresh_native_positions_m,
         run_native_controls=native_record_readback,
     )
 
@@ -3989,6 +3994,7 @@ def _check_conditional_full_force_coast_domains(
     source_affine_coverage_s: float, run_native_controls: bool,
     fresh_source_states: dict[str, tuple[Fraction, ...]],
     fresh_source_epoch_tdb_s: float, fresh_source_end_tdb_s: float,
+    fresh_native_positions_m: dict[str, tuple[Fraction, ...]],
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint, _initial_velocity_interval_m_s
@@ -4019,6 +4025,7 @@ def _check_conditional_full_force_coast_domains(
     assert set(source_affine_motion) == set(states)
     assert set(source_affine_positions_m) == set(states)
     assert set(fresh_source_states) == set(states)
+    assert set(fresh_native_positions_m) == set(states)
     assert all(np.all(np.isfinite(state)) for state in states.values())
     for body, state in states.items():
         assert np.array_equal(state[:3], position_anchors_m[body]), body
@@ -5273,6 +5280,30 @@ def _check_conditional_full_force_coast_domains(
                                     if label == "original":
                                         assert np.array_equal(derivative[3:6], anchor_m_s2)
                                     else:
+                                        assert probe_epoch == Time(fresh_source_epoch_tdb_s)
+                                        assert handoff_epoch == fresh_source_epoch_tdb_s
+                                        assert handoff_epoch <= adjacent_final_tdb_s <= fresh_source_end_tdb_s
+                                        assert (environment.origin, environment.orientation) == ("SSB", "J2000")
+                                        source_binding: dict[str, object] = {}
+                                        for source in trajectory.PHYSICAL_BODY_NAMES:
+                                            # Read cached environment state after the existing
+                                            # derivative call; do not issue another SPICE query.
+                                            consumer = tuple(map(Fraction, np.asarray(bodies.get(source).state).reshape(6)[:3]))
+                                            assert consumer == fresh_native_positions_m[source], source
+                                            residual_m = sum((abs(a-b) for a, b in zip(
+                                                consumer, fresh_source_states[source][:3], strict=True)), Fraction(0))
+                                            assert residual_m <= Fraction(source_position_errors_m[source]), source
+                                            source_binding[source] = {
+                                                "position_m": list(map(float, consumer)),
+                                                "conditional_l1_allowance_m": source_position_errors_m[source],
+                                                "exact_readback_match": True,
+                                            }
+                                        print(json.dumps({"fresh_source_consumer_binding": {
+                                            "epoch_tdb_s": handoff_epoch, "coverage_end_tdb_s": fresh_source_end_tdb_s,
+                                            "origin": "SSB", "orientation": "J2000", "sources": source_binding,
+                                            "additional_native_queries": 0, "additional_native_arcs": 0,
+                                            "scope": "Same-epoch cached positions only; no force-error or mission certificate",
+                                        }}, sort_keys=True, allow_nan=False))
                                         harmonic_started_s = perf_counter()
                                         harmonic_reports: dict[str, object] = {}
                                         replay_fields: dict[str, object] = {}
@@ -5283,6 +5314,7 @@ def _check_conditional_full_force_coast_domains(
                                             budget.check()
                                             field = bodies.get(source).gravity_field_model
                                             source_position = np.asarray(bodies.get(source).state).reshape(6)[:3].copy()
+                                            assert tuple(map(Fraction, source_position)) == fresh_native_positions_m[source], source
                                             rotation = np.asarray(bodies.get(source).rotation_model.inertial_to_body_fixed_rotation(handoff_epoch))
                                             budget.check()
                                             resource = next(item for item in environment.harmonic_fields if item.body == source)

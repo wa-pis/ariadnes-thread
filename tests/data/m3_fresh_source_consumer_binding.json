@@ -1,0 +1,21 @@
+{
+  "fresh_source_consumer_binding": {
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "coverage_end_tdb_s": 978995455.3554223,
+    "epoch_tdb_s": 978995455.2929223,
+    "orientation": "J2000",
+    "origin": "SSB",
+    "scope": "Same-epoch cached positions only; no force-error or mission certificate",
+    "sources": {
+      "Earth": {"conditional_l1_allowance_m": 6.0187747349184116e-05, "exact_readback_match": true, "position_m": [-46948913716.35798, 128131115019.08472, 55552327450.20176]},
+      "Jupiter": {"conditional_l1_allowance_m": 0.0004281144922474497, "exact_readback_match": true, "position_m": [-257841907589.15335, -695808143665.7294, -291955842431.6014]},
+      "Mars": {"conditional_l1_allowance_m": 0.0001648618821045329, "exact_readback_match": true, "position_m": [-245060528075.4266, 35261268330.50904, 22783597232.70358]},
+      "Mercury": {"conditional_l1_allowance_m": 4.3544796122872e-05, "exact_readback_match": true, "position_m": [-57907462056.549286, -24112400826.061794, -6902891034.081368]},
+      "Moon": {"conditional_l1_allowance_m": 8.934704095652991e-05, "exact_readback_match": true, "position_m": [-47126474532.15059, 128473303533.69559, 55670397251.351845]},
+      "Saturn": {"conditional_l1_allowance_m": 0.0007284371515436439, "exact_readback_match": true, "position_m": [538221048629.10724, 1158096843306.8557, 455167031784.0812]},
+      "Sun": {"conditional_l1_allowance_m": 1.4595070471278306e-07, "exact_readback_match": true, "position_m": [-152759301.5470408, 173039265.02940723, 85705792.6458708]},
+      "Venus": {"conditional_l1_allowance_m": 6.542382417808617e-05, "exact_readback_match": true, "position_m": [98617560902.82277, -38936661763.43269, -23761694733.6644]}
+    }
+  }
+}
