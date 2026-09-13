@@ -1,5 +1,33 @@
 ## Context
 
+### One nominal adjacent Mars native coast (2026-09-13)
+
+After the domain/reference prerequisites pass, run exactly one additional
+nominal 1/64 s coast from the saved Mars endpoint at t0+1/64 s to t0+1/32 s.
+Use existing force/settings/run adapters with the same full field, nominal
+integrator, SSB/J2000/TDB conventions and constant spacecraft mass. The
+run adapter resets and reads back global PPN parameters before its native
+call. Do not add acceleration decomposition or a new force oracle: the
+already qualified shifted reference is the comparison target.
+
+WHEN the native run completes, THEN verify exact native-time endpoints,
+exact initial-state handoff, finite terminal state and unchanged mass at
+every saved output. Compute exact rational L1 native-to-reference position
+and velocity residuals, add each once to the transported incoming-error
+bound, and report outward SI values and separate unchanged accuracy gates.
+A failed gate remains unresolved; no tolerance is loosened. These checks
+do not qualify unsaved native stages or certify mission safety.
+
+Count the attempted control before its prerequisite rechecks, then count
+the evaluation/native arc through the existing run adapter. WHEN successful,
+THEN counters increase by exactly (1,1,1); the full native inventory becomes
+eight arcs while retaining all seven previous controls, and the portable
+inventory remains zero. Count failed/terminated attempts as before. Record
+native-call and whole-control elapsed time under the unchanged shared
+300-second operation deadline. The enclosing cumulative-control timing
+includes this nested experiment; do not sum overlapping timing fields.
+Production caps, resource/force settings and reference tolerances stay fixed.
+
 ### Time- and state-shifted reference defect (2026-09-13)
 
 Let q1 have reference acceleration defect <=D+J*t on the cumulative
@@ -31,10 +59,10 @@ the preceding adjacent assessment encloses the ideal path separately.
 
 Transport the saved native-relative incoming radii over the next 1/64 s
 with D2,J2. WHEN reported, THEN label the bounds as ideal-state errors
-relative to q2 only. No adjacent native endpoint has been computed, so its
-native-to-reference residual is still missing. Preserve Moon's unresolved
-domain, all old controls and seven/zero native arc counts; no accuracy claim
-for an actual adjacent propagation or a mission follows from this step.
+relative to q2 only. These values exclude the adjacent native-to-reference
+residual, which the separate native control adds. Preserve Moon's unresolved
+domain and all earlier controls. Reference-only calculations add no native
+arcs and do not by themselves certify adjacent propagation or a mission.
 
 ### Adjacent short-coast prerequisites (2026-09-13)
 

@@ -51,6 +51,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 nominal adjacent Mars native coast (2026-09-13):
+Run one counted nominal adjacent short coast only after domain/reference
+rechecks. Verify exact native-time/initial-state handoff, constant saved
+mass, finite completion, reset PPN and the (1,1,1) counter increment via
+existing adapters/tests. Add exact endpoint residuals once to the carried
+reference enclosure; measure unchanged gates and elapsed time, preserving
+old controls and failed attempts. Run focused integrator/budget/transport
+tests, full pytest, Ruff, strict OpenSpec and legacy isolation. Keep 3.9 open.
+
+Measured verification: 374 focused integrator/budget/transport tests pass
+in 0.86 s; all 2402 tests pass in 529.62 s, including both inventories.
+The new nominal adjacent endpoint has outward residuals
+3.594394195990218e-5 m / 3.267852978397076e-9 m/s relative to the
+qualified shifted reference. After adding them once, the conditional
+two-segment endpoint bounds are 7.684027797138391e-5 m and
+5.87273990686923e-8 m/s: both unchanged accuracy gates pass. Native-time
+and initial-state handoff are exact; every saved mass is 2000 kg. The warm
+native call takes 0.009457959095016122 s, and its whole control takes
+0.01994612510316074 s. These omit prior environment/oracle preparation
+and are not mission-runtime estimates. Counters increase by (1,1,1),
+giving eight native controls/evaluations/arcs, versus zero portable arcs;
+the seven historical controls and 40 source readbacks per inventory remain.
+Ruff, strict OpenSpec, diff checks and legacy isolation pass. The shared
+300-second operation budget, production caps, resources, forces and
+tolerances stay unchanged. This is a conditional endpoint result only;
+native-stage safety and task 3.9 remain open.
+
 Task 3.9 shifted-reference force defect (2026-09-13):
 Derive D2,J2 with time rebasing and both reference shifts; verify exact
 manufactured-force coefficients, signed/zero/attainment and invalid cases.
