@@ -1,5 +1,36 @@
 ## Context
 
+### Adjacent short-coast prerequisites (2026-09-13)
+
+Retain the nominal Moon/Mars 1/64 s native endpoint n and its degree-map
+position/velocity error radii p,v, already relative to n. Assess the interval
+[t0+1/64,t0+1/32] without a new propagation. Use the existing 1/32 s force
+domain, not the expired 1/64 s source-motion allowances; its original state
+centres x0,v0 and radii 1000 m / 0.1 m/s are unchanged. Force acceleration
+bound A remains conditional on that domain, even when a full original
+1/32 s trajectory could not be certified to stay in it.
+
+WHEN the shifted interval has exact TDB handoff epochs, the same SSB/J2000
+frame and source/PCK coverage, THEN check first-exit reach about the old
+centres: |n_x-x0|+p+(|n_v|+v)*h+A*h^2/2 for position and
+|n_v-v0|+v+A*h for velocity. Use exact rational L1 norms of the stored
+Cartesian differences as Euclidean upper bounds. Verify this inequality
+against signed constant-acceleration trajectories (including zero duration,
+zero acceleration and large origins); reject invalid inputs. WHEN either
+reach is at or above its unchanged radius, THEN the adjacent domain remains
+unresolved, with no safe result or second propagation. Never zero the
+incoming radii or add the previous cubic residual again.
+
+The existing source-polynomial coverage and whole-window PCK qualification
+cover the shifted interval; source distance/force bounds use the already
+qualified cumulative 1/32 s source reaches. Check both native body-system
+and environment frame conventions and exact elapsed-time identities.
+Report the two nominal prerequisite assessments with outward SI bounds,
+separate position/velocity/coverage gates and zero added native arcs. The
+portable inventory has no native endpoint, so produces no such assessment.
+Even passing these gates does not qualify the next reference force defect,
+native arithmetic, actual adjacent propagation or mission composition.
+
 ### Reference-centre bridge at an analytic handoff (2026-09-13)
 
 At the common boundary let y be the ideal state, q the old reference and n

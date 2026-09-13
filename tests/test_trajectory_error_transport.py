@@ -6,6 +6,58 @@ import math
 import pytest
 
 
+def _recentered_coast_reaches_m_m_s(
+    duration_s: float, position_offset_m: Fraction, velocity_offset_m_s: Fraction,
+    nominal_speed_m_s: Fraction, position_error_m: Fraction, velocity_error_m_s: Fraction,
+    acceleration_m_s2: Fraction,
+) -> tuple[Fraction, Fraction]:
+    """Bound reach about old SI centres from a new nominal state and error ball.
+
+    Offsets/speed must bound Euclidean norms. Acceleration must hold on the
+    original domain for the entire shifted interval; closure is a separate gate.
+    """
+    assert type(duration_s) is float and math.isfinite(duration_s) and duration_s >= 0
+    assert all(isinstance(value, Fraction) and value >= 0 for value in (
+        position_offset_m, velocity_offset_m_s, nominal_speed_m_s,
+        position_error_m, velocity_error_m_s, acceleration_m_s2,
+    ))
+    h = Fraction(duration_s)
+    return (position_offset_m + position_error_m + (nominal_speed_m_s + velocity_error_m_s)*h + acceleration_m_s2*h**2/2,
+            velocity_offset_m_s + velocity_error_m_s + acceleration_m_s2*h)
+
+
+@pytest.mark.parametrize("duration_s", [0.0, 1 / 64])
+@pytest.mark.parametrize("acceleration", [0, 2])
+@pytest.mark.parametrize("direction", [-1, 1])
+@pytest.mark.parametrize("origin_m", [0, 10**12])
+def test_recentered_reach_attains_exact_acceleration(
+    duration_s: float, acceleration: int, direction: int, origin_m: int,
+) -> None:
+    h, p, v = Fraction(duration_s), Fraction(1, 10000), Fraction(1, 10**7)
+    # Old centre x0=origin, v0=2*s; new nominal x=origin+3*s, v=4*s.
+    position_m = origin_m + direction*(3+p+(4+v)*h+acceleration*h*h/2)
+    velocity_m_s = direction*(4+v+acceleration*h)
+    bounds = _recentered_coast_reaches_m_m_s(
+        duration_s, Fraction(3), Fraction(2), Fraction(4), p, v, Fraction(acceleration),
+    )
+    assert bounds == (abs(position_m-origin_m), abs(velocity_m_s-2*direction))
+
+
+@pytest.mark.parametrize("field", range(6))
+@pytest.mark.parametrize("invalid", [Fraction(-1), True, math.nan])
+def test_recentered_reach_rejects_invalid_bound(field: int, invalid: object) -> None:
+    values: list[object] = [Fraction(1)] * 6
+    values[field] = invalid
+    with pytest.raises(AssertionError):
+        _recentered_coast_reaches_m_m_s(0.125, *values)  # type: ignore[arg-type] -- boundary rejection.
+
+
+@pytest.mark.parametrize("duration_s", [-1.0, True, math.nan, math.inf])
+def test_recentered_reach_rejects_invalid_duration(duration_s: float) -> None:
+    with pytest.raises(AssertionError):
+        _recentered_coast_reaches_m_m_s(duration_s, *(Fraction(1),)*6)
+
+
 def _initial_velocity_interval_m_s(
     duration_s: float, position_sensitivity_s_inv2: Fraction, velocity_sensitivity_s_inv: Fraction,
     position_accuracy_margin_m: Fraction, velocity_accuracy_margin_m_s: Fraction,

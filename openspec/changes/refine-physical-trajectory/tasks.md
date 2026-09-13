@@ -51,6 +51,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 adjacent short-coast prerequisites (2026-09-13):
+Verify re-centred first-exit reach against exact signed constant acceleration,
+zero/large-origin and invalid-input controls. Retain nominal short native
+states/errors; assess shifted source/PCK/epoch/frame and original-domain
+closure with cumulative 1/32 s force allowances, without a new propagation.
+Report separate gates and unchanged native counts. Run focused/full pytest,
+Ruff, strict OpenSpec and legacy isolation before recording measured results.
+Keep 3.9 and actual adjacent propagation qualification open.
+
+Measured verification: 286 focused transport tests pass in 0.09 s, including
+38 new analytic/rejection cases. All 2347 tests pass in 530.71 s, including
+both real/portable inventories. Both nominal handoffs have covered source/
+PCK intervals, exact epochs and compatible frames, and their incoming balls
+are inside the unchanged 1000 m / 0.1 m/s domains. For the next 1/64 s,
+Moon reach is 1291.1784323779905 m and 0.04596892340455283 m/s:
+position closure is unresolved. Mars reach is 953.9021517983934 m and
+0.09908321511137594 m/s: both strict closure gates pass. Incoming Moon
+radii are 1.0979344696768146e-5 m / 1.1132880957709588e-7 m/s;
+Mars radii are 4.089581664258794e-5 m / 1.5322522880991422e-8 m/s.
+All displayed bounds round outward. The shifted interval is
+[978995455.2460473,978995455.2616723] TDB seconds since J2000.
+Ruff, strict OpenSpec, diff checks and legacy isolation pass. Native counts
+remain seven/zero and each inventory still has 40 affine readbacks. No new
+propagation, enlarged domain, changed force/tolerance/resource or operation
+budget. Moon's unresolved bound is not a collision or mission-infeasibility
+result; Mars's passing prerequisites are not a next-arc accuracy certificate.
+
 Task 3.9 analytic reference-centre bridge (2026-09-13):
 Verify the exact vector identity and Euclidean triangle bound separately
 for position and velocity; carry the bridge once through a second segment.

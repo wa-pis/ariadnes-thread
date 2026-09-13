@@ -3637,6 +3637,7 @@ def _check_conditional_full_force_coast_domains(
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint, _initial_velocity_interval_m_s
+    from test_trajectory_error_transport import _recentered_coast_reaches_m_m_s
     from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
     from test_trajectory_tracefree import _tracefree_operator_bound_s_inv2
     from test_trajectory_degree_map import _nonmonopole_degree_map_bound_s_inv2
@@ -3699,6 +3700,7 @@ def _check_conditional_full_force_coast_domains(
     print(json.dumps({"conditional_harmonic_coefficient_partition": coefficient_partitions}, sort_keys=True, allow_nan=False))
     results: list[dict[str, object]] = []
     for center, radius_m in (("Moon", 1_837_400.0), ("Mars", 3_689_500.0)):
+        short_handoff: tuple[tuple[Fraction, ...], Fraction, Fraction, float] | None = None
         # The stored SI state defines the exact initial condition of this control.
         state = states[center] + np.asarray([radius_m, 0.0, 0.0, 0.0, 1500.0, 0.0])
         source_error_floors_m = {
@@ -3935,6 +3937,57 @@ def _check_conditional_full_force_coast_domains(
             )
             assert Fraction(acceleration_m_s2) >= sum(map(Fraction, (*gravity_m_s2.values(), thrust, srp, relativity)))
             assert thrust == 0.0
+            adjacent_prerequisites: dict[str, object] | None = None
+            if run_native_controls and duration_s == 1 / 32:
+                assert short_handoff is not None
+                native_state, incoming_p_m, incoming_v_m_s, handoff_tdb_s = short_handoff
+                adjacent_duration_s = 1 / 64
+                adjacent_end_tdb_s = handoff_tdb_s + adjacent_duration_s
+                assert (environment.origin, environment.orientation) == ("SSB", "J2000")
+                assert (bodies.global_frame_origin(), bodies.global_frame_orientation()) == ("SSB", "J2000")
+                assert Fraction(handoff_tdb_s) - Fraction(start_tdb_s) == Fraction(1 / 64)
+                assert Fraction(adjacent_end_tdb_s) - Fraction(handoff_tdb_s) == Fraction(adjacent_duration_s)
+                assert Fraction(adjacent_end_tdb_s) - Fraction(start_tdb_s) == Fraction(duration_s)
+                # Use THIS 1/32 s domain's force/source bounds, not the earlier
+                # 1/64 s values. Its original spatial centres/radii stay fixed.
+                source_covered = duration_s <= source_affine_coverage_s
+                pck_covered = start_tdb_s <= handoff_tdb_s < adjacent_end_tdb_s <= end_tdb_s
+                assert source_covered and pck_covered
+                position_offset_m = sum((abs(value-Fraction(anchor)) for value, anchor in
+                                         zip(native_state[:3], state[:3], strict=True)), Fraction(0))
+                velocity_offset_m_s = sum((abs(value-Fraction(anchor)) for value, anchor in
+                                           zip(native_state[3:], state[3:], strict=True)), Fraction(0))
+                native_speed_m_s = sum(map(abs, native_state[3:]), Fraction(0))
+                adjacent_position_m, adjacent_velocity_m_s = _recentered_coast_reaches_m_m_s(
+                    adjacent_duration_s, position_offset_m, velocity_offset_m_s, native_speed_m_s,
+                    incoming_p_m, incoming_v_m_s, Fraction(acceleration_m_s2),
+                )
+                initial_inside = (position_offset_m + incoming_p_m < Fraction(position_radius_m)
+                                  and velocity_offset_m_s + incoming_v_m_s < Fraction(velocity_radius_m_s))
+                assert initial_inside
+                adjacent_position_closed = adjacent_position_m < Fraction(position_radius_m)
+                adjacent_velocity_closed = adjacent_velocity_m_s < Fraction(velocity_radius_m_s)
+                adjacent_values = {
+                    "incoming_position_error_m": incoming_p_m, "incoming_velocity_error_m_s": incoming_v_m_s,
+                    "position_reach_m": adjacent_position_m, "velocity_reach_m_s": adjacent_velocity_m_s,
+                }
+                reported_adjacent = {key: math.nextafter(float(value), math.inf) for key, value in adjacent_values.items()}
+                assert all(math.isfinite(value) and Fraction(value) >= adjacent_values[key] > 0
+                           for key, value in reported_adjacent.items())
+                adjacent_prerequisites = {
+                    "start_epoch_tdb_s": handoff_tdb_s, "end_epoch_tdb_s": adjacent_end_tdb_s,
+                    "duration_s": adjacent_duration_s, "force_domain_duration_s": duration_s,
+                    "origin": environment.origin, "orientation": environment.orientation,
+                    "time_scale": "TDB seconds since J2000", "state_units": ["m", "m/s"],
+                    "source_covered": source_covered, "pck_covered": pck_covered,
+                    "initial_ball_inside": initial_inside,
+                    "position_domain_closed": adjacent_position_closed,
+                    "velocity_domain_closed": adjacent_velocity_closed,
+                    "conditional_prerequisites_pass": adjacent_position_closed and adjacent_velocity_closed,
+                    "additional_native_arcs": 0,
+                    "scope": "Domain/coverage prerequisites only; no next-arc defect or native-arithmetic certificate",
+                    **reported_adjacent,
+                }
             force_variation_m_s2 = _coast_force_variation_bound_m_s2(
                 point_mass_variation_m_s2, frozen_harmonic_variation_m_s2,
                 angle_limited_rotation_variation_m_s2, srp, relativity,
@@ -4642,6 +4695,11 @@ def _check_conditional_full_force_coast_domains(
                     )
                     degree_position_m = degree_reference_m + cubic_position_residual_m
                     degree_velocity_m_s = degree_reference_m_s + cubic_velocity_residual_m_s
+                    if short_control and not tighter:
+                        assert short_handoff is None
+                        # Already relative to the native endpoint: do not add
+                        # its cubic-reference residual a second time.
+                        short_handoff = (tuple(map(Fraction, final_state[:6])), degree_position_m, degree_velocity_m_s, final_tdb_s)
                     assert 0 <= degree_position_m < tracefree_position_m <= Fraction("0.001")
                     assert 0 <= degree_velocity_m_s < tracefree_velocity_m_s
                     # Measured on the existing seven controls before promotion
@@ -4946,6 +5004,7 @@ def _check_conditional_full_force_coast_domains(
                         "velocity_bound_resolves_1um_s": velocity_error_m_s <= Fraction("0.000001"),
                         "ballistic_residual_l1_m": float(error_bound_m - curvature_m)})
             results.append({"center": center, "duration_s": duration_s,
+                "conditional_adjacent_coast_prerequisites": adjacent_prerequisites,
                 "position_domain_radius_m": position_radius_m,
                 "velocity_domain_radius_m_s": velocity_radius_m_s,
                 "conditional_point_mass_initial_jerk_intervals_m_s3": point_jerk_intervals_m_s3,
@@ -4976,6 +5035,7 @@ def _check_conditional_full_force_coast_domains(
                 "velocity_reach_upper_m_s": math.nextafter(float(velocity_reach_m_s), math.inf),
                 "conditional_domain_closed": closed, "endpoint_controls": endpoint_controls})
     expected_arcs = 7 if run_native_controls else 0
+    assert sum(result["conditional_adjacent_coast_prerequisites"] is not None for result in results) == (2 if run_native_controls else 0)
     assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (expected_arcs,) * 3
     return results
 

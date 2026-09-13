@@ -192,16 +192,24 @@ attain the triangle bound; omitting them underbounds the result. An error
 already relative to the handed-off native endpoint includes that bridge,
 so adding it again is conservative but unnecessarily consumes accuracy margin.
 
-Next bounded work within 3.9 is to assess one adjacent 1/64 s coast's
-prerequisites from the existing nominal Moon/Mars 1/64 s native endpoints,
-without launching a new native arc. Carry the existing native-relative
-endpoint radii unchanged, verify frame/epoch compatibility and source/PCK
-coverage over the shifted interval, and recheck strict first-exit closure
-inside the already qualified domains. WHEN any premise fails, THEN record
-the case as unresolved without enlarging its domain or discarding incoming
-error. Measure which premises pass before attempting another propagation;
-this assessment alone does not qualify a next-arc force defect, native
-arithmetic or mission composition.
+Adjacent 1/64 s prerequisites now use the nominal short native endpoints
+with their incoming error radii unchanged and the existing cumulative
+1/32 s force/source bounds. Both source/PCK/epoch/frame and initial-ball
+checks pass. Moon position reach 1291.1784323779905 m exceeds the original
+1000 m domain; velocity reach 0.04596892340455283 m/s stays below 0.1 m/s.
+Mars reaches 953.9021517983934 m / 0.09908321511137594 m/s, so both
+strict closure gates pass. No new native arc was run. These are conditional
+domain prerequisites, not adjacent-arc accuracy or collision classifications.
+
+Next bounded work within 3.9 is to derive and verify the shifted-reference
+force defect for the passing Mars case. Reuse the qualified cumulative
+cubic reference only with explicit time rebasing and position/velocity
+reference-centre shifts through the existing state sensitivities. WHEN
+transferred to the shifted reference, THEN its defect bound must enclose
+an independent analytic oracle, retaining every old allowance and proving
+both references/chords stay in the same qualified domain before native use.
+Keep Moon unresolved and do not launch another native arc until the next
+reference defect is qualified. No mission composition is implied.
 Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
@@ -211,7 +219,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2309 passing tests; both inventories
+The latest completed code check has 2347 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
 The native inventory runs seven spacecraft arcs, the portable inventory
