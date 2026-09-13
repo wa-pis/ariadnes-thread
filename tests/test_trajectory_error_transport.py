@@ -303,6 +303,64 @@ def _coast_error_envelope(
     )
 
 
+@pytest.mark.parametrize("offset_s", [0.0, 1 / 16])
+@pytest.mark.parametrize("acceleration_error_sign", [-1, 0, 1])
+@pytest.mark.parametrize("jerk_error_sign", [-1, 0, 1])
+@pytest.mark.parametrize("state_signs", [(0, 0), (1, 1), (-1, -1), (1, -1)])
+def test_fresh_affine_force_anchor_preserves_incoming_error(
+    offset_s: float, acceleration_error_sign: int, jerk_error_sign: int, state_signs: tuple[int, int],
+) -> None:
+    # Manufactured 3-D acceleration u*(2+3*(epoch-epoch0)) m/s^2.
+    # Its exact primitive is independent of the cubic-reference helper.
+    epoch0_tdb_s = Fraction(10**9)
+    origin_m = tuple(map(Fraction, (10**12, -2*10**12, 3*10**12)))
+    direction = (Fraction(3, 5), Fraction(4, 5), Fraction(0))
+    assert sum(component**2 for component in direction) == 1
+
+    def exact_state(epoch_tdb_s: Fraction) -> tuple[Fraction, ...]:
+        elapsed_s = epoch_tdb_s - epoch0_tdb_s
+        position_m = 1500*elapsed_s + elapsed_s**2 + elapsed_s**3/2
+        velocity_m_s = 1500 + 2*elapsed_s + 3*elapsed_s**2/2
+        return (tuple(origin + unit*position_m for origin, unit in zip(origin_m, direction, strict=True))
+                + tuple(unit*velocity_m_s for unit in direction))
+
+    handoff_epoch_tdb_s = epoch0_tdb_s + Fraction(offset_s)
+    p_m, v_m_s = Fraction(state_signs[0], 10000), Fraction(state_signs[1], 10**7)
+    incoming_error = tuple(unit*error for error in (p_m, v_m_s) for unit in direction)
+    nominal_state = tuple(value-error for value, error in zip(exact_state(handoff_epoch_tdb_s), incoming_error, strict=True))
+    acceleration_error_m_s2 = Fraction(acceleration_error_sign, 10**6)
+    jerk_error_m_s3 = Fraction(jerk_error_sign, 50000)
+    acceleration_m_s2 = tuple(unit*(2+3*Fraction(offset_s)+acceleration_error_m_s2) for unit in direction)
+    jerk_m_s3 = tuple(unit*(3+jerk_error_m_s3) for unit in direction)
+    assert sum((anchor-unit*(2+3*Fraction(offset_s)))**2 for anchor, unit in
+               zip(acceleration_m_s2, direction, strict=True)) == acceleration_error_m_s2**2
+    assert sum((anchor-3*unit)**2 for anchor, unit in zip(jerk_m_s3, direction, strict=True)) == jerk_error_m_s3**2
+    for local_s in (0.0, 1 / 32, 1 / 16):
+        tau = Fraction(local_s)
+        reference = _cubic_reference_endpoint(nominal_state, acceleration_m_s2, jerk_m_s3, local_s)
+        truth = exact_state(handoff_epoch_tdb_s + tau)
+        difference = tuple(a-b for a, b in zip(truth, reference, strict=True))
+        scalar_p = p_m+v_m_s*tau-acceleration_error_m_s2*tau**2/2-jerk_error_m_s3*tau**3/6
+        scalar_v = v_m_s-acceleration_error_m_s2*tau-jerk_error_m_s3*tau**2/2
+        assert difference == tuple(unit*error for error in (scalar_p, scalar_v) for unit in direction)
+        force = tuple(unit*(2+3*(Fraction(offset_s)+tau)) for unit in direction)
+        defect = tuple(value-a-j*tau for value, a, j in zip(force, acceleration_m_s2, jerk_m_s3, strict=True))
+        # Exact affine coefficients prove |defect(tau)| <= D+J*tau for
+        # EVERY nonnegative tau, not just these readback points. No stale J*t1
+        # is dropped: fresh acceleration and jerk each have independent bounds.
+        assert defect == tuple(-unit*(acceleration_error_m_s2+jerk_error_m_s3*tau) for unit in direction)
+        d, j = abs(acceleration_error_m_s2), abs(jerk_error_m_s3)
+        assert sum(value**2 for value in defect) <= (d+j*tau)**2
+        bounds = _coast_error_envelope(local_s, abs(p_m), abs(v_m_s), Fraction(0), Fraction(0), d,
+                                      acceleration_defect_rate_m_s3=j)
+        assert bounds == (abs(p_m)+abs(v_m_s)*tau+d*tau**2/2+j*tau**3/6,
+                          abs(v_m_s)+d*tau+j*tau**2/2)
+        assert sum(value**2 for value in difference[:3]) <= bounds[0]**2
+        assert sum(value**2 for value in difference[3:]) <= bounds[1]**2
+        if d == j == 0:
+            assert bounds == (abs(p_m)+abs(v_m_s)*tau, abs(v_m_s))
+
+
 @pytest.mark.parametrize("duration_s", [0.0, 1 / 64, 1 / 8])
 @pytest.mark.parametrize("sensitivity", [Fraction(0), Fraction(1, 10)])
 @pytest.mark.parametrize("zero_part", [False, True])

@@ -51,6 +51,33 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 analytic fresh-reference anchors (2026-09-13):
+Add exact 3-D affine-force controls with zero/nonzero absolute-time offsets,
+signed/zero acceleration and jerk anchor errors, and signed/zero incoming
+position/velocity errors. Verify the independent polynomial trajectory,
+exact residual coefficients, unchanged incoming-radius transport and squared
+Euclidean enclosure without floating tolerances. Retain stale-anchor reset
+counterexamples. Run focused transport/budget/integrator tests, full pytest,
+Ruff, strict OpenSpec and legacy isolation. No native calls or full-force
+promotion; thirteen/zero counts and task 3.9 remain unchanged/open.
+
+Verification: all 72 combinations pass with exact rational arithmetic and
+no numerical tolerance. Offsets are 0 and 1/16 s from epoch 1e9 TDB s;
+origin is (1e12,-2e12,3e12) m. Anchor errors span {-1,0,1}e-6 m/s^2 and
+{-2,0,2}e-5 m/s^3; incoming errors use zero, aligned and opposed signs with
+0.0001 m / 1e-7 m/s radii. Exact state/error polynomials and affine defect
+coefficients agree with independent integration; checks at local 0, 1/32
+and 1/16 s retain both incoming radii. The coefficient proof is global for
+this affine forcing, not a sampled bound on arbitrary forces. Perfect
+anchors yield only inherited position/velocity bounds, never a hidden reset.
+
+446 focused tests pass in 0.81 s; all 2474 tests pass in 531.68 s, retaining
+stale-clock and zero-reset rejection controls, both scientific inventories,
+thirteen/zero native counts and 40 source readbacks each. Ruff, strict
+OpenSpec, whitespace and unchanged legacy SHA-256/import checks pass.
+No native code, dependencies, force settings, scientific tolerances or caps
+changed. Fresh full-force reference qualification and task 3.9 remain open.
+
 Task 3.9 rebased constant-defect sources (2026-09-13):
 Split D2 into original D, J*t1 and position/velocity recentering allowances
 with the existing exact identity. Verify their sum equals D2 and their

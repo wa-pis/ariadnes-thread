@@ -1,5 +1,23 @@
 ## Context
 
+### Analytic fresh-reference anchors (2026-09-13)
+
+Use manufactured 3-D acceleration u*(2+3*(epoch-epoch0)) m/s^2 with exact
+unit vector u=(3/5,4/5,0), a large translated origin and an absolute TDB
+epoch. Its independently integrated polynomial supplies the true state.
+At zero/nonzero time offsets, start the cubic reference from a nominal
+handoff with signed position/velocity errors. Fresh acceleration and jerk
+anchors have independently known signed or zero errors ea and ej.
+The exact defect is -u*(ea+ej*tau), hence D=abs(ea), J=abs(ej) bound it
+for every nonnegative tau. WHEN transported, THEN retain both incoming
+radii and verify the exact error polynomial and squared Euclidean errors
+against the independent integrated bounds, including tau=0. Exact anchors
+remove only new forcing defect, not incoming uncertainty. Existing stale
+anchor clock-reset counterexamples remain mandatory regressions.
+These controls qualify only affine-in-time, state-independent forcing.
+Fresh full-force anchors, derivative bounds, domain/source coverage and
+cost are still unqualified; no native trajectory or deadline settings change.
+
 ### Rebased constant-defect source attribution (2026-09-13)
 
 Reuse the exact shifted-reference identity D2=D+J*t1+Lx*Rp+Lv*Rv.
