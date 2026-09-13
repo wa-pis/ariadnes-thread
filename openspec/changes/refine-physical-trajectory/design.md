@@ -1,5 +1,34 @@
 ## Context
 
+### Isolated Mars degree20 profiling (2026-09-13)
+
+Use the replay snapshot and existing Tudat coefficient loader, verifying
+the pinned file and canonical loaded-array hashes before arithmetic. WHEN
+the existing degree20 helper is evaluated three times without profiling
+and once with the standard-library profiler, THEN all scientific results
+must match the retained native enclosure and tail; report setup and run
+times plus inclusive/self times for harmonic jets, interval assembly and
+tail calculation. Inclusive times overlap and must not be summed. The
+profiled-minus-unprofiled-median difference is a noisy overhead observation,
+not a portable performance guarantee. Keep a separate 300 s bounded
+profiling operation that starts before setup, never reset its timer, and
+assert zero controls/propagations/arcs. This does not qualify mission cost
+or reset any mission budget. No high-cutoff retry in this step.
+
+Recorded baseline: `tests/data/m3_mars_degree20_profile.json` identifies
+the synthetic snapshot by SHA-256 and retains measured timings rather than
+asserting a machine-dependent speed threshold. Setup took 0.5918795419856906 s;
+the unprofiled median was 0.13463604194112122 s and profiled elapsed time
+0.18317958316765726 s. The 0.048543541226536036 s difference is noisy.
+Interval iteration included 0.129317214 s, harmonic jets 0.043992589 s and
+tail calculation 0.033766667 s. Exact rational arithmetic made 61,395 GCD
+calls (0.080577518 s). Generator call counts include resumptions, not
+independent full evaluations; these inclusive costs overlap.
+All four results match exactly, including the retained degree20 enclosure
+and 0.014624902702398076 m/s^2 outward tail. Only one native coefficient
+load is added in this separate test, with no propagation or source/rotation
+query. No conclusion about the failed high-degree runs follows yet.
+
 ### Replayable fresh harmonic inputs (2026-09-13)
 
 Capture the existing nominal Mars handoff state and both harmonic-source

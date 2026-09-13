@@ -376,15 +376,23 @@ coefficient-file identities and loaded-array hashes with explicit encoding.
 The first capture inventory passed in 264.73 s; this is whole-test elapsed
 time, not standalone harmonic runtime. No native calls were added.
 
-Next bounded work within 3.9 is an isolated degree20 Mars baseline profile
-using the stored geometry and coefficient arrays verified against those
-identities. WHEN replay reproduces the retained enclosure and tail, THEN
-report coefficient setup, exact harmonic arithmetic and tail costs
-separately, including profiling overhead and a bounded profiling deadline.
-Use the existing implementation and standard-library profiler. Do not
-retry high cutoffs before this cost evidence; profiling must not reset
-the shared mission timer to claim qualification. Source/PCK errors, other
-forces and fresh domain closure remain prerequisites; task 3.9 stays open.
+The isolated degree20 Mars baseline now replays the exact native enclosure
+and tail with matching coefficient identities and zero propagation arcs.
+Setup took 0.59188 s; three unprofiled runs took 0.13580/0.13464/0.13357 s,
+and the profiled run 0.18318 s. Inclusive harmonic-interval/jet/tail costs
+were 0.12932/0.04399/0.03377 s; 61,395 GCD calls consumed 0.08058 s.
+These overlap, include profiler effects, and must not be summed. The
+observed overhead difference of 0.04854 s is noisy, not a guarantee.
+The full record is `tests/data/m3_mars_degree20_profile.json`.
+
+Next bounded work within 3.9 is one isolated degree40 Mars growth profile
+on the same verified inputs, using the existing bounded profiling path.
+WHEN it completes without resetting the profiling deadline, THEN verify
+its tail against the existing cutoff ledger and enclosure nesting in the
+degree20 box, and compare measured arithmetic costs without extrapolating
+to degrees100/120 or mission runtime. Preserve deadline failure if any;
+no native arcs or mission extension. Source/PCK errors, remaining forces
+and fresh domain closure remain prerequisites; task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

@@ -1,0 +1,66 @@
+{
+  "observation_date": "2026-09-13",
+  "base_commit": "eb974f1",
+  "test": "tests/test_trajectory_harmonic_profile.py::test_stored_mars_degree20_profile",
+  "snapshot_sha256": "e401d88cbdd0110ac6c0357612b0053a34f87f8953856ac3372360e5ea3dca99",
+  "prefix_degree": 20,
+  "setup_elapsed_s": 0.5918795419856906,
+  "unprofiled_elapsed_s": [
+    0.13579837512224913,
+    0.13463604194112122,
+    0.13356716698035598
+  ],
+  "profiled_elapsed_s": 0.18317958316765726,
+  "profiled_minus_unprofiled_median_s": 0.048543541226536036,
+  "profile_rows": [
+    {
+      "calls": 61395,
+      "function": "<built-in method math.gcd>",
+      "inclusive_s": 0.080577518,
+      "self_s": 0.080577518
+    },
+    {
+      "calls": 232,
+      "function": "_generic_harmonic_term_intervals_m_s2",
+      "inclusive_s": 0.129317214,
+      "self_s": 0.001912896
+    },
+    {
+      "calls": 1,
+      "function": "_harmonic_prefix_vector_enclosure_m_s2",
+      "inclusive_s": 0.183096834,
+      "self_s": 0.00031769400000000004
+    },
+    {
+      "calls": 232,
+      "function": "_regular_solid_harmonic_jets",
+      "inclusive_s": 0.043992589000000006,
+      "self_s": 0.00051747
+    },
+    {
+      "calls": 1,
+      "function": "_stored_harmonic_tail_bound_m_s2",
+      "inclusive_s": 0.033766667,
+      "self_s": 0.000019375
+    }
+  ],
+  "component_intervals_m_s2": [
+    [
+      -3.1644671545870344,
+      -3.1352173491822377
+    ],
+    [
+      -0.011340394758140842,
+      0.01790941064665531
+    ],
+    [
+      -0.019929288341151874,
+      0.00932051706364428
+    ]
+  ],
+  "tail_upper_m_s2": 0.014624902702398076,
+  "profiling_deadline_s": 300,
+  "native_coefficient_loads": 1,
+  "native_arcs": 0,
+  "qualification": "Isolated stored-input timing observation, not a performance assertion; inclusive rows overlap, overhead difference is noisy, no mission deadline or force qualification"
+}

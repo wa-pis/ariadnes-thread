@@ -51,6 +51,25 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 isolated Mars degree20 profiling (2026-09-13):
+Verify pinned replay geometry and coefficient identities, then compare
+three unprofiled runs and one profiled run with the retained native
+enclosure/tail. Report setup and inclusive/self arithmetic costs, label
+overlapping times and noisy overhead, preserve a single bounded profiling
+timer and zero native arcs. Run focused checks, full pytest, Ruff, strict
+OpenSpec and legacy isolation. No higher cutoff or mission qualification.
+
+Verification: the final focused profile test passed in 1.24 s, all four
+exact results agreed, and all 2767 tests passed in 564.53 s. The recorded
+unprofiled median is 0.13463604194112122 s, profiled elapsed 0.18317958316765726 s,
+and setup 0.5918795419856906 s; these are observations, not performance gates.
+The record is `tests/data/m3_mars_degree20_profile.json`, tied to the
+synthetic replay fixture by SHA-256. The profiling operation preserved its
+single 300 s deadline and zero propagation counters. Ruff, strict OpenSpec,
+whitespace and unchanged legacy SHA/import checks pass. Existing thirteen/
+zero native inventory counts and scientific tolerances remain unchanged.
+Task 3.9 is still open; no conclusion about degree100/120 cost is claimed.
+
 Task 3.9 fresh harmonic replay snapshot (2026-09-13):
 Capture existing native handoff inputs without additional native calls;
 verify binary64 JSON round-trip, pinned resource/array identities and exact
