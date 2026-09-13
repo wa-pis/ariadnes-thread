@@ -36,3 +36,4 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 - [0005 — Fresh-handoff full-force evidence ledger](0005-fresh-full-force-ledger.md)
 - [0006 — Expose signed point-gravity intervals](0006-point-gravity-intervals.md)
 - [0007 — Bind six point forces to the fresh handoff](0007-fresh-point-gravity-binding.md)
+- [0008 — Audit source-position allowance coverage](0008-source-allowance-coverage.md)

@@ -51,6 +51,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0008 traces per-record uniform arithmetic, chain addition/scaling,
+guarded fresh cores and the sixteen existing local readback comparisons.
+Retained eight bounds match prior captured output; no new native query/arc.
+This documentation identifies conditional reuse, not completed consumer or
+force binding. Next retain existing fresh positions/chain bounds, verify
+exact consumer identity and epoch/coverage/body/frame binding, reject mismatch
+without epsilon inflation, and qualify nonsingular chord floors independently.
+JSON/link checks and strict OpenSpec verify the audit; no pytest rerun or
+new scientific baseline. Latest implementation remains 2879 passed; 3.9 open.
+
 Task 3.9 fresh six-source point-force binding (started 2026-09-13):
 Bind exact fresh polynomials and existing GM values at the preserved handoff,
 excluding Moon/Mars double counting. Verify epoch/coverage, state shape/types,

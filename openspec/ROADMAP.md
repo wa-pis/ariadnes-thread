@@ -474,11 +474,15 @@ native inventory is 149.77 s with unchanged thirteen/zero arcs. The added pure
 calculation/report preparation takes 0.0007207081653177738 s, with zero new
 native queries. No source/state errors or full-force certificate are claimed.
 
-Next establish a same-handoff source-geometry bridge before combining point
-and harmonic forces. WHEN reusing a chain-position allowance, THEN prove its
-fresh-epoch coverage and native/ideal input binding, verify nonsingular chord
-floors and bound the induced force difference. Reject missing coverage; do not
-copy an older epoch's radius floor. Use existing data and no extra native query.
+Decision0008 audits same-handoff source allowance coverage. The existing L1
+chain arithmetic bounds cover the fresh guarded cores conditionally, and
+sixteen existing readback comparisons already use them. This is not yet a
+consumer/force bridge. Next retain existing fresh native source positions and
+chain bounds with explicit epoch/coverage binding; compare exact polynomial
+anchors and stored harmonic positions without extra queries. WHEN coverage,
+body/frame/epoch or readback identity mismatches, THEN reject rather than
+inflate epsilon. Independently qualify positive chord floors before applying
+point or harmonic force sensitivity; do not reuse an old radius floor.
 SRP, relativity, incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or

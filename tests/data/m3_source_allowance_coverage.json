@@ -1,0 +1,27 @@
+{
+  "reviewed_revision": "a2770e7",
+  "source": "Existing native inventory captured in decision0007 full-suite run",
+  "epoch_tdb_s": 978995455.2929223,
+  "coverage_end_tdb_s": 978995455.3554223,
+  "origin": "SSB",
+  "orientation": "J2000",
+  "time_scale": "TDB seconds since J2000",
+  "position_unit": "m",
+  "norm": "L1, also a conservative L2 bound",
+  "conditional_chain_position_bound_m": {
+    "10": 1.4595070471278306e-7,
+    "1": 4.3544796122872e-5,
+    "2": 6.542382417808617e-5,
+    "399": 6.0187747349184116e-5,
+    "301": 8.934704095652991e-5,
+    "499": 0.0001648618821045329,
+    "599": 0.0004281144922474497,
+    "699": 0.0007284371515436439
+  },
+  "guarded_links": 11,
+  "body_chains": 8,
+  "reused_fresh_native_position_comparisons": 16,
+  "additional_native_queries": 0,
+  "additional_native_arcs": 0,
+  "qualification": "Conditional chain arithmetic within audited record cores; not arbitrary selection error, real-world ephemeris uncertainty or a completed native-consumer/force bridge"
+}
