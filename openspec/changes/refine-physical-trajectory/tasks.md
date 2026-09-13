@@ -51,6 +51,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 fresh Mars reference inventory (2026-09-13):
+Inspect the existing saved handoffs, source polynomial and force derivative
+oracles, initial-force readbacks, shifted-reference domain gates and runtime
+accounting. Verify which premises are already reusable and which must be
+recomputed; record the inventory in design. No code or scientific values
+change. Select original start+1/16 s and its existing next 1/16 s, not a
+mission extension. The first missing step is fresh source polynomial
+position/slope evaluation and coverage at that handoff; original slopes
+and original numerical force-anchor errors are not automatically reusable.
+Task 3.9 remains open. Verify documentation with strict OpenSpec and diff
+checks; existing executable-code verification remains the 2738-test run
+recorded below, not a newly measured run.
+
 Task 3.9 nonlinear fresh-reference control (2026-09-13):
 Verify independent rational truth for x''=2*x^3, strict first-exit and
 whole-reference domain closure, reference-path curvature and fresh D/J

@@ -1,5 +1,41 @@
 ## Context
 
+### Fresh Mars reference prerequisite inventory (2026-09-13)
+
+Select the already saved nominal `three_segment_handoff` at
+978995455.2929223 TDB s (original epoch +1/16 s), with its existing
+incoming position/velocity certificate. Assess a replacement reference on
+the already exercised next 1/16 s, not a new mission extension. The final
+four-segment endpoint is not saved as a reusable handoff. Code inspection
+of `tests/test_trajectory_spk.py` gives the following scoped inventory:
+
+| Premise | Existing evidence | Missing for a fresh reference |
+|---|---|---|
+| Incoming state | `three_segment_handoff` preserves nominal state, both error radii and epoch | No reset permitted; retain these exact radii |
+| Source position and derivative | `_spk_position_affine_data` evaluates position polynomials and their derivatives; 11 links forming eight body chains fit guarded cores over original first second | Evaluate all chains at the selected handoff; original slopes are not fresh slopes, and type-3 stored velocity is not a position derivative |
+| Acceleration anchor | Ten-component initial native force readback and point/SRP/Schwarzschild/harmonic arithmetic oracles qualify the original fixture | Fresh selected-state force readback or independently enclosed anchor, fresh PCK matrices and source errors; do not reuse original numerical anchor errors without proof |
+| Jerk anchor | `_point_mass_jerk_interval_m_s3` encloses eight monopoles at original epoch; harmonics' monopoles counted once | Apply to fresh nominal state and fresh source position derivatives; all nonmonopole terms remain in the defect allowance |
+| Monopole curvature | `_point_mass_force_curvature_bound_m_s4` has independent chain-rule controls; original cubic explicitly proves its acceleration bound is below domain A | Recheck fresh cubic acceleration, relative speed and distance floors over its entire interval; source curvature also contributes |
+| Other forces | Harmonic degree/rotation variation retained; SRP and relativity have conservative constant allowances | Recheck fresh geometry and whole-reference domain; no qualified full harmonic/SRP/relativity jerk is presently substituted |
+| Domain and arithmetic | Existing cumulative 1/8 s Mars domain, source core and PCK coverage support the shifted reference | New cubic and all required chords must close there; preserve outward arithmetic and source/rotation error allowances |
+| Endpoint and cost | Existing nominal/tighter final 1/16 s endpoints and thirteen/zero native counts | Recompute reference-to-native residual for any new reference, add incoming error once and charge all anchor work to shared deadline |
+
+The current continuation uses a_old+j_old*offset and retains j_old. Its
+D2 includes J_old*offset and reference shifts; it is not a fresh anchor.
+The source adapters accept an arbitrary covered epoch, but current native
+assembly calls them only at original start. Existing curvature use does
+check q''<=A; this is not an identified defect in the old certificates.
+
+First missing bound to address: fresh source position/slope enclosure at
+the selected handoff. WHEN the original guarded records cover the whole
+selected interval, THEN reevaluate their exact position polynomials and
+derivatives there, check offset-position and offset-slope differences against
+the original curvature bound, and retain all chain arithmetic allowances.
+Use exact manufactured polynomial checks for rebasing, including a changing
+slope and rejected coverage. No added spacecraft runs or claim of a fresh
+full-force certificate follows from this source-only step. Full-force
+acceleration, jerk assembly and domain reclosure still follow separately.
+
 ### Nonlinear fresh-reference control (2026-09-13)
 
 Use manufactured SI x''=2*x^3 with independent x=1/(1-t), v=1/(1-t)^2.

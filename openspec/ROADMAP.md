@@ -306,15 +306,21 @@ reference-path curvature plus transported errors with exact arithmetic;
 40 fail the conservative first-exit gate and return no certificate, even
 though exact truth stays inside. No real full-force reference changed.
 
-Next bounded work within 3.9 is to inventory the existing Mars handoff
-anchor and derivative oracles for a fresh full-force reference. WHEN an
-existing nominal endpoint is selected, THEN identify separately which
-acceleration/jerk errors, reference-path curvature, source/rotation domains
-and arithmetic allowances are already qualified and which remain missing.
-Use that evidence to choose one concrete missing bound; do not replace a
-reference derivative by a true-path derivative or reuse an expired bound.
-Do not claim analytic controls qualify real full-force anchors. Add no
-spacecraft native calls or mission extension during this inventory;
+The fresh-reference inventory selects saved nominal Mars handoff at
+original epoch+1/16 s and its already exercised next 1/16 s. Design records
+the available oracles and missing fresh source/force anchors and domain
+checks. Existing continuation shifts the old cubic; it is not freshly
+anchored. Original reference curvature already checks q''<=domain A.
+
+Next bounded work within 3.9 is fresh source polynomial position/slope
+evaluation at this handoff. WHEN all original guarded records cover the
+selected interval, THEN reevaluate eleven links forming eight body chains and check exact
+position/slope changes against original curvature bounds. Preserve source
+arithmetic allowances, reject uncovered intervals, and independently test
+rebasing with a changing polynomial slope. Do not substitute type-3 stored
+velocity for a position derivative. This source-only step does not qualify
+fresh full-force acceleration/jerk or a new cubic domain. Add no spacecraft
+native calls or mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
 caps and the shared 300-second deadline. Keep Moon unresolved and 3.9 open.
 Keep all previous certificates. Preserve all
