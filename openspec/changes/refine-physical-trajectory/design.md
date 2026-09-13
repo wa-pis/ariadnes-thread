@@ -1,5 +1,22 @@
 ## Context
 
+### Degree-wise remainder attribution (2026-09-13)
+
+Reuse the generic Jacobian helper's already outward-weighted coefficients.
+For degree n, enclose GM/d^3*(R/d)^n*(2*n+1)*sqrt((n+1)*sum(Cw^2+Sw^2))
+using exact rational scales and the existing upper dyadic square root.
+WHEN these per-degree enclosures fit inside the unchanged generic bound,
+THEN their sum plus an explicit nonnegative arithmetic slack must reconstruct
+it exactly; otherwise reject the diagnosis, never clamp or raise the bound.
+Verify single-degree addition-theorem squared norms, signed coefficients,
+different radii, zero field, nonmutation and reused-output rejection.
+Apply only to the existing Mars 1/8 s remainder, preserving all degrees 0..120
+and its C00/C20 exclusions. Scale with the same fixed-feedback transport
+multiplier; exact velocity contributions including slack must reconstruct
+the old remainder. Report nested SI values separately to avoid double counting.
+The ranking concerns conservative degree bounds, not true force errors or
+permission to truncate harmonics. No physical or native-stage claim changes.
+
 ### Selected spatial-bound provenance (2026-09-13)
 
 WHEN the composed C20-plus-remainder bound wins the existing minimum (ties

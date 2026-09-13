@@ -17,7 +17,17 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
-Latest spatial diagnosis (2026-09-13): the composed C20/remainder choice
+Latest degree diagnosis (2026-09-13): exact degree enclosures and an explicit
+nonnegative arithmetic slack reconstruct the unchanged Mars 1/8 s remainder.
+Degrees 2..10 contribute about 22.27%, 11..30 52.82%, 31..60 22.24%,
+and 61..120 2.66%. The largest single degree is 2 (excluding C20), only
+4.41%, followed by 3, 14, 15 and 25. The remainder is distributed across
+many degrees; a one- or two-degree remedy is not the indicated priority.
+The velocity-equivalent arithmetic slack is 2.3088194487634463e-22 m/s;
+it is retained, not rounded away. These are shares of a conservative bound,
+not physical uncertainty or permission to truncate the field.
+
+Retained spatial diagnosis: the composed C20/remainder choice
 wins for both bodies at all seven native endpoint controls. At Mars 1/8 s,
 C20 contributes 2.0161635635530162e-7 m/s and the independently enclosed
 remainder 9.900060826637374e-7 m/s. Their exact sum reconstructs the
@@ -108,10 +118,12 @@ Forty-six additional mixed-field/rejection controls verify independent polar
 Hessians and the C20/remainder composition. Native application changes only
 the reference spatial-variation bound; full-force state sensitivities,
 rotation allowances, arithmetic bounds and historical controls remain intact.
-Next bounded work within 3.9 is to attribute the selected Mars remainder
-bound by harmonic degree and identify dominant terms before choosing a
-sharper derivative/reference treatment. Verify reconstruction and retain
-every coefficient; this is not force truncation. Do not add longer controls or attempt mission composition
+Next bounded work within 3.9 is to qualify a general symmetric trace-free
+Hessian operator/Frobenius inequality for exterior harmonic fields, including
+independent analytic matrix controls, before any application to the existing
+remainder bound. The distributed degree ranking motivates a field-wide bound;
+no particular improvement or final gate passage is assumed. Preserve all
+coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
 yet. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
@@ -119,7 +131,7 @@ application. Native application additionally requires its own closed domain,
 source/rotation coverage, arithmetic allowances and runtime accounting.
 Do not substitute endpoint agreement or sampled differences for that proof.
 
-The latest completed code check has 2048 passing tests; both
+The latest completed code check has 2066 passing tests; both
 1/8 s limit-probe inventories pass, retaining the unresolved velocity gate.
 The native inventory runs seven spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost

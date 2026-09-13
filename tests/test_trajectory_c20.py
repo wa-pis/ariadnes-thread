@@ -46,6 +46,52 @@ def _c20_remainder_jacobian_bound_s_inv2(
     )
 
 
+@pytest.mark.parametrize("degree", [1, 2, 8, 120])
+@pytest.mark.parametrize("coefficient", [-0.125, 0.125])
+@pytest.mark.parametrize("distance_m", [1.0, 2.0])
+def test_degree_partition_encloses_single_term(degree: int, coefficient: float, distance_m: float) -> None:
+    cosine, sine = np.zeros((degree+1, degree+1)), np.zeros((degree+1, degree+1))
+    sine[degree, degree] = coefficient
+    original = cosine.tobytes(), sine.tobytes()
+    parts: dict[str, Fraction] = {}
+    budget = trajectory._RefinementBudget("degree-partition", 300.0)
+    bound = _harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, distance_m, cosine, sine, degree_parts_s_inv2=parts)
+    # Independent squared addition-theorem norm, GM=R=1 SI. The existing
+    # integer/float weighting is conservative, not a new physical coefficient.
+    n, d, c = degree, Fraction(distance_m), Fraction(coefficient)
+    exact_squared = (2*n+1)**2*(n+1)*(n+2)*(2*n+3)*c**2/d**(2*n+6)
+    assert parts[str(n)]**2 >= exact_squared
+    assert all(value == 0 for key, value in parts.items() if key not in {str(n), "arithmetic_slack"})
+    assert sum(parts.values(), Fraction(0)) == bound and parts["arithmetic_slack"] >= 0
+    assert (cosine.tobytes(), sine.tobytes()) == original and budget.native_arc_propagations == 0
+
+
+def test_degree_partition_retains_zero_field_and_rejects_reused_output() -> None:
+    budget = trajectory._RefinementBudget("zero-degree-partition", 300.0)
+    cosine, sine = np.zeros((3, 3)), np.zeros((3, 3))
+    parts: dict[str, Fraction] = {}
+    assert _harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, 1.0, cosine, sine, degree_parts_s_inv2=parts) == 0
+    assert parts == {"0": Fraction(0), "1": Fraction(0), "2": Fraction(0), "arithmetic_slack": Fraction(0)}
+    with pytest.raises(AssertionError):
+        _harmonic_spatial_jacobian_bound_s_inv2(budget, 1.0, 1.0, 1.0, cosine, sine, degree_parts_s_inv2=parts)
+
+
+def test_degree_partition_rejects_excessive_root_enclosure(monkeypatch: pytest.MonkeyPatch) -> None:
+    import test_trajectory_spk as spk_controls
+
+    def oversized_root(value: Fraction) -> tuple[Fraction, Fraction]:
+        return Fraction(0), value + 10**6
+
+    monkeypatch.setattr(spk_controls, "_dyadic_sqrt_bounds", oversized_root)
+    cosine, sine = np.zeros((3, 3)), np.zeros((3, 3))
+    sine[2, 2] = 0.125
+    with pytest.raises(AssertionError, match="do not fit"):
+        _harmonic_spatial_jacobian_bound_s_inv2(
+            trajectory._RefinementBudget("excessive-root", 300.0), 1.0, 1.0, 1.0, cosine, sine,
+            degree_parts_s_inv2={},
+        )
+
+
 def _selected_c20_jacobian_parts_s_inv2(
     c20: Fraction, composed: Fraction, generic: Fraction,
 ) -> dict[str, Fraction]:

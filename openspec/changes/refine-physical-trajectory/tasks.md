@@ -51,6 +51,31 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 degree-wise remainder diagnosis (2026-09-13):
+Verify exact reconstruction of the existing remainder from enclosed degree
+terms and nonnegative arithmetic slack; check single-degree analytic squared
+norms, sign/radius cases, zero, nonmutation and output rejection. Diagnose
+only the existing Mars 1/8 s control, retaining every coefficient and all
+historical gates. Run focused C20 tests, full pytest including both inventories,
+Ruff, strict OpenSpec and legacy isolation before recording the degree ranking.
+Do not close task 3.9 or weaken scientific tolerances.
+
+Measured result: 125 focused C20/degree tests pass, including eighteen new
+degree and rejection cases; all 2066 tests pass in 524.77 s, including both
+inventories. Excessively wide injected root enclosures correctly fail rather
+than increasing the bound. The Mars 1/8 s remainder is unchanged at
+9.900060826637374e-7 m/s; its arithmetic slack contributes
+2.3088194487634463e-22 m/s. Degree bands 2..10, 11..30, 31..60 and
+61..120 contribute respectively about 22.27%, 52.82%, 22.24% and 2.66%.
+Largest terms (m/s): degree 2 excluding C20 4.362161163576477e-8;
+degree 3 4.2522995042240426e-8; degree 14 3.307139673521599e-8;
+degree 15 3.1427470008796747e-8; degree 25 3.107004406137193e-8.
+The largest is only about 4.41% of the remainder. Exact rational sums,
+not rounded percentages, verify reconstruction. All original totals/gates
+remain unchanged; no coefficients are removed. Ruff, strict OpenSpec,
+diff checks and legacy isolation pass. Task 3.9 stays open with unchanged
+physical model, native counts, domains, tolerances and operation budget.
+
 Task 3.9 selected spatial-bound partition (2026-09-13):
 Verify composed/generic selection provenance, ties, zero and rejected invalid
 bounds, and direct equality to the independently calculated remainder in

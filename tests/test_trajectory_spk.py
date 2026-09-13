@@ -2710,6 +2710,7 @@ def test_point_mass_variation_rejects_singular_chord_floor() -> None:
 def _harmonic_spatial_jacobian_bound_s_inv2(
     budget: trajectory._RefinementBudget, gm_m3_s2: float,
     radius_m: float, distance_m: float, cosine: np.ndarray, sine: np.ndarray,
+    *, degree_parts_s_inv2: dict[str, Fraction] | None = None,
 ) -> Fraction:
     """Bound the ideal spatial Jacobian in s^-2, at a fixed field orientation."""
     scaled: list[list[list[float]]] = []
@@ -2736,7 +2737,23 @@ def _harmonic_spatial_jacobian_bound_s_inv2(
         budget.candidate_id, gm_m3_s2, radius_m, distance_m, *scaled,
     )
     budget.check()
-    return Fraction(acceleration_bound) / Fraction(distance_m)
+    bound = Fraction(acceleration_bound) / Fraction(distance_m)
+    if degree_parts_s_inv2 is not None:
+        assert not degree_parts_s_inv2
+        # Enclose each degree of the already weighted coefficient norm.
+        # Keep the remaining Decimal/binary64 allowance as its own channel.
+        gm, radius, distance = map(Fraction, (gm_m3_s2, radius_m, distance_m))
+        for n, (cosine_row, sine_row) in enumerate(zip(*scaled, strict=True)):
+            budget.check()
+            power = sum((Fraction(c)**2 + Fraction(s)**2 for c, s in
+                         zip(cosine_row[:n+1], sine_row[:n+1], strict=True)), Fraction(0))
+            root = _dyadic_sqrt_bounds((n+1)*power)[1] if power else Fraction(0)
+            degree_parts_s_inv2[str(n)] = gm/distance**3 * (radius/distance)**n * (2*n+1)*root
+        slack = bound - sum(degree_parts_s_inv2.values(), Fraction(0))
+        assert slack >= 0, "degree-root enclosures do not fit the existing bound"
+        degree_parts_s_inv2["arithmetic_slack"] = slack
+        assert sum(degree_parts_s_inv2.values(), Fraction(0)) == bound
+    return bound
 
 
 @pytest.mark.parametrize("degree", [0, 1, 2])
@@ -4617,6 +4634,26 @@ def _check_conditional_full_force_coast_domains(
                             reported = math.nextafter(float(value), math.inf) if value else 0.0
                             assert math.isfinite(reported) and Fraction(reported) >= value >= 0
                             reported_spatial_velocity_parts[body][name] = reported
+                    reported_mars_degree_velocity: dict[str, float] | None = None
+                    if center == "Mars" and duration_s == 1 / 8:
+                        field = bodies.get("Mars").gravity_field_model
+                        remainder_cosine = field.cosine_coefficients.copy()
+                        remainder_cosine[0, 0] = remainder_cosine[2, 0] = 0.0
+                        degree_parts: dict[str, Fraction] = {}
+                        remainder_bound = _harmonic_spatial_jacobian_bound_s_inv2(
+                            budget, field.gravitational_parameter, field.reference_radius,
+                            floors_m["Mars"], remainder_cosine, field.sine_coefficients,
+                            degree_parts_s_inv2=degree_parts,
+                        )
+                        assert remainder_bound == c20_spatial_parts_s_inv2["Mars"]["remainder"]
+                        multiplier = contributions["Mars_spatial"][1]/c20_nonmonopole_jacobians_s_inv2["Mars"]
+                        degree_velocity = {name: bound*multiplier for name, bound in degree_parts.items()}
+                        assert sum(degree_velocity.values(), Fraction(0)) == remainder_bound*multiplier
+                        reported_mars_degree_velocity = {}
+                        for name, value in degree_velocity.items():
+                            reported = math.nextafter(float(value), math.inf) if value else 0.0
+                            assert math.isfinite(reported) and Fraction(reported) >= value >= 0
+                            reported_mars_degree_velocity[name] = reported
                     transport_bounds = {
                         "conditional_weighted_reference_position_error_m": weighted_reference_position_error_m,
                         "conditional_weighted_reference_velocity_error_m_s": weighted_reference_velocity_error_m_s,
@@ -4694,6 +4731,7 @@ def _check_conditional_full_force_coast_domains(
                             **reported_c20_values,
                             "bound_contributions": reported_contributions,
                             "spatial_velocity_subcontributions_m_s": reported_spatial_velocity_parts,
+                            "mars_remainder_degree_velocity_m_s": reported_mars_degree_velocity,
                             "reference_within_velocity_gate": c20_reference_m_s <= Fraction("0.000001"),
                             "within_position_gate": c20_position_m <= Fraction("0.001"),
                             "within_velocity_gate": c20_velocity_m_s <= Fraction("0.000001"),
