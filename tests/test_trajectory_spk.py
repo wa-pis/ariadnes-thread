@@ -3578,6 +3578,21 @@ def _harmonic_prefix_vector_enclosure_m_s2(
         for axis, (lo, hi) in enumerate(intervals):
             lower[axis] += lo
             upper[axis] += hi
+    tail_m_s2 = _stored_harmonic_tail_bound_m_s2(
+        budget, gm_m3_s2, reference_radius_m, cosine, sine, body_position_m, spacecraft_position_m, inertial_to_fixed, cutoff,
+    )
+    return tuple((lo-tail_m_s2, hi+tail_m_s2) for lo, hi in zip(lower, upper, strict=True)), tail_m_s2
+
+
+def _stored_harmonic_tail_bound_m_s2(
+    budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
+    cosine: np.ndarray, sine: np.ndarray, body_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
+    inertial_to_fixed: np.ndarray, cutoff: int,
+) -> Fraction:
+    """Bound omitted harmonic acceleration norm in SI/J2000 at stored geometry."""
+    budget.check()
+    for array, shape in ((body_position_m, (3,)), (spacecraft_position_m, (3,)), (inertial_to_fixed, (3, 3))):
+        assert array.shape == shape and array.dtype == np.float64 and np.all(np.isfinite(array))
     relative = tuple(Fraction(a)-Fraction(b) for a, b in zip(spacecraft_position_m, body_position_m, strict=True))
     fixed = tuple(sum((Fraction(a)*b for a, b in zip(row, relative, strict=True)), Fraction(0)) for row in inertial_to_fixed)
     radius_lower = _dyadic_sqrt_bounds(sum((x*x for x in fixed), Fraction(0)))[0]
@@ -3590,7 +3605,7 @@ def _harmonic_prefix_vector_enclosure_m_s2(
     # ||Q^T||_2 <= ||Q||_F <= sum(abs(Q_ij)); no orthogonality assumption.
     tail_m_s2 = tail_fixed_m_s2*sum((abs(Fraction(x)) for row in inertial_to_fixed for x in row), Fraction(0))
     budget.check()
-    return tuple((lo-tail_m_s2, hi+tail_m_s2) for lo, hi in zip(lower, upper, strict=True)), tail_m_s2
+    return tail_m_s2
 
 
 @pytest.mark.parametrize("cutoff", [2, 3])
@@ -3605,6 +3620,10 @@ def test_harmonic_vector_enclosure_retains_tail(cutoff: int, scale: float, coeff
         np.zeros(3), np.asarray([0.0, 0.0, 2.0]), scale*np.eye(3), cutoff,
     )
     assert np.array_equal(cosine, original) and not np.any(sine)
+    assert tail == _stored_harmonic_tail_bound_m_s2(
+        trajectory._RefinementBudget("harmonic-tail-only", 300.0), 1.0, 1.0, cosine, sine,
+        np.zeros(3), np.asarray([0.0, 0.0, 2.0]), scale*np.eye(3), cutoff,
+    )
     # Independent pole force for stored Q=s*I: -1/(4*s) minus
     # C30*sqrt(7)/(8*s^4). Q^T must act on the omitted field too.
     monopole = -1/(4*Fraction(scale))
@@ -5175,6 +5194,40 @@ def _check_conditional_full_force_coast_domains(
                                                        for (a, b), (lo, hi) in zip(outward, intervals, strict=True))
                                             assert math.isfinite(reported_tail) and Fraction(reported_tail) >= tail >= 0
                                             assert tail > 0
+                                            if source == "Mars":
+                                                ledger_started_s = perf_counter()
+                                                tail_rows: list[dict[str, object]] = []
+                                                exact_tails: list[Fraction] = []
+                                                for trial_cutoff in (20, 40, 60, 80, 100, 110, 119, 120):
+                                                    budget.check()
+                                                    trial_tail = _stored_harmonic_tail_bound_m_s2(
+                                                        budget, field.gravitational_parameter, field.reference_radius,
+                                                        field.cosine_coefficients, field.sine_coefficients,
+                                                        source_position, probe_state[:3], rotation, trial_cutoff,
+                                                    )
+                                                    velocity_allowance = trial_tail*Fraction(next_s)
+                                                    exact_tails.append(trial_tail)
+                                                    reported_values = [math.nextafter(float(value), math.inf) if value else 0.0
+                                                                       for value in (trial_tail, velocity_allowance)]
+                                                    assert all(math.isfinite(a) and Fraction(a) >= b >= 0 for a, b in
+                                                               zip(reported_values, (trial_tail, velocity_allowance), strict=True))
+                                                    tail_rows.append({
+                                                        "prefix_degree": trial_cutoff, "tail_upper_m_s2": reported_values[0],
+                                                        "constant_tail_velocity_allowance_upper_m_s": reported_values[1],
+                                                        "tail_only_within_velocity_gate": velocity_allowance <= Fraction("0.000001"),
+                                                    })
+                                                assert exact_tails[0] == tail and exact_tails[-1] == 0
+                                                assert all(a >= b for a, b in zip(exact_tails, exact_tails[1:]))
+                                                ledger_elapsed_s = perf_counter()-ledger_started_s
+                                                assert math.isfinite(ledger_elapsed_s) and ledger_elapsed_s >= 0
+                                                print(json.dumps({"fresh_mars_tail_ledger": {
+                                                    "epoch_tdb_s": handoff_epoch, "duration_s": next_s,
+                                                    "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+                                                    "velocity_gate_m_s": 1e-6, "rows": tail_rows, "elapsed_s": ledger_elapsed_s,
+                                                    "additional_native_evaluations": 0,
+                                                    "qualification": "Stored-geometry tail-only budget screen; neither a whole-interval bound nor sufficient trajectory certification",
+                                                }}, sort_keys=True, allow_nan=False))
+                                                budget.check()
                                             harmonic_reports[source] = {
                                                 "evaluated_through_degree": cutoff, "maximum_degree": len(field.cosine_coefficients)-1,
                                                 "body_position_m": source_position.tolist(), "inertial_to_fixed": rotation.tolist(),

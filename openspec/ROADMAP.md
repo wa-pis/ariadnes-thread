@@ -355,14 +355,21 @@ tail is 0.014624902702398076 m/s^2; integrating that allowance alone over
 certificate conservatism, not measured error. It is not a viable fresh
 trajectory reference yet, despite mathematical enclosure tests passing.
 
-Next bounded work within 3.9 is a cheap Mars remainder-versus-cutoff ledger
-at this same stored geometry. WHEN each candidate prefix retains every
-higher-degree coefficient in a rigorous tail, THEN report its necessary
-velocity-budget contribution over 1/16 s before spending time on exact
-high-degree summation. Use measured tail/cost evidence to choose the next
-bounded experiment; no extrapolated runtime or lowered tolerance. Source/
-PCK input errors, remaining forces and fresh domain closure stay open and
-must be included before a full-force certificate. Keep task 3.9 open.
+The cheap Mars cutoff ledger takes 0.1088303339201957 s. Among tested
+degrees 20,40,60,80,100,110,119,120, degree100 is first to pass the tail-only
+velocity screen: 4.892361745559266e-7 m/s over1/16 s. Degree80 still needs
+3.2527946958121953e-6 m/s. This is neither the minimum over all degrees nor
+a complete trajectory certificate; exact-prefix runtime was not measured.
+
+Next bounded work within 3.9 is to measure one exact Mars degree100 prefix
+at the same stored handoff geometry, retaining degrees101..120 as a tail.
+WHEN its independent vector sum and remainder complete within the original
+shared deadline, THEN report intervals, parity of the tail with the ledger
+and measured cost without replacing the old reference. Retain degree20
+evidence and the failed degree120 runtime experiment. If degree100 also
+exceeds budget, preserve that failure rather than raising caps or returning
+a partial certificate. Source/PCK input errors, other forces and fresh
+domain closure remain prerequisites. Keep task 3.9 open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

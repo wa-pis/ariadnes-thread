@@ -1,5 +1,23 @@
 ## Context
 
+### Mars remainder cutoff ledger (2026-09-13)
+
+Extract the same stored-geometry tail calculation for reuse without exact
+prefix summation. At the already captured fresh Mars geometry, assess
+cutoffs 20,40,60,80,100,110,119,120. WHEN each remainder includes every
+coefficient above its cutoff, THEN its norm bound must decrease monotonically,
+match the current degree20 tail and vanish at full degree120. Report the
+tail and its constant-defect velocity-budget contribution h*tail for the
+existing h=1/16 s, using outward rounding and the unchanged 1e-6 m/s gate.
+Check the extracted helper against independent full/partial pole controls.
+
+This is a necessary budget screen for this conservative allowance, not a
+lower bound on actual error or a whole-interval force certificate. Passing
+the tail-only screen is insufficient: prefix arithmetic, incoming error,
+source/PCK/other-force errors and domain closure remain. Measure the ledger
+itself inside the shared deadline; do not infer exact-prefix runtime from
+this cheap computation. No native evaluation or propagation is added.
+
 ### Fresh stored-geometry harmonic assembly (2026-09-13)
 
 While the existing fresh derivative probe has updated the environment,

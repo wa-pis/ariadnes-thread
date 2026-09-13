@@ -51,6 +51,40 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 Mars remainder cutoff ledger (2026-09-13):
+Reuse the existing stored-geometry tail bound without exact prefix work;
+verify independent pole controls, unchanged degree20 tail, monotonicity
+and zero remainder at degree120. Report eight cutoffs and h*tail budget
+screen with outward rounding, unchanged gate and measured ledger runtime.
+Run focused tests, full pytest, Ruff, strict OpenSpec and legacy isolation.
+No new native evaluations; full-force/interval qualification remains open.
+
+Verification: 52 focused tests pass in 0.51 s; all 2766 tests pass in
+557.44 s. The extracted tail exactly matches the original helper in twelve
+independent pole cases and the native Mars degree20 control. Eight native-
+geometry ledger rows decrease monotonically and end at zero. Ledger time
+is 0.1088303339201957 s, including shared-budget checks and outward reporting.
+
+| Prefix degree | Tail allowance (m/s^2) | h*tail (m/s) | Tail-only gate |
+|---|---|---|---|
+| 20 | 0.014624902702398076 | 0.0009140564188998797 | fail |
+| 40 | 0.0020034676779043326 | 0.0001252167298690208 | fail |
+| 60 | 0.00031085398000027406 | 1.942837375001713e-5 | fail |
+| 80 | 5.2044715132995124e-5 | 3.2527946958121953e-6 | fail |
+| 100 | 7.827778792894826e-6 | 4.892361745559266e-7 | pass |
+| 110 | 2.2101970408827713e-6 | 1.381373150551732e-7 | pass |
+| 119 | 1.825867894014728e-7 | 1.141167433759205e-8 | pass |
+| 120 | 0 | 0 | pass |
+
+Values are rounded outward. Degree100 is the first TESTED passing prefix,
+not a proven minimum over all integer degrees. No high-degree exact sum
+was performed by the ledger and its timing does not predict that cost.
+The pass is only a constant-tail budget screen at stored geometry; other
+errors and whole-interval qualification remain. Both inventories preserve
+thirteen/zero arcs, forty explicit source readbacks and the previous
+four derivative/two rotation evaluations. Ruff, strict OpenSpec, whitespace
+and legacy SHA-256/import checks pass; no tolerances or caps changed.
+
 Task 3.9 fresh stored-geometry harmonic assembly (2026-09-13):
 Sum independent lunar and Martian degree0..20 intervals at the existing
 fresh handoff, retain all higher degrees of both fields as explicit tails,
