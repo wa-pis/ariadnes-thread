@@ -214,19 +214,24 @@ time and saved-mass checks. Its residual adds 3.594394195990218e-5 m and
 7.684027797138391e-5 m / 5.87273990686923e-8 m/s; both gates pass.
 The counted warm native call takes about 0.00946 s, excluding preparation.
 
-Next bounded work within 3.9 is one tighter adjacent Mars control from
-the same saved nominal first endpoint, with the same incoming error and
-shifted reference. WHEN complete, THEN add its own endpoint residual,
-check both unchanged gates and compare nominal/tighter endpoint differences
-against their combined certificates. Distinguish observed agreement from
-independently enclosed error; this is not a tighter rerun of the whole chain.
-Count the additional control/evaluation/arc (nine total if it completes),
-preserve all eight existing controls and the portable zero count, and
-measure time under the same 300-second operation budget. Do not revise
-production caps or discard failed attempts. Keep Moon unresolved; no
-mission or native-stage safety qualification follows from this experiment.
+The tighter adjacent control from the same nominal handoff also passes:
+6.69214346377787e-5 m / 5.872512533193787e-8 m/s. Observed nominal/
+tighter differences are bounded by 1.0789593218788875e-5 m and
+8.147468573574279e-12 m/s, consistent with both certificates. This is
+neither a tighter rerun of the first arc nor an independent error proof.
+
+Next bounded work within 3.9 is to assess a doubled 1/32 s continuation
+from the saved nominal two-segment endpoint to t0+1/16 s. Reuse the
+already qualified cumulative 1/16 s Mars domain (2000 m / 0.25 m/s),
+source/PCK coverage and cubic reference; carry both incoming radii. WHEN
+the shifted reference and ideal path/chords stay in that domain, THEN
+derive the rebased defect and report reference-only accuracy gates before
+any new native call. Do not introduce new radii or discard accumulated
+error. Retain all nine controls and the portable zero count, unchanged
+production caps and the shared 300-second operation budget. Keep Moon
+unresolved; this assessment is not mission or native-stage qualification.
 Keep all previous certificates. Preserve all
-coefficients and arithmetic allowances. Do not add longer controls or attempt mission composition
+coefficients and arithmetic allowances. Do not add unqualified native controls or attempt mission composition
 yet. WHEN a proposed
 derivative/remainder bound is tested, THEN it must enclose an independent
 analytic oracle with explicit SI units and tolerances before any native
@@ -237,7 +242,7 @@ Do not substitute endpoint agreement or sampled differences for that proof.
 The latest completed code check has 2402 passing tests; both inventories
 pass. Historical 1/8 s velocity gates remain unresolved; only the new
 degree-map certificate resolves them for the exact initial-state fixture.
-The native inventory runs eight spacecraft arcs, the portable inventory
+The native inventory runs nine spacecraft arcs, the portable inventory
 zero; each performs 40 affine source readbacks. These are diagnostic counts, not mission-cost
 estimates. Production limits and the shared 300-second deadline are unchanged.
 Task 3.9, the remaining finite-burn safety prerequisites and targeting remain

@@ -1,5 +1,32 @@
 ## Context
 
+### Tighter adjacent Mars control with frozen handoff (2026-09-13)
+
+Reuse the nominal adjacent-control loop for nominal and tighter settings.
+Both start from the exact same saved nominal first-arc state, epoch and
+mass, with the same incoming error radii, shifted cubic and force model.
+Only the second arc's existing integrator/tolerance configuration changes.
+This is not a tighter rerun of the complete two-arc chain.
+
+WHEN each control completes, THEN retain its own exact native-to-reference
+residual and add it once to the same reference enclosure, reporting the
+unchanged position/velocity gates. Preserve the nominal diagnostic field;
+add separate tighter and comparison fields. Recheck all prior handoff,
+frame/time/mass, PPN, domain/reference and per-attempt counter conditions.
+The full native inventory has nine controls/evaluations/arcs; portable zero
+and all eight previous controls remain. Count both calls and failed attempts
+under the same 300-second operation deadline and unchanged production caps.
+
+Compare exact squared Euclidean endpoint differences against the square of
+the sum of the two corresponding certificates. Both enclose the same ideal
+endpoint, so the triangle inequality supplies this comparison bound.
+Do not compare an L1 difference against an L2 certificate without a norm
+conversion. Report observed Euclidean differences with the existing upward
+dyadic square-root enclosure and outward binary64 rounding, including exact
+zero. WHEN the comparison passes, THEN label it as observed agreement
+consistent with the certificates, not an independent error or safety proof.
+Record each warm-call/control time without summing nested timing fields.
+
 ### One nominal adjacent Mars native coast (2026-09-13)
 
 After the domain/reference prerequisites pass, run exactly one additional

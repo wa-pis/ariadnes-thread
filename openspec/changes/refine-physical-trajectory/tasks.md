@@ -51,6 +51,35 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 tighter adjacent Mars control (2026-09-13):
+Reuse the counted adjacent loop with unchanged nominal handoff, incoming
+radii, reference and forces, adding one tighter call. Verify independent
+endpoint residual/gates, all native continuity/mass checks, exact squared
+Euclidean differences against combined certificates, outward/zero reporting
+and nine/zero counts. Retain previous controls and shared runtime accounting.
+Run focused integrator/budget/transport tests, full pytest, Ruff, strict
+OpenSpec and legacy isolation. Do not call agreement a separate error proof
+or mark task 3.9 or full-chain numerical qualification complete.
+
+Measured verification: 374 focused integrator/budget/transport tests pass
+in 0.78 s; all 2402 tests pass in 530.25 s, including both inventories.
+The tighter adjacent residual is 2.6025098626296958e-5 m and
+3.2655792416426435e-9 m/s; its conditional endpoint bounds are
+6.69214346377787e-5 m / 5.872512533193787e-8 m/s, both passing the
+unchanged gates. The nominal result is retained. Observed Euclidean
+differences round upward to 1.0789593218788875e-5 m and
+8.147468573574279e-12 m/s; combined certificates are
+0.0001437617126091626 m / 1.1745252440063017e-7 m/s. Exact squared
+comparisons pass. Both runs share the same nominal handoff and preserve
+exact epochs/initial state and every saved 2000 kg mass. The tighter warm
+native call takes 0.024303792044520378 s; whole-control time is
+0.03477070899680257 s, excluding prior preparation. Native counters are
+nine/zero with (1,1,1) per call; all prior controls and 40 affine source
+readbacks per inventory remain. Ruff, strict OpenSpec, diff checks and
+legacy isolation pass. No resource, force, tolerance, production-cap or
+operation-budget changes. Observed agreement is not a separate error proof;
+task 3.9, native-stage and full-chain safety remain open.
+
 Task 3.9 nominal adjacent Mars native coast (2026-09-13):
 Run one counted nominal adjacent short coast only after domain/reference
 rechecks. Verify exact native-time/initial-state handoff, constant saved
