@@ -267,17 +267,26 @@ comparison fits both certificates. Stored-position agreement is not zero
 physical error; this is not a tighter rerun of preceding arcs or an
 independent accuracy proof. The velocity margin remains limited.
 
-Next bounded work within 3.9 is to attribute the final 1/16 s endpoint
-certificate before proposing another extension. Reuse exact error transport
-to separate incoming-state, rebased constant-defect, defect-rate and native
-residual contributions for nominal/tighter controls. WHEN decomposed, THEN
-their exact sums must equal each complete position/velocity bound; report
-outward SI contributions and the remaining 0.001 m / 0.000001 m/s margins.
-Use the measured dominant bound contribution to choose the next refinement,
-not observed integrator agreement. Do not extrapolate expired domain/source
-bounds beyond t0+1/8 s or reset incoming error. Add no native calls: retain
-all thirteen controls and portable zero, unchanged production caps and the
-shared 300-second budget. Keep Moon unresolved and task 3.9 open.
+Final continuation attribution (2026-09-13): exact component sums reproduce
+both existing endpoint certificates. Nominal velocity contributions are
+4.407585349127e-7 m/s (rebased constant defect), 2.175561288190733e-7 m/s
+(defect rate), 2.3228674997903288e-7 m/s (incoming state) and
+5.3048424038699204e-8 m/s (native-reference residual). Reference-defect
+channels contribute about 70% of this bound; tighter integration barely
+changes the residual. This partitions a conservative certificate, not
+measured physical error. Remaining nominal velocity margin is at least
+5.635016225049474e-8 m/s; no extension is qualified by that margin alone.
+
+Next bounded work within 3.9 is to decompose the dominant rebased constant
+defect into original D, elapsed-reference J*t1, Lx*position-shift and
+Lv*velocity-shift contributions using the existing exact shift identity.
+WHEN transported separately, THEN their exact sums must equal the current
+constant-defect position/velocity contribution; report outward SI values
+and identify the dominant source before changing the reference construction.
+Do not extrapolate expired domain/source bounds beyond t0+1/8 s, reset
+incoming error or infer physical uncertainty from the ledger. Add no native
+calls: retain thirteen controls and portable zero, unchanged production caps
+and the shared 300-second budget. Keep Moon unresolved and task 3.9 open.
 Keep all previous certificates. Preserve all
 coefficients and arithmetic allowances. Do not add unqualified native controls or attempt mission composition
 yet. WHEN a proposed

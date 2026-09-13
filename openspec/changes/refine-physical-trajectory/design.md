@@ -1,5 +1,21 @@
 ## Context
 
+### Final continuation endpoint-bound attribution (2026-09-13)
+
+For both existing 1/16 s native controls, partition the conditional endpoint
+certificate into incoming-state transport, rebased constant defect, defect
+rate and native-to-reference residual. The exact envelope is linear in
+incoming p/v and D/J with fixed duration and sensitivities; reuse the
+qualified helper and its existing additivity/analytic tests. WHEN attributed,
+THEN exact rational component sums must equal both complete endpoint bounds.
+Report contributions upward in SI and remaining gate margins downward
+(including exact zero and negative margins), never implying an upper margin
+is safely available. Keep this ledger distinct from measured physical error.
+Include ledger work in the shared deadline and control timer. Retain all
+thirteen native controls and portable zero, without additional native calls,
+new domains, force settings, tolerances, dependencies or production caps.
+The ledger does not qualify continuation beyond the current 1/8 s interval.
+
 ### Tighter longer Mars continuation (2026-09-13)
 
 Reuse the counted native loop and exact Euclidean comparison for nominal

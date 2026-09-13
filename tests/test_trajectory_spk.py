@@ -4830,6 +4830,44 @@ def _check_conditional_full_force_coast_domains(
                             residual_v = sum((abs(Fraction(value)-reference) for value, reference in
                                               zip(adjacent_final[3:6], shifted_endpoint[3:], strict=True)), Fraction(0))
                             endpoint_p, endpoint_v = shifted_p + residual_p, shifted_v + residual_v
+                            endpoint_attribution: dict[str, object] | None = None
+                            if longer_control:
+                                # Fixed feedback makes this envelope linear in
+                                # incoming p/v and D/J; this partitions a bound,
+                                # not measured physical uncertainty.
+                                inputs = {
+                                    "incoming_state": (handoff_p_m, handoff_v_m_s, Fraction(0), Fraction(0)),
+                                    "constant_defect": (Fraction(0), Fraction(0), shifted_d, Fraction(0)),
+                                    "defect_rate": (Fraction(0), Fraction(0), Fraction(0), shifted_j),
+                                }
+                                parts: dict[str, tuple[Fraction, Fraction]] = {}
+                                for name, (p, v, d, j) in inputs.items():
+                                    budget.check()
+                                    parts[name] = _coast_error_envelope(
+                                        next_s, p, v, Fraction(reported_full_position_sensitivity),
+                                        Fraction(reported_relativity_sensitivities[1]), d, acceleration_defect_rate_m_s3=j,
+                                    )
+                                parts["native_reference_residual"] = (residual_p, residual_v)
+                                assert tuple(sum((part[index] for part in parts.values()), Fraction(0))
+                                             for index in (0, 1)) == (endpoint_p, endpoint_v)
+                                reported_parts: dict[str, dict[str, float]] = {}
+                                for name, part in parts.items():
+                                    reported_parts[name] = {}
+                                    for unit, value in zip(("position_m", "velocity_m_s"), part, strict=True):
+                                        reported = math.nextafter(float(value), math.inf) if value else 0.0
+                                        assert math.isfinite(reported) and Fraction(reported) >= value >= 0
+                                        reported_parts[name][unit] = reported
+                                margins = {"position_margin_lower_m": Fraction("0.001") - endpoint_p,
+                                           "velocity_margin_lower_m_s": Fraction("0.000001") - endpoint_v}
+                                reported_margins = {name: math.nextafter(float(value), -math.inf) if value else 0.0
+                                                    for name, value in margins.items()}
+                                assert all(math.isfinite(value) and Fraction(value) <= margins[name]
+                                           for name, value in reported_margins.items())
+                                endpoint_attribution = {
+                                    "contributions": reported_parts, "remaining_accuracy_margin": reported_margins,
+                                    "exact_sum_matches_endpoint_bound": True,
+                                    "scope": "Conditional bound attribution, not measured physical error or permission to extend the domain",
+                                }
                             counts_after = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
                             assert tuple(a-b for a, b in zip(counts_after, counts_before, strict=True)) == (1, 1, 1)
                             adjacent_elapsed_s = perf_counter() - adjacent_started_s
@@ -4857,6 +4895,9 @@ def _check_conditional_full_force_coast_domains(
                                           if doubled_control else "Conditional two-segment ideal-state endpoint bound; no native-stage or mission safety certificate"),
                                 **reported_adjacent_native,
                             }
+                            if longer_control:
+                                assert endpoint_attribution is not None
+                                adjacent_result["conditional_endpoint_error_attribution"] = endpoint_attribution
                             adjacent_results.append(adjacent_result)
                             adjacent_endpoints.append(tuple(map(Fraction, adjacent_final[:6])))
                             adjacent_error_bounds.append((endpoint_p, endpoint_v))

@@ -51,6 +51,43 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [x] 3.6 Assemble the complete per-source force mapping and reset/read back global PPN values before every arc; verify near-Moon/cruise/near-Mars total acceleration against an independent assembly under the existing force tolerance, poisoned PPN recovery, and no duplicated gravity. Complete this before task 4.3.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
+Task 3.9 final continuation bound attribution (2026-09-13):
+Reuse exact transport for incoming-state, constant-defect, defect-rate and
+native-residual contributions in both existing final 1/16 s controls. Verify
+exact component sums, upward SI contributions and downward remaining gate
+margins, plus unchanged scientific values and thirteen/zero counts. Run
+existing analytic/additivity transport tests with focused budget/integrator
+checks, full pytest, Ruff, strict OpenSpec and legacy isolation. No added
+native calls, domain extension or reset of incoming error; task 3.9 stays open.
+
+Measured attribution (upward SI bounds):
+
+| Contribution | Position (m) | Nominal velocity (m/s) |
+|---|---:|---:|
+| Incoming state | 0.00010531230542327953 | 2.3228674997903288e-7 |
+| Rebased constant defect | 1.3773704216021874e-8 | 4.407585349127e-7 |
+| Defect rate | 4.532419355809598e-9 | 2.175561288190733e-7 |
+| Native-reference residual | 4.41815941505782e-5 | 5.3048424038699204e-8 |
+
+Exact sums, before reporting roundoff, equal both original endpoint bounds.
+Only the tighter residual's velocity differs: 5.3040693333734134e-8 m/s.
+Remaining position margin is conservatively at least 0.0008504877943025704 m
+for both controls. Velocity margins are at least 5.635016225049474e-8 m/s
+(nominal) and 5.635789295545981e-8 m/s (tighter). The constant-defect and
+defect-rate channels account for about 70% of the nominal velocity bound;
+they are conservative reference allowances, not measured physical error.
+Investigate the dominant rebased constant allowance before extending the
+domain or assuming a stronger integrator resolves the limitation.
+
+Verification: 374 focused tests pass in 0.90 s and all 2402 tests pass in
+537.42 s, including both exact ledger identities, thirteen/zero native
+counts and 40 source readbacks per inventory. Existing analytic/additivity
+tests cover initial-state and D/J decomposition, including zero channels.
+Ruff, strict OpenSpec, whitespace and unchanged legacy SHA-256/import checks
+pass. Scientific bounds are unchanged. No new dependencies, native calls,
+force settings, tolerances, domains or production caps; attribution work is
+included in the existing control timing and shared 300-second deadline.
+
 Task 3.9 tighter longer continuation (2026-09-13):
 Reuse the counted nominal loop/comparison for one tighter 1/16 s call from
 the same frozen nominal three-segment handoff. Verify native continuity,
