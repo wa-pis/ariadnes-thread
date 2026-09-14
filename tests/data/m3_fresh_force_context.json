@@ -1,0 +1,60 @@
+{
+  "fresh_force_context": {
+    "collision_guards_m": {
+      "Earth": 6378136.6,
+      "Jupiter": 71492000.0,
+      "Mars": 3396190.0,
+      "Mercury": 2439700.0,
+      "Moon": 1737400.0,
+      "Saturn": 60268000.0,
+      "Sun": 696000000.0,
+      "Venus": 6051800.0
+    },
+    "dry_mass_kg": 1000.0,
+    "end_epoch_tdb_s": 978995455.3554223,
+    "force_reference_sha256": "44eb71a5eadf0fc2270e9d5a6eb8bf74e7ae2b526f8c520bd54fec2e5b4595e0",
+    "gravitational_parameters_m3_s2": {
+      "Earth": 398600441500000.0,
+      "Jupiter": 1.266865341960128e+17,
+      "Mars": 42828375815756.1,
+      "Mercury": 22031868691090.8,
+      "Moon": 4902800121846.8,
+      "Saturn": 3.79313226256016e+16,
+      "Sun": 1.327124400420322e+20,
+      "Venus": 324858592079000.0
+    },
+    "harmonic_replay_sha256": "4b02f282c783608d7b7ad174c33a4266c25b16c935b8d4b904cbae74107c272a",
+    "initial_state_m_m_s_kg": [
+      -245056838575.43283,
+      35261268424.25906,
+      22783597232.703575,
+      -3128.28194638288,
+      -18367.951868652242,
+      -9028.78105009038,
+      2000.0
+    ],
+    "light_inputs_sha256": "2a5ce63457b87ad69948da13dd03995e7f7be43469d7c636ef731eb7c441e1c0",
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "pck_sha256": "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2",
+    "relativity_resource": {
+      "acceleration_type": "schwarzschild-relativistic-correction",
+      "de_sitter_enabled": false,
+      "einstein_infeld_hoffmann_enabled": false,
+      "lense_thirring_enabled": false,
+      "ppn_beta": 1.0,
+      "ppn_gamma": 1.0,
+      "schwarzschild_enabled": true,
+      "source_body": "Sun",
+      "target_body": "Spacecraft"
+    },
+    "scope": "Same-probe nominal coast force-input links; not external authenticity, native-stage safety or cross-interval qualification",
+    "selected_pck_inputs_sha256": "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0",
+    "source_spk_context_sha256": "b00e888032a19081c8bbfd13ca73549af21224916ed997e4714fa68af7ce8cd5",
+    "speed_of_light_m_s": 299792458.0,
+    "start_epoch_tdb_s": 978995455.2929223,
+    "thrust_enabled": false,
+    "time_scale": "TDB seconds since J2000"
+  }
+}

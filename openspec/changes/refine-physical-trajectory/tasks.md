@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0042 links existing harmonic/light/force-reference snapshots,
+selected PCK inputs, actual GMs, relativity settings and collision guards
+to the same endpoint/SPK context, without new native work. Twelve new
+controls bring the focused module to 35 passing tests; all 3183 pass in
+469.03 s (native 146.56, portable 50.71), retaining thirteen/zero arcs.
+Prior endpoint/coast science and force inputs are unchanged; Ruff/strict
+OpenSpec/legacy checks pass. Next inspect physical two-interval handoff
+and remaining numerical/runtime scaling, not generic provenance layers.
+This nominal input association does not complete task 3.9 or mission safety.
+
 Decision0041 binds the endpoint report to eleven guarded SPK records from
 four files, reusing kernel_metadata and preserving the loaded pool. Nine
 new controls bring the focused module to 23 passing tests; all 3171 pass

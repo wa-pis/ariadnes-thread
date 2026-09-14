@@ -12,6 +12,41 @@ import pytest
 from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint
 
 
+def _check_endpoint_force_context(binding: dict, context: dict, replay: dict, light: dict, reference: dict, clearance: dict) -> None:
+    """Connect existing nominal-force inputs; not a whole-interval proof."""
+    assert binding["force_context_sha256"] == sha256(json.dumps(context, sort_keys=True, allow_nan=False).encode()).hexdigest()
+    assert binding["source_spk_context_sha256"] == context["source_spk_context_sha256"]
+    for key in ("start_epoch_tdb_s", "end_epoch_tdb_s", "origin", "orientation", "time_scale", "model_id"):
+        assert binding[key] == context[key]
+    assert context["initial_state_m_m_s_kg"] == binding["initial_state_m_m_s_kg"]
+    initial = binding["initial_state_m_m_s_kg"]
+    assert replay["spacecraft_position_m"]+replay["spacecraft_velocity_m_s"] == initial[:6]
+    for report in (replay, light, reference):
+        assert report["epoch_tdb_s"] == binding["start_epoch_tdb_s"]
+        assert report["model_id"] == binding["model_id"]
+        assert (report["origin"], report["orientation"]) == (binding["origin"], binding["orientation"])
+        assert report["spacecraft_mass_kg"] == initial[6]
+    assert light["spacecraft_state_m_m_s"] == reference["spacecraft_state_m_m_s"] == initial[:6]
+    for name, report in (("harmonic_replay", replay), ("light_inputs", light), ("force_reference", reference)):
+        assert context[f"{name}_sha256"] == sha256(json.dumps(report, sort_keys=True, allow_nan=False).encode()).hexdigest()
+    assert context["pck_sha256"] == replay["pck_sha256"] == light["pck_sha256"] == clearance["pck_sha256"]
+    assert context["selected_pck_inputs_sha256"] == "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0"
+    gm = context["gravitational_parameters_m3_s2"]
+    assert set(gm) == {"Sun", "Mercury", "Venus", "Earth", "Moon", "Mars", "Jupiter", "Saturn"}
+    assert all(type(value) is float and math.isfinite(value) and value > 0 for value in gm.values())
+    for body in ("Moon", "Mars"):
+        assert gm[body] == replay["fields"][body]["resource"]["gravitational_parameter_m3_s2"]
+    assert context["collision_guards_m"] == {body: row["collision_guard_radius_m"] for body, row in clearance["by_body"].items()}
+    assert context["dry_mass_kg"] == clearance["dry_mass_kg"]
+    assert context["thrust_enabled"] is clearance["thrust_enabled"] is False
+    assert context["speed_of_light_m_s"] == 299792458.0
+    relativity = context["relativity_resource"]
+    assert (relativity["source_body"], relativity["target_body"]) == ("Sun", "Spacecraft")
+    assert relativity["ppn_beta"] == relativity["ppn_gamma"] == 1.0
+    assert relativity["schwarzschild_enabled"] is True
+    assert all(relativity[key] is False for key in ("lense_thirring_enabled", "de_sitter_enabled", "einstein_infeld_hoffmann_enabled"))
+
+
 def _check_endpoint_spk_context(binding: dict, context: dict) -> None:
     """Bind retained source records, not all forces or external data authenticity."""
     assert binding["source_spk_context_sha256"] == sha256(json.dumps(context, sort_keys=True, allow_nan=False).encode()).hexdigest()
@@ -144,6 +179,44 @@ def test_endpoint_spk_context_rejects_inconsistent_record_even_with_new_digest(f
     binding["source_spk_context_sha256"] = sha256(json.dumps(context, sort_keys=True, allow_nan=False).encode()).hexdigest()
     with pytest.raises(AssertionError):
         _check_endpoint_spk_context(binding, context)
+
+
+def _retained_force_reports() -> tuple[dict, ...]:
+    directory = Path(__file__).with_name("data")
+    names = ("fresh_endpoint_binding", "fresh_force_context", "fresh_harmonic_replay", "fresh_light_inputs", "fresh_force_assembly", "fresh_conditional_clearance")
+    reports = [json.loads((directory / f"m3_{name}.json").read_text()) for name in names]
+    return tuple(report if name == "fresh_harmonic_replay" else report[name] for name, report in zip(names, reports, strict=True))
+
+
+def test_endpoint_force_context_replays_retained_inputs() -> None:
+    _check_endpoint_force_context(*_retained_force_reports())
+
+
+@pytest.mark.parametrize("field", ["harmonic_replay_sha256", "light_inputs_sha256", "source_spk_context_sha256"])
+def test_endpoint_force_context_rejects_independently_changed_identity(field: str) -> None:
+    binding, context, *reports = _retained_force_reports()
+    context[field] = "0"*64
+    with pytest.raises(AssertionError):
+        _check_endpoint_force_context(binding, context, *reports)
+
+
+@pytest.mark.parametrize("field,value", [("pck_sha256", "0"*64), ("selected_pck_inputs_sha256", "0"*64),
+                                       ("speed_of_light_m_s", 1.0), ("dry_mass_kg", 0.0), ("thrust_enabled", True)])
+def test_endpoint_force_context_rejects_inconsistent_input_with_new_digest(field: str, value: object) -> None:
+    binding, context, *reports = _retained_force_reports()
+    context[field] = value
+    binding["force_context_sha256"] = sha256(json.dumps(context, sort_keys=True, allow_nan=False).encode()).hexdigest()
+    with pytest.raises(AssertionError):
+        _check_endpoint_force_context(binding, context, *reports)
+
+
+@pytest.mark.parametrize("field,value", [("ppn_beta", 2.0), ("schwarzschild_enabled", False), ("lense_thirring_enabled", True)])
+def test_endpoint_force_context_rejects_changed_relativity_with_new_digest(field: str, value: object) -> None:
+    binding, context, *reports = _retained_force_reports()
+    context["relativity_resource"][field] = value
+    binding["force_context_sha256"] = sha256(json.dumps(context, sort_keys=True, allow_nan=False).encode()).hexdigest()
+    with pytest.raises(AssertionError):
+        _check_endpoint_force_context(binding, context, *reports)
 
 
 @pytest.mark.parametrize("field,index", [("initial_state_m_m_s_kg", 0), ("terminal_state_m_m_s_kg", 0),

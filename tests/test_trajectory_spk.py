@@ -4128,7 +4128,7 @@ def _check_conditional_full_force_coast_domains(
     from test_trajectory_gravity import _candidate, _spacecraft
 
     from test_trajectory_force_assembly import _compare_force_reference
-    from test_trajectory_endpoint_binding import _check_endpoint_binding, _check_endpoint_spk_context
+    from test_trajectory_endpoint_binding import _check_endpoint_binding, _check_endpoint_spk_context, _check_endpoint_force_context
 
     candidate = _candidate(
         departure_epoch_utc=ephemeris.tdb_to_utc(start_tdb_s),
@@ -5970,6 +5970,25 @@ def _check_conditional_full_force_coast_domains(
                                         }
                                         _check_endpoint_binding(endpoint_binding, fresh_cubic_report, fresh_transport_report, fresh_clearance_report)
                                         _check_endpoint_spk_context(endpoint_binding, fresh_spk_context)
+                                        force_context = {
+                                            "start_epoch_tdb_s": handoff_epoch, "end_epoch_tdb_s": adjacent_final_tdb_s,
+                                            "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+                                            "model_id": environment.model_id, "initial_state_m_m_s_kg": adjacent_initial.tolist(),
+                                            "source_spk_context_sha256": endpoint_binding["source_spk_context_sha256"],
+                                            "harmonic_replay_sha256": sha256(encoded_replay.encode()).hexdigest(),
+                                            "light_inputs_sha256": sha256(encoded_light.encode()).hexdigest(),
+                                            "force_reference_sha256": sha256(json.dumps(reference, sort_keys=True, allow_nan=False).encode()).hexdigest(),
+                                            "pck_sha256": environment.collision_resource.actual_sha256,
+                                            "selected_pck_inputs_sha256": sha256(json.dumps(pck_inputs, sort_keys=True, allow_nan=False).encode()).hexdigest(),
+                                            "gravitational_parameters_m3_s2": fresh_gm_m3_s2,
+                                            "relativity_resource": asdict(environment.relativity),
+                                            "speed_of_light_m_s": trajectory._SPEED_OF_LIGHT_M_S,
+                                            "collision_guards_m": guards_m, "dry_mass_kg": spacecraft.dry_mass_kg, "thrust_enabled": False,
+                                            "scope": "Same-probe nominal coast force-input links; not external authenticity, native-stage safety or cross-interval qualification",
+                                        }
+                                        endpoint_binding["force_context_sha256"] = sha256(json.dumps(force_context, sort_keys=True, allow_nan=False).encode()).hexdigest()
+                                        _check_endpoint_force_context(endpoint_binding, force_context, replay, light_snapshot, reference, fresh_clearance_report)
+                                        print(json.dumps({"fresh_force_context": force_context}, sort_keys=True, allow_nan=False))
                                         assert selected_handoff == preserved_handoff
                                         assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
                                         budget.check()

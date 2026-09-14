@@ -663,6 +663,12 @@ old science is unchanged and source context reproduces across modes.
 The artifact-transfer numeric serialization failure is recorded and fixed
 without relaxing digest checks. Next connect existing remaining force
 identities; source provenance alone is not mission safety. Task 3.9 stays open.
+Decision0042 links the existing nominal force inputs and PCK/GM/relativity/
+collision parameters to the endpoint and SPK context. All 3183 tests pass
+in 469.03 s (native 146.56, portable 50.71); prior science and force inputs
+are unchanged. No new native work or loosened criteria. Next inspect
+physical two-interval state/error handoff and numerical/runtime scaling;
+do not add generic provenance layers without a concrete gap. Task 3.9 remains open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
