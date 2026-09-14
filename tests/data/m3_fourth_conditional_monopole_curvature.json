@@ -1,0 +1,67 @@
+{
+  "fourth_conditional_monopole_curvature": {
+    "additional_ephemeris_queries": 0,
+    "additional_native_arcs": 0,
+    "anchor_error_sufficient_cap_m_s2_approx": 0.7122640475196665,
+    "anchor_norm_sufficient_cap_m_s2_approx": 3.9998400470051654,
+    "bodies": {
+      "Earth": {
+        "force_curvature_upper_m_s4": 3.0171855706509464e-19,
+        "relative_acceleration_upper_m_s2": 4.009777611384211,
+        "relative_speed_upper_m_s": 40392.52843581639
+      },
+      "Jupiter": {
+        "force_curvature_upper_m_s4": 2.0217188057936627e-18,
+        "relative_acceleration_upper_m_s2": 4.003466485629057,
+        "relative_speed_upper_m_s": 37847.32264516563
+      },
+      "Mars": {
+        "force_curvature_upper_m_s4": 2.0480478728251147e-05,
+        "relative_acceleration_upper_m_s2": 4.0027784102018815,
+        "relative_speed_upper_m_s": 1500.89515401892
+      },
+      "Mercury": {
+        "force_curvature_upper_m_s4": 2.349894518778605e-20,
+        "relative_acceleration_upper_m_s2": 4.062409018596836,
+        "relative_speed_upper_m_s": 43298.449822961615
+      },
+      "Moon": {
+        "force_curvature_upper_m_s4": 3.716660123758543e-21,
+        "relative_acceleration_upper_m_s2": 4.014948181904242,
+        "relative_speed_upper_m_s": 40632.587804118026
+      },
+      "Saturn": {
+        "force_curvature_upper_m_s4": 1.0286769196188124e-19,
+        "relative_acceleration_upper_m_s2": 4.000157200629249,
+        "relative_speed_upper_m_s": 38837.26864827904
+      },
+      "Sun": {
+        "force_curvature_upper_m_s4": 7.001224610647976e-14,
+        "relative_acceleration_upper_m_s2": 4.000000262617035,
+        "relative_speed_upper_m_s": 30519.87937900283
+      },
+      "Venus": {
+        "force_curvature_upper_m_s4": 6.221726928063434e-20,
+        "relative_acceleration_upper_m_s2": 4.019380598627598,
+        "relative_speed_upper_m_s": 86394.53050197104
+      }
+    },
+    "duration_s": 0.125,
+    "force_curvature_upper_m_s4": 2.0480478798265908e-05,
+    "input_sha256": {
+      "m3_fourth_endpoint_monopole_jerk.json": "d14933925c64e421917d0b0e9c4dbd2f1aedd5a5ea4ba43d6808a93fbc21f832",
+      "m3_fourth_endpoint_source_anchor.json": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+      "m3_fresh_endpoint_binding.json": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772",
+      "m3_fresh_force_context.json": "1152f520c207b73402bb3d2bdc56b013cad1970f25d5bf76d2ed5f4df06d7355",
+      "m3_quarter_second_initial_domain.json": "7beb57a90448e24abf73e490e23ecf1fcb2e5c2175c886a4edf14f9e7ce7fc8d"
+    },
+    "jerk_rounding_error_upper_m_s3": 1.4379857137182707e-20,
+    "reference_acceleration_cap_m_s2": 4.0,
+    "reference_reach_upper_m_m_s": [
+      7631.309654059291,
+      0.8945295566804817
+    ],
+    "scope": "Retained-input conditional cubic family with explicit acceleration premise only; no selected gravity anchor, nonmonopole rates, full J, native residual or mission certificate",
+    "taylor_rate_upper_m_s3": 1.2800299248916192e-06
+  }
+}

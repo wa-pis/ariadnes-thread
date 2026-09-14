@@ -62,8 +62,10 @@ verifies that separate convention with 60 exact manufactured/rejection cases,
 including a counterexample to relabelling an old anchor. Decision0061 binds
 eight ideal monopole jerks to the fourth endpoint and exact source derivatives,
 including midpoint rounding. This is not a full-force derivative or uniform J.
-Next bound monopole curvature with explicit reference-acceleration premises,
-then assess nonmonopole rates and remaining budget. No live new reference,
+Decision0062 bounds monopole curvature for an explicit conditional cubic
+family with acceleration at most 4 m/s^2, proving that family's domain inclusion
+from retained inputs. This does not establish a selected reference's premise.
+Next assess nonmonopole rates and remaining coupled budget. No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified
 separately. No acceptance/allocation change without review and user approval.

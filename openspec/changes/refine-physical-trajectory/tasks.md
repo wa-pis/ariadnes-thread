@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0062 (2026-09-15) checks a retained-input conditional cubic family:
+explicit acceleration cap 4 m/s^2 implies domain inclusion and monopole
+Taylor rate at most 1.2800299248916192e-6 m/s^3. It does not select an anchor,
+establish full J, reset carried errors or alter an acceptance allocation.
+Next assess nonmonopole translation/rotation rates on the same family before
+expensive vector work. See `docs/decisions/0062-conditional-fourth-monopole-curvature.md`;
+3.9 stays open.
+
 Decision0061 (2026-09-15) binds eight ideal monopole jerks to the actual
 fourth state and position-polynomial source derivatives. Exact component
 intervals and midpoint rounding are retained; no source/native arithmetic,
