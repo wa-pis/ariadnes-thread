@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0060 (2026-09-15) verifies the separate gravity-only reference
+contract with 60 analytic/rejection cases: signed constant/reversing bounded
+forces, exact gravitational remainder and integrated state errors, non-reset
+incoming radii, and the old-anchor factor-two counterexample. Old helper and
+physical model are unchanged. Next assess fresh gravity rate/budget and new
+coefficient/domain premises; no live reference or native arc is qualified.
+See `docs/decisions/0060-gravity-reference-analytic-controls.md`; 3.9 stays open.
+
 Decision0059 (2026-09-15) audits the same-epoch ledger: ten gravity-input
 channels sum to about 1.0394510091222506e-8 m/s^2, not a full anchor error.
 Missing vector/native arithmetic and J/residual channels prevent selecting

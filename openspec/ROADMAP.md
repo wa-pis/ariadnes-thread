@@ -57,8 +57,12 @@ with Moon/Mars excluded. Decision0059 audits available/missing channels and
 shows that a higher harmonic prefix alone does not resolve the remaining
 rate/residual budget. Next test a gravity-only comparison-polynomial anchor
 with a single bounded SRP/relativity norm charge; the true full-force model
-and old full-force-anchor factor-two controls remain unchanged. No live new
-reference, expensive vector evaluation or another arc is qualified yet.
+and old full-force-anchor factor-two controls remain unchanged. Decision0060
+verifies that separate convention with 60 exact manufactured/rejection cases,
+including a counterexample to relabelling an old anchor. Next assess fresh
+gravity jerk/rate and remaining budget, then bind any new curve's own
+coefficients/domain. No live new reference, expensive vector evaluation or
+another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.
