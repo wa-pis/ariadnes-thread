@@ -1,0 +1,31 @@
+{
+  "fresh_defect_channels": {
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "channel_inputs_si": {
+      "anchor_error_m_s2": 7.853215960348904e-6,
+      "jerk_error_m_s3": 3.777012706325851e-20,
+      "monopole_curvature_m_s4": 1.8061513448472072e-5,
+      "nonmonopole_translation_rate_m_s3": 8.72535388619181e-5,
+      "relativity_norm_m_s2": 1.1804408173470126e-10,
+      "rotation_rate_m_s3": 2.3007359855671667e-5,
+      "srp_norm_m_s2": 4.482151815418034e-8
+    },
+    "duration_s": 0.0625,
+    "elapsed_s": 0.0007749160286039114,
+    "epoch_tdb_s": 978995455.2929223,
+    "initial_state_m_m_s": [-245056838575.43283, 35261268424.25906, 22783597232.703575, -3128.28194638288, -18367.951868652242, -9028.78105009038],
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "outward_bounds_si": {
+      "defect_m_s2": 7.943095084820736e-6,
+      "defect_rate_m_s3": 0.00011082532101285457
+    },
+    "position_domain_radius_m": 4000.0,
+    "rotation_bound_original_duration_s": 0.125,
+    "scope": "Conditional D+J*t bound along the fresh cubic in the existing ideal SPK/PCK domain only; no error transport, native-stage or mission safety certificate",
+    "time_scale": "TDB seconds since J2000",
+    "velocity_domain_radius_m_s": 0.5
+  }
+}

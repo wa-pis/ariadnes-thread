@@ -594,6 +594,12 @@ portable56.42); retained fresh cubic output matches exactly. No extra
 native calls or production changes. Next bind the real force channels
 before fresh error transport; task3.9 remains open.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
+Decision0031 binds and retains the live fresh force-defect channels:
+D=7.943095084820736e-6 m/s^2, J=0.00011082532101285457 m/s^3, with
+unchanged old controls and zero additional native calls. Full suite3112
+passes in553.58 s (native198.76, portable84.60). Next apply error transport
+with unchanged incoming radii and the existing endpoint residual once;
+the conditional reference-defect bound is not a mission safety certificate.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

@@ -4079,6 +4079,7 @@ def _check_conditional_full_force_coast_domains(
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint, _initial_velocity_interval_m_s
     from test_trajectory_error_transport import _recentered_coast_reaches_m_m_s
+    from test_trajectory_error_transport import _fresh_reference_defect_m_s2_m_s3
     from test_trajectory_error_transport import _shifted_reference_defect_m_s2_m_s3
     from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
     from test_trajectory_tracefree import _tracefree_operator_bound_s_inv2
@@ -5754,6 +5755,72 @@ def _check_conditional_full_force_coast_domains(
                                             "additional_native_queries": 0, "additional_native_arcs": 0,
                                             "scope": "Separate nominal cubic reference and conditional domain inclusion only; residuals are not error bounds; full-force defect rate and error transport unresolved",
                                             **fresh_reported,
+                                        }}, sort_keys=True, allow_nan=False))
+                                        budget.check()
+                                        defect_started_s = perf_counter()
+                                        local_h = Fraction(next_s)
+                                        assert fresh_source_epoch_tdb_s == handoff_epoch
+                                        assert Fraction(handoff_epoch)+local_h <= Fraction(fresh_source_end_tdb_s)
+                                        assert Fraction(handoff_epoch)+local_h <= Fraction(start_tdb_s)+Fraction(source_affine_coverage_s)
+                                        assert start_tdb_s <= handoff_epoch < handoff_epoch+next_s <= end_tdb_s
+                                        assert set(fresh_source_states) == set(source_affine_motion) == set(trajectory.PHYSICAL_BODY_NAMES)
+                                        fresh_curvatures, fresh_translation_rates = {}, {}
+                                        for body, fresh_source in fresh_source_states.items():
+                                            budget.check()
+                                            old_slope, source_curvature = source_affine_motion[body]
+                                            assert sum((abs(a-b) for a, b in zip(fresh_source[3:], old_slope, strict=True)), Fraction(0)) <= source_curvature*Fraction(offset_s)
+                                            fresh_relative_speed = sum((abs(a-b) for a, b in
+                                                zip(handoff_state[3:], fresh_source[3:], strict=True)), Fraction(0))
+                                            fresh_relative_acceleration = fresh_acceleration_bound+source_curvature
+                                            fresh_curvatures[body] = _point_mass_force_curvature_bound_m_s4(
+                                                fresh_gm_m3_s2[body], floors_m[body],
+                                                fresh_relative_speed+fresh_relative_acceleration*local_h,
+                                                fresh_relative_acceleration,
+                                            )
+                                            if body in {"Moon", "Mars"}:
+                                                fresh_translation_rates[body] = degree_map_nonmonopole_s_inv2[body]*(
+                                                    fresh_relative_speed+fresh_relative_acceleration*local_h/2)
+                                        assert set(fresh_translation_rates) == {"Moon", "Mars"}
+                                        # These endpoint enclosures had their linear branches
+                                        # checked over the ORIGINAL cumulative duration.
+                                        fresh_rotation_rate = sum(map(Fraction, partitioned_rotation_variation_m_s2.values()), Fraction(0))/Fraction(duration_s)
+                                        fresh_channels = {
+                                            "anchor_error_m_s2": Fraction(reported_comparison[2]),
+                                            "jerk_error_m_s3": fresh_reference_jerk_error_m_s3,
+                                            "monopole_curvature_m_s4": sum(fresh_curvatures.values(), Fraction(0)),
+                                            "nonmonopole_translation_rate_m_s3": sum(fresh_translation_rates.values(), Fraction(0)),
+                                            "rotation_rate_m_s3": fresh_rotation_rate,
+                                            "srp_norm_m_s2": Fraction(srp), "relativity_norm_m_s2": Fraction(relativity),
+                                        }
+                                        # Consume outward binary64 channels so the saved
+                                        # inputs reproduce the exact D/J arithmetic cheaply.
+                                        channel_inputs = {key: math.nextafter(float(value), math.inf) if value else 0.0
+                                                          for key, value in fresh_channels.items()}
+                                        assert all(math.isfinite(out) and Fraction(out) >= fresh_channels[key] >= 0
+                                                   for key, out in channel_inputs.items())
+                                        fresh_d, fresh_j = _fresh_reference_defect_m_s2_m_s3(
+                                            next_s, **{key: Fraction(value) for key, value in channel_inputs.items()},
+                                        )
+                                        defect_values = {"defect_m_s2": fresh_d, "defect_rate_m_s3": fresh_j}
+                                        reported_defect = {key: math.nextafter(float(value), math.inf) if value else 0.0
+                                                           for key, value in defect_values.items()}
+                                        assert all(math.isfinite(out) and Fraction(out) >= defect_values[key] >= 0
+                                                   for key, out in reported_defect.items())
+                                        assert selected_handoff == preserved_handoff
+                                        assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                        budget.check()
+                                        print(json.dumps({"fresh_defect_channels": {
+                                            "epoch_tdb_s": handoff_epoch, "duration_s": next_s,
+                                            "rotation_bound_original_duration_s": duration_s,
+                                            "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+                                            "model_id": trajectory.PHYSICAL_MODEL_IDENTIFIER,
+                                            "initial_state_m_m_s": list(map(float, handoff_state)),
+                                            "position_domain_radius_m": position_radius_m, "velocity_domain_radius_m_s": velocity_radius_m_s,
+                                            "channel_inputs_si": channel_inputs,
+                                            "outward_bounds_si": reported_defect,
+                                            "elapsed_s": perf_counter()-defect_started_s,
+                                            "additional_native_queries": 0, "additional_native_arcs": 0,
+                                            "scope": "Conditional D+J*t bound along the fresh cubic in the existing ideal SPK/PCK domain only; no error transport, native-stage or mission safety certificate",
                                         }}, sort_keys=True, allow_nan=False))
                                         budget.check()
                                         print(json.dumps({"fresh_harmonic_vector_enclosure": {

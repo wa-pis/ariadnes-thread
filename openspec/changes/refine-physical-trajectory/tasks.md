@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0031 binds the tested fresh channel assembler to existing live
+source derivatives, domain bounds and the qualified acceleration anchor.
+It recomputes curvature/translation, retains norm-only force changes and
+uses rotation's original-duration rate. Retained D=7.943095084820736e-6
+m/s^2 and J=0.00011082532101285457 m/s^3; assembly0.000775 s, no new
+queries/arcs. All 3112 tests pass in 553.58 s (native198.76, portable84.60),
+Ruff/strict OpenSpec/legacy isolation pass. Previous scientific controls
+are unchanged. Next transport incoming radii with this pair and add the
+existing native endpoint residual once; task3.9 remains open.
+
 Decision0030 implements exact fresh D/J channel assembly in the existing
 test module. Twelve signed analytic reversal/Taylor/incoming-error cases
 and 26 boundary rejections pass (38 focused in 0.07 s). Removing the
