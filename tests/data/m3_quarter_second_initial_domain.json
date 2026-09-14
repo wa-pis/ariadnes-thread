@@ -1,0 +1,91 @@
+{
+  "quarter_second_initial_domain": {
+    "acceleration_upper_m_s2": 3.2875760444250655,
+    "additional_ephemeris_queries": 0,
+    "additional_native_arcs": 0,
+    "clearance_lower_m": {
+      "Earth": 221229518920.35965,
+      "Jupiter": 795972990606.8462,
+      "Mars": 234943.10821885892,
+      "Mercury": 198570853714.75647,
+      "Moon": 221236656894.25546,
+      "Saturn": 1435641422161.2192,
+      "Sun": 247747921591.4906,
+      "Venus": 354654114148.4514
+    },
+    "coast_mass_kg": 2000.0,
+    "collision_guards_m": {
+      "Earth": 6378136.6,
+      "Jupiter": 71492000.0,
+      "Mars": 3396190.0,
+      "Mercury": 2439700.0,
+      "Moon": 1737400.0,
+      "Saturn": 60268000.0,
+      "Sun": 696000000.0,
+      "Venus": 6051800.0
+    },
+    "conditional_domain_closed": true,
+    "distance_floors_m": {
+      "Earth": 221235897056.9597,
+      "Jupiter": 796044482606.8463,
+      "Mars": 3631133.108218859,
+      "Mercury": 198573293414.7565,
+      "Moon": 221238394294.2555,
+      "Saturn": 1435701690161.2195,
+      "Sun": 248443921591.49063,
+      "Venus": 354660165948.4515
+    },
+    "dry_mass_kg": 1000.0,
+    "duration_s": 0.25,
+    "elapsed_s": 0.21679204190149903,
+    "end_epoch_tdb_s": 978995455.4804223,
+    "gravity_upper_m_s2": {
+      "Earth": 8.143790336206992e-09,
+      "Jupiter": 1.9991978772434502e-07,
+      "Mars": 3.285425688475364,
+      "Mercury": 5.58739862937619e-10,
+      "Moon": 1.0016665998600251e-10,
+      "Saturn": 1.8402192230607218e-08,
+      "Sun": 0.0021500813027846375,
+      "Venus": 2.5826736515245576e-09
+    },
+    "initial_error_m_m_s": [
+      0.0,
+      0.0
+    ],
+    "initial_state_m_m_s_kg": [
+      -245056838379.9213,
+      35261269572.25604,
+      22783597797.002373,
+      -3128.0852119627166,
+      -18367.952057328373,
+      -9028.780705913492,
+      2000.0
+    ],
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "position_domain_radius_m": 8000.0,
+    "position_reach_upper_m": 7631.307230552536,
+    "relative_speed_upper_m_s": 30538.2397573849,
+    "schwarzschild_upper_m_s2": 1.1804627804138227e-10,
+    "scope": "Initial exact synthetic-state ideal-coast domain only; not numerical handoff, endpoint accuracy, native-stage or mission safety",
+    "source_envelope_duration_s": 1.0,
+    "source_reaches_m": {
+      "Earth": 51514.02789752032,
+      "Jupiter": 18112.416065725694,
+      "Mars": 50366.89178114096,
+      "Mercury": 132964.753756096,
+      "Moon": 54223.24840816563,
+      "Saturn": 14679.761374265736,
+      "Sun": 12.421829988752153,
+      "Venus": 71521.51571852337
+    },
+    "srp_upper_m_s2": 4.482151960137405e-08,
+    "start_epoch_tdb_s": 978995455.2304223,
+    "thrust_enabled": false,
+    "time_scale": "TDB seconds since J2000",
+    "velocity_domain_radius_m_s": 1.0,
+    "velocity_reach_upper_m_s": 0.8218940111062665
+  }
+}

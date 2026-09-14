@@ -26,9 +26,11 @@ radii, velocity closure and guard separation, without changing acceptance.
 Decision0047 identifies the fixed-anchor reach obstruction and scopes a
 zero-additional-native domain-only probe: 0.25 s, 8000 m / 1 m/s, using
 existing one-second source envelopes but recomputing every force/floor.
-The proposed domain has NOT passed; require new uniform A < 4 m/s^2 and
-all eight guard/coverage/closure checks under the existing budget. A larger
-physical interval and its resources/error transport must be qualified
+Decision0048's initial-state domain probe closes at A=3.2875760444250655
+m/s^2, with minimum conditional guard clearance 234943.10821885892 m.
+This is not a numerical handoff or a fifth native arc. Next check the carried
+fourth-endpoint error ball inside this domain; its reference/error transport
+must be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.
 

@@ -52,6 +52,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0048 implements only the initial-state quarter-second domain probe.
+New A=3.2875760444250655 m/s^2 gives reaches 7631.307230552536 m and
+0.8218940111062665 m/s inside 8000 m / 1 m/s; all eight guards are clear,
+with minimum conservative clearance 234943.10821885892 m at Mars.
+No added native arc/ephemeris query, new endpoint or changed accuracy gate.
+837 focused controls and all 3217 tests pass (463.75 s); the new report
+matches both modes exactly apart from timing and prior science is unchanged.
+New local calculation: 0.2168 / 0.2174 s native/portable; inventory remains
+13 / 0 arcs. Ruff, strict OpenSpec and legacy checks pass; retained evidence
+is `tests/data/m3_quarter_second_initial_domain.json` and Decision0048.
+Next qualify the carried fourth-endpoint error ball in this new domain,
+not a fifth propagation. Task 3.9 and native-stage safety remain open.
+
 Decision0047 finds that the fixed-anchor speed term alone prevents the
 4000 m reach formula from closing at 0.25 s. This is not actual domain exit.
 Next perform only a 0.25 s, 8000 m / 1 m/s initial-state domain check:

@@ -4236,6 +4236,82 @@ def _check_conditional_full_force_coast_domains(
         initial_speed_m_s = sum((abs(Fraction(value)) for value in state[3:]), Fraction(0))
         initial_speed_upper_m_s = math.nextafter(float(initial_speed_m_s), math.inf)
         assert Fraction(initial_speed_upper_m_s) >= initial_speed_m_s
+        if center == "Mars":
+            # Separate initial-state domain probe, NOT another native arc or
+            # extension of the reference/error/lineage controls below.
+            budget.check()
+            domain_started_s = perf_counter()
+            counts_before = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+            probe_h, probe_radius_m, probe_velocity_m_s = 0.25, 8000.0, 1.0
+            assert 0 < probe_h <= 1.0 <= source_affine_coverage_s
+            assert start_tdb_s + 1.0 <= end_tdb_s
+            assert Fraction(start_tdb_s + probe_h) - Fraction(start_tdb_s) == Fraction(probe_h)
+            assert set(body_reaches_m[1.0]) == set(trajectory.PHYSICAL_BODY_NAMES)
+            probe_floors, probe_gravity, probe_clearances = {}, {}, {}
+            for body in trajectory.PHYSICAL_BODY_NAMES:
+                budget.check()
+                floor = trajectory._relative_distance_lower_bound(
+                    budget, tuple(state[:3]), tuple(states[body][:3]), probe_radius_m, body_reaches_m[1.0][body],
+                )
+                probe_floors[body] = floor
+                assert floor > guards_m[body], (body, floor, guards_m[body])
+                clearance = Fraction(floor) - Fraction(guards_m[body])
+                probe_clearances[body] = math.nextafter(float(clearance), -math.inf)
+                assert 0 < Fraction(probe_clearances[body]) <= clearance
+                field = bodies.get(body).gravity_field_model
+                harmonic = body in {"Moon", "Mars"}
+                probe_gravity[body] = trajectory._harmonic_acceleration_upper_bound(
+                    budget.candidate_id, field.gravitational_parameter,
+                    field.reference_radius if harmonic else floor, floor,
+                    field.cosine_coefficients if harmonic else ((1.0,),),
+                    field.sine_coefficients if harmonic else ((0.0,),),
+                )
+            probe_mass = trajectory._mass_lower_bound(budget, spacecraft.initial_mass_kg, 0.0, 0.0, probe_h)
+            assert probe_mass == spacecraft.initial_mass_kg > spacecraft.dry_mass_kg
+            # Full illumination bounds SRP even in shadow; no lit-domain
+            # sensitivity or rotation-dependent defect is claimed here.
+            probe_thrust, probe_srp = trajectory._thrust_and_srp_upper_bounds(
+                budget.candidate_id, spacecraft, probe_floors["Sun"], thrust_enabled=False,
+            )
+            probe_relative_speed = initial_speed_m_s + Fraction(probe_velocity_m_s) + Fraction(sun_speed_upper_m_s)
+            probe_relative_speed_upper = math.nextafter(float(probe_relative_speed), math.inf)
+            assert Fraction(probe_relative_speed_upper) >= probe_relative_speed
+            probe_relativity = trajectory._schwarzschild_acceleration_upper_bound(
+                budget.candidate_id, bodies.get("Sun").gravity_field_model.gravitational_parameter,
+                probe_floors["Sun"], probe_relative_speed_upper,
+            )
+            probe_acceleration = trajectory._sum_force_acceleration_bounds(
+                budget, probe_gravity, probe_thrust, probe_srp, probe_relativity, thrust_enabled=False,
+            )
+            assert probe_thrust == 0.0
+            assert Fraction(probe_acceleration) >= sum(map(Fraction, (*probe_gravity.values(), probe_srp, probe_relativity)))
+            probe_position = trajectory._position_reach_upper_bound(
+                budget, probe_h, 0.0, initial_speed_upper_m_s, probe_acceleration,
+            )
+            probe_velocity = math.nextafter(float(Fraction(probe_acceleration)*Fraction(probe_h)), math.inf)
+            probe_closed = probe_position < probe_radius_m and probe_velocity < probe_velocity_m_s
+            budget.check()
+            assert counts_before == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+            print(json.dumps({"quarter_second_initial_domain": {
+                "model_id": environment.model_id, "origin": "SSB", "orientation": "J2000",
+                "time_scale": "TDB seconds since J2000", "start_epoch_tdb_s": start_tdb_s,
+                "end_epoch_tdb_s": start_tdb_s+probe_h, "duration_s": probe_h,
+                "initial_state_m_m_s_kg": [float(value) for value in (*state, spacecraft.initial_mass_kg)],
+                "initial_error_m_m_s": [0.0, 0.0], "source_envelope_duration_s": 1.0,
+                "source_reaches_m": body_reaches_m[1.0], "collision_guards_m": guards_m,
+                "distance_floors_m": probe_floors, "clearance_lower_m": probe_clearances,
+                "position_domain_radius_m": probe_radius_m, "velocity_domain_radius_m_s": probe_velocity_m_s,
+                "gravity_upper_m_s2": probe_gravity, "srp_upper_m_s2": probe_srp,
+                "schwarzschild_upper_m_s2": probe_relativity, "acceleration_upper_m_s2": probe_acceleration,
+                "relative_speed_upper_m_s": probe_relative_speed_upper, "coast_mass_kg": probe_mass,
+                "dry_mass_kg": spacecraft.dry_mass_kg, "thrust_enabled": False,
+                "position_reach_upper_m": probe_position, "velocity_reach_upper_m_s": probe_velocity,
+                "conditional_domain_closed": probe_closed, "additional_native_arcs": 0,
+                "additional_ephemeris_queries": 0, "elapsed_s": perf_counter()-domain_started_s,
+                "scope": "Initial exact synthetic-state ideal-coast domain only; not numerical handoff, endpoint accuracy, native-stage or mission safety",
+            }}, sort_keys=True, allow_nan=False))
+            budget.check()
+            assert probe_acceleration < 4.0 and probe_closed
         domain_cases = [(duration_s, 1000.0, 0.1) for duration_s in body_reaches_m]
         if center == "Mars":
             domain_cases.extend(((1 / 16, 2000.0, 0.25), (1 / 8, 4000.0, 0.5)))
