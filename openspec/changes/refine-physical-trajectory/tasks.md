@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0019 observes the selected fresh Sun type2/SSB/J2000 record,
+pins its kernel hash and verifies the same 16-ULP guarded core. A separate
+read-only state query exactly matches all six retained Sun components.
+Next bind the cached velocity to the existing differentiated-series chain
+allowance inside the inventory without extra queries. Documentation only;
+strict OpenSpec and whitespace checks pass, no full-suite rerun. The latest
+implementation remains 2990 passing tests; task3.9 stays open.
+
 Decision0018 implements signed SRP interval scaling of the existing Sun
 gravity box. All 79 focused SRP/midpoint checks pass in 0.50 s, including
 direct-formula parity, parameter scaling, GM cancellation, sign crossing,

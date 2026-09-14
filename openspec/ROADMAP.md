@@ -531,7 +531,11 @@ parameter/sign/rounding controls and rechecked pinned illumination inputs.
 The result uses ideal source polynomials and needs no second source bridge.
 Next audit/bind the cached Sun velocity representation and fresh coverage
 before Schwarzschild vector/error composition; no full-force certificate yet.
-SRP, relativity, incoming state-ball and domain gaps remain explicit.
+Decision0019 confirms the selected Sun record is type2, fits the guarded
+core and reproduces the retained six-component state in a separate read-only
+probe. Next make the cached-velocity/differentiated-series allowance binding
+an inventory assertion without new queries. Relativity, native arithmetic,
+incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
