@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0058 (2026-09-15) binds six point-source arithmetic channels at the
+fourth nominal state, retaining exact relative centres, GMs, source allowances
+and positive whole-chord floors. Existing Jacobian variation bounds apply;
+Moon/Mars remain solely harmonic. No queries/arcs or tolerance changes. Next
+audit the complete available/missing anchor-channel ledger and coupled rate
+budget before expensive vector work. See
+`docs/decisions/0058-fourth-endpoint-point-source-bridge.md`; 3.9 stays open.
+
 Decision0057 binds full Moon200/Mars120 source-arithmetic effects at the
 fourth nominal state and new stored matrices. Exact ideal-source centres,
 unchanged SPK allowances and positive whole-chord floors feed the existing

@@ -6943,6 +6943,41 @@ def _check_conditional_full_force_coast_domains(
             "elapsed_s": perf_counter()-source_force_started_s,
             "scope": "Full stored-matrix Moon/Mars fields: ideal-source-centred arithmetic ball at fixed fourth nominal state only; no PCK error, native harmonic arithmetic, carried-state, interval or astronomical uncertainty certificate",
         }}, sort_keys=True, allow_nan=False))
+        point_source_started_s = perf_counter()
+        fourth_point_sources = {}
+        for source in point_bodies:
+            budget.check()
+            relative = tuple(a-b for a, b in zip(fourth_states[source][:3], handoff_state[:3], strict=True))
+            radius_squared = sum((x*x for x in relative), Fraction(0))
+            source_record = fourth_source_report[source]
+            allowance = source_record["native_position_l1_allowance_m"]
+            assert 0 <= source_record["native_anchor_position_l1_residual_upper_m"] <= allowance
+            epsilon = Fraction(allowance)
+            exact_floor = _dyadic_sqrt_bounds(radius_squared)[0]-epsilon
+            floor = math.nextafter(float(exact_floor), -math.inf)
+            assert math.isfinite(floor) and 0 < Fraction(floor) <= exact_floor
+            assert (Fraction(floor)+epsilon)**2 <= radius_squared
+            error = _point_mass_variation_bound_m_s2(fourth_gm[source], floor, epsilon)
+            reported = math.nextafter(float(error), math.inf)
+            assert math.isfinite(reported) and 0 < error <= Fraction(reported)
+            fourth_point_sources[source] = {
+                "gm_m3_s2": fourth_gm[source], "distance_floor_m": floor,
+                "source_position_l1_allowance_m": allowance,
+                "relative_centre_m_exact": [[hex(x.numerator), hex(x.denominator)] for x in relative],
+                "acceleration_l2_allowance_m_s2": reported,
+            }
+        assert set(fourth_point_sources) == set(fourth_intervals) == set(point_bodies)
+        assert point_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+        budget.check()
+        print(json.dumps({"fourth_endpoint_point_source_bridge": {
+            "epoch_tdb_s": fourth_source_epoch_tdb_s, "origin": "SSB", "orientation": "J2000",
+            "time_scale": "TDB seconds since J2000", "model_id": environment.model_id,
+            "nominal_state_m_m_s_kg": list(map(float, handoff_state)),
+            "source_spk_context_sha256": retained_last_binding["source_spk_context_sha256"],
+            "fields": fourth_point_sources, "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
+            "elapsed_s": perf_counter()-point_source_started_s,
+            "scope": "Six point-force source-arithmetic balls at fixed fourth nominal state only; no native force arithmetic, carried-state, time-domain or astronomical uncertainty certificate; Moon/Mars excluded",
+        }}, sort_keys=True, allow_nan=False))
     else:
         assert nominal_lineage == [] and retained_last_binding is None
     print(json.dumps({"harmonic_error_reuse": {

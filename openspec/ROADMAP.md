@@ -51,9 +51,10 @@ those new matrix errors into full Moon200/Mars120 acceleration-error bounds
 at the exact fourth nominal state/source radius, with C00 retained and no
 additional queries/arcs. Decision0057 binds the full stored-matrix Moon/Mars
 source-arithmetic channel at the ideal-source-centred fourth state, using
-the existing allowances rather than sampled residuals. Next bind the six
-point-source channels and assess remaining coupled errors before expensive
-vector evaluation or another arc.
+the existing allowances rather than sampled residuals. Decision0058 binds the
+six point-source arithmetic channels using exact source-centred chord floors,
+with Moon/Mars excluded. Next audit the available and missing same-epoch anchor
+channels and coupled rate budget before expensive vector work or another arc.
 Interval-specific reference/error transport remains to be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.
