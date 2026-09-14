@@ -1,0 +1,17 @@
+{
+  "fresh_endpoint_binding": {
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "end_epoch_tdb_s": 978995455.3554223,
+    "incoming_error_m_m_s": [0.00010529778787867129, 2.3227467748483292e-7],
+    "initial_state_m_m_s_kg": [-245056838575.43283, 35261268424.25906, 22783597232.703575, -3128.28194638288, -18367.951868652242, -9028.78105009038, 2000.0],
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "outgoing_error_m_m_s": [0.00014951281615784107, 9.62662340905759e-7],
+    "scope": "Same-probe endpoint/error consistency only; not resource authentication, native-stage or mission safety",
+    "start_epoch_tdb_s": 978995455.2929223,
+    "terminal_state_m_m_s_kg": [-245056838770.95663, 35261267276.26207, 22783596668.40475, -3128.4786808243243, -18367.951684978845, -9028.781394259036, 2000.0],
+    "time_scale": "TDB seconds since J2000"
+  }
+}

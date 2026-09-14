@@ -649,6 +649,13 @@ complete resource-chain binding remains required before cross-run reuse.
 Local report timers and short uniform tiling do not establish mission
 runtime or adaptive infeasibility. Documentation audit only, strict
 OpenSpec/whitespace pass; task 3.9 remains open.
+Decision0040 retains the real native endpoint pair and replays its
+epoch/mass/error/residual correspondence against the same physical reports.
+Fourteen focused tests and all 3162 tests pass (504.90 s; native 165.62,
+portable 68.31); prior science is unchanged excluding explicit timings.
+No new arcs/queries per invocation. Next bind the selected SPK resource
+chain using existing inventory support; consistency is not authentication
+or mission safety. Task 3.9 remains open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0040 retains actual native initial/terminal seven-states and checks
+their epoch, mass, incoming error, exact cubic residual and outgoing error
+consistency against the same probe reports. Fourteen focused tests pass;
+the standalone inventory passes in 150.09 s, full 3162 in 504.90 s
+(native 165.62, portable 68.31). Prior science matches excluding explicit
+timing fields; Ruff/strict OpenSpec/legacy checks pass. No new native work
+per invocation. Next bind selected SPK chain/resource context, reusing the
+existing kernel inventory; no cross-run authentication or mission safety
+is claimed. Task 3.9 and scalability remain open.
+
 Decision0039 audits standalone physical evidence: saved residual norms do
 not bind the actual native terminal state. Next retain both native endpoints
 and verify their same-probe residual/epoch/error consistency, without new

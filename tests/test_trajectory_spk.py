@@ -4093,6 +4093,7 @@ def _check_conditional_full_force_coast_domains(
     from test_trajectory_gravity import _candidate, _spacecraft
 
     from test_trajectory_force_assembly import _compare_force_reference
+    from test_trajectory_endpoint_binding import _check_endpoint_binding
 
     candidate = _candidate(
         departure_epoch_utc=ephemeris.tdb_to_utc(start_tdb_s),
@@ -5740,7 +5741,7 @@ def _check_conditional_full_force_coast_domains(
                                                    for key, out in fresh_reported.items())
                                         assert selected_handoff == preserved_handoff
                                         assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
-                                        print(json.dumps({"fresh_cubic_reference": {
+                                        fresh_cubic_report = {
                                             "epoch_tdb_s": handoff_epoch, "duration_s": next_s,
                                             "origin": "SSB", "orientation": "J2000",
                                             "time_scale": "TDB seconds since J2000",
@@ -5755,7 +5756,8 @@ def _check_conditional_full_force_coast_domains(
                                             "additional_native_queries": 0, "additional_native_arcs": 0,
                                             "scope": "Separate nominal cubic reference and conditional domain inclusion only; residuals are not error bounds; full-force defect rate and error transport unresolved",
                                             **fresh_reported,
-                                        }}, sort_keys=True, allow_nan=False))
+                                        }
+                                        print(json.dumps({"fresh_cubic_reference": fresh_cubic_report}, sort_keys=True, allow_nan=False))
                                         budget.check()
                                         defect_started_s = perf_counter()
                                         local_h = Fraction(next_s)
@@ -5862,7 +5864,7 @@ def _check_conditional_full_force_coast_domains(
                                         assert selected_handoff == preserved_handoff
                                         assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
                                         budget.check()
-                                        print(json.dumps({"fresh_error_transport": {
+                                        fresh_transport_report = {
                                             "epoch_tdb_s": handoff_epoch, "duration_s": next_s,
                                             "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
                                             "model_id": trajectory.PHYSICAL_MODEL_IDENTIFIER,
@@ -5875,7 +5877,8 @@ def _check_conditional_full_force_coast_domains(
                                             "elapsed_s": perf_counter()-transport_started_s,
                                             "additional_native_queries": 0, "additional_native_arcs": 0,
                                             "scope": "Conditional ideal-state versus nominal native endpoint error for the existing fresh interval only; not native-stage or mission safety",
-                                        }}, sort_keys=True, allow_nan=False))
+                                        }
+                                        print(json.dumps({"fresh_error_transport": fresh_transport_report}, sort_keys=True, allow_nan=False))
                                         budget.check()
                                         clearance_started_s = perf_counter()
                                         assert set(floors_m) == set(guards_m) == set(trajectory.PHYSICAL_BODY_NAMES)
@@ -5899,7 +5902,7 @@ def _check_conditional_full_force_coast_domains(
                                         assert selected_handoff == preserved_handoff
                                         assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
                                         budget.check()
-                                        print(json.dumps({"fresh_conditional_clearance": {
+                                        fresh_clearance_report = {
                                             "start_epoch_tdb_s": handoff_epoch, "end_epoch_tdb_s": handoff_epoch+next_s,
                                             "domain_start_epoch_tdb_s": start_tdb_s, "domain_duration_s": duration_s,
                                             "source_polynomial_coverage_s": source_affine_coverage_s,
@@ -5916,7 +5919,24 @@ def _check_conditional_full_force_coast_domains(
                                             "elapsed_s": perf_counter()-clearance_started_s,
                                             "additional_native_queries": 0, "additional_native_arcs": 0,
                                             "scope": "Conditional ideal-coast clearance from eight collision spheres throughout this covered interval only; not native-stage, finite-burn or mission safety",
-                                        }}, sort_keys=True, allow_nan=False))
+                                        }
+                                        print(json.dumps({"fresh_conditional_clearance": fresh_clearance_report}, sort_keys=True, allow_nan=False))
+                                        budget.check()
+                                        endpoint_binding = {
+                                            "start_epoch_tdb_s": handoff_epoch, "end_epoch_tdb_s": adjacent_final_tdb_s,
+                                            "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+                                            "model_id": trajectory.PHYSICAL_MODEL_IDENTIFIER,
+                                            "initial_state_m_m_s_kg": adjacent_initial.tolist(), "terminal_state_m_m_s_kg": adjacent_final.tolist(),
+                                            "incoming_error_m_m_s": [transport_inputs["position_error_m"], transport_inputs["velocity_error_m_s"]],
+                                            "outgoing_error_m_m_s": [reported_transport["native_endpoint_position_error_m"], reported_transport["native_endpoint_velocity_error_m_s"]],
+                                            "additional_native_queries": 0, "additional_native_arcs": 0,
+                                            "scope": "Same-probe endpoint/error consistency only; not resource authentication, native-stage or mission safety",
+                                        }
+                                        _check_endpoint_binding(endpoint_binding, fresh_cubic_report, fresh_transport_report, fresh_clearance_report)
+                                        assert selected_handoff == preserved_handoff
+                                        assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                        budget.check()
+                                        print(json.dumps({"fresh_endpoint_binding": endpoint_binding}, sort_keys=True, allow_nan=False))
                                         budget.check()
                                         print(json.dumps({"fresh_harmonic_vector_enclosure": {
                                             "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
