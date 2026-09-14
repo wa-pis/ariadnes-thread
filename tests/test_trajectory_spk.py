@@ -2078,14 +2078,13 @@ def test_point_gravity_anchor_rejects_singularity() -> None:
         _point_gravity_anchor_error_bound_m_s2(1.0, np.zeros(3), np.zeros(3), np.zeros(3))
 
 
-def _schwarzschild_anchor_error_bound_m_s2(
+def _schwarzschild_intervals_m_s2(
     gm_m3_s2: float, sun_state: np.ndarray, spacecraft_state: np.ndarray,
-    observed_acceleration_m_s2: np.ndarray,
-) -> Fraction:
-    """Enclose PPN=1 Schwarzschild L1 error at exact stored SI SSB/J2000 states."""
+) -> tuple[tuple[Fraction, Fraction], ...]:
+    """Enclose the signed PPN=1 vector at exact stored SI SSB/J2000 states."""
     assert type(gm_m3_s2) is float and math.isfinite(gm_m3_s2) and gm_m3_s2 > 0
-    for vector, size in ((sun_state, 6), (spacecraft_state, 6), (observed_acceleration_m_s2, 3)):
-        assert vector.shape == (size,) and vector.dtype == np.float64
+    for vector in (sun_state, spacecraft_state):
+        assert vector.shape == (6,) and vector.dtype == np.float64
         assert np.all(np.isfinite(vector))
     relative = [Fraction(ship) - Fraction(sun) for ship, sun in
                 zip(spacecraft_state, sun_state, strict=True)]
@@ -2095,15 +2094,27 @@ def _schwarzschild_anchor_error_bound_m_s2(
     speed_squared_m2_s2 = sum((value**2 for value in velocity_m_s), Fraction(0))
     radial_m2_s = sum((r * v for r, v in zip(position_m, velocity_m_s, strict=True)), Fraction(0))
     gm = Fraction(gm_m3_s2)
-    error_m_s2 = Fraction(0)
-    for r, v, observed in zip(position_m, velocity_m_s, observed_acceleration_m_s2, strict=True):
+    intervals = []
+    for r, v in zip(position_m, velocity_m_s, strict=True):
         # Separate the rational potential term; only the velocity term needs sqrt.
         potential_m_s2 = 4 * gm**2 * r / (299792458**2 * squared_m2**2)
         velocity_term = gm * (-speed_squared_m2_s2 * r + 4 * radial_m2_s * v)
         endpoints = [potential_m_s2 + velocity_term / (299792458**2 * squared_m2 * radius)
                      for radius in (lower_m, upper_m)]
-        error_m_s2 += max(abs(Fraction(observed) - endpoint) for endpoint in endpoints)
-    return error_m_s2
+        intervals.append((min(endpoints), max(endpoints)))
+    return tuple(intervals)
+
+
+def _schwarzschild_anchor_error_bound_m_s2(
+    gm_m3_s2: float, sun_state: np.ndarray, spacecraft_state: np.ndarray,
+    observed_acceleration_m_s2: np.ndarray,
+) -> Fraction:
+    """Preserve the L1 error API as a reduction of the signed intervals."""
+    assert observed_acceleration_m_s2.shape == (3,) and observed_acceleration_m_s2.dtype == np.float64
+    assert np.all(np.isfinite(observed_acceleration_m_s2))
+    intervals = _schwarzschild_intervals_m_s2(gm_m3_s2, sun_state, spacecraft_state)
+    return sum((max(abs(Fraction(observed)-lo), abs(Fraction(observed)-hi))
+                for observed, (lo, hi) in zip(observed_acceleration_m_s2, intervals, strict=True)), Fraction(0))
 
 
 @pytest.mark.parametrize("offset", [0.0, 1e12])

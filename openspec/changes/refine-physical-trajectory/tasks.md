@@ -52,6 +52,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0021 extracts signed Schwarzschild intervals while preserving the
+old error API. The pinned fresh case adds the existing Sun source-state
+variation allowance once, after proving whole-chord distance/speed bounds.
+Eight signed examples, twelve source perturbations, five rejection cases
+and one retained case are added. All 103 focused checks pass in 0.51 s;
+full suite 3016 passed in 473.52 s, native 152.63 s, portable 50.87 s.
+Retained signed vector and 3.293019657772923e-27 m/s^2 L2 allowance match
+captured output. Ruff, strict OpenSpec and legacy isolation pass, unchanged
+thirteen/zero arcs and forty readbacks. No additional native queries/arcs or
+production change. Next compose the three force groups and named channels
+once; native force arithmetic and state/time domains remain open.
+
 Decision0020 adds the fresh cached-Sun velocity bridge using the existing
 full state readback and exact type2 derivative. Pin the kernel and guarded
 record identity; require exact cached/native equality and rational L1

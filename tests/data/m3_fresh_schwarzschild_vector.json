@@ -1,0 +1,19 @@
+{
+  "fresh_schwarzschild_vector": {
+    "acceleration_l2_allowance_m_s2": 3.293019657772923e-27,
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "epoch_tdb_s": 978995455.2929223,
+    "midpoint_l2_allowance_m_s2": 2.9165445267917088e-27,
+    "midpoint_m_s2": [-4.017496453235729e-11, 6.375567429189403e-12, 4.030281723374813e-12],
+    "orientation": "J2000",
+    "origin": "SSB",
+    "scope": "PPN=1 Sun Schwarzschild at fixed nominal spacecraft state; no native arithmetic, state/time domain or full-force certificate",
+    "source_chord_distance_floor_m": 248443929582.4009,
+    "source_chord_speed_upper_m_s": 30519.18248404948,
+    "source_convention": "exact Sun type-2 position polynomials and their derivatives",
+    "source_position_allowance_m": 1.4595070471278306e-07,
+    "source_state_l2_allowance_m_s2": 3.764751309812138e-28,
+    "source_velocity_allowance_m_s": 6.9538963374104784e-15
+  }
+}

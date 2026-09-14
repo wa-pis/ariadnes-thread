@@ -538,8 +538,13 @@ binding inside the inventory without new queries; all 2990 tests pass in
 473.27 s (native 152.86 s, portable 50.87 s), with unchanged thirteen/zero arcs.
 The 6.9538963374104784e-15 m/s conditional L1 allowance encloses the fresh
 8.779188700062134e-16 m/s observed residual; retained output matches exactly.
-Next qualify the signed Schwarzschild vector and its source-state bridge.
-Relativity, native arithmetic,
+Decision0021 extracts the signed Schwarzschild vector and adds its qualified
+Sun source-state bridge at the nominal fresh state. All 3016 tests pass in
+473.52 s (native 152.63 s, portable 50.87 s), unchanged thirteen/zero arcs.
+The retained 3.293019657772923e-27 m/s^2 L2 numerical allowance and signed
+vector match captured output; native force arithmetic is not included.
+Next compose the three retained force groups with each error channel once.
+Native arithmetic,
 incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
