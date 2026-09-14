@@ -587,6 +587,12 @@ SRP/Schwarzschild changes in D, recompute fresh monopole curvature and
 relative speeds, and rebind nonmonopole/rotation rates. Verify exact
 factor-two/Taylor controls before live binding and error transport.
 Documentation only; no new numerical certificate or full-suite rerun.
+Decision0030 verifies that channel assembly with 38 exact analytic and
+boundary controls, including force reversal, quadratic remainder and
+incoming error preservation. All 3112 tests pass in 495.77 s (native169.66,
+portable56.42); retained fresh cubic output matches exactly. No extra
+native calls or production changes. Next bind the real force channels
+before fresh error transport; task3.9 remains open.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;

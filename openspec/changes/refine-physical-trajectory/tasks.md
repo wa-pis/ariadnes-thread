@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0030 implements exact fresh D/J channel assembly in the existing
+test module. Twelve signed analytic reversal/Taylor/incoming-error cases
+and 26 boundary rejections pass (38 focused in 0.07 s). Removing the
+factor-two or curvature channel demonstrably underbounds the oracle.
+Full suite 3112 passed in 495.77 s (native169.66, portable56.42); Ruff,
+strict OpenSpec and legacy isolation pass. The fresh cubic diagnostic
+matches retained evidence exactly. Next bind the physical channels in
+the existing live probe; these analytic controls do not close task3.9.
+
 Decision0029 derives the fresh defect channel contract before numerical
 binding. The old rate excludes norm-only SRP/Schwarzschild variation:
 retain D=E0+2*(S+R), recompute fresh monopole curvature/relative speeds,

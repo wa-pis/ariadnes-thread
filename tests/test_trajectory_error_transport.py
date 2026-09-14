@@ -6,6 +6,81 @@ import math
 import pytest
 
 
+def _fresh_reference_defect_m_s2_m_s3(
+    duration_s: float, anchor_error_m_s2: Fraction, jerk_error_m_s3: Fraction,
+    monopole_curvature_m_s4: Fraction, nonmonopole_translation_rate_m_s3: Fraction,
+    rotation_rate_m_s3: Fraction, srp_norm_m_s2: Fraction, relativity_norm_m_s2: Fraction,
+) -> tuple[Fraction, Fraction]:
+    """Assemble D+J*t in SI for a fresh cubic; caller qualifies all channels.
+
+    Curvature, translation/rotation rates and force norms must hold on the
+    entire interval. This arithmetic does not establish domain/source coverage.
+    Norm-only force changes can be twice their individual acceleration norms.
+    """
+    assert type(duration_s) is float and math.isfinite(duration_s) and duration_s > 0
+    assert all(isinstance(value, Fraction) and value >= 0 for value in (
+        anchor_error_m_s2, jerk_error_m_s3, monopole_curvature_m_s4,
+        nonmonopole_translation_rate_m_s3, rotation_rate_m_s3, srp_norm_m_s2, relativity_norm_m_s2,
+    ))
+    return (anchor_error_m_s2 + 2*(srp_norm_m_s2 + relativity_norm_m_s2),
+            jerk_error_m_s3 + Fraction(duration_s)*monopole_curvature_m_s4/2
+            + nonmonopole_translation_rate_m_s3 + rotation_rate_m_s3)
+
+
+@pytest.mark.parametrize("channels", [(1, 2, 3, 4, 5, 0, 0), (0, 0, 0, 0, 0, 2, 3), (1, 2, 3, 4, 5, 2, 3)])
+@pytest.mark.parametrize("sign", [-1, 1])
+@pytest.mark.parametrize("incoming", [False, True])
+def test_fresh_defect_channels_enclose_exact_reversal_and_curvature(channels: tuple, sign: int, incoming: bool) -> None:
+    e, ej, k, translation, rotation, srp, relativity = map(Fraction, channels)
+    duration_s = 1 / 16
+    h = Fraction(duration_s)
+    d, j = _fresh_reference_defect_m_s2_m_s3(duration_s, *map(Fraction, channels))
+    p0, v0 = (Fraction(1, 10000), Fraction(1, 10**7)) if incoming else (Fraction(0), Fraction(0))
+    origin, speed, a0, j0 = map(Fraction, (10**12, 7, 11, 13))
+    for t in (Fraction(0), h/2, h):
+        # Two continuous bounded force components reverse over the horizon.
+        bounded_srp, bounded_relativity = (sign*norm*(1-2*t/h) for norm in (srp, relativity))
+        assert abs(bounded_srp) <= srp and abs(bounded_relativity) <= relativity
+        other_force = a0-sign*(srp+relativity+e) + (j0-sign*(ej+translation+rotation))*t-sign*k*t**2/2
+        force = other_force+bounded_srp+bounded_relativity
+        defect = force-(a0+j0*t)
+        ramp_rate = ej+translation+rotation+2*(srp+relativity)/h
+        assert defect == -sign*(e+ramp_rate*t+k*t**2/2)
+        # Exact nonnegative gap proves the WHOLE interval, not just samples.
+        gap = 2*(srp+relativity)*(1-t/h)+k*t*(h-t)/2
+        assert d+j*t-abs(defect) == gap >= 0
+        if t == h:
+            assert abs(defect) == d+j*h
+            if srp+relativity:
+                assert abs(defect) > (d-(srp+relativity))+j*h  # Missing factor two fails.
+            if k:
+                assert abs(defect) > d+(j-k*h/2)*h  # Missing Taylor remainder fails.
+        # Independent polynomial integration with signed incoming state error.
+        reference_p = origin+speed*t+a0*t**2/2+j0*t**3/6
+        reference_v = speed+a0*t+j0*t**2/2
+        truth_p = origin-sign*p0+(speed-sign*v0)*t+(a0-sign*e)*t**2/2+(j0-sign*ramp_rate)*t**3/6-sign*k*t**4/24
+        truth_v = speed-sign*v0+(a0-sign*e)*t+(j0-sign*ramp_rate)*t**2/2-sign*k*t**3/6
+        bounds = _coast_error_envelope(float(t), p0, v0, Fraction(0), Fraction(0), d, acceleration_defect_rate_m_s3=j)
+        assert abs(truth_p-reference_p) <= bounds[0] and abs(truth_v-reference_v) <= bounds[1]
+        if t == 0:
+            assert bounds == (p0, v0)
+
+
+@pytest.mark.parametrize("field", range(1, 8))
+@pytest.mark.parametrize("invalid", [Fraction(-1), True, 0.0])
+def test_fresh_defect_channels_reject_invalid_allowance(field: int, invalid: object) -> None:
+    inputs: list[object] = [0.0625]+[Fraction(0)]*7
+    inputs[field] = invalid
+    with pytest.raises(AssertionError):
+        _fresh_reference_defect_m_s2_m_s3(*inputs)  # type: ignore[arg-type] -- boundary rejection.
+
+
+@pytest.mark.parametrize("duration_s", [0.0, -1.0, True, math.nan, math.inf])
+def test_fresh_defect_channels_reject_invalid_horizon(duration_s: float) -> None:
+    with pytest.raises(AssertionError):
+        _fresh_reference_defect_m_s2_m_s3(duration_s, *(Fraction(0),)*7)
+
+
 def _shifted_reference_defect_m_s2_m_s3(
     offset_s: float, position_sensitivity_s_inv2: Fraction, velocity_sensitivity_s_inv: Fraction,
     defect_m_s2: Fraction, defect_rate_m_s3: Fraction,
