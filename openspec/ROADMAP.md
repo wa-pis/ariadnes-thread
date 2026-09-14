@@ -44,8 +44,11 @@ with live sources/GM, without resetting carried errors or duplicating Moon/Mars.
 Decision0054 audits harmonic tail cost in the remaining error budget: using
 the actual nominal anchor rather than the broad domain first admits a Mars
 degree115 prefix in an optimistic scalar screen. This does not qualify its
-full error or select it for implementation. Next check the new rotation bridge
-and remaining coupled channels before any expensive vector evaluation or arc.
+full error or select it for implementation. Decision0055 recomputes the
+same-epoch Moon/Mars matrix bridge and dimensionless singular-value bounds,
+with two rotation queries and no new spacecraft arc. Next bind these matrix
+errors to full-field acceleration and assess remaining coupled channels before
+any expensive vector evaluation or arc.
 Interval-specific reference/error transport remains to be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.

@@ -1,0 +1,64 @@
+{
+  "fourth_endpoint_rotation_bridge": {
+    "additional_ephemeris_queries": 0,
+    "additional_native_arcs": 0,
+    "additional_rotation_queries": 2,
+    "elapsed_s": 0.4351144579704851,
+    "epoch_tdb_s": 978995455.3554223,
+    "fields": {
+      "Mars": {
+        "inertial_to_fixed": [
+          [
+            0.7137625563840235,
+            -0.3757393623220674,
+            -0.5910693230966652
+          ],
+          [
+            0.5399262277623873,
+            0.8327296386258569,
+            0.12264182617821948
+          ],
+          [
+            0.4461195822628978,
+            -0.406670973338221,
+            0.7972427721627344
+          ]
+        ],
+        "matrix_entry_l1_allowance": 1.206005056117713e-11,
+        "operator_norm_upper": 1.0000000000120604,
+        "rotation_target_frame": "IAU_Mars",
+        "singular_value_lower": 0.9999999999879399
+      },
+      "Moon": {
+        "inertial_to_fixed": [
+          [
+            0.48734366252848826,
+            -0.7921116062798391,
+            -0.3674987861069638
+          ],
+          [
+            0.8728612169683675,
+            0.4538036993540363,
+            0.17937530032056237
+          ],
+          [
+            0.024687051379608638,
+            -0.4081928535010926,
+            0.9125618575443618
+          ]
+        ],
+        "matrix_entry_l1_allowance": 1.98899895618367e-13,
+        "operator_norm_upper": 1.0000000000001992,
+        "rotation_target_frame": "IAU_Moon",
+        "singular_value_lower": 0.9999999999998009
+      }
+    },
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "pck_sha256": "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2",
+    "pool_sha256": "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0",
+    "scope": "Stored matrices versus ideal text-PCK at the fourth endpoint; dimensionless matrix/operator bounds only, no force error, interval rotation bound or mission certificate",
+    "time_scale": "TDB seconds since J2000"
+  }
+}

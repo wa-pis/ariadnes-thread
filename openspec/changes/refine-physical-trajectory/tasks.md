@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0055 recomputes Moon/Mars PCK matrix errors at the actual fourth
+endpoint, retaining matrices, resource links and outward singular-value bounds.
+Two additional rotation queries, zero additional ephemeris queries/arcs; no
+old epoch's error is transplanted. These are dimensionless matrix bounds,
+not acceleration errors. Next bind the full-field matrix-to-force error to
+this state/source/resource set before choosing expensive harmonic work.
+See `docs/decisions/0055-fourth-endpoint-rotation-bridge.md`; 3.9 stays open.
+
 Decision0053 binds the six live point forces to the actual fourth endpoint,
 retaining the carried error as separate metadata and excluding Moon/Mars.
 All 3217 tests pass (524.51 s), prior science unchanged; no new native calls.

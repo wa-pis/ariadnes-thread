@@ -6826,6 +6826,40 @@ def _check_conditional_full_force_coast_domains(
             "elapsed_s": perf_counter()-point_started_s,
             "scope": "Six nominal ideal-polynomial point forces at the fourth endpoint only; carried error is metadata, not included in these intervals; no source arithmetic, harmonic, full-force or whole-interval error qualification",
         }}, sort_keys=True, allow_nan=False))
+        rotation_started_s = perf_counter()
+        budget.check()
+        pool_digest = sha256(json.dumps(pck_inputs, sort_keys=True, allow_nan=False).encode()).hexdigest()
+        assert pool_digest == "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0"
+        fourth_angles = _pck_angle_intervals_deg(budget, pck_inputs, fourth_source_epoch_tdb_s)
+        fourth_rotations = {}
+        for source in ("Moon", "Mars"):
+            budget.check()
+            rotation = np.asarray(bodies.get(source).rotation_model.inertial_to_body_fixed_rotation(fourth_source_epoch_tdb_s))
+            budget.check()
+            error = _pck_matrix_error_bound(fourth_angles[source], rotation)
+            reported_error = math.nextafter(float(error), math.inf)
+            # For ideal orthogonal R and ||Q-R||_2 <= e, all singular
+            # values of Q lie in [1-e, 1+e]. These are not force errors.
+            lower = math.nextafter(float(1-error), -math.inf)
+            upper = math.nextafter(float(1+error), math.inf)
+            assert math.isfinite(reported_error) and 0 <= error <= Fraction(reported_error) < 1
+            assert 0 < Fraction(lower) <= 1-error <= 1+error <= Fraction(upper)
+            fourth_rotations[source] = {
+                "rotation_target_frame": f"IAU_{source}", "inertial_to_fixed": rotation.tolist(),
+                "matrix_entry_l1_allowance": reported_error,
+                "singular_value_lower": lower, "operator_norm_upper": upper,
+            }
+        assert point_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+        budget.check()
+        print(json.dumps({"fourth_endpoint_rotation_bridge": {
+            "epoch_tdb_s": fourth_source_epoch_tdb_s, "origin": "SSB", "orientation": "J2000",
+            "time_scale": "TDB seconds since J2000", "model_id": environment.model_id,
+            "pool_sha256": pool_digest, "pck_sha256": environment.collision_resource.actual_sha256,
+            "fields": fourth_rotations, "additional_rotation_queries": 2,
+            "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
+            "elapsed_s": perf_counter()-rotation_started_s,
+            "scope": "Stored matrices versus ideal text-PCK at the fourth endpoint; dimensionless matrix/operator bounds only, no force error, interval rotation bound or mission certificate",
+        }}, sort_keys=True, allow_nan=False))
     else:
         assert nominal_lineage == [] and retained_last_binding is None
     print(json.dumps({"harmonic_error_reuse": {
