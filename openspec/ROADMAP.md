@@ -53,8 +53,12 @@ additional queries/arcs. Decision0057 binds the full stored-matrix Moon/Mars
 source-arithmetic channel at the ideal-source-centred fourth state, using
 the existing allowances rather than sampled residuals. Decision0058 binds the
 six point-source arithmetic channels using exact source-centred chord floors,
-with Moon/Mars excluded. Next audit the available and missing same-epoch anchor
-channels and coupled rate budget before expensive vector work or another arc.
+with Moon/Mars excluded. Decision0059 audits available/missing channels and
+shows that a higher harmonic prefix alone does not resolve the remaining
+rate/residual budget. Next test a gravity-only comparison-polynomial anchor
+with a single bounded SRP/relativity norm charge; the true full-force model
+and old full-force-anchor factor-two controls remain unchanged. No live new
+reference, expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.
