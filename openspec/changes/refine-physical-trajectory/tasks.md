@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0039 audits standalone physical evidence: saved residual norms do
+not bind the actual native terminal state. Next retain both native endpoints
+and verify their same-probe residual/epoch/error consistency, without new
+native work. Cross-run use still requires complete resource-chain binding.
+Local arithmetic and test-suite timings are not mission runtime; the old
+1/64 s uniform-tiling counterexample is not an adaptive lower bound.
+Documentation only; strict OpenSpec/whitespace pass, no full-suite rerun.
+Task 3.9 remains open and the old tighter endpoint control is preserved.
+
 Decision0038 extracts the same test-only clear-left continuation for
 native analytic recursion and17 synthetic controls. Successful return
 selects the right endpoint; blocked left never invokes right; inconsistent

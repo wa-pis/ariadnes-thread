@@ -642,6 +642,13 @@ synthetic cases add no native work; full3148 tests pass in497.72 s
 (native158.77, portable69.00), old diagnostics unchanged excluding times.
 Next identify physical interval/state/error/resource bindings and runtime
 applicability, not more generic label dispatch; task3.9 remains open.
+Decision0039 identifies missing standalone native endpoint bindings in
+the retained physical reports. Next retain both endpoints and check the
+same-probe residual/epoch/error correspondence without new native work;
+complete resource-chain binding remains required before cross-run reuse.
+Local report timers and short uniform tiling do not establish mission
+runtime or adaptive infeasibility. Documentation audit only, strict
+OpenSpec/whitespace pass; task 3.9 remains open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
