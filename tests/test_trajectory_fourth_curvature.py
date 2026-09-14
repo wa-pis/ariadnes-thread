@@ -8,9 +8,12 @@ from pathlib import Path
 from time import perf_counter
 
 from space_nav import trajectory
-from test_trajectory_degree_map import _nonmonopole_degree_map_bound_s_inv2
+from test_trajectory_c20 import _c20_spatial_jacobian_bound_s_inv2
+from test_trajectory_degree_map import _degree_hessian_operator_bound_s_inv2, _nonmonopole_degree_map_bound_s_inv2
 from test_trajectory_error_transport import _recentered_coast_reaches_m_m_s
 from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
+from test_trajectory_spk import _harmonic_spatial_jacobian_bound_s_inv2
+from test_trajectory_tracefree import _tracefree_operator_bound_s_inv2
 
 
 def test_fourth_endpoint_conditional_monopole_curvature() -> None:
@@ -94,6 +97,7 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
     started = perf_counter()
     translation = {}
     translation_total = F(0)
+    degree_report = None
     for body in ("Moon", "Mars"):
         budget.check()
         spec = next(item for item in trajectory._HARMONIC_FIELD_SPECS if item.body == body)
@@ -126,6 +130,58 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
             "nonmonopole_jacobian_upper_s_inv2": upper(jacobian),
             "displacement_rate_upper_m_s": upper(displacement_rate), "translation_rate_upper_m_s3": upper(rate),
         }
+        if body == "Mars":
+            degree_started = perf_counter()
+            degree_bounds = []
+            for n, (c_row, s_row) in enumerate(zip(nonmonopole, sine, strict=True)):
+                budget.check()
+                squared = sum((F(float(c))**2+F(float(s))**2 for c, s in zip(c_row[:n+1], s_row[:n+1], strict=True)), F(0))
+                degree_bounds.append(_degree_hessian_operator_bound_s_inv2(
+                    n, squared, field.gravitational_parameter, field.reference_radius, domain["distance_floors_m"][body],
+                ))
+            assert sum(degree_bounds, F(0)) == jacobian
+            c20 = _c20_spatial_jacobian_bound_s_inv2(
+                field.gravitational_parameter, field.reference_radius, domain["distance_floors_m"][body], float(nonmonopole[2, 0]),
+            )
+            remainder = nonmonopole.copy()
+            remainder[2, 0] = 0.0
+            remaining_degree = _nonmonopole_degree_map_bound_s_inv2(
+                budget, field.gravitational_parameter, field.reference_radius, domain["distance_floors_m"][body], remainder, sine,
+            )
+            # Ideal exterior harmonic Hessian is symmetric and trace-free;
+            # apply the factor to a Frobenius bound, never to an operator bound.
+            remaining_frobenius = _harmonic_spatial_jacobian_bound_s_inv2(
+                budget, field.gravitational_parameter, field.reference_radius, domain["distance_floors_m"][body], remainder, sine,
+            )
+            remaining = min(remaining_degree, _tracefree_operator_bound_s_inv2(remaining_frobenius))
+            selected = min(jacobian, c20+remaining)
+            incoming = F(endpoint["outgoing_error_m_m_s"][1])
+            gate = F("0.000001")
+            prefix_rows = []
+            for cutoff in range(spec.degree+1):
+                # Subtract only from this EXACT additive degree ledger, not
+                # unrelated upper bounds; omitted degrees are hypothetical.
+                tail = sum(degree_bounds[cutoff+1:], F(0))
+                value = incoming+tail*displacement_rate*h*h/2
+                prefix_rows.append({"cutoff": cutoff, "tail_jacobian_upper_s_inv2": upper(tail),
+                                    "optimistic_velocity_m_s_approx": float(value), "fits": value <= gate})
+            assert all(a["tail_jacobian_upper_s_inv2"] >= b["tail_jacobian_upper_s_inv2"] for a, b in zip(prefix_rows, prefix_rows[1:]))
+            assert prefix_rows[-1]["fits"] and sum(degree_bounds[spec.degree+1:], F(0)) == 0
+            degree_report = {
+                "input_sha256": hashes, "coefficient_sha256": spec.expected_sha256,
+                "body": body, "degree": spec.degree, "distance_floor_m": domain["distance_floors_m"][body],
+                "degree_jacobian_upper_s_inv2": list(map(upper, degree_bounds)),
+                "degree2_share_of_additive_bound_approx": float(degree_bounds[2]/jacobian),
+                "c20_operator_upper_s_inv2": upper(c20), "without_c20_operator_upper_s_inv2": upper(remaining),
+                "selected_full_nonmonopole_operator_upper_s_inv2": upper(selected),
+                "selected_translation_rate_upper_m_s3": upper(selected*displacement_rate),
+                "selected_optimistic_velocity_m_s_approx": float(incoming+selected*displacement_rate*h*h/2),
+                "without_c20_optimistic_velocity_m_s_approx": float(incoming+remaining*displacement_rate*h*h/2),
+                "selected_fits": incoming+selected*displacement_rate*h*h/2 <= gate,
+                "without_c20_fits": incoming+remaining*displacement_rate*h*h/2 <= gate,
+                "prefix_counterfactuals": prefix_rows, "elapsed_s": perf_counter()-degree_started,
+                "scope": "Mars-only conditional bound attribution; omitted C20/prefixes are counterfactual accounting, not force removal, a selected reference, true-error lower bounds or complete residual/rotation qualification",
+            }
     # Optimistic scalar accounting ONLY: omit all other defect channels,
     # feedback and native residuals, but do not reset incoming velocity error.
     velocity_accounting = F(endpoint["outgoing_error_m_m_s"][1])+translation_total*h*h/2
@@ -141,3 +197,5 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
         "elapsed_s": perf_counter()-started, "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
         "scope": "Conditional-family ideal nonmonopole translation at fixed orthogonal orientation only; not rotation, full J, source/native arithmetic, selected anchor or mission certificate; failed scalar screen is not a lower bound on true error",
     }}, sort_keys=True, allow_nan=False))
+    assert degree_report is not None
+    print(json.dumps({"fourth_mars_translation_degree_audit": degree_report}, sort_keys=True, allow_nan=False))

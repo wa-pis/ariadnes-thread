@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0064 (2026-09-15) attributes Mars translation to degrees and compares
+an independently bounded C20-free remainder. Degree2 is only about 23.8% of
+the additive bound; granting C20 zero charge still fails. The first optimistic
+omitted-prefix screen at degree60 is not a reference/truncation selection.
+Next assess rigorously covered local geometry versus the broad domain floor
+before high-degree derivative work. See
+`docs/decisions/0064-mars-translation-degree-attribution.md`; 3.9 stays open.
+
 Decision0063 (2026-09-15) adds conditional ideal nonmonopole translation:
 Moon200/Mars120 whole-degree bounds, with only C00 removed from a copy.
 The rate charge 1.1662837679384899e-4 m/s^3 already fails an optimistic

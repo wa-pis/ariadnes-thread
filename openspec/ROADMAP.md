@@ -68,8 +68,11 @@ from retained inputs. This does not establish a selected reference's premise.
 Decision0063 computes conditional nonmonopole translation with the whole-degree
 operator bound. Its charge alone fails the optimistic remaining velocity
 accounting screen; this is not a lower bound on actual trajectory error.
-Next identify dominant degree components/norm relaxations and assess tighter
-bounds or a leading nonmonopole reference derivative before rotation/vector work.
+Decision0064 attributes that bound: degree2 contributes about 23.8%; removing
+C20's charge alone still fails, and the compared C20/remainder norm does not
+improve the full sum. An optimistic omitted-prefix screen first fits at 60,
+but qualifies no reference or truncation. Next assess tighter covered local
+geometry versus the broad distance floor before high-degree derivative work.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified
