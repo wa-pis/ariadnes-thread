@@ -2,6 +2,7 @@
 
 from copy import deepcopy
 from fractions import Fraction
+from hashlib import sha256
 import json
 import math
 from pathlib import Path
@@ -9,6 +10,37 @@ from pathlib import Path
 import pytest
 
 from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint
+
+
+def _check_endpoint_spk_context(binding: dict, context: dict) -> None:
+    """Bind retained source records, not all forces or external data authenticity."""
+    assert binding["source_spk_context_sha256"] == sha256(json.dumps(context, sort_keys=True, allow_nan=False).encode()).hexdigest()
+    for key in ("start_epoch_tdb_s", "end_epoch_tdb_s", "origin", "orientation", "time_scale"):
+        assert binding[key] == context[key]
+    start, end = map(Fraction, (context["source_domain_start_tdb_s"], context["source_domain_end_tdb_s"]))
+    assert start <= Fraction(binding["start_epoch_tdb_s"]) < Fraction(binding["end_epoch_tdb_s"]) <= end
+    expected_chains = {"Sun": [10], "Mercury": [1], "Venus": [2], "Earth": [399], "Moon": [301, 399],
+                       "Mars": [499, 4], "Jupiter": [599, 5], "Saturn": [699, 6]}
+    assert context["body_chains"] == expected_chains
+    records = context["selected_records"]
+    expected_targets = {target for chain in expected_chains.values() for target in chain}
+    assert len(records) == len(expected_targets) == len({record["target"] for record in records})
+    by_target = {record["target"]: record for record in records}
+    assert set(by_target) == expected_targets
+    for chain in expected_chains.values():
+        for target, center in zip(chain, chain[1:]+[0], strict=True):
+            assert by_target[target]["center"] == center
+    for record in records:
+        assert record["frame_id"] == 1 and record["spk_type"] in (2, 3)
+        assert record["segment_first_word"] <= record["record_first_word"] <= record["record_last_word"] <= record["segment_last_word"]
+        size = record["record_last_word"]-record["record_first_word"]+1
+        assert type(record["record_index_zero_based"]) is int and record["record_index_zero_based"] >= 0
+        assert record["record_first_word"] == record["segment_first_word"]+size*record["record_index_zero_based"]
+        assert Fraction(record["segment_start_tdb_s"]) <= start < end <= Fraction(record["segment_end_tdb_s"])
+        mid, radius, guard = map(Fraction, (record["record_midpoint_tdb_s"], record["record_radius_s"], record["record_guard_s"]))
+        assert guard == 16*Fraction(math.ulp(float(mid))) and radius > guard > 0
+        assert mid-radius+guard <= start < end <= mid+radius-guard
+    assert by_target[10]["spk_type"] == 2
 
 
 def _check_endpoint_binding(binding: dict, cubic: dict, transport: dict, clearance: dict) -> None:
@@ -83,6 +115,35 @@ def test_endpoint_binding_replays_retained_physical_reports() -> None:
     names = ("fresh_endpoint_binding", "fresh_cubic_reference", "fresh_error_transport", "fresh_conditional_clearance")
     reports = [json.loads((directory / f"m3_{name}.json").read_text())[name] for name in names]
     _check_endpoint_binding(*reports)
+
+
+def _retained_spk_reports() -> tuple[dict, dict]:
+    directory = Path(__file__).with_name("data")
+    return tuple(json.loads((directory / f"m3_{name}.json").read_text())[name]
+                 for name in ("fresh_endpoint_binding", "fresh_spk_context"))
+
+
+def test_endpoint_spk_context_replays_retained_records() -> None:
+    _check_endpoint_spk_context(*_retained_spk_reports())
+
+
+def test_endpoint_spk_context_rejects_changed_kernel_identity() -> None:
+    binding, context = _retained_spk_reports()
+    context["selected_records"][0]["kernel"]["sha256"] = "0"*64
+    with pytest.raises(AssertionError):
+        _check_endpoint_spk_context(binding, context)
+
+
+@pytest.mark.parametrize("field,value", [("center", 1), ("frame_id", 2), ("spk_type", 3),
+                                       ("record_radius_s", 0.0), ("record_guard_s", 0.0),
+                                       ("record_index_zero_based", -1), ("segment_end_tdb_s", 0.0)])
+def test_endpoint_spk_context_rejects_inconsistent_record_even_with_new_digest(field: str, value: object) -> None:
+    binding, context = _retained_spk_reports()
+    sun = next(record for record in context["selected_records"] if record["target"] == 10)
+    sun[field] = value
+    binding["source_spk_context_sha256"] = sha256(json.dumps(context, sort_keys=True, allow_nan=False).encode()).hexdigest()
+    with pytest.raises(AssertionError):
+        _check_endpoint_spk_context(binding, context)
 
 
 @pytest.mark.parametrize("field,index", [("initial_state_m_m_s_kg", 0), ("terminal_state_m_m_s_kg", 0),

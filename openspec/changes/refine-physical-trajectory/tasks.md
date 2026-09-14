@@ -52,6 +52,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0041 binds the endpoint report to eleven guarded SPK records from
+four files, reusing kernel_metadata and preserving the loaded pool. Nine
+new controls bring the focused module to 23 passing tests; all 3171 pass
+in 468.49 s (native 146.50, portable 50.72), with thirteen/zero arcs.
+An artifact serialization mismatch was caught and fixed by preserving
+Python numeric representation, without weakening the digest check.
+Retained/full/portable contexts agree; old endpoint/coast science is
+unchanged. Ruff/strict OpenSpec/legacy checks pass. Next connect existing
+harmonic/PCK and remaining force identities to the same context; this is
+not complete force provenance or mission safety. Task 3.9 stays open.
+
 Decision0040 retains actual native initial/terminal seven-states and checks
 their epoch, mass, incoming error, exact cubic residual and outgoing error
 consistency against the same probe reports. Fourteen focused tests pass;

@@ -1,0 +1,286 @@
+{
+  "fresh_spk_context": {
+    "body_chains": {
+      "Earth": [
+        399
+      ],
+      "Jupiter": [
+        599,
+        5
+      ],
+      "Mars": [
+        499,
+        4
+      ],
+      "Mercury": [
+        1
+      ],
+      "Moon": [
+        301,
+        399
+      ],
+      "Saturn": [
+        699,
+        6
+      ],
+      "Sun": [
+        10
+      ],
+      "Venus": [
+        2
+      ]
+    },
+    "end_epoch_tdb_s": 978995455.3554223,
+    "orientation": "J2000",
+    "origin": "SSB",
+    "scope": "Unique guarded source position records for this probe; Sun velocity uses type-2 derivative; not astronomical uncertainty or complete force provenance",
+    "selected_records": [
+      {
+        "center": 0,
+        "frame_id": 1,
+        "kernel": {
+          "name": "inpop19a_TDB_m100_p100_spice.bsp",
+          "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+          "size_bytes": 22318080
+        },
+        "position_coefficients_km_sha256": "ff160ad6d902ed6adc1753920625939a51143d595af26843024050a53a26f197",
+        "record_first_word": 1965065,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 3048,
+        "record_last_word": 1965099,
+        "record_midpoint_tdb_s": 979430400.0,
+        "record_radius_s": 691200.0,
+        "segment_end_tdb_s": 3234816000.0,
+        "segment_first_word": 1858385,
+        "segment_last_word": 2022188,
+        "segment_start_tdb_s": -3234816000.0,
+        "spk_type": 2,
+        "target": 10
+      },
+      {
+        "center": 0,
+        "frame_id": 1,
+        "kernel": {
+          "name": "inpop19a_TDB_m100_p100_spice.bsp",
+          "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+          "size_bytes": 22318080
+        },
+        "position_coefficients_km_sha256": "edeed9d189692d81b7eb06aacad9913bf867047bbd881b4cec0d9dea341fad2a",
+        "record_first_word": 268609,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 6096,
+        "record_last_word": 268652,
+        "record_midpoint_tdb_s": 979084800.0,
+        "record_radius_s": 345600.0,
+        "segment_end_tdb_s": 3234816000.0,
+        "segment_first_word": 385,
+        "segment_last_word": 412228,
+        "segment_start_tdb_s": -3234816000.0,
+        "spk_type": 2,
+        "target": 1
+      },
+      {
+        "center": 0,
+        "frame_id": 1,
+        "kernel": {
+          "name": "inpop19a_TDB_m100_p100_spice.bsp",
+          "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+          "size_bytes": 22318080
+        },
+        "position_coefficients_km_sha256": "c5d3ada660f762499cc83ef7529b15b53aa21404f7724b67ef2f0b344d9bdf14",
+        "record_first_word": 509765,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 3048,
+        "record_last_word": 509796,
+        "record_midpoint_tdb_s": 979430400.0,
+        "record_radius_s": 691200.0,
+        "segment_end_tdb_s": 3234816000.0,
+        "segment_first_word": 412229,
+        "segment_last_word": 561992,
+        "segment_start_tdb_s": -3234816000.0,
+        "spk_type": 2,
+        "target": 2
+      },
+      {
+        "center": 0,
+        "frame_id": 1,
+        "kernel": {
+          "name": "inpop19a_TDB_m100_p100_spice.bsp",
+          "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+          "size_bytes": 22318080
+        },
+        "position_coefficients_km_sha256": "06ae32a50b5ad76a7ec821dd40dadcab0b3524ce8d3f91eaa57635fc49f7dcd8",
+        "record_first_word": 2522061,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 12192,
+        "record_last_word": 2522101,
+        "record_midpoint_tdb_s": 978912000.0,
+        "record_radius_s": 172800.0,
+        "segment_end_tdb_s": 3234816000.0,
+        "segment_first_word": 2022189,
+        "segment_last_word": 2789712,
+        "segment_start_tdb_s": -3234816000.0,
+        "spk_type": 2,
+        "target": 399
+      },
+      {
+        "center": 399,
+        "frame_id": 1,
+        "kernel": {
+          "name": "inpop19a_TDB_m100_p100_spice.bsp",
+          "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+          "size_bytes": 22318080
+        },
+        "position_coefficients_km_sha256": "4043a53e0d638fd17f23091f1448de7f10e7fd60c9ffcd0f2a89cfe5a54dea85",
+        "record_first_word": 1590733,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 12192,
+        "record_last_word": 1590773,
+        "record_midpoint_tdb_s": 978912000.0,
+        "record_radius_s": 172800.0,
+        "segment_end_tdb_s": 3234816000.0,
+        "segment_first_word": 1090861,
+        "segment_last_word": 1858384,
+        "segment_start_tdb_s": -3234816000.0,
+        "spk_type": 2,
+        "target": 301
+      },
+      {
+        "center": 4,
+        "frame_id": 1,
+        "kernel": {
+          "name": "NOE-4-2020.bsp",
+          "sha256": "bd05fc94f3f2c873b26bfc420759bc82df306593c1ed4173716b8472b115ab9b",
+          "size_bytes": 244004864
+        },
+        "position_coefficients_km_sha256": "9cab08447f892d092fefce168d8246b363080b495dd25837c6bb446b8d3ef100",
+        "record_first_word": 29681789,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 32856,
+        "record_last_word": 29681910,
+        "record_midpoint_tdb_s": 978966864.0,
+        "record_radius_s": 77328.0,
+        "segment_end_tdb_s": 2016785952.0,
+        "segment_first_word": 25673357,
+        "segment_last_word": 30500534,
+        "segment_start_tdb_s": -4102488000.0,
+        "spk_type": 3,
+        "target": 499
+      },
+      {
+        "center": 0,
+        "frame_id": 1,
+        "kernel": {
+          "name": "inpop19a_TDB_m100_p100_spice.bsp",
+          "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+          "size_bytes": 22318080
+        },
+        "position_coefficients_km_sha256": "0a0b1f48d03909bdc5982f83735e5faa8612958e4aa824d4b9d3bf3f2b9dcfeb",
+        "record_first_word": 807217,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 1524,
+        "record_last_word": 807251,
+        "record_midpoint_tdb_s": 980121600.0,
+        "record_radius_s": 1382400.0,
+        "segment_end_tdb_s": 3234816000.0,
+        "segment_first_word": 753877,
+        "segment_last_word": 835780,
+        "segment_start_tdb_s": -3234816000.0,
+        "spk_type": 2,
+        "target": 4
+      },
+      {
+        "center": 5,
+        "frame_id": 1,
+        "kernel": {
+          "name": "NOE-5-2021.bsp",
+          "sha256": "85063d326f068f4a6e5bd4f56c4c4bae330c0cea210d18d190451f33cb3add24",
+          "size_bytes": 455586816
+        },
+        "position_coefficients_km_sha256": "350b51d65b67f3fd0c5b6ff0b986bd5ae53a8eadb265017d9071c26f7830b5ba",
+        "record_first_word": 1349613,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 11054,
+        "record_last_word": 1349734,
+        "record_midpoint_tdb_s": 979080912.0,
+        "record_radius_s": 215568.0,
+        "segment_end_tdb_s": 1577713248.0,
+        "segment_first_word": 1025,
+        "segment_last_word": 1519074,
+        "segment_start_tdb_s": -3786912000.0,
+        "spk_type": 3,
+        "target": 599
+      },
+      {
+        "center": 0,
+        "frame_id": 1,
+        "kernel": {
+          "name": "inpop19a_TDB_m100_p100_spice.bsp",
+          "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+          "size_bytes": 22318080
+        },
+        "position_coefficients_km_sha256": "1b56aa1866aca9aa86a6b276bf168d3918111406b56bbe6140271827f15c0c9d",
+        "record_first_word": 875405,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 1524,
+        "record_last_word": 875430,
+        "record_midpoint_tdb_s": 980121600.0,
+        "record_radius_s": 1382400.0,
+        "segment_end_tdb_s": 3234816000.0,
+        "segment_first_word": 835781,
+        "segment_last_word": 896624,
+        "segment_start_tdb_s": -3234816000.0,
+        "spk_type": 2,
+        "target": 5
+      },
+      {
+        "center": 6,
+        "frame_id": 1,
+        "kernel": {
+          "name": "NOE-6-2018-MAIN-v2.bsp",
+          "sha256": "ff2188d11c8cd31933e6757e81cd43e66644e218d041c72628ebf291754e7f39",
+          "size_bytes": 222214144
+        },
+        "position_coefficients_km_sha256": "d1e121692999a54d1bd23fdc92ad0c03a7b99f9c292b9805120f57675d0ba033",
+        "record_first_word": 25978419,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 77,
+        "record_last_word": 25978540,
+        "record_midpoint_tdb_s": 979080480.0,
+        "record_radius_s": 171936.0,
+        "segment_end_tdb_s": 986817600.0,
+        "segment_first_word": 25969025,
+        "segment_last_word": 25981228,
+        "segment_start_tdb_s": 952430400.0,
+        "spk_type": 3,
+        "target": 699
+      },
+      {
+        "center": 0,
+        "frame_id": 1,
+        "kernel": {
+          "name": "inpop19a_TDB_m100_p100_spice.bsp",
+          "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+          "size_bytes": 22318080
+        },
+        "position_coefficients_km_sha256": "884e3240d256ff3da5a3a1e57797a08c667c934c3b49426777f1e68065b842e7",
+        "record_first_word": 931677,
+        "record_guard_s": 1.9073486328125e-06,
+        "record_index_zero_based": 1524,
+        "record_last_word": 931699,
+        "record_midpoint_tdb_s": 980121600.0,
+        "record_radius_s": 1382400.0,
+        "segment_end_tdb_s": 3234816000.0,
+        "segment_first_word": 896625,
+        "segment_last_word": 950448,
+        "segment_start_tdb_s": -3234816000.0,
+        "spk_type": 2,
+        "target": 6
+      }
+    ],
+    "source_domain_end_tdb_s": 978995456.2304223,
+    "source_domain_start_tdb_s": 978995455.2304223,
+    "start_epoch_tdb_s": 978995455.2929223,
+    "time_scale": "TDB seconds since J2000"
+  }
+}

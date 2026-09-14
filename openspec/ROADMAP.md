@@ -656,6 +656,13 @@ portable 68.31); prior science is unchanged excluding explicit timings.
 No new arcs/queries per invocation. Next bind the selected SPK resource
 chain using existing inventory support; consistency is not authentication
 or mission safety. Task 3.9 remains open.
+Decision0041 links the endpoint report to eleven selected SPK records
+from four files using the existing kernel inventory, with the loaded pool
+unchanged. All 3171 tests pass in 468.49 s (native 146.50, portable 50.72);
+old science is unchanged and source context reproduces across modes.
+The artifact-transfer numeric serialization failure is recorded and fixed
+without relaxing digest checks. Next connect existing remaining force
+identities; source provenance alone is not mission safety. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

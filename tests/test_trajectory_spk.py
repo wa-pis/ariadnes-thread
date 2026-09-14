@@ -638,6 +638,16 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     # Repeated kernel initialization registers the same physical file again.
     files = list({str(Path(entry[0]).resolve()): entry for entry in registrations}.values())
     assert files
+    budget.check()
+    kernel_inventory = ephemeris.kernel_metadata()
+    budget.check()
+    assert kernels_before == [spice.kdata(i, "ALL") for i in range(spice.ktotal("ALL"))]
+    assert len({Path(entry[0]).name for entry in files}) == len(files)
+    spk_identities = {}
+    for path, _, _, handle in files:
+        matches = [entry for entry in kernel_inventory["kernels"] if entry["type"] == "SPK" and entry["name"] == Path(path).name]
+        assert matches and all(entry == matches[0] for entry in matches)
+        spk_identities[handle] = {key: matches[0][key] for key in ("name", "size_bytes", "sha256")}
     # Effective targets already qualified against named Tudat states.
     expected_centers = {10: 0, 1: 0, 2: 0, 399: 0, 301: 399,
                         499: 4, 4: 0, 599: 5, 5: 0, 699: 6, 6: 0}
@@ -667,6 +677,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     position_records: dict[int, list[tuple[float, float, tuple[tuple[float, ...], ...]]]] = {
         target: [] for target in expected_centers
     }
+    position_record_contexts: dict[int, list[dict]] = {target: [] for target in expected_centers}
     joins: dict[tuple[int, Fraction], dict[int, tuple[
         tuple[Fraction, ...], tuple[Fraction, ...], float, np.ndarray,
     ]]] = {}
@@ -822,6 +833,17 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             assert 1 + Fraction(rate_extension_s) / Fraction(radius_s) >= rounded_limit
             rows_km = tuple(tuple(float(value) for value in row) for row in coefficients_km)
             position_records[target].append((midpoint_s, radius_s, rows_km))
+            position_record_contexts[target].append({
+                "kernel": spk_identities[handle], "target": target, "center": expected_centers[target],
+                "frame_id": 1, "spk_type": data_type,
+                "segment_start_tdb_s": first, "segment_end_tdb_s": last,
+                "segment_first_word": begin, "segment_last_word": end,
+                "record_index_zero_based": index, "record_first_word": begin+index*size,
+                "record_last_word": begin+(index+1)*size-1,
+                "record_midpoint_tdb_s": midpoint_s, "record_radius_s": radius_s,
+                "record_guard_s": extension_s,
+                "position_coefficients_km_sha256": sha256(json.dumps(rows_km, allow_nan=False).encode()).hexdigest(),
+            })
             normalization_rate_m_s = trajectory._spk_position_rate_bound(
                 budget, rows_km, radius_s, extension_s=rate_extension_s,
             )
@@ -1467,12 +1489,14 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     handoff_offset_s = Fraction(1, 16)
     handoff_tdb_s = start_tdb_s + float(handoff_offset_s)
     assert Fraction(handoff_tdb_s)-Fraction(start_tdb_s) == handoff_offset_s
+    selected_source_contexts = []
     for link, records in position_records.items():
-        selected = [(mid, radius, rows) for mid, radius, rows in records
+        selected = [(mid, radius, rows, context) for (mid, radius, rows), context in zip(records, position_record_contexts[link], strict=True)
                     if Fraction(mid) - Fraction(radius) + 16 * Fraction(math.ulp(mid)) <= Fraction(start_tdb_s)
                     and Fraction(start_tdb_s) + 1 <= Fraction(mid) + Fraction(radius) - 16 * Fraction(math.ulp(mid))]
         assert len(selected) == 1, (link, "affine interval must fit one qualified core")
-        mid, radius, rows = selected[0]
+        mid, radius, rows, context = selected[0]
+        selected_source_contexts.append(context)
         if link == 10:
             # Only the Sun's type-2 derivative is a velocity reference here;
             # type-3 stored velocities must not inherit this identification.
@@ -1586,6 +1610,15 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             assert math.isfinite(reported_reach_m) and Fraction(reported_reach_m) >= reach_m
             coast_body_reaches_m[duration_s][body] = reported_reach_m
     assert all(motion_samples[target][0][0] == start_tdb_s for target in body_ids.values())
+    fresh_spk_context = {
+        "start_epoch_tdb_s": handoff_tdb_s, "end_epoch_tdb_s": handoff_tdb_s+float(handoff_offset_s),
+        "source_domain_start_tdb_s": start_tdb_s, "source_domain_end_tdb_s": start_tdb_s+1.0,
+        "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+        "body_chains": {body: [target] if expected_centers[target] == 0 else [target, expected_centers[target]] for body, target in body_ids.items()},
+        "selected_records": selected_source_contexts,
+        "scope": "Unique guarded source position records for this probe; Sun velocity uses type-2 derivative; not astronomical uncertainty or complete force provenance",
+    }
+    print(json.dumps({"fresh_spk_context": fresh_spk_context}, sort_keys=True, allow_nan=False))
     coast_domains = _check_conditional_full_force_coast_domains(
         budget, start_tdb_s, end_tdb_s, coast_body_reaches_m, chain_speed_bounds_m_s[10],
         {body: motion_samples[target][0][1] for body, target in body_ids.items()},
@@ -1597,6 +1630,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         fresh_source_end_tdb_s=handoff_tdb_s+float(handoff_offset_s),
         fresh_native_positions_m=fresh_native_positions_m,
         fresh_native_sun_velocity_m_s=fresh_native_sun_velocity_m_s,
+        fresh_spk_context=fresh_spk_context,
         run_native_controls=native_record_readback,
     )
 
@@ -4075,6 +4109,7 @@ def _check_conditional_full_force_coast_domains(
     fresh_source_epoch_tdb_s: float, fresh_source_end_tdb_s: float,
     fresh_native_positions_m: dict[str, tuple[Fraction, ...]],
     fresh_native_sun_velocity_m_s: tuple[Fraction, ...],
+    fresh_spk_context: dict,
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint, _initial_velocity_interval_m_s
@@ -4093,7 +4128,7 @@ def _check_conditional_full_force_coast_domains(
     from test_trajectory_gravity import _candidate, _spacecraft
 
     from test_trajectory_force_assembly import _compare_force_reference
-    from test_trajectory_endpoint_binding import _check_endpoint_binding
+    from test_trajectory_endpoint_binding import _check_endpoint_binding, _check_endpoint_spk_context
 
     candidate = _candidate(
         departure_epoch_utc=ephemeris.tdb_to_utc(start_tdb_s),
@@ -5931,8 +5966,10 @@ def _check_conditional_full_force_coast_domains(
                                             "outgoing_error_m_m_s": [reported_transport["native_endpoint_position_error_m"], reported_transport["native_endpoint_velocity_error_m_s"]],
                                             "additional_native_queries": 0, "additional_native_arcs": 0,
                                             "scope": "Same-probe endpoint/error consistency only; not resource authentication, native-stage or mission safety",
+                                            "source_spk_context_sha256": sha256(json.dumps(fresh_spk_context, sort_keys=True, allow_nan=False).encode()).hexdigest(),
                                         }
                                         _check_endpoint_binding(endpoint_binding, fresh_cubic_report, fresh_transport_report, fresh_clearance_report)
+                                        _check_endpoint_spk_context(endpoint_binding, fresh_spk_context)
                                         assert selected_handoff == preserved_handoff
                                         assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
                                         budget.check()

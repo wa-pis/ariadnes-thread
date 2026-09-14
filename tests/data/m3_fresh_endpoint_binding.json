@@ -1,6 +1,7 @@
 {
   "fresh_endpoint_binding": {
     "additional_native_arcs": 0,
+    "source_spk_context_sha256": "b00e888032a19081c8bbfd13ca73549af21224916ed997e4714fa68af7ce8cd5",
     "additional_native_queries": 0,
     "end_epoch_tdb_s": 978995455.3554223,
     "incoming_error_m_m_s": [0.00010529778787867129, 2.3227467748483292e-7],
