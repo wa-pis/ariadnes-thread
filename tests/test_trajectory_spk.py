@@ -3217,9 +3217,48 @@ def test_pck_euler_rate_rejects_invalid_time_unit(time_unit_s: int) -> None:
         _pck_euler_rate_upper_rad_s((0.0, 0.0, 0.0), time_unit_s, Fraction(0), (), ())
 
 
+def _pck_angle_intervals_deg(
+    budget: trajectory._RefinementBudget, inputs: dict[str, list[float]], epoch_tdb_s: float,
+) -> dict[str, tuple[tuple[Fraction, Fraction], ...]]:
+    """Evaluate the supported text-PCK angles; caller pins pool and frame identity."""
+    budget.check()
+    assert type(epoch_tdb_s) is float and math.isfinite(epoch_tdb_s)
+    sizes = {f"BODY{body}_{key}": 3 for body in (301, 499) for key in ("POLE_RA", "POLE_DEC", "PM")}
+    sizes.update({f"BODY301_NUT_PREC_{key}": 13 for key in ("RA", "DEC", "PM")})
+    sizes["BODY3_NUT_PREC_ANGLES"] = 26
+    assert set(inputs) == set(sizes)
+    assert all(len(inputs[key]) == size and all(type(value) is float and math.isfinite(value) for value in inputs[key])
+               for key, size in sizes.items())
+    century_s = 36525*86400
+    phases = inputs["BODY3_NUT_PREC_ANGLES"]
+    phase_bounds = [_sin_cos_degrees_bounds(Fraction(offset)+Fraction(rate)*Fraction(epoch_tdb_s)/century_s)
+                    for offset, rate in zip(phases[::2], phases[1::2], strict=True)]
+    result = {}
+    for body, name in ((301, "Moon"), (499, "Mars")):
+        budget.check()
+        angles = []
+        for polynomial, periodic, unit_s in (("POLE_RA", "RA", century_s), ("POLE_DEC", "DEC", century_s), ("PM", "PM", 86400)):
+            time = Fraction(epoch_tdb_s)/unit_s
+            lower = upper = sum((Fraction(value)*time**power for power, value in enumerate(inputs[f"BODY{body}_{polynomial}"])), Fraction(0))
+            amplitudes = inputs[f"BODY301_NUT_PREC_{periodic}"] if body == 301 else ()
+            for amplitude, phase in zip(amplitudes, phase_bounds if body == 301 else (), strict=True):
+                term = [Fraction(amplitude)*endpoint for endpoint in phase[int(periodic == "DEC")]]
+                lower += min(term)
+                upper += max(term)
+            if periodic == "PM":
+                turns = lower//360
+                assert upper//360 == turns, "prime-meridian enclosure crosses a wrap"
+                lower -= 360*turns
+                upper -= 360*turns
+            angles.append((lower, upper))
+        result[name] = tuple(angles)
+    budget.check()
+    return result
+
+
 def _check_pinned_pck_rotation_rates(
     budget: trajectory._RefinementBudget, start_tdb_s: float, end_tdb_s: float,
-) -> tuple[dict[str, Fraction], dict[str, tuple[tuple[Fraction, Fraction], ...]], dict[str, Fraction]]:
+) -> tuple[dict[str, Fraction], dict[str, tuple[tuple[Fraction, Fraction], ...]], dict[str, Fraction], dict[str, list[float]]]:
     """Qualify ideal text-PCK rates; sampled native readbacks are not error bounds."""
     import spiceypy as spice
 
@@ -3245,16 +3284,13 @@ def _check_pinned_pck_rotation_rates(
     bounds: dict[str, Fraction] = {}
     pole_bounds: dict[str, Fraction] = {}
     angle_error_upper_rad: dict[str, dict[str, float]] = {}
-    angle_intervals_deg: dict[str, tuple[tuple[Fraction, Fraction], ...]] = {}
-    phase_bounds = [_sin_cos_degrees_bounds(Fraction(offset) + Fraction(rate) * Fraction(start_tdb_s) / century_s)
-                    for offset, rate in zip(phases[::2], phases[1::2], strict=True)]
+    angle_intervals_deg = _pck_angle_intervals_deg(budget, inputs, start_tdb_s)
     pi_bounds = _pi_rational_bounds()
     for body, name, frame_id in ((301, "Moon", 10020), (499, "Mars", 10014)):
         budget.check()
         frame = f"IAU_{name.upper()}"
         assert spice.namfrm(frame) == frame_id and spice.frinfo(frame_id) == (body, 2, body)
         components = []
-        initial_angles_deg: list[tuple[Fraction, Fraction]] = []
         native_angles = spice.bodeul(body, start_tdb_s)
         assert len(native_angles) == 4 and all(math.isfinite(value) for value in native_angles)
         assert native_angles[3] == 0.0  # No long-axis offset in the pinned model.
@@ -3267,21 +3303,7 @@ def _check_pinned_pck_rotation_rates(
                 tuple(inputs[f"BODY{body}_{polynomial}"]), time_unit_s,
                 epoch_magnitude_s, amplitudes, phase_rates if body == 301 else (),
             ))
-            time = Fraction(start_tdb_s) / time_unit_s
-            angle_deg = sum((Fraction(value) * time**power for power, value in
-                            enumerate(inputs[f"BODY{body}_{polynomial}"])), Fraction(0))
-            lower_deg = upper_deg = angle_deg
-            for amplitude, phase in zip(amplitudes, phase_bounds if body == 301 else (), strict=True):
-                term = [Fraction(amplitude) * endpoint for endpoint in phase[int(periodic == "DEC")]]
-                lower_deg += min(term)
-                upper_deg += max(term)
-            # BODEUL returns the prime meridian modulo one revolution.
-            if periodic == "PM":
-                turns = lower_deg // 360
-                assert upper_deg // 360 == turns  # Reject a wrap-crossing enclosure.
-                lower_deg -= 360 * turns
-                upper_deg -= 360 * turns
-            initial_angles_deg.append((lower_deg, upper_deg))
+            lower_deg, upper_deg = angle_intervals_deg[name][len(components)-1]
             angle_rad = [degree * pi / 180 for degree in (lower_deg, upper_deg) for pi in pi_bounds]
             observed_rad = Fraction(native_angles[len(components) - 1])
             error_rad = max(abs(observed_rad - endpoint) for endpoint in angle_rad)
@@ -3291,7 +3313,6 @@ def _check_pinned_pck_rotation_rates(
         bounds[name] = sum(components, Fraction(0))
         pole_bounds[name] = sum(components[:2], Fraction(0))
         assert 0 < pole_bounds[name] < bounds[name]
-        angle_intervals_deg[name] = tuple(initial_angles_deg)
         # Euler generators have unit operator norm: |omega| <= sum |angle'|.
         for epoch_tdb_s in np.linspace(start_tdb_s, end_tdb_s, 13):
             budget.check()
@@ -3310,7 +3331,7 @@ def _check_pinned_pck_rotation_rates(
     print(json.dumps({"pck_anchor_epoch_tdb_s": start_tdb_s,
                       "conditional_pck_pole_rate_upper_rad_s": reported_pole_bounds,
                       "pck_anchor_angle_error_upper_rad": angle_error_upper_rad}, sort_keys=True, allow_nan=False))
-    return bounds, angle_intervals_deg, pole_bounds
+    return bounds, angle_intervals_deg, pole_bounds, inputs
 
 
 @pytest.mark.parametrize("changed_source", ["binary", "coefficients", "phase", "frame", "mars-periodic", "pole-rate"])
@@ -4058,7 +4079,7 @@ def _check_conditional_full_force_coast_domains(
         flight_time_s=end_tdb_s - start_tdb_s,
     )
     spacecraft = _spacecraft()
-    rotation_rates_rad_s, pck_angles_deg, pole_rates_rad_s = _check_pinned_pck_rotation_rates(budget, start_tdb_s, end_tdb_s)
+    rotation_rates_rad_s, pck_angles_deg, pole_rates_rad_s, pck_inputs = _check_pinned_pck_rotation_rates(budget, start_tdb_s, end_tdb_s)
     environment = trajectory._build_physical_environment(candidate, spacecraft, budget=budget)
     bodies = environment.bodies
     states = {body: np.asarray(bodies.get(body).ephemeris.cartesian_state(start_tdb_s)).reshape(6)
@@ -5448,6 +5469,10 @@ def _check_conditional_full_force_coast_domains(
                                         budget.check()
                                         harmonic_reports: dict[str, object] = {}
                                         replay_fields: dict[str, object] = {}
+                                        fresh_pck_started_s = perf_counter()
+                                        assert sha256(json.dumps(pck_inputs, sort_keys=True, allow_nan=False).encode()).hexdigest() == "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0"
+                                        fresh_pck_angles = _pck_angle_intervals_deg(budget, pck_inputs, handoff_epoch)
+                                        fresh_pck_angle_elapsed_s = perf_counter()-fresh_pck_started_s
                                         # Full Mars degree120 exceeded the shared deadline
                                         # after 12 arcs. Keep all higher degrees as a tail;
                                         # this coarse enclosure is not a trajectory allocation.
@@ -5457,6 +5482,22 @@ def _check_conditional_full_force_coast_domains(
                                             source_position = np.asarray(bodies.get(source).state).reshape(6)[:3].copy()
                                             assert tuple(map(Fraction, source_position)) == fresh_native_positions_m[source], source
                                             rotation = np.asarray(bodies.get(source).rotation_model.inertial_to_body_fixed_rotation(handoff_epoch))
+                                            budget.check()
+                                            matrix_started_s = perf_counter()
+                                            fresh_matrix_error = _pck_matrix_error_bound(fresh_pck_angles[source], rotation)
+                                            reported_matrix_error = math.nextafter(float(fresh_matrix_error), math.inf)
+                                            assert math.isfinite(reported_matrix_error) and 0 <= fresh_matrix_error <= Fraction(reported_matrix_error) < 1
+                                            print(json.dumps({"fresh_pck_matrix_error": {
+                                                "body": source, "epoch_tdb_s": handoff_epoch,
+                                                "origin": "SSB", "orientation": "J2000", "rotation_target_frame": f"IAU_{source}",
+                                                "inertial_to_fixed": rotation.tolist(), "matrix_entry_l1_allowance": reported_matrix_error,
+                                                "pool_sha256": "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0",
+                                                "pck_sha256": environment.collision_resource.actual_sha256,
+                                                "shared_angle_elapsed_s": fresh_pck_angle_elapsed_s,
+                                                "matrix_elapsed_s": perf_counter()-matrix_started_s,
+                                                "additional_native_queries": 0, "additional_native_arcs": 0,
+                                                "scope": "Fresh stored matrix to ideal text-PCK rotation; no force, state/time domain or mission certificate",
+                                            }}, sort_keys=True, allow_nan=False))
                                             budget.check()
                                             resource = next(item for item in environment.harmonic_fields if item.body == source)
                                             assert resource.actual_sha256 == resource.expected_sha256

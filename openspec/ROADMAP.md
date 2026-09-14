@@ -552,8 +552,14 @@ Decision0023 audits fresh PCK rotation: recompute angles from the already
 pinned pool at the fresh epoch, and bridge matrices at the ideal-source
 relative vector to preserve the existing source-channel order. Keep C00
 and full fields. Next extract/reuse pure angle evaluation without new
-native queries; native-reference binding, incoming state-ball and domain
-gaps remain explicit. Documentation only; latest full suite remains 3029.
+native queries. Decision0024 implements this pure angle reuse and compares
+fresh stored matrices against ideal PCK rotations. All 3054 tests pass in
+474.83 s (native 153.46 s, portable 51.11 s), unchanged thirteen/zero arcs.
+Original PCK diagnostics reproduce exactly; fresh matrix L1 errors are
+9.340662146646177e-13 for Moon and 1.7882615809008832e-11 for Mars.
+Next translate matrix errors to full-field force bounds at ideal-source
+coordinates. Native-reference binding, incoming state-ball and domain
+gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;

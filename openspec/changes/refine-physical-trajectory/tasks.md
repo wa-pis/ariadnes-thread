@@ -52,6 +52,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0024 extracts pure PCK angle evaluation, preserves the original
+native/rate controls and reuses their pinned arrays at the fresh epoch.
+Existing fresh rotation matrices are compared to exact PCK angle intervals;
+dimensionless matrix errors remain separate from force allowances. All 72
+focused tests pass in 1.54 s; full suite 3054 passed in 474.83 s, native
+153.46 s, portable 51.11 s. Original PCK diagnostics exactly match the prior
+run in both variants. Retained fresh matrix errors match captured output:
+Moon 9.340662146646177e-13, Mars 1.7882615809008832e-11 (dimensionless L1).
+Ruff, strict OpenSpec and legacy isolation pass. No extra native query/arc;
+unchanged thirteen/zero arcs. Next full-field force bridge at ideal-source
+relative vectors; task3.9 stays open.
+
 Decision0023 audits fresh PCK prerequisites: reevaluate the pinned pool
 arrays at the fresh epoch; do not reuse original-anchor angle intervals.
 The rotation bridge must use the exact ideal-source relative radius because

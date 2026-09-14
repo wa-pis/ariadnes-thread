@@ -1,0 +1,44 @@
+{
+  "fresh_pck_matrix_errors": [
+    {
+      "additional_native_arcs": 0,
+      "additional_native_queries": 0,
+      "body": "Moon",
+      "epoch_tdb_s": 978995455.2929223,
+      "inertial_to_fixed": [
+        [0.48734351730802417, -0.7921116817650462, -0.36749881598339007],
+        [0.8728612980495358, 0.45380356755399587, 0.17937523921251042],
+        [0.024687051365502727, -0.4081928535467224, 0.912561857524333]
+      ],
+      "matrix_elapsed_s": 0.07349487510509789,
+      "matrix_entry_l1_allowance": 9.340662146646177e-13,
+      "orientation": "J2000",
+      "origin": "SSB",
+      "pck_sha256": "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2",
+      "pool_sha256": "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0",
+      "rotation_target_frame": "IAU_Moon",
+      "scope": "Fresh stored matrix to ideal text-PCK rotation; no force, state/time domain or mission certificate",
+      "shared_angle_elapsed_s": 0.30146854114718735
+    },
+    {
+      "additional_native_arcs": 0,
+      "additional_native_queries": 0,
+      "body": "Mars",
+      "epoch_tdb_s": 978995455.2929223,
+      "inertial_to_fixed": [
+        [0.7137601644353562, -0.37574305141630493, -0.5910698664096974],
+        [0.5399293898157318, 0.8327279740446641, 0.12263920766492556],
+        [0.44611958226290055, -0.406670973338193, 0.7972427721627471]
+      ],
+      "matrix_elapsed_s": 0.05796962487511337,
+      "matrix_entry_l1_allowance": 1.7882615809008832e-11,
+      "orientation": "J2000",
+      "origin": "SSB",
+      "pck_sha256": "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2",
+      "pool_sha256": "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0",
+      "rotation_target_frame": "IAU_Mars",
+      "scope": "Fresh stored matrix to ideal text-PCK rotation; no force, state/time domain or mission certificate",
+      "shared_angle_elapsed_s": 0.30146854114718735
+    }
+  ]
+}
