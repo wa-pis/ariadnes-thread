@@ -71,8 +71,12 @@ accounting screen; this is not a lower bound on actual trajectory error.
 Decision0064 attributes that bound: degree2 contributes about 23.8%; removing
 C20's charge alone still fails, and the compared C20/remainder norm does not
 improve the full sum. An optimistic omitted-prefix screen first fits at 60,
-but qualifies no reference or truncation. Next assess tighter covered local
-geometry versus the broad distance floor before high-degree derivative work.
+but qualifies no reference or truncation. Decision0065 derives covered local
+relative balls for the conditional reference and its translation chords,
+reducing the translation rate about 29.1%; the optimistic screen still fails.
+These are not true-state tubes or new full-force sensitivity domains.
+Next assess direction-free norm conservatism versus a richer reference
+derivative with bounded low-cost controls before high-degree/native work.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified

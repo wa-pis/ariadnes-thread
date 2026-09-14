@@ -1,0 +1,40 @@
+{
+  "fourth_conditional_local_translation": {
+    "additional_ephemeris_queries": 0,
+    "additional_native_arcs": 0,
+    "bodies": {
+      "Mars": {
+        "broad_distance_floor_m": 3631133.108218859,
+        "counterfactual_velocity_m_s_approx": 9.98850247794553e-07,
+        "elapsed_s": 0.024219874991104007,
+        "first_fitting_omitted_prefix_counterfactual": 44,
+        "local_distance_floor_m": 3689312.39942185,
+        "local_nonmonopole_jacobian_upper_s_inv2": 5.5081888961021043e-08,
+        "local_translation_rate_upper_m_s3": 8.265836017855932e-05,
+        "preceding_counterfactual_velocity_m_s_approx": 1.0017623347367573e-06,
+        "relative_displacement_upper_m": 187.5806225460353
+      },
+      "Moon": {
+        "broad_distance_floor_m": 221238394294.2555,
+        "elapsed_s": 0.06561699998565018,
+        "local_distance_floor_m": 221238449055.37964,
+        "local_nonmonopole_jacobian_upper_s_inv2": 7.292648833137344e-35,
+        "local_translation_rate_upper_m_s3": 2.9631736406160356e-30,
+        "relative_displacement_upper_m": 5079.042108732082
+      }
+    },
+    "duration_s": 0.125,
+    "fits": false,
+    "input_sha256": {
+      "m3_fourth_endpoint_monopole_jerk.json": "d14933925c64e421917d0b0e9c4dbd2f1aedd5a5ea4ba43d6808a93fbc21f832",
+      "m3_fourth_endpoint_source_anchor.json": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+      "m3_fresh_endpoint_binding.json": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772",
+      "m3_fresh_force_context.json": "1152f520c207b73402bb3d2bdc56b013cad1970f25d5bf76d2ed5f4df06d7355",
+      "m3_quarter_second_initial_domain.json": "7beb57a90448e24abf73e490e23ecf1fcb2e5c2175c886a4edf14f9e7ce7fc8d"
+    },
+    "optimistic_velocity_m_s_approx": 1.6084307798007537e-06,
+    "reference_acceleration_cap_m_s2": 4.0,
+    "scope": "Conditional reference-relative balls and translation chords only; not true-state tubes, full-force sensitivities, source/native arithmetic, rotation, selected reference or actual-error lower bounds; omitted prefixes remain counterfactual",
+    "translation_rate_upper_m_s3": 8.265836017855932e-05
+  }
+}

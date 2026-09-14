@@ -12,7 +12,7 @@ from test_trajectory_c20 import _c20_spatial_jacobian_bound_s_inv2
 from test_trajectory_degree_map import _degree_hessian_operator_bound_s_inv2, _nonmonopole_degree_map_bound_s_inv2
 from test_trajectory_error_transport import _recentered_coast_reaches_m_m_s
 from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
-from test_trajectory_spk import _harmonic_spatial_jacobian_bound_s_inv2
+from test_trajectory_spk import _dyadic_sqrt_bounds, _harmonic_spatial_jacobian_bound_s_inv2
 from test_trajectory_tracefree import _tracefree_operator_bound_s_inv2
 
 
@@ -98,6 +98,8 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
     translation = {}
     translation_total = F(0)
     degree_report = None
+    local_geometry = {}
+    local_total = F(0)
     for body in ("Moon", "Mars"):
         budget.check()
         spec = next(item for item in trajectory._HARMONIC_FIELD_SPECS if item.body == body)
@@ -130,6 +132,30 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
             "nonmonopole_jacobian_upper_s_inv2": upper(jacobian),
             "displacement_rate_upper_m_s": upper(displacement_rate), "translation_rate_upper_m_s3": upper(rate),
         }
+        local_started = perf_counter()
+        source_position = tuple(F(int(n, 16), int(d, 16)) for n, d in data["state_exact_m_m_s"][:3])
+        relative_position = tuple(a-b for a, b in zip(state[:3], source_position, strict=True))
+        radius_squared = sum((x*x for x in relative_position), F(0))
+        radius_lower = _dyadic_sqrt_bounds(radius_squared)[0]
+        # Every r(t) and chord [r(0), r(t)] is in this convex relative ball.
+        # This covers the conditional reference, NOT a true-state error tube.
+        displacement = h*displacement_rate
+        local_floor = math.nextafter(float(radius_lower-displacement), -math.inf)
+        assert math.isfinite(local_floor) and 0 < F(local_floor) <= radius_lower-displacement
+        assert (F(local_floor)+displacement)**2 <= radius_squared
+        assert local_floor > domain["distance_floors_m"][body] > domain["collision_guards_m"][body]
+        local_jacobian = _nonmonopole_degree_map_bound_s_inv2(
+            budget, field.gravitational_parameter, field.reference_radius, local_floor, nonmonopole, sine,
+        )
+        assert 0 <= local_jacobian <= jacobian
+        local_total += local_jacobian*displacement_rate
+        local_geometry[body] = {
+            "local_distance_floor_m": local_floor, "relative_displacement_upper_m": upper(displacement),
+            "broad_distance_floor_m": domain["distance_floors_m"][body],
+            "local_nonmonopole_jacobian_upper_s_inv2": upper(local_jacobian),
+            "local_translation_rate_upper_m_s3": upper(local_jacobian*displacement_rate),
+            "elapsed_s": perf_counter()-local_started,
+        }
         if body == "Mars":
             degree_started = perf_counter()
             degree_bounds = []
@@ -140,6 +166,21 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
                     n, squared, field.gravitational_parameter, field.reference_radius, domain["distance_floors_m"][body],
                 ))
             assert sum(degree_bounds, F(0)) == jacobian
+            # Degree n scales exactly as d^(-n-3); check against a separate
+            # complete helper evaluation at the new floor before using tails.
+            local_degrees = [value*(F(domain["distance_floors_m"][body])/F(local_floor))**(n+3)
+                             for n, value in enumerate(degree_bounds)]
+            assert sum(local_degrees, F(0)) == local_jacobian
+            local_values = [F(endpoint["outgoing_error_m_m_s"][1])
+                            + sum(local_degrees[cutoff+1:], F(0))*displacement_rate*h*h/2
+                            for cutoff in range(spec.degree+1)]
+            assert all(a >= b for a, b in zip(local_values, local_values[1:]))
+            first = next(n for n, value in enumerate(local_values) if value <= F("0.000001"))
+            local_geometry[body]["first_fitting_omitted_prefix_counterfactual"] = first
+            local_geometry[body]["counterfactual_velocity_m_s_approx"] = float(local_values[first])
+            if first:
+                assert local_values[first-1] > F("0.000001")
+                local_geometry[body]["preceding_counterfactual_velocity_m_s_approx"] = float(local_values[first-1])
             c20 = _c20_spatial_jacobian_bound_s_inv2(
                 field.gravitational_parameter, field.reference_radius, domain["distance_floors_m"][body], float(nonmonopole[2, 0]),
             )
@@ -199,3 +240,13 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
     }}, sort_keys=True, allow_nan=False))
     assert degree_report is not None
     print(json.dumps({"fourth_mars_translation_degree_audit": degree_report}, sort_keys=True, allow_nan=False))
+    local_velocity = F(endpoint["outgoing_error_m_m_s"][1])+local_total*h*h/2
+    budget.check()
+    print(json.dumps({"fourth_conditional_local_translation": {
+        "input_sha256": hashes, "bodies": local_geometry, "duration_s": float(h),
+        "reference_acceleration_cap_m_s2": float(acceleration),
+        "translation_rate_upper_m_s3": upper(local_total),
+        "optimistic_velocity_m_s_approx": float(local_velocity), "fits": local_velocity <= F("0.000001"),
+        "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
+        "scope": "Conditional reference-relative balls and translation chords only; not true-state tubes, full-force sensitivities, source/native arithmetic, rotation, selected reference or actual-error lower bounds; omitted prefixes remain counterfactual",
+    }}, sort_keys=True, allow_nan=False))
