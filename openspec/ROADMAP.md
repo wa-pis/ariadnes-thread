@@ -30,8 +30,11 @@ Decision0048's initial-state domain probe closes at A=3.2875760444250655
 m/s^2, with minimum conditional guard clearance 234943.10821885892 m.
 Decision0049 checks the carried fourth-endpoint error ball over the remaining
 0.125 s inside that domain, without another native arc. This is a domain
-handoff prerequisite only; interval-specific reference/error transport
-must be qualified
+handoff prerequisite only. Decision0050 derives the coupled remaining
+velocity-error budget; its separate channel ceilings cannot each be spent
+in full. Next qualify quarter-domain illumination and force sensitivities
+without new native arcs; interval-specific reference/error transport remains
+to be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.
 
