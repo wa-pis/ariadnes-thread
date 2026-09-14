@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0038 extracts the same test-only clear-left continuation for
+native analytic recursion and17 synthetic controls. Successful return
+selects the right endpoint; blocked left never invokes right; inconsistent
+outcomes, mutation and exceptions cannot produce a parent/partial result.
+All24 focused tests pass in3.06 s; full3148 in497.72 s (native158.77,
+portable69.00). Old adaptive science/counts/lineage and physical clearance
+match excluding times; Ruff/strict OpenSpec/legacy checks pass. Next
+identify concrete physical evidence bindings and numerical/runtime
+applicability before new native experiments. Task3.9 stays open.
+
 Decision0037 instruments the existing seven adaptive controls with native
 input snapshots, child-epoch/state handoff and discarded-parent checks.
 Counts match all recorded calls, including two calls on each limit exit.

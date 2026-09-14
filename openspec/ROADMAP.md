@@ -636,6 +636,12 @@ limits. Tangency exercises one handoff but remains unresolved; successful
 two-child composition still needs a synthetic control. Full3131 passes
 in505.61 s (native166.13, portable68.94), old scientific results unchanged.
 No new native work per invocation; task3.9 remains open.
+Decision0038 covers successful and blocked child composition through the
+same test-only transition used by native analytic recursion. Seventeen
+synthetic cases add no native work; full3148 tests pass in497.72 s
+(native158.77, portable69.00), old diagnostics unchanged excluding times.
+Next identify physical interval/state/error/resource bindings and runtime
+applicability, not more generic label dispatch; task3.9 remains open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

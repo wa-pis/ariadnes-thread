@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 import json
 import time
 
@@ -10,6 +11,73 @@ from numpy.typing import NDArray
 import pytest
 
 from space_nav import trajectory
+
+
+def _continue_clear_left(
+    left_status: str, midpoint: NDArray[np.float64] | None,
+    right_screen: Callable[[NDArray[np.float64]], tuple[str, NDArray[np.float64] | None]],
+) -> tuple[str, NDArray[np.float64] | None]:
+    """Test-only child composition; labels do not establish physical safety."""
+    assert left_status in {"clear", "impact", "unresolved"}
+    assert (midpoint is not None) == (left_status == "clear")
+    if left_status != "clear":
+        return left_status, None
+    assert midpoint is not None
+    accepted_midpoint = midpoint.copy()
+    right_status, terminal = right_screen(midpoint)
+    assert np.array_equal(midpoint, accepted_midpoint)
+    assert right_status in {"clear", "impact", "unresolved"}
+    assert (terminal is not None) == (right_status == "clear")
+    return right_status, terminal
+
+
+@pytest.mark.parametrize("left_status", ["clear", "impact", "unresolved"])
+@pytest.mark.parametrize("right_status", ["clear", "impact", "unresolved"])
+def test_child_composition_selects_right_endpoint_only(left_status: str, right_status: str) -> None:
+    parent, left, right = (np.full(6, value, dtype=np.float64) for value in (1, 2, 3))
+    calls = []
+    def right_screen(state: NDArray[np.float64]) -> tuple[str, NDArray[np.float64] | None]:
+        assert state is left and not np.array_equal(state, parent)
+        calls.append(state.copy())
+        return right_status, right if right_status == "clear" else None
+    status, terminal = _continue_clear_left(left_status, left if left_status == "clear" else None, right_screen)
+    assert len(calls) == int(left_status == "clear")
+    assert status == (right_status if left_status == "clear" else left_status)
+    assert terminal is (right if left_status == right_status == "clear" else None)
+    assert terminal is not parent and terminal is not left
+    assert np.array_equal(left, np.full(6, 2.0))
+
+
+@pytest.mark.parametrize("side,status,has_state", [
+    ("left", "unknown", False), ("left", "clear", False), ("left", "impact", True),
+    ("right", "unknown", False), ("right", "clear", False), ("right", "unresolved", True),
+])
+def test_child_composition_rejects_inconsistent_outcomes(side: str, status: str, has_state: bool) -> None:
+    state = np.zeros(6)
+    calls = []
+    def right_screen(midpoint: NDArray[np.float64]) -> tuple[str, NDArray[np.float64] | None]:
+        calls.append(midpoint)
+        return status, state if has_state else None
+    with pytest.raises(AssertionError):
+        _continue_clear_left(status if side == "left" else "clear", state if side != "left" or has_state else None, right_screen)
+    assert len(calls) == int(side == "right")
+
+
+def test_child_composition_rejects_mutated_handoff() -> None:
+    def right_screen(midpoint: NDArray[np.float64]) -> tuple[str, NDArray[np.float64] | None]:
+        midpoint[0] = 1.0
+        return "clear", np.full(6, 2.0)
+    with pytest.raises(AssertionError):
+        _continue_clear_left("clear", np.zeros(6), right_screen)
+
+
+def test_child_composition_preserves_child_exception() -> None:
+    failure = RuntimeError("child failed")
+    def right_screen(midpoint: NDArray[np.float64]) -> tuple[str, NDArray[np.float64] | None]:
+        raise failure
+    with pytest.raises(RuntimeError) as caught:
+        _continue_clear_left("clear", np.zeros(6), right_screen)
+    assert caught.value is failure
 
 
 @pytest.mark.parametrize(("case", "stop"), [
@@ -129,22 +197,19 @@ def test_bounded_subdivision_with_known_relative_acceleration(
         discarded_parent_checks += 1
         left_status, midpoint = screen(start_s, midpoint_s, start, depth + 1)
         assert np.array_equal(start, original_start)
-        if left_status != "clear":
-            assert midpoint is None
-            return left_status, None
-        assert midpoint is not None
-        accepted_midpoint = midpoint.copy()
-        right_input_index = len(native_inputs)
-        # The discarded parent and both refined children count as native work.
-        right_result = screen(midpoint_s, end_s, midpoint, depth + 1)
-        right_start_s, right_end_s, right_start_state = native_inputs[right_input_index]
-        assert (right_start_s, right_end_s) == (midpoint_s, end_s)
-        assert np.array_equal(right_start_state, accepted_midpoint)
-        assert np.array_equal(midpoint, accepted_midpoint)
-        assert right_result[1] is not end  # Never return the discarded parent endpoint.
-        assert (right_result[1] is not None) == (right_result[0] == "clear")
-        child_handoff_checks += 1
-        return right_result
+        def right_child(accepted: NDArray[np.float64]) -> tuple[str, NDArray[np.float64] | None]:
+            nonlocal child_handoff_checks
+            accepted_midpoint = accepted.copy()
+            right_input_index = len(native_inputs)
+            # The discarded parent and both refined children count as native work.
+            right_result = screen(midpoint_s, end_s, accepted, depth + 1)
+            right_start_s, right_end_s, right_start_state = native_inputs[right_input_index]
+            assert (right_start_s, right_end_s) == (midpoint_s, end_s)
+            assert np.array_equal(right_start_state, accepted_midpoint)
+            assert right_result[1] is not end  # Never return the discarded parent endpoint.
+            child_handoff_checks += 1
+            return right_result
+        return _continue_clear_left(left_status, midpoint, right_child)
 
     if stop is not None:
         terminal = None
