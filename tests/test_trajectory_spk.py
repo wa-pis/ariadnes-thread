@@ -5877,6 +5877,47 @@ def _check_conditional_full_force_coast_domains(
                                             "scope": "Conditional ideal-state versus nominal native endpoint error for the existing fresh interval only; not native-stage or mission safety",
                                         }}, sort_keys=True, allow_nan=False))
                                         budget.check()
+                                        clearance_started_s = perf_counter()
+                                        assert set(floors_m) == set(guards_m) == set(trajectory.PHYSICAL_BODY_NAMES)
+                                        assert guards_m == {surface.body: surface.guard_radius_m for surface in environment.collision_resource.surfaces}
+                                        assert environment.collision_resource.actual_sha256 == "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2"
+                                        assert adjacent_prerequisites["source_covered"] and adjacent_prerequisites["pck_covered"]
+                                        assert rounded_true_reaches[0] < Fraction(position_radius_m)
+                                        assert rounded_true_reaches[1] < Fraction(velocity_radius_m_s)
+                                        assert spacecraft.dry_mass_kg <= float(probe_state[6]) == spacecraft.initial_mass_kg
+                                        assert thrust == 0.0
+                                        clearance_by_body = {}
+                                        for body in trajectory.PHYSICAL_BODY_NAMES:
+                                            budget.check()
+                                            margin = Fraction(floors_m[body])-Fraction(guards_m[body])
+                                            reported_margin = math.nextafter(float(margin), -math.inf)
+                                            assert math.isfinite(reported_margin) and 0 < Fraction(reported_margin) <= margin
+                                            clearance_by_body[body] = {
+                                                "distance_floor_m": floors_m[body], "collision_guard_radius_m": guards_m[body],
+                                                "clearance_lower_m": reported_margin,
+                                            }
+                                        assert selected_handoff == preserved_handoff
+                                        assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                        budget.check()
+                                        print(json.dumps({"fresh_conditional_clearance": {
+                                            "start_epoch_tdb_s": handoff_epoch, "end_epoch_tdb_s": handoff_epoch+next_s,
+                                            "domain_start_epoch_tdb_s": start_tdb_s, "domain_duration_s": duration_s,
+                                            "source_polynomial_coverage_s": source_affine_coverage_s,
+                                            "pck_coverage_end_epoch_tdb_s": end_tdb_s,
+                                            "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+                                            "model_id": trajectory.PHYSICAL_MODEL_IDENTIFIER,
+                                            "pck_sha256": environment.collision_resource.actual_sha256,
+                                            "position_domain_radius_m": position_radius_m, "velocity_domain_radius_m_s": velocity_radius_m_s,
+                                            "incoming_position_error_m": transport_inputs["position_error_m"],
+                                            "incoming_velocity_error_m_s": transport_inputs["velocity_error_m_s"],
+                                            "rounded_incoming_ball_domain_closed": True,
+                                            "coast_mass_kg": float(probe_state[6]), "dry_mass_kg": spacecraft.dry_mass_kg,
+                                            "thrust_enabled": False, "by_body": clearance_by_body,
+                                            "elapsed_s": perf_counter()-clearance_started_s,
+                                            "additional_native_queries": 0, "additional_native_arcs": 0,
+                                            "scope": "Conditional ideal-coast clearance from eight collision spheres throughout this covered interval only; not native-stage, finite-burn or mission safety",
+                                        }}, sort_keys=True, allow_nan=False))
+                                        budget.check()
                                         print(json.dumps({"fresh_harmonic_vector_enclosure": {
                                             "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
                                             "time_scale": "TDB seconds since J2000", "acceleration_unit": "m/s^2",

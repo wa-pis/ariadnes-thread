@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0034 binds eight collision-distance floors/guards to the same
+covered fresh interval and rounded incoming-ball domain closure. All
+downward-rounded margins are positive; minimum Mars283007.82847962243 m.
+Retained conditional ideal-coast clearance is not native-stage/mission
+safety or a nominal altitude. Full suite3112 passes in502.97 s
+(native164.95, portable68.35); 715 focused tests, Ruff/strict OpenSpec/
+legacy checks pass. No new native calls or changed prior scientific
+controls. Next audit screening/native-rejection composition;3.9 stays open.
+
 Decision0033 separates conditional ideal-path clearance from native trial
 handling. Eight domain distance floors already exceed collision guards;
 next explicitly bind/report those margins with the existing fresh

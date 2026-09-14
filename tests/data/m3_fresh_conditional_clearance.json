@@ -1,0 +1,37 @@
+{
+  "fresh_conditional_clearance": {
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "by_body": {
+      "Earth": {"clearance_lower_m": 221229567994.96133, "collision_guard_radius_m": 6378136.6, "distance_floor_m": 221235946131.56137},
+      "Jupiter": {"clearance_lower_m": 795973009803.7988, "collision_guard_radius_m": 71492000.0, "distance_floor_m": 796044501803.799},
+      "Mars": {"clearance_lower_m": 283007.82847962243, "collision_guard_radius_m": 3396190.0, "distance_floor_m": 3679197.8284796225},
+      "Mercury": {"clearance_lower_m": 198570974058.5236, "collision_guard_radius_m": 2439700.0, "distance_floor_m": 198573413758.52362},
+      "Moon": {"clearance_lower_m": 221236708339.41714, "collision_guard_radius_m": 1737400.0, "distance_floor_m": 221238445739.41718},
+      "Saturn": {"clearance_lower_m": 1435641438995.2754, "collision_guard_radius_m": 60268000.0, "distance_floor_m": 1435701706995.2756},
+      "Sun": {"clearance_lower_m": 247747925602.35965, "collision_guard_radius_m": 696000000.0, "distance_floor_m": 248443925602.35968},
+      "Venus": {"clearance_lower_m": 354654180729.5446, "collision_guard_radius_m": 6051800.0, "distance_floor_m": 354660232529.5447}
+    },
+    "coast_mass_kg": 2000.0,
+    "domain_duration_s": 0.125,
+    "domain_start_epoch_tdb_s": 978995455.2304223,
+    "dry_mass_kg": 1000.0,
+    "elapsed_s": 3.079092130064964e-5,
+    "end_epoch_tdb_s": 978995455.3554223,
+    "incoming_position_error_m": 0.00010529778787867129,
+    "incoming_velocity_error_m_s": 2.3227467748483292e-7,
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "pck_coverage_end_epoch_tdb_s": 1004169273.4122404,
+    "pck_sha256": "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2",
+    "position_domain_radius_m": 4000.0,
+    "rounded_incoming_ball_domain_closed": true,
+    "scope": "Conditional ideal-coast clearance from eight collision spheres throughout this covered interval only; not native-stage, finite-burn or mission safety",
+    "source_polynomial_coverage_s": 1.0,
+    "start_epoch_tdb_s": 978995455.2929223,
+    "thrust_enabled": false,
+    "time_scale": "TDB seconds since J2000",
+    "velocity_domain_radius_m_s": 0.5
+  }
+}

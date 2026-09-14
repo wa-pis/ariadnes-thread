@@ -612,6 +612,12 @@ collision spheres, but must be bound to the same interval's true-state
 closure before reporting conditional ideal-path clearance. Do that next
 without new arcs; do not confuse it with native-stage safety or a
 production rejection policy. Documentation only; latest full suite3112.
+Decision0034 binds that conditional clearance report: all eight margins
+are positive, with minimum Mars283007.82847962243 m over the existing
+1/16 s interval. It is not a measured altitude or native-stage/mission
+certificate. All3112 tests pass in502.97 s (native164.95, portable68.35);
+no new native calls, old scientific controls preserved. Next audit the
+screening/native-rejection composition boundary; task3.9 remains open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
