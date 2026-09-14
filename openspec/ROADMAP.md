@@ -669,6 +669,12 @@ in 469.03 s (native 146.56, portable 50.71); prior science and force inputs
 are unchanged. No new native work or loosened criteria. Next inspect
 physical two-interval state/error handoff and numerical/runtime scaling;
 do not add generic provenance layers without a concrete gap. Task 3.9 remains open.
+Decision0043 clarifies the existing four-arc nominal prefix (1/64, 1/64,
+1/32, 1/16 s), with three non-reset reported error/epoch joins. The fresh
+report belongs to the fourth arc. Next retain the four actual state/error
+lineage rows using existing histories, not new arcs; four accepted rows
+must not replace the thirteen charged inventory arcs. Documentation audit
+only; task 3.9 and numerical/runtime scaling remain open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

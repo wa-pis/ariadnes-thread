@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0043 traces the existing FOUR accepted nominal Mars arcs:
+1/64 + 1/64 + 1/32 + 1/16 s. The fresh report covers the fourth arc,
+not an independent two-arc trajectory or a fifth propagation. Read-only
+replay confirms all three reported error/epoch handoffs without reset.
+Next retain the four native state/error lineage rows from existing histories
+and check their exact joins; keep thirteen charged inventory arcs distinct
+from four accepted rows. Documentation only; strict OpenSpec/whitespace
+pass, no full-suite rerun. No longer coast or completion of task 3.9.
+
 Decision0042 links existing harmonic/light/force-reference snapshots,
 selected PCK inputs, actual GMs, relativity settings and collision guards
 to the same endpoint/SPK context, without new native work. Twelve new
