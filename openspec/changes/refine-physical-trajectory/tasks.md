@@ -52,6 +52,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0049 carries the fourth endpoint's fresh outgoing radii into the
+quarter-second domain, retaining exact state/epoch links and nonzero errors.
+Position/velocity reaches are approximately 7631.304237880287 m and
+0.8054775248959558 m/s inside 8000 m / 1 m/s. These are domain reaches,
+not endpoint errors. No fifth arc or portable native state is fabricated.
+733 focused controls and all 3217 tests pass (463.10 s); independent exact
+recomputation matches the retained `m3_quarter_second_carried_domain.json`.
+Prior science and 13 / 0 native/portable counts remain unchanged; Ruff,
+strict OpenSpec and legacy checks pass. New local check: 0.0002551 s.
+Next derive interval-specific reference/defect prerequisites and assess the
+carried error budget before any new native propagation. Task 3.9 stays open.
+
 Decision0048 implements only the initial-state quarter-second domain probe.
 New A=3.2875760444250655 m/s^2 gives reaches 7631.307230552536 m and
 0.8218940111062665 m/s inside 8000 m / 1 m/s; all eight guards are clear,

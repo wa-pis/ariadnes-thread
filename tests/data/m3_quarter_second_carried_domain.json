@@ -1,0 +1,39 @@
+{
+  "quarter_second_carried_domain": {
+    "acceleration_upper_m_s2": 3.2875760444250655,
+    "additional_ephemeris_queries": 0,
+    "additional_native_arcs": 0,
+    "conditional_domain_closed": true,
+    "domain_start_epoch_tdb_s": 978995455.2304223,
+    "duration_s": 0.125,
+    "elapsed_s": 0.0002551248762756586,
+    "end_epoch_tdb_s": 978995455.4804223,
+    "incoming_error_m_m_s": [
+      0.00014951281615784107,
+      9.62662340905759e-07
+    ],
+    "initial_state_m_m_s_kg": [
+      -245056838770.95663,
+      35261267276.26207,
+      22783596668.40475,
+      -3128.4786808243243,
+      -18367.951684978845,
+      -9028.781394259036,
+      2000.0
+    ],
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "position_domain_radius_m": 8000.0,
+    "position_offset_upper_m": 3815.626934051514,
+    "reach_upper_m_m_s": [
+      7631.304237880287,
+      0.8054775248959558
+    ],
+    "scope": "Carried fourth-endpoint error ball closes in the qualified ideal-coast domain; no fifth native arc, endpoint error or native-stage certificate",
+    "start_epoch_tdb_s": 978995455.3554223,
+    "time_scale": "TDB seconds since J2000",
+    "velocity_domain_radius_m_s": 1.0,
+    "velocity_offset_upper_m_s": 0.3945295566804817
+  }
+}

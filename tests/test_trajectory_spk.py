@@ -4190,6 +4190,7 @@ def _check_conditional_full_force_coast_domains(
     harmonic_error_requests = 0
     nominal_lineage: list[dict] = []
     retained_last_binding: dict | None = None
+    quarter_domain: dict | None = None
     for center, radius_m in (("Moon", 1_837_400.0), ("Mars", 3_689_500.0)):
         short_handoff: tuple[tuple[Fraction, ...], Fraction, Fraction, float] | None = None
         two_segment_handoff: tuple[tuple[Fraction, ...], Fraction, Fraction, float] | None = None
@@ -4292,7 +4293,7 @@ def _check_conditional_full_force_coast_domains(
             probe_closed = probe_position < probe_radius_m and probe_velocity < probe_velocity_m_s
             budget.check()
             assert counts_before == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
-            print(json.dumps({"quarter_second_initial_domain": {
+            quarter_domain = {
                 "model_id": environment.model_id, "origin": "SSB", "orientation": "J2000",
                 "time_scale": "TDB seconds since J2000", "start_epoch_tdb_s": start_tdb_s,
                 "end_epoch_tdb_s": start_tdb_s+probe_h, "duration_s": probe_h,
@@ -4309,7 +4310,8 @@ def _check_conditional_full_force_coast_domains(
                 "conditional_domain_closed": probe_closed, "additional_native_arcs": 0,
                 "additional_ephemeris_queries": 0, "elapsed_s": perf_counter()-domain_started_s,
                 "scope": "Initial exact synthetic-state ideal-coast domain only; not numerical handoff, endpoint accuracy, native-stage or mission safety",
-            }}, sort_keys=True, allow_nan=False))
+            }
+            print(json.dumps({"quarter_second_initial_domain": quarter_domain}, sort_keys=True, allow_nan=False))
             budget.check()
             assert probe_acceleration < 4.0 and probe_closed
         domain_cases = [(duration_s, 1000.0, 0.1) for duration_s in body_reaches_m]
@@ -6614,6 +6616,56 @@ def _check_conditional_full_force_coast_domains(
         _check_nominal_lineage(lineage_report, retained_last_binding)
         budget.check()
         print(json.dumps({"nominal_four_arc_lineage": lineage_report}, sort_keys=True, allow_nan=False))
+        # Carry the existing fourth endpoint's FULL fresh error ball, not
+        # the zero-error initial condition of the separate domain probe.
+        handoff_started_s = perf_counter()
+        assert quarter_domain is not None and quarter_domain["conditional_domain_closed"] is True
+        for key in ("model_id", "origin", "orientation", "time_scale"):
+            assert quarter_domain[key] == retained_last_binding[key] == lineage_report[key]
+        first, last = nominal_lineage[0], nominal_lineage[-1]
+        assert quarter_domain["start_epoch_tdb_s"] == first["start_epoch_tdb_s"]
+        assert quarter_domain["initial_state_m_m_s_kg"] == first["initial_state_m_m_s_kg"]
+        assert quarter_domain["initial_error_m_m_s"] == [0.0, 0.0]
+        handoff_state = tuple(map(Fraction, retained_last_binding["terminal_state_m_m_s_kg"]))
+        domain_state = tuple(map(Fraction, quarter_domain["initial_state_m_m_s_kg"]))
+        assert handoff_state[6] == domain_state[6] == Fraction(quarter_domain["coast_mass_kg"])
+        assert not quarter_domain["thrust_enabled"] and handoff_state[6] > Fraction(quarter_domain["dry_mass_kg"])
+        remaining_s = Fraction(quarter_domain["end_epoch_tdb_s"])-Fraction(last["end_epoch_tdb_s"])
+        assert remaining_s == Fraction(1, 8)
+        p_offset = sum((abs(a-b) for a, b in zip(handoff_state[:3], domain_state[:3], strict=True)), Fraction(0))
+        v_offset = sum((abs(a-b) for a, b in zip(handoff_state[3:6], domain_state[3:6], strict=True)), Fraction(0))
+        carried_p, carried_v = map(Fraction, retained_last_binding["outgoing_error_m_m_s"])
+        assert 0 < carried_p <= Fraction("0.001") and 0 < carried_v <= Fraction("0.000001")
+        p_radius, v_radius = map(Fraction, (quarter_domain["position_domain_radius_m"], quarter_domain["velocity_domain_radius_m_s"]))
+        assert p_offset+carried_p < p_radius and v_offset+carried_v < v_radius
+        handoff_reaches = _recentered_coast_reaches_m_m_s(
+            float(remaining_s), p_offset, v_offset, sum(map(abs, handoff_state[3:6]), Fraction(0)),
+            carried_p, carried_v, Fraction(quarter_domain["acceleration_upper_m_s2"]),
+        )
+        # Every point of the carried ball stays in the same force domain.
+        # These are domain reaches, NOT endpoint uncertainty radii.
+        closed = handoff_reaches[0] < p_radius and handoff_reaches[1] < v_radius
+        reported_reaches = [math.nextafter(float(value), math.inf) for value in handoff_reaches]
+        assert all(Fraction(reported) >= exact for reported, exact in zip(reported_reaches, handoff_reaches, strict=True))
+        budget.check()
+        assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (expected_arcs,) * 3
+        print(json.dumps({"quarter_second_carried_domain": {
+            "model_id": environment.model_id, "origin": "SSB", "orientation": "J2000",
+            "time_scale": "TDB seconds since J2000", "domain_start_epoch_tdb_s": quarter_domain["start_epoch_tdb_s"],
+            "start_epoch_tdb_s": last["end_epoch_tdb_s"], "end_epoch_tdb_s": quarter_domain["end_epoch_tdb_s"],
+            "duration_s": float(remaining_s), "initial_state_m_m_s_kg": retained_last_binding["terminal_state_m_m_s_kg"],
+            "incoming_error_m_m_s": retained_last_binding["outgoing_error_m_m_s"],
+            "position_offset_upper_m": math.nextafter(float(p_offset), math.inf),
+            "velocity_offset_upper_m_s": math.nextafter(float(v_offset), math.inf),
+            "position_domain_radius_m": float(p_radius), "velocity_domain_radius_m_s": float(v_radius),
+            "acceleration_upper_m_s2": quarter_domain["acceleration_upper_m_s2"],
+            "reach_upper_m_m_s": reported_reaches, "conditional_domain_closed": closed,
+            "additional_native_arcs": 0, "additional_ephemeris_queries": 0,
+            "elapsed_s": perf_counter()-handoff_started_s,
+            "scope": "Carried fourth-endpoint error ball closes in the qualified ideal-coast domain; no fifth native arc, endpoint error or native-stage certificate",
+        }}, sort_keys=True, allow_nan=False))
+        budget.check()
+        assert closed
     else:
         assert nominal_lineage == [] and retained_last_binding is None
     print(json.dumps({"harmonic_error_reuse": {
