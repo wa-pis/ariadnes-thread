@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0063 (2026-09-15) adds conditional ideal nonmonopole translation:
+Moon200/Mars120 whole-degree bounds, with only C00 removed from a copy.
+The rate charge 1.1662837679384899e-4 m/s^3 already fails an optimistic
+velocity ledger preserving incoming error. This is a method-specific
+upper-bound screen, not a true-error lower bound or changed tolerance.
+Next identify dominant degrees/norm relaxations before more rotation/vector
+work. See `docs/decisions/0063-fourth-nonmonopole-translation-screen.md`;
+3.9 stays open.
+
 Decision0062 (2026-09-15) checks a retained-input conditional cubic family:
 explicit acceleration cap 4 m/s^2 implies domain inclusion and monopole
 Taylor rate at most 1.2800299248916192e-6 m/s^3. It does not select an anchor,

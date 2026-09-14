@@ -1,0 +1,43 @@
+{
+  "fourth_conditional_nonmonopole_translation": {
+    "additional_ephemeris_queries": 0,
+    "additional_native_arcs": 0,
+    "bodies": {
+      "Mars": {
+        "coefficient_sha256": "d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980",
+        "degree": 120,
+        "displacement_rate_upper_m_s": 1500.6449803682824,
+        "distance_floor_m": 3631133.108218859,
+        "gm_m3_s2": 42828375815756.1,
+        "nonmonopole_jacobian_upper_s_inv2": 7.771883311482942e-08,
+        "normalization_radius_m": 3396000.0,
+        "translation_rate_upper_m_s3": 0.00011662837679384899
+      },
+      "Moon": {
+        "coefficient_sha256": "3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d",
+        "degree": 200,
+        "displacement_rate_upper_m_s": 40632.336869856656,
+        "distance_floor_m": 221238394294.2555,
+        "gm_m3_s2": 4902800121846.8,
+        "nonmonopole_jacobian_upper_s_inv2": 7.292657858566036e-35,
+        "normalization_radius_m": 1738000.0,
+        "translation_rate_upper_m_s3": 2.963177307858626e-30
+      }
+    },
+    "duration_s": 0.125,
+    "elapsed_s": 1.0425624169874936,
+    "incoming_velocity_error_m_s": 9.62662340905759e-07,
+    "input_sha256": {
+      "m3_fourth_endpoint_monopole_jerk.json": "d14933925c64e421917d0b0e9c4dbd2f1aedd5a5ea4ba43d6808a93fbc21f832",
+      "m3_fourth_endpoint_source_anchor.json": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+      "m3_fresh_endpoint_binding.json": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772",
+      "m3_fresh_force_context.json": "1152f520c207b73402bb3d2bdc56b013cad1970f25d5bf76d2ed5f4df06d7355",
+      "m3_quarter_second_initial_domain.json": "7beb57a90448e24abf73e490e23ecf1fcb2e5c2175c886a4edf14f9e7ce7fc8d"
+    },
+    "optimistic_accounting_fits_velocity_gate": false,
+    "optimistic_velocity_accounting_m_s_approx": 1.8738215346077041e-06,
+    "reference_acceleration_cap_m_s2": 4.0,
+    "scope": "Conditional-family ideal nonmonopole translation at fixed orthogonal orientation only; not rotation, full J, source/native arithmetic, selected anchor or mission certificate; failed scalar screen is not a lower bound on true error",
+    "translation_rate_upper_m_s3": 0.00011662837679384899
+  }
+}

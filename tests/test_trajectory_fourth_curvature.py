@@ -5,8 +5,10 @@ from hashlib import sha256
 import json
 import math
 from pathlib import Path
+from time import perf_counter
 
 from space_nav import trajectory
+from test_trajectory_degree_map import _nonmonopole_degree_map_bound_s_inv2
 from test_trajectory_error_transport import _recentered_coast_reaches_m_m_s
 from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
 
@@ -14,6 +16,7 @@ from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_
 def test_fourth_endpoint_conditional_monopole_curvature() -> None:
     """Every cubic in the stated acceleration family has these remainder bounds."""
     root = Path(__file__).parent / "data"
+    budget = trajectory._RefinementBudget("fourth-conditional-rates", 300.0)
     hashes = {}
 
     def read(name: str, key: str) -> dict:
@@ -87,4 +90,54 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
         "jerk_rounding_error_upper_m_s3": jerk["midpoint_l1_error_upper_m_s3"],
         "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
         "scope": "Retained-input conditional cubic family with explicit acceleration premise only; no selected gravity anchor, nonmonopole rates, full J, native residual or mission certificate",
+    }}, sort_keys=True, allow_nan=False))
+    started = perf_counter()
+    translation = {}
+    translation_total = F(0)
+    for body in ("Moon", "Mars"):
+        budget.check()
+        spec = next(item for item in trajectory._HARMONIC_FIELD_SPECS if item.body == body)
+        path = trajectory._default_gravity_models_path()/body/spec.file_name
+        assert trajectory._coefficient_sha256(path) == spec.expected_sha256
+        field = trajectory._load_harmonic_field_settings(trajectory._import_tudat_environment_setup(), spec, path)
+        assert field.gravitational_parameter == spec.gravitational_parameter_m3_s2 == jerk["gravitational_parameters_m3_s2"][body]
+        assert field.reference_radius == spec.normalization_radius_m
+        cosine, sine = field.normalized_cosine_coefficients, field.normalized_sine_coefficients
+        assert cosine.shape == sine.shape == (spec.degree+1, spec.degree+1)
+        assert cosine[0, 0] == 1.0
+        nonmonopole = cosine.copy()
+        nonmonopole[0, 0] = 0.0  # Keep every other degree/order, including C20.
+        jacobian = _nonmonopole_degree_map_bound_s_inv2(
+            budget, field.gravitational_parameter, field.reference_radius,
+            domain["distance_floors_m"][body], nonmonopole, sine,
+        )
+        assert cosine[0, 0] == 1.0  # Never mutate the loaded full field.
+        data = source["bodies"][body]
+        slope = tuple(F(int(n, 16), int(d, 16)) for n, d in data["state_exact_m_m_s"][3:])
+        speed0 = sum((abs(a-b) for a, b in zip(state[3:6], slope, strict=True)), F(0))
+        relative_acceleration = acceleration+F(data["curvature_l1_upper_m_s2"])
+        displacement_rate = speed0+relative_acceleration*h/2
+        rate = jacobian*displacement_rate
+        translation_total += rate
+        translation[body] = {
+            "degree": spec.degree, "coefficient_sha256": spec.expected_sha256,
+            "gm_m3_s2": field.gravitational_parameter, "normalization_radius_m": field.reference_radius,
+            "distance_floor_m": domain["distance_floors_m"][body],
+            "nonmonopole_jacobian_upper_s_inv2": upper(jacobian),
+            "displacement_rate_upper_m_s": upper(displacement_rate), "translation_rate_upper_m_s3": upper(rate),
+        }
+    # Optimistic scalar accounting ONLY: omit all other defect channels,
+    # feedback and native residuals, but do not reset incoming velocity error.
+    velocity_accounting = F(endpoint["outgoing_error_m_m_s"][1])+translation_total*h*h/2
+    budget.check()
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+    print(json.dumps({"fourth_conditional_nonmonopole_translation": {
+        "input_sha256": hashes, "bodies": translation, "duration_s": float(h),
+        "reference_acceleration_cap_m_s2": float(acceleration),
+        "translation_rate_upper_m_s3": upper(translation_total),
+        "incoming_velocity_error_m_s": endpoint["outgoing_error_m_m_s"][1],
+        "optimistic_velocity_accounting_m_s_approx": float(velocity_accounting),
+        "optimistic_accounting_fits_velocity_gate": velocity_accounting <= F("0.000001"),
+        "elapsed_s": perf_counter()-started, "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
+        "scope": "Conditional-family ideal nonmonopole translation at fixed orthogonal orientation only; not rotation, full J, source/native arithmetic, selected anchor or mission certificate; failed scalar screen is not a lower bound on true error",
     }}, sort_keys=True, allow_nan=False))

@@ -65,7 +65,12 @@ including midpoint rounding. This is not a full-force derivative or uniform J.
 Decision0062 bounds monopole curvature for an explicit conditional cubic
 family with acceleration at most 4 m/s^2, proving that family's domain inclusion
 from retained inputs. This does not establish a selected reference's premise.
-Next assess nonmonopole rates and remaining coupled budget. No live new reference,
+Decision0063 computes conditional nonmonopole translation with the whole-degree
+operator bound. Its charge alone fails the optimistic remaining velocity
+accounting screen; this is not a lower bound on actual trajectory error.
+Next identify dominant degree components/norm relaxations and assess tighter
+bounds or a leading nonmonopole reference derivative before rotation/vector work.
+No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified
 separately. No acceptance/allocation change without review and user approval.
