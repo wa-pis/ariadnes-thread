@@ -6905,6 +6905,44 @@ def _check_conditional_full_force_coast_domains(
             "elapsed_s": perf_counter()-matrix_force_started_s,
             "scope": "Full-field stored-to-ideal matrix force bridge at fixed fourth nominal state and ideal-source radius only; no source arithmetic, native force arithmetic, carried-state or interval error certificate",
         }}, sort_keys=True, allow_nan=False))
+        source_force_started_s = perf_counter()
+        fourth_source_force = {}
+        for source in ("Moon", "Mars"):
+            budget.check()
+            field = bodies.get(source).gravity_field_model
+            source_record = fourth_source_report[source]
+            source_position = tuple(Fraction(int(n, 16), int(d, 16))
+                                    for n, d in source_record["state_exact_m_m_s"][:3])
+            relative = tuple(a-b for a, b in zip(handoff_state[:3], source_position, strict=True))
+            source_allowance = source_record["native_position_l1_allowance_m"]
+            assert 0 <= source_record["native_anchor_position_l1_residual_upper_m"] <= source_allowance
+            matrix = np.asarray(fourth_rotations[source]["inertial_to_fixed"])
+            source_error = _stored_harmonic_source_error_bound_m_s2(
+                budget, field.gravitational_parameter, field.reference_radius,
+                field.cosine_coefficients, field.sine_coefficients, relative, matrix, Fraction(source_allowance),
+            )
+            reported_source_error = math.nextafter(float(source_error), math.inf)
+            assert math.isfinite(reported_source_error) and 0 < source_error <= Fraction(reported_source_error)
+            fourth_source_force[source] = {
+                "degree": fourth_matrix_force[source]["degree"], "includes_c00": True,
+                "coefficient_sha256": fourth_matrix_force[source]["coefficient_sha256"],
+                "rotation_input_sha256": fourth_matrix_force[source]["rotation_input_sha256"],
+                "source_position_l1_allowance_m": source_allowance,
+                "relative_centre_m_exact": [[hex(x.numerator), hex(x.denominator)] for x in relative],
+                "acceleration_l2_allowance_m_s2": reported_source_error,
+            }
+        assert point_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+        budget.check()
+        print(json.dumps({"fourth_endpoint_harmonic_source_bridge": {
+            "epoch_tdb_s": fourth_source_epoch_tdb_s, "origin": "SSB", "orientation": "J2000",
+            "time_scale": "TDB seconds since J2000", "model_id": environment.model_id,
+            "nominal_state_m_m_s_kg": list(map(float, handoff_state)),
+            "source_spk_context_sha256": retained_last_binding["source_spk_context_sha256"],
+            "fields": fourth_source_force, "additional_rotation_queries": 0,
+            "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
+            "elapsed_s": perf_counter()-source_force_started_s,
+            "scope": "Full stored-matrix Moon/Mars fields: ideal-source-centred arithmetic ball at fixed fourth nominal state only; no PCK error, native harmonic arithmetic, carried-state, interval or astronomical uncertainty certificate",
+        }}, sort_keys=True, allow_nan=False))
     else:
         assert nominal_lineage == [] and retained_last_binding is None
     print(json.dumps({"harmonic_error_reuse": {

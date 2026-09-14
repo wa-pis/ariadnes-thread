@@ -18,7 +18,8 @@ def _stored_harmonic_source_error_bound_m_s2(
 ) -> Fraction:
     """Bound source effects in A.T*g(A*r); caller binds epoch/source allowance.
 
-    r is spacecraft minus stored source, SI/J2000. A is held fixed; no
+    r is spacecraft minus the chosen source-ball centre, SI/J2000; that
+    centre may be a stored source or an exact ideal polynomial. A is held fixed; no
     orthogonality or PCK-error premise. A nonpositive chord floor is unresolved.
     """
     budget.check()
