@@ -1,0 +1,23 @@
+{
+  "fresh_force_assembly": {
+    "acceleration_l2_allowance_m_s2": 7.838016334890343e-06,
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "epoch_tdb_s": 978995455.2929223,
+    "error_channels_m_s2": {
+      "final_midpoint": 5.254174618261198e-17,
+      "gravity": 7.8380163348378e-06,
+      "schwarzschild": 3.293019657772923e-27,
+      "srp": 5.890205713199613e-24
+    },
+    "harmonic_matrix_convention": "stored matrices held fixed",
+    "midpoint_m_s2": [-3.1477509045315113, 0.0029787932997721, -0.0055067603918823125],
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "scope": "Gravity, fully lit SRP and PPN=1 Sun Schwarzschild at fixed nominal coast state; no PCK/native force arithmetic, state/time domain or mission certificate",
+    "source_convention": "exact position polynomials; Sun velocity is their type-2 derivative",
+    "spacecraft_mass_kg": 2000.0,
+    "spacecraft_state_m_m_s": [-245056838575.43283, 35261268424.25906, 22783597232.703575, -3128.28194638288, -18367.951868652242, -9028.78105009038]
+  }
+}

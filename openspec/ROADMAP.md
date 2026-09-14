@@ -543,9 +543,13 @@ Sun source-state bridge at the nominal fresh state. All 3016 tests pass in
 473.52 s (native 152.63 s, portable 50.87 s), unchanged thirteen/zero arcs.
 The retained 3.293019657772923e-27 m/s^2 L2 numerical allowance and signed
 vector match captured output; native force arithmetic is not included.
-Next compose the three retained force groups with each error channel once.
-Native arithmetic,
-incoming state-ball and domain gaps remain explicit.
+Decision0022 composes the three retained force groups with each L2 total
+once, plus exact-sum midpoint rounding. All 3029 tests pass in 473.75 s
+(native 152.97 s, portable 50.68 s), unchanged thirteen/zero arcs. All three
+producer outputs match their pinned inputs; the retained total has a
+7.838016334890343e-6 m/s^2 conditional L2 allowance at the nominal state.
+Next qualify fresh PCK rotation and native-reference binding; incoming
+state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;

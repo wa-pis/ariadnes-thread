@@ -52,6 +52,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0022 composes the three pinned fresh force groups by exact component
+sums, preserving each group's L2 total once and adding final midpoint
+rounding. Thirteen new cancellation/ball/rounding/rejection/deadline/retained
+controls; all 71 focused checks pass in 0.51 s. Full suite 3029 passed in
+473.75 s, native 152.97 s, portable 50.68 s; unchanged thirteen/zero arcs
+and forty readbacks. All three producer outputs match pinned inputs; the
+retained sum and 7.838016334890343e-6 m/s^2 L2 allowance match captured
+output. Ruff, strict OpenSpec and legacy isolation pass.
+No query, arc or production change. Fresh PCK/native comparison and incoming
+state/time-domain qualification remain open; task3.9 stays open.
+
 Decision0021 extracts signed Schwarzschild intervals while preserving the
 old error API. The pinned fresh case adds the existing Sun source-state
 variation allowance once, after proving whole-chord distance/speed bounds.
