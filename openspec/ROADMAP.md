@@ -548,8 +548,12 @@ once, plus exact-sum midpoint rounding. All 3029 tests pass in 473.75 s
 (native 152.97 s, portable 50.68 s), unchanged thirteen/zero arcs. All three
 producer outputs match their pinned inputs; the retained total has a
 7.838016334890343e-6 m/s^2 conditional L2 allowance at the nominal state.
-Next qualify fresh PCK rotation and native-reference binding; incoming
-state-ball and domain gaps remain explicit.
+Decision0023 audits fresh PCK rotation: recompute angles from the already
+pinned pool at the fresh epoch, and bridge matrices at the ideal-source
+relative vector to preserve the existing source-channel order. Keep C00
+and full fields. Next extract/reuse pure angle evaluation without new
+native queries; native-reference binding, incoming state-ball and domain
+gaps remain explicit. Documentation only; latest full suite remains 3029.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
