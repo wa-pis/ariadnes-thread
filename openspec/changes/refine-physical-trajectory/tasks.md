@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0044 retains four actual nominal histories with exact error radii
+and checks all three state/epoch/error joins. Accepted ordinals 3/6/9/12
+remain distinct from thirteen charged arcs. An initial decimal Fraction
+serialization failure (102.92 s) was corrected using exact hexadecimal
+numerator/denominator pairs, without changing Python limits or precision.
+All 53 focused tests and 3201 full tests pass (468.88 s; native 146.37,
+portable 50.52). Exact lineage reproduces and all prior science is unchanged;
+Ruff/strict OpenSpec/legacy checks pass. Next assess domain/defect/runtime
+limits to larger qualified steps; task 3.9 and mission safety remain open.
+
 Decision0043 traces the existing FOUR accepted nominal Mars arcs:
 1/64 + 1/64 + 1/32 + 1/16 s. The fresh report covers the fourth arc,
 not an independent two-arc trajectory or a fifth propagation. Read-only

@@ -4129,6 +4129,7 @@ def _check_conditional_full_force_coast_domains(
 
     from test_trajectory_force_assembly import _compare_force_reference
     from test_trajectory_endpoint_binding import _check_endpoint_binding, _check_endpoint_spk_context, _check_endpoint_force_context
+    from test_trajectory_lineage import _check_nominal_lineage, _encode_error_pair
 
     candidate = _candidate(
         departure_epoch_utc=ephemeris.tdb_to_utc(start_tdb_s),
@@ -4187,6 +4188,8 @@ def _check_conditional_full_force_coast_domains(
     results: list[dict[str, object]] = []
     harmonic_error_cache: _HarmonicErrorCache = {}
     harmonic_error_requests = 0
+    nominal_lineage: list[dict] = []
+    retained_last_binding: dict | None = None
     for center, radius_m in (("Moon", 1_837_400.0), ("Mars", 3_689_500.0)):
         short_handoff: tuple[tuple[Fraction, ...], Fraction, Fraction, float] | None = None
         two_segment_handoff: tuple[tuple[Fraction, ...], Fraction, Fraction, float] | None = None
@@ -5199,6 +5202,15 @@ def _check_conditional_full_force_coast_domains(
                         # Already relative to the native endpoint: do not add
                         # its cubic-reference residual a second time.
                         short_handoff = (tuple(map(Fraction, final_state[:6])), degree_position_m, degree_velocity_m_s, final_tdb_s)
+                        if center == "Mars":
+                            nominal_lineage.append({
+                                "start_epoch_tdb_s": start_tdb_s, "end_epoch_tdb_s": final_tdb_s,
+                                "initial_state_m_m_s_kg": np.asarray(history[first_epoch]).reshape(7).tolist(),
+                                "terminal_state_m_m_s_kg": final_state.tolist(),
+                                "incoming_error_exact_m_m_s": _encode_error_pair((Fraction(0), Fraction(0))),
+                                "outgoing_error_exact_m_m_s": _encode_error_pair((degree_position_m, degree_velocity_m_s)),
+                                "native_arc_ordinal": budget.native_arc_propagations,
+                            })
                     assert 0 <= degree_position_m < tracefree_position_m <= Fraction("0.001")
                     assert 0 <= degree_velocity_m_s < tracefree_velocity_m_s
                     # Measured on the existing seven controls before promotion
@@ -6122,6 +6134,16 @@ def _check_conditional_full_force_coast_domains(
                             adjacent_results.append(adjacent_result)
                             adjacent_endpoints.append(tuple(map(Fraction, adjacent_final[:6])))
                             adjacent_error_bounds.append((endpoint_p, endpoint_v))
+                            if not adjacent_tighter:
+                                nominal_lineage.append({
+                                    "start_epoch_tdb_s": handoff_epoch, "end_epoch_tdb_s": adjacent_final_tdb_s,
+                                    "initial_state_m_m_s_kg": adjacent_initial.tolist(), "terminal_state_m_m_s_kg": adjacent_final.tolist(),
+                                    "incoming_error_exact_m_m_s": _encode_error_pair((handoff_p_m, handoff_v_m_s)),
+                                    "outgoing_error_exact_m_m_s": _encode_error_pair((endpoint_p, endpoint_v)),
+                                    "native_arc_ordinal": budget.native_arc_propagations,
+                                })
+                                if longer_control:
+                                    retained_last_binding = endpoint_binding
                         adjacent_native_control, adjacent_tighter_control = adjacent_results
                         comparison_values: dict[str, Fraction] = {}
                         for start_axis, unit in ((0, "m"), (3, "m_s")):
@@ -6502,6 +6524,22 @@ def _check_conditional_full_force_coast_domains(
     assert sum(result["conditional_adjacent_tighter_control"] is not None for result in results) == (1 if run_native_controls else 0)
     assert sum(result["conditional_adjacent_comparison"] is not None for result in results) == (1 if run_native_controls else 0)
     assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (expected_arcs,) * 3
+    if run_native_controls:
+        budget.check()
+        assert retained_last_binding is not None
+        lineage_report = {
+            "arcs": nominal_lineage, "accepted_nominal_arcs": len(nominal_lineage),
+            "charged_inventory_arcs": budget.native_arc_propagations,
+            "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+            "model_id": environment.model_id,
+            "error_encoding": "Each radius is [hexadecimal numerator, hexadecimal denominator] in SI; no float rounding",
+            "scope": "Actual nominal four-arc state/error lineage using old shifted-reference bounds; not native-stage or mission safety",
+        }
+        _check_nominal_lineage(lineage_report, retained_last_binding)
+        budget.check()
+        print(json.dumps({"nominal_four_arc_lineage": lineage_report}, sort_keys=True, allow_nan=False))
+    else:
+        assert nominal_lineage == [] and retained_last_binding is None
     print(json.dumps({"harmonic_error_reuse": {
         "requests": harmonic_error_requests, "uncached_evaluations": len(harmonic_error_cache),
         "hits": harmonic_error_requests - len(harmonic_error_cache),

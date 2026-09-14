@@ -675,6 +675,13 @@ report belongs to the fourth arc. Next retain the four actual state/error
 lineage rows using existing histories, not new arcs; four accepted rows
 must not replace the thirteen charged inventory arcs. Documentation audit
 only; task 3.9 and numerical/runtime scaling remain open.
+Decision0044 retains all four actual nominal histories and exact error
+radii; three state/time/error joins pass. Accepted ordinals 3/6/9/12 do not
+replace thirteen charged arcs. Decimal serialization overflow was fixed
+with exact hex fractions, not relaxed limits. All 3201 tests pass in
+468.88 s (native 146.37, portable 50.52); lineage reproduces and old science
+is unchanged. Next assess domain/defect/runtime limits for larger qualified
+steps, not assume lineage proves mission safety. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
