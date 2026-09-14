@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0028 constructs a separate fresh cubic with the observed acceleration
+and retained monopole-jerk midpoint/allowance. Its reaches are
+3815.6269057625564 m and 0.39453704896547703 m/s within the unchanged
+4000 m / 0.5 m/s domain. The existing shifted control and incoming errors
+are preserved. Retained native residuals are 4.4180487383045916e-5 m and
+1.7476440726817778e-8 m/s, not ideal-state error bounds. Full suite 3074
+passed in 494.64 s (native169.41, portable55.86); Ruff, strict OpenSpec
+and legacy isolation pass. No new native queries/arcs. Next qualify the
+fresh full-force defect rate before error transport; task3.9 remains open.
+
 Decision0027 audits the fresh-reference transition: the existing longer
 shifted-cubic endpoint already passes both gates and must remain intact.
 Fresh point error is not a uniform D/J pair and is not automatically tighter.

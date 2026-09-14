@@ -5240,6 +5240,8 @@ def _check_conditional_full_force_coast_domains(
                                                for value in (rounded_error, handoff_p_m, handoff_v_m_s)]
                             assert all(math.isfinite(a) and Fraction(a) >= b >= 0 for a, b in
                                        zip(reported_bounds, (rounded_error, handoff_p_m, handoff_v_m_s), strict=True))
+                            fresh_reference_jerk_m_s3 = tuple(map(Fraction, reported_midpoint))
+                            fresh_reference_jerk_error_m_s3 = Fraction(reported_bounds[0])
                             print(json.dumps({"fresh_mars_monopole_jerk": {
                                 "epoch_tdb_s": handoff_epoch, "source_coverage_end_tdb_s": fresh_source_end_tdb_s,
                                 "origin": "SSB", "orientation": "J2000", "jerk_unit": "m/s^3",
@@ -5702,6 +5704,56 @@ def _check_conditional_full_force_coast_domains(
                                             "elapsed_s": perf_counter()-comparison_started_s,
                                             "additional_native_queries": 0, "additional_native_arcs": 0,
                                             "scope": "Conditional native-to-ideal SPK/PCK full-force error at one fixed nominal coast state; not a uniform native arithmetic, state/time domain or mission certificate",
+                                        }}, sort_keys=True, allow_nan=False))
+                                        budget.check()
+                                        fresh_acceleration = tuple(map(Fraction, acceleration_probes[label]))
+                                        fresh_acceleration_bound = (sum(map(abs, fresh_acceleration), Fraction(0))
+                                            + Fraction(next_s)*sum(map(abs, fresh_reference_jerk_m_s3), Fraction(0)))
+                                        assert fresh_acceleration_bound <= Fraction(acceleration_m_s2)
+                                        fresh_reference_reaches = _recentered_coast_reaches_m_m_s(
+                                            next_s, position_offset_m, velocity_offset_m_s,
+                                            sum(map(abs, handoff_state[3:]), Fraction(0)),
+                                            Fraction(0), Fraction(0), fresh_acceleration_bound,
+                                        )
+                                        assert fresh_reference_reaches[0] < Fraction(position_radius_m)
+                                        assert fresh_reference_reaches[1] < Fraction(velocity_radius_m_s)
+                                        assert adjacent_prerequisites["conditional_prerequisites_pass"]
+                                        fresh_endpoint = _cubic_reference_endpoint(
+                                            handoff_state, fresh_acceleration, fresh_reference_jerk_m_s3, next_s,
+                                        )
+                                        fresh_values = {
+                                            "acceleration_l1_upper_m_s2": fresh_acceleration_bound,
+                                            "position_reach_upper_m": fresh_reference_reaches[0],
+                                            "velocity_reach_upper_m_s": fresh_reference_reaches[1],
+                                            "monopole_jerk_l1_error_upper_m_s3": fresh_reference_jerk_error_m_s3,
+                                            "incoming_position_error_upper_m": handoff_p_m,
+                                            "incoming_velocity_error_upper_m_s": handoff_v_m_s,
+                                            "native_endpoint_position_residual_l1_upper_m": sum((abs(Fraction(a)-b) for a, b in
+                                                zip(adjacent_final[:3], fresh_endpoint[:3], strict=True)), Fraction(0)),
+                                            "native_endpoint_velocity_residual_l1_upper_m_s": sum((abs(Fraction(a)-b) for a, b in
+                                                zip(adjacent_final[3:6], fresh_endpoint[3:], strict=True)), Fraction(0)),
+                                        }
+                                        fresh_reported = {key: math.nextafter(float(value), math.inf) if value else 0.0
+                                                          for key, value in fresh_values.items()}
+                                        assert all(math.isfinite(out) and Fraction(out) >= fresh_values[key] >= 0
+                                                   for key, out in fresh_reported.items())
+                                        assert selected_handoff == preserved_handoff
+                                        assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                        print(json.dumps({"fresh_cubic_reference": {
+                                            "epoch_tdb_s": handoff_epoch, "duration_s": next_s,
+                                            "origin": "SSB", "orientation": "J2000",
+                                            "time_scale": "TDB seconds since J2000",
+                                            "model_id": trajectory.PHYSICAL_MODEL_IDENTIFIER,
+                                            "initial_state_m_m_s": list(map(float, handoff_state)),
+                                            "acceleration_m_s2": acceleration_probes[label],
+                                            "monopole_jerk_m_s3": list(map(float, fresh_reference_jerk_m_s3)),
+                                            "endpoint_exact_m_m_s": list(map(str, fresh_endpoint)),
+                                            "position_domain_radius_m": position_radius_m,
+                                            "velocity_domain_radius_m_s": velocity_radius_m_s,
+                                            "reference_and_conditional_true_state_in_domain": True,
+                                            "additional_native_queries": 0, "additional_native_arcs": 0,
+                                            "scope": "Separate nominal cubic reference and conditional domain inclusion only; residuals are not error bounds; full-force defect rate and error transport unresolved",
+                                            **fresh_reported,
                                         }}, sort_keys=True, allow_nan=False))
                                         budget.check()
                                         print(json.dumps({"fresh_harmonic_vector_enclosure": {

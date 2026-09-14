@@ -1,0 +1,35 @@
+{
+  "fresh_cubic_reference": {
+    "acceleration_l1_upper_m_s2": 3.1563164125323384,
+    "acceleration_m_s2": [-3.147750890395473, 0.002978796195723602, -0.005506764365930771],
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "duration_s": 0.0625,
+    "endpoint_exact_m_m_s": [
+      "-75841418153817278498444720699427127341/309485009821345068724781056",
+      "1332133013831426098193774146517055/37778931862957161709568",
+      "10830614997022937784417989294793078203951/475368975085586025561263702016",
+      "-60513578453599244463096594567/19342813113834066795298816",
+      "-43370099698049402843362563/2361183241434822606848",
+      "-89416719951305893909024888986065/9903520314283042199192993792"
+    ],
+    "epoch_tdb_s": 978995455.2929223,
+    "incoming_position_error_upper_m": 0.00010529778787867129,
+    "incoming_velocity_error_upper_m_s": 2.3227467748483292e-7,
+    "initial_state_m_m_s": [-245056838575.43283, 35261268424.25906, 22783597232.703575, -3128.28194638288, -18367.951868652242, -9028.78105009038],
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "monopole_jerk_l1_error_upper_m_s3": 3.777012706325851e-20,
+    "monopole_jerk_m_s3": [-2.3820614400774456e-7, -0.001279146635563528, 3.616626412070719e-10],
+    "native_endpoint_position_residual_l1_upper_m": 4.4180487383045916e-5,
+    "native_endpoint_velocity_residual_l1_upper_m_s": 1.7476440726817778e-8,
+    "orientation": "J2000",
+    "origin": "SSB",
+    "position_domain_radius_m": 4000.0,
+    "position_reach_upper_m": 3815.6269057625564,
+    "reference_and_conditional_true_state_in_domain": true,
+    "scope": "Separate nominal cubic reference and conditional domain inclusion only; residuals are not error bounds; full-force defect rate and error transport unresolved",
+    "time_scale": "TDB seconds since J2000",
+    "velocity_domain_radius_m_s": 0.5,
+    "velocity_reach_upper_m_s": 0.39453704896547703
+  }
+}

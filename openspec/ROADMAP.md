@@ -576,6 +576,12 @@ error does not justify copying its old defect rate or setting that rate to
 zero. Next construct/check the fresh cubic before qualifying its D/J pair.
 Documentation audit only; latest full suite remains 3074. No new interval
 or mission certificate.
+Decision0028 constructs that separate fresh cubic and verifies its domain
+inclusion without resetting incoming errors or replacing the old control.
+Native velocity residual is 1.7476440726817778e-8 m/s, not an ideal-state
+error bound. All 3074 tests pass in 494.64 s (native169.41, portable55.86),
+unchanged thirteen/zero arcs. Numerical evidence and rationale are retained;
+the fresh full-force defect rate remains the prerequisite to error transport.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
