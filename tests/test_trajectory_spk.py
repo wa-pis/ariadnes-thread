@@ -1486,6 +1486,10 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     body_ids = dict(zip(trajectory.PHYSICAL_BODY_NAMES, (10, 1, 2, 399, 301, 499, 599, 699), strict=True))
     affine_links: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...], Fraction]] = {}
     fresh_affine_links: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...], Fraction]] = {}
+    fourth_affine_links: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...], Fraction]] = {}
+    fourth_offset_s = Fraction(1, 8)
+    fourth_epoch_tdb_s = start_tdb_s + float(fourth_offset_s)
+    assert Fraction(fourth_epoch_tdb_s)-Fraction(start_tdb_s) == fourth_offset_s
     handoff_offset_s = Fraction(1, 16)
     handoff_tdb_s = start_tdb_s + float(handoff_offset_s)
     assert Fraction(handoff_tdb_s)-Fraction(start_tdb_s) == handoff_offset_s
@@ -1529,6 +1533,17 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         assert fresh_c == old_c
         assert sum((abs(b-a-v*handoff_offset_s) for a, b, v in zip(old_p, fresh_p, old_v, strict=True)), Fraction(0)) <= old_c*handoff_offset_s**2/2
         assert sum((abs(b-a) for a, b in zip(old_v, fresh_v, strict=True)), Fraction(0)) <= old_c*handoff_offset_s
+        # Reanchor the SAME position records at the fourth endpoint. This
+        # is polynomial evaluation, not a new ephemeris query or native arc.
+        assert Fraction(mid)-Fraction(radius)+16*Fraction(math.ulp(mid)) <= Fraction(fourth_epoch_tdb_s)
+        assert Fraction(fourth_epoch_tdb_s)+fourth_offset_s <= Fraction(mid)+Fraction(radius)-16*Fraction(math.ulp(mid))
+        fourth_affine_links[link] = _spk_position_affine_data(
+            budget, rows, mid, radius, fourth_epoch_tdb_s, float(fourth_offset_s),
+        )
+        fourth_p, fourth_v, fourth_c = fourth_affine_links[link]
+        assert fourth_c == old_c
+        assert sum((abs(b-a-v*fourth_offset_s) for a, b, v in zip(old_p, fourth_p, old_v, strict=True)), Fraction(0)) <= old_c*fourth_offset_s**2/2
+        assert sum((abs(b-a) for a, b in zip(old_v, fourth_v, strict=True)), Fraction(0)) <= old_c*fourth_offset_s
     affine_curvature_bounds_m_s2: dict[str, float] = {}
     source_affine_motion: dict[str, tuple[tuple[Fraction, ...], Fraction]] = {}
     source_affine_positions_m: dict[str, tuple[Fraction, ...]] = {}
@@ -1537,6 +1552,8 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     fresh_source_states: dict[str, tuple[Fraction, ...]] = {}
     fresh_native_positions_m: dict[str, tuple[Fraction, ...]] = {}
     fresh_native_sun_velocity_m_s: tuple[Fraction, ...] | None = None
+    fourth_source_report: dict[str, dict] = {}
+    fourth_native_checks = 0
     for body, target in body_ids.items():
         center = expected_centers[target]
         chain = [target] if center == 0 else [target, center]
@@ -1546,6 +1563,17 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         fresh_position = tuple(sum((fresh_affine_links[link][0][axis] for link in chain), Fraction(0)) for axis in range(3))
         fresh_slope = tuple(sum((fresh_affine_links[link][1][axis] for link in chain), Fraction(0)) for axis in range(3))
         fresh_source_states[body] = fresh_position + fresh_slope
+        fourth_position = tuple(sum((fourth_affine_links[link][0][axis] for link in chain), Fraction(0)) for axis in range(3))
+        fourth_slope = tuple(sum((fourth_affine_links[link][1][axis] for link in chain), Fraction(0)) for axis in range(3))
+        assert sum((fourth_affine_links[link][2] for link in chain), Fraction(0)) == curvature
+        assert sum((abs(b-a-v*fourth_offset_s) for a, b, v in zip(position, fourth_position, slope, strict=True)), Fraction(0)) <= curvature*fourth_offset_s**2/2
+        assert sum((abs(b-a) for a, b in zip(slope, fourth_slope, strict=True)), Fraction(0)) <= curvature*fourth_offset_s
+        fourth_source_report[body] = {
+            "chain": chain,
+            "state_exact_m_m_s": [[hex(value.numerator), hex(value.denominator)] for value in fourth_position+fourth_slope],
+            "curvature_l1_upper_m_s2": math.nextafter(float(curvature), math.inf),
+            "native_position_l1_allowance_m": chain_position_bounds_m[target],
+        }
         assert sum((fresh_affine_links[link][2] for link in chain), Fraction(0)) == curvature
         assert sum((abs(b-a-v*handoff_offset_s) for a, b, v in zip(position, fresh_position, slope, strict=True)), Fraction(0)) <= curvature*handoff_offset_s**2/2
         assert sum((abs(b-a) for a, b in zip(slope, fresh_slope, strict=True)), Fraction(0)) <= curvature*handoff_offset_s
@@ -1559,6 +1587,16 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             native_state = spice.spkssb(target, start_tdb_s + duration_s, "J2000") * 1000
             assert np.all(np.isfinite(native_state))
             native_position = native_state[:3]
+            if Fraction(duration_s) == fourth_offset_s:
+                fourth_residual = sum((abs(Fraction(a)-b) for a, b in zip(native_position, fourth_position, strict=True)), Fraction(0))
+                assert fourth_residual <= Fraction(chain_position_bounds_m[target]), body
+                fourth_source_report[body]["native_anchor_position_l1_residual_upper_m"] = math.nextafter(float(fourth_residual), math.inf)
+                if body == "Sun":
+                    fourth_velocity_residual = sum((abs(Fraction(a)-b) for a, b in zip(native_state[3:], fourth_slope, strict=True)), Fraction(0))
+                    assert fourth_velocity_residual <= Fraction(chain_velocity_bounds_m_s[10])
+                    fourth_source_report[body]["native_velocity_l1_allowance_m_s"] = chain_velocity_bounds_m_s[10]
+                    fourth_source_report[body]["native_anchor_velocity_l1_residual_upper_m_s"] = math.nextafter(float(fourth_velocity_residual), math.inf)
+                fourth_native_checks += 1
             residual = sum((abs(Fraction(observed) - initial - velocity * Fraction(duration_s))
                             for observed, initial, velocity in zip(native_position, position, slope, strict=True)), Fraction(0))
             assert residual <= curvature * Fraction(duration_s)**2 / 2 + Fraction(chain_position_bounds_m[target]), body
@@ -1579,6 +1617,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
             affine_native_checks += 1
     assert len(affine_links) == 11 and affine_native_checks == 40
     assert len(fresh_affine_links) == 11 and fresh_native_comparisons == 16
+    assert len(fourth_affine_links) == 11 and fourth_native_checks == 8
     assert set(fresh_native_positions_m) == set(body_ids)
     assert fresh_native_sun_velocity_m_s is not None
     print(json.dumps({"fresh_source_affine_control": {
@@ -1619,6 +1658,19 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         "scope": "Unique guarded source position records for this probe; Sun velocity uses type-2 derivative; not astronomical uncertainty or complete force provenance",
     }
     print(json.dumps({"fresh_spk_context": fresh_spk_context}, sort_keys=True, allow_nan=False))
+    budget.check()
+    print(json.dumps({"fourth_endpoint_source_anchor": {
+        "epoch_tdb_s": fourth_epoch_tdb_s, "end_epoch_tdb_s": fourth_epoch_tdb_s+float(fourth_offset_s),
+        "duration_s": float(fourth_offset_s), "origin": "SSB", "orientation": "J2000",
+        "time_scale": "TDB seconds since J2000", "bodies": fourth_source_report,
+        "source_spk_context_sha256": sha256(json.dumps(fresh_spk_context, sort_keys=True, allow_nan=False).encode()).hexdigest(),
+        "additional_affine_evaluations": 11, "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
+        "reused_native_position_checks": fourth_native_checks, "reused_sun_velocity_checks": 1,
+        "exact_encoding": "Each SI position/slope is [hexadecimal numerator, hexadecimal denominator]",
+        "velocity_convention": "Derivative of position polynomials; only Sun type-2 compared to native velocity, not type-3 stored velocities",
+        "scope": "Covered source reanchor at fourth endpoint only; no new spacecraft force/reference/defect or mission certificate",
+    }}, sort_keys=True, allow_nan=False))
+    budget.check()
     coast_domains = _check_conditional_full_force_coast_domains(
         budget, start_tdb_s, end_tdb_s, coast_body_reaches_m, chain_speed_bounds_m_s[10],
         {body: motion_samples[target][0][1] for body, target in body_ids.items()},

@@ -52,6 +52,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0052 reanchors eleven already covered position records at the
+fourth endpoint, composes eight SSB states/slopes exactly, and reuses eight
+native position checks plus the Sun type-2 velocity check. No new native
+query/arc; type-3 stored velocities are not substituted for derivatives.
+23 focused checks and all 3217 tests pass (508.00 s); the new report matches
+three runs exactly and all prior scientific values are unchanged. Counts
+remain 13 / 0 native/portable arcs; Ruff, strict OpenSpec and legacy checks
+pass. Retained data: `tests/data/m3_fourth_endpoint_source_anchor.json`;
+scope, epoch/resource links and measurement limits are in Decision0052.
+Next bind the new sources to the fourth spacecraft state and qualify the
+point-gravity anchor portion, without claiming full-force D/J or a fifth arc.
+
 Decision0051 checks whole-domain illumination for Earth/Moon/Mars before
 the fully-lit SRP derivative, then recomputes all force sensitivities.
 Lx=1.942174880062744e-6 s^-2, Lv=7.30562670187794e-15 s^-1; remaining

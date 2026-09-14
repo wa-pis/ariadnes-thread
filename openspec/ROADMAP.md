@@ -35,8 +35,11 @@ velocity-error budget; its separate channel ceilings cannot each be spent
 in full. Decision0051 checks all three occultors and recomputes quarter-domain
 sensitivities (Lx=1.942174880062744e-6 s^-2, Lv=7.30562670187794e-15 s^-1).
 Feedback is below one, but no reference or D/J follows. Next qualify the
-fourth-endpoint reference/source anchor and its attainable defect budget;
-interval-specific reference/error transport remains to be qualified
+fourth-endpoint reference and its attainable defect budget. Decision0052
+reanchors the same eleven guarded source records for all eight bodies,
+reusing native anchor checks without new queries; the full-force consumer
+still needs spacecraft/resource binding and a new error argument.
+Interval-specific reference/error transport remains to be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.
 
