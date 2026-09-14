@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0027 audits the fresh-reference transition: the existing longer
+shifted-cubic endpoint already passes both gates and must remain intact.
+Fresh point error is not a uniform D/J pair and is not automatically tighter.
+Next construct a separate fresh cubic with existing coefficients, verify its
+domain inclusion, then qualify its complete defect rate while preserving
+incoming radii. Documentation only; strict OpenSpec/whitespace pass, no
+full-suite rerun or native call. Latest full suite remains 3074 passing tests.
+
 Decision0026 adds both live PCK force channels once to the pinned common
 reference radius, binds the exact fresh nominal state, and compares the
 already observed native acceleration using an exact squared L2 distance.

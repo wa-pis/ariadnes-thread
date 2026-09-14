@@ -570,7 +570,12 @@ portable 56.58 s), unchanged thirteen/zero arcs. The fixed-state native-error
 upper bound is 7.853215960348902e-6 m/s^2; the smaller observed distance
 1.496686907541579e-8 m/s^2 is not itself a qualified force error. Next construct the
 fresh local reference while retaining incoming error balls and qualifying
-state/time-domain force variation. No interval or mission certificate yet.
+state/time-domain force variation. Decision0027 clarifies that the existing
+longer shifted-cubic endpoint already passes; preserve it. A fresh point
+error does not justify copying its old defect rate or setting that rate to
+zero. Next construct/check the fresh cubic before qualifying its D/J pair.
+Documentation audit only; latest full suite remains 3074. No new interval
+or mission certificate.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
