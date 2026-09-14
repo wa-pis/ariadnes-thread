@@ -23,7 +23,11 @@ absolute-error requirement. Full-command nominal/tighter agreement remains
 10 m / 1e-4 m/s / 1e-6 kg and is not a rigorous safety radius. Decision0046
 states the geometric contract and checks 16 analytic combinations of error
 radii, velocity closure and guard separation, without changing acceptance.
-Next assess recomputation of force/domain bounds and resource cost; a larger
+Decision0047 identifies the fixed-anchor reach obstruction and scopes a
+zero-additional-native domain-only probe: 0.25 s, 8000 m / 1 m/s, using
+existing one-second source envelopes but recomputing every force/floor.
+The proposed domain has NOT passed; require new uniform A < 4 m/s^2 and
+all eight guard/coverage/closure checks under the existing budget. A larger
 physical interval and its resources/error transport must be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.

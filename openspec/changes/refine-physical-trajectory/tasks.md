@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0047 finds that the fixed-anchor speed term alone prevents the
+4000 m reach formula from closing at 0.25 s. This is not actual domain exit.
+Next perform only a 0.25 s, 8000 m / 1 m/s initial-state domain check:
+reuse covered one-second source envelopes, recompute all floors and force
+norms, and require strict closure (new A < 4 m/s^2) plus eight guard checks.
+Measure within the existing budget with zero added native arcs/ephemeris
+queries; do not extend D/J, numerical handoff or acceptance. Read-only exact
+scalar/source audit; docs only, no new domain has been qualified.
+
 Decision0046 adds 16 analytic geometric-contract cases: strict guard
 separation and complete domain closure are independent of the unchanged
 accuracy gates. Coarse/equal floors and failed velocity closure cannot
