@@ -52,6 +52,18 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0020 adds the fresh cached-Sun velocity bridge using the existing
+full state readback and exact type2 derivative. Pin the kernel and guarded
+record identity; require exact cached/native equality and rational L1
+residual within the existing uniform chain allowance. No additional query
+or arc, no force-error or state-domain certificate. All 109 focused checks
+pass in 0.61 s; full suite 2990 passed in 473.27 s, native 152.86 s,
+portable 50.87 s, unchanged thirteen/zero arcs and forty readbacks.
+Retained diagnostics match captured output: allowance 6.9538963374104784e-15
+m/s encloses observed L1 residual 8.779188700062134e-16 m/s. Ruff, strict
+OpenSpec and legacy isolation pass. Next signed Schwarzschild vector and
+source-state bridge; task3.9 stays open.
+
 Decision0019 observes the selected fresh Sun type2/SSB/J2000 record,
 pins its kernel hash and verifies the same 16-ULP guarded core. A separate
 read-only state query exactly matches all six retained Sun components.

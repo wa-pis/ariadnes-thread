@@ -533,8 +533,13 @@ Next audit/bind the cached Sun velocity representation and fresh coverage
 before Schwarzschild vector/error composition; no full-force certificate yet.
 Decision0019 confirms the selected Sun record is type2, fits the guarded
 core and reproduces the retained six-component state in a separate read-only
-probe. Next make the cached-velocity/differentiated-series allowance binding
-an inventory assertion without new queries. Relativity, native arithmetic,
+probe. Decision0020 adds the cached-velocity/differentiated-series allowance
+binding inside the inventory without new queries; all 2990 tests pass in
+473.27 s (native 152.86 s, portable 50.87 s), with unchanged thirteen/zero arcs.
+The 6.9538963374104784e-15 m/s conditional L1 allowance encloses the fresh
+8.779188700062134e-16 m/s observed residual; retained output matches exactly.
+Next qualify the signed Schwarzschild vector and its source-state bridge.
+Relativity, native arithmetic,
 incoming state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or

@@ -1,0 +1,30 @@
+{
+  "fresh_sun_velocity_record": {
+    "center": 0,
+    "conditional_l1_allowance_m_s": 6.9538963374104784e-15,
+    "epoch_tdb_s": 978995455.2929223,
+    "frame": 1,
+    "kernel_sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+    "record_guard_s": 1.9073486328125e-06,
+    "record_midpoint_tdb_s": 979430400.0,
+    "record_radius_s": 691200.0,
+    "spk_type": 2,
+    "target": 10,
+    "velocity_convention": "exact derivative of type-2 position polynomials"
+  },
+  "fresh_sun_velocity_binding": {
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "conditional_l1_allowance_m_s": 6.9538963374104784e-15,
+    "coverage_end_tdb_s": 978995455.3554223,
+    "epoch_tdb_s": 978995455.2929223,
+    "exact_cached_readback_match": true,
+    "model": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "observed_l1_residual_upper_m_s": 8.779188700062134e-16,
+    "orientation": "J2000",
+    "origin": "SSB",
+    "scope": "Conditional Sun velocity arithmetic bridge at the fresh epoch; no Schwarzschild force, state-ball or mission certificate",
+    "sun_state_m_m_s": [-152759301.5470408, 173039265.02940723, 85705792.6458708, -8.567768598269868, 1.785854797514042, 0.9495327247306723],
+    "velocity_convention": "exact derivative of type-2 position polynomials"
+  }
+}

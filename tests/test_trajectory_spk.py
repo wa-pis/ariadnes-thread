@@ -1473,6 +1473,26 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                     and Fraction(start_tdb_s) + 1 <= Fraction(mid) + Fraction(radius) - 16 * Fraction(math.ulp(mid))]
         assert len(selected) == 1, (link, "affine interval must fit one qualified core")
         mid, radius, rows = selected[0]
+        if link == 10:
+            # Only the Sun's type-2 derivative is a velocity reference here;
+            # type-3 stored velocities must not inherit this identification.
+            sun_segments = [segment for segment in segments if segment[1] == 10]
+            assert len(sun_segments) == 1
+            sun_handle, _, sun_type, *_ = sun_segments[0]
+            assert sun_type == 2 and expected_centers[10] == 0
+            sun_path = next(path for path, _, _, handle in files if handle == sun_handle)
+            with Path(sun_path).open("rb") as kernel:
+                sun_kernel_sha256 = file_digest(kernel, "sha256").hexdigest()
+            assert sun_kernel_sha256 == "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6"
+            print(json.dumps({"fresh_sun_velocity_record": {
+                "kernel_sha256": sun_kernel_sha256, "target": 10, "center": 0,
+                "frame": 1, "spk_type": sun_type,
+                "epoch_tdb_s": handoff_tdb_s,
+                "record_midpoint_tdb_s": mid, "record_radius_s": radius,
+                "record_guard_s": 16*math.ulp(mid),
+                "velocity_convention": "exact derivative of type-2 position polynomials",
+                "conditional_l1_allowance_m_s": chain_velocity_bounds_m_s[10],
+            }}, sort_keys=True, allow_nan=False))
         affine_links[link] = _spk_position_affine_data(budget, rows, mid, radius, start_tdb_s, 1.0)
         # Fresh data must fit the SAME guarded core, not merely a nearby record.
         assert Fraction(mid)-Fraction(radius)+16*Fraction(math.ulp(mid)) <= Fraction(handoff_tdb_s)
@@ -1492,6 +1512,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
     fresh_native_comparisons = 0
     fresh_source_states: dict[str, tuple[Fraction, ...]] = {}
     fresh_native_positions_m: dict[str, tuple[Fraction, ...]] = {}
+    fresh_native_sun_velocity_m_s: tuple[Fraction, ...] | None = None
     for body, target in body_ids.items():
         center = expected_centers[target]
         chain = [target] if center == 0 else [target, center]
@@ -1511,8 +1532,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         affine_curvature_bounds_m_s2[body] = reported_curvature
         for duration_s in coast_durations_s:
             budget.check()
-            native_position = spice.spkssb(target, start_tdb_s + duration_s, "J2000")[:3] * 1000
-            assert np.all(np.isfinite(native_position))
+            native_state = spice.spkssb(target, start_tdb_s + duration_s, "J2000") * 1000
+            assert np.all(np.isfinite(native_state))
+            native_position = native_state[:3]
             residual = sum((abs(Fraction(observed) - initial - velocity * Fraction(duration_s))
                             for observed, initial, velocity in zip(native_position, position, slope, strict=True)), Fraction(0))
             assert residual <= curvature * Fraction(duration_s)**2 / 2 + Fraction(chain_position_bounds_m[target]), body
@@ -1525,11 +1547,16 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
                 assert fresh_residual <= curvature*local_s**2/2+Fraction(chain_position_bounds_m[target]), body
                 if local_s == 0:
                     fresh_native_positions_m[body] = tuple(map(Fraction, native_position))
+                    if body == "Sun":
+                        fresh_native_sun_velocity_m_s = tuple(map(Fraction, native_state[3:]))
+                        assert sum((abs(actual-ideal) for actual, ideal in zip(
+                            fresh_native_sun_velocity_m_s, fresh_slope, strict=True)), Fraction(0)) <= Fraction(chain_velocity_bounds_m_s[10])
                 fresh_native_comparisons += 1
             affine_native_checks += 1
     assert len(affine_links) == 11 and affine_native_checks == 40
     assert len(fresh_affine_links) == 11 and fresh_native_comparisons == 16
     assert set(fresh_native_positions_m) == set(body_ids)
+    assert fresh_native_sun_velocity_m_s is not None
     print(json.dumps({"fresh_source_affine_control": {
         "epoch_tdb_s": handoff_tdb_s, "duration_s": float(handoff_offset_s),
         "origin": "SSB", "orientation": "J2000", "position_unit": "m", "slope_unit": "m/s",
@@ -1569,6 +1596,7 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         fresh_source_states=fresh_source_states, fresh_source_epoch_tdb_s=handoff_tdb_s,
         fresh_source_end_tdb_s=handoff_tdb_s+float(handoff_offset_s),
         fresh_native_positions_m=fresh_native_positions_m,
+        fresh_native_sun_velocity_m_s=fresh_native_sun_velocity_m_s,
         run_native_controls=native_record_readback,
     )
 
@@ -3995,6 +4023,7 @@ def _check_conditional_full_force_coast_domains(
     fresh_source_states: dict[str, tuple[Fraction, ...]],
     fresh_source_epoch_tdb_s: float, fresh_source_end_tdb_s: float,
     fresh_native_positions_m: dict[str, tuple[Fraction, ...]],
+    fresh_native_sun_velocity_m_s: tuple[Fraction, ...],
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint, _initial_velocity_interval_m_s
@@ -4027,6 +4056,8 @@ def _check_conditional_full_force_coast_domains(
     assert set(source_affine_positions_m) == set(states)
     assert set(fresh_source_states) == set(states)
     assert set(fresh_native_positions_m) == set(states)
+    assert len(fresh_native_sun_velocity_m_s) == 3
+    assert all(isinstance(value, Fraction) for value in fresh_native_sun_velocity_m_s)
     assert all(np.all(np.isfinite(state)) for state in states.values())
     for body, state in states.items():
         assert np.array_equal(state[:3], position_anchors_m[body]), body
@@ -5347,6 +5378,24 @@ def _check_conditional_full_force_coast_domains(
                                         }}, sort_keys=True, allow_nan=False))
                                         harmonic_started_s = perf_counter()
                                         assert fresh_sun_state is not None and np.all(np.isfinite(fresh_sun_state))
+                                        assert tuple(map(Fraction, fresh_sun_state[3:])) == fresh_native_sun_velocity_m_s
+                                        sun_velocity_residual = sum((abs(actual-ideal) for actual, ideal in zip(
+                                            fresh_native_sun_velocity_m_s, fresh_source_states["Sun"][3:], strict=True)), Fraction(0))
+                                        assert sun_velocity_residual <= Fraction(sun_velocity_error_m_s)
+                                        reported_sun_velocity_residual = math.nextafter(float(sun_velocity_residual), math.inf)
+                                        assert Fraction(reported_sun_velocity_residual) >= sun_velocity_residual
+                                        print(json.dumps({"fresh_sun_velocity_binding": {
+                                            "epoch_tdb_s": handoff_epoch, "coverage_end_tdb_s": fresh_source_end_tdb_s,
+                                            "origin": "SSB", "orientation": "J2000",
+                                            "model": trajectory.PHYSICAL_MODEL_IDENTIFIER,
+                                            "sun_state_m_m_s": fresh_sun_state.tolist(),
+                                            "velocity_convention": "exact derivative of type-2 position polynomials",
+                                            "conditional_l1_allowance_m_s": sun_velocity_error_m_s,
+                                            "observed_l1_residual_upper_m_s": reported_sun_velocity_residual,
+                                            "exact_cached_readback_match": True,
+                                            "additional_native_queries": 0, "additional_native_arcs": 0,
+                                            "scope": "Conditional Sun velocity arithmetic bridge at the fresh epoch; no Schwarzschild force, state-ball or mission certificate",
+                                        }}, sort_keys=True, allow_nan=False))
                                         light_started_s = perf_counter()
                                         light_counts = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
                                         srp_resource = environment.solar_radiation_pressure
