@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0061 (2026-09-15) binds eight ideal monopole jerks to the actual
+fourth state and position-polynomial source derivatives. Exact component
+intervals and midpoint rounding are retained; no source/native arithmetic,
+full-force jerk or uniform J is claimed. Zero new queries/arcs. Next bind
+monopole curvature and explicit reference-acceleration premises before
+nonmonopole rates and budget assessment. See
+`docs/decisions/0061-fourth-endpoint-monopole-jerk.md`; 3.9 stays open.
+
 Decision0060 (2026-09-15) verifies the separate gravity-only reference
 contract with 60 analytic/rejection cases: signed constant/reversing bounded
 forces, exact gravitational remainder and integrated state errors, non-reset

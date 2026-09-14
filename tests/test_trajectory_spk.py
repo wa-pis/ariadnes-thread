@@ -6978,6 +6978,43 @@ def _check_conditional_full_force_coast_domains(
             "elapsed_s": perf_counter()-point_source_started_s,
             "scope": "Six point-force source-arithmetic balls at fixed fourth nominal state only; no native force arithmetic, carried-state, time-domain or astronomical uncertainty certificate; Moon/Mars excluded",
         }}, sort_keys=True, allow_nan=False))
+        jerk_started_s = perf_counter()
+        all_fourth_states = {
+            body: tuple(Fraction(int(n, 16), int(d, 16)) for n, d in fourth_source_report[body]["state_exact_m_m_s"])
+            for body in trajectory.PHYSICAL_BODY_NAMES
+        }
+        all_fourth_gm = {body: bodies.get(body).gravity_field_model.gravitational_parameter
+                         for body in trajectory.PHYSICAL_BODY_NAMES}
+        fourth_jerks = _fresh_monopole_jerk_intervals_m_s3(
+            budget, retained_last_binding["end_epoch_tdb_s"], quarter_domain["end_epoch_tdb_s"],
+            fourth_source_epoch_tdb_s, fourth_source_end_tdb_s, handoff_state[:6], all_fourth_states, all_fourth_gm,
+        )
+        assert set(fourth_jerks) == set(trajectory.PHYSICAL_BODY_NAMES)
+        midpoint = tuple(sum((bounds[axis][0]+bounds[axis][1] for bounds in fourth_jerks.values()), Fraction(0))/2
+                         for axis in range(3))
+        midpoint_report = [float(x) for x in midpoint]
+        width = sum((hi-lo for bounds in fourth_jerks.values() for lo, hi in bounds), Fraction(0))/2
+        midpoint_error = width+sum((abs(Fraction(a)-b) for a, b in zip(midpoint_report, midpoint, strict=True)), Fraction(0))
+        error_report = math.nextafter(float(midpoint_error), math.inf)
+        assert all(math.isfinite(x) for x in midpoint_report)
+        assert math.isfinite(error_report) and 0 <= midpoint_error <= Fraction(error_report)
+        jerk_report = {body: [[math.nextafter(float(lo), -math.inf), math.nextafter(float(hi), math.inf)]
+                              for lo, hi in bounds] for body, bounds in fourth_jerks.items()}
+        assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lo <= hi <= Fraction(b)
+                   for body, bounds in fourth_jerks.items()
+                   for (a, b), (lo, hi) in zip(jerk_report[body], bounds, strict=True))
+        assert point_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+        budget.check()
+        print(json.dumps({"fourth_endpoint_monopole_jerk": {
+            "epoch_tdb_s": fourth_source_epoch_tdb_s, "source_coverage_end_tdb_s": fourth_source_end_tdb_s,
+            "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+            "model_id": environment.model_id, "nominal_state_m_m_s_kg": list(map(float, handoff_state)),
+            "source_spk_context_sha256": retained_last_binding["source_spk_context_sha256"],
+            "gravitational_parameters_m3_s2": all_fourth_gm, "body_intervals_m_s3": jerk_report,
+            "midpoint_m_s3": midpoint_report, "midpoint_l1_error_upper_m_s3": error_report,
+            "elapsed_s": perf_counter()-jerk_started_s, "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
+            "scope": "Eight nominal ideal monopoles only using position-polynomial derivatives; not full gravity/force jerk, uniform J, source/native arithmetic, carried-state error or a new trajectory reference",
+        }}, sort_keys=True, allow_nan=False))
     else:
         assert nominal_lineage == [] and retained_last_binding is None
     print(json.dumps({"harmonic_error_reuse": {
