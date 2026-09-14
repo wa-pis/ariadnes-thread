@@ -46,6 +46,10 @@ def test_bounded_subdivision_with_known_relative_acceleration(
         acceleration_m_s2[1] = 16.0 * radius_m / duration_s**2
     acceleration_bound_m_s2 = float(np.linalg.norm(acceleration_m_s2))
     max_position_error_m = 0.0
+    original_initial = initial.copy()
+    native_inputs: list[tuple[float, float, NDArray[np.float64]]] = []
+    child_handoff_checks = 0
+    discarded_parent_checks = 0
 
     def analytic(epoch_s: float) -> NDArray[np.float64]:
         return np.concatenate((
@@ -55,6 +59,7 @@ def test_bounded_subdivision_with_known_relative_acceleration(
 
     def advance(start_s: float, end_s: float, state: NDArray[np.float64]) -> NDArray[np.float64]:
         nonlocal max_position_error_m
+        original_state = state.copy()
         budget.check()
         settings = environment_setup.BodyListSettings("SSB", "J2000")
         settings.add_empty_settings("Spacecraft")
@@ -80,6 +85,8 @@ def test_bounded_subdivision_with_known_relative_acceleration(
             budget, bodies, coupled, first_in_evaluation=budget.native_arc_propagations == 0,
         )
         assert simulator.integration_completed_successfully is True
+        assert np.array_equal(state, original_state)
+        native_inputs.append((start_s, end_s, original_state))
         # Experimental trial only: inspect endpoint, then discard the simulator.
         # Do not use the production safe-result reader before interval screening.
         history = simulator.state_history
@@ -99,7 +106,10 @@ def test_bounded_subdivision_with_known_relative_acceleration(
     def screen(
         start_s: float, end_s: float, start: NDArray[np.float64], depth: int,
     ) -> tuple[str, NDArray[np.float64] | None]:
+        nonlocal child_handoff_checks, discarded_parent_checks
+        original_start = start.copy()
         end = advance(start_s, end_s, start)
+        assert np.array_equal(start, original_start)
         # Inside by more than the verified endpoint error is a definite impact.
         if min(np.linalg.norm(start[:3]), np.linalg.norm(end[:3])) + error_m < radius_m:
             return "impact", None
@@ -115,12 +125,26 @@ def test_bounded_subdivision_with_known_relative_acceleration(
         if depth == 6:
             return "unresolved", None
         midpoint_s = (start_s + end_s) / 2.0
+        assert start_s < midpoint_s < end_s
+        discarded_parent_checks += 1
         left_status, midpoint = screen(start_s, midpoint_s, start, depth + 1)
+        assert np.array_equal(start, original_start)
         if left_status != "clear":
+            assert midpoint is None
             return left_status, None
         assert midpoint is not None
+        accepted_midpoint = midpoint.copy()
+        right_input_index = len(native_inputs)
         # The discarded parent and both refined children count as native work.
-        return screen(midpoint_s, end_s, midpoint, depth + 1)
+        right_result = screen(midpoint_s, end_s, midpoint, depth + 1)
+        right_start_s, right_end_s, right_start_state = native_inputs[right_input_index]
+        assert (right_start_s, right_end_s) == (midpoint_s, end_s)
+        assert np.array_equal(right_start_state, accepted_midpoint)
+        assert np.array_equal(midpoint, accepted_midpoint)
+        assert right_result[1] is not end  # Never return the discarded parent endpoint.
+        assert (right_result[1] is not None) == (right_result[0] == "clear")
+        child_handoff_checks += 1
+        return right_result
 
     if stop is not None:
         terminal = None
@@ -129,6 +153,8 @@ def test_bounded_subdivision_with_known_relative_acceleration(
             _, terminal = screen(0.0, duration_s, initial, 0)
         assert terminal is None
         assert budget.native_arc_propagations == 2
+        assert len(native_inputs) == budget.native_arc_propagations
+        assert np.array_equal(initial, original_initial)
         assert budget.control_attempts == budget.propagation_evaluations == 1
         return
     status, terminal = screen(0.0, duration_s, initial, 0)
@@ -137,6 +163,12 @@ def test_bounded_subdivision_with_known_relative_acceleration(
     assert (terminal is not None) == (expected == "clear")
     assert budget.control_attempts == budget.propagation_evaluations == 1
     assert 1 <= budget.native_arc_propagations <= 32
+    assert len(native_inputs) == budget.native_arc_propagations
+    assert np.array_equal(initial, original_initial)
+    assert (native_inputs[0][0], native_inputs[0][1]) == (0.0, duration_s)
+    assert np.array_equal(native_inputs[0][2], original_initial)
+    if case == "tangent":
+        assert child_handoff_checks > 0 and discarded_parent_checks > 0
     if expected != "clear":
         assert budget.native_arc_propagations > 1
     budget.check()
@@ -144,5 +176,8 @@ def test_bounded_subdivision_with_known_relative_acceleration(
         "case": case, "status": status, "native_calls": budget.native_arc_propagations,
         "elapsed_s": time.monotonic() - started_s,
         "max_position_error_m": max_position_error_m,
+        "recorded_native_inputs": len(native_inputs),
+        "child_handoff_checks": child_handoff_checks,
+        "discarded_parent_checks": discarded_parent_checks,
         "scope": "analytic control only; no mission safety certificate",
     }, sort_keys=True))

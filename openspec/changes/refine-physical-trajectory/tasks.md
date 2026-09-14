@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0037 instruments the existing seven adaptive controls with native
+input snapshots, child-epoch/state handoff and discarded-parent checks.
+Counts match all recorded calls, including two calls on each limit exit.
+The tangent case exercises one handoff but remains unresolved; unsplit
+clear controls do not establish successful multi-leaf composition. All7
+focused controls pass in3.12 s; full3131 in505.61 s (native166.13,
+portable68.94), Ruff/strict OpenSpec/legacy checks pass. Old counts/science
+are unchanged. Next add synthetic successful/blocked-child composition
+checks without native work; task3.9 stays open.
+
 Decision0036 adds19 synthetic caller-contract cases: unresolved opens no
 history, clear cannot erase rejection, native failure remains fatal,
 invalid evidence rejects, and epoch/deadline checks remain active.

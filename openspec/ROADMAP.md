@@ -630,6 +630,12 @@ clearance data are unchanged. Unresolved returns no state; rejection,
 native failure, epoch and deadline checks survive composition. This is
 test-only control flow, not physical evidence binding or production safety.
 Next inspect child endpoint/evidence bindings; task3.9 stays open.
+Decision0037 verifies actual child-state lineage in the existing analytic
+adaptive controls: seven cases pass, counts remain5/1/2/1/8 and2/2 on
+limits. Tangency exercises one handoff but remains unresolved; successful
+two-child composition still needs a synthetic control. Full3131 passes
+in505.61 s (native166.13, portable68.94), old scientific results unchanged.
+No new native work per invocation; task3.9 remains open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production
