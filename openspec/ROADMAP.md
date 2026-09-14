@@ -607,6 +607,11 @@ improvement or mission safety is claimed. All3112 tests pass in500.78 s
 (native163.70, portable66.70), with no new native calls. Next audit the
 remaining internal-stage/interval-composition prerequisites before adding
 arcs or extending the coast; task3.9 remains open.
+Decision0033 audits that boundary: domain floors already clear all eight
+collision spheres, but must be bound to the same interval's true-state
+closure before reporting conditional ideal-path clearance. Do that next
+without new arcs; do not confuse it with native-stage safety or a
+production rejection policy. Documentation only; latest full suite3112.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

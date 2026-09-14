@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0033 separates conditional ideal-path clearance from native trial
+handling. Eight domain distance floors already exceed collision guards;
+next explicitly bind/report those margins with the existing fresh
+incoming-ball closure and identical coverage/resource, without new arcs.
+Stage latching and completed output alone cannot establish continuous
+safety. Documentation audit only; strict OpenSpec/whitespace pass, no
+full-suite rerun. Native rejection/composition remains open, as does3.9.
+
 Decision0032 transports the fresh D/J with uniform sensitivities and
 non-shrinking incoming radii, rechecks domain closure, and adds the native
 endpoint residual once. Bounds 0.00014951281615784107 m and
