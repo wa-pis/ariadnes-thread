@@ -1683,6 +1683,9 @@ def test_loaded_spk_chain_coverage_contains_candidate_interval(
         fresh_native_positions_m=fresh_native_positions_m,
         fresh_native_sun_velocity_m_s=fresh_native_sun_velocity_m_s,
         fresh_spk_context=fresh_spk_context,
+        fourth_source_report=fourth_source_report,
+        fourth_source_epoch_tdb_s=fourth_epoch_tdb_s,
+        fourth_source_end_tdb_s=fourth_epoch_tdb_s+float(fourth_offset_s),
         run_native_controls=native_record_readback,
     )
 
@@ -4162,6 +4165,8 @@ def _check_conditional_full_force_coast_domains(
     fresh_native_positions_m: dict[str, tuple[Fraction, ...]],
     fresh_native_sun_velocity_m_s: tuple[Fraction, ...],
     fresh_spk_context: dict,
+    fourth_source_report: dict,
+    fourth_source_epoch_tdb_s: float, fourth_source_end_tdb_s: float,
 ) -> list[dict[str, object]]:
     """Check conditional ideal domains and optional native endpoint residuals."""
     from test_trajectory_error_transport import _coast_error_envelope, _cubic_reference_endpoint, _initial_velocity_interval_m_s
@@ -6785,6 +6790,42 @@ def _check_conditional_full_force_coast_domains(
         }}, sort_keys=True, allow_nan=False))
         budget.check()
         assert closed
+        # Live source records and the actual fourth endpoint, never saved
+        # JSON as an ephemeris fallback. Moon/Mars stay in harmonic fields.
+        point_started_s = perf_counter()
+        point_counts = (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+        point_bodies = tuple(body for body in trajectory.PHYSICAL_BODY_NAMES if body not in {"Moon", "Mars"})
+        fourth_states = {
+            body: tuple(Fraction(int(n, 16), int(d, 16))
+                        for n, d in fourth_source_report[body]["state_exact_m_m_s"])
+            for body in point_bodies
+        }
+        fourth_gm = {body: bodies.get(body).gravity_field_model.gravitational_parameter for body in point_bodies}
+        fourth_intervals = _fresh_point_gravity_intervals_m_s2(
+            budget, retained_last_binding["end_epoch_tdb_s"], quarter_domain["end_epoch_tdb_s"],
+            fourth_source_epoch_tdb_s, fourth_source_end_tdb_s,
+            handoff_state[:6], fourth_states, fourth_gm,
+        )
+        fourth_point_bounds = {
+            body: [[math.nextafter(float(lo), -math.inf), math.nextafter(float(hi), math.inf)]
+                   for lo, hi in bounds] for body, bounds in fourth_intervals.items()
+        }
+        assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lo <= hi <= Fraction(b)
+                   for body, bounds in fourth_intervals.items()
+                   for (a, b), (lo, hi) in zip(fourth_point_bounds[body], bounds, strict=True))
+        assert point_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+        budget.check()
+        print(json.dumps({"fourth_endpoint_point_gravity": {
+            "epoch_tdb_s": fourth_source_epoch_tdb_s, "source_coverage_end_tdb_s": fourth_source_end_tdb_s,
+            "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+            "model_id": environment.model_id, "nominal_state_m_m_s_kg": list(map(float, handoff_state)),
+            "carried_error_m_m_s": retained_last_binding["outgoing_error_m_m_s"],
+            "gravitational_parameters_m3_s2": fourth_gm, "body_intervals_m_s2": fourth_point_bounds,
+            "source_spk_context_sha256": retained_last_binding["source_spk_context_sha256"],
+            "additional_native_queries": 0, "additional_native_arcs": 0,
+            "elapsed_s": perf_counter()-point_started_s,
+            "scope": "Six nominal ideal-polynomial point forces at the fourth endpoint only; carried error is metadata, not included in these intervals; no source arithmetic, harmonic, full-force or whole-interval error qualification",
+        }}, sort_keys=True, allow_nan=False))
     else:
         assert nominal_lineage == [] and retained_last_binding is None
     print(json.dumps({"harmonic_error_reuse": {
