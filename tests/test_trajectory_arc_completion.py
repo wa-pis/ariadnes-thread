@@ -19,6 +19,89 @@ def _native_history(epoch: float) -> dict[MagicMock, object]:
     return {native: STATE}
 
 
+def _consume_screened_control(
+    budget: trajectory._RefinementBudget, simulator: SimpleNamespace | MagicMock,
+    screening: object, reason: str | None, expected_epoch: float,
+) -> object:
+    """Synthetic caller contract only; screening is NOT physical evidence."""
+    budget.check()
+    if type(screening) is not str or screening not in {"clear", "unresolved"}:
+        raise ValueError("explicit valid screening outcome required")
+    if reason is not None or screening == "clear":
+        result = trajectory._read_trial_arc_outcome(budget.candidate_id, "coast", simulator, expected_epoch, reason)
+    else:
+        # Uncertainty cannot authorize history access, or hide native failure.
+        try:
+            if simulator.integration_completed_successfully is not True:
+                raise RuntimeError("native integration failed during unresolved screening")
+        except Exception as exc:
+            trajectory._raise_refinement_error(budget.candidate_id, "arc-completion", str(exc), exc)
+        result = None
+    budget.check()
+    return result
+
+
+@pytest.mark.parametrize("screening", ["clear", "unresolved"])
+@pytest.mark.parametrize("reason", [None, "rejected-dry-mass", "rejected-impact:Moon"])
+@pytest.mark.parametrize("completed", [False, True])
+def test_screened_control_preserves_rejection_and_uncertainty(
+    monkeypatch: pytest.MonkeyPatch, screening: str, reason: str | None, completed: bool,
+) -> None:
+    budget = trajectory._RefinementBudget("screened-control", 300.0)
+    simulator = MagicMock()
+    simulator.integration_completed_successfully = completed
+    expose = screening == "clear" and reason is None and completed
+    history = PropertyMock(return_value={10.0: STATE}) if expose else PropertyMock(side_effect=AssertionError("forbidden history read"))
+    native_history = PropertyMock(return_value=_native_history(10.0)) if expose else PropertyMock(side_effect=AssertionError("forbidden native history read"))
+    type(simulator).state_history = history
+    type(simulator).state_history_time_object = native_history
+    reader = MagicMock(wraps=trajectory._read_completed_arc_state)
+    monkeypatch.setattr(trajectory, "_read_completed_arc_state", reader)
+    if not completed:
+        with pytest.raises(TrajectoryRefinementError, match="arc-completion"):
+            _consume_screened_control(budget, simulator, screening, reason, 10.0)
+    else:
+        result = _consume_screened_control(budget, simulator, screening, reason, 10.0)
+        assert result == ((STATE[:6], STATE[6]) if expose else reason)
+    assert reader.call_count == int(screening == "clear" and reason is None)
+    if not expose:
+        history.assert_not_called()
+        native_history.assert_not_called()
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+
+
+@pytest.mark.parametrize("screening", [None, True, False, "", "impact", []])
+def test_screened_control_rejects_missing_or_invalid_evidence(screening: object) -> None:
+    simulator = MagicMock()
+    flag = PropertyMock(side_effect=AssertionError("unexpected native read"))
+    type(simulator).integration_completed_successfully = flag
+    with pytest.raises(ValueError, match="explicit valid screening"):
+        _consume_screened_control(trajectory._RefinementBudget("invalid-screen", 300.0), simulator, screening, None, 10.0)
+    flag.assert_not_called()
+
+
+def test_screened_control_keeps_epoch_validation_and_deadline() -> None:
+    simulator = SimpleNamespace(integration_completed_successfully=True,
+                                state_history={10.0: STATE}, state_history_time_object=_native_history(10.0))
+    with pytest.raises(TrajectoryRefinementError, match="final epoch mismatch"):
+        _consume_screened_control(trajectory._RefinementBudget("screened-epoch", 300.0), simulator, "clear", None, 11.0)
+    clock = [0.0]
+    budget = trajectory._RefinementBudget("screened-deadline", 300.0, monotonic=lambda: clock[0])
+    clock[0] = 301.0
+    with pytest.raises(TrajectoryRefinementError, match="shared deadline"):
+        _consume_screened_control(budget, simulator, "clear", None, 10.0)
+    clock[0] = 0.0
+    # Independent synthetic run, not a reset of the expired operation.
+    budget = trajectory._RefinementBudget("screened-post-deadline", 300.0, monotonic=lambda: clock[0])
+    native = MagicMock()
+    def finish_after_deadline() -> bool:
+        clock[0] = 301.0
+        return True
+    type(native).integration_completed_successfully = PropertyMock(side_effect=finish_after_deadline)
+    with pytest.raises(TrajectoryRefinementError, match="shared deadline"):
+        _consume_screened_control(budget, native, "unresolved", None, 10.0)
+
+
 @pytest.mark.parametrize("reason", [
     "rejected-dry-mass",
     *(f"rejected-impact:{body}" for body in trajectory.PHYSICAL_BODY_NAMES),

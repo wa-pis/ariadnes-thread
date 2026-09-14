@@ -624,6 +624,12 @@ and native failures retain precedence. Existing caller paths are test-only.
 Use synthetic no-history-access controls before physical composition;
 no new public status, native run or production certificate class. This
 audit changes documentation only; latest full suite remains3112.
+Decision0036 verifies that synthetic caller contract with19 new cases.
+All3131 tests pass in503.39 s (native164.91, portable68.00), and existing
+clearance data are unchanged. Unresolved returns no state; rejection,
+native failure, epoch and deadline checks survive composition. This is
+test-only control flow, not physical evidence binding or production safety.
+Next inspect child endpoint/evidence bindings; task3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

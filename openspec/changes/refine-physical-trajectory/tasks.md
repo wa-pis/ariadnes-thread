@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0036 adds19 synthetic caller-contract cases: unresolved opens no
+history, clear cannot erase rejection, native failure remains fatal,
+invalid evidence rejects, and epoch/deadline checks remain active.
+An initial fake-clock reuse error was corrected with separate synthetic
+operations, leaving the backward-clock guard unchanged. All70 focused
+tests pass in0.15 s; full3131 in503.39 s (native164.91, portable68.00).
+Ruff/strict OpenSpec/legacy isolation pass; prior clearance is unchanged.
+No production policy or real evidence binding is claimed. Next inspect
+child-state/evidence bindings in subdivision composition;3.9 remains open.
+
 Decision0035 audits caller-side screening/outcome composition: None is
 not clearance, unresolved must not reach the completed-state reader or
 become a fictitious impact, and recognized rejection/native failures
