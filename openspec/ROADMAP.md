@@ -582,6 +582,11 @@ Native velocity residual is 1.7476440726817778e-8 m/s, not an ideal-state
 error bound. All 3074 tests pass in 494.64 s (native169.41, portable55.86),
 unchanged thirteen/zero arcs. Numerical evidence and rationale are retained;
 the fresh full-force defect rate remains the prerequisite to error transport.
+Decision0029 specifies its sufficient channel contract: retain norm-only
+SRP/Schwarzschild changes in D, recompute fresh monopole curvature and
+relative speeds, and rebind nonmonopole/rotation rates. Verify exact
+factor-two/Taylor controls before live binding and error transport.
+Documentation only; no new numerical certificate or full-suite rerun.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;

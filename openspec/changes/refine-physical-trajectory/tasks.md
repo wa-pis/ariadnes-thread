@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0029 derives the fresh defect channel contract before numerical
+binding. The old rate excludes norm-only SRP/Schwarzschild variation:
+retain D=E0+2*(S+R), recompute fresh monopole curvature/relative speeds,
+and rebind nonmonopole translation and uniform rotation rates. No direct
+reuse of old D/J. Next verify the factor-two/Taylor controls, then bind
+the live channels before error transport. Documentation only; strict
+OpenSpec/whitespace pass, no full-suite rerun. Task3.9 remains open.
+
 Decision0028 constructs a separate fresh cubic with the observed acceleration
 and retained monopole-jerk midpoint/allowance. Its reaches are
 3815.6269057625564 m and 0.39453704896547703 m/s within the unchanged
