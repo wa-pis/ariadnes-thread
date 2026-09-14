@@ -1,5 +1,24 @@
 ## Context
 
+### Tolerance-purpose clarification (2026-09-14)
+
+Decision0045 distinguishes existing integrator settings, arc continuity,
+nominal/tighter agreement and conditional short-control enclosure gates.
+The 0.001 m / 1e-6 m/s private endpoint regressions remain unchanged; do
+not promote them into an unstated mission-wide absolute-error requirement.
+The specified 10 m / 1e-4 m/s / 1e-6 kg nominal/tighter agreement is also
+unchanged and is NOT a rigorous true-state error radius. Continuous safety
+must account for position, velocity-dependent force and source errors in
+a covered geometric enclosure that avoids all eight guard spheres.
+
+Next derive that safety-specific enclosure contract separately from the
+accuracy regressions, initially using existing qualified domains and
+analytic controls only. WHEN the enclosure/coverage premises are absent,
+THEN the outcome remains unresolved or an existing error, never safe.
+No longer coast, native experiment, changed production acceptance rule or
+larger error allocation follows from this clarification. Review and obtain
+user approval before implementing any such acceptance/allocation change.
+
 ### Fresh six-source point-gravity binding (2026-09-13)
 
 Bind `_point_gravity_intervals_m_s2` to Sun, Mercury, Venus, Earth, Jupiter

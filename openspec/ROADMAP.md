@@ -17,6 +17,15 @@ authorized on 2026-09-08 without weakening scientific tolerances or the shared
 300-second deadline. Other finite-burn prerequisites remain open before the
 targeting spike. Preserve the UI; scheduling state is managed in the app.
 
+Current planning clarification (2026-09-14, Decision0045): preserve all
+existing short-control gates, but do not reinterpret them as a mission-wide
+absolute-error requirement. Full-command nominal/tighter agreement remains
+10 m / 1e-4 m/s / 1e-6 kg and is not a rigorous safety radius. Next derive
+the geometric safety-enclosure contract on existing domains; a larger
+physical interval and its resources/error transport must be qualified
+separately. No acceptance/allocation change without review and user approval.
+Task 3.9, native-stage safety and mission-scale runtime remain open.
+
 Latest initial-error qualification (2026-09-13): all 21 degree-map families
 close inside the unchanged domains and pass position; 19 pass velocity.
 With p=0.0001 m at Mars 1/8 s, velocity bounds for initial velocity radii

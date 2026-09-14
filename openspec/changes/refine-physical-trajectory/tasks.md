@@ -52,6 +52,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0045 separates integrator/continuity/short-control gates from the
+specified 10 m / 1e-4 m/s full-command nominal/tighter comparison. None is
+silently changed or substituted for a true-state safety radius. Exact
+frozen-coefficient accounting shows both D and J individually exhaust the
+remaining short-control velocity margin on a hypothetical equal next step;
+that is not a next-interval certificate or physical impossibility claim.
+Next derive the geometric safety-enclosure contract using existing domains,
+preserving all accuracy regressions and seeking approval before changed
+production acceptance/allocation. Docs only, strict OpenSpec/whitespace pass;
+no new native work or full-suite rerun. Task 3.9 remains open.
+
 Decision0044 retains four actual nominal histories with exact error radii
 and checks all three state/epoch/error joins. Accepted ordinals 3/6/9/12
 remain distinct from thirteen charged arcs. An initial decimal Fraction
