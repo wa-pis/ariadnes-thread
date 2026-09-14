@@ -12,6 +12,68 @@ import pytest
 from space_nav import trajectory
 from test_trajectory_gravity_assembly import _finite_fraction
 from test_trajectory_midpoint import _midpoint_acceleration_l2_bound_m_s2
+from test_trajectory_spk import _dyadic_sqrt_bounds
+
+
+def _compare_force_reference(
+    budget: trajectory._RefinementBudget, midpoint: tuple[float, ...], observed: tuple[float, ...],
+    base_allowance: float, pck_allowances: dict[str, float],
+) -> tuple[Fraction, Fraction, Fraction]:
+    """Enclose fixed-state native error; caller binds all states/resources."""
+    budget.check()
+    assert len(midpoint) == len(observed) == 3 and set(pck_allowances) == {"Moon", "Mars"}
+    errors = tuple(map(_finite_fraction, (base_allowance, *pck_allowances.values())))
+    assert all(error >= 0 for error in errors)
+    difference = tuple(_finite_fraction(a)-_finite_fraction(b) for a, b in zip(observed, midpoint, strict=True))
+    squared = sum((value**2 for value in difference), Fraction(0))
+    distance = _dyadic_sqrt_bounds(squared)[1] if squared else Fraction(0)
+    reference_radius = sum(errors, Fraction(0))
+    budget.check()
+    return reference_radius, distance, reference_radius+distance
+
+
+@pytest.mark.parametrize("offset", [0.0, 1e12])
+def test_force_reference_comparison_attains_aligned_bound(offset: float) -> None:
+    result = _compare_force_reference(trajectory._RefinementBudget("native-force-aligned", 300.0),
+                                      (offset, offset, offset), (offset+3.0, offset+4.0, offset), 0.5, {"Moon": 0.25, "Mars": 0.25})
+    assert result == (Fraction(1), Fraction(5), Fraction(6))
+    # Truth is one metre opposite the observation from the midpoint.
+    assert (Fraction(3)+Fraction(3, 5))**2+(Fraction(4)+Fraction(4, 5))**2 == result[2]**2
+
+
+@pytest.mark.parametrize("observed", [(0.0, 0.0, 0.0), (1.0, 1.0, 0.0)])
+def test_force_reference_comparison_preserves_zero_and_irrational_norm(observed: tuple) -> None:
+    radius, distance, total = _compare_force_reference(trajectory._RefinementBudget("native-force-norm", 300.0),
+                                                      (0.0,)*3, observed, 1.0, {"Moon": 0.0, "Mars": 0.0})
+    assert radius == 1 and total == radius+distance
+    if observed[0] == 0:
+        assert distance == 0
+    else:
+        assert 2 <= distance**2 < 2+Fraction(1, 10**25)
+
+
+@pytest.mark.parametrize("invalid", ["missing", "extra", "base", "negative", "nan", "boolean", "shape", "vector"])
+def test_force_reference_comparison_rejects_invalid_inputs(invalid: str) -> None:
+    allowances = {"Moon": 0.0, "Mars": 0.0}
+    if invalid == "missing":
+        del allowances["Moon"]
+    elif invalid == "extra":
+        allowances["source-again"] = 1.0
+    elif invalid in {"negative", "nan", "boolean"}:
+        allowances["Moon"] = {"negative": -1.0, "nan": math.nan, "boolean": True}[invalid]
+    with pytest.raises(AssertionError):
+        _compare_force_reference(trajectory._RefinementBudget("native-force-invalid", 300.0),
+                                 () if invalid == "shape" else (0.0,)*3,
+                                 (math.inf, 0.0, 0.0) if invalid == "vector" else (0.0,)*3,
+                                 -1.0 if invalid == "base" else 0.0, allowances)
+
+
+@pytest.mark.parametrize("expiry_check", [1, 2])
+def test_force_reference_comparison_preserves_deadline(expiry_check: int) -> None:
+    clock = iter([0.0]*expiry_check+[301.0])
+    with pytest.raises(trajectory.TrajectoryRefinementError, match="shared deadline"):
+        _compare_force_reference(trajectory._RefinementBudget("native-force-expired", 300.0, lambda: next(clock)),
+                                 (0.0,)*3, (0.0,)*3, 0.0, {"Moon": 0.0, "Mars": 0.0})
 
 
 def _force_group_midpoint(

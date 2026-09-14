@@ -1,0 +1,24 @@
+{
+  "fresh_native_force_comparison": {
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "elapsed_s": 0.00012212502770125866,
+    "epoch_tdb_s": 978995455.2929223,
+    "ideal_pck_reference_l2_allowance_m_s2": 7.838249091273487e-06,
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "native_error_l2_upper_m_s2": 7.853215960348902e-06,
+    "observed_acceleration_m_s2": [-3.147750890395473, 0.002978796195723602, -0.005506764365930771],
+    "observed_midpoint_distance_upper_m_s2": 1.496686907541579e-08,
+    "orientation": "J2000",
+    "origin": "SSB",
+    "pck_force_l2_allowances_m_s2": {
+      "Mars": 2.3275638314181238e-10,
+      "Moon": 3.7424896523222953e-22
+    },
+    "reference_midpoint_m_s2": [-3.1477509045315113, 0.0029787932997721, -0.0055067603918823125],
+    "scope": "Conditional native-to-ideal SPK/PCK full-force error at one fixed nominal coast state; not a uniform native arithmetic, state/time domain or mission certificate",
+    "spacecraft_mass_kg": 2000.0,
+    "spacecraft_state_m_m_s": [-245056838575.43283, 35261268424.25906, 22783597232.703575, -3128.28194638288, -18367.951868652242, -9028.78105009038],
+    "stored_matrix_reference_l2_allowance_m_s2": 7.838016334890343e-06
+  }
+}

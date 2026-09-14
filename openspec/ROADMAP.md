@@ -563,8 +563,14 @@ counterexamples pass. All 3060 tests pass in 473.03 s (native 158.26 s,
 portable 44.25 s), unchanged thirteen/zero arcs. Retained force allowances
 are 3.7424896523222953e-22 m/s^2 for Moon and 2.3275638314181238e-10
 m/s^2 for Mars; prior matrix/common-force results match exactly. Next add the two PCK
-channels once and bind the native acceleration observation. Incoming
-state-ball and domain gaps remain explicit.
+channels once and bind the native acceleration observation. Decision0026
+implements that fixed-state comparison with separate reference-radius and
+observed-distance channels. All 3074 tests pass in 497.09 s (native 170.93 s,
+portable 56.58 s), unchanged thirteen/zero arcs. The fixed-state native-error
+upper bound is 7.853215960348902e-6 m/s^2; the smaller observed distance
+1.496686907541579e-8 m/s^2 is not itself a qualified force error. Next construct the
+fresh local reference while retaining incoming error balls and qualifying
+state/time-domain force variation. No interval or mission certificate yet.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;

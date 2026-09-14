@@ -4091,6 +4091,8 @@ def _check_conditional_full_force_coast_domains(
     from test_trajectory_zonal_rotation import _partition_nonmonopole_coefficients, _partitioned_rotation_bound_m_s2
     from test_trajectory_gravity import _candidate, _spacecraft
 
+    from test_trajectory_force_assembly import _compare_force_reference
+
     candidate = _candidate(
         departure_epoch_utc=ephemeris.tdb_to_utc(start_tdb_s),
         arrival_epoch_utc=ephemeris.tdb_to_utc(end_tdb_s),
@@ -5492,6 +5494,7 @@ def _check_conditional_full_force_coast_domains(
                                         assert sha256(json.dumps(pck_inputs, sort_keys=True, allow_nan=False).encode()).hexdigest() == "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0"
                                         fresh_pck_angles = _pck_angle_intervals_deg(budget, pck_inputs, handoff_epoch)
                                         fresh_pck_angle_elapsed_s = perf_counter()-fresh_pck_started_s
+                                        fresh_pck_force_allowances: dict[str, float] = {}
                                         # Full Mars degree120 exceeded the shared deadline
                                         # after 12 arcs. Keep all higher degrees as a tail;
                                         # this coarse enclosure is not a trajectory allocation.
@@ -5574,6 +5577,7 @@ def _check_conditional_full_force_coast_domains(
                                             )
                                             reported_pck_force_error = math.nextafter(float(pck_force_error), math.inf)
                                             assert math.isfinite(reported_pck_force_error) and Fraction(reported_pck_force_error) >= pck_force_error > 0
+                                            fresh_pck_force_allowances[source] = reported_pck_force_error
                                             assert source_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
                                             assert selected_handoff == preserved_handoff
                                             print(json.dumps({"fresh_pck_force_error": {
@@ -5666,6 +5670,40 @@ def _check_conditional_full_force_coast_domains(
                                                           + [decoded_replay["spacecraft_mass_kg"]], dtype="<f8").tobytes() == probe_state.astype("<f8").tobytes()
                                         print('{"fresh_harmonic_replay": ' + encoded_replay + '}')
                                         budget.check()
+                                        comparison_started_s = perf_counter()
+                                        reference_raw = (ROOT / "tests/data/m3_fresh_force_assembly.json").read_bytes()
+                                        assert sha256(reference_raw).hexdigest() == "4e12c784996cf07315bebe88dbd648d96b4485c5aa3c7548b6aa12d890ccad45"
+                                        reference = json.loads(reference_raw)["fresh_force_assembly"]
+                                        assert reference["epoch_tdb_s"] == handoff_epoch
+                                        assert (reference["origin"], reference["orientation"]) == (environment.origin, environment.orientation) == ("SSB", "J2000")
+                                        assert reference["model_id"] == trajectory.PHYSICAL_MODEL_IDENTIFIER
+                                        assert reference["spacecraft_state_m_m_s"] == probe_state[:6].tolist()
+                                        assert reference["spacecraft_mass_kg"] == float(probe_state[6])
+                                        assert reference["harmonic_matrix_convention"] == "stored matrices held fixed"
+                                        assert reference["source_convention"] == "exact position polynomials; Sun velocity is their type-2 derivative"
+                                        comparison = _compare_force_reference(
+                                            budget, tuple(reference["midpoint_m_s2"]), tuple(acceleration_probes[label]),
+                                            reference["acceleration_l2_allowance_m_s2"], fresh_pck_force_allowances,
+                                        )
+                                        reported_comparison = tuple(math.nextafter(float(value), math.inf) if value else 0.0 for value in comparison)
+                                        assert all(math.isfinite(out) and Fraction(out) >= exact >= 0 for out, exact in zip(reported_comparison, comparison, strict=True))
+                                        assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                        assert selected_handoff == preserved_handoff
+                                        print(json.dumps({"fresh_native_force_comparison": {
+                                            "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
+                                            "model_id": trajectory.PHYSICAL_MODEL_IDENTIFIER,
+                                            "spacecraft_state_m_m_s": probe_state[:6].tolist(), "spacecraft_mass_kg": float(probe_state[6]),
+                                            "reference_midpoint_m_s2": reference["midpoint_m_s2"], "observed_acceleration_m_s2": acceleration_probes[label],
+                                            "stored_matrix_reference_l2_allowance_m_s2": reference["acceleration_l2_allowance_m_s2"],
+                                            "pck_force_l2_allowances_m_s2": fresh_pck_force_allowances,
+                                            "ideal_pck_reference_l2_allowance_m_s2": reported_comparison[0],
+                                            "observed_midpoint_distance_upper_m_s2": reported_comparison[1],
+                                            "native_error_l2_upper_m_s2": reported_comparison[2],
+                                            "elapsed_s": perf_counter()-comparison_started_s,
+                                            "additional_native_queries": 0, "additional_native_arcs": 0,
+                                            "scope": "Conditional native-to-ideal SPK/PCK full-force error at one fixed nominal coast state; not a uniform native arithmetic, state/time domain or mission certificate",
+                                        }}, sort_keys=True, allow_nan=False))
+                                        budget.check()
                                         print(json.dumps({"fresh_harmonic_vector_enclosure": {
                                             "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
                                             "time_scale": "TDB seconds since J2000", "acceleration_unit": "m/s^2",
@@ -5689,7 +5727,7 @@ def _check_conditional_full_force_coast_domains(
                                     "observed_accelerations_m_s2": acceleration_probes,
                                     "additional_derivative_evaluations": 4, "additional_native_arcs": 0,
                                     "elapsed_s": probe_elapsed_s,
-                                    "qualification": "Native full-force readback only; fresh independent component/source/PCK error enclosure unresolved",
+                                    "qualification": "Native full-force readback; fixed-state reference comparison reported separately, interval error enclosure unresolved",
                                 }}, sort_keys=True, allow_nan=False))
                                 budget.check()
                             residual_p = sum((abs(Fraction(value)-reference) for value, reference in

@@ -52,6 +52,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0026 adds both live PCK force channels once to the pinned common
+reference radius, binds the exact fresh nominal state, and compares the
+already observed native acceleration using an exact squared L2 distance.
+Fourteen comparison/rejection/deadline controls; all 62 focused tests pass
+in 0.51 s. Full suite 3074 passed in 497.09 s, native 170.93 s, portable
+56.58 s, unchanged thirteen/zero arcs. Retained comparison matches captured
+output and prior inputs: ideal-PCK reference radius 7.838249091273487e-6,
+observed distance 1.496686907541579e-8 and native-error upper bound
+7.853215960348902e-6 m/s^2. Ruff, strict OpenSpec and legacy isolation pass.
+The result is fixed-state only, not
+uniform native arithmetic or state/time-domain qualification. No new query
+or arc; incoming error balls must be retained and task3.9 stays open.
+
 Decision0025 applies the existing matrix-to-force bound to full Moon200/
 Mars120 arrays at exact ideal-source relative radii, retaining C00 and the
 source-then-rotation order. Six analytic counterexamples reject old-radius
