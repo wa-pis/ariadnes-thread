@@ -557,9 +557,14 @@ fresh stored matrices against ideal PCK rotations. All 3054 tests pass in
 474.83 s (native 153.46 s, portable 51.11 s), unchanged thirteen/zero arcs.
 Original PCK diagnostics reproduce exactly; fresh matrix L1 errors are
 9.340662146646177e-13 for Moon and 1.7882615809008832e-11 for Mars.
-Next translate matrix errors to full-field force bounds at ideal-source
-coordinates. Native-reference binding, incoming state-ball and domain
-gaps remain explicit.
+Decision0025 translates matrix errors to full-field force bounds at exact
+ideal-source coordinates, keeping C00 and all degrees. Six old-radius
+counterexamples pass. All 3060 tests pass in 473.03 s (native 158.26 s,
+portable 44.25 s), unchanged thirteen/zero arcs. Retained force allowances
+are 3.7424896523222953e-22 m/s^2 for Moon and 2.3275638314181238e-10
+m/s^2 for Mars; prior matrix/common-force results match exactly. Next add the two PCK
+channels once and bind the native acceleration observation. Incoming
+state-ball and domain gaps remain explicit.
 Do not evaluate degree120 or extend the coast. Task 3.9 stays open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;

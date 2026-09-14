@@ -3910,6 +3910,25 @@ def test_stored_matrix_force_encloses_proper_rotation_and_monopole_scaling() -> 
     assert 0 < 1 - Fraction(9, 8)**-1 <= bound  # A=(9/8)*I, g(r)=-r/|r|^3.
 
 
+@pytest.mark.parametrize("degree", [0, 2, 8])
+@pytest.mark.parametrize("scale", [Fraction(7, 8), Fraction(9, 8)])
+def test_matrix_bridge_requires_the_ideal_source_radius(degree: int, scale: Fraction) -> None:
+    budget = trajectory._RefinementBudget("matrix-source-order", 300.0)
+    cosine, sine = np.zeros((degree+1, degree+1)), np.zeros((degree+1, degree+1))
+    cosine[degree, 0] = 1.0
+    ideal_radius = Fraction(1, 4)
+    correct = _stored_matrix_force_error_bound_m_s2(
+        budget, 1.0, 1.0, ideal_radius**2, abs(scale-1), cosine, sine,
+    )
+    wrong_radius = _stored_matrix_force_error_bound_m_s2(
+        budget, 1.0, 1.0, Fraction(1), abs(scale-1), cosine, sine,
+    )
+    # Q=I, A=scale*I, r_i=(0,0,1/4). Both sides must use r_i,
+    # not the former stored-source radius r_s=1. Include the C00 case.
+    exact_squared = (degree+1)**2*(2*degree+1)*(scale**(-degree-1)-1)**2/ideal_radius**(2*degree+4)
+    assert wrong_radius**2 < exact_squared <= correct**2
+
+
 @pytest.mark.parametrize(("squared", "error"), [
     (Fraction(0), Fraction(0)), (Fraction(1), Fraction(-1)),
     (Fraction(1), Fraction(1)), (Fraction(1), 0.125),
@@ -5540,6 +5559,35 @@ def _check_conditional_full_force_coast_domains(
                                                 "elapsed_s": perf_counter()-source_started_s,
                                                 "additional_native_queries": 0, "additional_native_arcs": 0,
                                                 "scope": "Full stored harmonic field source-position effect at fixed nominal state and matrix; no PCK, native arithmetic or interval certificate",
+                                            }}, sort_keys=True, allow_nan=False))
+                                            budget.check()
+                                            pck_force_started_s = perf_counter()
+                                            ideal_relative_m = tuple(a-b for a, b in zip(handoff_state[:3], fresh_source_states[source][:3], strict=True))
+                                            ideal_radius_squared_m2 = sum((value**2 for value in ideal_relative_m), Fraction(0))
+                                            assert ideal_radius_squared_m2 > 0
+                                            assert Fraction(str(ideal_radius_squared_m2)) == ideal_radius_squared_m2
+                                            assert field.cosine_coefficients[0, 0] == 1.0 and field.sine_coefficients[0, 0] == 0.0
+                                            pck_force_error = _stored_matrix_force_error_bound_m_s2(
+                                                budget, field.gravitational_parameter, field.reference_radius,
+                                                ideal_radius_squared_m2, Fraction(reported_matrix_error),
+                                                field.cosine_coefficients, field.sine_coefficients,
+                                            )
+                                            reported_pck_force_error = math.nextafter(float(pck_force_error), math.inf)
+                                            assert math.isfinite(reported_pck_force_error) and Fraction(reported_pck_force_error) >= pck_force_error > 0
+                                            assert source_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                            assert selected_handoff == preserved_handoff
+                                            print(json.dumps({"fresh_pck_force_error": {
+                                                "body": source, "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
+                                                "degree": full_degree, "order": full_degree, "includes_c00": True,
+                                                "coefficient_sha256": resource.actual_sha256,
+                                                "pck_sha256": environment.collision_resource.actual_sha256,
+                                                "gm_m3_s2": field.gravitational_parameter, "reference_radius_m": field.reference_radius,
+                                                "matrix_entry_l1_allowance": reported_matrix_error,
+                                                "ideal_radius_squared_m2_fraction": str(ideal_radius_squared_m2),
+                                                "acceleration_l2_allowance_m_s2": reported_pck_force_error,
+                                                "elapsed_s": perf_counter()-pck_force_started_s,
+                                                "additional_native_queries": 0, "additional_native_arcs": 0,
+                                                "scope": "Full-field stored-to-ideal PCK matrix bridge at exact ideal-source radius and fixed nominal spacecraft state; no native force arithmetic or state/time domain certificate",
                                             }}, sort_keys=True, allow_nan=False))
                                             budget.check()
                                             intervals, tail = _harmonic_prefix_vector_enclosure_m_s2(

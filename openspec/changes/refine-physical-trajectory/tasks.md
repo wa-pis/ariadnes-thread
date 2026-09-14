@@ -52,6 +52,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0025 applies the existing matrix-to-force bound to full Moon200/
+Mars120 arrays at exact ideal-source relative radii, retaining C00 and the
+source-then-rotation order. Six analytic counterexamples reject old-radius
+substitution; all 87 focused checks pass in 3.44 s. Full suite 3060 passed
+in 473.03 s, native 158.26 s, portable 44.25 s, unchanged thirteen/zero arcs.
+Retained PCK force allowances match captured output: Moon
+3.7424896523222953e-22, Mars 2.3275638314181238e-10 m/s^2. Matrix inputs
+and the existing common-force result match exactly. Ruff, strict OpenSpec
+and legacy isolation pass.
+No additional query, arc or high-degree vector evaluation. Next add the two
+PCK channels once and bind the retained native acceleration; state/time
+domains remain open and task3.9 is not complete.
+
 Decision0024 extracts pure PCK angle evaluation, preserves the original
 native/rate controls and reuses their pinned arrays at the fresh epoch.
 Existing fresh rotation matrices are compared to exact PCK angle intervals;
