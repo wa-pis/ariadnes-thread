@@ -158,6 +158,61 @@ def test_position_reach_composes_with_distance_floor_on_exact_motion() -> None:
     assert floor_m > 6.0 and floor_m <= 8.0  # No clearance claim for an 8 m guard.
 
 
+@pytest.mark.parametrize("errors", [(0.0001, 1e-7), (0.01, 0.0001)])
+@pytest.mark.parametrize("velocity_radius", [2.0, 0.75])
+@pytest.mark.parametrize("guard_case", ["clear", "coarse", "touching-bound", "initial-impact"])
+def test_geometric_clearance_is_separate_from_accuracy_and_requires_closed_domain(
+    errors: tuple[float, float], velocity_radius: float, guard_case: str,
+) -> None:
+    from test_trajectory_error_transport import _recentered_coast_reaches_m_m_s
+
+    budget = trajectory._RefinementBudget("geometric-contract-control", 300.0)
+    h = Fraction(1, 2)
+    ep, ev = map(Fraction, errors)
+    body_error = Fraction(0.05)
+    # SI analytic family, with worst signed initial errors directed toward
+    # the body: ship(t)=10-ep-(1+ev)*t-t^2, body(t)=body_error+t/2.
+    # Acceleration -2 is uniform, so the reach and its velocity counterpart
+    # are known independently over the whole interval, not just sampled.
+    position_radius = Fraction(2)
+    p_reach, v_reach = _recentered_coast_reaches_m_m_s(
+        float(h), Fraction(0), Fraction(0), Fraction(1), ep, ev, Fraction(2),
+    )
+    assert p_reach == ep+(1+ev)*h+h*h < position_radius
+    assert v_reach == ev+2*h
+    closed = p_reach < position_radius and v_reach < Fraction(velocity_radius)
+    assert closed is (velocity_radius == 2.0)
+    body_reach = trajectory._position_reach_upper_bound(budget, float(h), float(body_error), 0.5, 0.0)
+    floor = trajectory._relative_distance_lower_bound(
+        budget, (10.0, 0.0, 0.0), (0.0, 0.0, 0.0), float(position_radius), body_reach,
+    )
+    assert Fraction(floor) <= 10-position_radius-Fraction(body_reach)
+    minimum_distance = 10-ep-body_error-(Fraction(3, 2)+ev)*h-h*h
+    assert 0 < Fraction(floor) < minimum_distance
+    for t in (Fraction(0), h/2, h):
+        separation = 10-ep-body_error-(Fraction(3, 2)+ev)*t-t*t
+        # This identity has nonnegative factors for EVERY t in [0,h].
+        assert separation-minimum_distance == (h-t)*(Fraction(3, 2)+ev+h+t) >= 0
+    guard = {"clear": Fraction(7), "coarse": Fraction(8),
+             "touching-bound": Fraction(floor), "initial-impact": Fraction(10)}[guard_case]
+    conditional_clear = closed and Fraction(floor) > guard
+    assert conditional_clear is (velocity_radius == 2.0 and guard_case == "clear")
+    accuracy_gate = ep <= Fraction("0.001") and ev <= Fraction("0.000001")
+    assert accuracy_gate is (errors[0] == 0.0001)
+    if guard_case in ("clear", "coarse", "touching-bound"):
+        assert minimum_distance > guard  # Actual analytic path is clear.
+        # Coarse/equal lower bounds still cannot certify it: unresolved,
+        # not an invented impact. A failed velocity-domain closure also
+        # cannot be repaired merely by positive geometric clearance.
+    else:
+        assert 10-ep-body_error < guard  # Independently known initial impact.
+    if conditional_clear and not accuracy_gate:
+        assert ep > Fraction("0.001") and ev > Fraction("0.000001")
+        # A loose state radius can still prove separation; this does not
+        # change any existing physical-control or integration tolerance.
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+
+
 @pytest.mark.parametrize("field", range(4))
 @pytest.mark.parametrize("value", [-1.0, True, math.nan, math.inf])
 def test_position_reach_rejects_invalid_input(field: int, value: float) -> None:

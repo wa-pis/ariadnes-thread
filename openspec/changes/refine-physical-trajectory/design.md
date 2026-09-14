@@ -11,9 +11,14 @@ unchanged and is NOT a rigorous true-state error radius. Continuous safety
 must account for position, velocity-dependent force and source errors in
 a covered geometric enclosure that avoids all eight guard spheres.
 
-Next derive that safety-specific enclosure contract separately from the
-accuracy regressions, initially using existing qualified domains and
-analytic controls only. WHEN the enclosure/coverage premises are absent,
+Decision0046 states that safety-specific enclosure contract separately from
+accuracy regressions, using existing domains and 16 analytic controls.
+WHEN whole-interval position/velocity (and applicable mass) closure holds
+under uniformly bounded covered forces, and every domain-to-source distance
+floor strictly exceeds its pinned guard, THEN geometric clearance is
+conditionally established for that interval. WHEN a floor equals its guard
+or closure fails, THEN clearance is unresolved, not an inferred impact.
+WHEN the enclosure/coverage premises are absent,
 THEN the outcome remains unresolved or an existing error, never safe.
 No longer coast, native experiment, changed production acceptance rule or
 larger error allocation follows from this clarification. Review and obtain

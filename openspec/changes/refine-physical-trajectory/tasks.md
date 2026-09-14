@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0046 adds 16 analytic geometric-contract cases: strict guard
+separation and complete domain closure are independent of the unchanged
+accuracy gates. Coarse/equal floors and failed velocity closure cannot
+certify clearance; initial impact is established independently. Focused
+distance/mass tests: 122 passed; full suite: 3217 passed (465.22 s).
+Prior scientific outputs are unchanged; Ruff/strict OpenSpec/legacy checks
+pass. No production or native inventory change (13 native / 0 portable).
+Next assess larger-domain force-bound recomputation and resource cost,
+without extrapolating current qualified coverage. Task 3.9 remains open.
+
 Decision0045 separates integrator/continuity/short-control gates from the
 specified 10 m / 1e-4 m/s full-command nominal/tighter comparison. None is
 silently changed or substituted for a true-state safety radius. Exact

@@ -20,8 +20,10 @@ targeting spike. Preserve the UI; scheduling state is managed in the app.
 Current planning clarification (2026-09-14, Decision0045): preserve all
 existing short-control gates, but do not reinterpret them as a mission-wide
 absolute-error requirement. Full-command nominal/tighter agreement remains
-10 m / 1e-4 m/s / 1e-6 kg and is not a rigorous safety radius. Next derive
-the geometric safety-enclosure contract on existing domains; a larger
+10 m / 1e-4 m/s / 1e-6 kg and is not a rigorous safety radius. Decision0046
+states the geometric contract and checks 16 analytic combinations of error
+radii, velocity closure and guard separation, without changing acceptance.
+Next assess recomputation of force/domain bounds and resource cost; a larger
 physical interval and its resources/error transport must be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.
