@@ -39,6 +39,13 @@ fourth-endpoint reference and its attainable defect budget. Decision0052
 reanchors the same eleven guarded source records for all eight bodies,
 reusing native anchor checks without new queries; the full-force consumer
 still needs spacecraft/resource binding and a new error argument.
+Decision0053 binds the six nominal point forces to the actual fourth endpoint
+with live sources/GM, without resetting carried errors or duplicating Moon/Mars.
+Decision0054 audits harmonic tail cost in the remaining error budget: using
+the actual nominal anchor rather than the broad domain first admits a Mars
+degree115 prefix in an optimistic scalar screen. This does not qualify its
+full error or select it for implementation. Next check the new rotation bridge
+and remaining coupled channels before any expensive vector evaluation or arc.
 Interval-specific reference/error transport remains to be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.

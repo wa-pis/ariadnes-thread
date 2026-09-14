@@ -1,0 +1,307 @@
+{
+  "anchor_intercept_m_s2_approx": 2.0853152271970628e-07,
+  "elapsed_s": 1.3773765419609845,
+  "fields": {
+    "Mars": {
+      "cases": {
+        "nominal_anchor": {
+          "distance_floor_m": 3689499.9800443966,
+          "rows": [
+            {
+              "cutoff": 100,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.1766879041826974e-06,
+              "tail_norm_upper_m_s2": 1.6220347347338589e-06
+            },
+            {
+              "cutoff": 101,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.1557716281689727e-06,
+              "tail_norm_upper_m_s2": 1.4547045291630024e-06
+            },
+            {
+              "cutoff": 102,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.1353464502104848e-06,
+              "tail_norm_upper_m_s2": 1.2913031079744294e-06
+            },
+            {
+              "cutoff": 103,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.1180620424409085e-06,
+              "tail_norm_upper_m_s2": 1.1530278479159024e-06
+            },
+            {
+              "cutoff": 104,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.101268752276148e-06,
+              "tail_norm_upper_m_s2": 1.0186815286362884e-06
+            },
+            {
+              "cutoff": 105,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.0867091243616358e-06,
+              "tail_norm_upper_m_s2": 9.02204507087525e-07
+            },
+            {
+              "cutoff": 106,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.0733227218170811e-06,
+              "tail_norm_upper_m_s2": 7.951132883560071e-07
+            },
+            {
+              "cutoff": 107,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.060745354930417e-06,
+              "tail_norm_upper_m_s2": 6.944943547894101e-07
+            },
+            {
+              "cutoff": 108,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.048944634267452e-06,
+              "tail_norm_upper_m_s2": 6.000885909181318e-07
+            },
+            {
+              "cutoff": 109,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.0395707330569539e-06,
+              "tail_norm_upper_m_s2": 5.25097382372007e-07
+            },
+            {
+              "cutoff": 110,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.031181864097492e-06,
+              "tail_norm_upper_m_s2": 4.5798643171460306e-07
+            },
+            {
+              "cutoff": 111,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.0234466218970245e-06,
+              "tail_norm_upper_m_s2": 3.9610449504981126e-07
+            },
+            {
+              "cutoff": 112,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.0159006960882393e-06,
+              "tail_norm_upper_m_s2": 3.357370894955005e-07
+            },
+            {
+              "cutoff": 113,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.00894716201158e-06,
+              "tail_norm_upper_m_s2": 2.801088177262865e-07
+            },
+            {
+              "cutoff": 114,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.002947147342018e-06,
+              "tail_norm_upper_m_s2": 2.3210870109810707e-07
+            },
+            {
+              "cutoff": 115,
+              "fits_optimistic_anchor_intercept": true,
+              "optimistic_velocity_formula_m_s_approx": 9.976565543065503e-07,
+              "tail_norm_upper_m_s2": 1.897839574565694e-07
+            },
+            {
+              "cutoff": 116,
+              "fits_optimistic_anchor_intercept": true,
+              "optimistic_velocity_formula_m_s_approx": 9.928654168459614e-07,
+              "tail_norm_upper_m_s2": 1.5145485835343637e-07
+            },
+            {
+              "cutoff": 117,
+              "fits_optimistic_anchor_intercept": true,
+              "optimistic_velocity_formula_m_s_approx": 9.87954136117703e-07,
+              "tail_norm_upper_m_s2": 1.1216461312352827e-07
+            },
+            {
+              "cutoff": 118,
+              "fits_optimistic_anchor_intercept": true,
+              "optimistic_velocity_formula_m_s_approx": 9.836694504024304e-07,
+              "tail_norm_upper_m_s2": 7.788712792144757e-08
+            },
+            {
+              "cutoff": 119,
+              "fits_optimistic_anchor_intercept": true,
+              "optimistic_velocity_formula_m_s_approx": 9.786629042947988e-07,
+              "tail_norm_upper_m_s2": 3.783475966812e-08
+            },
+            {
+              "cutoff": 120,
+              "fits_optimistic_anchor_intercept": true,
+              "optimistic_velocity_formula_m_s_approx": 9.739335592645243e-07,
+              "tail_norm_upper_m_s2": 0.0
+            }
+          ]
+        },
+        "whole_domain": {
+          "distance_floor_m": 3631133.108218859,
+          "rows": [
+            {
+              "cutoff": 100,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 2.1424499089869406e-06,
+              "tail_norm_upper_m_s2": 9.34813065593788e-06
+            },
+            {
+              "cutoff": 101,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 2.0343576255420107e-06,
+              "tail_norm_upper_m_s2": 8.483392401499323e-06
+            },
+            {
+              "cutoff": 102,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.927106583789011e-06,
+              "tail_norm_upper_m_s2": 7.625384080494093e-06
+            },
+            {
+              "cutoff": 103,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.8348886225263029e-06,
+              "tail_norm_upper_m_s2": 6.887640401586391e-06
+            },
+            {
+              "cutoff": 104,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.74385073991753e-06,
+              "tail_norm_upper_m_s2": 6.159337351766928e-06
+            },
+            {
+              "cutoff": 105,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.6636530284413547e-06,
+              "tail_norm_upper_m_s2": 5.5177556696923986e-06
+            },
+            {
+              "cutoff": 106,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.5887324843435024e-06,
+              "tail_norm_upper_m_s2": 4.9183913260038806e-06
+            },
+            {
+              "cutoff": 107,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.517208431606622e-06,
+              "tail_norm_upper_m_s2": 4.346198912790851e-06
+            },
+            {
+              "cutoff": 108,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.4490222676711735e-06,
+              "tail_norm_upper_m_s2": 3.8007096095841058e-06
+            },
+            {
+              "cutoff": 109,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.3939879681249377e-06,
+              "tail_norm_upper_m_s2": 3.3604352198946087e-06
+            },
+            {
+              "cutoff": 110,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.3439451424196708e-06,
+              "tail_norm_upper_m_s2": 2.9600926203269693e-06
+            },
+            {
+              "cutoff": 111,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.297059737229868e-06,
+              "tail_norm_upper_m_s2": 2.5850093844997765e-06
+            },
+            {
+              "cutoff": 112,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.2505866385404421e-06,
+              "tail_norm_upper_m_s2": 2.213224600625549e-06
+            },
+            {
+              "cutoff": 113,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.2070735379901191e-06,
+              "tail_norm_upper_m_s2": 1.865119801504844e-06
+            },
+            {
+              "cutoff": 114,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.168923752690287e-06,
+              "tail_norm_upper_m_s2": 1.5599215237370346e-06
+            },
+            {
+              "cutoff": 115,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.1347439552338323e-06,
+              "tail_norm_upper_m_s2": 1.2864831482343445e-06
+            },
+            {
+              "cutoff": 116,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.1032933430672847e-06,
+              "tail_norm_upper_m_s2": 1.0348782547196237e-06
+            },
+            {
+              "cutoff": 117,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.0705358563209145e-06,
+              "tail_norm_upper_m_s2": 7.728183647249612e-07
+            },
+            {
+              "cutoff": 118,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.0414982956972218e-06,
+              "tail_norm_upper_m_s2": 5.40517883260171e-07
+            },
+            {
+              "cutoff": 119,
+              "fits_optimistic_anchor_intercept": false,
+              "optimistic_velocity_formula_m_s_approx": 1.0070232602794041e-06,
+              "tail_norm_upper_m_s2": 2.6471760410241417e-07
+            },
+            {
+              "cutoff": 120,
+              "fits_optimistic_anchor_intercept": true,
+              "optimistic_velocity_formula_m_s_approx": 9.739335592645243e-07,
+              "tail_norm_upper_m_s2": 0.0
+            }
+          ]
+        }
+      },
+      "resource_sha256": "d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980"
+    },
+    "Moon": {
+      "cases": {
+        "nominal_anchor": {
+          "distance_floor_m": 221238454134.42175,
+          "rows": [
+            {
+              "cutoff": 2,
+              "fits_optimistic_anchor_intercept": true,
+              "optimistic_velocity_formula_m_s_approx": 9.739335592645243e-07,
+              "tail_norm_upper_m_s2": 2.2689821393132474e-29
+            }
+          ]
+        },
+        "whole_domain": {
+          "distance_floor_m": 221238394294.2555,
+          "rows": [
+            {
+              "cutoff": 2,
+              "fits_optimistic_anchor_intercept": true,
+              "optimistic_velocity_formula_m_s_approx": 9.739335592645243e-07,
+              "tail_norm_upper_m_s2": 2.2689852078701638e-29
+            }
+          ]
+        }
+      },
+      "resource_sha256": "3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d"
+    }
+  },
+  "input_sha256": {
+    "m3_fourth_endpoint_source_anchor.json": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+    "m3_fresh_endpoint_binding.json": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772",
+    "m3_quarter_second_force_sensitivities.json": "dd5ad63f697e25368da71d5ab0888a04e4a064bb2a6bffc6ce0612192d2194e0",
+    "m3_quarter_second_initial_domain.json": "7beb57a90448e24abf73e490e23ecf1fcb2e5c2175c886a4edf14f9e7ce7fc8d"
+  },
+  "scope": "Ideal orthogonal-frame tail bounds and optimistic scalar budget only; no stored-matrix/native errors, full-force reference, J, residual or mission qualification"
+}

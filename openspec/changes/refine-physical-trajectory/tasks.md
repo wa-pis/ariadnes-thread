@@ -52,6 +52,17 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0053 binds the six live point forces to the actual fourth endpoint,
+retaining the carried error as separate metadata and excluding Moon/Mars.
+All 3217 tests pass (524.51 s), prior science unchanged; no new native calls.
+Decision0054's reproducible coefficient-tail audit distinguishes the broad
+domain floor from nominal-anchor geometry. The first tested prefix fitting
+the optimistic scalar anchor intercept is Mars120 / Mars115 respectively;
+these are not certified full-force errors or selected allocations. No vector
+or native propagation is added. Next qualify the new rotation bridge and
+remaining anchor/rate budget before choosing expensive harmonic work. See
+`docs/decisions/0054-harmonic-anchor-tail-budget.md`; task 3.9 remains open.
+
 Decision0052 reanchors eleven already covered position records at the
 fourth endpoint, composes eight SSB states/slopes exactly, and reuses eight
 native position checks plus the Sun type-2 velocity check. No new native
