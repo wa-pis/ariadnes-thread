@@ -1,0 +1,58 @@
+{
+  "fourth_endpoint_rotation_force_bridge": {
+    "additional_ephemeris_queries": 0,
+    "additional_native_arcs": 0,
+    "additional_rotation_queries": 0,
+    "elapsed_s": 0.2707736250013113,
+    "epoch_tdb_s": 978995455.3554223,
+    "fields": {
+      "Mars": {
+        "acceleration_l2_allowance_m_s2": 1.5697109459316845e-10,
+        "coefficient_sha256": "d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980",
+        "degree": 120,
+        "gm_m3_s2": 42828375815756.1,
+        "ideal_radius_squared_m2_exact": [
+          "0x3b5bbf8e6660369fa48b7f3c5da18a2bd8508e4efa15a8935d3a7ee1a05d7be8595d2fe0285eed4a4b0b3f82cc65f65d7fb087f446f5d9dc0fc37cb393cba155717a96cdb007776410164e8cf39e5247b6d87ea47ab6bf9eb5b2c125320ba359890cc4d1751c32c098d6002fbe5c53c79f0d6450c74f8855bfdbc47e7e3f23d83d50af3b1bbf1c3445fb2bd9cab99dd723a890bd207d721f697a20d38eda5341322d2edc1df9e805a921f4ae53e82bd110a2e43333dd05ecbefc0740ffd6295e1ffcc196082cf084298bf36cd0d25843b",
+          "0x4cb66f5a348dd0ad9670ff76298ab49ca25e8a1ddb9716855b36470e5d60f2a75d2d3de720054665613d5c3bc43dd5171444c5402e54716e335a0237d6cb7bb19e17c0d8000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "includes_c00": true,
+        "matrix_entry_l1_allowance": 1.206005056117713e-11,
+        "order": 120,
+        "reference_radius_m": 3396000.0,
+        "rotation_input_sha256": "4b39c1c1e2f8a860ce2014c1e79e03b6a61a65f10e4753f6d58ba4b543193073"
+      },
+      "Moon": {
+        "acceleration_l2_allowance_m_s2": 7.969250975249056e-23,
+        "coefficient_sha256": "3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d",
+        "degree": 200,
+        "gm_m3_s2": 4902800121846.8,
+        "ideal_radius_squared_m2_exact": [
+          "0x810f759706ae84db4fac514b501d5a37eaca57460b0586506f6d822373851bf2d71ae4974a912ffd955e07acaa68991ceb0651e7e525d4f96536209e16a1d9b2c5fd2d1c8192f1dd61882e7c48ede6aa5a13306121e206cb7e753d6f2e60b16f271b5f8135c2bfe50dfec954457d3b76576311367782c9baf03b69aa5e5ff391ef3226aee6eb2aff1f685563b073b61",
+          "0xc73a7d364a0e7df00695d13248072e655ccef7a360429d5fc481900000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "includes_c00": true,
+        "matrix_entry_l1_allowance": 1.98899895618367e-13,
+        "order": 200,
+        "reference_radius_m": 1738000.0,
+        "rotation_input_sha256": "bb62ac9b0336e70e1890e28ce018a60a191ec343c01792e2962d326f458c509a"
+      }
+    },
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "nominal_state_m_m_s_kg": [
+      -245056838770.95663,
+      35261267276.26207,
+      22783596668.40475,
+      -3128.4786808243243,
+      -18367.951684978845,
+      -9028.781394259036,
+      2000.0
+    ],
+    "orientation": "J2000",
+    "origin": "SSB",
+    "pck_sha256": "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2",
+    "pool_sha256": "75435fa077261f1e6392eb362d8f02dde5f621d5dd02fefb99ca773d5966b9a0",
+    "scope": "Full-field stored-to-ideal matrix force bridge at fixed fourth nominal state and ideal-source radius only; no source arithmetic, native force arithmetic, carried-state or interval error certificate",
+    "source_spk_context_sha256": "b00e888032a19081c8bbfd13ca73549af21224916ed997e4714fa68af7ce8cd5",
+    "time_scale": "TDB seconds since J2000"
+  }
+}

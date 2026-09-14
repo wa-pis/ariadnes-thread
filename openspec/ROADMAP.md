@@ -46,9 +46,11 @@ the actual nominal anchor rather than the broad domain first admits a Mars
 degree115 prefix in an optimistic scalar screen. This does not qualify its
 full error or select it for implementation. Decision0055 recomputes the
 same-epoch Moon/Mars matrix bridge and dimensionless singular-value bounds,
-with two rotation queries and no new spacecraft arc. Next bind these matrix
-errors to full-field acceleration and assess remaining coupled channels before
-any expensive vector evaluation or arc.
+with two rotation queries and no new spacecraft arc. Decision0056 converts
+those new matrix errors into full Moon200/Mars120 acceleration-error bounds
+at the exact fourth nominal state/source radius, with C00 retained and no
+additional queries/arcs. Next bind source-position arithmetic and assess
+remaining coupled channels before any expensive vector evaluation or arc.
 Interval-specific reference/error transport remains to be qualified
 separately. No acceptance/allocation change without review and user approval.
 Task 3.9, native-stage safety and mission-scale runtime remain open.

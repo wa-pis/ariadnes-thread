@@ -6860,6 +6860,51 @@ def _check_conditional_full_force_coast_domains(
             "elapsed_s": perf_counter()-rotation_started_s,
             "scope": "Stored matrices versus ideal text-PCK at the fourth endpoint; dimensionless matrix/operator bounds only, no force error, interval rotation bound or mission certificate",
         }}, sort_keys=True, allow_nan=False))
+        matrix_force_started_s = perf_counter()
+        fourth_matrix_force = {}
+        for source, degree in (("Moon", 200), ("Mars", 120)):
+            budget.check()
+            field = bodies.get(source).gravity_field_model
+            resource = next(item for item in environment.harmonic_fields if item.body == source)
+            assert resource.actual_sha256 == resource.expected_sha256
+            assert resource.degree == resource.order == degree
+            assert field.gravitational_parameter == resource.gravitational_parameter_m3_s2
+            assert field.reference_radius == resource.normalization_radius_m
+            assert field.cosine_coefficients.shape == field.sine_coefficients.shape == (degree+1, degree+1)
+            assert field.cosine_coefficients[0, 0] == 1.0 and field.sine_coefficients[0, 0] == 0.0
+            source_position = tuple(Fraction(int(n, 16), int(d, 16))
+                                    for n, d in fourth_source_report[source]["state_exact_m_m_s"][:3])
+            relative = tuple(a-b for a, b in zip(handoff_state[:3], source_position, strict=True))
+            radius_squared = sum((x*x for x in relative), Fraction(0))
+            matrix_allowance = fourth_rotations[source]["matrix_entry_l1_allowance"]
+            force_error = _stored_matrix_force_error_bound_m_s2(
+                budget, field.gravitational_parameter, field.reference_radius,
+                radius_squared, Fraction(matrix_allowance), field.cosine_coefficients, field.sine_coefficients,
+            )
+            reported_force_error = math.nextafter(float(force_error), math.inf)
+            assert math.isfinite(reported_force_error) and 0 < force_error <= Fraction(reported_force_error)
+            fourth_matrix_force[source] = {
+                "degree": degree, "order": degree, "includes_c00": True,
+                "coefficient_sha256": resource.actual_sha256,
+                "gm_m3_s2": field.gravitational_parameter, "reference_radius_m": field.reference_radius,
+                "matrix_entry_l1_allowance": matrix_allowance,
+                "rotation_input_sha256": sha256(json.dumps(fourth_rotations[source], sort_keys=True, allow_nan=False).encode()).hexdigest(),
+                "ideal_radius_squared_m2_exact": [hex(radius_squared.numerator), hex(radius_squared.denominator)],
+                "acceleration_l2_allowance_m_s2": reported_force_error,
+            }
+        assert point_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+        budget.check()
+        print(json.dumps({"fourth_endpoint_rotation_force_bridge": {
+            "epoch_tdb_s": fourth_source_epoch_tdb_s, "origin": "SSB", "orientation": "J2000",
+            "time_scale": "TDB seconds since J2000", "model_id": environment.model_id,
+            "nominal_state_m_m_s_kg": list(map(float, handoff_state)),
+            "source_spk_context_sha256": retained_last_binding["source_spk_context_sha256"],
+            "pool_sha256": pool_digest, "pck_sha256": environment.collision_resource.actual_sha256,
+            "fields": fourth_matrix_force, "additional_rotation_queries": 0,
+            "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
+            "elapsed_s": perf_counter()-matrix_force_started_s,
+            "scope": "Full-field stored-to-ideal matrix force bridge at fixed fourth nominal state and ideal-source radius only; no source arithmetic, native force arithmetic, carried-state or interval error certificate",
+        }}, sort_keys=True, allow_nan=False))
     else:
         assert nominal_lineage == [] and retained_last_binding is None
     print(json.dumps({"harmonic_error_reuse": {
