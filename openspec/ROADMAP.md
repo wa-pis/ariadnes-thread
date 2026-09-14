@@ -618,6 +618,12 @@ are positive, with minimum Mars283007.82847962243 m over the existing
 certificate. All3112 tests pass in502.97 s (native164.95, portable68.35);
 no new native calls, old scientific controls preserved. Next audit the
 screening/native-rejection composition boundary; task3.9 remains open.
+Decision0035 defines the next caller-contract check: unresolved or missing
+screening evidence must not reach completed-state consumption; rejection
+and native failures retain precedence. Existing caller paths are test-only.
+Use synthetic no-history-access controls before physical composition;
+no new public status, native run or production certificate class. This
+audit changes documentation only; latest full suite remains3112.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

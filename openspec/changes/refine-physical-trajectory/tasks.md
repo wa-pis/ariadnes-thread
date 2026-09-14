@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0035 audits caller-side screening/outcome composition: None is
+not clearance, unresolved must not reach the completed-state reader or
+become a fictitious impact, and recognized rejection/native failures
+retain precedence. Current reader callers are tests, not production.
+Next add a small synthetic no-history-access composition control, without
+a new public status or production certificate abstraction. Documentation
+only; strict OpenSpec/whitespace pass, no full-suite rerun.3.9 stays open.
+
 Decision0034 binds eight collision-distance floors/guards to the same
 covered fresh interval and rounded incoming-ball domain closure. All
 downward-rounded margins are positive; minimum Mars283007.82847962243 m.
