@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0032 transports the fresh D/J with uniform sensitivities and
+non-shrinking incoming radii, rechecks domain closure, and adds the native
+endpoint residual once. Bounds 0.00014951281615784107 m and
+9.62662340905759e-7 m/s pass both unchanged gates, but are slightly looser
+than the preserved old shifted-cubic control. Do not replace it or claim
+an accuracy improvement. Full suite3112 passes in500.78 s (native163.70,
+portable66.70); 715 focused tests, Ruff/strict OpenSpec/legacy checks pass.
+No new native calls. The fresh-reference comparison is complete; next
+audit internal-stage/interval-composition prerequisites. Task3.9 stays open.
+
 Decision0031 binds the tested fresh channel assembler to existing live
 source derivatives, domain bounds and the qualified acceleration anchor.
 It recomputes curvature/translation, retains norm-only force changes and

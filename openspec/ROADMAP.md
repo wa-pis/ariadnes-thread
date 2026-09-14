@@ -600,6 +600,13 @@ unchanged old controls and zero additional native calls. Full suite3112
 passes in553.58 s (native198.76, portable84.60). Next apply error transport
 with unchanged incoming radii and the existing endpoint residual once;
 the conditional reference-defect bound is not a mission safety certificate.
+Decision0032 completes fresh endpoint transport: 0.00014951281615784107 m
+and 9.62662340905759e-7 m/s pass unchanged gates but are slightly looser
+than the existing shifted control. Preserve that control; no accuracy
+improvement or mission safety is claimed. All3112 tests pass in500.78 s
+(native163.70, portable66.70), with no new native calls. Next audit the
+remaining internal-stage/interval-composition prerequisites before adding
+arcs or extending the coast; task3.9 remains open.
 Count/time every native evaluation; add no propagation arcs or
 mission extension;
 retain thirteen controls, portable zero, unchanged tolerances, production

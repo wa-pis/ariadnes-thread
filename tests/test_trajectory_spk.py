@@ -5823,6 +5823,60 @@ def _check_conditional_full_force_coast_domains(
                                             "scope": "Conditional D+J*t bound along the fresh cubic in the existing ideal SPK/PCK domain only; no error transport, native-stage or mission safety certificate",
                                         }}, sort_keys=True, allow_nan=False))
                                         budget.check()
+                                        transport_started_s = perf_counter()
+                                        transport_inputs = {
+                                            "position_error_m": fresh_reported["incoming_position_error_upper_m"],
+                                            "velocity_error_m_s": fresh_reported["incoming_velocity_error_upper_m_s"],
+                                            "position_sensitivity_s_inv2": reported_full_position_sensitivity,
+                                            "velocity_sensitivity_s_inv": reported_relativity_sensitivities[1],
+                                            "acceleration_defect_m_s2": reported_defect["defect_m_s2"],
+                                            "acceleration_defect_rate_m_s3": reported_defect["defect_rate_m_s3"],
+                                        }
+                                        exact_transport_inputs = {key: Fraction(value) for key, value in transport_inputs.items()}
+                                        assert exact_transport_inputs["position_error_m"] >= handoff_p_m
+                                        assert exact_transport_inputs["velocity_error_m_s"] >= handoff_v_m_s
+                                        rounded_true_reaches = _recentered_coast_reaches_m_m_s(
+                                            next_s, position_offset_m, velocity_offset_m_s,
+                                            sum(map(abs, handoff_state[3:]), Fraction(0)),
+                                            exact_transport_inputs["position_error_m"], exact_transport_inputs["velocity_error_m_s"],
+                                            Fraction(acceleration_m_s2),
+                                        )
+                                        assert rounded_true_reaches[0] < Fraction(position_radius_m)
+                                        assert rounded_true_reaches[1] < Fraction(velocity_radius_m_s)
+                                        fresh_p, fresh_v = _coast_error_envelope(next_s, **exact_transport_inputs)
+                                        fresh_native_residuals = (
+                                            fresh_reported["native_endpoint_position_residual_l1_upper_m"],
+                                            fresh_reported["native_endpoint_velocity_residual_l1_upper_m_s"],
+                                        )
+                                        fresh_native_p = fresh_p+Fraction(fresh_native_residuals[0])
+                                        fresh_native_v = fresh_v+Fraction(fresh_native_residuals[1])
+                                        transport_values = {
+                                            "reference_position_error_m": fresh_p, "reference_velocity_error_m_s": fresh_v,
+                                            "native_endpoint_position_error_m": fresh_native_p,
+                                            "native_endpoint_velocity_error_m_s": fresh_native_v,
+                                        }
+                                        reported_transport = {key: math.nextafter(float(value), math.inf) if value else 0.0
+                                                              for key, value in transport_values.items()}
+                                        assert all(math.isfinite(out) and Fraction(out) >= transport_values[key] >= 0
+                                                   for key, out in reported_transport.items())
+                                        assert selected_handoff == preserved_handoff
+                                        assert probe_counts == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+                                        budget.check()
+                                        print(json.dumps({"fresh_error_transport": {
+                                            "epoch_tdb_s": handoff_epoch, "duration_s": next_s,
+                                            "origin": "SSB", "orientation": "J2000", "time_scale": "TDB seconds since J2000",
+                                            "model_id": trajectory.PHYSICAL_MODEL_IDENTIFIER,
+                                            "inputs_si": transport_inputs, "outward_bounds_si": reported_transport,
+                                            "native_endpoint_residual_m_m_s": list(fresh_native_residuals),
+                                            "position_gate_m": 0.001, "velocity_gate_m_s": 0.000001,
+                                            "within_position_gate": Fraction(reported_transport["native_endpoint_position_error_m"]) <= Fraction("0.001"),
+                                            "within_velocity_gate": Fraction(reported_transport["native_endpoint_velocity_error_m_s"]) <= Fraction("0.000001"),
+                                            "rounded_incoming_ball_domain_closed": True,
+                                            "elapsed_s": perf_counter()-transport_started_s,
+                                            "additional_native_queries": 0, "additional_native_arcs": 0,
+                                            "scope": "Conditional ideal-state versus nominal native endpoint error for the existing fresh interval only; not native-stage or mission safety",
+                                        }}, sort_keys=True, allow_nan=False))
+                                        budget.check()
                                         print(json.dumps({"fresh_harmonic_vector_enclosure": {
                                             "epoch_tdb_s": handoff_epoch, "origin": "SSB", "orientation": "J2000",
                                             "time_scale": "TDB seconds since J2000", "acceleration_unit": "m/s^2",

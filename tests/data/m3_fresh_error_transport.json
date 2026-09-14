@@ -1,0 +1,34 @@
+{
+  "fresh_error_transport": {
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "duration_s": 0.0625,
+    "elapsed_s": 0.0001413340214639902,
+    "epoch_tdb_s": 978995455.2929223,
+    "inputs_si": {
+      "acceleration_defect_m_s2": 7.943095084820736e-6,
+      "acceleration_defect_rate_m_s3": 0.00011082532101285457,
+      "position_error_m": 0.00010529778787867129,
+      "position_sensitivity_s_inv2": 1.8341627449997726e-6,
+      "velocity_error_m_s": 2.3227467748483292e-7,
+      "velocity_sensitivity_s_inv": 7.305506851594195e-15
+    },
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "native_endpoint_residual_m_m_s": [4.4180487383045916e-5, 1.7476440726817778e-8],
+    "orientation": "J2000",
+    "origin": "SSB",
+    "outward_bounds_si": {
+      "native_endpoint_position_error_m": 0.00014951281615784107,
+      "native_endpoint_velocity_error_m_s": 9.62662340905759e-7,
+      "reference_position_error_m": 0.00010533232877479514,
+      "reference_velocity_error_m_s": 9.451859001789412e-7
+    },
+    "position_gate_m": 0.001,
+    "rounded_incoming_ball_domain_closed": true,
+    "scope": "Conditional ideal-state versus nominal native endpoint error for the existing fresh interval only; not native-stage or mission safety",
+    "time_scale": "TDB seconds since J2000",
+    "velocity_gate_m_s": 1e-6,
+    "within_position_gate": true,
+    "within_velocity_gate": true
+  }
+}
