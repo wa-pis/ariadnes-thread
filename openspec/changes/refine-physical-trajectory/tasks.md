@@ -52,6 +52,19 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0051 checks whole-domain illumination for Earth/Moon/Mars before
+the fully-lit SRP derivative, then recomputes all force sensitivities.
+Lx=1.942174880062744e-6 s^-2, Lv=7.30562670187794e-15 s^-1; remaining
+1/8 s feedback is 1.5173242163693528e-8 < 1. Coupled-budget accounting
+still leaves anchor/J and native residual unqualified. No new native arc.
+155 focused checks and all 3217 tests pass (462.17 s); new scientific values
+match across three runs and prior science is unchanged. Local calculation
+0.2065 / 0.2058 s; counts remain 13 / 0 native/portable arcs. Ruff, strict
+OpenSpec and legacy checks pass; retained report is
+`tests/data/m3_quarter_second_force_sensitivities.json` (Decision0051).
+Next qualify the fourth-endpoint reference/source anchor and assess its
+defect-channel cost/budget before another propagation. Task 3.9 stays open.
+
 Decision0050 derives necessary coupled error-budget ceilings, not a new
 accuracy certificate. The unchanged velocity gate leaves 3.73376590942409e-8
 m/s; the new domain's norm-only light/relativity charge leaves

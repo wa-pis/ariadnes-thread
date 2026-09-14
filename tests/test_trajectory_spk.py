@@ -4314,6 +4314,73 @@ def _check_conditional_full_force_coast_domains(
             print(json.dumps({"quarter_second_initial_domain": quarter_domain}, sort_keys=True, allow_nan=False))
             budget.check()
             assert probe_acceleration < 4.0 and probe_closed
+            sensitivity_started_s = perf_counter()
+            quarter_lit = {
+                occultor: _apparent_spheres_strictly_disjoint(
+                    states["Sun"][:3], bodies.get("Sun").shape_model.average_radius,
+                    states[occultor][:3], bodies.get(occultor).shape_model.average_radius,
+                    state[:3], source_position_error_m=body_reaches_m[1.0]["Sun"],
+                    occultor_position_error_m=body_reaches_m[1.0][occultor], observer_position_error_m=probe_radius_m,
+                ) for occultor in trajectory.SOLAR_RADIATION_OCCULTING_BODY_NAMES
+            }
+            assert set(quarter_lit) == {"Moon", "Earth", "Mars"}
+            # Missing illumination is unresolved: never use the lit Jacobian.
+            assert all(quarter_lit.values()), quarter_lit
+            quarter_position_sensitivities = {}
+            for body in trajectory.PHYSICAL_BODY_NAMES:
+                budget.check()
+                field = bodies.get(body).gravity_field_model
+                nonmonopole_bound = Fraction(0)
+                if body in {"Moon", "Mars"}:
+                    nonmonopole = field.cosine_coefficients.copy()
+                    assert nonmonopole[0, 0] == 1.0
+                    nonmonopole[0, 0] = 0.0
+                    nonmonopole_bound = _harmonic_spatial_jacobian_bound_s_inv2(
+                        budget, field.gravitational_parameter, field.reference_radius,
+                        probe_floors[body], nonmonopole, field.sine_coefficients,
+                    )
+                    assert field.cosine_coefficients[0, 0] == 1.0
+                quarter_position_sensitivities[body] = _monopole_split_jacobian_bound_s_inv2(
+                    field.gravitational_parameter, probe_floors[body], nonmonopole_bound,
+                )
+            quarter_position_sensitivities["Sun/SRP"] = _fully_lit_srp_position_jacobian_bound_s_inv2(
+                trajectory.SUN_LUMINOSITY_W, spacecraft.srp_area_m2,
+                spacecraft.reflectivity_coefficient, spacecraft.initial_mass_kg, probe_floors["Sun"],
+            )
+            quarter_rel_sensitivities = _schwarzschild_state_jacobian_bounds(
+                bodies.get("Sun").gravity_field_model.gravitational_parameter,
+                probe_floors["Sun"], Fraction(probe_relative_speed_upper),
+            )
+            quarter_position_sensitivities["Sun/Schwarzschild"] = quarter_rel_sensitivities[0]
+            assert set(quarter_position_sensitivities) == set(trajectory.PHYSICAL_BODY_NAMES) | {"Sun/SRP", "Sun/Schwarzschild"}
+            quarter_lx_parts = {body: math.nextafter(float(value), math.inf)
+                                for body, value in quarter_position_sensitivities.items()}
+            assert all(math.isfinite(value) and Fraction(value) >= quarter_position_sensitivities[body] > 0
+                       for body, value in quarter_lx_parts.items())
+            quarter_lx = math.nextafter(float(sum(map(Fraction, quarter_lx_parts.values()), Fraction(0))), math.inf)
+            quarter_lv = math.nextafter(float(quarter_rel_sensitivities[1]), math.inf)
+            assert Fraction(quarter_lx) >= sum(map(Fraction, quarter_lx_parts.values()), Fraction(0))
+            assert Fraction(quarter_lv) >= quarter_rel_sensitivities[1] > 0
+            remaining_h = Fraction(1, 8)
+            quarter_feedback = Fraction(quarter_lx)*remaining_h**2/2 + Fraction(quarter_lv)*remaining_h
+            reported_feedback = math.nextafter(float(quarter_feedback), math.inf)
+            assert 0 < quarter_feedback <= Fraction(reported_feedback) < 1
+            budget.check()
+            assert counts_before == (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations)
+            print(json.dumps({"quarter_second_force_sensitivities": {
+                "model_id": environment.model_id, "origin": "SSB", "orientation": "J2000",
+                "time_scale": "TDB seconds since J2000", "start_epoch_tdb_s": start_tdb_s,
+                "end_epoch_tdb_s": start_tdb_s+probe_h, "source_envelope_duration_s": 1.0,
+                "position_domain_radius_m": probe_radius_m, "velocity_domain_radius_m_s": probe_velocity_m_s,
+                "coast_mass_kg": spacecraft.initial_mass_kg, "fully_lit_by_occultor": quarter_lit,
+                "distance_floors_m": probe_floors, "position_by_force_upper_s_inv2": quarter_lx_parts,
+                "position_upper_s_inv2": quarter_lx, "velocity_upper_s_inv": quarter_lv,
+                "error_transport_duration_s": float(remaining_h), "feedback_upper": reported_feedback,
+                "additional_native_arcs": 0, "additional_ephemeris_queries": 0,
+                "elapsed_s": perf_counter()-sensitivity_started_s,
+                "scope": "Uniform quarter-domain state sensitivities and lit premise only; no reference/defect, endpoint-error or native-stage certificate",
+            }}, sort_keys=True, allow_nan=False))
+            budget.check()
         domain_cases = [(duration_s, 1000.0, 0.1) for duration_s in body_reaches_m]
         if center == "Mars":
             domain_cases.extend(((1 / 16, 2000.0, 0.25), (1 / 8, 4000.0, 0.5)))

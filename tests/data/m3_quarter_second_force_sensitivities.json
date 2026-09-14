@@ -1,0 +1,49 @@
+{
+  "quarter_second_force_sensitivities": {
+    "additional_ephemeris_queries": 0,
+    "additional_native_arcs": 0,
+    "coast_mass_kg": 2000.0,
+    "distance_floors_m": {
+      "Earth": 221235897056.9597,
+      "Jupiter": 796044482606.8463,
+      "Mars": 3631133.108218859,
+      "Mercury": 198573293414.7565,
+      "Moon": 221238394294.2555,
+      "Saturn": 1435701690161.2195,
+      "Sun": 248443921591.49063,
+      "Venus": 354660165948.4515
+    },
+    "elapsed_s": 0.2065451662056148,
+    "end_epoch_tdb_s": 978995455.4804223,
+    "error_transport_duration_s": 0.125,
+    "feedback_upper": 1.5173242163693528e-08,
+    "fully_lit_by_occultor": {
+      "Earth": true,
+      "Mars": true,
+      "Moon": true
+    },
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "position_by_force_upper_s_inv2": {
+      "Earth": 7.362087658053321e-20,
+      "Jupiter": 5.022829555194147e-19,
+      "Mars": 1.942174862753563e-06,
+      "Mercury": 5.627542891889183e-21,
+      "Moon": 9.055088318240771e-22,
+      "Saturn": 2.563511954707078e-20,
+      "Sun": 1.7308383227986202e-14,
+      "Sun/SRP": 1.7227790534988772e-19,
+      "Sun/Schwarzschild": 2.233621625311943e-21,
+      "Venus": 1.4564216111599855e-20
+    },
+    "position_domain_radius_m": 8000.0,
+    "position_upper_s_inv2": 1.942174880062744e-06,
+    "scope": "Uniform quarter-domain state sensitivities and lit premise only; no reference/defect, endpoint-error or native-stage certificate",
+    "source_envelope_duration_s": 1.0,
+    "start_epoch_tdb_s": 978995455.2304223,
+    "time_scale": "TDB seconds since J2000",
+    "velocity_domain_radius_m_s": 1.0,
+    "velocity_upper_s_inv": 7.30562670187794e-15
+  }
+}
