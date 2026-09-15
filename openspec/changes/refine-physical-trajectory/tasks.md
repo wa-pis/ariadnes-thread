@@ -52,6 +52,16 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0073 (2026-09-15) adds one bounded degree-100 evaluation per precision
+alongside the existing exact reference. Every interval encloses the exact box;
+the finite tail is unchanged. The first observation takes about 9 s versus
+22 s exact, but 53-bit prefix error expands to about 0.01324 m/s^2. At 80/120
+bits the finite tail dominates. This is not a repeated benchmark or a new
+full-force anchor. Next assess the verification contract for a bounded-only
+degree-120 stored-input evaluation without rerunning the over-budget exact
+full vector; see `docs/decisions/0073-stored-mars-degree100-bounded-comparison.md`.
+Task 3.9, input bindings and mission runtime remain open; no allocations change.
+
 Decision0072 (2026-09-15) extends the same stored-input comparison to degree 40.
 All repeated bounds contain the exact result with an unchanged finite tail.
 The bounded method is still about 1.3–1.5 times slower, and 53-bit arithmetic

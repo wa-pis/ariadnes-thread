@@ -97,9 +97,13 @@ pinned Mars handoff: bounded evaluations repeat exactly and enclose the exact
 result, but are about 2.5–3 times slower. The unchanged finite tail dominates
 the error bound. Decision0072 extends the same comparison to degree 40: the
 gap narrows to about 1.3–1.5 times slower, but 53-bit interval error grows.
-The finite tail still dominates. Next use the existing degree-100 exact
-reference for a limited bounded comparison under the unchanged deadline;
-retain tails and all input errors, with no new anchor or native arc.
+The finite tail still dominates there. Decision0073 checks degree 100 with one
+exact and three bounded evaluations: about 9 s versus 22 s in the first run,
+but the 53-bit arithmetic enclosure expands to about 0.01324 m/s^2. At 80/120
+bits the finite tail still dominates. Next check the verification contract for
+a bounded-only full degree-120 stored-input evaluation; do not rerun the known
+over-budget exact full vector. Retain input errors and the degree-100-plus-tail
+coarse consistency control, with no new anchor or native arc.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified
