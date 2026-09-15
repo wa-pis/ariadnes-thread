@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0072 (2026-09-15) extends the same stored-input comparison to degree 40.
+All repeated bounds contain the exact result with an unchanged finite tail.
+The bounded method is still about 1.3–1.5 times slower, and 53-bit arithmetic
+width grows with degree. Next compare a limited number of bounded evaluations
+with the existing degree-100 exact reference under the unchanged deadline;
+see `docs/decisions/0072-stored-mars-degree40-bounded-comparison.md`.
+Task 3.9 remains open; no full-field anchor, allocation or native arc is added.
+
 Decision0071 (2026-09-15) compares degree-20 bounded arithmetic with the existing
 exact Mars profile at the historical retained handoff, not the fourth endpoint.
 Three repeats at each precision enclose the exact result and keep the finite

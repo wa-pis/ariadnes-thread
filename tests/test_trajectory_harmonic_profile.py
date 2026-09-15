@@ -167,7 +167,7 @@ def test_stored_mars_harmonic_profile(cutoff: int) -> None:
         "profiling_deadline_s": 300.0, "native_coefficient_loads": 1, "native_arcs": 0,
         "qualification": "Isolated stored-input timing only; inclusive rows overlap, overhead difference is noisy, no mission deadline or force qualification",
     }}, sort_keys=True, allow_nan=False))
-    if cutoff == 20:
+    if cutoff in (20, 40):
         # Reuse this historical handoff and coefficient load, NOT the fourth
         # endpoint. Keep omitted degrees and all repeated work in the budget.
         exact_prefix = tuple((lo+tail, hi-tail) for lo, hi in intervals)
@@ -204,8 +204,8 @@ def test_stored_mars_harmonic_profile(cutoff: int) -> None:
         budget.check()
         assert budget.deadline_monotonic_s == deadline_s
         assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
-        print(json.dumps({"stored_mars_degree20_bounded_comparison": {
-            "snapshot_sha256": sha256(snapshot_bytes).hexdigest(), "prefix_degree": 20, "full_model_degree": 120,
+        print(json.dumps({f"stored_mars_degree{cutoff}_bounded_comparison": {
+            "snapshot_sha256": sha256(snapshot_bytes).hexdigest(), "prefix_degree": cutoff, "full_model_degree": 120,
             "epoch_tdb_s": snapshot["epoch_tdb_s"], "origin": snapshot["origin"], "orientation": snapshot["orientation"],
             "time_scale": snapshot["time_scale"], "model_id": snapshot["model_id"],
             "coefficient_sha256": recorded["resource"]["actual_sha256"],

@@ -95,8 +95,11 @@ including output rounding. It is still slower at low degree and qualifies no
 real full-field anchor. Decision0071 compares degree 20 at the historical
 pinned Mars handoff: bounded evaluations repeat exactly and enclose the exact
 result, but are about 2.5–3 times slower. The unchanged finite tail dominates
-the error bound. Next compare the existing degree-40 profile; retain tails and
-all input/error charges, and do not transfer historical geometry to a new anchor.
+the error bound. Decision0072 extends the same comparison to degree 40: the
+gap narrows to about 1.3–1.5 times slower, but 53-bit interval error grows.
+The finite tail still dominates. Next use the existing degree-100 exact
+reference for a limited bounded comparison under the unchanged deadline;
+retain tails and all input errors, with no new anchor or native arc.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified
