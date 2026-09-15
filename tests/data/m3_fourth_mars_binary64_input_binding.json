@@ -1,0 +1,44 @@
+{
+  "additional_native_arcs": 0,
+  "additional_native_queries": 0,
+  "carried_error_m_m_s": [
+    0.00014951281615784107,
+    9.62662340905759e-07
+  ],
+  "coefficient_sha256": "d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980",
+  "epoch_tdb_s": 978995455.3554223,
+  "existing_matrix_force_l2_allowance_m_s2": 1.5697109459316845e-10,
+  "existing_source_force_l2_allowance_m_s2": 1.023753899662649e-08,
+  "existing_source_position_l1_allowance_m": 0.0001648618821045329,
+  "force_context_sha256": "8da680c3f7e8e746d631b9fb0c0cfc1f46eecab42ede176753670d93194cff88",
+  "force_evaluations": 0,
+  "input_sha256": {
+    "fourth_endpoint_harmonic_source_bridge": "8fb05b56a5aa93be1e662d474ce9afd71cfb909b4f5e6deae60790a0606b72ca",
+    "fourth_endpoint_rotation_bridge": "3672fd0501a222b96ea9a98b6bb9d0b7353c680ef4d9e46cf9192250bcb47fa9",
+    "fourth_endpoint_rotation_force_bridge": "2f24608d2a5dad8fe70309963ea5bd10ecbd8a639eacbf67af8ed5db9ac534f6",
+    "fourth_endpoint_source_anchor": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+    "fresh_endpoint_binding": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772"
+  },
+  "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+  "nominal_state_m_m_s_kg": [
+    -245056838770.95663,
+    35261267276.26207,
+    22783596668.40475,
+    -3128.4786808243243,
+    -18367.951684978845,
+    -9028.781394259036,
+    2000.0
+  ],
+  "orientation": "J2000",
+  "origin": "SSB",
+  "qualification": "Rounded ideal SPK polynomial point, NOT a retained native readback; inside existing source ball at the actual fourth nominal state. Input audit only; no force arithmetic, carried-state or interval certificate; no allowance reduction",
+  "rotation_input_sha256": "4b39c1c1e2f8a860ce2014c1e79e03b6a61a65f10e4753f6d58ba4b543193073",
+  "rounded_ideal_source_position_m": [
+    -245060528270.93192,
+    35261267088.76203,
+    22783596668.40478
+  ],
+  "source_rounding_l1_upper_m": 4.241708265417352e-06,
+  "source_spk_context_sha256": "b00e888032a19081c8bbfd13ca73549af21224916ed997e4714fa68af7ce8cd5",
+  "time_scale": "TDB seconds since J2000"
+}

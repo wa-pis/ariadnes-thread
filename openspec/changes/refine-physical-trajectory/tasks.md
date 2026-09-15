@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0075 (2026-09-16) audits the actual fourth Mars input binding across
+the endpoint, source, rotation and force-input records. Explicit rounding of
+the ideal polynomial point has L1 error at most 4.24e-6 m, inside the unchanged
+0.000164862 m source ball; it is not a retained native readback. No force
+evaluation or native query is added. Next evaluate at these bound inputs and
+retain source/PCK allowances once each, with carried-state error separate;
+see `docs/decisions/0075-fourth-mars-binary64-input-binding.md`.
+Task 3.9 remains open; no new anchor or production allocation is selected.
+
 Decision0074 (2026-09-15) evaluates the full finite Mars degree-120 field at
 80/120 bits, one case each under the same deadline as the existing degree-100
 checks. Cost is about 14 s per case; finite tail is zero and arithmetic L2

@@ -105,7 +105,11 @@ degree-120 field at 80/120 bits in about 14 s per case, with zero finite tail
 and arithmetic L2 bounds about 1.02e-7/2.08e-16 m/s^2. Both boxes fit inside
 the coarse degree-100-plus-tail enclosure, a consistency check rather than an
 exact full-vector oracle. No exact degree-120 rerun or new native arc is added.
-Next audit actual fourth-endpoint input binding and missing error terms;
+Decision0075 binds the actual fourth-point inputs: explicit binary64 rounding
+of the ideal Mars polynomial position contributes at most 4.24e-6 m, within
+the unchanged 0.000164862 m source ball. This rounded point is not a native
+readback. Next evaluate the finite Mars field at these bound inputs, retaining
+source/PCK allowances once each and the full carried error separately;
 the historical stored vector is not a new full-force reference.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
