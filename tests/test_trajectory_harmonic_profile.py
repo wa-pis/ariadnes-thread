@@ -167,3 +167,53 @@ def test_stored_mars_harmonic_profile(cutoff: int) -> None:
         "profiling_deadline_s": 300.0, "native_coefficient_loads": 1, "native_arcs": 0,
         "qualification": "Isolated stored-input timing only; inclusive rows overlap, overhead difference is noisy, no mission deadline or force qualification",
     }}, sort_keys=True, allow_nan=False))
+    if cutoff == 20:
+        # Reuse this historical handoff and coefficient load, NOT the fourth
+        # endpoint. Keep omitted degrees and all repeated work in the budget.
+        exact_prefix = tuple((lo+tail, hi-tail) for lo, hi in intervals)
+        comparisons = []
+        for bits in (53, 80, 120):
+            bounded_timings_s = []
+            previous_result = None
+            for _ in range(3):
+                run_started_s = perf_counter()
+                bounded_intervals, bounded_tail = _harmonic_prefix_vector_enclosure_m_s2(*args, bits=bits)
+                bounded_timings_s.append(perf_counter()-run_started_s)
+                budget.check()
+                assert bounded_tail == tail
+                if previous_result is not None:
+                    assert (bounded_intervals, bounded_tail) == previous_result
+                previous_result = bounded_intervals, bounded_tail
+                # Remove EXACT helper expansion; never subtract JSON tail bounds.
+                bounded_prefix = tuple((lo+tail, hi-tail) for lo, hi in bounded_intervals)
+                assert all(lo <= elo <= ehi <= hi for (lo, hi), (elo, ehi)
+                           in zip(bounded_prefix, exact_prefix, strict=True))
+                assert all(lo <= elo <= ehi <= hi for (lo, hi), (elo, ehi)
+                           in zip(bounded_intervals, intervals, strict=True))
+            midpoint, prefix_error = _midpoint_acceleration_l2_bound_m_s2(bounded_prefix, Fraction(0))
+            full_midpoint, separate_error = _midpoint_acceleration_l2_bound_m_s2(bounded_prefix, tail)
+            assert midpoint == full_midpoint and separate_error == prefix_error+tail
+            widths = [math.nextafter(float(hi-lo), math.inf) for lo, hi in bounded_prefix]
+            comparisons.append({"bits": bits, "evaluations": 3, "unprofiled_elapsed_s": bounded_timings_s,
+                                "median_elapsed_s": median(bounded_timings_s),
+                                "bounded_to_exact_elapsed_ratio": median(bounded_timings_s)/median(timings_s),
+                                "midpoint_m_s2": midpoint, "prefix_component_width_upper_m_s2": widths,
+                                "prefix_midpoint_l2_error_upper_m_s2": math.nextafter(float(prefix_error), math.inf),
+                                "tail_upper_m_s2": math.nextafter(float(tail), math.inf),
+                                "separate_tail_l2_error_upper_m_s2": math.nextafter(float(separate_error), math.inf)})
+        budget.check()
+        assert budget.deadline_monotonic_s == deadline_s
+        assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+        print(json.dumps({"stored_mars_degree20_bounded_comparison": {
+            "snapshot_sha256": sha256(snapshot_bytes).hexdigest(), "prefix_degree": 20, "full_model_degree": 120,
+            "epoch_tdb_s": snapshot["epoch_tdb_s"], "origin": snapshot["origin"], "orientation": snapshot["orientation"],
+            "time_scale": snapshot["time_scale"], "model_id": snapshot["model_id"],
+            "coefficient_sha256": recorded["resource"]["actual_sha256"],
+            "cosine_sha256": recorded["cosine_sha256"], "sine_sha256": recorded["sine_sha256"],
+            "exact_unprofiled_elapsed_s": timings_s, "exact_median_elapsed_s": median(timings_s),
+            "exact_evaluations": 4, "exact_profiled_evaluations": 1, "bounded_evaluations": 9,
+            "native_coefficient_loads": 1, "native_arcs": 0, "shared_deadline_s": 300.0,
+            "shared_elapsed_s": perf_counter()-started_s, "cases": comparisons,
+            "qualification": "Historical stored geometry, not fourth endpoint; arithmetic and finite tail only, source/PCK/native inputs and mission runtime unqualified",
+        }}, sort_keys=True, allow_nan=False))
+        budget.check()

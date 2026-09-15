@@ -92,8 +92,11 @@ The interval implementation is slower at this small degree; no full-field
 accuracy or performance claim follows. Decision0070 encloses normalized
 degree-0/2/8 manufactured acceleration terms and sums at exact stored geometry,
 including output rounding. It is still slower at low degree and qualifies no
-real full-field anchor. Next compare a moderate-degree bounded evaluation at
-retained pinned-field geometry; retain tails and all input/error charges.
+real full-field anchor. Decision0071 compares degree 20 at the historical
+pinned Mars handoff: bounded evaluations repeat exactly and enclose the exact
+result, but are about 2.5–3 times slower. The unchanged finite tail dominates
+the error bound. Next compare the existing degree-40 profile; retain tails and
+all input/error charges, and do not transfer historical geometry to a new anchor.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified

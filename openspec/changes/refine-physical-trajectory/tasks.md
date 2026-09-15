@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0071 (2026-09-15) compares degree-20 bounded arithmetic with the existing
+exact Mars profile at the historical retained handoff, not the fourth endpoint.
+Three repeats at each precision enclose the exact result and keep the finite
+tail unchanged, within one shared budget with all prior work. The new method
+is about 2.5–3 times slower there. Next compare degree 40; see
+`docs/decisions/0071-stored-mars-degree20-bounded-comparison.md`.
+Task 3.9 remains open; no full-force anchor or physical allocation is selected.
+
 Decision0070 (2026-09-15) adds bounded normalized-force assembly to the existing
 test-only evaluator while preserving its exact default. Thirty-six manufactured
 finite-field cases enclose every exact term and the summed vector, including

@@ -3804,12 +3804,13 @@ def _harmonic_remainder_anchor_error_bound_m_s2(
 def _harmonic_prefix_vector_enclosure_m_s2(
     budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
     cosine: np.ndarray, sine: np.ndarray, body_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
-    inertial_to_fixed: np.ndarray, cutoff: int,
+    inertial_to_fixed: np.ndarray, cutoff: int, *, bits: int | None = None,
 ) -> tuple[tuple[tuple[Fraction, Fraction], ...], Fraction]:
     """Enclose full harmonic vector at exact stored geometry, including tail.
 
     Output is J2000 m/s^2. Source/PCK input error is NOT included. The
     stored matrix need not be orthogonal: bound its transpose on the tail.
+    Optional test-only bits round the prefix; the separate tail is unchanged.
     """
     budget.check()
     assert cosine.ndim == 2 and cosine.shape == sine.shape
@@ -3817,7 +3818,7 @@ def _harmonic_prefix_vector_enclosure_m_s2(
     lower, upper = [Fraction(0)]*3, [Fraction(0)]*3
     for _, intervals in _generic_harmonic_term_intervals_m_s2(
         budget, gm_m3_s2, reference_radius_m, cosine[:cutoff+1, :cutoff+1], sine[:cutoff+1, :cutoff+1],
-        body_position_m, spacecraft_position_m, inertial_to_fixed,
+        body_position_m, spacecraft_position_m, inertial_to_fixed, bits=bits,
     ):
         for axis, (lo, hi) in enumerate(intervals):
             lower[axis] += lo
@@ -3855,13 +3856,14 @@ def _stored_harmonic_tail_bound_m_s2(
 @pytest.mark.parametrize("cutoff", [2, 3])
 @pytest.mark.parametrize("scale", [1.0, 2.0])
 @pytest.mark.parametrize("coefficient", [-0.125, 0.0, 0.125])
-def test_harmonic_vector_enclosure_retains_tail(cutoff: int, scale: float, coefficient: float) -> None:
+@pytest.mark.parametrize("bits", [None, 80])
+def test_harmonic_vector_enclosure_retains_tail(cutoff: int, scale: float, coefficient: float, bits: int | None) -> None:
     cosine, sine = np.zeros((4, 4)), np.zeros((4, 4))
     cosine[0, 0], cosine[3, 0] = 1.0, coefficient
     original = cosine.copy()
     intervals, tail = _harmonic_prefix_vector_enclosure_m_s2(
         trajectory._RefinementBudget("harmonic-vector", 300.0), 1.0, 1.0, cosine, sine,
-        np.zeros(3), np.asarray([0.0, 0.0, 2.0]), scale*np.eye(3), cutoff,
+        np.zeros(3), np.asarray([0.0, 0.0, 2.0]), scale*np.eye(3), cutoff, bits=bits,
     )
     assert np.array_equal(cosine, original) and not np.any(sine)
     assert tail == _stored_harmonic_tail_bound_m_s2(
