@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0078 (2026-09-16) assembles six point-mass and two harmonic nominal
+fourth-point contributions with exact midpoint summation and final rounding.
+The combined gravity bound is 1.03945103435e-8 m/s^2; Moon/Mars monopoles are
+not duplicated and all input radii are retained once. Stored-data assembly
+adds no force evaluation/query/arc and makes no mission-runtime claim.
+Next bind the gravity-only reference candidate and check conditional domains
+and missing full-force channels; see `docs/decisions/0078-fourth-gravity-sum.md`.
+Task 3.9 and carried-state/interval/runtime qualification remain open.
+
 Decision0077 (2026-09-16) reuses the fourth-point test for Moon degree-2 and
 degree-4 exact prefixes with bounded tails through degree 200. The reported
 degree-4 evaluation takes about 0.046 s; the finite tail is 4.28638e-39 m/s^2

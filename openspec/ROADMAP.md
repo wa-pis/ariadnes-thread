@@ -114,8 +114,12 @@ The combined nominal Mars-only arithmetic/source/PCK bound is 1.03945e-8
 m/s^2; carried-state error remains separate. Decision0077 checks the lunar
 contribution using an exact degree-4 prefix and bounded degrees 5–200 tail:
 about 0.046 s per evaluation, combined nominal bound 8.21509e-23 m/s^2.
-Next assemble the eight-source gravity-only nominal diagnostic with explicit
-summation rounding and no Moon/Mars monopole double counting;
+Decision0078 assembles eight nominal gravity contributions with exact midpoint
+summation and one final rounding: combined bound 1.03945103435e-8 m/s^2,
+including the rounding term 1.60645e-16 m/s^2 and all retained input margins.
+Moon/Mars occur only as harmonic sources. Next bind a gravity-only reference
+candidate to this state and the existing monopole jerk, verifying conditional
+domains and all remaining full-force channels before any new native arc;
 the historical stored vector is not a new full-force reference.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.

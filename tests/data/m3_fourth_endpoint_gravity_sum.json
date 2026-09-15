@@ -1,0 +1,109 @@
+{
+  "additional_native_arcs": 0,
+  "additional_native_queries": 0,
+  "body_l2_error_upper_m_s2": {
+    "Earth": 5.378725722039055e-24,
+    "Jupiter": 2.446315962132358e-22,
+    "Mars": 1.039451018241243e-08,
+    "Mercury": 3.524102742641133e-25,
+    "Moon": 8.215091534373285e-23,
+    "Saturn": 2.115511433282287e-23,
+    "Sun": 4.404217242180438e-19,
+    "Venus": 1.3822884574077733e-24
+  },
+  "body_midpoints_m_s2": {
+    "Earth": [
+      7.292433822865173e-09,
+      3.4185771253117515e-09,
+      1.2062303971377169e-09
+    ],
+    "Jupiter": [
+      -3.2108605944359456e-09,
+      -1.83601835667873e-07,
+      -7.904412072818075e-08
+    ],
+    "Mars": [
+      -3.149870681072988,
+      0.0032025762414817425,
+      -0.005310130131716032
+    ],
+    "Mercury": [
+      5.265944334235334e-10,
+      -1.670635766740407e-10,
+      -8.353081418768224e-11
+    ],
+    "Moon": [
+      8.961377289910998e-11,
+      4.2202126527480255e-11,
+      1.4889631992837298e-11
+    ],
+    "Saturn": [
+      1.003971061352049e-08,
+      1.4392011368908702e-08,
+      5.5421002390757414e-09
+    ],
+    "Sun": [
+      0.00211944662681383,
+      -0.00030366021938191826,
+      -0.00019643187796879435
+    ],
+    "Venus": [
+      2.502672426315532e-09,
+      -5.403169576093509e-10,
+      -3.3894760639126675e-10
+    ]
+  },
+  "carried_error_m_m_s": [
+    0.00014951281615784107,
+    9.62662340905759e-07
+  ],
+  "epoch_tdb_s": 978995455.3554223,
+  "force_context_sha256": "8da680c3f7e8e746d631b9fb0c0cfc1f46eecab42ede176753670d93194cff88",
+  "force_evaluations": 0,
+  "harmonic_bodies": [
+    "Mars",
+    "Moon"
+  ],
+  "ideal_gravity_l2_error_upper_m_s2": 1.0394510343498623e-08,
+  "input_l2_error_upper_m_s2": 1.0394510182853207e-08,
+  "input_sha256": {
+    "fourth_endpoint_point_gravity": "5b271412ca8a08ed166b565627907004f69b1efb83feeda4b5ea0f7699857dbe",
+    "fourth_endpoint_point_source_bridge": "0e3172dfe654fa94f9179157f46acf802673a53f94a2a3d485704cf5bfc193fe",
+    "fourth_mars_bounded_force": "91c567c06cafc25a092ead5dba09919d49f1ec42c3c5d3e7670f0c99d3e1dc22",
+    "fourth_moon_bounded_force": "ffdc0bf99a2986f222f395d6e35bbd22ca8b71a11481915e6397b724986db2fb",
+    "fresh_endpoint_binding": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772"
+  },
+  "midpoint_m_s2": [
+    -3.14775121720601,
+    0.002898749565674243,
+    -0.005506634713063707
+  ],
+  "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+  "nominal_state_m_m_s_kg": [
+    -245056838770.95663,
+    35261267276.26207,
+    22783596668.40475,
+    -3128.4786808243243,
+    -18367.951684978845,
+    -9028.781394259036,
+    2000.0
+  ],
+  "orientation": "J2000",
+  "origin": "SSB",
+  "point_bodies": [
+    "Earth",
+    "Jupiter",
+    "Mercury",
+    "Saturn",
+    "Sun",
+    "Venus"
+  ],
+  "qualification": "Stored eight-source ideal nominal gravity sum only; point-source margins retained conservatively, harmonic tails/input allowances already included once. No native-force arithmetic, SRP, relativity, carried-state, interval or mission-runtime qualification; not a selected reference",
+  "retained_point_source_allowance_m_s2": 2.765507619020795e-21,
+  "shared_deadline_s": 300.0,
+  "shared_elapsed_s": 0.0008145421743392944,
+  "source_count": 8,
+  "source_spk_context_sha256": "b00e888032a19081c8bbfd13ca73549af21224916ed997e4714fa68af7ce8cd5",
+  "summation_rounding_l2_error_upper_m_s2": 1.6064541573869645e-16,
+  "time_scale": "TDB seconds since J2000"
+}
