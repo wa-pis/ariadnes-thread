@@ -1,0 +1,86 @@
+{
+  "fourth_hypothetical_subdivision_allowances": {
+    "additional_ephemeris_queries": 0,
+    "additional_native_arcs": 0,
+    "horizon_s": 0.125,
+    "hypothetical_common_J_m_s3": 8.265836017855932e-05,
+    "incoming_error_m_m_s": [
+      0.00014951281615784107,
+      9.62662340905759e-07
+    ],
+    "input_sha256": {
+      "m3_fourth_conditional_local_translation.json": "c63d0fa72256dd4ec3b5c1518838f6921d156402ca062f28b8a420a1e99b0198",
+      "m3_fourth_endpoint_source_anchor.json": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+      "m3_fresh_endpoint_binding.json": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772"
+    },
+    "rows": [
+      {
+        "constant_D_cap_from_velocity_m_s2_approx": -4.867446238406031e-06,
+        "fits_both_without_other_costs": false,
+        "optimistic_position_m_approx": 0.00014966005596874158,
+        "optimistic_velocity_m_s_approx": 1.6084307798007537e-06,
+        "per_piece_position_residual_cap_from_position_m_approx": 0.0008503399440312584,
+        "per_piece_velocity_residual_cap_from_velocity_m_s_approx": -6.084307798007538e-07,
+        "reference_piece_count": 1,
+        "step_s": 0.125,
+        "velocity_room_m_s_approx": -6.084307798007538e-07
+      },
+      {
+        "constant_D_cap_from_velocity_m_s2_approx": -2.2843724828260515e-06,
+        "fits_both_without_other_costs": false,
+        "optimistic_position_m_approx": 0.00014964996583688385,
+        "optimistic_velocity_m_s_approx": 1.2855465603532565e-06,
+        "per_piece_position_residual_cap_from_position_m_approx": 0.0004251750170815581,
+        "per_piece_velocity_residual_cap_from_velocity_m_s_approx": -1.4277328017662822e-07,
+        "reference_piece_count": 2,
+        "step_s": 0.0625,
+        "velocity_room_m_s_approx": -2.8554656035325644e-07
+      },
+      {
+        "constant_D_cap_from_velocity_m_s2_approx": -9.928356050360621e-07,
+        "fits_both_without_other_costs": false,
+        "optimistic_position_m_approx": 0.00014964239823799056,
+        "optimistic_velocity_m_s_approx": 1.1241044506295077e-06,
+        "per_piece_position_residual_cap_from_position_m_approx": 0.00021258940044050235,
+        "per_piece_velocity_residual_cap_from_velocity_m_s_approx": -3.102611265737694e-08,
+        "reference_piece_count": 4,
+        "step_s": 0.03125,
+        "velocity_room_m_s_approx": -1.2410445062950777e-07
+      },
+      {
+        "constant_D_cap_from_velocity_m_s2_approx": -3.470671661410675e-07,
+        "fits_both_without_other_costs": false,
+        "optimistic_position_m_approx": 0.00014963798380530278,
+        "optimistic_velocity_m_s_approx": 1.0433833957676334e-06,
+        "per_piece_position_residual_cap_from_position_m_approx": 0.00010629525202433715,
+        "per_piece_velocity_residual_cap_from_velocity_m_s_approx": -5.42292447095418e-09,
+        "reference_piece_count": 8,
+        "step_s": 0.015625,
+        "velocity_room_m_s_approx": -4.338339576763344e-08
+      },
+      {
+        "constant_D_cap_from_velocity_m_s2_approx": -2.4182946693570163e-08,
+        "fits_both_without_other_costs": false,
+        "optimistic_position_m_approx": 0.00014963561893064863,
+        "optimistic_velocity_m_s_approx": 1.0030228683366964e-06,
+        "per_piece_position_residual_cap_from_position_m_approx": 5.314777381683446e-05,
+        "per_piece_velocity_residual_cap_from_velocity_m_s_approx": -1.889292710435169e-10,
+        "reference_piece_count": 16,
+        "step_s": 0.0078125,
+        "velocity_room_m_s_approx": -3.0228683366962704e-09
+      },
+      {
+        "constant_D_cap_from_velocity_m_s2_approx": 1.3725916303017852e-07,
+        "fits_both_without_other_costs": true,
+        "optimistic_position_m_approx": 0.000149634397078744,
+        "optimistic_velocity_m_s_approx": 9.828426046212276e-07,
+        "per_piece_position_residual_cap_from_position_m_approx": 2.6573925091289252e-05,
+        "per_piece_velocity_residual_cap_from_velocity_m_s_approx": 5.361686055866348e-10,
+        "reference_piece_count": 32,
+        "step_s": 0.00390625,
+        "velocity_room_m_s_approx": 1.7157395378772315e-08
+      }
+    ],
+    "scope": "Optimistic algebraic sensitivity only, assuming the benchmark J on every future piece without qualification; signed caps are approximate, separate intercepts not simultaneous allocations; not new arc counts, full-force composition, native residual bounds or a selected partition"
+  }
+}

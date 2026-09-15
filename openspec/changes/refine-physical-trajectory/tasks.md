@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0067 (2026-09-15) adds 60 exact manufactured composition controls and
+one hypothetical sensitivity audit. Subdivision reduces J cost but retains
+D*H and accumulates repeated endpoint residuals, including their position
+effect. A 32-piece optimistic screen is not a selected native partition or
+uniform-rate qualification. Next compare repeated accuracy/cost demands with
+bounded richer-reference evaluation controls. See
+`docs/decisions/0067-subdivision-error-cost-accounting.md`; 3.9 stays open.
+
 Decision0066 (2026-09-15) lower-bounds the fixed whole-degree isotropic
 accounting formula using an upper radius and lower Euclidean speed/coefficient
 roots. Geometry/speed tightening alone cannot meet the current private gate;

@@ -78,9 +78,13 @@ These are not true-state tubes or new full-force sensitivity domains.
 Decision0066 proves a method-only lower accounting value of
 1.6075158036363222e-6 m/s: geometry/speed tightening cannot make this fixed
 isotropic formula pass the 1e-6 gate. This is not a true-error lower bound.
-Next compare shorter-reference composition versus richer/directional
-references using bounded controls, preserving cumulative errors and repeated
-anchor/residual costs before high-degree/native work.
+Decision0067 verifies exact manufactured subdivision accounting: rate cost
+falls as 1/N, constant-defect cost remains D*H, and residual costs accumulate.
+A hypothetical common-rate screen first passes among tested counts at 32,
+leaving only about 5.36e-10 m/s per-piece velocity residual if every other new
+cost is zero; this neither selects a partition nor qualifies new references.
+Next compare repeated anchor/residual accuracy and cost demands with bounded
+richer-reference evaluation controls before high-degree/native work.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified
