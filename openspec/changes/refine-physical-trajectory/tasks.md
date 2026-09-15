@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0074 (2026-09-15) evaluates the full finite Mars degree-120 field at
+80/120 bits, one case each under the same deadline as the existing degree-100
+checks. Cost is about 14 s per case; finite tail is zero and arithmetic L2
+bounds are about 1.02e-7/2.08e-16 m/s^2. Coarse-box and cross-precision checks
+pass, but do not supply an exact full-vector oracle. No exact-120 rerun or
+native arc is added. Next audit fourth-endpoint binding and outstanding input
+errors; see `docs/decisions/0074-stored-mars-degree120-bounded-evaluation.md`.
+Task 3.9 remains open; no production anchor, precision or allocation changes.
+
 Decision0073 (2026-09-15) adds one bounded degree-100 evaluation per precision
 alongside the existing exact reference. Every interval encloses the exact box;
 the finite tail is unchanged. The first observation takes about 9 s versus

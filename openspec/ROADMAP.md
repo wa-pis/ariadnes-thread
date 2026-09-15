@@ -100,10 +100,13 @@ gap narrows to about 1.3–1.5 times slower, but 53-bit interval error grows.
 The finite tail still dominates there. Decision0073 checks degree 100 with one
 exact and three bounded evaluations: about 9 s versus 22 s in the first run,
 but the 53-bit arithmetic enclosure expands to about 0.01324 m/s^2. At 80/120
-bits the finite tail still dominates. Next check the verification contract for
-a bounded-only full degree-120 stored-input evaluation; do not rerun the known
-over-budget exact full vector. Retain input errors and the degree-100-plus-tail
-coarse consistency control, with no new anchor or native arc.
+bits the finite tail still dominates. Decision0074 evaluates the full finite
+degree-120 field at 80/120 bits in about 14 s per case, with zero finite tail
+and arithmetic L2 bounds about 1.02e-7/2.08e-16 m/s^2. Both boxes fit inside
+the coarse degree-100-plus-tail enclosure, a consistency check rather than an
+exact full-vector oracle. No exact degree-120 rerun or new native arc is added.
+Next audit actual fourth-endpoint input binding and missing error terms;
+the historical stored vector is not a new full-force reference.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified

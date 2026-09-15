@@ -221,3 +221,55 @@ def test_stored_mars_harmonic_profile(cutoff: int) -> None:
                              + ("; one observation per method, not repeated benchmark medians" if cutoff == 100 else ""),
         }}, sort_keys=True, allow_nan=False))
         budget.check()
+    if cutoff == 100:
+        # ponytail: reuse the coarse exact-100-plus-tail consistency control;
+        # this is NOT an exact full-120 oracle or a fourth-endpoint binding.
+        coarse_midpoint, coarse_error = _midpoint_acceleration_l2_bound_m_s2(exact_prefix, tail)
+        full_cases = []
+        previous_box = None
+        for bits in (80, 120):
+            run_started_s = perf_counter()
+            full_box, full_tail = _harmonic_prefix_vector_enclosure_m_s2(*args[:-1], 120, bits=bits)
+            full_elapsed_s = perf_counter()-run_started_s
+            budget.check()
+            assert full_tail == 0  # No omitted terms WITHIN this finite model.
+            assert all(max(lo, clo) <= min(hi, chi) for (lo, hi), (clo, chi)
+                       in zip(full_box, intervals, strict=True))
+            full_midpoint, full_error = _midpoint_acceleration_l2_bound_m_s2(full_box, full_tail)
+            assert sum((Fraction(a)-Fraction(b))**2 for a, b in
+                       zip(full_midpoint, coarse_midpoint, strict=True)) <= (full_error+coarse_error)**2
+            if previous_box is not None:
+                assert all(max(lo, plo) <= min(hi, phi) for (lo, hi), (plo, phi)
+                           in zip(full_box, previous_box, strict=True))
+            contained = all(clo <= lo <= hi <= chi for (lo, hi), (clo, chi)
+                            in zip(full_box, intervals, strict=True))
+            previous_box = full_box
+            outward = [[math.nextafter(float(lo), -math.inf), math.nextafter(float(hi), math.inf)]
+                        for lo, hi in full_box]
+            assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lo <= hi <= Fraction(b)
+                       for (a, b), (lo, hi) in zip(outward, full_box, strict=True))
+            error_upper = math.nextafter(float(full_error), math.inf)
+            assert math.isfinite(error_upper) and Fraction(error_upper) >= full_error
+            full_cases.append({"bits": bits, "evaluations": 1, "elapsed_s": full_elapsed_s,
+                               "component_intervals_m_s2": outward, "midpoint_m_s2": full_midpoint,
+                               "midpoint_l2_error_upper_m_s2": error_upper,
+                               "finite_model_tail_m_s2": 0.0,
+                               "inside_coarse_degree100_box": contained})
+        budget.check()
+        assert budget.deadline_monotonic_s == deadline_s
+        assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+        print(json.dumps({"stored_mars_degree120_bounded_evaluation": {
+            "snapshot_sha256": sha256(snapshot_bytes).hexdigest(), "full_model_degree": 120,
+            "epoch_tdb_s": snapshot["epoch_tdb_s"], "origin": snapshot["origin"], "orientation": snapshot["orientation"],
+            "time_scale": snapshot["time_scale"], "model_id": snapshot["model_id"],
+            "coefficient_sha256": recorded["resource"]["actual_sha256"],
+            "cosine_sha256": recorded["cosine_sha256"], "sine_sha256": recorded["sine_sha256"],
+            "coarse_degree100_midpoint_m_s2": coarse_midpoint,
+            "coarse_degree100_l2_error_upper_m_s2": math.nextafter(float(coarse_error), math.inf),
+            "exact_degree100_evaluations": 1, "exact_degree120_evaluations": 0,
+            "bounded_degree100_evaluations": 3, "bounded_degree120_evaluations": 2,
+            "native_coefficient_loads": 1, "native_arcs": 0, "shared_deadline_s": 300.0,
+            "shared_elapsed_s": perf_counter()-started_s, "cases": full_cases,
+            "qualification": "One observation per precision at historical stored geometry; coarse-box and cross-precision consistency are not an exact full-vector oracle; no source/PCK/native input, beyond-degree120 model, fourth-endpoint or mission-runtime qualification",
+        }}, sort_keys=True, allow_nan=False))
+        budget.check()
