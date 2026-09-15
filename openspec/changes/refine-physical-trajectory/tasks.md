@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0077 (2026-09-16) reuses the fourth-point test for Moon degree-2 and
+degree-4 exact prefixes with bounded tails through degree 200. The reported
+degree-4 evaluation takes about 0.046 s; the finite tail is 4.28638e-39 m/s^2
+and the combined nominal lunar arithmetic/tail/source/PCK bound 8.21509e-23
+m/s^2. No full degree-200 vector or new query/arc is added. Next assemble a
+gravity-only nominal sum with all input and output-rounding terms and no
+Moon/Mars monopole duplication; see `docs/decisions/0077-fourth-moon-finite-tail.md`.
+Task 3.9, carried-state transport and full-force/runtime gates remain open.
+
 Decision0076 (2026-09-16) evaluates Mars degree 120 at the audited fourth
 endpoint with 120-bit bounded arithmetic and a counted exact-100-plus-tail
 coarse consistency check. Shared work is about 34 s; full evaluation about

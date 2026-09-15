@@ -1,0 +1,123 @@
+{
+  "fourth_moon_binary64_input_binding": {
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "carried_error_m_m_s": [
+      0.00014951281615784107,
+      9.62662340905759e-07
+    ],
+    "coefficient_sha256": "3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d",
+    "epoch_tdb_s": 978995455.3554223,
+    "existing_matrix_force_l2_allowance_m_s2": 7.969250975249056e-23,
+    "existing_source_force_l2_allowance_m_s2": 2.4557653639262546e-24,
+    "existing_source_position_l1_allowance_m": 8.934704095652991e-05,
+    "force_context_sha256": "8da680c3f7e8e746d631b9fb0c0cfc1f46eecab42ede176753670d93194cff88",
+    "force_evaluations": 0,
+    "input_sha256": {
+      "fourth_endpoint_harmonic_source_bridge": "8fb05b56a5aa93be1e662d474ce9afd71cfb909b4f5e6deae60790a0606b72ca",
+      "fourth_endpoint_rotation_bridge": "3672fd0501a222b96ea9a98b6bb9d0b7353c680ef4d9e46cf9192250bcb47fa9",
+      "fourth_endpoint_rotation_force_bridge": "2f24608d2a5dad8fe70309963ea5bd10ecbd8a639eacbf67af8ed5db9ac534f6",
+      "fourth_endpoint_source_anchor": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+      "fresh_endpoint_binding": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772"
+    },
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "nominal_state_m_m_s_kg": [
+      -245056838770.95663,
+      35261267276.26207,
+      22783596668.40475,
+      -3128.4786808243243,
+      -18367.951684978845,
+      -9028.781394259036,
+      2000.0
+    ],
+    "orientation": "J2000",
+    "origin": "SSB",
+    "qualification": "Rounded ideal SPK polynomial point, NOT a retained native readback; inside existing source ball at the actual fourth nominal state. Input audit only; no force arithmetic, carried-state or interval certificate; no allowance reduction",
+    "rotation_input_sha256": "bb62ac9b0336e70e1890e28ce018a60a191ec343c01792e2962d326f458c509a",
+    "rounded_ideal_source_position_m": [
+      -47126476381.57305,
+      128473302959.55965,
+      55670396998.804825
+    ],
+    "source_rounding_l1_upper_m": 1.1229831428572507e-05,
+    "source_spk_context_sha256": "b00e888032a19081c8bbfd13ca73549af21224916ed997e4714fa68af7ce8cd5",
+    "time_scale": "TDB seconds since J2000"
+  },
+  "fourth_moon_bounded_force": {
+    "additional_native_arcs": 0,
+    "additional_native_queries": 0,
+    "arithmetic_l2_error_upper_m_s2": 2.640227316012839e-27,
+    "bits": null,
+    "carried_error_m_m_s": [
+      0.00014951281615784107,
+      9.62662340905759e-07
+    ],
+    "coarse_degree2_l2_error_upper_m_s2": 2.7489868561560062e-27,
+    "coarse_elapsed_s": 0.044226208003237844,
+    "coefficient_sha256": "3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d",
+    "cosine_sha256": "fcdc396a425ed40d5fff7794b1aa83e5de438a1105331d4f07bad4456287b047",
+    "degree": 4,
+    "epoch_tdb_s": 978995455.3554223,
+    "exact_degree200_evaluations": 0,
+    "exact_degree2_evaluations": 1,
+    "exact_degree4_evaluations": 1,
+    "finite_model_tail_m_s2": 4.286375449937509e-39,
+    "full_elapsed_s": 0.04589708289131522,
+    "full_model_degree": 200,
+    "ideal_finite_field_l2_error_upper_m_s2": 8.215091534373284e-23,
+    "input_sha256": {
+      "fourth_endpoint_harmonic_source_bridge": "8fb05b56a5aa93be1e662d474ce9afd71cfb909b4f5e6deae60790a0606b72ca",
+      "fourth_endpoint_rotation_bridge": "3672fd0501a222b96ea9a98b6bb9d0b7353c680ef4d9e46cf9192250bcb47fa9",
+      "fourth_endpoint_rotation_force_bridge": "2f24608d2a5dad8fe70309963ea5bd10ecbd8a639eacbf67af8ed5db9ac534f6",
+      "fourth_endpoint_source_anchor": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+      "fresh_endpoint_binding": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772"
+    },
+    "inside_coarse_degree2_box": true,
+    "matrix_l2_allowance_upper_m_s2": 7.969250975249057e-23,
+    "midpoint_m_s2": [
+      8.961377289910998e-11,
+      4.2202126527480255e-11,
+      1.4889631992837298e-11
+    ],
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "native_coefficient_loads": 1,
+    "nominal_state_m_m_s_kg": [
+      -245056838770.95663,
+      35261267276.26207,
+      22783596668.40475,
+      -3128.4786808243243,
+      -18367.951684978845,
+      -9028.781394259036,
+      2000.0
+    ],
+    "orientation": "J2000",
+    "origin": "SSB",
+    "qualification": "Stored fourth-point Moon-only diagnostic with source/PCK allowances once each; coarse consistency is not an exact full-vector oracle. No native harmonic arithmetic, other forces, carried-state, interval or beyond-degree200 model-error qualification; not a production anchor",
+    "rotation_input_sha256": "bb62ac9b0336e70e1890e28ce018a60a191ec343c01792e2962d326f458c509a",
+    "rounded_ideal_source_position_m": [
+      -47126476381.57305,
+      128473302959.55965,
+      55670396998.804825
+    ],
+    "shared_deadline_s": 300.0,
+    "shared_elapsed_s": 0.7085257500875741,
+    "sine_sha256": "7b6d51398eacdff87a2734d76dea8c7837510c0ab8c4a12244cc15c687848d8c",
+    "source_l2_allowance_upper_m_s2": 2.455765363926255e-24,
+    "source_spk_context_sha256": "b00e888032a19081c8bbfd13ca73549af21224916ed997e4714fa68af7ce8cd5",
+    "stored_input_component_intervals_m_s2": [
+      [
+        8.961377289910997e-11,
+        8.961377289911e-11
+      ],
+      [
+        4.220212652748025e-11,
+        4.220212652748026e-11
+      ],
+      [
+        1.4889631992837295e-11,
+        1.48896319928373e-11
+      ]
+    ],
+    "time_scale": "TDB seconds since J2000"
+  }
+}

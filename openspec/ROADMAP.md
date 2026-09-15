@@ -111,8 +111,11 @@ the unchanged 0.000164862 m source ball. This rounded point is not a native
 readback. Decision0076 evaluates the finite Mars field at those inputs: about
 13 s for the bounded full vector and 34 s for setup plus the coarse control.
 The combined nominal Mars-only arithmetic/source/PCK bound is 1.03945e-8
-m/s^2; carried-state error remains separate. Next qualify the lunar harmonic
-contribution at the same endpoint, using an explicit finite-tail bound;
+m/s^2; carried-state error remains separate. Decision0077 checks the lunar
+contribution using an exact degree-4 prefix and bounded degrees 5–200 tail:
+about 0.046 s per evaluation, combined nominal bound 8.21509e-23 m/s^2.
+Next assemble the eight-source gravity-only nominal diagnostic with explicit
+summation rounding and no Moon/Mars monopole double counting;
 the historical stored vector is not a new full-force reference.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
