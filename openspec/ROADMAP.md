@@ -89,8 +89,11 @@ are not bounded globally. No force accuracy or speedup is established.
 Decision0069 reuses the exact recurrence with outward intervals through degree
 8: all 5,760 polynomial/derivative components enclose the exact oracle.
 The interval implementation is slower at this small degree; no full-field
-accuracy or performance claim follows. Next qualify low-degree normalized
-force assembly before moderate-degree timing; retain all input/error charges.
+accuracy or performance claim follows. Decision0070 encloses normalized
+degree-0/2/8 manufactured acceleration terms and sums at exact stored geometry,
+including output rounding. It is still slower at low degree and qualifies no
+real full-field anchor. Next compare a moderate-degree bounded evaluation at
+retained pinned-field geometry; retain tails and all input/error charges.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified

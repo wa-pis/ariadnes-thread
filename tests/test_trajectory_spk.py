@@ -3589,13 +3589,17 @@ def test_regular_solid_harmonics_checks_deadline_between_rows() -> None:
 def _generic_harmonic_term_intervals_m_s2(
     budget: trajectory._RefinementBudget, gm_m3_s2: float, reference_radius_m: float,
     cosine: np.ndarray, sine: np.ndarray, body_position_m: np.ndarray, spacecraft_position_m: np.ndarray,
-    inertial_to_fixed: np.ndarray,
+    inertial_to_fixed: np.ndarray, *, bits: int | None = None,
 ) -> Iterator[tuple[tuple[int, int], tuple[tuple[Fraction, Fraction], ...]]]:
     """Yield normalized force-component intervals at exact stored SI states/matrix.
 
     Inertial J2000 acceleration in m/s^2; source/PCK input error is separate.
+    Optional test-only significand precision bounds the recurrence arithmetic.
+    Stored geometry and initial radial ratios stay exact; roots retain the
+    existing 100-relative-guard-bit enclosures, independently of bits.
     """
     budget.check()
+    assert bits is None or (type(bits) is int and bits > 0)
     assert all(type(value) is float and math.isfinite(value) and value > 0 for value in (gm_m3_s2, reference_radius_m))
     assert cosine.ndim == 2 and cosine.shape == sine.shape and cosine.shape[0] == cosine.shape[1] > 0
     assert all(matrix.dtype == np.float64 and np.all(np.isfinite(matrix)) and not np.any(np.triu(matrix, 1))
@@ -3618,6 +3622,10 @@ def _generic_harmonic_term_intervals_m_s2(
     root_lower, root_upper = _dyadic_sqrt_bounds(q)
     radial_factor_m_s2 = Fraction(gm_m3_s2) / (scale_m**2 * q)
     radial_ratio = Fraction(reference_radius_m) / (scale_m * q)
+    if bits is not None:
+        coordinates = tuple(_DyadicInterval(value, value, bits) for value in coordinates)
+        radial_factor_m_s2 = _DyadicInterval(radial_factor_m_s2, radial_factor_m_s2, bits)
+        radial_ratio = _DyadicInterval(radial_ratio, radial_ratio, bits)
     yielded_terms = 0
     for degree, order, real, imaginary in _regular_solid_harmonic_jets(budget, coordinates, maximum_degree):
         if degree and order == 0:
@@ -3627,13 +3635,19 @@ def _generic_harmonic_term_intervals_m_s2(
         normalization_squared = Fraction((2 if order else 1) * (2 * degree + 1) * math.factorial(degree - order),
                                          math.factorial(degree + order))
         norm_lower, norm_upper = _dyadic_sqrt_bounds(normalization_squared)
+        normalization = (_DyadicInterval(norm_lower / root_upper, norm_upper / root_lower, bits)
+                         if bits is not None else None)
         polynomial_m_s2 = [radial_factor_m_s2 * (q * derivative - (2 * degree + 1) * jet[0] * u)
                            for derivative, u in zip(jet[1:], coordinates, strict=True)]
         intervals: list[tuple[Fraction, Fraction]] = []
         for axis in range(3):
             projected_m_s2 = sum((matrix[row][axis] * polynomial_m_s2[row] for row in range(3)), Fraction(0))
-            endpoints_m_s2 = (projected_m_s2 * norm_lower / root_upper, projected_m_s2 * norm_upper / root_lower)
-            intervals.append((min(endpoints_m_s2), max(endpoints_m_s2)))
+            if normalization is None:
+                endpoints_m_s2 = (projected_m_s2 * norm_lower / root_upper, projected_m_s2 * norm_upper / root_lower)
+                intervals.append((min(endpoints_m_s2), max(endpoints_m_s2)))
+            else:
+                bounded_m_s2 = projected_m_s2 * normalization
+                intervals.append((bounded_m_s2.lower, bounded_m_s2.upper))
         yielded_terms += 1
         yield (degree, order), tuple(intervals)
     budget.check()
@@ -3696,7 +3710,8 @@ def test_generic_harmonic_degree_two_matches_cartesian_oracle(order: int, distor
 
 @pytest.mark.parametrize("radius_m", [1.0, 2.0])
 @pytest.mark.parametrize("kind", ["zonal", "cosine", "sine", "mixed"])
-def test_generic_harmonic_degree_three_axis_oracles(radius_m: float, kind: str) -> None:
+@pytest.mark.parametrize("bits", [None, 80])
+def test_generic_harmonic_degree_three_axis_oracles(radius_m: float, kind: str, bits: int | None) -> None:
     cosine, sine = np.zeros((4, 4)), np.zeros((4, 4))
     order = 0 if kind == "zonal" else 3
     cosine[3, order] = 0.0 if kind == "sine" else 0.125
@@ -3713,7 +3728,7 @@ def test_generic_harmonic_degree_three_axis_oracles(radius_m: float, kind: str) 
     assert expected_squared <= bound_m_s2**2 < expected_squared * (1 + Fraction(2)**-90)
     terms = list(_generic_harmonic_term_intervals_m_s2(
         trajectory._RefinementBudget("generic-degree-three-interval", 300.0), 1.0, 1.0, cosine, sine,
-        np.zeros(3), position_m, np.eye(3),
+        np.zeros(3), position_m, np.eye(3), bits=bits,
     ))
     assert [key for key, _ in terms] == [(n, m) for n in range(4) for m in range(n+1)]
     components = (Fraction(0), Fraction(0), -4*Fraction(cosine[3, 0])) if order == 0 else (
