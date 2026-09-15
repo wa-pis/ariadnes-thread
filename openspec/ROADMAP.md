@@ -86,8 +86,11 @@ cost is zero; this neither selects a partition nor qualifies new references.
 Decision0068 adds test-only outward dyadic rounding and manufactured Horner
 controls with bounded significands; exponents and accumulated interval widths
 are not bounded globally. No force accuracy or speedup is established.
-Next compare a small bounded harmonic recurrence with the existing exact
-oracle before high-degree/native work; retain all input/error charges.
+Decision0069 reuses the exact recurrence with outward intervals through degree
+8: all 5,760 polynomial/derivative components enclose the exact oracle.
+The interval implementation is slower at this small degree; no full-field
+accuracy or performance claim follows. Next qualify low-degree normalized
+force assembly before moderate-degree timing; retain all input/error charges.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified

@@ -20,6 +20,7 @@ import numpy as np
 import pytest
 
 from space_nav import ephemeris, trajectory
+from test_trajectory_rounded_arithmetic import _DyadicInterval
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -3453,24 +3454,27 @@ def test_pck_rotation_rates_reject_changed_source(
 
 
 def _regular_solid_harmonic_jets(
-    budget: trajectory._RefinementBudget, coordinates: tuple[Fraction, ...], maximum_degree: int,
-) -> Iterator[tuple[int, int, tuple[Fraction, ...], tuple[Fraction, ...]]]:
+    budget: trajectory._RefinementBudget, coordinates: tuple[Fraction | _DyadicInterval, ...], maximum_degree: int,
+) -> Iterator[tuple[int, int, tuple[Fraction | _DyadicInterval, ...], tuple[Fraction | _DyadicInterval, ...]]]:
     """Yield unnormalized real/imaginary (value, dx, dy, dz), with no Condon-Shortley phase.
 
-    Coordinates are dimensionless exact rationals; only two preceding degree
-    rows are retained. This polynomial kernel does not yet evaluate a force.
+    Coordinates are dimensionless exact rationals or same-precision intervals;
+    only two preceding degree rows are retained. This kernel is not a force.
     """
     budget.check()
     assert type(maximum_degree) is int and maximum_degree >= 0
-    assert len(coordinates) == 3 and all(isinstance(value, Fraction) for value in coordinates)
+    assert len(coordinates) == 3
+    assert (all(isinstance(value, Fraction) for value in coordinates)
+            or (all(isinstance(value, _DyadicInterval) for value in coordinates)
+                and len({value.bits for value in coordinates}) == 1))
     x, y, z = coordinates
     q = sum((value**2 for value in coordinates), Fraction(0))
     zero = (Fraction(0),) * 4
-    previous: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...]]] = {}
-    older: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...]]] = {}
+    previous: dict[int, tuple[tuple[Fraction | _DyadicInterval, ...], tuple[Fraction | _DyadicInterval, ...]]] = {}
+    older: dict[int, tuple[tuple[Fraction | _DyadicInterval, ...], tuple[Fraction | _DyadicInterval, ...]]] = {}
     for degree in range(maximum_degree + 1):
         budget.check()
-        current: dict[int, tuple[tuple[Fraction, ...], tuple[Fraction, ...]]] = {}
+        current: dict[int, tuple[tuple[Fraction | _DyadicInterval, ...], tuple[Fraction | _DyadicInterval, ...]]] = {}
         for order in range(degree + 1):
             budget.check()
             if degree == 0:

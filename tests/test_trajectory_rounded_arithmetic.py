@@ -1,5 +1,8 @@
 """Bounded-significand arithmetic controls; not a qualified force evaluator."""
 
+from __future__ import annotations
+
+from dataclasses import dataclass
 from fractions import Fraction
 
 import pytest
@@ -22,6 +25,63 @@ def _outward_dyadic(value: Fraction, bits: int) -> tuple[Fraction, Fraction]:
     step = Fraction(2)**(exponent - bits + 1)
     scaled = value / step
     return (scaled.numerator // scaled.denominator) * step, (-(-scaled.numerator // scaled.denominator)) * step
+
+
+@dataclass(frozen=True)
+class _DyadicInterval:
+    """Only the arithmetic required by the existing solid-harmonic recurrence.
+
+    No square roots or interval division: this is not a force evaluator.
+    """
+
+    lower: Fraction
+    upper: Fraction
+    bits: int
+
+    def __post_init__(self) -> None:
+        assert isinstance(self.lower, Fraction) and isinstance(self.upper, Fraction)
+        assert self.lower <= self.upper
+        assert type(self.bits) is int and self.bits > 0
+        object.__setattr__(self, "lower", _outward_dyadic(self.lower, self.bits)[0])
+        object.__setattr__(self, "upper", _outward_dyadic(self.upper, self.bits)[1])
+
+    def _coerce(self, other: _DyadicInterval | Fraction | int) -> _DyadicInterval:
+        if isinstance(other, _DyadicInterval):
+            assert self.bits == other.bits
+            return other
+        assert isinstance(other, Fraction) or type(other) is int
+        return _DyadicInterval(Fraction(other), Fraction(other), self.bits)
+
+    def __add__(self, other: _DyadicInterval | Fraction | int) -> _DyadicInterval:
+        other = self._coerce(other)
+        return _DyadicInterval(self.lower + other.lower, self.upper + other.upper, self.bits)
+
+    __radd__ = __add__
+
+    def __neg__(self) -> _DyadicInterval:
+        return _DyadicInterval(-self.upper, -self.lower, self.bits)
+
+    def __sub__(self, other: _DyadicInterval | Fraction | int) -> _DyadicInterval:
+        return self + -self._coerce(other)
+
+    def __rsub__(self, other: Fraction | int) -> _DyadicInterval:
+        return self._coerce(other) + -self
+
+    def __mul__(self, other: _DyadicInterval | Fraction | int) -> _DyadicInterval:
+        other = self._coerce(other)
+        products = [a*b for a in (self.lower, self.upper) for b in (other.lower, other.upper)]
+        return _DyadicInterval(min(products), max(products), self.bits)
+
+    __rmul__ = __mul__
+
+    def __truediv__(self, other: int) -> _DyadicInterval:
+        assert type(other) is int and other > 0
+        return _DyadicInterval(self.lower / other, self.upper / other, self.bits)
+
+    def __pow__(self, exponent: int) -> _DyadicInterval:
+        assert type(exponent) is int and exponent == 2
+        # Dependency-safe four-corner enclosure, possibly loose across zero.
+        return self * self
 
 
 @pytest.mark.parametrize("bits", [1, 24, 53, 80, 120])

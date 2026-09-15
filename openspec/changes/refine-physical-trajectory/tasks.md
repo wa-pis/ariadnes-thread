@@ -52,6 +52,13 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0069 (2026-09-15) reuses the existing test-only harmonic recurrence
+with bounded intervals through degree 8, covering all 5,760 dimensionless
+polynomial/derivative components at four precisions and four points. It is
+slower than exact arithmetic at this degree; force normalization and larger
+degree performance remain unqualified. See
+`docs/decisions/0069-low-degree-interval-harmonic-jets.md`. Task 3.9 stays open.
+
 Decision0068 (2026-09-15) adds 71 isolated outward-rounding/Horner controls
 using standard-library Fraction, without a production evaluator or new native
 work. Bounded significands do not guarantee tight force intervals or speed.

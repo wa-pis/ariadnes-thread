@@ -1,0 +1,390 @@
+{
+  "cases": [
+    {
+      "bits": 24,
+      "bounded_elapsed_s": 0.027792375069111586,
+      "coordinates_exact": [
+        [
+          "0x1",
+          "0x3"
+        ],
+        [
+          "-0x2",
+          "0x5"
+        ],
+        [
+          "0x7",
+          "0xb"
+        ]
+      ],
+      "exact_elapsed_s": 0.0011120408307760954,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 0.0006497150885395367,
+      "maximum_width_upper": 0.7812500000000001,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 53,
+      "bounded_elapsed_s": 0.029974457807838917,
+      "coordinates_exact": [
+        [
+          "0x1",
+          "0x3"
+        ],
+        [
+          "-0x2",
+          "0x5"
+        ],
+        [
+          "0x7",
+          "0xb"
+        ]
+      ],
+      "exact_elapsed_s": 0.0011120408307760954,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 1.2079226507921705e-12,
+      "maximum_width_upper": 1.5425030142068865e-09,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 80,
+      "bounded_elapsed_s": 0.03211166709661484,
+      "coordinates_exact": [
+        [
+          "0x1",
+          "0x3"
+        ],
+        [
+          "-0x2",
+          "0x5"
+        ],
+        [
+          "0x7",
+          "0xb"
+        ]
+      ],
+      "exact_elapsed_s": 0.0011120408307760954,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 8.711992994615212e-21,
+      "maximum_width_upper": 1.0625181290357945e-17,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 120,
+      "bounded_elapsed_s": 0.03332487493753433,
+      "coordinates_exact": [
+        [
+          "0x1",
+          "0x3"
+        ],
+        [
+          "-0x2",
+          "0x5"
+        ],
+        [
+          "0x7",
+          "0xb"
+        ]
+      ],
+      "exact_elapsed_s": 0.0011120408307760954,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 7.646465614874026e-33,
+      "maximum_width_upper": 9.663546088957396e-30,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 24,
+      "bounded_elapsed_s": 0.02760345791466534,
+      "coordinates_exact": [
+        [
+          "0x13d70a3d70a3d7",
+          "0x40000000000000"
+        ],
+        [
+          "-0x7851eb851eb85",
+          "0x10000000000000"
+        ],
+        [
+          "0x1a8f5c28f5c28f",
+          "0x20000000000000"
+        ]
+      ],
+      "exact_elapsed_s": 0.0018314158078283072,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 0.0011904797503601654,
+      "maximum_width_upper": 1.2812500000000002,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 53,
+      "bounded_elapsed_s": 0.030330374836921692,
+      "coordinates_exact": [
+        [
+          "0x13d70a3d70a3d7",
+          "0x40000000000000"
+        ],
+        [
+          "-0x7851eb851eb85",
+          "0x10000000000000"
+        ],
+        [
+          "0x1a8f5c28f5c28f",
+          "0x20000000000000"
+        ]
+      ],
+      "exact_elapsed_s": 0.0018314158078283072,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 1.298973436101917e-12,
+      "maximum_width_upper": 1.5425030142068865e-09,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 80,
+      "bounded_elapsed_s": 0.031922291964292526,
+      "coordinates_exact": [
+        [
+          "0x13d70a3d70a3d7",
+          "0x40000000000000"
+        ],
+        [
+          "-0x7851eb851eb85",
+          "0x10000000000000"
+        ],
+        [
+          "0x1a8f5c28f5c28f",
+          "0x20000000000000"
+        ]
+      ],
+      "exact_elapsed_s": 0.0018314158078283072,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 8.847860029596246e-21,
+      "maximum_width_upper": 1.2359904766334752e-17,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 120,
+      "bounded_elapsed_s": 0.03390504186972976,
+      "coordinates_exact": [
+        [
+          "0x13d70a3d70a3d7",
+          "0x40000000000000"
+        ],
+        [
+          "-0x7851eb851eb85",
+          "0x10000000000000"
+        ],
+        [
+          "0x1a8f5c28f5c28f",
+          "0x20000000000000"
+        ]
+      ],
+      "exact_elapsed_s": 0.0018314158078283072,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 4.150005576447715e-33,
+      "maximum_width_upper": 7.88860905221012e-30,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 24,
+      "bounded_elapsed_s": 0.016230291919782758,
+      "coordinates_exact": [
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "-0x1",
+          "0x1"
+        ]
+      ],
+      "exact_elapsed_s": 0.0009577078744769096,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 0.0,
+      "maximum_width_upper": 0.0,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 53,
+      "bounded_elapsed_s": 0.01676983293145895,
+      "coordinates_exact": [
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "-0x1",
+          "0x1"
+        ]
+      ],
+      "exact_elapsed_s": 0.0009577078744769096,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 0.0,
+      "maximum_width_upper": 0.0,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 80,
+      "bounded_elapsed_s": 0.01695141615346074,
+      "coordinates_exact": [
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "-0x1",
+          "0x1"
+        ]
+      ],
+      "exact_elapsed_s": 0.0009577078744769096,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 0.0,
+      "maximum_width_upper": 0.0,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 120,
+      "bounded_elapsed_s": 0.01698412513360381,
+      "coordinates_exact": [
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "-0x1",
+          "0x1"
+        ]
+      ],
+      "exact_elapsed_s": 0.0009577078744769096,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 0.0,
+      "maximum_width_upper": 0.0,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 24,
+      "bounded_elapsed_s": 0.014253542060032487,
+      "coordinates_exact": [
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ]
+      ],
+      "exact_elapsed_s": 0.0008930410258471966,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 0.0,
+      "maximum_width_upper": 0.0,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 53,
+      "bounded_elapsed_s": 0.014818917028605938,
+      "coordinates_exact": [
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ]
+      ],
+      "exact_elapsed_s": 0.0008930410258471966,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 0.0,
+      "maximum_width_upper": 0.0,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 80,
+      "bounded_elapsed_s": 0.01505879103206098,
+      "coordinates_exact": [
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ]
+      ],
+      "exact_elapsed_s": 0.0008930410258471966,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 0.0,
+      "maximum_width_upper": 0.0,
+      "scalar_components": 360,
+      "terms": 45
+    },
+    {
+      "bits": 120,
+      "bounded_elapsed_s": 0.01517741591669619,
+      "coordinates_exact": [
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ],
+        [
+          "0x0",
+          "0x1"
+        ]
+      ],
+      "exact_elapsed_s": 0.0008930410258471966,
+      "maximum_degree": 8,
+      "maximum_width_over_max_one_abs_exact_upper": 0.0,
+      "maximum_width_upper": 0.0,
+      "scalar_components": 360,
+      "terms": 45
+    }
+  ],
+  "native_arcs": 0,
+  "scope": "dimensionless unnormalized polynomial jets; not force"
+}
