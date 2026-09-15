@@ -108,8 +108,11 @@ exact full-vector oracle. No exact degree-120 rerun or new native arc is added.
 Decision0075 binds the actual fourth-point inputs: explicit binary64 rounding
 of the ideal Mars polynomial position contributes at most 4.24e-6 m, within
 the unchanged 0.000164862 m source ball. This rounded point is not a native
-readback. Next evaluate the finite Mars field at these bound inputs, retaining
-source/PCK allowances once each and the full carried error separately;
+readback. Decision0076 evaluates the finite Mars field at those inputs: about
+13 s for the bounded full vector and 34 s for setup plus the coarse control.
+The combined nominal Mars-only arithmetic/source/PCK bound is 1.03945e-8
+m/s^2; carried-state error remains separate. Next qualify the lunar harmonic
+contribution at the same endpoint, using an explicit finite-tail bound;
 the historical stored vector is not a new full-force reference.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.

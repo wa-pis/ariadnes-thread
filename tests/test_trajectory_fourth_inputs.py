@@ -1,19 +1,26 @@
-"""Stored fourth-endpoint input binding, not a new force or trajectory anchor."""
+"""Fourth-point Mars diagnostics, not a full-force or trajectory anchor."""
 
 from fractions import Fraction
 from hashlib import sha256
 import json
 import math
 from pathlib import Path
+from time import perf_counter
+
+import numpy as np
 
 from space_nav import trajectory
+from test_trajectory_midpoint import _midpoint_acceleration_l2_bound_m_s2
+from test_trajectory_spk import _harmonic_prefix_vector_enclosure_m_s2
 
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_fourth_mars_binary64_input_binding() -> None:
+    started_s = perf_counter()
     budget = trajectory._RefinementBudget("fourth-mars-input-audit", 300.0)
+    deadline_s = budget.deadline_monotonic_s
     names = ("fresh_endpoint_binding", "fourth_endpoint_source_anchor", "fourth_endpoint_rotation_bridge",
              "fourth_endpoint_harmonic_source_bridge", "fourth_endpoint_rotation_force_bridge")
     raw = {name: (ROOT / f"tests/data/m3_{name}.json").read_bytes() for name in names}
@@ -78,5 +85,71 @@ def test_fourth_mars_binary64_input_binding() -> None:
         "existing_matrix_force_l2_allowance_m_s2": matrix_force["acceleration_l2_allowance_m_s2"],
         "force_evaluations": 0, "additional_native_queries": 0, "additional_native_arcs": 0,
         "qualification": "Rounded ideal SPK polynomial point, NOT a retained native readback; inside existing source ball at the actual fourth nominal state. Input audit only; no force arithmetic, carried-state or interval certificate; no allowance reduction",
+    }}, sort_keys=True, allow_nan=False))
+    budget.check()
+    # Reuse the audited source ball: rounding is already inside it, not an
+    # extra force-error channel. This diagnostic is not the native evaluator.
+    field = trajectory._load_harmonic_field_settings(trajectory._import_tudat_environment_setup(), spec, path)
+    budget.check()
+    cosine, sine = field.normalized_cosine_coefficients, field.normalized_sine_coefficients
+    assert cosine.shape == sine.shape == (121, 121)
+    coefficient_hashes = {}
+    for matrix, key in ((cosine, "cosine_sha256"), (sine, "sine_sha256")):
+        assert matrix.dtype == np.float64 and np.all(np.isfinite(matrix))
+        coefficient_hashes[key] = sha256(matrix.astype("<f8").tobytes()).hexdigest()
+        assert coefficient_hashes[key] == historical["fields"]["Mars"][key]
+    assert field.gravitational_parameter == spec.gravitational_parameter_m3_s2
+    assert field.reference_radius == spec.normalization_radius_m
+    args = (budget, field.gravitational_parameter, field.reference_radius, cosine, sine,
+            np.asarray(rounded), np.asarray(state[:3]), np.asarray(rotation["inertial_to_fixed"]))
+    run_started_s = perf_counter()
+    coarse_box, tail = _harmonic_prefix_vector_enclosure_m_s2(*args, 100)
+    coarse_elapsed_s = perf_counter()-run_started_s
+    budget.check()
+    coarse_prefix = tuple((lo+tail, hi-tail) for lo, hi in coarse_box)
+    coarse_midpoint, coarse_error = _midpoint_acceleration_l2_bound_m_s2(coarse_prefix, tail)
+    run_started_s = perf_counter()
+    full_box, full_tail = _harmonic_prefix_vector_enclosure_m_s2(*args, 120, bits=120)
+    full_elapsed_s = perf_counter()-run_started_s
+    budget.check()
+    assert full_tail == 0 and tail > 0
+    assert all(max(lo, clo) <= min(hi, chi) for (lo, hi), (clo, chi)
+               in zip(full_box, coarse_box, strict=True))
+    midpoint, arithmetic_error = _midpoint_acceleration_l2_bound_m_s2(full_box, full_tail)
+    assert sum((Fraction(a)-Fraction(b))**2 for a, b in zip(midpoint, coarse_midpoint, strict=True)) <= (arithmetic_error+coarse_error)**2
+    errors = (arithmetic_error, Fraction(source_force["acceleration_l2_allowance_m_s2"]),
+              Fraction(matrix_force["acceleration_l2_allowance_m_s2"]))
+    total = sum(errors, Fraction(0))
+    reported_errors = [math.nextafter(float(value), math.inf) for value in (*errors, total)]
+    assert all(math.isfinite(value) and Fraction(value) >= exact for value, exact
+               in zip(reported_errors, (*errors, total), strict=True))
+    outward = [[math.nextafter(float(lo), -math.inf), math.nextafter(float(hi), math.inf)] for lo, hi in full_box]
+    assert all(math.isfinite(a) and math.isfinite(b) and Fraction(a) <= lo <= hi <= Fraction(b)
+               for (a, b), (lo, hi) in zip(outward, full_box, strict=True))
+    budget.check()
+    assert budget.deadline_monotonic_s == deadline_s
+    assert (budget.control_attempts, budget.propagation_evaluations, budget.native_arc_propagations) == (0, 0, 0)
+    print(json.dumps({"fourth_mars_bounded_force": {
+        "epoch_tdb_s": epoch, "origin": binding["origin"], "orientation": binding["orientation"],
+        "time_scale": binding["time_scale"], "model_id": binding["model_id"],
+        "input_sha256": {name: sha256(data).hexdigest() for name, data in raw.items()},
+        "source_spk_context_sha256": binding["source_spk_context_sha256"],
+        "coefficient_sha256": spec.expected_sha256, **coefficient_hashes, "rotation_input_sha256": digest,
+        "nominal_state_m_m_s_kg": state, "rounded_ideal_source_position_m": rounded,
+        "carried_error_m_m_s": binding["outgoing_error_m_m_s"],
+        "degree": 120, "bits": 120, "midpoint_m_s2": midpoint,
+        "stored_input_component_intervals_m_s2": outward, "finite_model_tail_m_s2": 0.0,
+        "arithmetic_l2_error_upper_m_s2": reported_errors[0],
+        "source_l2_allowance_upper_m_s2": reported_errors[1],
+        "matrix_l2_allowance_upper_m_s2": reported_errors[2],
+        "ideal_finite_field_l2_error_upper_m_s2": reported_errors[3],
+        "coarse_degree100_l2_error_upper_m_s2": math.nextafter(float(coarse_error), math.inf),
+        "inside_coarse_degree100_box": all(clo <= lo <= hi <= chi for (lo, hi), (clo, chi)
+                                          in zip(full_box, coarse_box, strict=True)),
+        "exact_degree100_evaluations": 1, "exact_degree120_evaluations": 0, "bounded_degree120_evaluations": 1,
+        "coarse_elapsed_s": coarse_elapsed_s, "full_elapsed_s": full_elapsed_s,
+        "shared_elapsed_s": perf_counter()-started_s, "shared_deadline_s": 300.0,
+        "native_coefficient_loads": 1, "additional_native_queries": 0, "additional_native_arcs": 0,
+        "qualification": "Stored fourth-point Mars-only diagnostic with source/PCK allowances once each; coarse consistency is not an exact full-vector oracle. No native harmonic arithmetic, other forces, carried-state, interval or beyond-degree120 model-error qualification; not a production anchor",
     }}, sort_keys=True, allow_nan=False))
     budget.check()

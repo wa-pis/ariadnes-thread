@@ -1,0 +1,76 @@
+{
+  "additional_native_arcs": 0,
+  "additional_native_queries": 0,
+  "arithmetic_l2_error_upper_m_s2": 9.119276823149571e-17,
+  "bits": 120,
+  "bounded_degree120_evaluations": 1,
+  "carried_error_m_m_s": [
+    0.00014951281615784107,
+    9.62662340905759e-07
+  ],
+  "coarse_degree100_l2_error_upper_m_s2": 7.827781095508099e-06,
+  "coarse_elapsed_s": 19.95453262492083,
+  "coefficient_sha256": "d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980",
+  "cosine_sha256": "77c296a2983558f1bcdcb3bbf0c1928fe11214aa834baa804526a9fa9043db61",
+  "degree": 120,
+  "epoch_tdb_s": 978995455.3554223,
+  "exact_degree100_evaluations": 1,
+  "exact_degree120_evaluations": 0,
+  "finite_model_tail_m_s2": 0.0,
+  "full_elapsed_s": 13.1020007499028,
+  "ideal_finite_field_l2_error_upper_m_s2": 1.0394510182412429e-08,
+  "input_sha256": {
+    "fourth_endpoint_harmonic_source_bridge": "8fb05b56a5aa93be1e662d474ce9afd71cfb909b4f5e6deae60790a0606b72ca",
+    "fourth_endpoint_rotation_bridge": "3672fd0501a222b96ea9a98b6bb9d0b7353c680ef4d9e46cf9192250bcb47fa9",
+    "fourth_endpoint_rotation_force_bridge": "2f24608d2a5dad8fe70309963ea5bd10ecbd8a639eacbf67af8ed5db9ac534f6",
+    "fourth_endpoint_source_anchor": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+    "fresh_endpoint_binding": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772"
+  },
+  "inside_coarse_degree100_box": true,
+  "matrix_l2_allowance_upper_m_s2": 1.5697109459316848e-10,
+  "midpoint_m_s2": [
+    -3.149870681072988,
+    0.0032025762414817425,
+    -0.005310130131716032
+  ],
+  "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+  "native_coefficient_loads": 1,
+  "nominal_state_m_m_s_kg": [
+    -245056838770.95663,
+    35261267276.26207,
+    22783596668.40475,
+    -3128.4786808243243,
+    -18367.951684978845,
+    -9028.781394259036,
+    2000.0
+  ],
+  "orientation": "J2000",
+  "origin": "SSB",
+  "qualification": "Stored fourth-point Mars-only diagnostic with source/PCK allowances once each; coarse consistency is not an exact full-vector oracle. No native harmonic arithmetic, other forces, carried-state, interval or beyond-degree120 model-error qualification; not a production anchor",
+  "rotation_input_sha256": "4b39c1c1e2f8a860ce2014c1e79e03b6a61a65f10e4753f6d58ba4b543193073",
+  "rounded_ideal_source_position_m": [
+    -245060528270.93192,
+    35261267088.76203,
+    22783596668.40478
+  ],
+  "shared_deadline_s": 300.0,
+  "shared_elapsed_s": 33.70166587503627,
+  "sine_sha256": "2c2303255796c4d3c231ab2abb07c2955b79968e72b5c4ae526417165e814f06",
+  "source_l2_allowance_upper_m_s2": 1.0237538996626492e-08,
+  "source_spk_context_sha256": "b00e888032a19081c8bbfd13ca73549af21224916ed997e4714fa68af7ce8cd5",
+  "stored_input_component_intervals_m_s2": [
+    [
+      -3.1498706810729886,
+      -3.1498706810729877
+    ],
+    [
+      0.003202576241481742,
+      0.003202576241481743
+    ],
+    [
+      -0.005310130131716033,
+      -0.005310130131716031
+    ]
+  ],
+  "time_scale": "TDB seconds since J2000"
+}

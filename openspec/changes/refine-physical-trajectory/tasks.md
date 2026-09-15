@@ -52,6 +52,15 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0076 (2026-09-16) evaluates Mars degree 120 at the audited fourth
+endpoint with 120-bit bounded arithmetic and a counted exact-100-plus-tail
+coarse consistency check. Shared work is about 34 s; full evaluation about
+13 s. Arithmetic plus existing source/PCK allowances gives 1.03945e-8 m/s^2
+for the ideal finite Mars field at the fixed nominal state. Carried error,
+native arithmetic and all other forces remain separate; no new queries/arcs
+or production anchor. Next qualify the lunar contribution at this endpoint;
+see `docs/decisions/0076-fourth-mars-bounded-force.md`. Task 3.9 stays open.
+
 Decision0075 (2026-09-16) audits the actual fourth Mars input binding across
 the endpoint, source, rotation and force-input records. Explicit rounding of
 the ideal polynomial point has L1 error at most 4.24e-6 m, inside the unchanged
