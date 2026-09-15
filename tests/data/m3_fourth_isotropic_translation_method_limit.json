@@ -1,0 +1,24 @@
+{
+  "fourth_isotropic_translation_method_limit": {
+    "additional_ephemeris_queries": 0,
+    "additional_native_arcs": 0,
+    "anchor_radius_upper_m": 3689499.9800443975,
+    "body": "Mars",
+    "coefficient_sha256": "d13b31d46862838abe62ebab3cef8209244588abe14e4e5e481c0fb64354e980",
+    "degree_formula_lower_s_inv2": 5.5027478400685614e-08,
+    "duration_s": 0.125,
+    "elapsed_s": 0.010826708981767297,
+    "geometry_and_speed_tightening_cannot_pass": true,
+    "initial_relative_speed_lower_m_s": 1500.0004657397433,
+    "input_sha256": {
+      "m3_fourth_endpoint_monopole_jerk.json": "d14933925c64e421917d0b0e9c4dbd2f1aedd5a5ea4ba43d6808a93fbc21f832",
+      "m3_fourth_endpoint_source_anchor.json": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+      "m3_fresh_endpoint_binding.json": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772",
+      "m3_fresh_force_context.json": "1152f520c207b73402bb3d2bdc56b013cad1970f25d5bf76d2ed5f4df06d7355",
+      "m3_quarter_second_initial_domain.json": "7beb57a90448e24abf73e490e23ecf1fcb2e5c2175c886a4edf14f9e7ce7fc8d"
+    },
+    "scope": "Lower bound on fixed full-degree isotropic translation accounting with the same state, fields, horizon and incoming error ONLY; not a lower bound on actual force change or trajectory error, nor an obstruction to directional bounds, richer references or other horizons",
+    "translation_formula_lower_m_s3": 8.25412432295121e-05,
+    "velocity_accounting_lower_m_s": 1.6075158036363222e-06
+  }
+}

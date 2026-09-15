@@ -7,6 +7,8 @@ import math
 from pathlib import Path
 from time import perf_counter
 
+import pytest
+
 from space_nav import trajectory
 from test_trajectory_c20 import _c20_spatial_jacobian_bound_s_inv2
 from test_trajectory_degree_map import _degree_hessian_operator_bound_s_inv2, _nonmonopole_degree_map_bound_s_inv2
@@ -14,6 +16,19 @@ from test_trajectory_error_transport import _recentered_coast_reaches_m_m_s
 from test_trajectory_force_derivatives import _point_mass_force_curvature_bound_m_s4
 from test_trajectory_spk import _dyadic_sqrt_bounds, _harmonic_spatial_jacobian_bound_s_inv2
 from test_trajectory_tracefree import _tracefree_operator_bound_s_inv2
+
+
+@pytest.mark.parametrize("degree", [0, 2, 60, 120])
+def test_isotropic_degree_accounting_monotone_floor(degree: int) -> None:
+    """Exact square-root oracle for the method-output inequality, not force error."""
+    # (2n+1)*Q=1; r(0)=5 and ||v(0)||=2 are exact oracle values.
+    q = F(1, 2*degree+1)
+    exact_floor = F(7, 5**(degree+3))*(degree+1)*(degree+2)*2
+    for distance in (2.5, 5.0):
+        for speed in (F(2), F(3)):
+            result = _degree_hessian_operator_bound_s_inv2(degree, q, 7.0, 1.0, distance)*speed
+            assert result >= exact_floor
+            assert (result == exact_floor) == (distance == 5.0 and speed == 2)
 
 
 def test_fourth_endpoint_conditional_monopole_curvature() -> None:
@@ -98,6 +113,7 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
     translation = {}
     translation_total = F(0)
     degree_report = None
+    method_report = None
     local_geometry = {}
     local_total = F(0)
     for body in ("Moon", "Mars"):
@@ -159,13 +175,47 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
         if body == "Mars":
             degree_started = perf_counter()
             degree_bounds = []
+            degree_norm_squares = []
             for n, (c_row, s_row) in enumerate(zip(nonmonopole, sine, strict=True)):
                 budget.check()
                 squared = sum((F(float(c))**2+F(float(s))**2 for c, s in zip(c_row[:n+1], s_row[:n+1], strict=True)), F(0))
+                degree_norm_squares.append(squared)
                 degree_bounds.append(_degree_hessian_operator_bound_s_inv2(
                     n, squared, field.gravitational_parameter, field.reference_radius, domain["distance_floors_m"][body],
                 ))
             assert sum(degree_bounds, F(0)) == jacobian
+            method_started = perf_counter()
+            # Any uniform distance floor is <= ||r(0)||; any initial-speed
+            # upper bound is >= ||r'(0)||. These opposite-sided enclosures
+            # deliberately LOWER-bound this accounting method, not true error.
+            radius_ceiling = _dyadic_sqrt_bounds(radius_squared)[1]
+            velocity_squared = sum(((a-b)**2 for a, b in zip(state[3:6], slope, strict=True)), F(0))
+            speed_lower = _dyadic_sqrt_bounds(velocity_squared)[0]
+            assert radius_ceiling**2 >= radius_squared and 0 <= speed_lower**2 <= velocity_squared
+            gm, normalization_radius = F(field.gravitational_parameter), F(field.reference_radius)
+            formula_lower = sum((gm/radius_ceiling**3*(normalization_radius/radius_ceiling)**n
+                                 * (n+1)*(n+2)*_dyadic_sqrt_bounds((2*n+1)*q)[0]
+                                 for n, q in enumerate(degree_norm_squares) if q), F(0))
+            assert 0 < formula_lower <= local_jacobian and 0 < speed_lower <= speed0
+            rate_lower = formula_lower*speed_lower
+            value_lower = F(endpoint["outgoing_error_m_m_s"][1])+rate_lower*h*h/2
+            assert value_lower <= F(endpoint["outgoing_error_m_m_s"][1])+local_jacobian*displacement_rate*h*h/2
+
+            def lower(value: F) -> float:
+                result = math.nextafter(float(value), -math.inf)
+                assert math.isfinite(result) and 0 <= F(result) <= value
+                return result
+
+            method_report = {
+                "input_sha256": hashes, "coefficient_sha256": spec.expected_sha256, "body": body,
+                "duration_s": float(h), "anchor_radius_upper_m": upper(radius_ceiling),
+                "initial_relative_speed_lower_m_s": lower(speed_lower),
+                "degree_formula_lower_s_inv2": lower(formula_lower), "translation_formula_lower_m_s3": lower(rate_lower),
+                "velocity_accounting_lower_m_s": lower(value_lower),
+                "geometry_and_speed_tightening_cannot_pass": F("0.000001") < F(lower(value_lower)),
+                "elapsed_s": perf_counter()-method_started, "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
+                "scope": "Lower bound on fixed full-degree isotropic translation accounting with the same state, fields, horizon and incoming error ONLY; not a lower bound on actual force change or trajectory error, nor an obstruction to directional bounds, richer references or other horizons",
+            }
             # Degree n scales exactly as d^(-n-3); check against a separate
             # complete helper evaluation at the new floor before using tails.
             local_degrees = [value*(F(domain["distance_floors_m"][body])/F(local_floor))**(n+3)
@@ -250,3 +300,5 @@ def test_fourth_endpoint_conditional_monopole_curvature() -> None:
         "additional_ephemeris_queries": 0, "additional_native_arcs": 0,
         "scope": "Conditional reference-relative balls and translation chords only; not true-state tubes, full-force sensitivities, source/native arithmetic, rotation, selected reference or actual-error lower bounds; omitted prefixes remain counterfactual",
     }}, sort_keys=True, allow_nan=False))
+    assert method_report is not None
+    print(json.dumps({"fourth_isotropic_translation_method_limit": method_report}, sort_keys=True, allow_nan=False))

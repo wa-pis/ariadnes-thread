@@ -52,6 +52,14 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0066 (2026-09-15) lower-bounds the fixed whole-degree isotropic
+accounting formula using an upper radius and lower Euclidean speed/coefficient
+roots. Geometry/speed tightening alone cannot meet the current private gate;
+this is not a physical-error lower bound. Next compare shorter-reference
+composition and richer/directional references with cumulative errors and all
+repeated costs retained. See `docs/decisions/0066-isotropic-translation-method-limit.md`;
+3.9 stays open.
+
 Decision0065 (2026-09-15) derives a covered relative-displacement ball and
 translation-chord floor for the same conditional reference family. The tighter
 Moon/Mars geometry lowers translation rate about 29.1%, but the optimistic

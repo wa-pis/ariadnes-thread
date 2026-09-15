@@ -75,8 +75,12 @@ but qualifies no reference or truncation. Decision0065 derives covered local
 relative balls for the conditional reference and its translation chords,
 reducing the translation rate about 29.1%; the optimistic screen still fails.
 These are not true-state tubes or new full-force sensitivity domains.
-Next assess direction-free norm conservatism versus a richer reference
-derivative with bounded low-cost controls before high-degree/native work.
+Decision0066 proves a method-only lower accounting value of
+1.6075158036363222e-6 m/s: geometry/speed tightening cannot make this fixed
+isotropic formula pass the 1e-6 gate. This is not a true-error lower bound.
+Next compare shorter-reference composition versus richer/directional
+references using bounded controls, preserving cumulative errors and repeated
+anchor/residual costs before high-degree/native work.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified
