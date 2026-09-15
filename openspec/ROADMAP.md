@@ -83,8 +83,11 @@ falls as 1/N, constant-defect cost remains D*H, and residual costs accumulate.
 A hypothetical common-rate screen first passes among tested counts at 32,
 leaving only about 5.36e-10 m/s per-piece velocity residual if every other new
 cost is zero; this neither selects a partition nor qualifies new references.
-Next compare repeated anchor/residual accuracy and cost demands with bounded
-richer-reference evaluation controls before high-degree/native work.
+Decision0068 adds test-only outward dyadic rounding and manufactured Horner
+controls with bounded significands; exponents and accumulated interval widths
+are not bounded globally. No force accuracy or speedup is established.
+Next compare a small bounded harmonic recurrence with the existing exact
+oracle before high-degree/native work; retain all input/error charges.
 No live new reference,
 expensive vector evaluation or another arc is qualified yet.
 Interval-specific reference/error transport remains to be qualified

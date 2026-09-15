@@ -52,6 +52,13 @@ an arbitrary larger value; isolated qualification uses at most 32 subsegments.
 - [ ] 3.7 Verify safety termination precedence over final-epoch failure, an initially unsafe state, and a trajectory entering and leaving a collision sphere between output epochs; distinguish rejected trials from native integration failures and discard unsafe trial history before task 4.3.
 
 Task 3.9 source-position allowance coverage audit (2026-09-14):
+Decision0068 (2026-09-15) adds 71 isolated outward-rounding/Horner controls
+using standard-library Fraction, without a production evaluator or new native
+work. Bounded significands do not guarantee tight force intervals or speed.
+Next compare a small harmonic recurrence with the exact oracle; see
+`docs/decisions/0068-bounded-significand-arithmetic-controls.md`.
+Task 3.9 remains unchecked; no physical tolerance or allocation changes.
+
 Decision0067 (2026-09-15) adds 60 exact manufactured composition controls and
 one hypothetical sensitivity audit. Subdivision reduces J cost but retains
 D*H and accumulates repeated endpoint residuals, including their position
