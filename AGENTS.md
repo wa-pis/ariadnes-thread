@@ -1,9 +1,25 @@
 # Project Working Rules
 
+## Start here and keep context small
+
+- Read this file and `CURRENT_STATE.md` first, then relevant roadmap sections,
+  active requirements and code. Do not repeatedly load historical logs.
+- Prioritize one working end-to-end example. Add complexity only for a named
+  requirement with measurable benefit; reuse existing code, tools and checks.
+- Bound research before starting: question, completion criterion and time/compute
+  budget. Defer investigation that does not unblock the current goal.
+- Keep summaries short and detailed evidence in artifacts. Distinguish empirical
+  observations, mathematical bounds and assumptions; preserve scientific caveats.
+- Update `CURRENT_STATE.md` after a completed unit or material blocker with the
+  verified revision/checks, next action and links. Keep it under 60 lines;
+  durable rationale belongs in `docs/decisions/`, not a growing status diary.
+- Automation is paused by user request. A work session does not authorize restart.
+  Use subagents only when explicitly requested by the user.
+
 ## Mission and scope
 
 - Build Ariadna, an open, extensible ground-based space-navigation platform with an open specification, reference implementation, and interoperability tests. Moon-to-Mars is the first reference use case; see `openspec/VISION.md`. Do not represent it as onboard or flight-qualified software, an adopted industry standard, or a certified CCSDS implementation.
-- Follow the linear milestones in `openspec/ROADMAP.md`. Keep at most one active OpenSpec change and do not implement later-milestone behavior early.
+- Follow the current priority and milestone dependencies in `openspec/ROADMAP.md`. Keep at most one active OpenSpec change and do not implement later-milestone behavior early. Reconcile a changed plan with the active specification before implementation; a roadmap edit cannot relax a scientific gate.
 - Explicit user instructions override this file. Otherwise, make reasonable reversible assumptions and continue until the active task is complete.
 
 ## Scientific contract
@@ -30,7 +46,7 @@
 - Keep public APIs and CLI behavior backward compatible unless an accepted OpenSpec change explicitly revises them.
 - Keep `moon_to_mars.py` byte-for-byte unchanged and never import it from `space_nav`.
 - Keep changes scoped. Preserve unrelated user work and avoid speculative abstractions or future-milestone scaffolding.
-- Parallelize only independent work; give agents non-overlapping ownership and review integrated results.
+- When the user requests subagents, give independent work non-overlapping ownership and review integrated results. Do not delegate by default as a token-saving measure.
 
 ## Python code requirements
 
@@ -47,6 +63,11 @@
 
 ## Verification
 
+- Group related changes into coherent verifiable units. Use focused checks during
+  iteration and the full suite at implementation completion, not every prose edit.
+  Documentation-only changes require accurate claims, working local links and a
+  clean diff, plus strict validation when OpenSpec is touched. Report explicitly
+  when runtime tests were not rerun.
 - Run focused tests while iterating and `conda run -n space-nav python -m pytest -q` before completing implementation work.
 - Use real SPICE/TudatPy parity checks for scientific boundaries and pure injected tests for deterministic error paths.
 - Do not mark an OpenSpec task complete until its stated check passes.
