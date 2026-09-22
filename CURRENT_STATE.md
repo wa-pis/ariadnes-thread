@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-09-16. Keep this file under 60 lines; replace stale status instead
+Updated: 2026-09-22. Keep this file under 60 lines; replace stale status instead
 of appending a diary. This is a navigation aid, not an alternative specification.
 
 ## Goal and scheduling
@@ -21,11 +21,14 @@ Automation `ariadna-m3` is paused by user request. Do not restart it automatical
 
 ## Next action
 
-Perform D1 in the roadmap: inspect scenario → search → selected candidate → UI
-and list the smallest missing pieces for one demonstration. Reuse existing
-outputs; do not start another expensive safety-bound experiment.
-Before implementation, reconcile the active OpenSpec artifacts with the proposed
-slice and validate strictly. Changed scientific gates need explicit approval.
+D1 is complete at inspected revision `f132d8a`: scenario/search/selection/UI
+already work. All 14 explorer and UI tests passed in 3.83 s; the full suite was
+not rerun. Pytest cache writing was denied by the sandbox (warning only).
+See [audit](docs/demo-audit.md) for evidence and limitations.
+Next: D2, specify a small UI provenance panel reusing existing CLI conventions,
+bound to edited inputs and invalidated with stale results. Reconcile the active
+OpenSpec artifacts and validate before implementation. No new dynamics work;
+changed scientific gates still need explicit approval.
 
 ## Boundaries and references
 

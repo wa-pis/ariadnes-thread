@@ -19,12 +19,12 @@ until explicitly revised. This planning edit changes no implementation checkbox.
 
 | Step | Status | Completion evidence |
 |---|---|---|
-| D1 — Audit the existing demonstration | Next | Trace scenario → M2 search → selected candidate → Streamlit display. Record outputs, missing links and model limitations without new expensive numerical experiments. |
+| D1 — Audit the existing demonstration | Complete 2026-09-22 | Existing path inspected at `f132d8a`; 14 explorer/UI tests pass. See [audit](../docs/demo-audit.md) for available outputs, provenance gap and limitations. |
 | D2 — Agree the smallest missing slice | Pending D1 | Reconcile the active proposal/specs/design/tasks; define observable success, accuracy checks and runtime limits; pass strict validation before implementation. Changed scientific gates require explicit user approval. |
 | D3 — Deliver one reproducible demonstration | Pending D2 | An explicit scenario yields a selectable route with dates, flight time, ideal maneuver cost, propellant/mass feasibility, provenance and visible model limitations. Repeat runs agree in scientific data. Display infeasibility honestly; never label M2 as finite-burn validation. |
 | D4 — Add justified physical refinement | Pending D3 and scope agreement | Demonstrate agreed propagation/finite-burn behavior for one candidate, numerical convergence and independent comparison with explicit tolerances. Complete only when the applicable accepted specification passes. |
 
-The next session starts with D1, not another task-3.9 proof or native arc. If a
+The next session starts with D2, not another task-3.9 proof or native arc. If a
 demonstration needs behavior outside the current contract, revise that contract
 first. Do not bypass safety checks or rename a simplified result high fidelity.
 
