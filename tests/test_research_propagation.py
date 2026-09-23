@@ -238,8 +238,10 @@ def test_preflight_rejection_launches_nothing(
     assert not rig.calls
 
 
+@pytest.mark.parametrize("compare_profiles", [False, True])
 def test_native_three_arc_composition_matches_rocket_equation(
     monkeypatch: pytest.MonkeyPatch,
+    compare_profiles: bool,
 ) -> None:
     """Toy native oracle: stationary far-away bodies, not mission ephemerides."""
     from tudatpy.dynamics import environment_setup, propagation_setup
@@ -302,9 +304,49 @@ def test_native_three_arc_composition_matches_rocket_equation(
         epoch_tdb_s=200.0,
         epoch_utc=propagation.ephemeris.tdb_to_utc(200.0),
     )
-    result = propagation._propagate_research_run(
-        budget, report.scenario, environment, initial, target, report.seed_controls
-    )
+    if compare_profiles:
+        for name in (
+            "harmonic_fields",
+            "gravity_acceleration_inventory",
+            "solar_radiation_pressure",
+            "relativity",
+        ):
+            setattr(environment, name, ("toy-only",))
+
+        def fresh(*args: object, **kwargs: object) -> SimpleNamespace:
+            assert kwargs["budget"] is budget
+            values = vars(environment).copy()
+            values["bodies"] = environment_setup.create_system_of_bodies(settings)
+            return SimpleNamespace(**values)
+
+        monkeypatch.setattr(physical, "_build_physical_environment", fresh)
+        compared = propagation._compare_research_profiles(
+            budget,
+            report.scenario,
+            SimpleNamespace(
+                candidate_id=report.candidate_id,
+                departure_epoch_tdb_s=100.0,
+                arrival_epoch_tdb_s=200.0,
+            ),
+            environment,
+            initial,
+            target,
+            report.seed_controls,
+            report.provenance_json,
+        )
+        assert compared.outcome == "completed", compared.comparison_reason
+        assert compared.numerical_agreement is True
+        assert compared.progress == ResearchProgress(6, 6)
+        assert len(compared.integration_differences) == 4
+        assert (
+            compared.nominal.burns[0].direction_tnw
+            == compared.tighter.burns[0].direction_tnw
+        )
+        result = compared.tighter
+    else:
+        result = propagation._propagate_research_run(
+            budget, report.scenario, environment, initial, target, report.seed_controls
+        )
     assert result.outcome == "completed", result.reason
     assert result.progress == ResearchProgress(3, 3)
     assert result.boundary_masses_kg == pytest.approx(

@@ -8,8 +8,19 @@ import math
 
 from . import ephemeris, trajectory as physical
 from .errors import EphemerisError, TrajectoryRefinementError
-from .models import FiniteBurnRecord, Scenario, TrajectoryBoundaryState
-from .research import ResearchProgress, ResearchRun, _ResearchBudget
+from .models import (
+    FiniteBurnRecord,
+    ImpulsiveTransferCandidate,
+    Scenario,
+    TrajectoryBoundaryState,
+)
+from .research import (
+    ResearchProgress,
+    ResearchReport,
+    ResearchRun,
+    _ResearchBudget,
+    _canonical_object,
+)
 
 
 _ARCS = ("departure-burn", "coast", "arrival-burn")
@@ -19,6 +30,104 @@ _COVERAGE = (
     "history including endpoints. No RK minor-stage or continuous-interval "
     "guarantee; between-check impacts, small bodies and debris are not excluded."
 )
+
+
+def _environment_identity(
+    environment: physical._PhysicalEnvironment,
+) -> tuple[object, ...]:
+    """Immutable resource/model description, excluding native mutable objects."""
+    return tuple(
+        getattr(environment, name)
+        for name in (
+            "model_id",
+            "initial_epoch_tdb_s",
+            "final_epoch_tdb_s",
+            "origin",
+            "orientation",
+            "harmonic_fields",
+            "gravity_acceleration_inventory",
+            "solar_radiation_pressure",
+            "relativity",
+            "collision_resource",
+        )
+    )
+
+
+def _compare_research_profiles(
+    budget: _ResearchBudget,
+    scenario: Scenario,
+    candidate: ImpulsiveTransferCandidate,
+    environment: physical._PhysicalEnvironment,
+    initial_state: TrajectoryBoundaryState,
+    target_state: TrajectoryBoundaryState,
+    controls: tuple[float, ...],
+    provenance_json: str,
+) -> ResearchReport:
+    """Run nominal then tighter once, with fixed commands and the shared clock.
+
+    Caller verifies candidate/resources, prepares nominal environment under this
+    budget and holds the science lock. Tighter preparation uses the same deadline.
+    Wall time ends at the last budget observation, before report serialization.
+    """
+    if (
+        candidate.candidate_id != budget.candidate_id
+        or candidate.departure_epoch_tdb_s != initial_state.epoch_tdb_s
+        or candidate.arrival_epoch_tdb_s != target_state.epoch_tdb_s
+    ):
+        raise ValueError("candidate identity and epochs must match verified boundaries")
+    if not isinstance(controls, tuple):
+        raise ValueError("fixed seed controls must be an immutable tuple")
+    provenance_json = _canonical_object("provenance_json", provenance_json)
+    identity = _environment_identity(environment)
+    nominal = _propagate_research_run(
+        budget,
+        scenario,
+        environment,
+        initial_state,
+        target_state,
+        controls,
+    )
+    tighter = ResearchRun(
+        profile="tighter",
+        outcome="unavailable",
+        reason="nominal-not-completed",
+        progress=ResearchProgress(0, 0),
+        checked_state_count=0,
+        check_coverage="No states or events checked; tighter propagation not started.",
+    )
+    if nominal.outcome == "completed":
+        try:
+            budget.check()
+            fresh = physical._build_physical_environment(
+                candidate, scenario.spacecraft, budget=budget
+            )
+            budget.check()
+            if fresh is environment or fresh.bodies is environment.bodies:
+                raise ValueError("tighter profile requires a fresh native environment")
+            if _environment_identity(fresh) != identity:
+                raise ValueError("tighter environment resource/model identity changed")
+        except (TrajectoryRefinementError, ValueError) as exc:
+            tighter = replace(tighter, reason=f"tighter preparation: {exc}")
+        else:
+            tighter = _propagate_research_run(
+                budget,
+                scenario,
+                fresh,
+                initial_state,
+                target_state,
+                controls,
+                tighter=True,
+            )
+    return ResearchReport(
+        candidate_id=candidate.candidate_id,
+        scenario=scenario,
+        seed_controls=controls,
+        provenance_json=provenance_json,
+        nominal=nominal,
+        tighter=tighter,
+        elapsed_wall_s=budget._last_monotonic_s
+        - (budget.deadline_monotonic_s - budget.runtime_seconds),
+    )
 
 
 def _propagate_research_run(

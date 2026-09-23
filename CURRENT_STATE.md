@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-09-23. Keep this file under 60 lines; replace stale status instead
+Updated: 2026-09-24. Keep this file under 60 lines; replace stale status instead
 of appending a diary. This is a navigation aid, not an alternative specification.
 
 ## Goal and scheduling
@@ -33,15 +33,14 @@ The candidate ceiling is now 10000 (default 2000, default deadline 300 s).
 UI.7: 94 focused checks and 3,507 full-suite tests pass (625.11 s); real reference
 search: 10000 solved, 35 Pareto entries, 3.175 s on this machine. Scientific
 model/tolerances are unchanged; details are recorded in the active tasks.
-D4.1 complete, based on `db532de`: immutable profile outcomes and diagnostics,
-derived residuals/comparison, explicit absent values, detached JSON and separate
-wall timing; fixed false safety flag. Shared budget allows six arcs and no retry.
-137 focused checks and 3,567 full-suite tests pass (628.94 s); Ruff, strict
-OpenSpec and unchanged legacy checksum pass. Scientific tolerances unchanged.
-D4.2 complete, based on `5015c71`: three arcs, sampled guards and exact handoff.
-242 focused checks and 3,583 full-suite tests pass (585.16 s); Ruff, strict
-OpenSpec and legacy checksum pass. Next: D4.3 frozen-command replay/D4.4 bounded
-mission experiment. No full-force mission run; strict M3 is not complete.
+D4.1/D4.2 delivered: immutable research reports, shared six-arc budget, three-arc
+composition and sampled guards. Baseline `e9f125c`: 242 focused checks and
+3,583 full-suite tests pass (585.16 s); Ruff, strict OpenSpec and legacy pass.
+D4.3 complete, based on `e9f125c`: fixed commands, fresh environment and shared
+deadline; 124 focused checks and 3,598 full-suite tests pass (626.61 s).
+Ruff, strict OpenSpec and legacy pass. Partial failures remain unqualified.
+Next: D4.4 bounded reference mission experiment and D4.5 final evidence checks.
+No full-force mission run; strict M3 is not complete. Tolerances unchanged.
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.

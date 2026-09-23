@@ -60,6 +60,18 @@ No partial endpoint survives an aborted run. Short native toy tests qualify
 composition only and deliberately do not replace real mission ephemerides or
 demonstrate the full-force reference mission.
 
+The D4.3 comparison driver accepts caller-verified candidate, nominal environment,
+boundaries, seed controls and provenance under the original budget/science lock.
+It executes nominal once; only nominal completion authorizes one freshly built
+tighter environment and replay. Model/resource descriptors must match the
+pre-nominal snapshot; reusing the same native body system is rejected. Preparation
+failure or deadline expiry leaves the tighter run unavailable and preserves the
+completed nominal diagnostics. No command adjustment or retry occurs. The existing
+research report derives differences/residuals and separates integration agreement
+from target closure. Wall duration uses the last budget observation and excludes
+report serialization. Candidate reproduction, initial preparation and standalone
+reference-experiment evidence remain D4.4 work, not a new production interface.
+
 The exception to whole-interval enclosure gating is authorized only for this
 explicit research path. Strict M3 tasks 3.9, 4.3 and all completion criteria
 remain open and unchanged. First learn the fixed seed's outcome; command
