@@ -39,8 +39,9 @@ composition and sampled guards. Baseline `e9f125c`: 242 focused checks and
 D4.3 complete, based on `e9f125c`: fixed commands, fresh environment and shared
 deadline; 124 focused checks and 3,598 full-suite tests pass (626.61 s).
 Ruff, strict OpenSpec and legacy pass. Partial failures remain unqualified.
-Next: D4.4 bounded reference mission experiment and D4.5 final evidence checks.
-No full-force mission run; strict M3 is not complete. Tolerances unchanged.
+D4.4 complete: six arcs in 20.10 s; agreement fails (1751.29 m), miss ~198M km.
+Based on `2aca9f6`: 130 focused / 3,604 full tests pass (607.53 s); static checks pass.
+Next: D4.5 reproducibility evidence. Decision 0079; no retry or strict M3 closure.
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
@@ -54,5 +55,5 @@ Changed scientific gates still need explicit approval.
 - Rules: [AGENTS.md](AGENTS.md).
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest evidence: [Decision 0078](docs/decisions/0078-fourth-gravity-sum.md).
+- Latest evidence: [Decision 0079](docs/decisions/0079-research-reference.md).
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

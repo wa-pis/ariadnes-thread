@@ -5,8 +5,23 @@
 - [x] D4.1 Define a separate research-report contract and shared deadline/counter handling; verify completed/aborted/unavailable diagnostics, no false safe/converged status, absent-value semantics and forced budget exhaustion before native launches.
 - [x] D4.2 Compose fixed-seed departure/coast/arrival arcs with existing native adapters and checked state/mass handoff; verify manufactured continuity and mass checks, invalid initial state, detected collision/dry-mass precedence, native failure and no continuation from partial history. Declare actual guard sampling/event coverage explicitly.
 - [x] D4.3 Add frozen-command nominal/tighter comparison and target residual reporting; verify all four boundaries against 10 m / 0.0001 m/s / 0.000001 kg, commands unchanged, deliberate disagreement and tighter-run failure remain unqualified, and no trajectory safety claim follows.
-- [ ] D4.4 Run one bounded live reference experiment after D4.1–D4.3 checks pass; retain script and machine-readable outcome/resource/model/command/counter/timing evidence, including failure. Verify one shared default 300-second budget, at most six arc launches, and zero automatic retries. Do not mark target closure or strict M3 completion without its separate evidence.
+- [x] D4.4 Run one bounded live reference experiment after D4.1–D4.3 checks pass; retain script and machine-readable outcome/resource/model/command/counter/timing evidence, including failure. Verify one shared default 300-second budget, at most six arc launches, and zero automatic retries. Do not mark target closure or strict M3 completion without its separate evidence.
 - [ ] D4.5 Run focused research/native/regression tests, full suite, Ruff, strict OpenSpec and legacy checks; record reproducibility checks with sufficient budget and update roadmap while leaving unfinished strict M3 gates open.
+
+D4.4 evidence (2026-09-24, based on `2aca9f6` plus hashed new source): the
+standalone `python -m space_nav.research_experiment SCENARIO OUTPUT` reproduces
+the selected candidate from fresh input, shares the original deadline with
+resource preparation/comparison and refuses output overwrite. One reference
+experiment completed six arcs in 20.101860458 s, zero retries. Numerical agreement
+failed: arrival differences 1751.286621 m / 0.000321787419 m/s; nominal target miss
+197851062193.609 m. Exit 1 intentionally reports failed agreement. No tolerance
+or force-model changes. See [Decision 0079](../../../docs/decisions/0079-research-reference.md)
+and its finite JSON resource/model/command/source/counter evidence.
+130 focused tests pass in 1.84 s; full suite: 3,604 pass in 607.53 s. Ruff,
+strict OpenSpec, whitespace and unchanged legacy SHA-256 pass. Stored source
+hashes and position differences were independently checked without another native
+run. D4.5 remains open for identical-input reproducibility evidence; the tighter
+profile is not an independent identical-input repetition. Strict M3 stays open.
 
 D4.1 accounting prerequisite: `research.py` reuses the strict refinement clock
 without changing its limits. The research adapter permits one control and two
