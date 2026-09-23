@@ -8,6 +8,17 @@
 - [ ] D4.4 Run one bounded live reference experiment after D4.1–D4.3 checks pass; retain script and machine-readable outcome/resource/model/command/counter/timing evidence, including failure. Verify one shared default 300-second budget, at most six arc launches, and zero automatic retries. Do not mark target closure or strict M3 completion without its separate evidence.
 - [ ] D4.5 Run focused research/native/regression tests, full suite, Ruff, strict OpenSpec and legacy checks; record reproducibility checks with sufficient budget and update roadmap while leaving unfinished strict M3 gates open.
 
+D4.1 accounting prerequisite: `research.py` reuses the strict refinement clock
+without changing its limits. The research adapter permits one control and two
+ordered three-arc runs, counts launches before execution, and requires explicit
+acceptance before continuing. Its immutable progress snapshot cannot assert
+continuous safety. This is not the scientific report contract or an executor;
+D4.1 remains open. Deadline checks are cooperative, not native-call preemption.
+Verification (2026-09-23, based on `dd3f413`): 35 focused research/strict-budget
+checks pass; full suite: 3,522 pass in 613.70 s. Ruff, strict OpenSpec and
+unchanged legacy SHA-256 pass. One sandbox-denied pytest-cache write warning
+does not affect test results. No native research experiment was executed.
+
 - [x] UI.7 Raise the candidate ceiling to 10000 across scenario/grid/result/UI/help while retaining default 2000 and the existing deadline; verify 100×100 generation, boundary acceptance/rejection, real search/UI completion, default 1980 regression and forced deadline/no-partial-result checks; run full suite, Ruff and strict validation and record runtime evidence.
 
 UI.7 evidence (2026-09-23, based on `d0b9076`): 94 focused checks pass in

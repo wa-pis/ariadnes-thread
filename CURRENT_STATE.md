@@ -33,8 +33,13 @@ The candidate ceiling is now 10000 (default 2000, default deadline 300 s).
 UI.7: 94 focused checks and 3,507 full-suite tests pass (625.11 s); real reference
 search: 10000 solved, 35 Pareto entries, 3.175 s on this machine. Scientific
 model/tolerances are unchanged; details are recorded in the active tasks.
-Next: D4.1–D4.5, the explicitly approved research-only fixed-seed finite-burn
-experiment. Implement separate report/budget contracts before native runs.
+In progress: D4.1 research-only budget/progress adapter, reusing the existing
+clock; one control, two ordered three-arc runs, no retry, fixed false safety flag.
+35 focused budget checks and 3,522 full-suite tests pass (613.70 s); Ruff,
+strict OpenSpec and unchanged legacy checksum pass. Pytest cache write warned
+because of sandbox permissions; no test failed.
+Next: finish the separate scientific report contract, then D4.2–D4.5. No native
+research experiment has run; D4.1 remains open.
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
