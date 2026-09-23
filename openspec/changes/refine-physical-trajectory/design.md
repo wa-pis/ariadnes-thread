@@ -15,6 +15,23 @@ continuous safety are distinct fields. Continuous safety is always unverified
 in this first slice. A complete nominal run with an unavailable tighter run is
 not numerically validated. Do not fill absent values with zeros.
 
+`ResearchRun` holds one profile's outcome, reason, local arc counts, declared
+check coverage/settings and, only on completion, four ordered boundary states,
+four masses, two existing `FiniteBurnRecord` values and the target state.
+`ResearchReport` combines nominal/tighter runs, the normalized scenario snapshot,
+fixed seed controls and finite JSON provenance. Metadata stays immutable as
+canonical JSON text internally; serialization returns detached objects. Wall
+time is separate from scientific values. The fixed force-model identifier names
+the intended pinned model, not proof that resources loaded when provenance is
+absent. Resource/candidate verification remains the executor's responsibility.
+
+Residual norms and profile differences are derived from stored states/masses,
+not independently supplied claims. Completion, comparison failure and missing
+comparison remain distinct. Both profiles must share initial state, target,
+boundary epochs and burn directions. Report validation is structural evidence;
+manufactured contract tests neither demonstrate a feasible trajectory nor verify
+native integration, continuous safety or time-conversion accuracy.
+
 Compose three nominal arcs and at most three tighter arcs. The same initial
 state, commands and arc epochs are used for both profiles. Carry mass/state
 within each run, and check failures/events before accepting a boundary. State

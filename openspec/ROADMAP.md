@@ -29,16 +29,16 @@ until explicitly revised. This planning edit changes no implementation checkbox.
 | D1 — Audit the existing demonstration | Complete 2026-09-22 | Existing path inspected at `f132d8a`; 14 explorer/UI tests pass. See [audit](../docs/demo-audit.md) for available outputs, provenance gap and limitations. |
 | D2 — Agree the smallest missing slice | Specified 2026-09-23 | Active proposal/design/tasks and visual-explorer delta specify the read-only provenance panel, edited-input binding, failure lifecycle and regression checks. No scientific gate or runtime limit changes. Strict validation required before implementation. |
 | D3 — Deliver one reproducible demonstration | Complete 2026-09-23 | Existing M2 explorer plus calculation-bound provenance panel. 29 focused checks and 3,502 full-suite tests pass; scientific limitations and reference mass shortfall remain visible. This does not qualify finite burns or complete M3. |
-| D4 — Add justified physical refinement | Pending D3 and scope agreement | Demonstrate agreed propagation/finite-burn behavior for one candidate, numerical convergence and independent comparison with explicit tolerances. Complete only when the applicable accepted specification passes. |
+| D4 — Research-only fixed-seed experiment | In progress; scope approved | Active tasks D4.1–D4.5: separate report, bounded three-arc composition and tighter repeat, explicit residuals and comparison. No continuous-safety or strict-M3 completion claim. |
 
 Explorer usability follow-up delivered 2026-09-23: elapsed-day control, visible
 budget/grid, Pareto priorities, ideal-fuel filter, Russian help and explicit
 unscreened-object warning. 33 focused checks and 3,506 full-suite tests pass;
 Ruff, strict OpenSpec and legacy checksum pass. No physical gates changed.
 
-After that follow-up, review D4 scope, not another task-3.9 proof or native arc. If a
-demonstration needs behavior outside the current contract, revise that contract
-first. Do not bypass safety checks or rename a simplified result high fidelity.
+D4 scope is approved in the active research-experiment specification. Complete
+its contracts and manufactured checks before its single bounded native experiment.
+Any further scope expansion needs a revised contract; strict M3 gates remain open.
 
 ## Engineering milestones
 
@@ -47,7 +47,7 @@ first. Do not bypass safety checks or rename a simplified result high fidelity.
 | M1 — `establish-navigation-foundation` | Archived 2026-09-04 | Reproducible environment, scenarios, SI/time/frame contract and SPICE diagnostics. |
 | M2 — `plan-impulsive-transfer` | Archived 2026-09-04 | Bounded 3D impulsive search and time/fuel Pareto front. |
 | Visual transfer explorer | Archived 2026-09-07 | Delivered Streamlit prototype with explicitly labelled simplified model. |
-| M3 — `refine-physical-trajectory` | Open; implementation paused for D1/D2 | Accepted physical-refinement requirements and end-to-end checks pass. Task 3.9 remains unresolved; component tests are not mission validation. |
+| M3 — `refine-physical-trajectory` | Open; research D4 prioritized | Accepted physical-refinement requirements and end-to-end checks pass. Task 3.9 remains unresolved; component tests are not mission validation. |
 | M4 — `estimate-navigation-state` | Deferred until M3 archival | Ground-station observations, batch estimation and state covariance. |
 | M5 — `schedule-course-corrections` | Deferred until M4 archival | Zero to three corrections using only observations available at maneuver time. |
 | M6 — `verify-and-report-mission` | Deferred until M5 archival | Monte Carlo reporting and independent GMAT comparison under agreed criteria. |

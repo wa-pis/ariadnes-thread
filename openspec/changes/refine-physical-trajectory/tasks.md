@@ -2,7 +2,7 @@
 
 ### Research D4 — next implementation, not strict M3 completion
 
-- [ ] D4.1 Define a separate research-report contract and shared deadline/counter handling; verify completed/aborted/unavailable diagnostics, no false safe/converged status, absent-value semantics and forced budget exhaustion before native launches.
+- [x] D4.1 Define a separate research-report contract and shared deadline/counter handling; verify completed/aborted/unavailable diagnostics, no false safe/converged status, absent-value semantics and forced budget exhaustion before native launches.
 - [ ] D4.2 Compose fixed-seed departure/coast/arrival arcs with existing native adapters and checked state/mass handoff; verify manufactured continuity and mass checks, invalid initial state, detected collision/dry-mass precedence, native failure and no continuation from partial history. Declare actual guard sampling/event coverage explicitly.
 - [ ] D4.3 Add frozen-command nominal/tighter comparison and target residual reporting; verify all four boundaries against 10 m / 0.0001 m/s / 0.000001 kg, commands unchanged, deliberate disagreement and tighter-run failure remain unqualified, and no trajectory safety claim follows.
 - [ ] D4.4 Run one bounded live reference experiment after D4.1–D4.3 checks pass; retain script and machine-readable outcome/resource/model/command/counter/timing evidence, including failure. Verify one shared default 300-second budget, at most six arc launches, and zero automatic retries. Do not mark target closure or strict M3 completion without its separate evidence.
@@ -12,12 +12,25 @@ D4.1 accounting prerequisite: `research.py` reuses the strict refinement clock
 without changing its limits. The research adapter permits one control and two
 ordered three-arc runs, counts launches before execution, and requires explicit
 acceptance before continuing. Its immutable progress snapshot cannot assert
-continuous safety. This is not the scientific report contract or an executor;
-D4.1 remains open. Deadline checks are cooperative, not native-call preemption.
+continuous safety. This initial prerequisite did not include a scientific report
+or executor. Deadline checks are cooperative, not native-call preemption.
 Verification (2026-09-23, based on `dd3f413`): 35 focused research/strict-budget
 checks pass; full suite: 3,522 pass in 613.70 s. Ruff, strict OpenSpec and
 unchanged legacy SHA-256 pass. One sandbox-denied pytest-cache write warning
 does not affect test results. No native research experiment was executed.
+
+D4.1 report implementation (based on `db532de`): separate immutable nominal/tighter
+records enforce complete versus absent trajectory data and fixed-command replay.
+Residuals and numerical agreement derive from the stored states, with explicit
+comparison-failure/unavailable reasons. Finite detached JSON separates scientific
+data from wall time and always disclaims continuous safety. 137 focused checks
+pass, including budget regressions and manufactured position/velocity/mass
+agreement boundaries. Full suite: 3,567 pass in 628.94 s; Ruff, strict OpenSpec,
+diff whitespace checks and unchanged legacy SHA-256 pass. D4.3 still needs
+executor-level replay verification; no native research experiment has run.
+An initial test expected the wrong exception from dataclass replacement; it was
+corrected. An intermediate full run was deliberately interrupted after 1,901
+passing tests to add the explicit comparison-failure reason, then restarted.
 
 - [x] UI.7 Raise the candidate ceiling to 10000 across scenario/grid/result/UI/help while retaining default 2000 and the existing deadline; verify 100×100 generation, boundary acceptance/rejection, real search/UI completion, default 1980 regression and forced deadline/no-partial-result checks; run full suite, Ruff and strict validation and record runtime evidence.
 
