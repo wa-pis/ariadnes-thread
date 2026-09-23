@@ -1,5 +1,28 @@
 ## Context
 
+### Explorer usability follow-up — specified, not implemented
+
+Retain 121 trajectory samples. Map the time widget to those discrete samples
+using elapsed TDB seconds / 86400 for its visible values, not index labels.
+Do not resample or use rounded labels as scientific keys; reset to departure
+on candidate change. Use a manufactured 3000-day fixture for display checks,
+not a new long-duration physical-feasibility claim.
+
+Move the single max_candidates editor from the collapsed limits section into
+the main controls. Reuse the existing grid-shape calculation; show requested
+maximum and actual grid separately from completed evaluation/solution counts.
+Budget edits invalidate results; sorting/filtering are view preferences and do
+not alter the normalized scenario or its recorded provenance.
+
+Sort copies of the returned Pareto list by the chosen scalar and candidate_id.
+Default to ascending fuel, filter off. Preserve a visible selection across
+preference changes; otherwise select and visibly identify the first remaining
+candidate. Clear candidate-specific cached samples when selection changes.
+For an empty filtered set, render filters, counts and search provenance but no
+candidate selector/metrics/trajectory. Never index an empty list. Do not modify
+the search result, retain all evaluated candidates, add weighting, or claim safety.
+Existing M3 requirements and completed D3 provenance checks remain unchanged.
+
 ### D2 — calculation-bound explorer provenance (2026-09-23)
 
 Implement this presentation slice before resuming physical-refinement work.

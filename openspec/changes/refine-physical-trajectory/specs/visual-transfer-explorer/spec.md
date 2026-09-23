@@ -1,5 +1,48 @@
 ## ADDED Requirements
 
+### Requirement: Elapsed-day trajectory control
+The explorer SHALL label the time control "Дней после старта" and display elapsed days for the existing sampled trajectory rather than sample indices. One day SHALL equal 86400 TDB seconds; the selected UTC date, marker, speed and state SHALL refer to the same sample. Sampling density and scientific tolerances SHALL remain unchanged.
+
+#### Scenario: Explore a long transfer
+- **WHEN** a manufactured 3000-day candidate is sampled at 121 evenly spaced epochs and its first, middle and last samples are selected
+- **THEN** the control displays 0, 1500 and 3000 days respectively, with the corresponding sample's UTC date and state, and no additional candidate search or provenance collection occurs
+
+#### Scenario: Switch duration
+- **WHEN** the selected candidate changes to one with a different flight time
+- **THEN** the control resets to that candidate's departure, its upper endpoint equals flight_time_s / 86400, and every selectable value maps to an existing sample without extrapolation or duplicate rounded-value selection
+
+### Requirement: Visible search budget and actual grid
+The explorer SHALL expose "Количество вариантов для проверки" in the main input area as the existing integer limits.max_candidates budget from 1 through 2000. It SHALL explain that this is a maximum, display the actual rectangular search grid, and preserve the existing solver and runtime limit. There SHALL be only one editor for this field.
+
+#### Scenario: Explain the default budget
+- **WHEN** the requested budget is 2000
+- **THEN** the preview shows 44 departure dates × 45 flight durations = 1980 planned candidates, while completed-search evaluated, solved and failed counts retain their distinct meanings
+
+#### Scenario: Validate and invalidate a changed budget
+- **WHEN** the budget changes to 1 or 100
+- **THEN** previous results and provenance are cleared, previews show 1 × 1 = 1 or 10 × 10 = 100 respectively, and the next explicit calculation receives the selected budget
+- **AND** non-integer budgets and values outside 1 through 2000 cannot start a search
+
+### Requirement: Explicit candidate selection preferences
+The explorer SHALL offer "Приоритет выбора" with "Меньше топлива", "Быстрее долететь" and "Меньше Δv", plus "Только варианты, которым хватает топлива". These controls SHALL only sort/filter the returned Pareto front, not rerun search, alter scientific data or claim a global optimum. The UI SHALL disclose this scope and label feasibility as the ideal M2 mass budget, not physical safety.
+
+#### Scenario: Sort deterministically
+- **WHEN** a priority is selected
+- **THEN** displayed candidates are ordered ascending by propellant_mass_kg, flight_time_s or total_delta_v_m_s respectively, with candidate_id as the deterministic tie-break
+- **AND** the existing selected candidate is preserved if still visible; otherwise the first visible candidate is explicitly shown as selected, with all summary and trajectory data matching it
+
+#### Scenario: Filter feasible candidates
+- **WHEN** the fuel filter is enabled
+- **THEN** only candidates whose existing mass_feasible flag is true remain, the visible and total Pareto counts are displayed, and search/provenance builders receive zero additional calls
+
+#### Scenario: Handle no matching candidates
+- **WHEN** the active filter leaves zero candidates
+- **THEN** the UI shows a clear no-matching-variants message and no selected-candidate metrics or trajectory; search provenance and filter controls remain available, and disabling the filter restores the original candidate set without recalculation
+
+#### Scenario: Honest defaults and interpretation
+- **WHEN** a new search result is displayed
+- **THEN** the default priority is "Меньше топлива", the feasibility filter is off, and the UI explains that fuel and delta-v rankings coincide for the fixed-spacecraft ideal rocket-equation model; no safety score or weighted multi-criterion score is presented
+
 ### Requirement: Calculation-bound provenance panel
 The explorer SHALL display read-only provenance for each successful M2 search using the normalized scenario actually supplied to the solver, existing CLI-compatible model/resource fields, and explicit scientific conventions. It SHALL NOT label edited inputs with the source example's file hash or claim M3 qualification.
 

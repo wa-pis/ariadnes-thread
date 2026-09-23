@@ -25,8 +25,10 @@ D1–D3 are complete. The "О расчёте" panel reuses CLI metadata and reco
 normalized edited inputs; result/provenance invalidation and reuse are tested.
 Implementation was based on `6a80424`; its commit is identifiable from Git history.
 See [audit](docs/demo-audit.md) for the original gap and active tasks for closure.
-Next: review D4 scope and measurable accuracy/runtime goals before resuming M3
-physical-refinement implementation. Do not automatically resume task-3.9 research.
+Next: implement the specified explorer usability tasks UI.1–UI.4: elapsed days,
+visible candidate budget/grid, priorities and ideal-fuel filtering. No code has
+changed for this follow-up yet. Then review D4 scope before physical refinement;
+do not automatically resume task-3.9 research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
 Changed scientific gates still need explicit approval.
 

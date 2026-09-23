@@ -18,6 +18,13 @@ No scientific tolerances changed. Remaining M3 tasks are still incomplete.
 
 ## 1. Public contracts and candidate handoff
 
+### Explorer usability follow-up (pending; independent of M3 physics)
+
+- [ ] UI.1 Replace index labels with elapsed-day sample selection; verify 0/1500/3000-day manufactured endpoints/midpoint, UTC/marker/state consistency, duration-change reset, unchanged 121-sample density and zero repeated search/provenance calls.
+- [ ] UI.2 Promote the single candidate-budget editor and add actual-grid preview; verify budgets 1/100/2000, invalid input rejection, stale-result invalidation, correct solver inputs and unchanged 2000 cap/runtime limit.
+- [ ] UI.3 Add fuel/time/delta-v priorities and ideal-fuel feasibility filtering over the Pareto front; verify each ordering, deterministic ties, defaults, selection preservation/replacement, empty-set recovery, visible counts, immutable results/provenance and zero additional searches.
+- [ ] UI.4 Run focused UI/explorer/CLI tests, Ruff, full pinned suite, strict OpenSpec validation and legacy checks; verify unchanged scientific tolerances and record results before marking this follow-up complete.
+
 - [x] 1.1 Add frozen, slotted `TrajectoryBoundaryState`, `FiniteBurnRecord`, `TrajectoryBoundaryDifference`, and `PhysicalTrajectoryResult` records with status-dependent field/count/diagnostic invariants, unit/frame/time labels, finite-value validation, and serialization; verify constructor and round-trip tests cover valid, invalid, infeasible, failed, and converged forms.
 - [x] 1.2 Add `TrajectoryRefinementError` and lazy public package exports for the M3 API without importing TudatPy or loading kernels at import time; verify import-isolation and chained-error tests pass.
 - [x] 1.3 Implement exact M2 Pareto-candidate reproduction and handoff comparison for identifiers, epochs, vectors, burns, and masses; verify matching candidates pass within the specified tolerances and malformed, missing, or altered candidates fail before physical propagation.

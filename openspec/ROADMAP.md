@@ -24,7 +24,12 @@ until explicitly revised. This planning edit changes no implementation checkbox.
 | D3 — Deliver one reproducible demonstration | Complete 2026-09-23 | Existing M2 explorer plus calculation-bound provenance panel. 29 focused checks and 3,502 full-suite tests pass; scientific limitations and reference mass shortfall remain visible. This does not qualify finite burns or complete M3. |
 | D4 — Add justified physical refinement | Pending D3 and scope agreement | Demonstrate agreed propagation/finite-burn behavior for one candidate, numerical convergence and independent comparison with explicit tolerances. Complete only when the applicable accepted specification passes. |
 
-The next session reviews D4 scope, not another task-3.9 proof or native arc. If a
+Before D4, implement the user-requested explorer usability follow-up UI.1–UI.4
+in the active change: elapsed-day control, visible budget/grid and Pareto
+priorities with an ideal-fuel filter. This follow-up is specified, not delivered;
+completed D3 remains the provenance baseline. No physical gates are changed.
+
+After that follow-up, review D4 scope, not another task-3.9 proof or native arc. If a
 demonstration needs behavior outside the current contract, revise that contract
 first. Do not bypass safety checks or rename a simplified result high fidelity.
 
