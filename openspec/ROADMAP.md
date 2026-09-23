@@ -21,10 +21,10 @@ until explicitly revised. This planning edit changes no implementation checkbox.
 |---|---|---|
 | D1 — Audit the existing demonstration | Complete 2026-09-22 | Existing path inspected at `f132d8a`; 14 explorer/UI tests pass. See [audit](../docs/demo-audit.md) for available outputs, provenance gap and limitations. |
 | D2 — Agree the smallest missing slice | Specified 2026-09-23 | Active proposal/design/tasks and visual-explorer delta specify the read-only provenance panel, edited-input binding, failure lifecycle and regression checks. No scientific gate or runtime limit changes. Strict validation required before implementation. |
-| D3 — Deliver one reproducible demonstration | Pending D2 | An explicit scenario yields a selectable route with dates, flight time, ideal maneuver cost, propellant/mass feasibility, provenance and visible model limitations. Repeat runs agree in scientific data. Display infeasibility honestly; never label M2 as finite-burn validation. |
+| D3 — Deliver one reproducible demonstration | Complete 2026-09-23 | Existing M2 explorer plus calculation-bound provenance panel. 29 focused checks and 3,502 full-suite tests pass; scientific limitations and reference mass shortfall remain visible. This does not qualify finite burns or complete M3. |
 | D4 — Add justified physical refinement | Pending D3 and scope agreement | Demonstrate agreed propagation/finite-burn behavior for one candidate, numerical convergence and independent comparison with explicit tolerances. Complete only when the applicable accepted specification passes. |
 
-The next session starts with D3 tasks 0.1–0.3, not another task-3.9 proof or native arc. If a
+The next session reviews D4 scope, not another task-3.9 proof or native arc. If a
 demonstration needs behavior outside the current contract, revise that contract
 first. Do not bypass safety checks or rename a simplified result high fidelity.
 

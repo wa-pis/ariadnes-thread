@@ -28,6 +28,12 @@ calculate. Select a candidate and move the time slider. Changing input clears
 old results. The original example has an ideal propellant shortfall: this is
 shown as a warning, not hidden by choosing another spacecraft.
 
+Expand **О расчёте** after calculating to inspect the M2 model, runtime/resource
+versions, loaded SPICE kernel metadata, search counts and normalized SI inputs.
+These describe the completed search, including your edits, not the original
+example file. Editing inputs or a calculation failure clears this snapshot;
+moving the slider or selecting another candidate reuses it without another search.
+
 The plot is a Sun-relative J2000 XY projection, not an ecliptic view. M2 uses a
 two-body transfer and ideal endpoint impulses; it does not resolve escape,
 capture, or engine firing durations. The app lists ignored parameters. This

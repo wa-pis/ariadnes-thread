@@ -16,20 +16,19 @@ Automation `ariadna-m3` is paused by user request. Do not restart it automatical
 - M3 remains open, not an operational high-fidelity mission capability. Task 3.9
   and end-to-end finite-burn/safety/runtime checks remain unresolved.
 - Decision 0078 assembled eight nominal gravity contributions, not a full-force
-  trajectory certificate. Baseline verification recorded 3,496 passing tests;
-  these were not rerun for this documentation-only planning change.
+  trajectory certificate. D3 verification: 3,502 tests pass in 608.17 s;
+  29 focused checks, Ruff, strict OpenSpec and unchanged legacy checksum pass.
 
 ## Next action
 
-D1 is complete at inspected revision `f132d8a`: scenario/search/selection/UI
-already work. All 14 explorer and UI tests passed in 3.83 s; the full suite was
-not rerun. Pytest cache writing was denied by the sandbox (warning only).
-See [audit](docs/demo-audit.md) for evidence and limitations.
-D2 is specified in the active proposal/design/tasks and visual-explorer delta.
-Next: implement D3 tasks 0.1–0.3, a read-only "О расчёте" panel reusing CLI
-metadata with a detached normalized-input snapshot and atomic invalidation.
-No code or scientific gate changed during D2; runtime tests were not rerun.
-No new dynamics work; changed scientific gates still need explicit approval.
+D1–D3 are complete. The "О расчёте" panel reuses CLI metadata and records
+normalized edited inputs; result/provenance invalidation and reuse are tested.
+Implementation was based on `6a80424`; its commit is identifiable from Git history.
+See [audit](docs/demo-audit.md) for the original gap and active tasks for closure.
+Next: review D4 scope and measurable accuracy/runtime goals before resuming M3
+physical-refinement implementation. Do not automatically resume task-3.9 research.
+Browser visual QA was not performed; application behavior was checked by AppTest.
+Changed scientific gates still need explicit approval.
 
 ## Boundaries and references
 

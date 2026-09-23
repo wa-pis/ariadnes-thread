@@ -11,11 +11,14 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from . import ephemeris
+from .cli import _runtime_manifest
 from .errors import EphemerisError, ScenarioValidationError, TransferSearchError
 from .explorer import SCIENCE_LOCK, sample_transfer
-from .models import ImpulsiveTransferCandidate
+from .models import ImpulsiveTransferCandidate, Scenario
 from .scenario import scenario_from_mapping
-from .transfer import IGNORED_SCENARIO_FIELDS, search_impulsive_transfers
+from .transfer import (
+    IGNORED_SCENARIO_FIELDS, _transfer_model_manifest, search_impulsive_transfers,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -54,8 +57,17 @@ LABELS = {
 
 
 def _invalidate() -> None:
-    for name in ("result", "sampled", "sampled_id"):
+    for name in ("result", "sampled", "sampled_id", "provenance"):
         st.session_state.pop(name, None)
+
+
+def _search_provenance(scenario: Scenario) -> dict[str, Any]:
+    """Snapshot normalized SI inputs and resources while SCIENCE_LOCK is held."""
+    return {
+        **_runtime_manifest(scenario.limits.random_seed),
+        "scenario": scenario.to_dict(),
+        "transfer_model": _transfer_model_manifest(scenario),
+    }
 
 
 def _load_example() -> None:
@@ -156,7 +168,8 @@ def main() -> None:
                 scenario = scenario_from_mapping(inputs)
                 with st.spinner("Ищем варианты перелёта…"), SCIENCE_LOCK:
                     result = search_impulsive_transfers(scenario)
-                st.session_state["result"] = result
+                    provenance = _search_provenance(scenario)
+                st.session_state.update(result=result, provenance=provenance)
             except (ScenarioValidationError, TransferSearchError, EphemerisError) as exc:
                 st.error(str(exc))
     with right:
@@ -188,3 +201,11 @@ def main() -> None:
         with st.expander("Что не учитывает эта модель"):
             st.write("Импульсы оцениваются только в начале и конце перелёта. Продолжительность включений не вычисляется.")
             st.write(list(IGNORED_SCENARIO_FIELDS))
+        with st.expander("О расчёте"):
+            provenance = st.session_state["provenance"]
+            st.write(f"Модель: {provenance['transfer_model']['identifier']}")
+            st.caption("Параметры выполненного поиска: SI / SSB / J2000; время — TDB от J2000. "
+                       "Даты входного сценария — UTC. Это модель M2, не проверка M3.")
+            st.write(f"Оценено: {result.evaluated_candidates}; решено: {result.solved_candidates}; "
+                     f"не решено: {result.failed_candidates}.")
+            st.json(provenance)

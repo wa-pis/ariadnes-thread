@@ -90,6 +90,13 @@ def _tudatpy_version() -> str:
 def _manifest(scenario_path: Path, random_seed: int) -> dict[str, Any]:
     return {
         "scenario_sha256": sha256(scenario_path.read_bytes()).hexdigest(),
+        **_runtime_manifest(random_seed),
+    }
+
+
+def _runtime_manifest(random_seed: int) -> dict[str, Any]:
+    """Capture shared runtime/resource provenance without a file identity."""
+    return {
         "versions": {
             "python": platform.python_version(),
             "space_nav": _distribution_version("space-nav", __version__),
