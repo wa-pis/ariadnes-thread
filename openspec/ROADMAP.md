@@ -50,6 +50,10 @@ its gates. Review future detailed numerical targets before specification.
 
 ## Research and extensions
 
+Search-budget extension delivered 2026-09-23: ceiling 10000, default 2000,
+unchanged deadline behavior. UI.7 records real-run and 3,507-test verification.
+This increases search density, not the fidelity of the physical model.
+
 - [Optional object analysis draft](deferred/optional-object-analysis/spec.md):
   independent opt-in display, additional gravity and post-calculation encounter
   screening, each with explicit coverage, status and provenance. Requirements

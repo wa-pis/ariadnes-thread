@@ -109,7 +109,7 @@ def _fake_lambert(
 
 @pytest.mark.parametrize(
     ("budget", "shape", "attempts"),
-    [(1, (1, 1), 1), (17, (4, 4), 16), (2000, (44, 45), 1980)],
+    [(1, (1, 1), 1), (17, (4, 4), 16), (2000, (44, 45), 1980), (10000, (100, 100), 10000)],
 )
 def test_grid_is_bounded_closed_and_departure_major(
     budget: int, shape: tuple[int, int], attempts: int

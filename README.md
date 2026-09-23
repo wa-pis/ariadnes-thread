@@ -28,7 +28,7 @@ calculate. Select a candidate and move the time slider. Changing input clears
 old results. The original example has an ideal propellant shortfall: this is
 shown as a warning, not hidden by choosing another spacecraft.
 
-The main controls expose a 1–2000 candidate budget and the actual date/duration
+The main controls expose a 1–10000 candidate budget (default 2000) and the actual date/duration
 grid. Sort the returned Pareto front by fuel, flight time or delta-v; optionally
 filter by ideal fuel feasibility. These view preferences do not repeat search.
 An empty filter retains the search provenance and can be cleared. The trajectory

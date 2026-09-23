@@ -31,7 +31,7 @@ The explorer SHALL provide discoverable Russian-language help for every editable
 
 #### Scenario: Explain constraints and ignored inputs accurately
 - **WHEN** help is opened for dates, masses, Isp, thrust, orbit orientation, tracking, seed or candidate budget
-- **THEN** it states the applicable format/units and implemented validation rules, including date ordering, initial mass greater than dry mass and integer budget 1–2000
+- **THEN** it states the applicable format/units and implemented validation rules, including date ordering, initial mass greater than dry mass and integer budget 1–10000
 - **AND** it distinguishes required-but-ignored M2 inputs from active inputs, explains that Isp affects ideal fuel consumption while thrust does not determine burn duration in M2, and introduces no new scientific limits or defaults
 
 #### Scenario: Explain scientific results and provenance
@@ -55,7 +55,7 @@ The explorer SHALL label the time control "Дней после старта" and
 - **THEN** the control resets to that candidate's departure, its upper endpoint equals flight_time_s / 86400, and every selectable value maps to an existing sample without extrapolation or duplicate rounded-value selection
 
 ### Requirement: Visible search budget and actual grid
-The explorer SHALL expose "Количество вариантов для проверки" in the main input area as the existing integer limits.max_candidates budget from 1 through 2000. It SHALL explain that this is a maximum, display the actual rectangular search grid, and preserve the existing solver and runtime limit. There SHALL be only one editor for this field.
+The explorer SHALL expose "Количество вариантов для проверки" in the main input area as the existing integer limits.max_candidates budget from 1 through 10000. It SHALL explain that this is a maximum, display the actual rectangular search grid, and preserve the existing solver and runtime limit. There SHALL be only one editor for this field.
 
 #### Scenario: Explain the default budget
 - **WHEN** the requested budget is 2000
@@ -64,7 +64,7 @@ The explorer SHALL expose "Количество вариантов для про
 #### Scenario: Validate and invalidate a changed budget
 - **WHEN** the budget changes to 1 or 100
 - **THEN** previous results and provenance are cleared, previews show 1 × 1 = 1 or 10 × 10 = 100 respectively, and the next explicit calculation receives the selected budget
-- **AND** non-integer budgets and values outside 1 through 2000 cannot start a search
+- **AND** non-integer budgets and values outside 1 through 10000 cannot start a search
 
 ### Requirement: Explicit candidate selection preferences
 The explorer SHALL offer "Приоритет выбора" with "Меньше топлива", "Быстрее долететь" and "Меньше Δv", plus "Только варианты, которым хватает топлива". These controls SHALL only sort/filter the returned Pareto front, not rerun search, alter scientific data or claim a global optimum. The UI SHALL disclose this scope and label feasibility as the ideal M2 mass budget, not physical safety.

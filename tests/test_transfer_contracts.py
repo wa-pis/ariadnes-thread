@@ -100,7 +100,7 @@ def test_candidate_rejects_invalid_values(
         ({"orientation": "ECLIPJ2000"}, "J2000"),
         ({"time_scale": "UTC"}, "TDB seconds"),
         ({"evaluated_candidates": True}, "nonnegative integer"),
-        ({"evaluated_candidates": 2001, "solved_candidates": 2000}, "2000"),
+        ({"evaluated_candidates": 10001, "solved_candidates": 10000}, "10000"),
         ({"failed_candidates": 0}, "must equal"),
         ({"mass_feasible_candidates": 2}, "must not exceed"),
         ({"pareto_front": [_candidate()]}, "tuple"),

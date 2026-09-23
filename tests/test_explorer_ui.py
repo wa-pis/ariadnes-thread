@@ -191,7 +191,7 @@ def test_preferences_filter_help_and_budget(monkeypatch: pytest.MonkeyPatch) -> 
     assert search.call_count == provenance.call_count == 1
     assert app.session_state["result"] == result
     assert app.session_state["provenance"] == snapshot
-    for budget, grid in ((1, "1 дат старта × 1"), (100, "10 дат старта × 10")):
+    for budget, grid in ((1, "1 дат старта × 1"), (100, "10 дат старта × 10"), (10000, "100 дат старта × 100")):
         app.number_input(key="field:limits.max_candidates").set_value(budget).run()
         assert "result" not in app.session_state
         assert any(grid in c.value for c in app.caption)
@@ -237,6 +237,6 @@ def test_help_semantics_and_ignored_fields() -> None:
     assert "кг" in FIELD_HELP["dry_mass_kg"]
     assert "сухой" in FIELD_HELP["initial_mass_kg"]
     assert "UTC" in FIELD_HELP["departure_start_utc"]
-    assert "1–2000" in FIELD_HELP["max_candidates"]
+    assert "1–10000" in FIELD_HELP["max_candidates"]
     assert "не текущая скорость" in RESULT_HELP["delta_v"]
     assert "неизвестные" in RESULT_HELP["scope"]

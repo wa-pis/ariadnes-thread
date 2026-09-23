@@ -1,5 +1,16 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+- [x] UI.7 Raise the candidate ceiling to 10000 across scenario/grid/result/UI/help while retaining default 2000 and the existing deadline; verify 100×100 generation, boundary acceptance/rejection, real search/UI completion, default 1980 regression and forced deadline/no-partial-result checks; run full suite, Ruff and strict validation and record runtime evidence.
+
+UI.7 evidence (2026-09-23, based on `d0b9076`): 94 focused checks pass in
+22.72 s; full suite: 3,507 pass in 625.11 s. Ruff and strict validation pass;
+legacy checksum is unchanged. A real reference-scenario search with only
+max_candidates changed to 10000 evaluated/solved 10000 pairs, failed 0, returned
+35 Pareto entries and took 3.175 s with runtime_seconds=300. This local timing
+is not a guarantee for other windows or machines. Earlier UI.2/validation
+evidence referring to a 2000 ceiling is superseded only in its ceiling;
+the 2000 default and 1980 reference-grid regression remain unchanged.
+
 Implement this bounded presentation slice first. Existing M3 tasks and gates
 below are unchanged; completing section 0 does not complete or archive M3.
 

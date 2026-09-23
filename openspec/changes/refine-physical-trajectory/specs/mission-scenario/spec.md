@@ -1,3 +1,40 @@
+## MODIFIED Requirements
+
+### Requirement: Field-specific validation
+The system SHALL reject missing, non-finite, or physically invalid values with `ScenarioValidationError`. The error SHALL identify the full dotted field path and explain the violated constraint. All durations and physical magnitudes SHALL be positive, all spacecraft fields SHALL be positive, `initial_mass_kg` MUST be greater than `dry_mass_kg`, the departure start MUST precede the departure end, minimum time of flight MUST be less than maximum time of flight, and target periapsis altitude MUST be less than target apoapsis altitude. Angular fields SHALL be finite; inclination SHALL be in `[0, 180]` degrees and RAAN, argument of periapsis, and true anomaly SHALL be in `[0, 360)` degrees. `max_candidates` SHALL be an integer from 1 through 10000.
+
+#### Scenario: Missing required value
+- **WHEN** `spacecraft.max_thrust_n` is absent
+- **THEN** validation fails with an error that identifies `spacecraft.max_thrust_n`
+
+#### Scenario: Non-finite numeric value
+- **WHEN** any numeric field contains a NaN or infinity value
+- **THEN** validation fails with an error that identifies that field
+
+#### Scenario: Invalid spacecraft masses
+- **WHEN** `spacecraft.initial_mass_kg` is less than or equal to `spacecraft.dry_mass_kg`
+- **THEN** validation fails and identifies `spacecraft.initial_mass_kg`
+
+#### Scenario: Invalid search order
+- **WHEN** the departure start is not earlier than the departure end or minimum time of flight is not less than maximum time of flight
+- **THEN** validation fails and identifies the later or upper-bound field responsible for the invalid ordering
+
+#### Scenario: Invalid target ellipse
+- **WHEN** target periapsis altitude is greater than or equal to target apoapsis altitude
+- **THEN** validation fails and identifies `target_orbit.apoapsis_altitude_km`
+
+#### Scenario: Target orbit differs from the M1 contract
+- **WHEN** an otherwise valid target orbit does not use a 300 km periapsis and 10000 km apoapsis
+- **THEN** validation fails and identifies the altitude field that differs from the M1 value
+
+#### Scenario: Expanded budget boundary
+- **WHEN** max_candidates is 10000 and sufficient runtime is available
+- **THEN** the budget is accepted and the search grid is 100 departure dates by 100 durations, while omitted limits retain max_candidates=2000 and runtime_seconds=300
+
+#### Scenario: Above the expanded ceiling
+- **WHEN** max_candidates is 10001
+- **THEN** the budget is rejected before scientific search
+
 ## ADDED Requirements
 
 ### Requirement: Candidate-bound orbit-state semantics

@@ -275,8 +275,8 @@ class TransferSearchResult:
             value = getattr(self, name)
             if not isinstance(value, int) or isinstance(value, bool) or value < 0:
                 raise ValueError(f"{name} must be a nonnegative integer")
-        if self.evaluated_candidates > 2000:
-            raise ValueError("evaluated_candidates must not exceed 2000")
+        if self.evaluated_candidates > 10000:
+            raise ValueError("evaluated_candidates must not exceed 10000")
         if self.solved_candidates + self.failed_candidates != self.evaluated_candidates:
             raise ValueError(
                 "solved_candidates plus failed_candidates must equal "

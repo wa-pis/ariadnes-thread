@@ -83,7 +83,7 @@ def test_values_are_immutable_deterministic_and_spice_free() -> None:
         ("apoapsis_altitude_km = 10000.0", "apoapsis_altitude_km = 9999.0", "target_orbit.apoapsis_altitude_km"),
         ("inclination_deg = 90.0", "inclination_deg = 181.0", "departure_orbit.inclination_deg"),
         ("raan_deg = 0.0", "raan_deg = 360.0", "departure_orbit.raan_deg"),
-        ("max_candidates = 2000", "max_candidates = 2001", "limits.max_candidates"),
+        ("max_candidates = 2000", "max_candidates = 10001", "limits.max_candidates"),
     ],
 )
 def test_field_specific_validation(

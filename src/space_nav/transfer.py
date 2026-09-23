@@ -67,8 +67,8 @@ def _grid_shape(candidate_budget: int) -> tuple[int, int]:
 
     if not isinstance(candidate_budget, int) or isinstance(candidate_budget, bool):
         raise ValueError("candidate_budget must be an integer")
-    if not 1 <= candidate_budget <= 2000:
-        raise ValueError("candidate_budget must be from 1 through 2000")
+    if not 1 <= candidate_budget <= 10000:
+        raise ValueError("candidate_budget must be from 1 through 10000")
     departure_count = math.isqrt(candidate_budget)
     return departure_count, candidate_budget // departure_count
 

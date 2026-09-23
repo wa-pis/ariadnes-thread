@@ -9,6 +9,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ## What Changes
 
+- User-approved search-budget extension: accept at most 10,000 candidates across scenario validation, solver, result invariants and UI. Keep default 2000, unchanged grid algorithm, unchanged default 300-second deadline, and no partial successful result on timeout. The physical model is unchanged.
 - Clarify M2 dynamics versus displayed ephemerides versus collision screening, and visibly warn that asteroid/comet/space-debris screening was not performed. Catalogue-based screening is deferred, not implemented by this change.
 - Add Russian-language help for every explorer input/control and scientific result, including units, actual validation constraints, model usage and limitations; no new defaults, validation rules or physics.
 - User-requested explorer usability follow-up: replace sample-index labels with elapsed days, promote the existing 1–2000 search budget with actual-grid preview, and add explicit Pareto sorting by fuel/time/delta-v plus an ideal-mass-feasibility filter. This is presentation-only; no new optimizer, scientific gate, search limit or M3 completion claim.

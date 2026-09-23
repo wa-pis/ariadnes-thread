@@ -85,7 +85,7 @@ def _load_example() -> None:
 
 def _input_fields(raw: dict[str, Any]) -> dict[str, Any]:
     values: dict[str, Any] = {}
-    budget = st.number_input("Количество вариантов для проверки", min_value=1, max_value=2000,
+    budget = st.number_input("Количество вариантов для проверки", min_value=1, max_value=10000,
                              value=raw["limits"]["max_candidates"], step=1,
                              key="field:limits.max_candidates", on_change=_invalidate,
                              help=FIELD_HELP["max_candidates"])

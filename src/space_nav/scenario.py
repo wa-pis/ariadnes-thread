@@ -389,8 +389,8 @@ def _parse_limits(table: Mapping[str, Any]) -> LimitsSpec:
     if seed < 0:
         _fail("limits.random_seed", "must be greater than or equal to 0")
     candidates = _integer(values["max_candidates"], "limits.max_candidates")
-    if not 1 <= candidates <= 2000:
-        _fail("limits.max_candidates", "must be an integer from 1 through 2000")
+    if not 1 <= candidates <= 10000:
+        _fail("limits.max_candidates", "must be an integer from 1 through 10000")
     return LimitsSpec(runtime_seconds=runtime, random_seed=seed, max_candidates=candidates)
 
 

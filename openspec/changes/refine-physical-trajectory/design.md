@@ -1,5 +1,15 @@
 ## Context
 
+### Expanded search budget
+
+Raise only the candidate ceiling to 10000 in validation, grid construction,
+result invariants and UI/help. Preserve the 2000 default, historical 44×45
+reference grid, and all existing deadline checks. Budget 10000 yields 100×100.
+No sampling density, force model, scientific tolerance or automatic runtime
+increase follows. Measure a real reference search; measured completion is not
+a guarantee for every launch window or machine. Archive-time spec sync must
+include the mission-scenario and impulsive-transfer-search modified requirements.
+
 ### Explorer usability follow-up — implemented 2026-09-23
 
 Show an unscreened-small-body/debris warning beside every displayed M2 result,
