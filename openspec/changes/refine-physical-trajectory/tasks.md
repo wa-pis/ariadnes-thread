@@ -1,3 +1,12 @@
+## 0. D3 — M2 explorer provenance (specified 2026-09-23)
+
+Implement this bounded presentation slice first. Existing M3 tasks and gates
+below are unchanged; completing section 0 does not complete or archive M3.
+
+- [ ] 0.1 Reuse existing CLI-compatible runtime/reference/model/kernel metadata and capture a detached normalized scenario snapshot without a fictitious file identity; verify shared-field parity, edited dry_mass_kg=500, JSON compatibility, snapshot detachment and unchanged CLI payloads/lazy imports.
+- [ ] 0.2 Build result and provenance under SCIENCE_LOCK and publish them together; add the read-only "О расчёте" panel and extend invalidation; verify visible metadata/conventions/counts, edits/reload cleanup, search/resource/sampling failure cleanup, and zero additional search or provenance calls on slider/selection changes.
+- [ ] 0.3 Run focused UI/explorer/CLI checks, Ruff, the complete pinned test suite, legacy checksum/import checks and strict OpenSpec validation; verify all pass with unchanged scientific tolerances, then update current state and roadmap without marking unfinished M3 tasks complete.
+
 ## 1. Public contracts and candidate handoff
 
 - [x] 1.1 Add frozen, slotted `TrajectoryBoundaryState`, `FiniteBurnRecord`, `TrajectoryBoundaryDifference`, and `PhysicalTrajectoryResult` records with status-dependent field/count/diagnostic invariants, unit/frame/time labels, finite-value validation, and serialization; verify constructor and round-trip tests cover valid, invalid, infeasible, failed, and converged forms.

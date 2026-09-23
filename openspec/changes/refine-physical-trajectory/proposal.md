@@ -9,6 +9,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ## What Changes
 
+- D2 planning revision (2026-09-23): first deliver the D3 read-only M2 explorer provenance panel described in the added `visual-transfer-explorer` delta. Bind provenance to normalized edited inputs and reuse existing CLI model/resource conventions. This bounded presentation slice does not complete M3 or relax its gates; remaining physical implementation stays paused pending roadmap D4 scope review.
 - User-approved on 2026-09-09: replace production 300 s interpolated ephemerides with Tudat direct SPICE for all eight bodies. Preserve the old tables only as regression evidence; validate complete SPK center-chain coverage before environment creation, retain all numerical tolerances and the shared deadline, and identify the revised model as `cannonball-srp-schwarzschild-direct-spice-v2` (with the existing model prefix).
 - Add deterministic boundary-value refinement from the configured lunar parking-orbit state to the configured Martian target-orbit state, using the M2 candidate only as the initial targeting seed.
 - Propagate separate departure-burn, coast, and arrival-burn arcs with TudatPy, coupled spacecraft mass, dry-mass protection, impact detection, and bounded targeting failure.
@@ -34,6 +35,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ### Modified Capabilities
 
+- `visual-transfer-explorer`: Add calculation-bound provenance with atomic result publication and stale-result invalidation; preserve the existing M2 approximation and CLI contracts.
 - `mission-scenario`: Define body-centred osculating orbit elements on J2000 axes at the selected candidate boundary epochs, including circular-orbit equivalence and distinct shape/gravity radii.
 - `diagnostic-cli`: Add the refinement command, status rendering, error behavior, and complete dynamics provenance without changing existing commands.
 

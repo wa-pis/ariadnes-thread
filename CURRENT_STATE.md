@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-09-22. Keep this file under 60 lines; replace stale status instead
+Updated: 2026-09-23. Keep this file under 60 lines; replace stale status instead
 of appending a diary. This is a navigation aid, not an alternative specification.
 
 ## Goal and scheduling
@@ -25,10 +25,11 @@ D1 is complete at inspected revision `f132d8a`: scenario/search/selection/UI
 already work. All 14 explorer and UI tests passed in 3.83 s; the full suite was
 not rerun. Pytest cache writing was denied by the sandbox (warning only).
 See [audit](docs/demo-audit.md) for evidence and limitations.
-Next: D2, specify a small UI provenance panel reusing existing CLI conventions,
-bound to edited inputs and invalidated with stale results. Reconcile the active
-OpenSpec artifacts and validate before implementation. No new dynamics work;
-changed scientific gates still need explicit approval.
+D2 is specified in the active proposal/design/tasks and visual-explorer delta.
+Next: implement D3 tasks 0.1–0.3, a read-only "О расчёте" panel reusing CLI
+metadata with a detached normalized-input snapshot and atomic invalidation.
+No code or scientific gate changed during D2; runtime tests were not rerun.
+No new dynamics work; changed scientific gates still need explicit approval.
 
 ## Boundaries and references
 

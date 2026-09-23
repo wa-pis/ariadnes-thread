@@ -1,5 +1,43 @@
 ## Context
 
+### D2 — calculation-bound explorer provenance (2026-09-23)
+
+Implement this presentation slice before resuming physical-refinement work.
+The existing M2 solver, sampling, force conventions and scientific tolerances
+are unchanged. No new dependency, exporter, backend abstraction or version bump.
+
+Add a read-only Russian-labelled "О расчёте" expander after successful search.
+Show the M2 model identifier, package/runtime/resource versions, loaded SPICE
+kernel metadata, SI/SSB/J2000/TDB conventions, normalized scenario and search
+counts. Label ignored fields and keep the ideal-propellant warning visible.
+The existing candidate selector identifies the displayed candidate; provenance
+describes its parent search, not a new high-fidelity trajectory.
+
+Capture a detached JSON-compatible snapshot of the validated Scenario supplied
+to the solver. The snapshot is the run identity for this slice: do not invent
+a file path or reuse the reference TOML's hash after editing. CLI file-byte
+`scenario_sha256` retains its existing meaning and output shape. A new scenario
+hash, canonical export standard and downloadable report are unnecessary here.
+
+Reuse `_transfer_model_manifest` and `kernel_metadata`; share only the small
+existing runtime/reference metadata construction if needed to avoid duplication.
+Do not call the CLI parser, fabricate a temporary scenario file, or perform a
+second search to produce provenance. Preserve CLI lazy imports and parity tests.
+
+Build the result and provenance as local values under the existing SCIENCE_LOCK,
+then publish both to session state only when both succeed. Resource errors must
+use the existing domain-error presentation path; never publish a result with
+missing provenance. Capture before releasing the lock so later sessions cannot
+replace the recorded resource context. Preserve the existing search deadline;
+this slice makes no new whole-UI runtime guarantee.
+
+Extend `_invalidate` to clear provenance on example reload, any input edit,
+search failure or sampling failure. Slider movement and candidate selection
+reuse the successful search snapshot without regenerating metadata or search.
+Tests must prove metadata-call/search-call counts, snapshot detachment, resource
+failure cleanup and parity with CLI shared fields. Existing endpoints and
+analytic-orbit tolerances stay unchanged. No M3 task becomes complete as a result.
+
 ### Tolerance-purpose clarification (2026-09-14)
 
 Decision0045 distinguishes existing integrator settings, arc continuity,
