@@ -1,5 +1,36 @@
 ## Context
 
+### Research D4 — user-approved scope revision
+
+The next implementation is a research-only script/entrypoint, not a new
+production refine command or UI toggle. Start with the existing explicit
+feasible fixture and candidate d0001-t0035; retain the original infeasible
+fixture as a rejection control. Reuse the M3 environment, boundary conversion,
+TNW engine, seed controls and integrator factories. Do not duplicate dynamics.
+
+Implement a separate research report with outcome and reason, immutable scientific
+values and optional diagnostics; do not weaken PhysicalTrajectoryResult to hold
+unqualified trajectories. Completion, numerical agreement, target residual and
+continuous safety are distinct fields. Continuous safety is always unverified
+in this first slice. A complete nominal run with an unavailable tighter run is
+not numerically validated. Do not fill absent values with zeros.
+
+Compose three nominal arcs and at most three tighter arcs. The same initial
+state, commands and arc epochs are used for both profiles. Carry mass/state
+within each run, and check failures/events before accepting a boundary. State
+which native/evaluation checks are installed and their coverage; no sampled
+check is a substitute for task 3.9. Deadline plumbing precedes any live mission
+experiment. Maximum six launches and one shared scenario runtime budget, with
+no automatic retries; aborting at a budget is a valid diagnostic outcome, not
+a reason to silently increase it.
+
+The exception to whole-interval enclosure gating is authorized only for this
+explicit research path. Strict M3 tasks 3.9, 4.3 and all completion criteria
+remain open and unchanged. First learn the fixed seed's outcome; command
+optimization, public API/UI integration and a target-closure claim require a
+subsequent scoped decision based on that evidence. No new catalogue checks,
+gravity simplification, dependency or experimental tolerance increase.
+
 ### Expanded search budget
 
 Raise only the candidate ceiling to 10000 in validation, grid construction,

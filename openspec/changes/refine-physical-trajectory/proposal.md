@@ -9,6 +9,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ## What Changes
 
+- User-approved research D4: introduce an explicitly labelled, opt-in fixed-seed finite-burn experiment with nominal/tighter comparison. It may run without the strict task-3.9 continuous-safety certificate, but retains validation, mass/detected-collision checks and integration failures. This exception applies only to research-trajectory-experiment, not strict M3 targeting or PhysicalTrajectoryResult. M3 remains incomplete.
 - User-approved search-budget extension: accept at most 10,000 candidates across scenario validation, solver, result invariants and UI. Keep default 2000, unchanged grid algorithm, unchanged default 300-second deadline, and no partial successful result on timeout. The physical model is unchanged.
 - Clarify M2 dynamics versus displayed ephemerides versus collision screening, and visibly warn that asteroid/comet/space-debris screening was not performed. Catalogue-based screening is deferred, not implemented by this change.
 - Add Russian-language help for every explorer input/control and scientific result, including units, actual validation constraints, model usage and limitations; no new defaults, validation rules or physics.
@@ -35,6 +36,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ### New Capabilities
 
+- `research-trajectory-experiment`: bounded single-candidate, fixed-command propagation and honest diagnostic reporting without a continuous-safety claim.
 - `physical-trajectory-refinement`: Deterministic candidate handoff, physical endpoint targeting, high-fidelity force propagation, finite burns, coupled mass, feasibility classification, numerical error budgets, and reproducible result records.
 
 ### Modified Capabilities

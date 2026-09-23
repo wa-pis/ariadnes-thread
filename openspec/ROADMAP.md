@@ -13,6 +13,13 @@ Start with [current state](../CURRENT_STATE.md). Preserve previous results in th
 
 ## Near-term sequence
 
+User-approved research D4 now takes priority: one explicit fixed-seed candidate,
+three arcs plus a tighter repeat, at most six native launches and one shared
+scenario deadline. Implement active tasks D4.1–D4.5. Report endpoint miss and
+numerical agreement separately; never claim continuous safety or M3 completion.
+The strict M3 enclosure prerequisite is waived only for this isolated research
+experiment, not for production refinement. Optimizer and UI integration follow
+only after a separate evidence-based scope decision.
 These are work packages, not additional OpenSpec changes. The sole active change
 remains `refine-physical-trajectory`; its accepted requirements remain in force
 until explicitly revised. This planning edit changes no implementation checkbox.
