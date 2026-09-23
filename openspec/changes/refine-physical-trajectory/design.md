@@ -41,6 +41,25 @@ experiment. Maximum six launches and one shared scenario runtime budget, with
 no automatic retries; aborting at a budget is a valid diagnostic outcome, not
 a reason to silently increase it.
 
+The private D4.2 composer accepts already verified environment/boundary inputs;
+candidate reproduction, fresh environment preparation per profile, global native
+serialization and final report assembly belong to its caller. It reuses the
+native engine, force, integrator, coupled-state and completion adapters. Integrator
+construction and diagnostic settings now read the same pinned profile values.
+
+Research guards check pre-arc states, custom full-step termination evaluations
+inside the requested arc and saved history. Counts include repeated evaluations,
+not unique epochs. Trials past the requested arc end are left to exact time
+termination and are not counted as checked. RK minor stages and between-check
+intervals are not certified. Detected rejection is latched; native failure is
+checked before consuming history, and a detected event precedes final-epoch
+mismatch classification. Research rejects mass equal to dry mass as required;
+the existing strict-M3 classifier is unchanged. Handoff state/mass must match
+the next native history's initial sample exactly; coast history keeps mass fixed.
+No partial endpoint survives an aborted run. Short native toy tests qualify
+composition only and deliberately do not replace real mission ephemerides or
+demonstrate the full-force reference mission.
+
 The exception to whole-interval enclosure gating is authorized only for this
 explicit research path. Strict M3 tasks 3.9, 4.3 and all completion criteria
 remain open and unchanged. First learn the fixed seed's outcome; command

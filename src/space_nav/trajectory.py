@@ -1605,13 +1605,13 @@ def _build_arc_force_models(
         )
 
 
-def _build_arc_integrator(
+def _arc_integrator_profile(
     candidate_id: object,
     arc: Literal["departure-burn", "coast", "arrival-burn"],
     *,
     tighter: bool = False,
-) -> Any:
-    """Build pinned seven-state SI translation/mass integration settings."""
+) -> dict[str, Any]:
+    """Return the pinned settings shared by native construction and reporting."""
     if not isinstance(arc, str) or arc not in {
         "departure-burn", "coast", "arrival-burn",
     } or not isinstance(tighter, bool):
@@ -1630,27 +1630,45 @@ def _build_arc_integrator(
         initial_s, minimum_s, maximum_s = (
             (300.0, 1e-3, 86400.0) if coast else (1.0, 1e-6, 30.0)
         )
+    return {
+        "coefficient_set": "rkdp_87" if tighter else "rkf_78",
+        "relative_tolerance": relative,
+        "absolute_tolerances_si": absolute,
+        "initial_step_s": initial_s, "minimum_step_s": minimum_s,
+        "maximum_step_s": maximum_s, "assess_termination_on_minor_steps": False,
+        "minimum_step_handling": "throw_exception_below_minimum",
+        "accept_infinity_step": False, "accept_nan_step": False,
+    }
+
+
+def _build_arc_integrator(
+    candidate_id: object,
+    arc: Literal["departure-burn", "coast", "arrival-burn"],
+    *,
+    tighter: bool = False,
+) -> Any:
+    """Build pinned seven-state SI translation/mass integration settings."""
+    profile = _arc_integrator_profile(candidate_id, arc, tighter=tighter)
     try:
         propagation_setup = _import_tudat_propagation_setup()
     except RuntimeError as exc:
         _raise_refinement_error(candidate_id, "integrator-construction", str(exc), exc)
     try:
         integrator = propagation_setup.integrator
-        coefficient = (
-            integrator.CoefficientSets.rkdp_87 if tighter
-            else integrator.CoefficientSets.rkf_78
-        )
+        coefficient = getattr(integrator.CoefficientSets, profile["coefficient_set"])
         control = integrator.step_size_control_elementwise_matrix_tolerance(
-            ((relative,),) * 7, tuple((value,) for value in absolute),
+            ((profile["relative_tolerance"],),) * 7,
+            tuple((value,) for value in profile["absolute_tolerances_si"]),
         )
         validation = integrator.step_size_validation(
-            minimum_s, maximum_s,
-            integrator.MinimumIntegrationTimeStepHandling.throw_exception_below_minimum,
-            accept_infinity_step=False, accept_nan_step=False,
+            profile["minimum_step_s"], profile["maximum_step_s"],
+            getattr(integrator.MinimumIntegrationTimeStepHandling, profile["minimum_step_handling"]),
+            accept_infinity_step=profile["accept_infinity_step"],
+            accept_nan_step=profile["accept_nan_step"],
         )
         return integrator.runge_kutta_variable_step(
-            initial_s, coefficient, control, validation,
-            assess_termination_on_minor_steps=False,
+            profile["initial_step_s"], coefficient, control, validation,
+            assess_termination_on_minor_steps=profile["assess_termination_on_minor_steps"],
         )
     except Exception as exc:
         _raise_refinement_error(

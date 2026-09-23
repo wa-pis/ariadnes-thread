@@ -38,8 +38,10 @@ derived residuals/comparison, explicit absent values, detached JSON and separate
 wall timing; fixed false safety flag. Shared budget allows six arcs and no retry.
 137 focused checks and 3,567 full-suite tests pass (628.94 s); Ruff, strict
 OpenSpec and unchanged legacy checksum pass. Scientific tolerances unchanged.
-Next: D4.2 three-arc composition, then executor-level comparison and the bounded
-experiment. No native research experiment has run; strict M3 is not complete.
+D4.2 complete, based on `5015c71`: three arcs, sampled guards and exact handoff.
+242 focused checks and 3,583 full-suite tests pass (585.16 s); Ruff, strict
+OpenSpec and legacy checksum pass. Next: D4.3 frozen-command replay/D4.4 bounded
+mission experiment. No full-force mission run; strict M3 is not complete.
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
