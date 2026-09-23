@@ -14,14 +14,17 @@ from . import ephemeris
 from .cli import _runtime_manifest
 from .errors import EphemerisError, ScenarioValidationError, TransferSearchError
 from .explorer import SCIENCE_LOCK, sample_transfer
+from .explorer_help import CONTROL_HELP, FIELD_HELP, RESULT_HELP
 from .models import ImpulsiveTransferCandidate, Scenario
 from .scenario import scenario_from_mapping
 from .transfer import (
-    IGNORED_SCENARIO_FIELDS, _transfer_model_manifest, search_impulsive_transfers,
+    IGNORED_SCENARIO_FIELDS, _grid_shape, _transfer_model_manifest, search_impulsive_transfers,
 )
 
 
 ROOT = Path(__file__).resolve().parents[2]
+PRIORITIES = {"Меньше топлива": "propellant_mass_kg", "Быстрее долететь": "flight_time_s",
+              "Меньше Δv": "total_delta_v_m_s"}
 LABELS = {
     "departure_start_utc": "Начало окна старта (UTC, …Z)",
     "departure_end_utc": "Конец окна старта (UTC, …Z)",
@@ -57,7 +60,7 @@ LABELS = {
 
 
 def _invalidate() -> None:
-    for name in ("result", "sampled", "sampled_id", "provenance"):
+    for name in ("result", "sampled", "sampled_id", "provenance", "elapsed", "candidate", "priority", "fuel_only"):
         st.session_state.pop(name, None)
 
 
@@ -82,6 +85,12 @@ def _load_example() -> None:
 
 def _input_fields(raw: dict[str, Any]) -> dict[str, Any]:
     values: dict[str, Any] = {}
+    budget = st.number_input("Количество вариантов для проверки", min_value=1, max_value=2000,
+                             value=raw["limits"]["max_candidates"], step=1,
+                             key="field:limits.max_candidates", on_change=_invalidate,
+                             help=FIELD_HELP["max_candidates"])
+    departures, durations = _grid_shape(budget)
+    st.caption(f"{departures} дат старта × {durations} длительностей = {departures * durations} вариантов (максимум {budget}).")
     titles = {"search": "Даты перелёта", "spacecraft": "Аппарат",
               "departure_orbit": "Орбита Луны", "target_orbit": "Орбита Марса",
               "tracking": "Измерения (не используются)", "limits": "Лимиты поиска"}
@@ -89,23 +98,27 @@ def _input_fields(raw: dict[str, Any]) -> dict[str, Any]:
         values[section] = {}
         with st.expander(titles[section], expanded=section in ("search", "spacecraft")):
             for name, value in raw[section].items():
+                if name == "max_candidates":
+                    values[section][name] = budget
+                    continue
                 key = f"field:{section}.{name}"
                 label = LABELS.get(name, name)
                 if isinstance(value, (int, float)):
                     edited = st.number_input(
                         label, value=value, key=key, on_change=_invalidate,
                         format="%d" if isinstance(value, int) else "%.6g",
+                        help=FIELD_HELP[name],
                     )
                 else:
                     text = ", ".join(value) if isinstance(value, list) else value
-                    edited = st.text_input(label, value=text, key=key, on_change=_invalidate)
+                    edited = st.text_input(label, value=text, key=key, on_change=_invalidate, help=FIELD_HELP[name])
                     if isinstance(value, list):
                         edited = [part.strip() for part in edited.split(",")]
                 values[section][name] = edited
     return values
 
 
-def _render_trajectory(candidate: ImpulsiveTransferCandidate) -> None:
+def _prepare_trajectory(candidate: ImpulsiveTransferCandidate) -> None:
     if st.session_state.get("sampled_id") != candidate.candidate_id:
         st.session_state.pop("sampled", None)
         with SCIENCE_LOCK:
@@ -116,8 +129,16 @@ def _render_trajectory(candidate: ImpulsiveTransferCandidate) -> None:
             }
         st.session_state["sampled"] = (states, context)
         st.session_state["sampled_id"] = candidate.candidate_id
+        st.session_state.pop("elapsed", None)
+
+
+def _render_trajectory(candidate: ImpulsiveTransferCandidate) -> None:
+    _prepare_trajectory(candidate)
     states, context = st.session_state["sampled"]
-    index = st.slider("Момент перелёта", 0, len(states) - 1, 0)
+    days = _elapsed_days(candidate.flight_time_s, len(states))
+    selected_day = st.select_slider("Дней после старта", options=days, value=days[0],
+                                    key="elapsed", help=CONTROL_HELP["elapsed"])
+    index = days.index(selected_day)
     scale = 1e9  # m -> million km, display boundary only.
     figure = go.Figure()
     for name, track, color in (
@@ -143,9 +164,15 @@ def _render_trajectory(candidate: ImpulsiveTransferCandidate) -> None:
     st.caption("Проекция XY осей J2000 относительно Солнца; это не плоскость эклиптики. Размеры тел условные.")
     st.write(f"UTC: {current.epoch_utc} · Скорость относительно Солнца: {speed / 1000:.3f} км/с")
     with st.expander("Точное состояние — SI / SSB / J2000"):
+        st.write(RESULT_HELP["state"])
         st.json({"epoch_tdb_s": current.epoch_tdb_s, "time_scale": "TDB seconds since J2000",
                  "origin": current.origin, "orientation": current.orientation,
                  "position_m": current.position_m, "velocity_m_s": current.velocity_m_s})
+
+
+def _elapsed_days(flight_time_s: float, count: int) -> tuple[float, ...]:
+    """Map the existing evenly spaced samples to 86400-second days."""
+    return tuple(flight_time_s * i / (count - 1) / 86400 for i in range(count))
 
 
 def main() -> None:
@@ -172,20 +199,55 @@ def main() -> None:
                 st.session_state.update(result=result, provenance=provenance)
             except (ScenarioValidationError, TransferSearchError, EphemerisError) as exc:
                 st.error(str(exc))
-    with right:
+    result_area = right.empty()
+    with result_area.container():
         if "sampling_error" in st.session_state:
             st.error(st.session_state.pop("sampling_error"))
         result = st.session_state.get("result")
         if result is None:
             st.info("Задайте параметры и нажмите «Рассчитать перелёт».")
             return
-        candidates = {c.candidate_id: c for c in result.pareto_front}
-        chosen = st.selectbox("Вариант перелёта", list(candidates))
+        pending = [c for c in sorted(result.pareto_front, key=lambda c: (
+            getattr(c, PRIORITIES[st.session_state.get("priority", "Меньше топлива")]), c.candidate_id))
+            if not st.session_state.get("fuel_only", False) or c.mass_feasible]
+        if pending:
+            selected = next((c for c in pending if c.candidate_id == st.session_state.get("candidate")), pending[0])
+            try:
+                _prepare_trajectory(selected)
+            except (TransferSearchError, EphemerisError) as exc:
+                _invalidate()
+                st.error(str(exc))
+                return
+        st.selectbox("Приоритет выбора", list(PRIORITIES), key="priority", help=CONTROL_HELP["priority"])
+        st.checkbox("Только варианты, которым хватает топлива", key="fuel_only", help=CONTROL_HELP["fuel_only"])
+        st.caption("Для одного аппарата в идеальной модели расход топлива и Δv дают одинаковое ранжирование.")
+        candidates = {c.candidate_id: c for c in pending}
+        st.caption(f"Видно {len(candidates)} из {len(result.pareto_front)} вариантов фронта Парето.")
+        with st.expander("Справка по результатам"):
+            for text in RESULT_HELP.values():
+                st.write(text)
+        with st.expander("О расчёте"):
+            provenance = st.session_state["provenance"]
+            st.write(f"Модель: {provenance['transfer_model']['identifier']}")
+            st.write(RESULT_HELP["provenance"])
+            st.write(f"Оценено: {result.evaluated_candidates}; решено: {result.solved_candidates}; не решено: {result.failed_candidates}.")
+            st.json(provenance)
+        if not candidates:
+            for key in ("sampled", "sampled_id", "elapsed", "candidate"):
+                st.session_state.pop(key, None)
+            st.info("Нет подходящих вариантов. Отключите фильтр или измените параметры поиска.")
+            return
+        if st.session_state.get("candidate") not in candidates:
+            st.session_state["candidate"] = next(iter(candidates))
+        chosen = st.selectbox("Вариант перелёта", list(candidates),
+                              index=list(candidates).index(st.session_state["candidate"]),
+                              key="candidate", help=CONTROL_HELP["candidate"])
         candidate = candidates[chosen]
+        st.warning("Проверка столкновений с малыми телами и космическим мусором не выполнялась")
         a, b, c = st.columns(3)
-        a.metric("Перелёт, суток", f"{candidate.flight_time_s / 86400:.1f}")
-        b.metric("Идеальное Δv, км/с", f"{candidate.total_delta_v_m_s / 1000:.3f}")
-        c.metric("Топливо, кг", f"{candidate.propellant_mass_kg:.1f}")
+        a.metric("Перелёт, суток", f"{candidate.flight_time_s / 86400:.1f}", help=RESULT_HELP["flight"])
+        b.metric("Идеальное Δv, км/с", f"{candidate.total_delta_v_m_s / 1000:.3f}", help=RESULT_HELP["delta_v"])
+        c.metric("Топливо, кг", f"{candidate.propellant_mass_kg:.1f}", help=RESULT_HELP["fuel"])
         if not candidate.mass_feasible:
             st.error("Недостаточно топлива по идеальной оценке M2: конечная масса ниже сухой.")
         else:
@@ -197,15 +259,8 @@ def main() -> None:
         except (TransferSearchError, EphemerisError) as exc:
             _invalidate()
             st.session_state["sampling_error"] = str(exc)
+            result_area.empty()
             st.rerun()
         with st.expander("Что не учитывает эта модель"):
             st.write("Импульсы оцениваются только в начале и конце перелёта. Продолжительность включений не вычисляется.")
             st.write(list(IGNORED_SCENARIO_FIELDS))
-        with st.expander("О расчёте"):
-            provenance = st.session_state["provenance"]
-            st.write(f"Модель: {provenance['transfer_model']['identifier']}")
-            st.caption("Параметры выполненного поиска: SI / SSB / J2000; время — TDB от J2000. "
-                       "Даты входного сценария — UTC. Это модель M2, не проверка M3.")
-            st.write(f"Оценено: {result.evaluated_candidates}; решено: {result.solved_candidates}; "
-                     f"не решено: {result.failed_candidates}.")
-            st.json(provenance)

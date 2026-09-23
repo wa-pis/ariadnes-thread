@@ -25,15 +25,18 @@ D1–D3 are complete. The "О расчёте" panel reuses CLI metadata and reco
 normalized edited inputs; result/provenance invalidation and reuse are tested.
 Implementation was based on `6a80424`; its commit is identifiable from Git history.
 See [audit](docs/demo-audit.md) for the original gap and active tasks for closure.
-Next: implement the specified explorer usability tasks UI.1–UI.4: elapsed days,
-visible candidate budget/grid, priorities and ideal-fuel filtering. No code has
-changed for this follow-up yet. Then review D4 scope before physical refinement;
-do not automatically resume task-3.9 research.
+UI follow-up delivered: elapsed days, visible budget/grid, priorities and ideal-fuel
+filter, Russian field/result help and unscreened-object warning. Based on `3da51c7`
+plus the subsequently approved specification edits. 33 focused checks and 3,506
+full-suite tests pass (623.39 s); Ruff, strict OpenSpec and legacy checksum pass.
+Next: review D4 scope before physical refinement; catalogue screening remains
+deferred. Do not automatically resume task-3.9 research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
 Changed scientific gates still need explicit approval.
 
 ## Boundaries and references
 
+- Future optional display/gravity/screening: [deferred draft](openspec/deferred/optional-object-analysis/spec.md); not implemented or an active change.
 - No tolerance changes, completed-task claims, M4–M6 work, ML or exporters now.
 - Preserve research evidence and the immutable `moon_to_mars.py`.
 - Rules: [AGENTS.md](AGENTS.md).

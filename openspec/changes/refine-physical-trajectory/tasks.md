@@ -18,12 +18,22 @@ No scientific tolerances changed. Remaining M3 tasks are still incomplete.
 
 ## 1. Public contracts and candidate handoff
 
-### Explorer usability follow-up (pending; independent of M3 physics)
+### Explorer usability follow-up (delivered; independent of M3 physics)
 
-- [ ] UI.1 Replace index labels with elapsed-day sample selection; verify 0/1500/3000-day manufactured endpoints/midpoint, UTC/marker/state consistency, duration-change reset, unchanged 121-sample density and zero repeated search/provenance calls.
-- [ ] UI.2 Promote the single candidate-budget editor and add actual-grid preview; verify budgets 1/100/2000, invalid input rejection, stale-result invalidation, correct solver inputs and unchanged 2000 cap/runtime limit.
-- [ ] UI.3 Add fuel/time/delta-v priorities and ideal-fuel feasibility filtering over the Pareto front; verify each ordering, deterministic ties, defaults, selection preservation/replacement, empty-set recovery, visible counts, immutable results/provenance and zero additional searches.
-- [ ] UI.4 Run focused UI/explorer/CLI tests, Ruff, full pinned suite, strict OpenSpec validation and legacy checks; verify unchanged scientific tolerances and record results before marking this follow-up complete.
+Verification (2026-09-23): 33 focused explorer/UI/CLI checks pass in 11.93 s;
+full suite: 3,506 pass in 623.39 s. Ruff, strict OpenSpec and unchanged legacy
+SHA-256 pass. AppTest checks controls, help coverage, empty-filter recovery,
+selection preservation and cleanup. The 3000-day display check is manufactured,
+not evidence of a feasible 3000-day trajectory. Initial tests exposed selection
+reset and stale rendering after sampling failure; both were fixed before the
+successful runs. Browser visual QA remains unperformed; M3 is still incomplete.
+
+- [x] UI.6 Add visible small-body/debris screening-not-performed warning and help distinguishing ephemerides, propagation forces and collision coverage; verify presence for every displayed candidate including fuel-feasible ones, persistence after time/selection/filter changes, catalogue uncertainty caveats, no fabricated safety/risk claims and no extra scientific calls. Include these checks in UI.4.
+- [x] UI.5 Add Russian help for every input/control and scientific result/provenance field using native tooltips or labelled adjacent text; verify complete nonempty coverage, agreement with validators/units/ignored-field contracts, availability before search and after errors/empty filtering, and zero scientific calls or state changes when reading help. Include these checks in UI.4 before follow-up completion.
+- [x] UI.1 Replace index labels with elapsed-day sample selection; verify 0/1500/3000-day manufactured endpoints/midpoint, UTC/marker/state consistency, duration-change reset, unchanged 121-sample density and zero repeated search/provenance calls.
+- [x] UI.2 Promote the single candidate-budget editor and add actual-grid preview; verify budgets 1/100/2000, invalid input rejection, stale-result invalidation, correct solver inputs and unchanged 2000 cap/runtime limit.
+- [x] UI.3 Add fuel/time/delta-v priorities and ideal-fuel feasibility filtering over the Pareto front; verify each ordering, deterministic ties, defaults, selection preservation/replacement, empty-set recovery, visible counts, immutable results/provenance and zero additional searches.
+- [x] UI.4 Run focused UI/explorer/CLI tests, Ruff, full pinned suite, strict OpenSpec validation and legacy checks; verify unchanged scientific tolerances and record results before marking this follow-up complete.
 
 - [x] 1.1 Add frozen, slotted `TrajectoryBoundaryState`, `FiniteBurnRecord`, `TrajectoryBoundaryDifference`, and `PhysicalTrajectoryResult` records with status-dependent field/count/diagnostic invariants, unit/frame/time labels, finite-value validation, and serialization; verify constructor and round-trip tests cover valid, invalid, infeasible, failed, and converged forms.
 - [x] 1.2 Add `TrajectoryRefinementError` and lazy public package exports for the M3 API without importing TudatPy or loading kernels at import time; verify import-isolation and chained-error tests pass.

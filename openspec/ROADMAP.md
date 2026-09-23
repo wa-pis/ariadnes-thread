@@ -24,10 +24,10 @@ until explicitly revised. This planning edit changes no implementation checkbox.
 | D3 — Deliver one reproducible demonstration | Complete 2026-09-23 | Existing M2 explorer plus calculation-bound provenance panel. 29 focused checks and 3,502 full-suite tests pass; scientific limitations and reference mass shortfall remain visible. This does not qualify finite burns or complete M3. |
 | D4 — Add justified physical refinement | Pending D3 and scope agreement | Demonstrate agreed propagation/finite-burn behavior for one candidate, numerical convergence and independent comparison with explicit tolerances. Complete only when the applicable accepted specification passes. |
 
-Before D4, implement the user-requested explorer usability follow-up UI.1–UI.4
-in the active change: elapsed-day control, visible budget/grid and Pareto
-priorities with an ideal-fuel filter. This follow-up is specified, not delivered;
-completed D3 remains the provenance baseline. No physical gates are changed.
+Explorer usability follow-up delivered 2026-09-23: elapsed-day control, visible
+budget/grid, Pareto priorities, ideal-fuel filter, Russian help and explicit
+unscreened-object warning. 33 focused checks and 3,506 full-suite tests pass;
+Ruff, strict OpenSpec and legacy checksum pass. No physical gates changed.
 
 After that follow-up, review D4 scope, not another task-3.9 proof or native arc. If a
 demonstration needs behavior outside the current contract, revise that contract
@@ -50,6 +50,19 @@ its gates. Review future detailed numerical targets before specification.
 
 ## Research and extensions
 
+- [Optional object analysis draft](deferred/optional-object-analysis/spec.md):
+  independent opt-in display, additional gravity and post-calculation encounter
+  screening, each with explicit coverage, status and provenance. Requirements
+  are recorded; provider choices and numerical gates remain open. No active
+  change or current scientific acceptance gate is replaced by this draft.
+- Deferred: catalogue-based close-approach screening for asteroids, comets and
+  artificial debris, separate from gravitational perturbation modelling. Before
+  implementation, agree object selection, data sources/versions and coverage,
+  reference/time conventions, position uncertainty and encounter thresholds.
+  Define missing/stale-data behavior and measurable validation cases; lack of
+  coverage must not be reported as clearance. Catalogue screening cannot certify
+  absence of unknown objects. No new milestone/change or implementation is
+  authorized here; current UI work only discloses that screening was not done.
 - Pause rigorous full-force error-bound work until a demonstrated need and bounded
   research question justify it. Preserve code, tests and evidence; no separate
   Git branch is created by this planning change.

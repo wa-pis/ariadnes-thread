@@ -1,5 +1,48 @@
 ## ADDED Requirements
 
+### Requirement: Explicit dynamics and collision-screening scope
+The explorer SHALL distinguish ephemeris/display objects, forces used to propagate the spacecraft, and objects covered by collision screening. A displayed planetary track, available SPICE state, successful Lambert solution or ideal fuel-feasible candidate SHALL NOT imply gravitational inclusion, collision clearance or a safe flight corridor. Current M2 output SHALL explicitly report that small-body and space-debris screening was not performed.
+
+#### Scenario: Explain the current M2 model
+- **WHEN** a candidate trajectory is displayed
+- **THEN** adjacent scope text identifies Sun-centred two-body propagation, ephemeris-based Moon/Mars endpoints and ideal impulses, and states that other displayed planetary tracks do not add their gravitational perturbations or collision checks to this arc
+- **AND** uncompleted M3 multi-body force and selected-body guard components are not presented as an operational validated mission calculation
+
+#### Scenario: Warn about unscreened objects
+- **WHEN** any M2 candidate is displayed, including an ideal fuel-feasible candidate
+- **THEN** the visible result area, without opening a help expander, contains "Проверка столкновений с малыми телами и космическим мусором не выполнялась"
+- **AND** nearby help explicitly includes asteroids (including belt objects), comets and artificial debris, and states that no collision probability, minimum clearance or all-object safety guarantee was computed
+
+#### Scenario: Preserve the warning across selection
+- **WHEN** the user changes candidate, time sample, priority or ideal-fuel filter and a candidate remains visible
+- **THEN** the unscreened-object warning remains visible without new scientific calls, changed candidate values or a fabricated safe/zero-risk status
+
+#### Scenario: Explain catalogue limits
+- **WHEN** the user reads collision-screening help
+- **THEN** it states that any future catalogue-based screening would cover only identified objects and its declared time span and uncertainties, and cannot guarantee absence of unknown or untracked objects
+
+### Requirement: Complete field and result help
+The explorer SHALL provide discoverable Russian-language help for every editable scenario field, selection control and displayed scientific result. Help SHALL explain meaning in plain language, displayed units (or that a value is dimensionless), applicable validation constraints and relationships, and the parameter's actual role or lack of use in M2. Help SHALL NOT invent recommended values, silently change inputs, imply ignored fields affect M2, or equate ideal feasibility with flight safety.
+
+#### Scenario: Cover every input and control
+- **WHEN** the user inspects any field in search, departure_orbit, target_orbit, spacecraft, tracking or limits, or the elapsed-day, candidate, priority and fuel-filter controls
+- **THEN** a labelled tooltip or adjacent help text is available for every rendered field/control, including fields inside collapsed sections
+- **AND** automated coverage checks reject a missing or empty help entry for any rendered field/control
+
+#### Scenario: Explain constraints and ignored inputs accurately
+- **WHEN** help is opened for dates, masses, Isp, thrust, orbit orientation, tracking, seed or candidate budget
+- **THEN** it states the applicable format/units and implemented validation rules, including date ordering, initial mass greater than dry mass and integer budget 1–2000
+- **AND** it distinguishes required-but-ignored M2 inputs from active inputs, explains that Isp affects ideal fuel consumption while thrust does not determine burn duration in M2, and introduces no new scientific limits or defaults
+
+#### Scenario: Explain scientific results and provenance
+- **WHEN** results and the provenance panel are displayed
+- **THEN** labelled help explains flight time, departure/arrival dates, delta-v versus instantaneous speed, propellant versus remaining/dry mass, ideal mass feasibility, Pareto trade-offs, grid/evaluated/solved/failed/visible counts, and the displayed model/version/kernel/input-snapshot/reference-state metadata
+- **AND** time help distinguishes UTC date labels, TDB elapsed seconds and 86400-second days; frame help distinguishes scientific SSB/J2000 states from the Sun-relative XY display; units or dimensionless status accompany displayed scientific quantities
+
+#### Scenario: Read help without changing the calculation
+- **WHEN** help is opened before or after a calculation, including after a validation error or an empty filtered result
+- **THEN** help for currently rendered fields remains available without additional search, sampling or provenance calls and without changing inputs, selection or stored results
+
 ### Requirement: Elapsed-day trajectory control
 The explorer SHALL label the time control "Дней после старта" and display elapsed days for the existing sampled trajectory rather than sample indices. One day SHALL equal 86400 TDB seconds; the selected UTC date, marker, speed and state SHALL refer to the same sample. Sampling density and scientific tolerances SHALL remain unchanged.
 

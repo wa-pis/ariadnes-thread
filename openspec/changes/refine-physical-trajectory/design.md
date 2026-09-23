@@ -1,6 +1,25 @@
 ## Context
 
-### Explorer usability follow-up — specified, not implemented
+### Explorer usability follow-up — implemented 2026-09-23
+
+Show an unscreened-small-body/debris warning beside every displayed M2 result,
+not only inside help. Separate displayed ephemerides, active propagation forces
+and collision-screening coverage in the explanation. Do not infer spacecraft
+force inclusion from perturbations embedded in a planetary ephemeris, or infer
+collision clearance from an available state. Keep existing M3 guard requirements
+unchanged; their unfinished implementation is not a current M2 safety feature.
+This slice adds static disclosure only: no catalogue downloads, new force terms,
+encounter searches, risk scores or fictitious numerical collision probabilities.
+
+Provide static Russian help keyed by existing field/control identifiers. Prefer
+Streamlit's native help tooltips and labelled adjacent text for result groups;
+do not build a separate documentation framework. Explain every scientific field
+shown in state/provenance JSON through nearby labelled help, not only the panel
+title. Derive wording from current scenario validators, model contracts and
+IGNORED_SCENARIO_FIELDS, not guesses about physically advisable ranges. Automated
+coverage must enumerate rendered controls and fail for missing/empty help; add
+semantic checks for units, inter-field constraints and M2 ignored-field status.
+Opening help is presentation-only and must not invoke scientific adapters.
 
 Retain 121 trajectory samples. Map the time widget to those discrete samples
 using elapsed TDB seconds / 86400 for its visible values, not index labels.

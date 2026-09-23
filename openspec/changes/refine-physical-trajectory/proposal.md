@@ -9,6 +9,8 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ## What Changes
 
+- Clarify M2 dynamics versus displayed ephemerides versus collision screening, and visibly warn that asteroid/comet/space-debris screening was not performed. Catalogue-based screening is deferred, not implemented by this change.
+- Add Russian-language help for every explorer input/control and scientific result, including units, actual validation constraints, model usage and limitations; no new defaults, validation rules or physics.
 - User-requested explorer usability follow-up: replace sample-index labels with elapsed days, promote the existing 1–2000 search budget with actual-grid preview, and add explicit Pareto sorting by fuel/time/delta-v plus an ideal-mass-feasibility filter. This is presentation-only; no new optimizer, scientific gate, search limit or M3 completion claim.
 - D2 planning revision (2026-09-23): first deliver the D3 read-only M2 explorer provenance panel described in the added `visual-transfer-explorer` delta. Bind provenance to normalized edited inputs and reuse existing CLI model/resource conventions. This bounded presentation slice does not complete M3 or relax its gates; remaining physical implementation stays paused pending roadmap D4 scope review.
 - User-approved on 2026-09-09: replace production 300 s interpolated ephemerides with Tudat direct SPICE for all eight bodies. Preserve the old tables only as regression evidence; validate complete SPK center-chain coverage before environment creation, retain all numerical tolerances and the shared deadline, and identify the revised model as `cannonball-srp-schwarzschild-direct-spice-v2` (with the existing model prefix).

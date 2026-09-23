@@ -28,6 +28,16 @@ calculate. Select a candidate and move the time slider. Changing input clears
 old results. The original example has an ideal propellant shortfall: this is
 shown as a warning, not hidden by choosing another spacecraft.
 
+The main controls expose a 1–2000 candidate budget and the actual date/duration
+grid. Sort the returned Pareto front by fuel, flight time or delta-v; optionally
+filter by ideal fuel feasibility. These view preferences do not repeat search.
+An empty filter retains the search provenance and can be cleared. The trajectory
+control displays elapsed 86400-second days rather than sample indices.
+
+Every input has Russian help with units, constraints and M2 usage. Results have
+an additional glossary. Small-body/debris screening is explicitly not performed;
+displayed planetary tracks do not establish gravitational inclusion or safety.
+
 Expand **О расчёте** after calculating to inspect the M2 model, runtime/resource
 versions, loaded SPICE kernel metadata, search counts and normalized SI inputs.
 These describe the completed search, including your edits, not the original
