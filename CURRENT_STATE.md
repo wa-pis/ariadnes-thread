@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-09-26. Keep this file under 60 lines; replace stale status instead
+Updated: 2026-09-27. Keep this file under 60 lines; replace stale status instead
 of appending a diary. This is a navigation aid, not an alternative specification.
 
 ## Goal and scheduling
@@ -41,11 +41,11 @@ deadline; 124 focused checks and 3,598 full-suite tests pass (626.61 s).
 Ruff, strict OpenSpec and legacy pass. Partial failures remain unqualified.
 D4.4 complete: six arcs in 20.10 s; agreement fails (1751.29 m), miss ~198M km.
 Based on `2aca9f6`: 130 focused / 3,604 full tests pass (607.53 s); static checks pass.
-Next: D4.5 bounded replay proposal; Decision 0080 separates seed geometry/error.
+D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pass.
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-Changed scientific gates still need explicit approval.
+Next: agree bounded identical-start coast diagnosis; no changed scientific gates.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ Changed scientific gates still need explicit approval.
 - Rules: [AGENTS.md](AGENTS.md).
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest diagnosis: [Decision 0080](docs/decisions/0080-seed-and-integration-diagnosis.md); no native rerun.
+- Latest evidence: [Decision 0081](docs/decisions/0081-research-reproducibility.md); repeatable, not accurate.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

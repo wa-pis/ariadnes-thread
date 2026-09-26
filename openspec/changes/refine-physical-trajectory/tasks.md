@@ -6,7 +6,16 @@
 - [x] D4.2 Compose fixed-seed departure/coast/arrival arcs with existing native adapters and checked state/mass handoff; verify manufactured continuity and mass checks, invalid initial state, detected collision/dry-mass precedence, native failure and no continuation from partial history. Declare actual guard sampling/event coverage explicitly.
 - [x] D4.3 Add frozen-command nominal/tighter comparison and target residual reporting; verify all four boundaries against 10 m / 0.0001 m/s / 0.000001 kg, commands unchanged, deliberate disagreement and tighter-run failure remain unqualified, and no trajectory safety claim follows.
 - [x] D4.4 Run one bounded live reference experiment after D4.1–D4.3 checks pass; retain script and machine-readable outcome/resource/model/command/counter/timing evidence, including failure. Verify one shared default 300-second budget, at most six arc launches, and zero automatic retries. Do not mark target closure or strict M3 completion without its separate evidence.
-- [ ] D4.5 Run focused research/native/regression tests, full suite, Ruff, strict OpenSpec and legacy checks; record reproducibility checks with sufficient budget and update roadmap while leaving unfinished strict M3 gates open.
+- [x] D4.5 Run focused research/native/regression tests, full suite, Ruff, strict OpenSpec and legacy checks; record reproducibility checks with sufficient budget and update roadmap while leaving unfinished strict M3 gates open.
+
+D4.5 closure (2026-09-27): [Decision 0081](../../../docs/decisions/0081-research-reproducibility.md)
+records one authorized replay at `1c8fd9e`: six arcs, 22.114353167 s, zero retries.
+Parsed science and reproduction objects match Decision 0079 exactly; only wall
+time differs. Numerical agreement remains false, with unchanged target miss.
+130 focused tests pass in 1.77 s; Ruff, strict OpenSpec and legacy pass. Full
+suite evidence (3,604 pass, 607.53 s) is reused from `0138db9`, not rerun: source,
+tests and environment/package files are unchanged. D4 is an experimentally
+complete research slice, not numerical qualification or strict M3 completion.
 
 2026-09-26 read-only diagnosis at `0138db9`: [Decision 0080](../../../docs/decisions/0080-seed-and-integration-diagnosis.md)
 separates the prescribed untargeted seed's geometry limitation from integration
