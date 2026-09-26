@@ -8,6 +8,12 @@
 - [x] D4.4 Run one bounded live reference experiment after D4.1–D4.3 checks pass; retain script and machine-readable outcome/resource/model/command/counter/timing evidence, including failure. Verify one shared default 300-second budget, at most six arc launches, and zero automatic retries. Do not mark target closure or strict M3 completion without its separate evidence.
 - [ ] D4.5 Run focused research/native/regression tests, full suite, Ruff, strict OpenSpec and legacy checks; record reproducibility checks with sufficient budget and update roadmap while leaving unfinished strict M3 gates open.
 
+2026-09-26 read-only diagnosis at `0138db9`: [Decision 0080](../../../docs/decisions/0080-seed-and-integration-diagnosis.md)
+separates the prescribed untargeted seed's geometry limitation from integration
+disagreement accumulated across coast. No native run, changed code, tolerances
+or acceptance gates. D4.5 remains open; one identical-input bounded replay is
+proposed next, not silently performed or counted as numerical acceptance.
+
 D4.4 evidence (2026-09-24, based on `2aca9f6` plus hashed new source): the
 standalone `python -m space_nav.research_experiment SCENARIO OUTPUT` reproduces
 the selected candidate from fresh input, shares the original deadline with
