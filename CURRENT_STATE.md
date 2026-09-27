@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D5 complete: 157 focused / 3,631 full tests pass (595.03 s); next: scope convergence study.
+D5 complete: 157 focused / 3,631 full tests pass (595.03 s); next: D6.1 step-study adapter.
 
 ## Boundaries and references
 

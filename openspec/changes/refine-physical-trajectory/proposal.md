@@ -9,6 +9,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ## What Changes
 
+- Research follow-ups D5/D6 isolate coast disagreement without changing production physics or acceptance gates. D5 compares identical-start profiles; D6 varies only the tighter coast profile's maximum step (21600/10800/5400 s), with three launches maximum under one 300-second deadline. Observed step sensitivity is not an absolute error bound or mission qualification.
 - User-approved research D4: introduce an explicitly labelled, opt-in fixed-seed finite-burn experiment with nominal/tighter comparison. It may run without the strict task-3.9 continuous-safety certificate, but retains validation, mass/detected-collision checks and integration failures. This exception applies only to research-trajectory-experiment, not strict M3 targeting or PhysicalTrajectoryResult. M3 remains incomplete.
 - User-approved search-budget extension: accept at most 10,000 candidates across scenario validation, solver, result invariants and UI. Keep default 2000, unchanged grid algorithm, unchanged default 300-second deadline, and no partial successful result on timeout. The physical model is unchanged.
 - Clarify M2 dynamics versus displayed ephemerides versus collision screening, and visibly warn that asteroid/comet/space-debris screening was not performed. Catalogue-based screening is deferred, not implemented by this change.

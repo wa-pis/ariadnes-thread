@@ -1,5 +1,34 @@
 ## Context
 
+### Research D6 — maximum-step sensitivity, not a certified error estimate
+
+Decision 0082 found zero nominal restart drift but 115.67 m of identical-start
+profile disagreement. D6 tests one variable: copy the existing tighter coast
+settings and set maximum_step_s to 21600, 10800 or 5400. Keep rkdp_87, relative
+tolerance 1e-13, absolute translation/mass tolerances, initial step 75 s, minimum
+step 1e-5 s, force inventory and initial state fixed. No global profile mutation,
+monkeypatching of production settings or new general experiment framework.
+Reuse the D5 coast path and its validation/guards; retain D5's two-launch cap.
+D6 has a separately enforced three-launch cap and one 300-second deadline.
+
+Run the 21600-second control first and compare its endpoint to the retained D5
+tighter endpoint. Stop on a failed baseline comparison using existing thresholds.
+Only then run the two refinements. Report all pairwise differences. A ratio of
+adjacent difference norms is descriptive, not an extrapolated error estimate;
+when its denominator is zero, retain null and a reason. Do not assign Richardson
+order or certify the finest profile as truth from three adaptive-step endpoints.
+
+The step controller may already choose intervals shorter than the new cap.
+Record the saved epoch mesh digest and interval statistics to expose an unchanged
+mesh. Saved intervals include endpoint handling and do not reveal all rejected
+steps or internal RK stages. An unchanged mesh/result is not independent accuracy
+evidence. No automatic tolerance changes or retries if refinement is inconclusive.
+
+This is a scoped continuation of isolated research, not new production defaults,
+targeting, UI or strict M3 implementation. Build/test before one bounded live
+study; retain any failure. The 10 m / 0.0001 m/s / 0.000001 kg comparison gates
+and continuous-safety caveats stay unchanged.
+
 ### Research D5 — identical-start coast diagnosis
 
 D4's result is reproducible but fails integration agreement and target closure.

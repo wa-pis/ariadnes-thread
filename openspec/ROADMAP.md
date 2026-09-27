@@ -31,6 +31,7 @@ until explicitly revised. This planning edit changes no implementation checkbox.
 | D3 — Deliver one reproducible demonstration | Complete 2026-09-23 | Existing M2 explorer plus calculation-bound provenance panel. 29 focused checks and 3,502 full-suite tests pass; scientific limitations and reference mass shortfall remain visible. This does not qualify finite burns or complete M3. |
 | D4 — Research-only fixed-seed experiment | Research complete; numerical qualification failed | Authorized replay completed six arcs in 22.11 s with exactly matching science/provenance. Agreement still fails (1751.29 m); target miss remains. See [Decision 0081](../docs/decisions/0081-research-reproducibility.md). No continuous-safety or strict-M3 completion claim. |
 | D5 — Identical-start coast diagnosis | Diagnostic complete; position agreement failed | Two arcs in 7.62 s; zero nominal restart drift, same-input separation 115.67 m exceeds 10 m. 3,631 tests pass. See [Decision 0082](../docs/decisions/0082-identical-start-coast.md). No accuracy or strict-M3 qualification. |
+| D6 — Maximum-step sensitivity | Specified; not implemented or run | Same-start rkdp_87 coast with maximum steps 21600/10800/5400 s, one 300 s budget and at most three launches; verify baseline and actual saved meshes, no accuracy or safety certification. |
 
 Explorer usability follow-up delivered 2026-09-23: elapsed-day control, visible
 budget/grid, Pareto priorities, ideal-fuel filter, Russian help and explicit

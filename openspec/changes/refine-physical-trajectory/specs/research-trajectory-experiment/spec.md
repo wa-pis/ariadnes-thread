@@ -101,3 +101,41 @@ native arc launches, counted before execution, with zero automatic retries.
 - **WHEN** a coast diagnostic finishes or aborts
 - **THEN** finite machine-readable evidence records the reference digest, source identity, normalized scenario, candidate, resource/model metadata, actual integrator settings, supplied initial state and epochs, guard coverage, counters and outcome separately from wall time
 - **AND** it states research-only and continuous_safety_verified=false, does not overwrite prior evidence, and does not qualify target closure, strict M3 or task 3.9
+
+### Requirement: Bounded single-variable coast step study
+The research-only D6 study SHALL run at most three coast profiles from the same
+nominal departure cutoff used by D5, in order of maximum step 21600, 10800 and
+5400 seconds. Each SHALL use the pinned tighter rkdp_87 profile with only its
+maximum_step_s changed in a diagnostic-local copy. Relative/absolute tolerances,
+initial/minimum step, termination policy, forces, mass, start/end epochs and
+reference conventions SHALL remain unchanged. Production profiles and D5's
+two-launch limit SHALL remain unchanged. One shared 300-second cooperative
+deadline SHALL cover input verification, preparations and all three launches.
+No retries, additional profiles, optimizer or automatic production promotion
+are permitted. D5 reference/resource verification and sampled guards SHALL apply.
+
+#### Scenario: Bind the step-study baseline
+- **WHEN** D6 starts with verified Decision 0079 and Decision 0082 artifact identities
+- **THEN** each native initial history matches the same seven supplied state/mass components and epoch exactly, and the first completed endpoint is compared to Decision 0082's tighter endpoint
+- **AND** if baseline drift exceeds 10 m, 0.0001 m/s or 0.000001 kg, no smaller-step profile starts and the report states baseline mismatch rather than attributing a difference to step refinement
+
+#### Scenario: Change only the maximum step
+- **WHEN** all three diagnostic settings are constructed
+- **THEN** their scientific settings differ only in maximum_step_s with exact values 21600, 10800 and 5400, and querying the original production profiles before and after returns identical values
+- **AND** each profile uses a fresh resource-matched full-force environment without thrust, preserves constant coast mass and completes under the existing epoch tolerance
+
+#### Scenario: Report empirical refinement without an accuracy claim
+- **WHEN** all profiles finish
+- **THEN** the report contains signed endpoint differences and position/velocity/mass norms for every pair, plus unchanged-threshold flags for each pair
+- **AND** it reports the second adjacent difference divided by the first separately for position and velocity when the denominator is positive; zero denominators produce null ratios with an explicit reason, never NaN, infinity or a fictitious convergence order
+- **AND** it distinguishes decreasing, unchanged or increasing adjacent differences without asserting absolute accuracy, an asymptotic order, a global error bound or task-3.9 safety
+
+#### Scenario: Observe whether the step cap changed the calculation
+- **WHEN** a profile completes
+- **THEN** the report retains a digest of its ordered saved epoch sequence and saved-interval count, minimum, median and maximum in seconds, labelled saved intervals rather than RK stages or all attempted internal steps
+- **AND** unchanged saved meshes or unchanged endpoints are reported explicitly and are not by themselves called proof of convergence
+
+#### Scenario: Preserve failures and stop within the study budget
+- **WHEN** input verification fails, a sampled event is rejected, a native call fails or the shared deadline expires
+- **THEN** no further profile starts, attempted/completed arc counts and contextual reasons are retained, incomplete profiles expose no endpoint, and comparisons requiring missing endpoints are unavailable
+- **AND** evidence is finite JSON, records source/reference/resource/settings identity and guard coverage, separates wall time, never overwrites earlier artifacts and always disclaims continuous safety and mission qualification

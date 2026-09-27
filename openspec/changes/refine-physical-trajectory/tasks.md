@@ -1,5 +1,11 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D6 — bounded maximum-step study (specified 2026-09-27)
+
+- [ ] D6.1 Reuse the coast diagnostic for three diagnostic-local tighter profiles (maximum steps 21600/10800/5400 s); verify only that setting changes, production settings/D5 cap stay unchanged, baseline mismatch prevents refinements, one deadline/three-launch cap/no retries, shared guards, signed pairwise comparisons, finite zero-denominator handling and saved-mesh statistics/digests with manufactured and native-oracle tests.
+- [ ] D6.2 After focused checks pass, execute one bounded live study and retain finite JSON, invocation, reference/source/resource/settings provenance, mesh diagnostics, pairwise differences, counters and timing, including failure; verify no extra profiles or promotion to production and distinguish step sensitivity from absolute accuracy.
+- [ ] D6.3 Run focused/native regressions, full suite, Ruff, strict OpenSpec and legacy checks; record evidence and update roadmap/current state while strict M3 and safety remain open.
+
 ### Research D5 — identical-start coast diagnosis (specified 2026-09-27)
 
 - [x] D5.1 Implement the private two-profile coast diagnostic by reusing existing native adapters and research guards; verify reference/scenario/resource mismatch before launches, identical initial histories, no thrust, constant mass, contextual failure without partial endpoints, one shared deadline, two-launch cap and zero retries. Verify signed differences and non-additive norms with manufactured cases and a native analytic coast oracle.
