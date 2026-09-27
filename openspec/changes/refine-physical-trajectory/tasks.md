@@ -1,5 +1,11 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D7 — one target-correction attempt (specified 2026-09-27)
+
+- [ ] D7.1 Add pure six-control correction arithmetic using existing scaling/bounds and NumPy; verify an independently solvable linear fixture, column order/units, rank deficiency, nonfinite rejection, trust cap, angular wrapping, unchanged closure gates and zero-score handling. No native mission run in this step.
+- [ ] D7.2 Reuse the research composer with a D7-local budget and baseline/probe/trial/tighter orchestration; verify reference mismatch stops probes, fresh environments, one shared deadline, 8/9/27 accounting, unchanged D4–D6 limits, guards, failure evidence, no probe selection/retries and tighter validation only for an improving trial. Run focused native adapter regressions.
+- [ ] D7.3 After focused checks pass, execute one bounded live study, retain finite exclusive-output evidence and a decision record including failure, raw residual changes, score/closure/agreement distinctions and provenance; run full suite, Ruff, strict OpenSpec and legacy checks before implementation completion. Update roadmap/current state; leave strict M3 and task 3.9 open.
+
 ### Research D6 — bounded maximum-step study (specified 2026-09-27)
 
 - [x] D6.1 Reuse the coast diagnostic for three diagnostic-local tighter profiles (maximum steps 21600/10800/5400 s); verify only that setting changes, production settings/D5 cap stay unchanged, baseline mismatch prevents refinements, one deadline/three-launch cap/no retries, shared guards, signed pairwise comparisons, finite zero-denominator handling and saved-mesh statistics/digests with manufactured and native-oracle tests.

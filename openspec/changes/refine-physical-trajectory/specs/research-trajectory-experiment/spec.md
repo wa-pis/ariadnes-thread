@@ -1,5 +1,34 @@
 ## ADDED Requirements
 
+### Requirement: Bounded research-only command correction
+The D7 experiment SHALL test at most one six-control update from the prescribed
+reference seed, using the unchanged physical model, target and nominal/tighter
+integrator profiles. D4–D6 limits SHALL remain unchanged. D7 SHALL remain separate
+from the production corrector and SHALL always disclaim continuous safety.
+
+#### Scenario: Verify baseline before changing commands
+- **WHEN** D7 is invoked for the pinned reference fixture and candidate d0001-t0035
+- **THEN** it verifies Decision 0079 identity, scenario, candidate, seed and resource provenance and recomputes a nominal baseline with a fresh environment
+- **AND** probes start only if all four boundary epochs and controls match and state/mass drift stays within 10 m, 0.0001 m/s and 0.000001 kg; otherwise the report records the mismatch and no probe launches
+
+#### Scenario: Compute one empirical correction
+- **WHEN** the baseline completes and does not already meet both target gates
+- **THEN** six forward probes run in control order using increments (0.00001 rad, 0.00001 rad, 1 s) for each burn, with separate fresh resource-matched environments
+- **AND** the scaled residual uses 1000 m and 0.01 m/s, trust scales use (0.25 rad, 0.25 rad, 600 s) for each burn, and the scaled Jacobian and NumPy least-squares solve use rcond=1e-12 with finite rank six required
+- **AND** the update is capped to unit infinity norm in trust coordinates before one alpha=1 trial; no damping retry, alternate finite difference, extra iteration or probe-as-command is permitted
+
+#### Scenario: Distinguish improvement from target closure and validation
+- **WHEN** the corrected nominal trial completes
+- **THEN** the report stores signed terminal residuals, separate position/velocity norms, scaled score and its ratio to baseline (null with reason for a zero denominator)
+- **AND** improvement means both endpoint gates of 1000 m and 0.01 m/s pass or the score is at most 0.9999 times the baseline score; neither improvement nor closure implies mission qualification
+- **AND** only an improving trial receives one frozen-command tighter run, whose four boundary differences use the unchanged 10 m / 0.0001 m/s / 0.000001 kg gates and whose failed or unavailable agreement is retained separately
+
+#### Scenario: Preserve bounded failures and evidence
+- **WHEN** a control or probe is rejected, the Jacobian loses rank, a native run fails, a sampled guard triggers or the deadline expires
+- **THEN** no further trial starts; the reason, prior completed evidence and attempted/completed counts remain, while incomplete endpoints and unavailable comparisons stay absent
+- **AND** one shared 300-second cooperative deadline, eight control attempts, nine propagation evaluations and 27 native arcs are hard invocation limits, with no retries or automatically enlarged budget
+- **AND** finite exclusive-output JSON records source/reference/resource/settings identity, each run's controls and role, residual changes, Jacobian, rank and singular values when available, sampled-check coverage and separate wall time; the report never marks strict M3 or continuous safety complete
+
 ### Requirement: Separate opt-in research experiment
 The system SHALL provide an explicitly requested D4 research experiment distinct
 from strict M3 refinement. It SHALL NOT return PhysicalTrajectoryResult, claim

@@ -1,5 +1,72 @@
 ## Context
 
+### Research D7 — one correction attempt toward the existing target
+
+Decision 0083 completes the bounded coast study without establishing accuracy.
+Do not extend that study automatically. Test whether one step of the already
+specified six-control formulation reduces the full-trajectory target residual.
+This is an explicit research-only exception to D4's fixed-command scope, not
+permission to bypass strict M3 gates in a production corrector.
+
+Use examples/m3_feasible_mission.toml, candidate d0001-t0035 and the unchanged
+prescribed seed. Verify pinned Decision 0079 input/candidate/runtime/resources,
+rebuild boundaries and seed, and reproduce one nominal three-arc baseline.
+Compare all four baseline boundary states/masses to stored nominal values using
+10 m / 1e-4 m/s / 1e-6 kg gates, with identical epochs and controls. A mismatch
+stops before probes. Record current source hashes, not equality to old sources.
+
+Controls are (a_d, e_d, tau_d, a_a, e_a, tau_a). Terminal residual is propagated
+minus target position/velocity at the fixed arrival epoch, SI/SSB/J2000. Reuse
+rho=(delta_r/1000 m, delta_v/0.01 m/s), S=norm(rho), forward increments
+h=(1e-5 rad,1e-5 rad,1 s) repeated for both burns, and trust scales
+s=(0.25 rad,0.25 rad,600 s) repeated. Run six probes from the same seed in index
+order, each in a fresh native environment. Record raw signed residual changes
+as well as J_z[:,j]=(rho_probe-rho_seed)/(h_j/s_j). Finite differences are
+empirical sensitivities, not derivative error certificates; D6 is not a noise
+bound for these different, perturbed three-arc trajectories.
+
+Use the existing NumPy dependency: lstsq(J_z,-rho_seed,rcond=1e-12), require
+finite values and rank six, retain singular values and rank. Cap dz by
+1/max(1,norm_inf(dz)), set dx=s*dz, and attempt exactly x_trial=x_seed+dx.
+Canonicalize/validate through the existing control gate. No alternative seed,
+backward difference, damping retry, second iteration or best-probe selection.
+Unavailable probe, deficient rank or invalid trial yields an explicit stopped
+outcome; never invent a missing Jacobian column. This intentionally tests only
+alpha=1, unlike the separately specified production damping schedule.
+
+Report actual position and velocity miss separately, S and S_trial/S_seed
+(null with reason if S_seed=0). A valid trial is improving only when it closes
+both existing endpoint gates (1000 m and 0.01 m/s) or satisfies
+S_trial <= S_seed*(1-1e-4). Reduced combined score need not reduce both norms.
+Probes are never eligible commands. If the baseline already closes, stop and
+report that observation without probes or a convergence claim.
+
+Only an improving trial receives one tighter three-arc run with identical
+controls, initial state and arc epochs, fresh resource-matched environment,
+and the existing nominal/tighter profiles. Reuse boundary-comparison gates
+10 m / 1e-4 m/s / 1e-6 kg. An improving nominal result with a failed/unavailable
+tighter comparison remains unvalidated; never overwrite either outcome.
+No Moon-400/Mars-60 runs, UI/API change or production promotion in D7.
+
+One cooperative 300-second clock starts before input verification. Enforce at
+most eight control attempts (seed, six probes, one update), nine propagation
+evaluations including the frozen tighter diagnostic, and 27 native arcs.
+Analytic rejection consumes an attempt but no native launch; native attempts
+count before execution and completions only after guards/handoff checks. Stop
+the whole study on a failed arc, event, invalid/nonfinite result or deadline;
+no retry after failure. Preserve prior completed evidence, never an endpoint for
+an incomplete run. These D7-local caps must not relax D4/D5/D6 budget classes.
+
+Reuse the research composer, control/boundary/force adapters and sampled guards;
+introduce only the local budget/orchestration and pure correction arithmetic
+needed by this slice. Store finite JSON with controls for each labelled role,
+resources/source/reference hashes, residuals, solve diagnostics, rejection and
+arc counters, check coverage and wall time separately. All records are research
+only; continuous_safety_verified=false. Exclusive output protects old evidence.
+Complete manufactured tests and native adapter regressions before one live run;
+retain failure and stop. This is not the full eight-iteration targeting spike,
+does not meet task 3.9, and cannot qualify strict M3 or a flyable trajectory.
+
 ### Research D6 — maximum-step sensitivity, not a certified error estimate
 
 Decision 0082 found zero nominal restart drift but 115.67 m of identical-start
