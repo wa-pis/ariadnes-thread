@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D5 complete: 157 focused / 3,631 full tests pass (595.03 s); next: D6.1 step-study adapter.
+D6 complete: 181 focused / 3,655 full tests pass (644.15 s); next: scope target closure.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D5 complete: 157 focused / 3,631 full tests pass (595.03 s); next: D6.1 step-stu
 - Rules: [AGENTS.md](AGENTS.md).
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest evidence: [Decision 0082](docs/decisions/0082-identical-start-coast.md); zero nominal restart drift, not accuracy.
+- Latest evidence: [Decision 0083](docs/decisions/0083-coast-step-study.md), base `5e92d54`; step differences 0.47–1.97 m, increasing, not accuracy.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

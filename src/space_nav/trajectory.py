@@ -1649,6 +1649,15 @@ def _build_arc_integrator(
 ) -> Any:
     """Build pinned seven-state SI translation/mass integration settings."""
     profile = _arc_integrator_profile(candidate_id, arc, tighter=tighter)
+    return _build_integrator_from_profile(candidate_id, arc, profile)
+
+
+def _build_integrator_from_profile(
+    candidate_id: object,
+    arc: str,
+    profile: dict[str, Any],
+) -> Any:
+    """Internal native factory; callers supply a validated pinned/local profile."""
     try:
         propagation_setup = _import_tudat_propagation_setup()
     except RuntimeError as exc:

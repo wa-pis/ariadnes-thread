@@ -198,7 +198,8 @@ def test_diagnostic_wiring(monkeypatch: pytest.MonkeyPatch, failure: str) -> Non
     json.dumps(result, allow_nan=False)
 
 
-def test_native_coast_matches_uniform_motion(monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.parametrize("study", [False, True])
+def test_native_coast_matches_uniform_motion(monkeypatch: pytest.MonkeyPatch, study: bool) -> None:
     """Toy native oracle: negligible gravity, not reference-mission evidence."""
     from tudatpy.dynamics import environment_setup, propagation_setup
     import numpy as np
@@ -225,8 +226,8 @@ def test_native_coast_matches_uniform_motion(monkeypatch: pytest.MonkeyPatch) ->
     monkeypatch.setattr(physical, "_build_arc_force_models", forces)
     initial = replace(report.nominal.boundaries[0], position_m=(0.0, 1e7, 0.0),
                       velocity_m_s=(1000.0, 0.0, 0.0))
-    budget = coast._CoastBudget(report.candidate_id, 300)
-    for tighter in (False, True):
+    budget = (coast._StepStudyBudget if study else coast._CoastBudget)(report.candidate_id, 300)
+    for tighter in ((True, True, True) if study else (False, True)):
         env = SimpleNamespace(
             model_id=physical.PHYSICAL_MODEL_IDENTIFIER, origin="SSB", orientation="J2000",
             initial_epoch_tdb_s=100.0, final_epoch_tdb_s=200.0,
@@ -239,4 +240,7 @@ def test_native_coast_matches_uniform_motion(monkeypatch: pytest.MonkeyPatch) ->
         assert result.endpoint[:3] == pytest.approx((100000.0, 1e7, 0.0), abs=1e-6, rel=0)
         assert result.endpoint[3:6] == pytest.approx((1000.0, 0.0, 0.0), abs=1e-9, rel=0)
         assert result.endpoint[6] == 2000.0
-    assert budget.completed_arcs == 2
+        if study:
+            assert result.saved_mesh is not None
+            assert result.saved_mesh.interval_count >= 1
+    assert budget.completed_arcs == (3 if study else 2)

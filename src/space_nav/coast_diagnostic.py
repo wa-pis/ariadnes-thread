@@ -1,4 +1,4 @@
-"""Private D5 identical-start coast experiment; no mission qualification."""
+"""Private D5/D6 coast diagnostics; no mission qualification."""
 
 from __future__ import annotations
 
@@ -8,6 +8,7 @@ from hashlib import sha256
 import json
 import math
 from pathlib import Path
+from statistics import median
 from typing import Any
 
 from . import trajectory as physical
@@ -19,6 +20,8 @@ from .research_propagation import _COVERAGE
 
 
 _REFERENCE_SHA256 = "17f03d9557be6e439af5f1c388e1eb092f55236b3c2afc3de65006d5f639c235"
+_STEP_BASELINE_SHA256 = "1a62dd55c642e71530a7092522ff5c6c3408444e4f9e7bea149894f25d1928a2"
+_MAXIMUM_STEPS_S = (21600.0, 10800.0, 5400.0)
 
 
 @dataclass(slots=True)
@@ -49,6 +52,46 @@ class _CoastBudget(physical._RefinementBudget):
         self.completed_arcs += 1
 
 
+class _StepStudyBudget(_CoastBudget):
+    """D6 only: three single coast arcs, retaining D5's independent two-arc cap."""
+
+    __slots__ = ()
+
+    def begin_arc(self, *, first_in_evaluation: bool) -> None:
+        self.check()
+        if (self.stopped or self.native_arc_propagations >= 3
+                or self.completed_arcs != self.native_arc_propagations
+                or first_in_evaluation is not True):
+            self._fail("step-study-budget", "three single arcs only; no retries or continuation")
+        physical._RefinementBudget.begin_arc(self, first_in_evaluation=True)
+
+
+def _step_profile(candidate_id: object, index: int) -> dict[str, Any]:
+    if isinstance(index, bool) or not isinstance(index, int) or not 0 <= index < 3:
+        raise ValueError("step profile index must be 0, 1 or 2")
+    return {**physical._arc_integrator_profile(candidate_id, "coast", tighter=True),
+            "maximum_step_s": _MAXIMUM_STEPS_S[index]}
+
+
+@dataclass(frozen=True, slots=True)
+class _SavedMesh:
+    epoch_sequence_sha256: str
+    interval_count: int
+    minimum_interval_s: float
+    median_interval_s: float
+    maximum_interval_s: float
+
+
+def _saved_mesh(epochs: tuple[float, ...]) -> _SavedMesh:
+    values = tuple(physical._finite_float("saved epoch", v) for v in epochs)
+    intervals = tuple(physical._positive_finite("saved interval", b - a)
+                      for a, b in zip(values, values[1:]))
+    if not intervals:
+        raise ValueError("saved mesh requires at least two distinct epochs")
+    digest = sha256(json.dumps(values, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+    return _SavedMesh(digest, len(intervals), min(intervals), median(intervals), max(intervals))
+
+
 @dataclass(frozen=True, slots=True)
 class _CoastRun:
     """Checked private output; endpoint is absent on any failure, SI/SSB/J2000."""
@@ -57,6 +100,7 @@ class _CoastRun:
     endpoint: tuple[float, ...] | None
     checked_state_count: int
     reason: str | None
+    saved_mesh: _SavedMesh | None = None
 
 
 def _propagate_coast(
@@ -110,9 +154,16 @@ def _propagate_coast(
 
     try:
         budget.check()
-        if (not isinstance(tighter, bool) or budget.stopped
-                or budget.native_arc_propagations != int(tighter)
-                or budget.completed_arcs != int(tighter)):
+        study = isinstance(budget, _StepStudyBudget)
+        if study:
+            index = budget.native_arc_propagations
+            if tighter is not True or budget.stopped or budget.completed_arcs != index:
+                raise ValueError("step study requires ordered tighter profiles")
+            settings = _step_profile(budget.candidate_id, index)
+            profile = f"step-{_MAXIMUM_STEPS_S[index]:g}"
+        elif (not isinstance(tighter, bool) or budget.stopped
+              or budget.native_arc_propagations != int(tighter)
+              or budget.completed_arcs != int(tighter)):
             raise ValueError("coast profiles must run once in nominal/tighter order")
         end_tdb_s = physical._finite_float("end_tdb_s", end_tdb_s)
         if (environment.model_id != physical.PHYSICAL_MODEL_IDENTIFIER
@@ -138,7 +189,8 @@ def _propagate_coast(
         )
         coupled = physical._build_coupled_arc_settings(
             budget.candidate_id, environment.bodies, forces, state, mass_kg, epoch,
-            physical._build_arc_integrator(budget.candidate_id, "coast", tighter=tighter),
+            (physical._build_integrator_from_profile(budget.candidate_id, "coast", settings)
+             if study else physical._build_arc_integrator(budget.candidate_id, "coast", tighter=tighter)),
             termination, thrust_enabled=False,
         )
         simulator = physical._run_native_arc(
@@ -175,7 +227,8 @@ def _propagate_coast(
         )
         if final_mass != mass_kg:
             raise ValueError("coast mass changed")
-        result = _CoastRun(profile, (*final, final_mass), checked, None)
+        mesh = _saved_mesh(tuple(at for at, _ in samples)) if study else None
+        result = _CoastRun(profile, (*final, final_mass), checked, None, mesh)
         budget.complete_arc()
         return result
     except (TrajectoryRefinementError, EphemerisError, ValueError, TypeError, RuntimeError) as exc:
@@ -216,6 +269,53 @@ def _environment_manifest(environment: physical._PhysicalEnvironment) -> dict[st
     return json.loads(json.dumps(data, allow_nan=False))
 
 
+def _difference_trend(first: float, second: float) -> dict[str, Any]:
+    a = physical._finite_float("first difference", first)
+    b = physical._finite_float("second difference", second)
+    if min(a, b) < 0:
+        raise ValueError("difference norms must be nonnegative")
+    ratio = b / a if a > 0 else None
+    reason = "zero_previous_difference" if a == 0 else None
+    if ratio is not None and not math.isfinite(ratio):
+        ratio, reason = None, "nonfinite_ratio"
+    return {"ratio": ratio, "ratio_unavailable_reason": reason,
+            "trend": "decreasing" if b < a else "increasing" if b > a else "unchanged"}
+
+
+def _study_comparisons(runs: list[_CoastRun]) -> dict[str, Any]:
+    if len(runs) != 3 or any(r.endpoint is None or r.saved_mesh is None for r in runs):
+        raise ValueError("step comparisons require three complete endpoints and meshes")
+    pairs = {}
+    for i, j in ((0, 1), (1, 2), (0, 2)):
+        left, right = runs[i], runs[j]
+        pairs[f"{i}-{j}"] = {
+            **_difference(left.endpoint, right.endpoint),
+            "endpoints_identical": left.endpoint == right.endpoint,
+            "saved_meshes_identical": left.saved_mesh.epoch_sequence_sha256
+            == right.saved_mesh.epoch_sequence_sha256,
+        }
+    return {
+        "pairs": pairs,
+        "position": _difference_trend(pairs["0-1"]["position_norm_m"], pairs["1-2"]["position_norm_m"]),
+        "velocity": _difference_trend(pairs["0-1"]["velocity_norm_m_s"], pairs["1-2"]["velocity_norm_m_s"]),
+    }
+
+
+def _load_step_baseline(path: Path, stored: dict[str, Any]) -> dict[str, Any]:
+    raw = path.read_bytes()
+    if sha256(raw).hexdigest() != _STEP_BASELINE_SHA256:
+        raise ValueError("step baseline digest differs from Decision 0082")
+    data = json.loads(raw)["science"]
+    if (data["outcome"] != "completed" or data["scenario"] != stored["scenario"]
+            or data["reference_sha256"] != _REFERENCE_SHA256
+            or data["environment"] != stored["provenance"]["environment"]
+            or data["initial"] != stored["nominal"]["boundaries"][1]
+            or data["initial_mass_kg"] != stored["nominal"]["boundary_masses_kg"][1]
+            or data["end_epoch_tdb_s"] != stored["nominal"]["boundaries"][2]["epoch_tdb_s"]):
+        raise ValueError("step baseline input/model identity mismatch")
+    return data
+
+
 def _load_reference(path: Path, scenario: Scenario) -> dict[str, Any]:
     raw = path.read_bytes()
     if sha256(raw).hexdigest() != _REFERENCE_SHA256:
@@ -235,26 +335,41 @@ def _load_reference(path: Path, scenario: Scenario) -> dict[str, Any]:
     return data
 
 
-def _run_diagnostic(scenario: Scenario, reference: Path) -> dict[str, Any]:
-    """Two coast launches maximum; return finite detached diagnostic JSON values."""
-    budget = _CoastBudget("d0001-t0035", 300.0)
+def _run_diagnostic(
+    scenario: Scenario, reference: Path, *, step_baseline: Path | None = None,
+) -> dict[str, Any]:
+    """D5 two arcs, or opt-in D6 three arcs; one shared clock and no retries."""
+    study = step_baseline is not None
+    budget = (_StepStudyBudget if study else _CoastBudget)("d0001-t0035", 300.0)
     science: dict[str, Any] = {
         "research_only": True, "continuous_safety_verified": False,
         "origin": "SSB", "orientation": "J2000", "units": "SI",
         "time_scale": "TDB seconds since J2000", "scenario": scenario.to_dict(),
         "expected_reference_sha256": _REFERENCE_SHA256, "check_coverage": _COVERAGE,
-        "runtime_limit_s": 300, "maximum_native_arcs": 2, "automatic_retries": 0,
+        "runtime_limit_s": 300, "maximum_native_arcs": 3 if study else 2, "automatic_retries": 0,
         "profiles": [], "comparisons": None, "reason": None, "outcome": "aborted",
         "interpretation": "Signed differences, not additive norms or exact sensitivity. "
         "Restart drift must pass thresholds before interpreting the isolated comparison. "
         "Neither profile is ground truth; no target closure or safety qualification.",
     }
+    if study:
+        science.update(
+            expected_step_baseline_sha256=_STEP_BASELINE_SHA256,
+            baseline_comparison=None,
+            interpretation="Maximum-step sensitivity only, not absolute error, convergence order, "
+            "ground truth, target closure or safety. Unchanged meshes/endpoints are not proof of accuracy.",
+            saved_mesh_description="Ordered saved epochs and intervals, including endpoint handling; "
+            "not all rejected steps or internal RK stages.",
+        )
     stage = "reference-verification"
     with SCIENCE_LOCK:
         try:
             budget.check()
             stored = _load_reference(reference, scenario)
             science["reference_sha256"] = _REFERENCE_SHA256
+            baseline = _load_step_baseline(step_baseline, stored) if study else None
+            if study:
+                science["step_baseline_sha256"] = _STEP_BASELINE_SHA256
             budget.check()
             stage = "candidate-verification"
             values = dict(stored["provenance"]["candidate"])
@@ -278,9 +393,11 @@ def _run_diagnostic(scenario: Scenario, reference: Path) -> dict[str, Any]:
             end = stored["nominal"]["boundaries"][2]["epoch_tdb_s"]
             science.update(initial=asdict(initial), initial_mass_kg=mass, end_epoch_tdb_s=end)
             endpoints: list[tuple[float, ...]] = []
-            previous: physical._PhysicalEnvironment | None = None
-            for tighter in (False, True):
-                stage = ("tighter" if tighter else "nominal") + "-preparation"
+            previous: list[physical._PhysicalEnvironment] = []
+            runs: list[_CoastRun] = []
+            for index, tighter in enumerate((True, True, True) if study else (False, True)):
+                stage = (f"step-{_MAXIMUM_STEPS_S[index]:g}" if study
+                         else "tighter" if tighter else "nominal") + "-preparation"
                 budget.check()
                 environment = physical._build_physical_environment(
                     candidate, scenario.spacecraft, budget=budget,
@@ -289,30 +406,39 @@ def _run_diagnostic(scenario: Scenario, reference: Path) -> dict[str, Any]:
                 manifest = _environment_manifest(environment)
                 if manifest != stored["provenance"]["environment"]:
                     raise ValueError("environment identity differs from reference")
-                if previous is not None and (
-                    environment is previous or environment.bodies is previous.bodies
-                ):
+                if any(environment is old or environment.bodies is old.bodies for old in previous):
                     raise ValueError("coast profiles require fresh native environments")
                 science["environment"] = manifest
-                settings = physical._arc_integrator_profile(
+                pinned_settings = physical._arc_integrator_profile(
                     candidate.candidate_id, "coast", tighter=tighter,
                 )
                 stored_settings = stored["tighter" if tighter else "nominal"]["integrator_settings"]["coast"]
-                if json.loads(json.dumps(settings, allow_nan=False)) != stored_settings:
+                if json.loads(json.dumps(pinned_settings, allow_nan=False)) != stored_settings:
                     raise ValueError("integrator profile differs from reference")
+                settings = _step_profile(candidate.candidate_id, index) if study else pinned_settings
                 stage = "coast-propagation"
                 run = _propagate_coast(budget, environment, scenario, initial, mass, end, tighter=tighter)
-                science["profiles"].append({**asdict(run), "integrator_settings": settings})
+                serialized = {**asdict(run), "integrator_settings": settings}
+                if not study:
+                    serialized.pop("saved_mesh")  # Preserve the D5 report shape.
+                science["profiles"].append(serialized)
                 if run.endpoint is None:
                     raise ValueError(run.reason)
                 endpoints.append(run.endpoint)
-                previous = environment
+                runs.append(run)
+                previous.append(environment)
+                if study and index == 0:
+                    science["baseline_comparison"] = _difference(
+                        run.endpoint, tuple(baseline["profiles"][1]["endpoint"]),
+                    )
+                    if not science["baseline_comparison"]["within_thresholds"]:
+                        raise ValueError("step-study baseline mismatch; refinements not started")
             old = []
             for profile in ("nominal", "tighter"):
                 item = stored[profile]["boundaries"][2]
                 old.append((*item["position_m"], *item["velocity_m_s"],
                             stored[profile]["boundary_masses_kg"][2]))
-            science["comparisons"] = {
+            science["comparisons"] = _study_comparisons(runs) if study else {
                 "restart_drift": _difference(endpoints[0], old[0]),
                 "same_input_profiles": _difference(endpoints[0], endpoints[1]),
                 "tighter_changed_input_and_restart": _difference(endpoints[1], old[1]),
@@ -341,10 +467,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("scenario", type=Path)
     parser.add_argument("reference", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--step-baseline", type=Path, help="Opt in to D6 using retained Decision 0082 JSON")
     args = parser.parse_args(argv)
     scenario = load_scenario(args.scenario)
     with args.output.open("x", encoding="utf-8") as stream:
-        result = _run_diagnostic(scenario, args.reference)
+        result = _run_diagnostic(scenario, args.reference, step_baseline=args.step_baseline)
         json.dump(result, stream, indent=2, sort_keys=True, allow_nan=False)
         stream.write("\n")
     # Zero means the diagnostic completed, not that profile thresholds passed.
