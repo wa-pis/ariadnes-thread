@@ -1,5 +1,34 @@
 ## Context
 
+### Research D5 — identical-start coast diagnosis
+
+D4's result is reproducible but fails integration agreement and target closure.
+D5 isolates the coast comparison without changing the prescribed seed. Use
+Decision 0079's nominal departure-cutoff state/mass and arrival-ignition epoch
+for both existing profiles; do not silently use the tighter departure cutoff.
+Reuse existing force, coupled-state, integrator and completion adapters. Share
+the research guard implementation where practical rather than inventing weaker
+checks. Keep the diagnostic private/standalone, with no production CLI or UI.
+Use one 300-second deadline and two native launches total, no retries.
+
+Let N0/T0 be stored nominal/tighter arrival-ignition states and N1/T1 be new
+coast endpoints from the identical nominal cutoff. Record signed SI vectors
+N1-N0 (restart drift), N1-T1 (same-input profile difference), and T1-T0 (changed
+input plus restart effects under the tighter profile). Their norms are not
+additive. The identity N0-T0 = -(N1-N0) + (N1-T1) + (T1-T0) is a bookkeeping
+check, not a physical error bound. If restart drift exceeds the existing gates,
+the experiment cannot cleanly attribute the original disagreement; report that
+limitation instead of selecting an integrator or relaxing a gate. Even a small
+restart drift does not establish real-world accuracy or exact error attribution.
+
+Complete and test the single-coast path before the bounded live experiment.
+Validate frozen reference/scenario/candidate/resource identity before native
+work. Record actual code identity, including intentional diagnostic changes;
+do not require a newly added entrypoint to have the old report's source digest.
+Do not change force models or integrator profiles to obtain passing results.
+The D4 whole-interval safety exception remains limited to these explicitly
+labelled research paths; strict M3 remains unchanged and open.
+
 ### Research D4 — user-approved scope revision
 
 The next implementation is a research-only script/entrypoint, not a new

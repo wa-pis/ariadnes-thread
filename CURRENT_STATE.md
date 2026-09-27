@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-Next: agree bounded identical-start coast diagnosis; no changed scientific gates.
+Next: D5.1 identical-start coast adapter; D5 specified, not yet run. Gates unchanged.
 
 ## Boundaries and references
 

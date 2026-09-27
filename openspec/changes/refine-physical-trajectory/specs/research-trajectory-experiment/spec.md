@@ -67,3 +67,37 @@ SHALL be separated from reproducible scientific values.
 #### Scenario: Repeat identical input
 - **WHEN** identical inputs, resources and commands are run twice with sufficient time
 - **THEN** scientific report values and classification agree, excluding wall-clock measurements, without modifying existing M2 outputs or strict M3 acceptance
+
+### Requirement: Isolated identical-start coast diagnosis
+The research-only D5 follow-up SHALL compare the two existing coast integrator
+profiles from the same stored nominal departure-cutoff Cartesian state, mass
+and TDB epoch to the same stored arrival-ignition epoch. Its reference SHALL be
+the retained Decision 0079 report, whose science was reproduced in Decision 0081.
+It SHALL verify the input artifact digest, normalized scenario, reproduced
+candidate, epochs, frames and resource/model identity before propagation. A
+stored cutoff is an experimental initial condition, not a qualified mission state.
+Each profile SHALL use a fresh pinned full-force environment without thrust.
+No departure or arrival burn, optimizer, retargeting or changed tolerance is
+permitted. This separate experiment SHALL share one 300-second cooperative
+deadline from input verification through both profiles and allow at most two
+native arc launches, counted before execution, with zero automatic retries.
+
+#### Scenario: Compare profiles with identical inputs
+- **WHEN** the verified reference is propagated with nominal and tighter coast settings
+- **THEN** both native initial histories match the same seven supplied SI state/mass components and start epoch exactly, both end at the stored arrival-ignition epoch within the existing 1 microsecond completion tolerance, and every saved coast mass equals the initial mass
+- **AND** the report records both endpoints and their position, velocity and mass differences using unchanged 10 m, 0.0001 m/s and 0.000001 kg comparison thresholds, without claiming either profile is ground truth
+
+#### Scenario: Distinguish restart drift from inherited differences
+- **WHEN** both coast profiles complete
+- **THEN** the report separately records the new nominal endpoint minus the stored nominal endpoint, the new nominal endpoint minus the new tighter endpoint, and the new tighter endpoint minus the stored tighter endpoint, as signed Cartesian differences and norms with explicit units
+- **AND** it does not subtract norms to attribute errors, interpret restart drift exceeding existing comparison thresholds as isolated integration error, or claim that the new tighter-minus-stored-tighter difference is a mathematically exact sensitivity estimate
+
+#### Scenario: Reject invalid inputs or an incomplete coast
+- **WHEN** reference identity fails, a sampled guard rejects a state, the deadline expires or a native arc fails
+- **THEN** no subsequent native arc starts, attempted/completed counters and a contextual reason are retained, and the failed arc has no endpoint or comparison derived from partial history
+- **AND** complete prior-profile evidence may remain explicitly unqualified; D4 pre-arc/full-step/saved-history guards, dry-mass equality rejection, event-before-epoch-mismatch handling and declared coverage limitations remain in force
+
+#### Scenario: Preserve diagnostic provenance
+- **WHEN** a coast diagnostic finishes or aborts
+- **THEN** finite machine-readable evidence records the reference digest, source identity, normalized scenario, candidate, resource/model metadata, actual integrator settings, supplied initial state and epochs, guard coverage, counters and outcome separately from wall time
+- **AND** it states research-only and continuous_safety_verified=false, does not overwrite prior evidence, and does not qualify target closure, strict M3 or task 3.9

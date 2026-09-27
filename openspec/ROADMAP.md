@@ -30,6 +30,7 @@ until explicitly revised. This planning edit changes no implementation checkbox.
 | D2 — Agree the smallest missing slice | Specified 2026-09-23 | Active proposal/design/tasks and visual-explorer delta specify the read-only provenance panel, edited-input binding, failure lifecycle and regression checks. No scientific gate or runtime limit changes. Strict validation required before implementation. |
 | D3 — Deliver one reproducible demonstration | Complete 2026-09-23 | Existing M2 explorer plus calculation-bound provenance panel. 29 focused checks and 3,502 full-suite tests pass; scientific limitations and reference mass shortfall remain visible. This does not qualify finite burns or complete M3. |
 | D4 — Research-only fixed-seed experiment | Research complete; numerical qualification failed | Authorized replay completed six arcs in 22.11 s with exactly matching science/provenance. Agreement still fails (1751.29 m); target miss remains. See [Decision 0081](../docs/decisions/0081-research-reproducibility.md). No continuous-safety or strict-M3 completion claim. |
+| D5 — Identical-start coast diagnosis | Specified; implementation pending | Two coast profiles from one frozen cutoff, 300 s total and at most two native launches; distinguish restart drift from same-input profile disagreement. No live D5 run yet; strict M3 remains open. |
 
 Explorer usability follow-up delivered 2026-09-23: elapsed-day control, visible
 budget/grid, Pareto priorities, ideal-fuel filter, Russian help and explicit

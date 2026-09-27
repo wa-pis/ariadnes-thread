@@ -1,5 +1,11 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D5 — identical-start coast diagnosis (specified 2026-09-27)
+
+- [ ] D5.1 Implement the private two-profile coast diagnostic by reusing existing native adapters and research guards; verify reference/scenario/resource mismatch before launches, identical initial histories, no thrust, constant mass, contextual failure without partial endpoints, one shared deadline, two-launch cap and zero retries. Verify signed differences and non-additive norms with manufactured cases and a native analytic coast oracle.
+- [ ] D5.2 After focused checks pass, run one live reference coast diagnostic under its 300-second/two-launch limit; retain script and finite JSON with reference/source/resource identity, both endpoint comparisons, restart drift, counters and timing, including failure. Do not change tolerances or claim root cause when restart drift prevents isolation.
+- [ ] D5.3 Run focused/native regression tests, full suite, Ruff, strict OpenSpec and legacy checks; record evidence and update current state/roadmap without qualifying the mission or archiving strict M3.
+
 ### Research D4 — next implementation, not strict M3 completion
 
 - [x] D4.1 Define a separate research-report contract and shared deadline/counter handling; verify completed/aborted/unavailable diagnostics, no false safe/converged status, absent-value semantics and forced budget exhaustion before native launches.
