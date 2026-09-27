@@ -2,9 +2,21 @@
 
 ### Research D5 — identical-start coast diagnosis (specified 2026-09-27)
 
-- [ ] D5.1 Implement the private two-profile coast diagnostic by reusing existing native adapters and research guards; verify reference/scenario/resource mismatch before launches, identical initial histories, no thrust, constant mass, contextual failure without partial endpoints, one shared deadline, two-launch cap and zero retries. Verify signed differences and non-additive norms with manufactured cases and a native analytic coast oracle.
-- [ ] D5.2 After focused checks pass, run one live reference coast diagnostic under its 300-second/two-launch limit; retain script and finite JSON with reference/source/resource identity, both endpoint comparisons, restart drift, counters and timing, including failure. Do not change tolerances or claim root cause when restart drift prevents isolation.
-- [ ] D5.3 Run focused/native regression tests, full suite, Ruff, strict OpenSpec and legacy checks; record evidence and update current state/roadmap without qualifying the mission or archiving strict M3.
+- [x] D5.1 Implement the private two-profile coast diagnostic by reusing existing native adapters and research guards; verify reference/scenario/resource mismatch before launches, identical initial histories, no thrust, constant mass, contextual failure without partial endpoints, one shared deadline, two-launch cap and zero retries. Verify signed differences and non-additive norms with manufactured cases and a native analytic coast oracle.
+- [x] D5.2 After focused checks pass, run one live reference coast diagnostic under its 300-second/two-launch limit; retain script and finite JSON with reference/source/resource identity, both endpoint comparisons, restart drift, counters and timing, including failure. Do not change tolerances or claim root cause when restart drift prevents isolation.
+- [x] D5.3 Run focused/native regression tests, full suite, Ruff, strict OpenSpec and legacy checks; record evidence and update current state/roadmap without qualifying the mission or archiving strict M3.
+
+D5 evidence (2026-09-27, based on `76b8f87` plus hashed new adapter):
+[Decision 0082](../../../docs/decisions/0082-identical-start-coast.md) retains the
+standalone invocation and finite JSON. One experiment completed two coast arcs
+in 7.619343375 s, zero retries. Nominal restart drift is exactly zero; same-input
+profile differences are 115.669948207 m / 0.000020400481302 m/s / zero kg.
+Position still fails the unchanged 10 m gate. No accuracy or safety claim.
+157 focused checks pass in 2.32 s, including native analytic coast and failure
+paths. Full suite: 3,631 pass in 595.03 s; Ruff, strict OpenSpec, whitespace and
+unchanged legacy SHA-256 pass. Source/reference hashes and signed-vector
+decomposition were checked from retained evidence without another native run.
+Strict M3/task 3.9 remain open; any diagnostic convergence study is separate.
 
 ### Research D4 — next implementation, not strict M3 completion
 

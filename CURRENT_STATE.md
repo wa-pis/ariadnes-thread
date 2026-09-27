@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-Next: D5.1 identical-start coast adapter; D5 specified, not yet run. Gates unchanged.
+D5 complete: 157 focused / 3,631 full tests pass (595.03 s); next: scope convergence study.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ Next: D5.1 identical-start coast adapter; D5 specified, not yet run. Gates uncha
 - Rules: [AGENTS.md](AGENTS.md).
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest evidence: [Decision 0081](docs/decisions/0081-research-reproducibility.md); repeatable, not accurate.
+- Latest evidence: [Decision 0082](docs/decisions/0082-identical-start-coast.md); zero nominal restart drift, not accuracy.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).
