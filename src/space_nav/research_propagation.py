@@ -155,6 +155,25 @@ def _propagate_research_run(
         or budget.control_attempts != int(tighter)
     ):
         raise ValueError("profile must start once, in nominal/tighter order")
+    return _compose_research_run(
+        budget, scenario, environment, initial_state, target_state, controls,
+        tighter=tighter, register_control=not tighter,
+    )
+
+
+def _compose_research_run(
+    budget: _ResearchBudget,
+    scenario: Scenario,
+    environment: physical._PhysicalEnvironment,
+    initial_state: TrajectoryBoundaryState,
+    target_state: TrajectoryBoundaryState,
+    controls: tuple[float, ...],
+    *,
+    tighter: bool,
+    register_control: bool,
+) -> ResearchRun:
+    """Shared three-arc engine; caller enforces study ordering and budget policy."""
+    expected = budget.native_arc_propagations
     profile = "tighter" if tighter else "nominal"
     settings_json = json.dumps(
         {
@@ -189,7 +208,7 @@ def _propagate_research_run(
 
     try:
         budget.check()
-        if not tighter:
+        if register_control:
             budget.begin_control()
         if (
             environment.model_id != physical.PHYSICAL_MODEL_IDENTIFIER
