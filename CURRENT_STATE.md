@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-09-27. Keep this file under 60 lines; replace stale status instead
+Updated: 2026-09-28. Keep this file under 60 lines; replace stale status instead
 of appending a diary. This is a navigation aid, not an alternative specification.
 
 ## Goal and scheduling
@@ -45,15 +45,15 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D6 at `d1616d8`: 181 focused / 3,655 full tests pass; next: D7.1 pure correction tests.
+D7.1 based on `3c632cd`: 44 focused / 3,670 full tests pass; next: D7.2 orchestration.
 
 ## Boundaries and references
 
 - Future optional display/gravity/screening: [deferred draft](openspec/deferred/optional-object-analysis/spec.md); not implemented or an active change.
-- D7 specified only: one correction, 300 s / 27 arcs; no production targeting, M4–M6, ML or exporters.
+- D7 arithmetic only: live study pending, 300 s / 27 arcs; no production targeting, M4–M6, ML or exporters.
 - Preserve research evidence and the immutable `moon_to_mars.py`.
 - Rules: [AGENTS.md](AGENTS.md).
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest evidence: [Decision 0083](docs/decisions/0083-coast-step-study.md), base `5e92d54`; step differences 0.47–1.97 m, increasing, not accuracy.
+- Latest checks: [Decision 0084](docs/decisions/0084-one-step-correction-arithmetic.md); pure linear oracle, no new mission evidence.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).
