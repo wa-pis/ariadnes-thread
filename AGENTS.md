@@ -86,7 +86,7 @@
 ## Git
 
 - Work on `dev` unless the user specifies another branch.
-- Use small logical Conventional Commits. Commit completed units after checks pass.
+- After each completed, verified project stage (implementation, documentation or bounded experiment), create a separate logical Conventional Commit and push it to `origin/dev`; do not accumulate completed stages awaiting another user prompt. Include the stage's relevant tests, OpenSpec/status updates and ADR/evidence when applicable. Do not bundle unrelated or unfinished work.
 - Never commit secrets, caches, virtual environments, editable-install metadata, or generated build artifacts.
-- The user authorized commits and pushes for the Streamlit prototype: push reviewed commits to the existing origin/dev. Do not rewrite history, delete branches, or change remotes without further explicit authorization.
+- The user authorizes stage-by-stage commits and pushes for the whole project. Verify push success and report the commit hash and checks at handoff. If checks fail or push is blocked, report the exact limitation; do not claim completion or bypass checks. Negative experimental evidence may be committed under the ADR rules without claiming scientific success. Do not force-push, rewrite history, delete branches or change remotes without further explicit authorization.
 - Leave the working tree clean at handoff, or clearly identify remaining user-owned changes.
