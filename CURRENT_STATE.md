@@ -45,15 +45,15 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D7.2 based on `596ceef`: 266 focused / 3,704 full tests pass; next: D7.3 one live study.
+D7 at `6061cd8`: 24 arcs / 19.11 s, no improvement; 3,704 tests pass; next: scope decision.
 
 ## Boundaries and references
 
 - Future optional display/gravity/screening: [deferred draft](openspec/deferred/optional-object-analysis/spec.md); not implemented or an active change.
-- D7 driver tested, live study pending, 300 s / 27 arcs; no production targeting, M4–M6, ML or exporters.
+- D7 single study done, score +23.84%; no automatic retry, production targeting, M4–M6, ML or exporters.
 - Preserve research evidence and the immutable `moon_to_mars.py`.
 - Rules: [AGENTS.md](AGENTS.md).
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest checks: [Decision 0085](docs/decisions/0085-bounded-targeting-orchestration.md); orchestration regressions, no new mission evidence.
+- Latest evidence: [Decision 0086](docs/decisions/0086-targeting-step-does-not-improve.md); trial miss 245.01M km, no tighter run or qualification.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).
