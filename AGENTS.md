@@ -73,12 +73,17 @@
 - Do not mark an OpenSpec task complete until its stated check passes.
 - Report numerical tolerances, scientific limitations, test results, and any unverified assumptions.
 
-## Git
+## Architecture Decision Records (ADR)
 
+- `docs/adr/` is the sole decision-record directory; do not recreate `docs/decisions/` or a parallel journal. Follow [the ADR workflow](docs/adr/README.md). Write new records in English as `NNNN-short-title.md`, using the next unused number in the existing sequence; never renumber historical records.
 - Before changing an architectural choice, read the relevant records in `docs/adr/`; search by topic rather than loading the entire journal. For consequential changes to module boundaries, interfaces, dependencies, data contracts or scientific architecture, create an ADR using `docs/adr/ADR_TEMPLATE.md` in the same change. Record alternatives, trade-offs and revisit conditions; do not invent historical rationale. Routine fixes need no ADR.
+- New ADRs must include context and constraints, options considered, decision and rationale, consequences and revisit conditions, and evidence and verification. Include date, scope, measured/base revision, related OpenSpec links, decision status (`proposed`, `accepted`, `rejected`, `superseded`) and separate implementation/verification status. Add each new ADR to `docs/adr/README.md`.
 - Keep ADRs and experiment records in the same numbered journal. Decision acceptance is not implementation completion or scientific validation. ADRs cannot override OpenSpec gates or authorize deferred work; reconcile requirements first. Supersede choices with linked new records, preserving original evidence.
+- When replacing a decision, create a new ADR with `Supersedes` and mark the old record `superseded` with `Superseded by`. Preserve the old rationale and results. Historical records 0001–0086 may retain their original structures and status wording; do not retroactively label experiments accepted or invent missing alternatives. Retained evidence files are immutable: new results require new artifacts, not overwritten JSON or rewritten provenance.
 - Record consequential scientific, performance and architectural decisions in `docs/adr/` using its lightweight record structure. Separate observations, hypotheses and conditional mathematical arguments; link evidence and the measured code revision, including failures and unresolved checks.
 - Evidence-only/documentation commits may preserve failed experiments after checking accuracy, links and artifact syntax. Explicitly label incomplete implementation; exclude unverified code and do not treat such commits as satisfying implementation test or milestone gates. Preserve earlier evidence when a later decision supersedes it.
+
+## Git
 
 - Work on `dev` unless the user specifies another branch.
 - Use small logical Conventional Commits. Commit completed units after checks pass.
