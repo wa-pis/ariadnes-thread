@@ -100,12 +100,15 @@ def _trial_controls(
 
 
 def _improvement(
-    baseline: tuple[float, ...], trial: tuple[float, ...],
+    baseline: tuple[float, ...], trial: tuple[float, ...], *, alpha: float = 1.0,
 ) -> tuple[bool, float | None, str | None]:
     """Return improvement, score ratio, unavailable-ratio reason; not accuracy."""
+    alpha = physical._finite_float("damping alpha", alpha)
+    if alpha not in (1.0, 0.5, 0.25):
+        raise ValueError("damping alpha must be 1, 0.5 or 0.25")
     base, result = _residual(baseline), _residual(trial)
     ratio = result.score / base.score if base.score else None
     reason = "zero-baseline-score" if ratio is None else None
     if ratio is not None and not math.isfinite(ratio):
         ratio, reason = None, "nonfinite-score-ratio"
-    return result.closes or result.score <= base.score * 0.9999, ratio, reason
+    return result.closes or result.score <= base.score * (1 - 1e-4 * alpha), ratio, reason

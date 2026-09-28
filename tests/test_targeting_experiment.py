@@ -111,7 +111,7 @@ def pipeline(monkeypatch: pytest.MonkeyPatch) -> SimpleNamespace:
         assert start == initial and end == target and not register_control
         index = len(rig.calls)
         rig.calls.append((controls, tighter, env))
-        assert budget.control_attempts == min(index + 1, 8)
+        assert budget.control_attempts == index + int(not tighter)
         if rig.failure == f"run-{index}":
             budget.begin_arc(first_in_evaluation=True)
             return ResearchRun(profile="tighter" if tighter else "nominal", outcome="aborted",

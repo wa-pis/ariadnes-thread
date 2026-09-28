@@ -1,4 +1,4 @@
-"""Private bounded D7 orchestration; no production targeting or safety claim."""
+"""Private bounded D7/D8 orchestration; no production targeting or safety claim."""
 
 from __future__ import annotations
 
@@ -19,6 +19,11 @@ from .models import ImpulsiveTransferCandidate, Scenario
 from .research import ResearchRun, _ResearchBudget
 from .research_propagation import _ARCS, _COVERAGE, _compose_research_run
 from .scenario import load_scenario
+
+
+_DAMPING_SHA256 = "c370c31f4a3dcd1f3ef324d0f2331bb46d707af0eae6d256ee935471a6c9233d"
+_CONTROL_NAMES = ("departure_azimuth_rad", "departure_elevation_rad", "departure_duration_s",
+                  "arrival_azimuth_rad", "arrival_elevation_rad", "arrival_duration_s")
 
 
 @dataclass(slots=True)
@@ -49,6 +54,72 @@ class _TargetingBudget(_ResearchBudget):
                 or self.control_attempts != expected_controls):
             self._fail("D7-budget", "nine three-arc evaluations only; no retries")
         physical._RefinementBudget.begin_arc(self, first_in_evaluation=first_in_evaluation)
+
+
+@dataclass(slots=True)
+class _DampingBudget(_TargetingBudget):
+    tighter_started: bool = field(default=False, init=False)
+
+    def begin_control(self) -> None:
+        if self.tighter_started or self.control_attempts >= 3:
+            self._fail("D8-budget", "three controls only; no controls after selection")
+        _TargetingBudget.begin_control(self)
+
+    def begin_tighter(self) -> None:
+        self.check()
+        if (self.stopped or self.tighter_started or self.control_attempts not in (2, 3)
+                or self.propagation_evaluations != self.control_attempts
+                or self.completed_arcs != self.native_arc_propagations
+                or self.completed_arcs != 3 * self.control_attempts):
+            self._fail("D8-budget", "one frozen run after completed trial only")
+        self.tighter_started = True
+
+    def begin_arc(self, *, first_in_evaluation: bool) -> None:
+        self.check()
+        first = self.native_arc_propagations % 3 == 0
+        expected_controls = self.propagation_evaluations + int(first) - int(self.tighter_started)
+        if (self.stopped or self.native_arc_propagations >= 12
+                or self.completed_arcs != self.native_arc_propagations
+                or not isinstance(first_in_evaluation, bool) or first_in_evaluation != first
+                or self.control_attempts != expected_controls):
+            self._fail("D8-budget", "four ordered three-arc evaluations only; no retries")
+        physical._RefinementBudget.begin_arc(self, first_in_evaluation=first_in_evaluation)
+
+
+def _load_damping_reference(path: Path, stored: dict[str, Any]) -> dict[str, Any]:
+    raw = path.read_bytes()
+    if sha256(raw).hexdigest() != _DAMPING_SHA256:
+        raise ValueError("damping reference digest differs from Decision 0086")
+    payload = json.loads(raw)
+    _validate_damping_reference(payload, stored)
+    return payload
+
+
+def _validate_damping_reference(payload: dict[str, Any], stored: dict[str, Any]) -> None:
+    """Validate imported scientific identity even after its artifact digest passes."""
+    json.dumps(payload, allow_nan=False)
+    data = payload["science"]
+    for key, expected in (("reference_sha256", _REFERENCE_SHA256), ("outcome", "not-improving"),
+                          ("scenario", stored["scenario"]), ("candidate", stored["provenance"]["candidate"]),
+                          ("runtime", stored["provenance"]["runtime"]),
+                          ("environment", stored["provenance"]["environment"]),
+                          ("seed_controls", [stored["seed_commands"][n] for n in _CONTROL_NAMES])):
+        if data[key] != expected:
+            raise ValueError(f"damping reference {key} mismatch")
+    if data["correction"]["rank"] != 6 or data["correction"]["reason"] is not None:
+        raise ValueError("damping requires a rank-six completed correction")
+    step = physical._finite_cartesian_values(data["correction"]["control_step"], "retained direction")
+    if any(abs(v) > bound for v, bound in zip(step, correction._TRUST_SCALES)):
+        raise ValueError("retained direction exceeds trust scales")
+    baseline = data["runs"][0]
+    run = baseline["run"]
+    if (baseline["role"] != "baseline" or baseline["controls"] != data["seed_controls"]
+            or run["outcome"] != "completed" or run["profile"] != "nominal"
+            or run["integrator_settings"] != stored["nominal"]["integrator_settings"]
+            or run["target_state"] != stored["nominal"]["target_state"]
+            or run["boundaries"][0] != stored["nominal"]["boundaries"][0]
+            or not all(d["within_thresholds"] for d in _compare_boundaries(run, stored["nominal"]))):
+        raise ValueError("damping reference baseline identity mismatch")
 
 
 def _run_data(run: ResearchRun) -> dict[str, Any]:
@@ -82,9 +153,12 @@ def _terminal_residual(run: ResearchRun) -> tuple[float, ...]:
     ))).values
 
 
-def _run_targeting(scenario: Scenario, reference: Path) -> dict[str, Any]:
+def _run_targeting(
+    scenario: Scenario, reference: Path, *, damping_reference: Path | None = None,
+) -> dict[str, Any]:
     """One update at most; preserve diagnostics after failure, never retry."""
-    budget = _TargetingBudget("d0001-t0035", 300.0)
+    damping = damping_reference is not None
+    budget = (_DampingBudget if damping else _TargetingBudget)("d0001-t0035", 300.0)
     science: dict[str, Any] = {
         "research_only": True, "continuous_safety_verified": False,
         "origin": "SSB", "orientation": "J2000", "units": "SI",
@@ -99,6 +173,11 @@ def _run_targeting(scenario: Scenario, reference: Path) -> dict[str, Any]:
         "interpretation": "One empirical correction; improvement, closure and numerical "
         "agreement are separate. No accuracy, continuous safety or strict M3 qualification.",
     }
+    if damping:
+        science.update(maximum_controls=3, maximum_evaluations=4, maximum_native_arcs=12,
+                       expected_damping_reference_sha256=_DAMPING_SHA256,
+                       damping_baseline_comparison=None, selected_alpha=None,
+                       fractions=[{"alpha": a, "status": "not-started", "reason": None} for a in (0.5, 0.25)])
     stage = "reference-verification"
     previous: list[physical._PhysicalEnvironment] = []
     with SCIENCE_LOCK:
@@ -107,6 +186,13 @@ def _run_targeting(scenario: Scenario, reference: Path) -> dict[str, Any]:
             stored = _load_reference(reference, scenario)
             science["reference_sha256"] = _REFERENCE_SHA256
             budget.check()
+            if damping:
+                stage = "damping-reference-verification"
+                retained = _load_damping_reference(damping_reference, stored)
+                science.update(damping_reference_sha256=_DAMPING_SHA256,
+                               imported_source_sha256=retained["source_sha256"],
+                               retained_control_step=retained["science"]["correction"]["control_step"])
+                budget.check()
             stage = "candidate-verification"
             values = dict(stored["provenance"]["candidate"])
             for key in ("departure_v_infinity_m_s", "arrival_v_infinity_m_s"):
@@ -141,12 +227,10 @@ def _run_targeting(scenario: Scenario, reference: Path) -> dict[str, Any]:
             initial, target = physical._build_boundary_states(scenario, candidate, gm["Moon"], gm["Mars"])
             budget.begin_control()  # Count the seed before its analytic validation.
             seed = physical._build_initial_burn_controls(scenario, candidate, gm["Moon"], gm["Mars"])
-            names = ("departure_azimuth_rad", "departure_elevation_rad", "departure_duration_s",
-                     "arrival_azimuth_rad", "arrival_elevation_rad", "arrival_duration_s")
             if isinstance(seed, str):
                 science["rejection_counts"][seed] = 1
                 raise ValueError(seed)
-            if seed != tuple(stored["seed_commands"][n] for n in names):
+            if seed != tuple(stored["seed_commands"][n] for n in _CONTROL_NAMES):
                 raise ValueError("prescribed seed mismatch")
             for state, expected in ((initial, stored["nominal"]["boundaries"][0]),
                                     (target, stored["nominal"]["target_state"])):
@@ -154,13 +238,18 @@ def _run_targeting(scenario: Scenario, reference: Path) -> dict[str, Any]:
                     raise ValueError("rebuilt boundary/target mismatch")
             science["seed_controls"] = seed
 
-            def evaluate(role: str, controls: tuple[float, ...], *, tighter: bool = False) -> ResearchRun:
+            def evaluate(role: str, controls: tuple[float, ...], *, tighter: bool = False,
+                         alpha: float | None = None) -> ResearchRun:
                 nonlocal stage
                 stage = role
                 budget.check()
                 if not tighter and role != "baseline":
                     budget.begin_control()
+                if damping and tighter:
+                    budget.begin_tighter()
                 entry: dict[str, Any] = {"role": role, "controls": controls, "run": None, "reason": None}
+                if damping:
+                    entry["alpha"] = alpha
                 science["runs"].append(entry)
                 prepared = physical._prepare_burn_controls(
                     candidate.candidate_id, scenario.spacecraft, initial.epoch_tdb_s,
@@ -192,9 +281,39 @@ def _run_targeting(scenario: Scenario, reference: Path) -> dict[str, Any]:
             science["baseline_comparison"] = _compare_boundaries(_run_data(baseline), stored["nominal"])
             if not all(d["within_thresholds"] for d in science["baseline_comparison"]):
                 raise ValueError("baseline drift; probes not started")
+            if damping:
+                science["damping_baseline_comparison"] = _compare_boundaries(
+                    _run_data(baseline), retained["science"]["runs"][0]["run"],
+                )
+                if not all(d["within_thresholds"] for d in science["damping_baseline_comparison"]):
+                    raise ValueError("D7 baseline drift; damping not started")
             base_residual = _terminal_residual(baseline)
             if correction._residual(base_residual).closes:
                 science["outcome"] = "baseline-closed"
+            elif damping:
+                science["outcome"] = "not-improving"
+                for fraction in science["fractions"]:
+                    alpha = fraction["alpha"]
+                    fraction.update(status="attempted",
+                                    score_threshold=correction._residual(base_residual).score * (1-1e-4*alpha))
+                    controls = tuple(v + alpha*d for v, d in zip(seed, science["retained_control_step"]))
+                    trial = evaluate(f"fraction-{alpha:g}", controls, alpha=alpha)
+                    improving, ratio, reason = correction._improvement(
+                        base_residual, _terminal_residual(trial), alpha=alpha,
+                    )
+                    fraction.update(status="completed", improving=improving, score_ratio=ratio,
+                                    ratio_unavailable_reason=reason)
+                    if not improving:
+                        continue
+                    science["selected_alpha"] = alpha
+                    science["improvement"] = dict(fraction)
+                    frozen = tuple(science["runs"][-1]["controls"])
+                    tighter = evaluate("tighter", frozen, tighter=True, alpha=alpha)
+                    differences = _compare_boundaries(_run_data(trial), _run_data(tighter))
+                    science["tighter_comparison"] = differences
+                    science["numerical_agreement"] = all(d["within_thresholds"] for d in differences)
+                    science["outcome"] = "improving"
+                    break
             else:
                 probes = []
                 for i, h in enumerate(correction._PROBE_STEPS):
@@ -224,6 +343,13 @@ def _run_targeting(scenario: Scenario, reference: Path) -> dict[str, Any]:
             science["reason"] = f"{stage}: {exc}"
         finally:
             budget.stopped = True
+            if damping:
+                for fraction in science["fractions"]:
+                    if fraction["status"] == "not-started":
+                        fraction.update(status="skipped", reason="earlier-selection" if science["selected_alpha"]
+                                        is not None else science["outcome"])
+                    elif fraction["status"] == "attempted":
+                        fraction.update(status="failed", reason=science["reason"])
     science.update(control_attempts=budget.control_attempts,
                    propagation_evaluations=budget.propagation_evaluations,
                    attempted_arcs=budget.native_arc_propagations, completed_arcs=budget.completed_arcs)
@@ -239,10 +365,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("scenario", type=Path)
     parser.add_argument("reference", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--damping-reference", type=Path, help="Opt into D8 with retained Decision 0086 JSON")
     args = parser.parse_args(argv)
     scenario = load_scenario(args.scenario)
     with args.output.open("x", encoding="utf-8") as stream:
-        result = _run_targeting(scenario, args.reference)
+        result = (_run_targeting(scenario, args.reference, damping_reference=args.damping_reference)
+                  if args.damping_reference is not None else _run_targeting(scenario, args.reference))
         json.dump(result, stream, indent=2, sort_keys=True, allow_nan=False)
         stream.write("\n")
     return 1 if result["science"]["outcome"] == "aborted" else 0

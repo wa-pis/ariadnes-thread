@@ -45,15 +45,15 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D7: 24 arcs / 19.11 s, no improvement; 3,704 tests pass. D8 specified; next: D8.1 adapter.
+D8.1 based on `6fb0e8c`: 301 focused / 3,739 full tests pass (806.13 s). Next: D8.2 live study.
 
 ## Boundaries and references
 
 - Future optional display/gravity/screening: [deferred draft](openspec/deferred/optional-object-analysis/spec.md); not implemented or an active change.
-- D8 planned: retained-direction half/quarter steps, 300 s / 12 arcs; no live run, production targeting or M4–M6.
+- D8 adapter tested: retained-direction half/quarter steps, 300 s / 12 arcs; no live run, production targeting or M4–M6.
 - Preserve research evidence and the immutable `moon_to_mars.py`.
 - Rules: [AGENTS.md](AGENTS.md).
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest evidence: [Decision 0086](docs/decisions/0086-targeting-step-does-not-improve.md); trial miss 245.01M km, no tighter run or qualification.
+- Latest checks: [Decision 0087](docs/decisions/0087-retained-direction-damping.md); D7 evidence unchanged, no new mission result or qualification.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

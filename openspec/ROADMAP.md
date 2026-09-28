@@ -45,12 +45,13 @@ Any further scope expansion needs a revised contract; strict M3 gates remain ope
 
 ### Next bounded research step
 
-D8 is specified, not implemented or run: replay the baseline, then test the
+D8.1 is implemented and tested, not run on the live mission: replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first
 improvement and validate it once with tighter settings. One shared 300 s budget,
 at most 3 control attempts / 4 evaluations / 12 arcs. No new probes or solve,
 no retry after failure and no change to strict M3 gates. Active D8 tasks govern
-implementation and the single subsequent experiment.
+implementation and the single subsequent experiment (D8.2). [Decision 0087](../docs/decisions/0087-retained-direction-damping.md):
+301 focused / 3,739 full tests pass (806.13 s); Ruff, strict OpenSpec and legacy checks pass.
 
 ## Engineering milestones
 
