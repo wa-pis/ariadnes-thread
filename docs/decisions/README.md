@@ -1,8 +1,37 @@
-# Decision journal
+# Decision journal and Architecture Decision Records (ADRs)
 
 Record consequential choices, not every command. OpenSpec remains authoritative
 for requirements, milestone order and acceptance gates; these records explain why.
 Use English, stable numbered filenames and links to evidence rather than copied logs.
+
+## ADR workflow
+
+Use this existing journal for ADRs; do not create a second `docs/adr` history.
+An ADR explains a consequential architectural choice: module boundaries,
+interfaces, dependencies, data contracts or scientific architecture. Experiments
+remain evidence records, not automatically architectural decisions. Routine fixes,
+status updates and every individual run do not require an ADR.
+
+1. Search the journal for the affected topic and read relevant decisions before
+   changing code. Follow supersession links; do not assume the newest numbered
+   experiment supersedes an architectural choice.
+2. Copy [the ADR template](ADR_TEMPLATE.md) to the next unused `NNNN-short-title.md`
+   in the shared sequence. Record context, actual alternatives and reasons before
+   or alongside implementation. Do not reconstruct unknown historical motives.
+3. Use decision status `proposed`, `accepted`, `rejected` or `superseded`.
+   Track implementation and verification separately. Acceptance does not mean
+   the code exists, a hypothesis is proven or a mission is qualified.
+4. Link the relevant OpenSpec requirement/change and evidence. OpenSpec defines
+   what must hold; ADRs explain why a design was selected. A conflicting ADR must
+   not silently relax an acceptance gate or enable deferred work.
+5. Commit the record with the relevant change and add an entry below. When a
+   choice changes, create a new record with `Supersedes`, then mark the earlier
+   one `superseded` with `Superseded by`. Preserve its original rationale/results.
+
+Existing records keep their filenames and historical contents; no bulk migration
+or retroactive acceptance is required. The list below is a curated entry point,
+not a complete catalogue. Find all records with `rg --files docs/decisions` and
+search topics with `rg -n 'TOPIC' docs/decisions --glob '*.md'`.
 
 ## Record structure
 
