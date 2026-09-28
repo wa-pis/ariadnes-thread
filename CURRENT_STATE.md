@@ -45,12 +45,12 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D7 at `6061cd8`: 24 arcs / 19.11 s, no improvement; 3,704 tests pass; next: scope decision.
+D7: 24 arcs / 19.11 s, no improvement; 3,704 tests pass. D8 specified; next: D8.1 adapter.
 
 ## Boundaries and references
 
 - Future optional display/gravity/screening: [deferred draft](openspec/deferred/optional-object-analysis/spec.md); not implemented or an active change.
-- D7 single study done, score +23.84%; no automatic retry, production targeting, M4–M6, ML or exporters.
+- D8 planned: retained-direction half/quarter steps, 300 s / 12 arcs; no live run, production targeting or M4–M6.
 - Preserve research evidence and the immutable `moon_to_mars.py`.
 - Rules: [AGENTS.md](AGENTS.md).
 - Plan: [roadmap](openspec/ROADMAP.md).

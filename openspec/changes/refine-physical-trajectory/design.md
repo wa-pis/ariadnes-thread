@@ -1,5 +1,62 @@
 ## Context
 
+### Research D8 — bounded damping of the retained D7 direction
+
+Decision 0086 measured a score increase of 23.84% for alpha=1. Test smaller
+fractions of that same capped direction, not a new Jacobian, seed or optimizer.
+Reuse existing preparation, command validation, three-arc composition and
+boundary comparisons. Do not duplicate dynamics or modify D7's behavior.
+
+Bind the Decision 0079 reference and Decision 0086 JSON (SHA-256
+`c370c31f4a3dcd1f3ef324d0f2331bb46d707af0eae6d256ee935471a6c9233d`).
+Verify scenario, candidate d0001-t0035, runtime/kernels/resources/settings,
+seed, initial/target states and epochs agree. Require D7's completed baseline,
+rank-six finite correction, bounded six-component control_step and recorded
+not-improving outcome. Retain D7 source hashes as historical provenance; record
+current source hashes separately, without requiring identical implementation.
+
+Rebuild the prescribed seed and replay one nominal baseline. Compare all four
+boundaries to both retained baselines: identical epochs/frames and drift at most
+10 m / 1e-4 m/s / 1e-6 kg. A mismatch stops before damping. If the verified
+baseline already closes, stop without damping or a qualification claim.
+
+Form each raw trial as x_seed + alpha*dx_D7, independently from the original
+seed, for alpha=(0.5,0.25) in that order. Do not add a fraction to the failed
+full-step trial, chain updates, rescale the direction again, recompute probes,
+or rerun alpha=1. Reuse canonical angle/window/mass checks before propagation.
+An analytic rejection, sampled event, integration failure, nonfinite value or
+deadline stops the entire study, not merely the current fraction.
+
+Use the existing production damping rule S_trial <= S_baseline*(1-1e-4*alpha)
+or closure of both 1000 m / 0.01 m/s gates, with the unchanged scaled residual.
+This alpha-dependent sufficient-decrease rule is explicit and local to D8;
+D7's alpha=1 criterion remains unchanged. Retain separate position/velocity
+misses, scores, ratios (null with reason for unavailable finite ratios) and the
+actual acceptance threshold for each attempted fraction. A lower score need
+not reduce both misses. Stop at the first improving nominal trial: the remaining
+fraction is not run and is explicitly labelled skipped, never unsuccessful.
+
+Only that first improving trial receives one tighter run with exactly frozen
+canonical controls, initial state and arc epochs, in a fresh matched environment.
+Compare four boundaries using 10 m / 1e-4 m/s / 1e-6 kg. Failed or unavailable
+agreement remains separate from nominal improvement; no fallback to another
+fraction after a tighter failure/disagreement. If neither fraction improves,
+report not-improving without a tighter run. No global optimum or feasibility claim.
+
+Use one cooperative 300-second clock from verification through all runs, at
+most three control attempts (baseline and two fractions), four propagation
+evaluations and 12 native arcs. Count attempts before analytic rejection,
+launches before native calls and completions only after checks. No retries or
+deadline resets; native calls cannot be preempted. D8-local policy must not
+relax D4–D7 caps. Preserve prior completed diagnostics but no incomplete endpoint.
+
+Finite exclusive-output JSON retains both artifact hashes, current and imported
+source provenance, frozen direction, seed, per-run controls/alpha/status/reason,
+residuals, selection and skipped fractions, resource/settings identity, counters,
+sampled-check coverage and separate wall time. Continuous safety stays false.
+Build and test before one live study; retain failure and stop. No production
+promotion, new UI, model/tolerance change, repeated optimization or M3 archival.
+
 ### Research D7 — one correction attempt toward the existing target
 
 Decision 0083 completes the bounded coast study without establishing accuracy.

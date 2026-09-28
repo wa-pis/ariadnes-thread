@@ -43,6 +43,15 @@ D4 scope is approved in the active research-experiment specification. Complete
 its contracts and manufactured checks before its single bounded native experiment.
 Any further scope expansion needs a revised contract; strict M3 gates remain open.
 
+### Next bounded research step
+
+D8 is specified, not implemented or run: replay the baseline, then test the
+retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first
+improvement and validate it once with tighter settings. One shared 300 s budget,
+at most 3 control attempts / 4 evaluations / 12 arcs. No new probes or solve,
+no retry after failure and no change to strict M3 gates. Active D8 tasks govern
+implementation and the single subsequent experiment.
+
 ## Engineering milestones
 
 | Milestone | Status | Exit criterion |

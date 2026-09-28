@@ -1,5 +1,10 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D8 — retained-direction damping (specified 2026-09-28)
+
+- [ ] D8.1 Reuse research preparation/composition with pinned 0079/0086 binding and a D8-local budget; verify independent seed-based half/quarter commands, canonicalization, alpha-dependent decrease/closure edges, early selection/skipped fractions, baseline mismatch, fresh environments, frozen tighter commands, failure stops and 3/4/12 accounting under one deadline. Verify unchanged D4–D7 behavior, finite reports/output preservation and focused native regressions; run full suite, Ruff, strict OpenSpec and legacy checks before implementation completion.
+- [ ] D8.2 After D8.1 checks pass, execute one live study within 300 s / 12 arcs and retain finite evidence plus a decision record, including non-improvement/failure. Independently check hashes, commands, thresholds, residuals, selection/skips and counters; update roadmap/current state without claiming accuracy, safety or strict-M3 completion. No automatic repeat or extra fractions.
+
 ### Research D7 — one target-correction attempt (specified 2026-09-27)
 
 - [x] D7.1 Add pure six-control correction arithmetic using existing scaling/bounds and NumPy; verify an independently solvable linear fixture, column order/units, rank deficiency, nonfinite rejection, trust cap, angular wrapping, unchanged closure gates and zero-score handling. No native mission run in this step. Decision 0084: 44 focused / 3,670 full tests pass (590.78 s), Ruff, strict OpenSpec and legacy checksum pass.

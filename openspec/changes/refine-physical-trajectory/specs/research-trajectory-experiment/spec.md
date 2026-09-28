@@ -1,5 +1,33 @@
 ## ADDED Requirements
 
+### Requirement: Bounded damping of a retained research correction
+D8 SHALL evaluate the retained D7 control direction at alpha=0.5 followed by
+alpha=0.25 only if the first completed nominal trial does not improve. It SHALL
+reuse the original seed, physical model and integrator settings without new
+probes, a new solve, chained updates or changes to D4–D7 contracts.
+
+#### Scenario: Bind evidence and replay the baseline
+- **WHEN** D8 receives the pinned Decision 0079 and Decision 0086 artifacts
+- **THEN** it verifies hashes, normalized inputs, seed, candidate, runtime/resources/settings and a finite rank-six D7 direction within the existing trust scales before damping
+- **AND** a fresh nominal baseline must match both retained baselines at all four boundary epochs/frames within 10 m, 0.0001 m/s and 0.000001 kg; mismatch stops before either fraction, and an already-closed baseline stops without a convergence claim
+
+#### Scenario: Try fractions in deterministic order
+- **WHEN** the baseline passes and remains outside target closure
+- **THEN** each attempted command is canonicalized from x_seed+alpha*dx_D7 with alpha in (0.5,0.25), never from a previous trial
+- **AND** improvement is both unchanged endpoint gates of 1000 m and 0.01 m/s passing or S_trial <= S_baseline*(1-0.0001*alpha), using the existing residual scales of 1000 m and 0.01 m/s
+- **AND** the first improving nominal trial is selected, any remaining fraction is explicitly skipped, and no probes, alpha=1 repeat, additional fraction or second iteration runs
+
+#### Scenario: Validate only the selected trial
+- **WHEN** a nominal fraction is selected
+- **THEN** exactly one tighter run uses its frozen canonical controls, initial state and epochs in a fresh resource-matched environment, with all four boundary differences checked against 10 m / 0.0001 m/s / 0.000001 kg
+- **AND** disagreement or unavailable validation remains separate from nominal improvement and cannot trigger another fraction; if neither fraction improves, no tighter run starts
+
+#### Scenario: Bound failures and preserve honest evidence
+- **WHEN** validation, a command, a sampled guard, integration or the deadline fails
+- **THEN** no subsequent run starts; incomplete endpoints remain absent, previous completed diagnostics and contextual reasons are retained, and no successful mission is inferred
+- **AND** one shared 300-second cooperative deadline, three control attempts, four propagation evaluations and 12 native launches bound the invocation with no retries or budget resets
+- **AND** exclusive finite JSON records both references, source/resource/settings identity, frozen direction, controls and alpha, residual norms/scores/ratios with explicit unavailable reasons, actual acceptance thresholds, selected/skipped fractions, counters, coverage and separate wall time, always with continuous_safety_verified=false
+
 ### Requirement: Bounded research-only command correction
 The D7 experiment SHALL test at most one six-control update from the prescribed
 reference seed, using the unchanged physical model, target and nominal/tighter
