@@ -554,7 +554,7 @@ Full verification remains required before committing the midpoint unit.
 The bounded duplicate check now confirms call3 exactly matches call1
 (Moon degree150, including observed native terms); it stopped intentionally
 after two arcs in 72.32 s, before returning any reused result. See
-`docs/decisions/0002-exact-harmonic-input-duplicate.md` and its replay driver.
+`docs/adr/0002-exact-harmonic-input-duplicate.md` and its replay driver.
 Invocation-local reuse now passes the parity, key-miss, mutation and deadline
 checks above. All 2823 tests pass in 444.18 s; native inventory is 135.28 s,
 with 14 requests, 4 uncached evaluations and 10 hits. All 13 native arcs

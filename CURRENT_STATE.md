@@ -52,8 +52,8 @@ D8.1 based on `6fb0e8c`: 301 focused / 3,739 full tests pass (806.13 s). Next: D
 - Future optional display/gravity/screening: [deferred draft](openspec/deferred/optional-object-analysis/spec.md); not implemented or an active change.
 - D8 adapter tested: retained-direction half/quarter steps, 300 s / 12 arcs; no live run, production targeting or M4–M6.
 - Preserve research evidence and the immutable `moon_to_mars.py`.
-- Rules: [AGENTS.md](AGENTS.md); [ADR workflow/template](docs/decisions/README.md) added; documentation-only, runtime tests not rerun.
+- Rules: [AGENTS.md](AGENTS.md); journal migrated to [docs/adr](docs/adr/README.md); 0087 uses ADR structure, historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest checks: [Decision 0087](docs/decisions/0087-retained-direction-damping.md); D7 evidence unchanged, no new mission result or qualification.
+- Latest checks: [Decision 0087](docs/adr/0087-retained-direction-damping.md); D7 evidence unchanged, no new mission result or qualification.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

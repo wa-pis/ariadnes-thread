@@ -31,7 +31,7 @@ repeated oracle calls, so this early-stop driver is not a current-dev regression
 test and need not find the same duplicate on newer code.
 
 ```sh
-conda run --no-capture-output -n space-nav python docs/decisions/experiments/0002-check-duplicates.py
+conda run --no-capture-output -n space-nav python docs/adr/experiments/0002-check-duplicates.py
 ```
 
 Expected diagnostic outcome: exit 1 with `DIAGNOSTIC_STOP` and an observation

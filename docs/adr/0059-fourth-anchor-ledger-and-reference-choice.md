@@ -99,7 +99,7 @@ hypothetical sum+(S+R). The anchor coefficient in its velocity output is
 h/(1-f); the J coefficient is
 `h*(Lx*h^3/6+Lv*h^2/2)/(1-f)+h^2/2`. Divide the remaining velocity margin
 by the respective coefficient. Tail screens add the relevant nominal-anchor
-row from `docs/decisions/experiments/0054-harmonic-tail-budget.json` to D.
+row from `docs/adr/experiments/0054-harmonic-tail-budget.json` to D.
 All decimals above are explanatory approximations, not new outward constants.
 
 Read-only checks confirm that all ten channels share the same epoch, state,

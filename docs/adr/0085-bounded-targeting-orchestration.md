@@ -57,7 +57,7 @@ result even if it fails. Strict M3/task 3.9 remain open; do not archive the chan
 Prepared invocation (not executed in this step):
 
 ```sh
-conda run --no-capture-output -n space-nav python -m space_nav.targeting_experiment examples/m3_feasible_mission.toml docs/decisions/experiments/0079-research-reference.json NEW_EVIDENCE.json
+conda run --no-capture-output -n space-nav python -m space_nav.targeting_experiment examples/m3_feasible_mission.toml docs/adr/experiments/0079-research-reference.json NEW_EVIDENCE.json
 ```
 
 Exit 1 means an aborted study; exit 0 only means the bounded study returned a

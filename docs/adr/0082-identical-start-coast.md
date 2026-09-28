@@ -12,7 +12,7 @@ Run once after 157 focused checks passed, with no retry, changed force model,
 new tolerance or command optimization:
 
 ```sh
-conda run --no-capture-output -n space-nav python -m space_nav.coast_diagnostic examples/m3_feasible_mission.toml docs/decisions/experiments/0079-research-reference.json docs/decisions/experiments/0082-identical-start-coast.json
+conda run --no-capture-output -n space-nav python -m space_nav.coast_diagnostic examples/m3_feasible_mission.toml docs/adr/experiments/0079-research-reference.json docs/adr/experiments/0082-identical-start-coast.json
 ```
 
 Both profiles start with the retained nominal departure-cutoff state and mass,

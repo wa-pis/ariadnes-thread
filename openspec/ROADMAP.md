@@ -9,7 +9,7 @@ Automation is paused. Do not resume it without an explicit user request.
 
 Start with [current state](../CURRENT_STATE.md). Preserve previous results in the
 [historical roadmap](../docs/roadmap-history-2026-09-16.md), the
-[decision journal](../docs/decisions/README.md), and existing tests.
+[decision journal](../docs/adr/README.md), and existing tests.
 
 ## Near-term sequence
 
@@ -29,10 +29,10 @@ until explicitly revised. This planning edit changes no implementation checkbox.
 | D1 — Audit the existing demonstration | Complete 2026-09-22 | Existing path inspected at `f132d8a`; 14 explorer/UI tests pass. See [audit](../docs/demo-audit.md) for available outputs, provenance gap and limitations. |
 | D2 — Agree the smallest missing slice | Specified 2026-09-23 | Active proposal/design/tasks and visual-explorer delta specify the read-only provenance panel, edited-input binding, failure lifecycle and regression checks. No scientific gate or runtime limit changes. Strict validation required before implementation. |
 | D3 — Deliver one reproducible demonstration | Complete 2026-09-23 | Existing M2 explorer plus calculation-bound provenance panel. 29 focused checks and 3,502 full-suite tests pass; scientific limitations and reference mass shortfall remain visible. This does not qualify finite burns or complete M3. |
-| D4 — Research-only fixed-seed experiment | Research complete; numerical qualification failed | Authorized replay completed six arcs in 22.11 s with exactly matching science/provenance. Agreement still fails (1751.29 m); target miss remains. See [Decision 0081](../docs/decisions/0081-research-reproducibility.md). No continuous-safety or strict-M3 completion claim. |
-| D5 — Identical-start coast diagnosis | Diagnostic complete; position agreement failed | Two arcs in 7.62 s; zero nominal restart drift, same-input separation 115.67 m exceeds 10 m. 3,631 tests pass. See [Decision 0082](../docs/decisions/0082-identical-start-coast.md). No accuracy or strict-M3 qualification. |
-| D6 — Maximum-step sensitivity | Diagnostic complete; no convergence claim | Three arcs in 30.63 s, exact baseline replay, changed saved meshes; pair differences 0.47–1.97 m pass diagnostic thresholds but adjacent differences increase. 3,655 tests pass. See [Decision 0083](../docs/decisions/0083-coast-step-study.md). Production settings and strict M3 remain unchanged. |
-| D7 — One target-correction attempt | Experiment complete; correction did not improve | [Decision 0086](../docs/decisions/0086-targeting-step-does-not-improve.md): 24 arcs in 19.11 s, exact baseline replay; position miss 197.85M to 245.01M km, score ratio 1.23837. No tighter run, retry or mission qualification. 49 focused / 3,704 full tests pass. Next scope decision required before another experiment. |
+| D4 — Research-only fixed-seed experiment | Research complete; numerical qualification failed | Authorized replay completed six arcs in 22.11 s with exactly matching science/provenance. Agreement still fails (1751.29 m); target miss remains. See [Decision 0081](../docs/adr/0081-research-reproducibility.md). No continuous-safety or strict-M3 completion claim. |
+| D5 — Identical-start coast diagnosis | Diagnostic complete; position agreement failed | Two arcs in 7.62 s; zero nominal restart drift, same-input separation 115.67 m exceeds 10 m. 3,631 tests pass. See [Decision 0082](../docs/adr/0082-identical-start-coast.md). No accuracy or strict-M3 qualification. |
+| D6 — Maximum-step sensitivity | Diagnostic complete; no convergence claim | Three arcs in 30.63 s, exact baseline replay, changed saved meshes; pair differences 0.47–1.97 m pass diagnostic thresholds but adjacent differences increase. 3,655 tests pass. See [Decision 0083](../docs/adr/0083-coast-step-study.md). Production settings and strict M3 remain unchanged. |
+| D7 — One target-correction attempt | Experiment complete; correction did not improve | [Decision 0086](../docs/adr/0086-targeting-step-does-not-improve.md): 24 arcs in 19.11 s, exact baseline replay; position miss 197.85M to 245.01M km, score ratio 1.23837. No tighter run, retry or mission qualification. 49 focused / 3,704 full tests pass. Next scope decision required before another experiment. |
 
 Explorer usability follow-up delivered 2026-09-23: elapsed-day control, visible
 budget/grid, Pareto priorities, ideal-fuel filter, Russian help and explicit
@@ -50,7 +50,7 @@ retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first
 improvement and validate it once with tighter settings. One shared 300 s budget,
 at most 3 control attempts / 4 evaluations / 12 arcs. No new probes or solve,
 no retry after failure and no change to strict M3 gates. Active D8 tasks govern
-implementation and the single subsequent experiment (D8.2). [Decision 0087](../docs/decisions/0087-retained-direction-damping.md):
+implementation and the single subsequent experiment (D8.2). [Decision 0087](../docs/adr/0087-retained-direction-damping.md):
 301 focused / 3,739 full tests pass (806.13 s); Ruff, strict OpenSpec and legacy checks pass.
 
 ## Engineering milestones

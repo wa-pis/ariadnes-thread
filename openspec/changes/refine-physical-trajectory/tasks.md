@@ -24,7 +24,7 @@
 - [x] D5.3 Run focused/native regression tests, full suite, Ruff, strict OpenSpec and legacy checks; record evidence and update current state/roadmap without qualifying the mission or archiving strict M3.
 
 D5 evidence (2026-09-27, based on `76b8f87` plus hashed new adapter):
-[Decision 0082](../../../docs/decisions/0082-identical-start-coast.md) retains the
+[Decision 0082](../../../docs/adr/0082-identical-start-coast.md) retains the
 standalone invocation and finite JSON. One experiment completed two coast arcs
 in 7.619343375 s, zero retries. Nominal restart drift is exactly zero; same-input
 profile differences are 115.669948207 m / 0.000020400481302 m/s / zero kg.
@@ -43,7 +43,7 @@ Strict M3/task 3.9 remain open; any diagnostic convergence study is separate.
 - [x] D4.4 Run one bounded live reference experiment after D4.1–D4.3 checks pass; retain script and machine-readable outcome/resource/model/command/counter/timing evidence, including failure. Verify one shared default 300-second budget, at most six arc launches, and zero automatic retries. Do not mark target closure or strict M3 completion without its separate evidence.
 - [x] D4.5 Run focused research/native/regression tests, full suite, Ruff, strict OpenSpec and legacy checks; record reproducibility checks with sufficient budget and update roadmap while leaving unfinished strict M3 gates open.
 
-D4.5 closure (2026-09-27): [Decision 0081](../../../docs/decisions/0081-research-reproducibility.md)
+D4.5 closure (2026-09-27): [Decision 0081](../../../docs/adr/0081-research-reproducibility.md)
 records one authorized replay at `1c8fd9e`: six arcs, 22.114353167 s, zero retries.
 Parsed science and reproduction objects match Decision 0079 exactly; only wall
 time differs. Numerical agreement remains false, with unchanged target miss.
@@ -52,7 +52,7 @@ suite evidence (3,604 pass, 607.53 s) is reused from `0138db9`, not rerun: sourc
 tests and environment/package files are unchanged. D4 is an experimentally
 complete research slice, not numerical qualification or strict M3 completion.
 
-2026-09-26 read-only diagnosis at `0138db9`: [Decision 0080](../../../docs/decisions/0080-seed-and-integration-diagnosis.md)
+2026-09-26 read-only diagnosis at `0138db9`: [Decision 0080](../../../docs/adr/0080-seed-and-integration-diagnosis.md)
 separates the prescribed untargeted seed's geometry limitation from integration
 disagreement accumulated across coast. No native run, changed code, tolerances
 or acceptance gates. D4.5 remains open; one identical-input bounded replay is
@@ -65,7 +65,7 @@ resource preparation/comparison and refuses output overwrite. One reference
 experiment completed six arcs in 20.101860458 s, zero retries. Numerical agreement
 failed: arrival differences 1751.286621 m / 0.000321787419 m/s; nominal target miss
 197851062193.609 m. Exit 1 intentionally reports failed agreement. No tolerance
-or force-model changes. See [Decision 0079](../../../docs/decisions/0079-research-reference.md)
+or force-model changes. See [Decision 0079](../../../docs/adr/0079-research-reference.md)
 and its finite JSON resource/model/command/source/counter evidence.
 130 focused tests pass in 1.84 s; full suite: 3,604 pass in 607.53 s. Ruff,
 strict OpenSpec, whitespace and unchanged legacy SHA-256 pass. Stored source
@@ -222,7 +222,7 @@ The combined gravity bound is 1.03945103435e-8 m/s^2; Moon/Mars monopoles are
 not duplicated and all input radii are retained once. Stored-data assembly
 adds no force evaluation/query/arc and makes no mission-runtime claim.
 Next bind the gravity-only reference candidate and check conditional domains
-and missing full-force channels; see `docs/decisions/0078-fourth-gravity-sum.md`.
+and missing full-force channels; see `docs/adr/0078-fourth-gravity-sum.md`.
 Task 3.9 and carried-state/interval/runtime qualification remain open.
 
 Decision0077 (2026-09-16) reuses the fourth-point test for Moon degree-2 and
@@ -231,7 +231,7 @@ degree-4 evaluation takes about 0.046 s; the finite tail is 4.28638e-39 m/s^2
 and the combined nominal lunar arithmetic/tail/source/PCK bound 8.21509e-23
 m/s^2. No full degree-200 vector or new query/arc is added. Next assemble a
 gravity-only nominal sum with all input and output-rounding terms and no
-Moon/Mars monopole duplication; see `docs/decisions/0077-fourth-moon-finite-tail.md`.
+Moon/Mars monopole duplication; see `docs/adr/0077-fourth-moon-finite-tail.md`.
 Task 3.9, carried-state transport and full-force/runtime gates remain open.
 
 Decision0076 (2026-09-16) evaluates Mars degree 120 at the audited fourth
@@ -241,7 +241,7 @@ coarse consistency check. Shared work is about 34 s; full evaluation about
 for the ideal finite Mars field at the fixed nominal state. Carried error,
 native arithmetic and all other forces remain separate; no new queries/arcs
 or production anchor. Next qualify the lunar contribution at this endpoint;
-see `docs/decisions/0076-fourth-mars-bounded-force.md`. Task 3.9 stays open.
+see `docs/adr/0076-fourth-mars-bounded-force.md`. Task 3.9 stays open.
 
 Decision0075 (2026-09-16) audits the actual fourth Mars input binding across
 the endpoint, source, rotation and force-input records. Explicit rounding of
@@ -249,7 +249,7 @@ the ideal polynomial point has L1 error at most 4.24e-6 m, inside the unchanged
 0.000164862 m source ball; it is not a retained native readback. No force
 evaluation or native query is added. Next evaluate at these bound inputs and
 retain source/PCK allowances once each, with carried-state error separate;
-see `docs/decisions/0075-fourth-mars-binary64-input-binding.md`.
+see `docs/adr/0075-fourth-mars-binary64-input-binding.md`.
 Task 3.9 remains open; no new anchor or production allocation is selected.
 
 Decision0074 (2026-09-15) evaluates the full finite Mars degree-120 field at
@@ -258,7 +258,7 @@ checks. Cost is about 14 s per case; finite tail is zero and arithmetic L2
 bounds are about 1.02e-7/2.08e-16 m/s^2. Coarse-box and cross-precision checks
 pass, but do not supply an exact full-vector oracle. No exact-120 rerun or
 native arc is added. Next audit fourth-endpoint binding and outstanding input
-errors; see `docs/decisions/0074-stored-mars-degree120-bounded-evaluation.md`.
+errors; see `docs/adr/0074-stored-mars-degree120-bounded-evaluation.md`.
 Task 3.9 remains open; no production anchor, precision or allocation changes.
 
 Decision0073 (2026-09-15) adds one bounded degree-100 evaluation per precision
@@ -268,7 +268,7 @@ the finite tail is unchanged. The first observation takes about 9 s versus
 bits the finite tail dominates. This is not a repeated benchmark or a new
 full-force anchor. Next assess the verification contract for a bounded-only
 degree-120 stored-input evaluation without rerunning the over-budget exact
-full vector; see `docs/decisions/0073-stored-mars-degree100-bounded-comparison.md`.
+full vector; see `docs/adr/0073-stored-mars-degree100-bounded-comparison.md`.
 Task 3.9, input bindings and mission runtime remain open; no allocations change.
 
 Decision0072 (2026-09-15) extends the same stored-input comparison to degree 40.
@@ -276,7 +276,7 @@ All repeated bounds contain the exact result with an unchanged finite tail.
 The bounded method is still about 1.3–1.5 times slower, and 53-bit arithmetic
 width grows with degree. Next compare a limited number of bounded evaluations
 with the existing degree-100 exact reference under the unchanged deadline;
-see `docs/decisions/0072-stored-mars-degree40-bounded-comparison.md`.
+see `docs/adr/0072-stored-mars-degree40-bounded-comparison.md`.
 Task 3.9 remains open; no full-field anchor, allocation or native arc is added.
 
 Decision0071 (2026-09-15) compares degree-20 bounded arithmetic with the existing
@@ -284,7 +284,7 @@ exact Mars profile at the historical retained handoff, not the fourth endpoint.
 Three repeats at each precision enclose the exact result and keep the finite
 tail unchanged, within one shared budget with all prior work. The new method
 is about 2.5–3 times slower there. Next compare degree 40; see
-`docs/decisions/0071-stored-mars-degree20-bounded-comparison.md`.
+`docs/adr/0071-stored-mars-degree20-bounded-comparison.md`.
 Task 3.9 remains open; no full-force anchor or physical allocation is selected.
 
 Decision0070 (2026-09-15) adds bounded normalized-force assembly to the existing
@@ -292,7 +292,7 @@ test-only evaluator while preserving its exact default. Thirty-six manufactured
 finite-field cases enclose every exact term and the summed vector, including
 binary64 midpoint rounding. Existing root bounds are reused; small-degree
 runtime is worse, not a speedup. Next measure a moderate-degree pinned-field
-case; see `docs/decisions/0070-low-degree-bounded-force-assembly.md`.
+case; see `docs/adr/0070-low-degree-bounded-force-assembly.md`.
 Task 3.9 and all full-field/source/native error obligations remain open.
 
 Decision0069 (2026-09-15) reuses the existing test-only harmonic recurrence
@@ -300,13 +300,13 @@ with bounded intervals through degree 8, covering all 5,760 dimensionless
 polynomial/derivative components at four precisions and four points. It is
 slower than exact arithmetic at this degree; force normalization and larger
 degree performance remain unqualified. See
-`docs/decisions/0069-low-degree-interval-harmonic-jets.md`. Task 3.9 stays open.
+`docs/adr/0069-low-degree-interval-harmonic-jets.md`. Task 3.9 stays open.
 
 Decision0068 (2026-09-15) adds 71 isolated outward-rounding/Horner controls
 using standard-library Fraction, without a production evaluator or new native
 work. Bounded significands do not guarantee tight force intervals or speed.
 Next compare a small harmonic recurrence with the exact oracle; see
-`docs/decisions/0068-bounded-significand-arithmetic-controls.md`.
+`docs/adr/0068-bounded-significand-arithmetic-controls.md`.
 Task 3.9 remains unchecked; no physical tolerance or allocation changes.
 
 Decision0067 (2026-09-15) adds 60 exact manufactured composition controls and
@@ -315,14 +315,14 @@ D*H and accumulates repeated endpoint residuals, including their position
 effect. A 32-piece optimistic screen is not a selected native partition or
 uniform-rate qualification. Next compare repeated accuracy/cost demands with
 bounded richer-reference evaluation controls. See
-`docs/decisions/0067-subdivision-error-cost-accounting.md`; 3.9 stays open.
+`docs/adr/0067-subdivision-error-cost-accounting.md`; 3.9 stays open.
 
 Decision0066 (2026-09-15) lower-bounds the fixed whole-degree isotropic
 accounting formula using an upper radius and lower Euclidean speed/coefficient
 roots. Geometry/speed tightening alone cannot meet the current private gate;
 this is not a physical-error lower bound. Next compare shorter-reference
 composition and richer/directional references with cumulative errors and all
-repeated costs retained. See `docs/decisions/0066-isotropic-translation-method-limit.md`;
+repeated costs retained. See `docs/adr/0066-isotropic-translation-method-limit.md`;
 3.9 stays open.
 
 Decision0065 (2026-09-15) derives a covered relative-displacement ball and
@@ -331,7 +331,7 @@ Moon/Mars geometry lowers translation rate about 29.1%, but the optimistic
 velocity accounting still fails. True-state errors and broad full-force
 sensitivities remain unchanged. Next assess direction-aware bounds versus
 richer reference derivatives with bounded controls. See
-`docs/decisions/0065-local-reference-translation-geometry.md`; 3.9 stays open.
+`docs/adr/0065-local-reference-translation-geometry.md`; 3.9 stays open.
 
 Decision0064 (2026-09-15) attributes Mars translation to degrees and compares
 an independently bounded C20-free remainder. Degree2 is only about 23.8% of
@@ -339,7 +339,7 @@ the additive bound; granting C20 zero charge still fails. The first optimistic
 omitted-prefix screen at degree60 is not a reference/truncation selection.
 Next assess rigorously covered local geometry versus the broad domain floor
 before high-degree derivative work. See
-`docs/decisions/0064-mars-translation-degree-attribution.md`; 3.9 stays open.
+`docs/adr/0064-mars-translation-degree-attribution.md`; 3.9 stays open.
 
 Decision0063 (2026-09-15) adds conditional ideal nonmonopole translation:
 Moon200/Mars120 whole-degree bounds, with only C00 removed from a copy.
@@ -347,7 +347,7 @@ The rate charge 1.1662837679384899e-4 m/s^3 already fails an optimistic
 velocity ledger preserving incoming error. This is a method-specific
 upper-bound screen, not a true-error lower bound or changed tolerance.
 Next identify dominant degrees/norm relaxations before more rotation/vector
-work. See `docs/decisions/0063-fourth-nonmonopole-translation-screen.md`;
+work. See `docs/adr/0063-fourth-nonmonopole-translation-screen.md`;
 3.9 stays open.
 
 Decision0062 (2026-09-15) checks a retained-input conditional cubic family:
@@ -355,7 +355,7 @@ explicit acceleration cap 4 m/s^2 implies domain inclusion and monopole
 Taylor rate at most 1.2800299248916192e-6 m/s^3. It does not select an anchor,
 establish full J, reset carried errors or alter an acceptance allocation.
 Next assess nonmonopole translation/rotation rates on the same family before
-expensive vector work. See `docs/decisions/0062-conditional-fourth-monopole-curvature.md`;
+expensive vector work. See `docs/adr/0062-conditional-fourth-monopole-curvature.md`;
 3.9 stays open.
 
 Decision0061 (2026-09-15) binds eight ideal monopole jerks to the actual
@@ -364,7 +364,7 @@ intervals and midpoint rounding are retained; no source/native arithmetic,
 full-force jerk or uniform J is claimed. Zero new queries/arcs. Next bind
 monopole curvature and explicit reference-acceleration premises before
 nonmonopole rates and budget assessment. See
-`docs/decisions/0061-fourth-endpoint-monopole-jerk.md`; 3.9 stays open.
+`docs/adr/0061-fourth-endpoint-monopole-jerk.md`; 3.9 stays open.
 
 Decision0060 (2026-09-15) verifies the separate gravity-only reference
 contract with 60 analytic/rejection cases: signed constant/reversing bounded
@@ -372,7 +372,7 @@ forces, exact gravitational remainder and integrated state errors, non-reset
 incoming radii, and the old-anchor factor-two counterexample. Old helper and
 physical model are unchanged. Next assess fresh gravity rate/budget and new
 coefficient/domain premises; no live reference or native arc is qualified.
-See `docs/decisions/0060-gravity-reference-analytic-controls.md`; 3.9 stays open.
+See `docs/adr/0060-gravity-reference-analytic-controls.md`; 3.9 stays open.
 
 Decision0059 (2026-09-15) audits the same-epoch ledger: ten gravity-input
 channels sum to about 1.0394510091222506e-8 m/s^2, not a full anchor error.
@@ -381,7 +381,7 @@ a prefix from tail cost alone. Next add exact analytic controls for a
 gravity-only comparison anchor with a single nongravity norm charge, keeping
 the true full-force model and old factor-two helper/counterexamples intact.
 Docs-only prerequisite; no new live reference or arc. See
-`docs/decisions/0059-fourth-anchor-ledger-and-reference-choice.md`; 3.9 stays open.
+`docs/adr/0059-fourth-anchor-ledger-and-reference-choice.md`; 3.9 stays open.
 
 Decision0058 (2026-09-15) binds six point-source arithmetic channels at the
 fourth nominal state, retaining exact relative centres, GMs, source allowances
@@ -389,7 +389,7 @@ and positive whole-chord floors. Existing Jacobian variation bounds apply;
 Moon/Mars remain solely harmonic. No queries/arcs or tolerance changes. Next
 audit the complete available/missing anchor-channel ledger and coupled rate
 budget before expensive vector work. See
-`docs/decisions/0058-fourth-endpoint-point-source-bridge.md`; 3.9 stays open.
+`docs/adr/0058-fourth-endpoint-point-source-bridge.md`; 3.9 stays open.
 
 Decision0057 binds full Moon200/Mars120 source-arithmetic effects at the
 fourth nominal state and new stored matrices. Exact ideal-source centres,
@@ -397,7 +397,7 @@ unchanged SPK allowances and positive whole-chord floors feed the existing
 two-matrix-factor bound; sampled residuals never replace allowances. No new
 queries/arcs, tolerance or production change. Next bind six point-source
 channels before a complete error ledger or expensive vector work. See
-`docs/decisions/0057-fourth-endpoint-harmonic-source-bridge.md`; 3.9 stays open.
+`docs/adr/0057-fourth-endpoint-harmonic-source-bridge.md`; 3.9 stays open.
 
 Decision0056 binds the new matrix-to-force channel to the actual fourth state,
 exact ideal-source radii and full Moon200/Mars120 fields, including C00.
@@ -405,7 +405,7 @@ The existing chord/norm/Jacobian helper bounds both input/output matrix
 effects. No additional queries or arcs; native/source arithmetic and the
 carried-state/time-domain errors remain separate. Next bind the source
 arithmetic channel before selecting expensive vector work. See
-`docs/decisions/0056-fourth-endpoint-matrix-force-bridge.md`; 3.9 stays open.
+`docs/adr/0056-fourth-endpoint-matrix-force-bridge.md`; 3.9 stays open.
 
 Decision0055 recomputes Moon/Mars PCK matrix errors at the actual fourth
 endpoint, retaining matrices, resource links and outward singular-value bounds.
@@ -413,7 +413,7 @@ Two additional rotation queries, zero additional ephemeris queries/arcs; no
 old epoch's error is transplanted. These are dimensionless matrix bounds,
 not acceleration errors. Next bind the full-field matrix-to-force error to
 this state/source/resource set before choosing expensive harmonic work.
-See `docs/decisions/0055-fourth-endpoint-rotation-bridge.md`; 3.9 stays open.
+See `docs/adr/0055-fourth-endpoint-rotation-bridge.md`; 3.9 stays open.
 
 Decision0053 binds the six live point forces to the actual fourth endpoint,
 retaining the carried error as separate metadata and excluding Moon/Mars.
@@ -424,7 +424,7 @@ the optimistic scalar anchor intercept is Mars120 / Mars115 respectively;
 these are not certified full-force errors or selected allocations. No vector
 or native propagation is added. Next qualify the new rotation bridge and
 remaining anchor/rate budget before choosing expensive harmonic work. See
-`docs/decisions/0054-harmonic-anchor-tail-budget.md`; task 3.9 remains open.
+`docs/adr/0054-harmonic-anchor-tail-budget.md`; task 3.9 remains open.
 
 Decision0052 reanchors eleven already covered position records at the
 fourth endpoint, composes eight SSB states/slopes exactly, and reuses eight

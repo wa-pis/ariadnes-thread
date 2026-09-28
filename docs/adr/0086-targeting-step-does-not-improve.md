@@ -11,7 +11,7 @@ reference, runtime/kernel/resource identity and all completed run evidence.
 49 focused tests passed in 0.31 s before one live invocation:
 
 ```sh
-conda run --no-capture-output -n space-nav python -m space_nav.targeting_experiment examples/m3_feasible_mission.toml docs/decisions/experiments/0079-research-reference.json docs/decisions/experiments/0086-targeting-study.json
+conda run --no-capture-output -n space-nav python -m space_nav.targeting_experiment examples/m3_feasible_mission.toml docs/adr/experiments/0079-research-reference.json docs/adr/experiments/0086-targeting-study.json
 ```
 
 No code, seed, force model, integrator setting or tolerance changed. Each run

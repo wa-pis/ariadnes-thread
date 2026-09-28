@@ -1,9 +1,29 @@
 # 0087 — Reuse the retained correction with bounded damping
 
 Date: 2026-09-28. Base revision: `6fb0e8c` plus D8.1 implementation and tests.
-Status: verified-path implementation work; no new mission experiment.
+Decision status: accepted (bounded research implementation only).
+Implementation: complete and tested; live D8.2 study not run.
+Scope: M3 research D8.1; no production targeting or qualification.
+Related OpenSpec: [active D8 tasks](../../openspec/changes/refine-physical-trajectory/tasks.md).
+Supersedes / Superseded by: none. Extends D7; does not replace its evidence.
 
-## Decision
+## Context and constraints
+
+The [D7 study](0086-targeting-step-does-not-improve.md) found that one full
+correction increased the target miss. D8 asks whether smaller fractions of that
+retained direction improve it. The accepted scope permits alpha=0.5 and 0.25
+under one 300-second budget, without a new Jacobian or changed physical gates.
+
+## Options considered
+
+- Reuse the existing private preparation/composition path: selected to preserve
+  common dynamics, guards and provenance, while making damping opt-in.
+- Duplicate preparation or dynamics: rejected as unnecessary parallel machinery.
+
+These alternatives are explicit in the original implementation record; no
+additional historical deliberation is inferred.
+
+## Decision and rationale
 
 Extend the existing private targeting entrypoint with an opt-in
 `--damping-reference` argument rather than duplicate preparation or dynamics.
@@ -28,6 +48,8 @@ or 0.25, preserving D7's default alpha=1 behavior. Record each attempted fractio
 actual threshold before propagation. Zero/overflowing score ratios remain null
 with a reason. Improvement is neither absolute accuracy nor mission acceptance.
 
+## Consequences and revisit conditions
+
 First improvement selects one frozen-command tighter run. Any remaining fraction
 is explicitly skipped; validation failure/disagreement does not enable fallback.
 Baseline closure skips both fractions. Failed attempts retain reasons and no
@@ -38,7 +60,11 @@ native arcs under one cooperative 300-second clock. It supports tighter
 validation after either fraction but refuses further controls/runs afterward.
 No retries, changed force model, new Jacobian, UI or production promotion.
 
-## Checks and next step
+Revisit the approach only after the single D8.2 study reports its outcome,
+closure and numerical agreement. Any further fractions, iterations or budget
+changes require a revised OpenSpec contract, not an automatic retry.
+
+## Evidence and verification
 
 301 focused tests passed in 11.83 s, including unchanged D4–D7/native regressions.
 New manufactured checks cover both selection branches, no improvement, skipped
@@ -55,5 +81,5 @@ study, retaining any negative outcome. Strict M3/task 3.9 remain open.
 Prepared invocation, not executed in this step:
 
 ```sh
-conda run --no-capture-output -n space-nav python -m space_nav.targeting_experiment examples/m3_feasible_mission.toml docs/decisions/experiments/0079-research-reference.json NEW_EVIDENCE.json --damping-reference docs/decisions/experiments/0086-targeting-study.json
+conda run --no-capture-output -n space-nav python -m space_nav.targeting_experiment examples/m3_feasible_mission.toml docs/adr/experiments/0079-research-reference.json NEW_EVIDENCE.json --damping-reference docs/adr/experiments/0086-targeting-study.json
 ```

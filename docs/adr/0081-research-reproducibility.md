@@ -8,7 +8,7 @@ Status: accepted D4 repeatability evidence, not numerical or mission acceptance.
 One user-authorized replay, no automatic retry, unchanged scenario and code:
 
 ```sh
-conda run --no-capture-output -n space-nav python -m space_nav.research_experiment examples/m3_feasible_mission.toml docs/decisions/experiments/0081-research-replay.json
+conda run --no-capture-output -n space-nav python -m space_nav.research_experiment examples/m3_feasible_mission.toml docs/adr/experiments/0081-research-replay.json
 ```
 
 Compare the [first report](experiments/0079-research-reference.json) with the
@@ -31,7 +31,7 @@ Reproduce the comparison without native computation from the repository root:
 import json
 from pathlib import Path
 
-root = Path("docs/decisions/experiments")
+root = Path("docs/adr/experiments")
 a = json.loads((root / "0079-research-reference.json").read_text())
 b = json.loads((root / "0081-research-replay.json").read_text())
 assert a["science"] == b["science"]

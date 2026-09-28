@@ -1,4 +1,4 @@
-# Decision journal and Architecture Decision Records (ADRs)
+# Architecture Decision Records (ADRs)
 
 Record consequential choices, not every command. OpenSpec remains authoritative
 for requirements, milestone order and acceptance gates; these records explain why.
@@ -6,7 +6,8 @@ Use English, stable numbered filenames and links to evidence rather than copied 
 
 ## ADR workflow
 
-Use this existing journal for ADRs; do not create a second `docs/adr` history.
+This is the canonical ADR directory, migrated from `docs/decisions` on 2026-09-28.
+Keep one shared numbering sequence; do not create a parallel decision journal.
 An ADR explains a consequential architectural choice: module boundaries,
 interfaces, dependencies, data contracts or scientific architecture. Experiments
 remain evidence records, not automatically architectural decisions. Routine fixes,
@@ -28,10 +29,15 @@ status updates and every individual run do not require an ADR.
    choice changes, create a new record with `Supersedes`, then mark the earlier
    one `superseded` with `Superseded by`. Preserve its original rationale/results.
 
-Existing records keep their filenames and historical contents; no bulk migration
-or retroactive acceptance is required. The list below is a curated entry point,
-not a complete catalogue. Find all records with `rg --files docs/decisions` and
-search topics with `rg -n 'TOPIC' docs/decisions --glob '*.md'`.
+Historical records 0001–0086 retain their original structures and status wording:
+they include scientific experiments, not just architectural choices. Paths in
+Markdown now reference this directory; retained JSON and experiment scripts are
+unchanged. Paths embedded in immutable evidence describe the original run.
+Record 0087 and new ADRs use the template's explicit sections. Do not fabricate
+missing alternatives or retroactively mark historical experiments accepted.
+The list below is a curated entry point,
+not a complete catalogue. Find all records with `rg --files docs/adr` and
+search topics with `rg -n 'TOPIC' docs/adr --glob '*.md'`.
 
 ## Record structure
 
@@ -52,11 +58,15 @@ is legitimate evidence, not a passing implementation gate. Do not bundle unfinis
 code merely to save the record. Code completion still requires the project checks.
 
 Link the measured base revision in each record. Git history identifies the commit
-introducing the record (`git log --follow -- docs/decisions/FILE.md`); a record need
+introducing the record (`git log --follow -- docs/adr/FILE.md`); a record need
 not contain its own future commit hash. For a changed decision, add a new record
 linking the old one and mark the old one superseded; do not erase earlier outcomes.
 
 ## Records
+
+- [0087 — Retained-step damping](0087-retained-direction-damping.md) — current ADR; implementation verified, live study pending.
+
+### Historical decision and evidence records
 
 - [0001 — Investigate the inventory deadline before optimization](0001-inventory-runtime-investigation.md)
 - [0002 — Exact harmonic input duplication is observed](0002-exact-harmonic-input-duplicate.md)

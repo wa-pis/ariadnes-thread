@@ -57,7 +57,7 @@ import math
 from pathlib import Path
 
 s = json.loads(Path(
-    "docs/decisions/experiments/0079-research-reference.json"
+    "docs/adr/experiments/0079-research-reference.json"
 ).read_text())["science"]
 moon = next(x for x in s["provenance"]["environment"]["harmonic_fields"]
             if x["body"] == "Moon")

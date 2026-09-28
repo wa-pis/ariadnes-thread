@@ -16,7 +16,7 @@ from test_coast_diagnostic import REFERENCE, SCENARIO
 from test_research_propagation import _rig
 
 
-BASELINE = Path("docs/decisions/experiments/0082-identical-start-coast.json")
+BASELINE = Path("docs/adr/experiments/0082-identical-start-coast.json")
 
 
 def test_profiles_change_only_cap_and_reach_native_factory(monkeypatch: pytest.MonkeyPatch) -> None:

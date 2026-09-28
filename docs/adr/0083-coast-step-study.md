@@ -11,7 +11,7 @@ settings, saved-mesh diagnostics, signed comparisons and separate wall time.
 One live experiment after 181 focused tests passed; no retries or extra profiles:
 
 ```sh
-conda run --no-capture-output -n space-nav python -m space_nav.coast_diagnostic examples/m3_feasible_mission.toml docs/decisions/experiments/0079-research-reference.json docs/decisions/experiments/0083-coast-step-study.json --step-baseline docs/decisions/experiments/0082-identical-start-coast.json
+conda run --no-capture-output -n space-nav python -m space_nav.coast_diagnostic examples/m3_feasible_mission.toml docs/adr/experiments/0079-research-reference.json docs/adr/experiments/0083-coast-step-study.json --step-baseline docs/adr/experiments/0082-identical-start-coast.json
 ```
 
 All three full-force coasts use the same retained nominal departure-cutoff state,

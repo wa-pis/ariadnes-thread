@@ -12,7 +12,7 @@ and its tighter replay within the original 300-second budget, and do they agree?
 Run once, without retries, optimizer, changed tolerances or simplified forces:
 
 ```sh
-conda run --no-capture-output -n space-nav python -m space_nav.research_experiment examples/m3_feasible_mission.toml docs/decisions/experiments/0079-research-reference.json
+conda run --no-capture-output -n space-nav python -m space_nav.research_experiment examples/m3_feasible_mission.toml docs/adr/experiments/0079-research-reference.json
 ```
 
 The entrypoint refuses an existing output; a separately authorized reproduction

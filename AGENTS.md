@@ -12,7 +12,7 @@
   observations, mathematical bounds and assumptions; preserve scientific caveats.
 - Update `CURRENT_STATE.md` after a completed unit or material blocker with the
   verified revision/checks, next action and links. Keep it under 60 lines;
-  durable rationale belongs in `docs/decisions/`, not a growing status diary.
+  durable rationale belongs in `docs/adr/`, not a growing status diary.
 - Automation is paused by user request. A work session does not authorize restart.
   Use subagents only when explicitly requested by the user.
 
@@ -75,9 +75,9 @@
 
 ## Git
 
-- Before changing an architectural choice, read the relevant records in `docs/decisions/`; search by topic rather than loading the entire journal. For consequential changes to module boundaries, interfaces, dependencies, data contracts or scientific architecture, create an ADR using `docs/decisions/ADR_TEMPLATE.md` in the same change. Record alternatives, trade-offs and revisit conditions; do not invent historical rationale. Routine fixes need no ADR.
+- Before changing an architectural choice, read the relevant records in `docs/adr/`; search by topic rather than loading the entire journal. For consequential changes to module boundaries, interfaces, dependencies, data contracts or scientific architecture, create an ADR using `docs/adr/ADR_TEMPLATE.md` in the same change. Record alternatives, trade-offs and revisit conditions; do not invent historical rationale. Routine fixes need no ADR.
 - Keep ADRs and experiment records in the same numbered journal. Decision acceptance is not implementation completion or scientific validation. ADRs cannot override OpenSpec gates or authorize deferred work; reconcile requirements first. Supersede choices with linked new records, preserving original evidence.
-- Record consequential scientific, performance and architectural decisions in `docs/decisions/` using its lightweight record structure. Separate observations, hypotheses and conditional mathematical arguments; link evidence and the measured code revision, including failures and unresolved checks.
+- Record consequential scientific, performance and architectural decisions in `docs/adr/` using its lightweight record structure. Separate observations, hypotheses and conditional mathematical arguments; link evidence and the measured code revision, including failures and unresolved checks.
 - Evidence-only/documentation commits may preserve failed experiments after checking accuracy, links and artifact syntax. Explicitly label incomplete implementation; exclude unverified code and do not treat such commits as satisfying implementation test or milestone gates. Preserve earlier evidence when a later decision supersedes it.
 
 - Work on `dev` unless the user specifies another branch.

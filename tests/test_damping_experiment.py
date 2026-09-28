@@ -17,7 +17,7 @@ from test_targeting_experiment import REFERENCE, SCENARIO, pipeline as d7_pipeli
 from test_research_propagation import _rig
 
 
-DAMPING = Path("docs/decisions/experiments/0086-targeting-study.json")
+DAMPING = Path("docs/adr/experiments/0086-targeting-study.json")
 
 
 @pytest.mark.parametrize("trials", [1, 2])

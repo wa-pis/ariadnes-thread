@@ -18,7 +18,7 @@ from space_nav.scenario import load_scenario
 from test_research_propagation import _rig
 
 
-REFERENCE = Path("docs/decisions/experiments/0079-research-reference.json")
+REFERENCE = Path("docs/adr/experiments/0079-research-reference.json")
 SCENARIO = Path("examples/m3_feasible_mission.toml")
 
 
