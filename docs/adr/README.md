@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0089 — Local response diagnosis](0089-local-response-diagnosis.md) — linear prediction disagrees with retained propagation; bounded derivative study recommended.
 - [0088 — Damping does not improve](0088-damping-does-not-improve.md) — completed D8 study; neither fraction selected.
 - [0087 — Retained-step damping](0087-retained-direction-damping.md) — current ADR; implementation verified, live study pending.
 

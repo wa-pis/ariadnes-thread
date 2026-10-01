@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D8.2 at `6f2a06c`: 9 arcs / 10.51 s; neither fraction improves. Next: read-only response diagnosis.
+Diagnosis at `4d7342e`: linear model predicts improvement but observed response disagrees. Next: specify bounded local-response study.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D8.2 at `6f2a06c`: 9 arcs / 10.51 s; neither fraction improves. Next: read-only 
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest evidence: [ADR 0088](docs/adr/0088-damping-does-not-improve.md); 69 focused tests and independent readback pass; full suite reused from D8.1.
+- Latest diagnosis: [ADR 0089](docs/adr/0089-local-response-diagnosis.md); signs/order checked, cancellation and extrapolation observed; no new native run.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

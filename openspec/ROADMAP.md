@@ -47,8 +47,11 @@ Any further scope expansion needs a revised contract; strict M3 gates remain ope
 
 D8.2 completed one live study: [ADR 0088](../docs/adr/0088-damping-does-not-improve.md).
 Nine arcs completed in 10.51 s; alpha=0.5/0.25 increased scores by 5.01%/1.49%.
-Neither trial was selected; no tighter run. Next: read-only response diagnosis
-before specifying further targeting work. The completed D8 contract was to replay the baseline, then test the
+Neither trial was selected; no tighter run. [ADR 0089](../docs/adr/0089-local-response-diagnosis.md)
+checks signs/order and shows local prediction disagreement, large cancellation
+and extrapolation beyond probe sizes. Next: specify a bounded local-response
+study before further targeting; no D9 implementation or native run yet.
+The completed D8 contract was to replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first
 improvement and validate it once with tighter settings. One shared 300 s budget,
 at most 3 control attempts / 4 evaluations / 12 arcs. No new probes or solve,
