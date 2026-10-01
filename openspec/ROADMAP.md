@@ -45,7 +45,10 @@ Any further scope expansion needs a revised contract; strict M3 gates remain ope
 
 ### Next bounded research step
 
-D8.1 is implemented and tested, not run on the live mission: replay the baseline, then test the
+D8.2 completed one live study: [ADR 0088](../docs/adr/0088-damping-does-not-improve.md).
+Nine arcs completed in 10.51 s; alpha=0.5/0.25 increased scores by 5.01%/1.49%.
+Neither trial was selected; no tighter run. Next: read-only response diagnosis
+before specifying further targeting work. The completed D8 contract was to replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first
 improvement and validate it once with tighter settings. One shared 300 s budget,
 at most 3 control attempts / 4 evaluations / 12 arcs. No new probes or solve,

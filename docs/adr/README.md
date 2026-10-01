@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0088 — Damping does not improve](0088-damping-does-not-improve.md) — completed D8 study; neither fraction selected.
 - [0087 — Retained-step damping](0087-retained-direction-damping.md) — current ADR; implementation verified, live study pending.
 
 ### Historical decision and evidence records
