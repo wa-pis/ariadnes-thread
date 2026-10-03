@@ -1,5 +1,11 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D10 — proposed central columns (2026-10-04; approval required)
+
+- [x] D10.1 Draft the bounded central-column question, thirteen-command nominal schedule, pinned 0079/0086/0092 bindings, baseline/positive replay gates, central/forward/even formulas, retained-direction comparison, exploratory thresholds, 13/13/39 budget, stops and honest evidence semantics. ADR 0093 is proposed; verify strict OpenSpec, documentation links, diff and legacy checksum. No runtime change, native study or approval implied.
+- [ ] D10.2 After explicit scope approval, reuse existing preparation/composer with a separate private diagnostic mode and budget. Verify independent linear/quadratic six-column oracles, control order/units, central/forward/even identity and cancellation, zero/nonfinite ratio handling, threshold equality/failure, all reference identities, baseline/positive replay mismatch, seed-based +/- commands, frozen settings/target, fresh environments, analytic/native/event failures, 13/13/39 counters and shared deadline, exclusive finite evidence and unchanged D4–D9 behavior. Run focused/native regressions, full suite, Ruff, strict OpenSpec and legacy checks; document implementation in an ADR before completion.
+- [ ] D10.3 After D10.2 passes, execute one 300-second/39-arc nominal study and retain finite evidence plus ADR, including failure or timeout. Independently verify hashes, thirteen commands, residuals, replay comparisons, six central/forward/even columns and contributions, two D9 slope criteria, budgets and absence of solve/selection/retry. Update roadmap/state; no automatic second scale/profile or mission qualification.
+
 ### Research D9 — local directional response (specified 2026-10-03)
 
 - [x] D9.1 Specify signed scales, paired profiles, reference binding, formulas, consistency thresholds, counters, stop rules and evidence semantics; verify strict OpenSpec and document the rationale in ADR 0090. No runtime change or native experiment.

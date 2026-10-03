@@ -1,5 +1,40 @@
 ## Context
 
+### Research D10 — proposed central-column diagnosis (approval required)
+
+D9 central directional response is relatively stable across its sampled scales
+and profiles but disagrees with the retained forward Jacobian. Test whether
+central columns at the original D7 increments reproduce that response before
+considering another correction. ADR 0093 is proposed, not implementation approval.
+Reuse preparation, pinned references, command validation, three-arc composition,
+sampled guards and nominal settings; keep the private mode and its own budget.
+
+Bind 0079/0086/0092 to the hashes and replay gates in the research requirement.
+Retain current source identity separately from imported historical hashes.
+Verify a nominal baseline against all three, then evaluate +/-h for each control
+in existing order, independently from the seed. Verify every positive run against
+its retained D7 counterpart before starting its negative partner. No target or
+duration-handoff convention changes. All twelve probes use fresh environments.
+One 300-second deadline covers thirteen controls/evaluations and 39 native arcs;
+there is no guarantee of completion, retry, budget expansion or tighter run.
+
+With existing residual scaling and T=(0.25,0.25,600) repeated twice, h=(1e-5,1e-5,1)
+repeated twice, compute central C_i, forward F_i and even E_i as specified.
+Use compensated sums for cancelling directional contributions. Reconstruct
+F_i-C_i=E_i and g_forward-g_central=sum(E_i*z_i) as arithmetic diagnostics,
+not physical error estimates. Report signed historical column differences and
+sum-of-contribution-norms divided by norm-of-sum, null with reason at zero or
+nonfinite ratios. Do not compute a new solve, rank or selected control.
+
+Compare g_central with both retained nominal D9 slopes using the fixed positive
+norm(g_D7) denominator and <=0.10 criterion. This is a one-profile, one-increment
+test; it cannot validate every column or cross-profile derivative accuracy.
+Preserve all failures and partial complete pairs, without a whole-matrix claim
+until every evaluation completes. D10.1 proposes the contract; D10.2 requires
+approval and independent arithmetic/orchestration checks plus full-suite tests;
+D10.3 then runs one bounded study and checks its evidence independently.
+No UI, production targeting, strict M3 archival or automation restart follows.
+
 ### Research D9 — bounded local directional-response diagnosis
 
 ADR 0089 identifies disagreement between the retained linear model and observed

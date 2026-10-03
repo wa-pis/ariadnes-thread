@@ -1,5 +1,35 @@
 ## ADDED Requirements
 
+### Requirement: Approval-gated central-column research diagnosis
+D10 SHALL remain inactive until its proposed scope in ADR 0093 receives explicit
+user approval. If approved, it SHALL test a nominal central Jacobian at the
+original six D7 probe increments without selecting commands, solving another
+correction, changing production settings or modifying D4–D9 contracts.
+
+#### Scenario: Bind retained evidence and replay nominal inputs
+- **WHEN** an approved D10 invocation receives 0079, 0086 and 0092
+- **THEN** it verifies the pinned SHA256 hashes 17f03d9557be6e439af5f1c388e1eb092f55236b3c2afc3de65006d5f639c235, c370c31f4a3dcd1f3ef324d0f2331bb46d707af0eae6d256ee935471a6c9233d and 164760a35451b3e8cf43bf2213e8466a331dbcb85004249e134e9daefa1a7374 respectively, scenario/candidate/seed/target, resource/runtime/settings identity and completed retained diagnostics before perturbation
+- **AND** it verifies the finite retained rank-six D7 direction/Jacobian and nonzero predicted norm, replays all four nominal baseline boundaries against all three references at identical epochs/frames within 10 m, 0.0001 m/s and 0.000001 kg, and verifies each positive probe against its matching D7 run with those same gates before the corresponding negative probe
+- **AND** any mismatch stops without running later commands, while cross-profile baseline disagreement is retained as context rather than used to relax replay gates
+
+#### Scenario: Evaluate only the prescribed central columns
+- **WHEN** the baseline replay passes
+- **THEN** D10 forms twelve independent seed-based perturbations, positive then negative per column, in departure then arrival azimuth/elevation/duration order with h=(0.00001 rad,0.00001 rad,1 s) repeated twice, using the existing canonical command gates, fixed target epoch and fresh matched environments
+- **AND** the baseline and twelve probes use nominal settings only, with limits of thirteen control attempts counted before analytic validation, thirteen evaluations and thirty-nine native launches under one cooperative 300-second clock from input verification through reporting
+- **AND** analytic rejection, sampled event, native failure, nonfinite calculation or deadline terminates the invocation without retries, tighter runs, chained controls, incomplete endpoints or automatically enlarged limits
+
+#### Scenario: Compare central prediction with retained directional response
+- **WHEN** all thirteen nominal evaluations complete
+- **THEN** with scaled residuals r, original trust scales T and z=retained_step/T it reports columns C_i=(r(+h_i)-r(-h_i))*T_i/(2*h_i), F_i=(r(+h_i)-r(0))*T_i/h_i and E_i=((r(+h_i)-r(0))+(r(-h_i)-r(0)))*T_i/(2*h_i), including signed differences from the retained D7 columns and the arithmetic identity F_i-C_i=E_i
+- **AND** it reports each central/forward directional contribution, E_i*z_i, their sums, retained and new predictions and cancellation metrics, with explicit unavailable reasons for zero-denominator or nonfinite ratios
+- **AND** the two norm(D9_nominal(a)-sum(C_i*z_i))/norm(g_D7) checks for a=2^-14 and 2^-15 use the exploratory <=0.10 threshold; overall nominal directional consistency requires both checks, zero central direction is not divided by, and no correction solve or command selection occurs even if a probe improves
+- **AND** consistency at this one seed/increment/profile does not qualify individual columns, cross-profile sensitivity, derivative error bounds, convergence, accuracy, mission closure or continuous safety
+
+#### Scenario: Retain complete or failed column-study evidence
+- **WHEN** D10 completes or aborts
+- **THEN** finite exclusive-output JSON retains source/reference/resource/settings identities, historical imported hashes separately from current source hashes, seed and exact commands/column/sign ordering, raw SI and scaled residuals, replay differences, attempted/completed counters, available columns/checks with unavailable reasons and separate wall time
+- **AND** earlier evidence is untouched, unavailable summaries are not manufactured from incomplete pairs, continuous_safety_verified remains false and no additional native study is started automatically
+
 ### Requirement: Bounded local directional-response diagnosis
 D9 SHALL evaluate the retained D7 direction around the original seed using
 alpha=(0,+2^-14,-2^-14,+2^-15,-2^-15), with nominal then frozen tighter

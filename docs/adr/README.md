@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0093 — Central-column study proposal](0093-central-column-study-proposal.md) — approval required; thirteen nominal evaluations / 39 arcs, no solve or selection; implementation and experiment not started.
 - [0092 — Local response disagreement](0092-local-response-disagrees-with-jacobian.md) — D9.3 complete: 30 arcs / 95.75 s; eight of twelve checks pass, all four model checks fail; no selection or M3 qualification.
 - [0091 — Local response implementation](0091-local-response-implementation.md) — D9.2 verified; one D9.3 live study remains.
 - [0090 — Local response study contract](0090-local-response-study-contract.md) — D9 specified; implementation and experiment pending.

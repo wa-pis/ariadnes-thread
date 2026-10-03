@@ -60,8 +60,12 @@ retains thirty arcs / 95.75 s, exact baseline replays and eight of twelve passin
 checks. All four model checks fail (0.303–0.312 versus <=0.10); scale/profile and
 curvature checks pass. No command selected or mission qualification. 45 focused
 tests and independent hashes/controls/residuals/arithmetic checks pass; D9.2 full
-suite reused. Next: agree a bounded sensitivity-model question before further
-native work; no automatic repeat, column study or optimizer expansion.
+suite reused. Next proposal: [ADR 0093](../docs/adr/0093-central-column-study-proposal.md)
+specifies six central columns at original D7 increments, nominal only, thirteen
+evaluations / 39 arcs under 300 s. Compare their prediction with the two retained
+D9 nominal slopes; no new solve or selection. D10.1 documentation is complete;
+explicit scope approval is required before D10.2 implementation and its single
+D10.3 study. No automatic repeat, second scale/profile or optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first
 improvement and validate it once with tighter settings. One shared 300 s budget,
