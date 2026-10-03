@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D10.2 at `88b8afc` plus implementation: 246 focused / 3,856 full tests pass (578.59 s). Next: one D10.3 study (13 nominal runs / 39 arcs / 300 s), no retry or solve.
+D10.3 at `812ebeb`: 39 arcs / 27.93 s; central discrepancies 0.00573/0.01358 pass <=0.10, no solve/selection. Next: agree one bounded central-matrix correction scope; no automatic study.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D10.2 at `88b8afc` plus implementation: 246 focused / 3,856 full tests pass (578
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest physical evidence: [ADR 0092](docs/adr/0092-local-response-disagrees-with-jacobian.md); D10 implementation: [ADR 0094](docs/adr/0094-central-column-implementation.md), verified. Ruff/OpenSpec/legacy pass; strict M3 open.
+- Latest evidence: [ADR 0095](docs/adr/0095-central-columns-match-local-response.md); 72 D10 tests and independent hashes/arithmetic pass; D10.2 full suite reused (3,856 tests). Ruff/OpenSpec/legacy pass; strict M3 open.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

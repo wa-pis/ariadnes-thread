@@ -66,9 +66,14 @@ evaluations / 39 arcs under 300 s. Compare their prediction with the two retaine
 D9 nominal slopes; no new solve or selection. The user approved the scope on
 2026-10-04. D10.2 is verified in
 [ADR 0094](../docs/adr/0094-central-column-implementation.md): 246 focused / 3,856
-full tests pass (578.59 s), Ruff/strict OpenSpec/legacy pass. Next: its single D10.3
-study. No automatic repeat, second scale/profile
-or optimizer expansion.
+full tests pass (578.59 s), Ruff/strict OpenSpec/legacy pass. D10.3 completed at
+`812ebeb`: [ADR 0095](../docs/adr/0095-central-columns-match-local-response.md)
+retains 39 arcs / 27.93 s, exact baseline/positive replays and two passing central
+response discrepancies (0.00573/0.01358 versus <=0.10). No solve or selection;
+individual columns and strict M3 remain unqualified. 72 D10 checks and independent
+evidence verification pass; D10.2 full suite reused. Next: agree a bounded
+central-matrix correction contract. No automatic repeat, second scale/profile,
+new solve or optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first
 improvement and validate it once with tighter settings. One shared 300 s budget,
