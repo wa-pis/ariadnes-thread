@@ -1,11 +1,11 @@
 ## Context
 
-### Research D10 — proposed central-column diagnosis (approval required)
+### Research D10 — approved central-column diagnosis (2026-10-04)
 
 D9 central directional response is relatively stable across its sampled scales
 and profiles but disagrees with the retained forward Jacobian. Test whether
 central columns at the original D7 increments reproduce that response before
-considering another correction. ADR 0093 is proposed, not implementation approval.
+considering another correction. The user approved ADR 0093's scope on 2026-10-04.
 Reuse preparation, pinned references, command validation, three-arc composition,
 sampled guards and nominal settings; keep the private mode and its own budget.
 
@@ -30,8 +30,8 @@ Compare g_central with both retained nominal D9 slopes using the fixed positive
 norm(g_D7) denominator and <=0.10 criterion. This is a one-profile, one-increment
 test; it cannot validate every column or cross-profile derivative accuracy.
 Preserve all failures and partial complete pairs, without a whole-matrix claim
-until every evaluation completes. D10.1 proposes the contract; D10.2 requires
-approval and independent arithmetic/orchestration checks plus full-suite tests;
+until every evaluation completes. D10.1 records the contract; D10.2 requires
+independent arithmetic/orchestration checks plus full-suite tests;
 D10.3 then runs one bounded study and checks its evidence independently.
 No UI, production targeting, strict M3 archival or automation restart follows.
 

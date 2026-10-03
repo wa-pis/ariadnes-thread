@@ -1,8 +1,8 @@
 ## ADDED Requirements
 
 ### Requirement: Approval-gated central-column research diagnosis
-D10 SHALL remain inactive until its proposed scope in ADR 0093 receives explicit
-user approval. If approved, it SHALL test a nominal central Jacobian at the
+D10's scope in ADR 0093 was explicitly approved by the user on 2026-10-04.
+D10 SHALL test a nominal central Jacobian at the
 original six D7 probe increments without selecting commands, solving another
 correction, changing production settings or modifying D4–D9 contracts.
 

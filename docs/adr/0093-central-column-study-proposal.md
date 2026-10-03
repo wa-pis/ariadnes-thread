@@ -1,8 +1,8 @@
 # 0093 — Propose a bounded central-column sensitivity study
 
 Date: 2026-10-04
-Decision status: proposed (D10 scope; requires approval before implementation).
-Implementation: not started; specification and documentation verified separately.
+Decision status: accepted (user approved D10 on 2026-10-04).
+Implementation: tracked separately in [0094](0094-central-column-implementation.md); specification acceptance is not scientific validation.
 Scope / milestone: M3 research D10; no propagation in this stage.
 Base revision: `022cd79c13265fd09fc339aacc59e459d0af99ca`, clean before planning.
 Related OpenSpec: [requirements](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md), [design](../../openspec/changes/refine-physical-trajectory/design.md), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md).
@@ -27,13 +27,13 @@ gates unchanged. No new correction solve, trial selection or operational API.
   contributions to the inaccurate local prediction.
 - Recompute all columns at two scales and both profiles: deferred; 50 evaluations
   would increase cost without first testing the forward-versus-central hypothesis.
-- Central columns at the original increments, nominal profile only: proposed;
+- Central columns at the original increments, nominal profile only: selected;
   thirteen evaluations give an independent full matrix and allow comparison
   with already retained nominal D9 slopes, with a bounded compute budget.
 
 ## Decision and rationale
 
-Propose one baseline followed by +h_i and -h_i for each of six controls, in
+Use one baseline followed by +h_i and -h_i for each of six controls, in
 departure then arrival azimuth/elevation/duration order. Use original
 h=(1e-5 rad,1e-5 rad,1 s) repeated twice. Each command is independently formed
 from the seed and gets a fresh matched environment. This is thirteen controls,
@@ -67,12 +67,12 @@ and a contextual reason rather than nonfinite JSON.
 
 ## Consequences and revisit conditions
 
-This is a proposed diagnostic, not a repair or accepted new targeting model.
+This is an accepted diagnostic contract, not a repair or accepted new targeting model.
 A pass would support central directional consistency only at the sampled seed,
 increments and nominal profile. It would not validate every column, cross-profile
 derivatives, convergence, absolute accuracy, safety or strict M3 completion.
 Failure or timeout is retained without another scale, larger budget or retry.
-Implementation and the single live study remain separate tasks after approval.
+Implementation and the single live study remain separate checked tasks.
 Reuse existing preparation, command gates and composer; add no dependencies.
 UI, production physics, historical artifacts and paused automation are unchanged.
 

@@ -1,4 +1,4 @@
-"""Private bounded D7/D8/D9 orchestration; no production targeting or safety claim."""
+"""Private bounded D7–D10 orchestration; no production targeting or safety claim."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from . import research_correction as correction
+from . import research_columns as columns
 from . import research_response as response
 from . import trajectory as physical
 from .cli import _runtime_manifest
@@ -23,6 +24,7 @@ from .scenario import load_scenario
 
 
 _DAMPING_SHA256 = "c370c31f4a3dcd1f3ef324d0f2331bb46d707af0eae6d256ee935471a6c9233d"
+_COLUMN_REFERENCE_SHA256 = "164760a35451b3e8cf43bf2213e8466a331dbcb85004249e134e9daefa1a7374"
 _CONTROL_NAMES = ("departure_azimuth_rad", "departure_elevation_rad", "departure_duration_s",
                   "arrival_azimuth_rad", "arrival_elevation_rad", "arrival_duration_s")
 
@@ -110,6 +112,79 @@ class _ResponseBudget(_TargetingBudget):
         physical._RefinementBudget.begin_arc(self, first_in_evaluation=first_in_evaluation)
 
 
+@dataclass(slots=True)
+class _ColumnBudget(_TargetingBudget):
+    def begin_control(self) -> None:
+        self.check()
+        if (self.stopped or self.control_attempts >= 13
+                or self.control_attempts != self.propagation_evaluations
+                or self.completed_arcs != 3*self.propagation_evaluations
+                or self.completed_arcs != self.native_arc_propagations):
+            self._fail("D10-budget", "thirteen ordered nominal controls only; no retries")
+        physical._RefinementBudget.begin_control(self)
+
+    def begin_arc(self, *, first_in_evaluation: bool) -> None:
+        self.check()
+        first = self.native_arc_propagations % 3 == 0
+        if (self.stopped or self.native_arc_propagations >= 39
+                or self.completed_arcs != self.native_arc_propagations
+                or not isinstance(first_in_evaluation, bool) or first_in_evaluation != first
+                or self.control_attempts != self.propagation_evaluations+int(first)):
+            self._fail("D10-budget", "thirteen three-arc evaluations only; no retries")
+        physical._RefinementBudget.begin_arc(self, first_in_evaluation=first_in_evaluation)
+
+
+def _load_column_reference(path: Path, retained: dict[str, Any], stored: dict[str, Any]) -> dict[str, Any]:
+    raw = path.read_bytes()
+    if sha256(raw).hexdigest() != _COLUMN_REFERENCE_SHA256:
+        raise ValueError("column reference digest differs from ADR 0092")
+    payload = json.loads(raw)
+    _validate_column_reference(payload, retained, stored)
+    return payload
+
+
+def _validate_column_reference(
+    payload: dict[str, Any], retained: dict[str, Any], stored: dict[str, Any],
+) -> None:
+    """Validate D9 identity and the six historical positive-probe identities."""
+    json.dumps(payload, allow_nan=False)
+    data, d7 = payload["science"], retained["science"]
+    for key in ("scenario", "candidate", "runtime", "environment", "seed_controls"):
+        if data[key] != d7[key]:
+            raise ValueError(f"column reference {key} mismatch")
+    if (data["outcome"] != "completed" or data["reference_sha256"] != _REFERENCE_SHA256
+            or data["response_reference_sha256"] != _DAMPING_SHA256
+            or data["retained_control_step"] != d7["correction"]["control_step"]
+            or data["retained_jacobian"] != d7["correction"]["jacobian"]
+            or data["response_diagnostics"] is None or len(data["runs"]) != 10):
+        raise ValueError("column reference incomplete or direction mismatch")
+    seed = data["seed_controls"]
+    for i, alpha in enumerate(response._ALPHAS):
+        for k, profile in enumerate(("nominal", "tighter")):
+            entry = data["runs"][2*i+k]
+            run = entry["run"]
+            expected = [v+alpha*d for v, d in zip(seed, data["retained_control_step"])]
+            if (entry["alpha"] != alpha or entry["controls"] != expected
+                    or run["outcome"] != "completed" or run["profile"] != profile
+                    or run["target_state"] != stored[profile]["target_state"]
+                    or run["integrator_settings"] != stored[profile]["integrator_settings"]):
+                raise ValueError("column reference paired run identity mismatch")
+    for i, h in enumerate(correction._PROBE_STEPS):
+        entry = d7["runs"][i+1]
+        run = entry["run"]
+        expected = [v+(h if j == i else 0) for j, v in enumerate(seed)]
+        if (entry["role"] != f"probe-{i}" or entry["controls"] != expected
+                or run["outcome"] != "completed" or run["profile"] != "nominal"
+                or run["target_state"] != stored["nominal"]["target_state"]
+                or run["integrator_settings"] != stored["nominal"]["integrator_settings"]):
+            raise ValueError("historical positive probe identity mismatch")
+    slopes = data["response_diagnostics"]["profiles"]["nominal"]["slopes"]
+    if len(slopes) != 2:
+        raise ValueError("column reference requires two nominal slopes")
+    for slope in slopes:
+        physical._finite_cartesian_values(slope, "retained nominal slope")
+
+
 def _load_damping_reference(path: Path, stored: dict[str, Any]) -> dict[str, Any]:
     raw = path.read_bytes()
     if sha256(raw).hexdigest() != _DAMPING_SHA256:
@@ -180,13 +255,16 @@ def _terminal_residual(run: ResearchRun) -> tuple[float, ...]:
 def _run_targeting(
     scenario: Scenario, reference: Path, *, damping_reference: Path | None = None,
     response_reference: Path | None = None,
+    column_references: tuple[Path, Path] | None = None,
 ) -> dict[str, Any]:
     """One update at most; preserve diagnostics after failure, never retry."""
     damping = damping_reference is not None
     local_response = response_reference is not None
-    if damping and local_response:
-        raise ValueError("damping and response modes are mutually exclusive")
-    budget_type = _ResponseBudget if local_response else (_DampingBudget if damping else _TargetingBudget)
+    local_columns = column_references is not None
+    if sum((damping, local_response, local_columns)) > 1:
+        raise ValueError("damping, response and column modes are mutually exclusive")
+    budget_type = (_ColumnBudget if local_columns else _ResponseBudget if local_response
+                   else _DampingBudget if damping else _TargetingBudget)
     budget = budget_type("d0001-t0035", 300.0)
     science: dict[str, Any] = {
         "research_only": True, "continuous_safety_verified": False,
@@ -216,6 +294,16 @@ def _run_targeting(
                        baseline_profile_comparison=None, diagnostic_threshold=response._THRESHOLD,
                        interpretation="Local directional response only; no command selection, derivative "
                        "error bound, accuracy, continuous safety or strict M3 qualification.")
+    if local_columns:
+        science.update(maximum_controls=13, maximum_evaluations=13, maximum_native_arcs=39,
+                       expected_response_reference_sha256=_DAMPING_SHA256,
+                       expected_column_reference_sha256=_COLUMN_REFERENCE_SHA256,
+                       column_reference_sha256=None, response_baseline_comparison=None,
+                       column_baseline_comparison=None, positive_probe_comparisons=[],
+                       column_pairs=[], column_diagnostics=None,
+                       column_unavailable_reason="study-not-completed", selected_alpha=None,
+                       interpretation="Nominal central-column diagnosis only; no solve or selection, "
+                       "column/cross-profile accuracy, continuous safety or strict M3 qualification.")
     stage = "reference-verification"
     previous: list[physical._PhysicalEnvironment] = []
     with SCIENCE_LOCK:
@@ -224,18 +312,26 @@ def _run_targeting(
             stored = _load_reference(reference, scenario)
             science["reference_sha256"] = _REFERENCE_SHA256
             budget.check()
-            if damping or local_response:
+            if damping or local_response or local_columns:
                 stage = "damping-reference-verification"
-                retained = _load_damping_reference(response_reference if local_response else damping_reference, stored)
-                science.update(**{("response_reference_sha256" if local_response else "damping_reference_sha256"):
+                direction_path = (column_references[0] if local_columns else
+                                  response_reference if local_response else damping_reference)
+                retained = _load_damping_reference(direction_path, stored)
+                science.update(**{("response_reference_sha256" if local_response or local_columns else "damping_reference_sha256"):
                                   _DAMPING_SHA256},
                                imported_source_sha256=retained["source_sha256"],
                                retained_control_step=retained["science"]["correction"]["control_step"])
-                if local_response:
+                if local_response or local_columns:
                     stage = "direction-verification"
                     science["retained_jacobian"] = retained["science"]["correction"]["jacobian"]
                     direction = response._direction(science["retained_jacobian"], science["retained_control_step"])
                     science["predicted_direction"] = direction
+                if local_columns:
+                    stage = "column-reference-verification"
+                    column_reference = _load_column_reference(column_references[1], retained, stored)
+                    science.update(column_reference_sha256=_COLUMN_REFERENCE_SHA256,
+                                   imported_column_source_sha256=column_reference["source_sha256"],
+                                   baseline_profile_comparison=column_reference["science"]["baseline_profile_comparison"])
                 budget.check()
             stage = "candidate-verification"
             values = dict(stored["provenance"]["candidate"])
@@ -283,7 +379,8 @@ def _run_targeting(
             science["seed_controls"] = seed
 
             def evaluate(role: str, controls: tuple[float, ...], *, tighter: bool = False,
-                         alpha: float | None = None) -> ResearchRun:
+                         alpha: float | None = None, column: int | None = None,
+                         sign: int | None = None) -> ResearchRun:
                 nonlocal stage
                 stage = role
                 budget.check()
@@ -292,6 +389,8 @@ def _run_targeting(
                 if damping and tighter:
                     budget.begin_tighter()
                 entry: dict[str, Any] = {"role": role, "controls": controls, "run": None, "reason": None}
+                if column is not None:
+                    entry.update(column=column, sign=sign, probe_step=correction._PROBE_STEPS[column])
                 if damping or local_response:
                     entry["alpha"] = alpha
                 science["runs"].append(entry)
@@ -325,15 +424,45 @@ def _run_targeting(
             science["baseline_comparison"] = _compare_boundaries(_run_data(baseline), stored["nominal"])
             if not all(d["within_thresholds"] for d in science["baseline_comparison"]):
                 raise ValueError("baseline drift; probes not started")
-            if damping or local_response:
-                comparison_key = "response_baseline_comparison" if local_response else "damping_baseline_comparison"
+            if damping or local_response or local_columns:
+                comparison_key = "response_baseline_comparison" if local_response or local_columns else "damping_baseline_comparison"
                 science[comparison_key] = _compare_boundaries(
                     _run_data(baseline), retained["science"]["runs"][0]["run"],
                 )
                 if not all(d["within_thresholds"] for d in science[comparison_key]):
                     raise ValueError("D7 baseline drift; damping not started")
             base_residual = _terminal_residual(baseline)
-            if local_response:
+            if local_columns:
+                stage = "column-baseline-replay"
+                science["column_baseline_comparison"] = _compare_boundaries(
+                    _run_data(baseline), column_reference["science"]["runs"][0]["run"])
+                if not all(d["within_thresholds"] for d in science["column_baseline_comparison"]):
+                    raise ValueError("D9 baseline drift; columns not started")
+                base_scaled = correction._residual(base_residual).scaled
+                for i, h in enumerate(correction._PROBE_STEPS):
+                    pair_values = []
+                    for sign in (1, -1):
+                        controls = tuple(v+(sign*h if j == i else 0) for j, v in enumerate(seed))
+                        trial = evaluate(f"column-{i}-{sign:+d}", controls, column=i, sign=sign)
+                        if sign == 1:
+                            stage = f"positive-probe-{i}-replay"
+                            differences = _compare_boundaries(_run_data(trial), retained["science"]["runs"][i+1]["run"])
+                            science["positive_probe_comparisons"].append(dict(column=i, differences=differences))
+                            if not all(d["within_thresholds"] for d in differences):
+                                raise ValueError("positive probe drift; negative probe not started")
+                        pair_values.append(correction._residual(_terminal_residual(trial)).scaled)
+                    stage = f"column-{i}-arithmetic"
+                    historical = tuple(row[i] for row in science["retained_jacobian"])
+                    science["column_pairs"].append(columns._column_pair(base_scaled, *pair_values, i,
+                        historical, tuple(science["retained_control_step"])))
+                    budget.check()
+                stage = "column-arithmetic"
+                slopes = column_reference["science"]["response_diagnostics"]["profiles"]["nominal"]["slopes"]
+                science["column_diagnostics"] = columns._column_diagnostics(
+                    science["column_pairs"], direction, tuple(tuple(v) for v in slopes))
+                science["column_unavailable_reason"] = None
+                science["outcome"] = "completed"
+            elif local_response:
                 tighter_baseline = evaluate("baseline-tighter", seed, tighter=True, alpha=0.0)
                 science["tighter_baseline_comparison"] = _compare_boundaries(
                     _run_data(tighter_baseline), stored["tighter"],
@@ -415,6 +544,8 @@ def _run_targeting(
             budget.stopped = True
             if local_response and science["response_diagnostics"] is None:
                 science["response_unavailable_reason"] = science["reason"]
+            if local_columns and science["column_diagnostics"] is None:
+                science["column_unavailable_reason"] = science["reason"]
             if damping:
                 for fraction in science["fractions"]:
                     if fraction["status"] == "not-started":
@@ -440,10 +571,13 @@ def main(argv: list[str] | None = None) -> int:
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--damping-reference", type=Path, help="Opt into D8 with retained Decision 0086 JSON")
     modes.add_argument("--response-reference", type=Path, help="Opt into D9 with retained Decision 0086 JSON")
+    modes.add_argument("--column-references", type=Path, nargs=2, metavar=("D7", "D9"),
+                       help="Opt into D10 with retained 0086 and 0092 JSON")
     args = parser.parse_args(argv)
     scenario = load_scenario(args.scenario)
     with args.output.open("x", encoding="utf-8") as stream:
-        options = ({"response_reference": args.response_reference} if args.response_reference is not None else
+        options = ({"column_references": tuple(args.column_references)} if args.column_references is not None else
+                   {"response_reference": args.response_reference} if args.response_reference is not None else
                    {"damping_reference": args.damping_reference} if args.damping_reference is not None else {})
         result = _run_targeting(scenario, args.reference, **options)
         json.dump(result, stream, indent=2, sort_keys=True, allow_nan=False)
