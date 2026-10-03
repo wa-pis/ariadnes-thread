@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0092 — Local response disagreement](0092-local-response-disagrees-with-jacobian.md) — D9.3 complete: 30 arcs / 95.75 s; eight of twelve checks pass, all four model checks fail; no selection or M3 qualification.
 - [0091 — Local response implementation](0091-local-response-implementation.md) — D9.2 verified; one D9.3 live study remains.
 - [0090 — Local response study contract](0090-local-response-study-contract.md) — D9 specified; implementation and experiment pending.
 - [0089 — Local response diagnosis](0089-local-response-diagnosis.md) — linear prediction disagrees with retained propagation; bounded derivative study recommended.

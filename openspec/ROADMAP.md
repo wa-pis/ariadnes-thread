@@ -54,8 +54,14 @@ alpha=+/-2^-14 and +/-2^-15, each paired nominal/tighter, at most five controls,
 ten evaluations and thirty arcs under 300 s. Twelve response consistency checks
 use an explicit exploratory 0.10 threshold. D9.2 is implemented and verified in
 [ADR 0091](../docs/adr/0091-local-response-implementation.md): 346 focused / 3,784
-full tests pass (598.42 s), Ruff/strict OpenSpec/legacy pass. Next: D9.3's single
-experiment; no live D9 study or mission qualification yet.
+full tests pass (598.42 s), Ruff/strict OpenSpec/legacy pass. D9.3 completed at
+`1db4706`: [ADR 0092](../docs/adr/0092-local-response-disagrees-with-jacobian.md)
+retains thirty arcs / 95.75 s, exact baseline replays and eight of twelve passing
+checks. All four model checks fail (0.303–0.312 versus <=0.10); scale/profile and
+curvature checks pass. No command selected or mission qualification. 45 focused
+tests and independent hashes/controls/residuals/arithmetic checks pass; D9.2 full
+suite reused. Next: agree a bounded sensitivity-model question before further
+native work; no automatic repeat, column study or optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first
 improvement and validate it once with tighter settings. One shared 300 s budget,
