@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-10-02. Keep this file under 60 lines; replace stale status instead
+Updated: 2026-10-03. Keep this file under 60 lines; replace stale status instead
 of appending a diary. This is a navigation aid, not an alternative specification.
 
 ## Goal and scheduling
@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-Diagnosis at `4d7342e`: linear model predicts improvement but observed response disagrees. Next: specify bounded local-response study.
+D9 specified at `a0d5863`: signed small steps, paired profiles, 300 s / 30 arcs. Next: D9.2 implementation and verification.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ Diagnosis at `4d7342e`: linear model predicts improvement but observed response 
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest diagnosis: [ADR 0089](docs/adr/0089-local-response-diagnosis.md); signs/order checked, cancellation and extrapolation observed; no new native run.
+- Latest contract: [ADR 0090](docs/adr/0090-local-response-study-contract.md); strict OpenSpec passes; no runtime change or live D9 run.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

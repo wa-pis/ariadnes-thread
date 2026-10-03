@@ -1,5 +1,57 @@
 ## Context
 
+### Research D9 — bounded local directional-response diagnosis
+
+ADR 0089 identifies disagreement between the retained linear model and observed
+finite steps. Measure local consistency before another solve. Reuse the private
+research preparation, pinned 0079/0086 validation, canonical command gate,
+three-arc composer, sampled guards and nominal/tighter settings. No new physics,
+dependency or public API is needed; use a separate diagnostic mode and local
+budget rather than relaxing D7/D8 limits.
+
+Use alpha=(0,+2^-14,-2^-14,+2^-15,-2^-15), each independently from the seed.
+The larger departure duration change is only 0.03662109375 s; the smaller is
+0.018310546875 s. The largest component is about 0.8245 and 0.4123 of its
+original D7 probe increment. These scales test the local response rather than
+extrapolating the retained full correction. They are diagnostic choices, not
+validated optimal finite-difference increments.
+
+For each distinct command, run nominal then tighter with frozen canonical
+controls in fresh resource-matched environments. Seed nominal must match 0079
+and 0086, and seed tighter must match 0079 tighter, at all four boundaries with
+the existing epoch/frame/state/mass checks. Do not require nominal and tighter
+to agree with one another: their discrepancy is part of this experiment.
+Validate nonzero finite g=J*(dx/T) before perturbations. Preserve the fixed
+target/cutoff epoch; changed durations alter ignition/cutoff handoff times via
+the existing composer, not the target. Stop on any failed replay or guard.
+
+In each profile, let r(alpha) be the signed SI residual scaled by
+(1000,1000,1000,0.01,0.01,0.01). For a>0 compute
+D(a)=(r(a)-r(-a))/(2*a) and C(a)=(r(a)+r(-a)-2*r(0))/(2*a).
+Report g, every signed prediction r(0)+alpha*g, actual change, model-error
+vectors and separate physical miss norms. Normalize derivative/model discrepancy,
+curvature, scale difference and cross-profile slope difference by G=norm(g).
+The four model and curvature checks, two scale checks and two profile checks
+each use <=0.10 as an exploratory consistency threshold. Require all twelve
+checks for overall diagnostic consistency. This chosen threshold does not
+certify a derivative error bound or change any production numerical gate.
+No score decrease selects a command and no new least-squares solve runs.
+
+Use one shared cooperative 300-second deadline, five control attempts,
+ten evaluations and thirty native arc launches. Count each nominal command
+before analytic validation and its frozen tighter repeat only as an evaluation.
+Check ordered completed-arc handoff, fresh environments, no retries and no
+deadline reset. Any failure terminates the invocation; preserve completed
+diagnostics and unavailable reasons without manufacturing unfinished endpoints.
+Finite exclusive JSON binds current and imported provenance separately and
+records thresholds, all signed commands/profiles, counts, guards and wall time.
+
+D9.1 freezes this specification. D9.2 implements and tests orchestration and
+pure response arithmetic with independent linear/quadratic oracles, full suite,
+Ruff, strict OpenSpec and legacy checks. D9.3 then executes one bounded live
+study and independently checks its evidence; retain negative outcomes.
+No production targeting, UI integration, M4-M6 or strict M3 archival follows.
+
 ### Research D8 — bounded damping of the retained D7 direction
 
 Decision 0086 measured a score increase of 23.84% for alpha=1. Test smaller

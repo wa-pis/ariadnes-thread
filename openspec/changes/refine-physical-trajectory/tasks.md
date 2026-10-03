@@ -1,5 +1,11 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D9 — local directional response (specified 2026-10-03)
+
+- [x] D9.1 Specify signed scales, paired profiles, reference binding, formulas, consistency thresholds, counters, stop rules and evidence semantics; verify strict OpenSpec and document the rationale in ADR 0090. No runtime change or native experiment.
+- [ ] D9.2 Reuse existing preparation/composition with a D9-local 5/10/30 budget and diagnostic mode. Verify independent linear/quadratic arithmetic oracles, threshold equality/failure, zero/nonfinite handling, fixed-target seed-based commands, both replay checks, paired frozen settings, fresh environments, ordering/counters, shared deadline, analytic/native/event failures, exclusive finite output and unchanged D4-D8 behavior. Run focused/native regressions, full suite, Ruff, strict OpenSpec and legacy checks before implementation completion.
+- [ ] D9.3 After D9.2 passes, execute one live 300-second/30-arc study; retain finite JSON and ADR including failed consistency or abort. Independently verify hashes, commands, raw residuals, formulas, twelve thresholds, counts and absence of selection/solve/retry; update roadmap/state while strict M3 stays open.
+
 ### Research D8 — retained-direction damping (specified 2026-09-28)
 
 - [x] D8.1 Reuse research preparation/composition with pinned 0079/0086 binding and a D8-local budget; verify independent seed-based half/quarter commands, canonicalization, alpha-dependent decrease/closure edges, early selection/skipped fractions, baseline mismatch, fresh environments, frozen tighter commands, failure stops and 3/4/12 accounting under one deadline. Verify unchanged D4–D7 behavior, finite reports/output preservation and focused native regressions; run full suite, Ruff, strict OpenSpec and legacy checks before implementation completion. Decision 0087: 301 focused / 3,739 full tests pass (806.13 s); Ruff, strict OpenSpec and legacy checksum pass. No live D8 experiment.

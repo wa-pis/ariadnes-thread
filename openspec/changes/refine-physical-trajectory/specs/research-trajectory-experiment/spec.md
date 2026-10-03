@@ -1,5 +1,36 @@
 ## ADDED Requirements
 
+### Requirement: Bounded local directional-response diagnosis
+D9 SHALL evaluate the retained D7 direction around the original seed using
+alpha=(0,+2^-14,-2^-14,+2^-15,-2^-15), with nominal then frozen tighter
+propagation for each command. It SHALL preserve the physical model, target,
+reference bindings and existing D4-D8 contracts without selecting a command
+or performing another correction solve.
+
+#### Scenario: Verify inputs and both baseline profiles
+- **WHEN** D9 receives the pinned 0079 and 0086 artifacts
+- **THEN** it verifies their hashes, scenario, candidate, seed, finite rank-six direction, Jacobian and resource/runtime/settings identity under the shared deadline
+- **AND** the nominal baseline must match the retained 0079/0086 nominal boundaries and the tighter baseline must match 0079 tighter boundaries at identical epochs/frames within 10 m, 0.0001 m/s and 0.000001 kg before perturbations
+- **AND** nominal-versus-tighter disagreement is retained as a diagnostic and does not replace within-profile replay checks or prevent the requested sensitivity study
+
+#### Scenario: Execute fixed small perturbations
+- **WHEN** both baseline replay checks pass
+- **THEN** the four signed perturbations are independently formed as seed+alpha*retained_step in the specified order, validated through the existing command gates, and each receives nominal then tighter propagation with frozen canonical controls and fresh matched environments
+- **AND** control attempts count five distinct nominal commands before analytic validation, while all ten profile evaluations and thirty native launches are counted independently; frozen tighter runs add no control attempt
+- **AND** one cooperative 300-second clock covers verification through reporting; a command rejection, sampled event, native failure, nonfinite calculation or deadline stops all later runs without retries or partial endpoints
+
+#### Scenario: Quantify response rather than choose a correction
+- **WHEN** all ten profile evaluations complete
+- **THEN** using scaled signed residuals r and g=J*(retained_step/trust_scales), D9 reports predicted and observed changes at every signed alpha, central slopes D(a)=(r(+a)-r(-a))/(2*a) and curvature C(a)=(r(+a)+r(-a)-2*r(0))/(2*a) for a=2^-14 and 2^-15 in each profile
+- **AND** with G=norm(g)>0 it reports norm(D(a)-g)/G, norm(C(a))/G, norm(D(a)-D(a/2))/G and norm(D_nominal(a)-D_tighter(a))/G, including signed vectors and unavailable-ratio reasons rather than NaN or infinity
+- **AND** each discrepancy is diagnostically consistent when at most 0.10; overall consistency requires every model, curvature, scale and profile check to pass, and the report records actual thresholds without implying absolute accuracy, a derivative error bound, mission closure or continuous safety
+- **AND** zero predicted directional norm prevents perturbations with an explicit unavailable diagnostic; improvement/closure is informational only and no trial is selected even if its score decreases
+
+#### Scenario: Preserve complete or failed diagnostic evidence
+- **WHEN** D9 finishes or aborts
+- **THEN** finite exclusive-output JSON retains source/reference/resource/settings provenance, original direction/Jacobian, exact commands and alpha/profile ordering, residuals, baseline comparisons, completed discrepancies and attempted/completed counters with contextual reasons
+- **AND** missing comparisons remain absent with a reason, historical imported source hashes remain distinct from current hashes, wall time is separate, and continuous_safety_verified remains false
+
 ### Requirement: Bounded damping of a retained research correction
 D8 SHALL evaluate the retained D7 control direction at alpha=0.5 followed by
 alpha=0.25 only if the first completed nominal trial does not improve. It SHALL
