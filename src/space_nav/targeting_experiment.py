@@ -1,4 +1,4 @@
-"""Private bounded D7/D8 orchestration; no production targeting or safety claim."""
+"""Private bounded D7/D8/D9 orchestration; no production targeting or safety claim."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from . import research_correction as correction
+from . import research_response as response
 from . import trajectory as physical
 from .cli import _runtime_manifest
 from .coast_diagnostic import _difference, _environment_manifest, _load_reference, _REFERENCE_SHA256
@@ -86,6 +87,29 @@ class _DampingBudget(_TargetingBudget):
         physical._RefinementBudget.begin_arc(self, first_in_evaluation=first_in_evaluation)
 
 
+@dataclass(slots=True)
+class _ResponseBudget(_TargetingBudget):
+    def begin_control(self) -> None:
+        self.check()
+        if (self.stopped or self.control_attempts >= 5
+                or self.propagation_evaluations != 2*self.control_attempts
+                or self.completed_arcs != 3*self.propagation_evaluations
+                or self.completed_arcs != self.native_arc_propagations):
+            self._fail("D9-budget", "five ordered paired commands only; no retries")
+        physical._RefinementBudget.begin_control(self)
+
+    def begin_arc(self, *, first_in_evaluation: bool) -> None:
+        self.check()
+        first = self.native_arc_propagations % 3 == 0
+        expected_controls = (self.propagation_evaluations + int(first) + 1)//2
+        if (self.stopped or self.native_arc_propagations >= 30
+                or self.completed_arcs != self.native_arc_propagations
+                or not isinstance(first_in_evaluation, bool) or first_in_evaluation != first
+                or self.control_attempts != expected_controls):
+            self._fail("D9-budget", "ten ordered three-arc evaluations only; no retries")
+        physical._RefinementBudget.begin_arc(self, first_in_evaluation=first_in_evaluation)
+
+
 def _load_damping_reference(path: Path, stored: dict[str, Any]) -> dict[str, Any]:
     raw = path.read_bytes()
     if sha256(raw).hexdigest() != _DAMPING_SHA256:
@@ -155,10 +179,15 @@ def _terminal_residual(run: ResearchRun) -> tuple[float, ...]:
 
 def _run_targeting(
     scenario: Scenario, reference: Path, *, damping_reference: Path | None = None,
+    response_reference: Path | None = None,
 ) -> dict[str, Any]:
     """One update at most; preserve diagnostics after failure, never retry."""
     damping = damping_reference is not None
-    budget = (_DampingBudget if damping else _TargetingBudget)("d0001-t0035", 300.0)
+    local_response = response_reference is not None
+    if damping and local_response:
+        raise ValueError("damping and response modes are mutually exclusive")
+    budget_type = _ResponseBudget if local_response else (_DampingBudget if damping else _TargetingBudget)
+    budget = budget_type("d0001-t0035", 300.0)
     science: dict[str, Any] = {
         "research_only": True, "continuous_safety_verified": False,
         "origin": "SSB", "orientation": "J2000", "units": "SI",
@@ -178,6 +207,15 @@ def _run_targeting(
                        expected_damping_reference_sha256=_DAMPING_SHA256,
                        damping_baseline_comparison=None, selected_alpha=None,
                        fractions=[{"alpha": a, "status": "not-started", "reason": None} for a in (0.5, 0.25)])
+    if local_response:
+        science.update(maximum_controls=5, maximum_evaluations=10, maximum_native_arcs=30,
+                       expected_response_reference_sha256=_DAMPING_SHA256,
+                       response_reference_sha256=None, response_diagnostics=None,
+                       response_unavailable_reason="study-not-completed", selected_alpha=None,
+                       response_baseline_comparison=None, tighter_baseline_comparison=None,
+                       baseline_profile_comparison=None, diagnostic_threshold=response._THRESHOLD,
+                       interpretation="Local directional response only; no command selection, derivative "
+                       "error bound, accuracy, continuous safety or strict M3 qualification.")
     stage = "reference-verification"
     previous: list[physical._PhysicalEnvironment] = []
     with SCIENCE_LOCK:
@@ -186,12 +224,18 @@ def _run_targeting(
             stored = _load_reference(reference, scenario)
             science["reference_sha256"] = _REFERENCE_SHA256
             budget.check()
-            if damping:
+            if damping or local_response:
                 stage = "damping-reference-verification"
-                retained = _load_damping_reference(damping_reference, stored)
-                science.update(damping_reference_sha256=_DAMPING_SHA256,
+                retained = _load_damping_reference(response_reference if local_response else damping_reference, stored)
+                science.update(**{("response_reference_sha256" if local_response else "damping_reference_sha256"):
+                                  _DAMPING_SHA256},
                                imported_source_sha256=retained["source_sha256"],
                                retained_control_step=retained["science"]["correction"]["control_step"])
+                if local_response:
+                    stage = "direction-verification"
+                    science["retained_jacobian"] = retained["science"]["correction"]["jacobian"]
+                    direction = response._direction(science["retained_jacobian"], science["retained_control_step"])
+                    science["predicted_direction"] = direction
                 budget.check()
             stage = "candidate-verification"
             values = dict(stored["provenance"]["candidate"])
@@ -248,7 +292,7 @@ def _run_targeting(
                 if damping and tighter:
                     budget.begin_tighter()
                 entry: dict[str, Any] = {"role": role, "controls": controls, "run": None, "reason": None}
-                if damping:
+                if damping or local_response:
                     entry["alpha"] = alpha
                 science["runs"].append(entry)
                 prepared = physical._prepare_burn_controls(
@@ -277,18 +321,44 @@ def _run_targeting(
                 budget.check()
                 return run
 
-            baseline = evaluate("baseline", seed)
+            baseline = evaluate("baseline", seed, alpha=0.0 if local_response else None)
             science["baseline_comparison"] = _compare_boundaries(_run_data(baseline), stored["nominal"])
             if not all(d["within_thresholds"] for d in science["baseline_comparison"]):
                 raise ValueError("baseline drift; probes not started")
-            if damping:
-                science["damping_baseline_comparison"] = _compare_boundaries(
+            if damping or local_response:
+                comparison_key = "response_baseline_comparison" if local_response else "damping_baseline_comparison"
+                science[comparison_key] = _compare_boundaries(
                     _run_data(baseline), retained["science"]["runs"][0]["run"],
                 )
-                if not all(d["within_thresholds"] for d in science["damping_baseline_comparison"]):
+                if not all(d["within_thresholds"] for d in science[comparison_key]):
                     raise ValueError("D7 baseline drift; damping not started")
             base_residual = _terminal_residual(baseline)
-            if correction._residual(base_residual).closes:
+            if local_response:
+                tighter_baseline = evaluate("baseline-tighter", seed, tighter=True, alpha=0.0)
+                science["tighter_baseline_comparison"] = _compare_boundaries(
+                    _run_data(tighter_baseline), stored["tighter"],
+                )
+                if not all(d["within_thresholds"] for d in science["tighter_baseline_comparison"]):
+                    raise ValueError("tighter baseline drift; perturbations not started")
+                science["baseline_profile_comparison"] = _compare_boundaries(
+                    _run_data(baseline), _run_data(tighter_baseline),
+                )
+                nominal_values = [correction._residual(base_residual).scaled]
+                tighter_values = [correction._residual(_terminal_residual(tighter_baseline)).scaled]
+                for alpha in response._ALPHAS[1:]:
+                    controls = tuple(v+alpha*d for v, d in zip(seed, science["retained_control_step"]))
+                    trial = evaluate(f"response-{alpha:g}", controls, alpha=alpha)
+                    frozen = tuple(science["runs"][-1]["controls"])
+                    tighter = evaluate(f"response-{alpha:g}-tighter", frozen, tighter=True, alpha=alpha)
+                    nominal_values.append(correction._residual(_terminal_residual(trial)).scaled)
+                    tighter_values.append(correction._residual(_terminal_residual(tighter)).scaled)
+                stage = "response-arithmetic"
+                science["response_diagnostics"] = response._response_diagnostics(
+                    direction, tuple(nominal_values), tuple(tighter_values),
+                )
+                science["response_unavailable_reason"] = None
+                science["outcome"] = "completed"
+            elif correction._residual(base_residual).closes:
                 science["outcome"] = "baseline-closed"
             elif damping:
                 science["outcome"] = "not-improving"
@@ -343,6 +413,8 @@ def _run_targeting(
             science["reason"] = f"{stage}: {exc}"
         finally:
             budget.stopped = True
+            if local_response and science["response_diagnostics"] is None:
+                science["response_unavailable_reason"] = science["reason"]
             if damping:
                 for fraction in science["fractions"]:
                     if fraction["status"] == "not-started":
@@ -365,12 +437,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("scenario", type=Path)
     parser.add_argument("reference", type=Path)
     parser.add_argument("output", type=Path)
-    parser.add_argument("--damping-reference", type=Path, help="Opt into D8 with retained Decision 0086 JSON")
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--damping-reference", type=Path, help="Opt into D8 with retained Decision 0086 JSON")
+    modes.add_argument("--response-reference", type=Path, help="Opt into D9 with retained Decision 0086 JSON")
     args = parser.parse_args(argv)
     scenario = load_scenario(args.scenario)
     with args.output.open("x", encoding="utf-8") as stream:
-        result = (_run_targeting(scenario, args.reference, damping_reference=args.damping_reference)
-                  if args.damping_reference is not None else _run_targeting(scenario, args.reference))
+        options = ({"response_reference": args.response_reference} if args.response_reference is not None else
+                   {"damping_reference": args.damping_reference} if args.damping_reference is not None else {})
+        result = _run_targeting(scenario, args.reference, **options)
         json.dump(result, stream, indent=2, sort_keys=True, allow_nan=False)
         stream.write("\n")
     return 1 if result["science"]["outcome"] == "aborted" else 0

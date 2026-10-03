@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0091 — Local response implementation](0091-local-response-implementation.md) — D9.2 verified; one D9.3 live study remains.
 - [0090 — Local response study contract](0090-local-response-study-contract.md) — D9 specified; implementation and experiment pending.
 - [0089 — Local response diagnosis](0089-local-response-diagnosis.md) — linear prediction disagrees with retained propagation; bounded derivative study recommended.
 - [0088 — Damping does not improve](0088-damping-does-not-improve.md) — completed D8 study; neither fraction selected.

@@ -49,12 +49,13 @@ D8.2 completed one live study: [ADR 0088](../docs/adr/0088-damping-does-not-impr
 Nine arcs completed in 10.51 s; alpha=0.5/0.25 increased scores by 5.01%/1.49%.
 Neither trial was selected; no tighter run. [ADR 0089](../docs/adr/0089-local-response-diagnosis.md)
 checks signs/order and shows local prediction disagreement, large cancellation
-and extrapolation beyond probe sizes. Next: specify a bounded local-response
-study before further targeting. D9.1 is now specified in [ADR 0090](../docs/adr/0090-local-response-study-contract.md):
+and extrapolation beyond probe sizes. D9.1 is specified in [ADR 0090](../docs/adr/0090-local-response-study-contract.md):
 alpha=+/-2^-14 and +/-2^-15, each paired nominal/tighter, at most five controls,
 ten evaluations and thirty arcs under 300 s. Twelve response consistency checks
-use an explicit exploratory 0.10 threshold. Next: D9.2 implementation/tests,
-then D9.3's single experiment; neither is complete yet.
+use an explicit exploratory 0.10 threshold. D9.2 is implemented and verified in
+[ADR 0091](../docs/adr/0091-local-response-implementation.md): 346 focused / 3,784
+full tests pass (598.42 s), Ruff/strict OpenSpec/legacy pass. Next: D9.3's single
+experiment; no live D9 study or mission qualification yet.
 The completed D8 contract was to replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first
 improvement and validate it once with tighter settings. One shared 300 s budget,

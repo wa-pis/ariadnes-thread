@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-10-03. Keep this file under 60 lines; replace stale status instead
+Updated: 2026-10-04. Keep this file under 60 lines; replace stale status instead
 of appending a diary. This is a navigation aid, not an alternative specification.
 
 ## Goal and scheduling
@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D9 specified at `a0d5863`: signed small steps, paired profiles, 300 s / 30 arcs. Next: D9.2 implementation and verification.
+D9.2 based on `8f199b5`: 346 focused / 3,784 full tests pass (598.42 s). Next: D9.3 single live response study.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D9 specified at `a0d5863`: signed small steps, paired profiles, 300 s / 30 arcs.
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest contract: [ADR 0090](docs/adr/0090-local-response-study-contract.md); strict OpenSpec passes; no runtime change or live D9 run.
+- Latest checks: [ADR 0091](docs/adr/0091-local-response-implementation.md); Ruff/OpenSpec/legacy pass; no live D9 run or strict M3 qualification.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).
