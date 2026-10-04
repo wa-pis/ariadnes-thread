@@ -76,8 +76,11 @@ evidence verification pass; D10.2 full suite reused. D11.1 is specified in
 one central-matrix capped solve/trial, conditional frozen tighter repeat,
 two controls / three evaluations / nine arcs under 300 s. D11.2 is verified in
 [ADR 0097](../docs/adr/0097-central-correction-implementation.md): 236 focused /
-3,896 full tests pass (596.41 s), Ruff/strict OpenSpec/legacy pass. Next: one
-D11.3 study. No extra fractions, probes, repeated solves,
+3,896 full tests pass (596.41 s), Ruff/strict OpenSpec/legacy pass. D11.3 at local
+`b6d4513`: [ADR 0098](../docs/adr/0098-central-correction-does-not-improve.md)
+retains six arcs / 5.59 s, exact baseline replays, score ratio 1.23457 despite
+linear prediction 0.99154; no selection/tighter. Push pending explicit approval.
+No automatic next experiment. No extra fractions, probes, repeated solves,
 automatic retries or production optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first

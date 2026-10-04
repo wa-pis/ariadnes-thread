@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D11.2 verified at contract base `63150b7`: 236 focused / 3,896 full tests (596.41 s), Ruff/strict OpenSpec/legacy pass. One central-matrix correction; next: one D11.3 study, 2 controls / 3 evaluations / 9 arcs / 300 s.
+D11 complete at local `b6d4513`: 236 focused / 3,896 full tests (596.41 s); six native arcs / 5.59 s, trial score +23.46%, no selection/tighter. Push blocked: request explicit origin/dev approval; no automatic further research.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D11.2 verified at contract base `63150b7`: 236 focused / 3,896 full tests (596.4
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest physical evidence: [ADR 0095](docs/adr/0095-central-columns-match-local-response.md); implementation: [ADR 0097](docs/adr/0097-central-correction-implementation.md). D11 live study pending; strict M3 open.
+- Latest evidence: [ADR 0098](docs/adr/0098-central-correction-does-not-improve.md); implementation: [ADR 0097](docs/adr/0097-central-correction-implementation.md). Checks pass; strict M3 open. Automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).
