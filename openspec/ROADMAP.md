@@ -83,8 +83,10 @@ linear prediction 0.99154; no selection/tighter. Code/evidence pushed as
 `b6d4513` / `00a5802` after explicit user approval. D12 is approved in
 [ADR 0099](../docs/adr/0099-central-direction-damping-contract.md): half/quarter
 of the retained central step, first improvement gets one frozen tighter repeat,
-3 controls / 4 evaluations / 12 arcs / 300 s. Next: D12.2 implementation/full
-verification, then one D12.3 study. No automatic subsequent experiment.
+3 controls / 4 evaluations / 12 arcs / 300 s. D12.2 verified in
+[ADR 0100](../docs/adr/0100-central-damping-implementation.md): 287 focused /
+3,947 full tests pass (609.93 s), Ruff/strict OpenSpec/legacy pass.
+Next: one D12.3 study. No automatic subsequent experiment.
 No extra fractions, probes, repeated solves,
 automatic retries or production optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the

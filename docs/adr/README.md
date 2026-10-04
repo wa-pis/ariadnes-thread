@@ -64,7 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
-- [0099 — Central-direction damping contract](0099-central-direction-damping-contract.md) — D12 approved: retained half/quarter steps, conditional tighter, 3/4/12 budget; implementation/study pending.
+- [0100 — Central damping implementation](0100-central-damping-implementation.md) — D12.2: 287 focused / 3,947 full tests pass; live study pending.
+- [0099 — Central-direction damping contract](0099-central-direction-damping-contract.md) — D12 approved: retained half/quarter steps, conditional tighter, 3/4/12 budget.
 - [0098 — Central correction does not improve](0098-central-correction-does-not-improve.md) — D11.3: six arcs / 5.59 s; measured score +23.46%, no tighter run or selection; strict M3 open.
 - [0097 — Central correction implementation](0097-central-correction-implementation.md) — D11.2 verified: 236 focused / 3,896 full tests.
 - [0096 — One central-matrix correction contract](0096-single-central-correction-contract.md) — D11 specified: baseline, one capped solve/trial, conditional tighter repeat, 2/3/9 budget.

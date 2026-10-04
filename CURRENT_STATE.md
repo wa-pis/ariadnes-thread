@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D11 complete, code `b6d4513` / evidence `00a5802` pushed: 236 focused / 3,896 full tests; six arcs / 5.59 s, score +23.46%. D12 approved/specification complete: next implement/test retained half/quarter schedule, then one study; 3 controls / 4 evaluations / 12 arcs / 300 s.
+D11 complete, code `b6d4513` / evidence `00a5802` pushed: six arcs / 5.59 s, score +23.46%. D12.2 verified at base `40f8396`: 287 focused / 3,947 full tests (609.93 s), Ruff/strict OpenSpec/legacy pass. Next: one D12.3 study; 3 controls / 4 evaluations / 12 arcs / 300 s.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D11 complete, code `b6d4513` / evidence `00a5802` pushed: 236 focused / 3,896 fu
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest evidence: [ADR 0098](docs/adr/0098-central-correction-does-not-improve.md); next contract: [ADR 0099](docs/adr/0099-central-direction-damping-contract.md). Documentation checks pass; runtime tests not rerun for D12 planning. Strict M3 open; automation paused.
+- Latest evidence: [ADR 0098](docs/adr/0098-central-correction-does-not-improve.md); implementation: [ADR 0100](docs/adr/0100-central-damping-implementation.md). D12 live study pending. Strict M3 open; automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).
