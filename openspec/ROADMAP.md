@@ -79,8 +79,13 @@ two controls / three evaluations / nine arcs under 300 s. D11.2 is verified in
 3,896 full tests pass (596.41 s), Ruff/strict OpenSpec/legacy pass. D11.3 at local
 `b6d4513`: [ADR 0098](../docs/adr/0098-central-correction-does-not-improve.md)
 retains six arcs / 5.59 s, exact baseline replays, score ratio 1.23457 despite
-linear prediction 0.99154; no selection/tighter. Push pending explicit approval.
-No automatic next experiment. No extra fractions, probes, repeated solves,
+linear prediction 0.99154; no selection/tighter. Code/evidence pushed as
+`b6d4513` / `00a5802` after explicit user approval. D12 is approved in
+[ADR 0099](../docs/adr/0099-central-direction-damping-contract.md): half/quarter
+of the retained central step, first improvement gets one frozen tighter repeat,
+3 controls / 4 evaluations / 12 arcs / 300 s. Next: D12.2 implementation/full
+verification, then one D12.3 study. No automatic subsequent experiment.
+No extra fractions, probes, repeated solves,
 automatic retries or production optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first

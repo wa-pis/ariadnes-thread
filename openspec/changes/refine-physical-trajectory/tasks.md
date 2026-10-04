@@ -1,5 +1,11 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D12 — retained central-direction damping (approved 2026-10-04)
+
+- [x] D12.1 Specify pinned 0079/0098 bindings, retained algebra/raw-residual checks, baseline replay/closure, independent half/quarter schedule, alpha-dependent decrease, first selection/frozen tighter/no-fallback semantics and 3/4/12/300-second budget in ADR 0099 and OpenSpec. Verify hashes, links, strict validation, diff and legacy checksum; no runtime/native work in this stage.
+- [ ] D12.2 Reuse damping preparation/composer and gates without new solver/probes/dependencies. Verify independent fraction/threshold/unit/prediction oracles, retained identity/algebra/raw residual mismatch, replay/resources/closed baseline, both selection branches and no selection, canonical independent/frozen commands, failed tighter retention/no fallback, analytic/native/event/nonfinite failures, 3/4/12 counters/shared deadline and exclusive finite output. Verify unchanged D4–D11, focused/native regressions, full suite, Ruff, strict OpenSpec and legacy; record implementation ADR before completion.
+- [ ] D12.3 After D12.2 passes, execute one study under 300 seconds/twelve arcs; retain finite JSON and ADR including failure/non-improvement. Independently check hashes, commands, raw residuals, thresholds, selection/skips/optional agreement, counters and no solve/probes/retries. Update roadmap/state; no strict M3 qualification or automatic next experiment.
+
 ### Research D11 — one central-matrix correction (specified 2026-10-04)
 
 - [x] D11.1 Specify pinned 0079/0095 binding, retained-matrix reconstruction, baseline replay/closed handling, one rank-six solve/cap, predicted-decrease guard, alpha=1 trial, conditional tighter agreement, 2/3/9 budget, stops and evidence semantics in ADR 0096 and OpenSpec. Verify strict validation, hashes, links, diff, legacy checksum and independent synthetic solve/cap algebra; no runtime or native experiment in this stage.

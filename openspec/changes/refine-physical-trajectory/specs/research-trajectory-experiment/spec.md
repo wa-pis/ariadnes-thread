@@ -1,5 +1,27 @@
 ## ADDED Requirements
 
+### Requirement: Bounded damping of the retained central correction
+D12 SHALL evaluate only alpha=0.5 and conditionally alpha=0.25 of the retained
+D11 correction from the original seed, without a new solve, derivative probes,
+chained updates or changes to D4–D11 scientific contracts.
+
+#### Scenario: Bind central correction evidence and replay the baseline
+- **WHEN** D12 receives pinned 0079 and 0098 with SHA256 17f03d9557be6e439af5f1c388e1eb092f55236b3c2afc3de65006d5f639c235 and b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057
+- **THEN** it verifies scenario/candidate/seed/target/runtime/resources/settings, historical 0079/0095 identities, completed nominal baseline and alpha=1 trial, not-improving outcome without selection/tighter, and finite rank-six matrix/correction with algebraically consistent cap, trust units and prediction; raw endpoint residuals and recorded improvement are reconstructed without a solver or native probes
+- **AND** a fresh nominal baseline matches both retained baselines at four identical epochs/frames within 10 m, 0.0001 m/s and 0.000001 kg; mismatch stops before fractions, and both existing 1000 m and 0.01 m/s closure gates stop as baseline-closed with both fractions skipped
+
+#### Scenario: Test independent fractions and stop at the first improvement
+- **WHEN** the baseline replay passes without closure
+- **THEN** D12 evaluates seed+0.5*retained_step and only after its completed non-improvement evaluates seed+0.25*retained_step, independently from the seed through existing canonical angle/window/mass gates, with unchanged target/settings and fresh environments
+- **AND** empirical improvement requires S_trial <= S_baseline*(1-0.0001*alpha) or both closure gates, with actual thresholds, physical misses, raw/scaled residuals and score ratios recorded; any linear prediction is diagnostic only and cannot select a command
+- **AND** the first improvement selects exactly one frozen canonical-command tighter evaluation with identical initial/target states and four-boundary 10 m, 0.0001 m/s and 0.000001 kg agreement gates; remaining fractions are skipped, and disagreement or failure preserves nominal improvement without fallback
+
+#### Scenario: Bound one invocation and retain honest evidence
+- **WHEN** D12 completes or a replay/analytic/event/native/nonfinite/deadline failure occurs
+- **THEN** one shared cooperative 300-second clock permits at most three nominal control attempts counted before analytic validation, four evaluations and twelve native launches, with no extra control counted for the frozen tighter evaluation
+- **AND** finite exclusive-output JSON retains reference/current/imported source provenance, retained matrix/step, exact fraction commands, completed diagnostics, skipped/unavailable reasons, attempted/completed counters and separate wall time, without unfinished endpoints
+- **AND** no retry, additional fraction, derivative probe, new solve or budget increase occurs; continuous_safety_verified remains false and improvement, closure and numerical agreement are separate from strict M3 qualification; no further experiment starts automatically
+
 ### Requirement: One retained-central-matrix research correction
 D11 SHALL test at most one correction computed from the retained D10 central
 matrix around the original seed, without re-probes, iterative targeting,

@@ -1,5 +1,22 @@
 ## Context
 
+### Research D12 — damp the retained central correction
+
+ADR 0099 binds one half/quarter schedule to pinned 0079/0098, without solving
+again. Reuse existing damping orchestration, preparation/composer and guards.
+Validate the retained D11 identities, raw residuals, rank-six matrix, cap/unit
+and prediction algebra before native work; historical/current hashes stay separate.
+Replay both nominal baselines at unchanged four-boundary/mass gates. Closed
+baseline skips fractions. Try seed+0.5*dx, then seed+0.25*dx only after completed
+non-improvement, never chained controls. Use alpha-dependent sufficient decrease
+or both closure gates; any prediction is diagnostic, not acceptance evidence.
+First improvement gets one frozen fresh tighter repeat and skips later fractions.
+Failure/disagreement never enables fallback. One 300-second clock, 3 controls /
+4 evaluations / 12 arcs, no new solve/probes/retries or budget growth. Preserve
+completed evidence and explicit unavailable/skipped reasons. D12.1 specifies;
+D12.2 implements/tests including full regression; only then D12.3 runs once.
+No UI, production optimizer, automation restart or strict M3 gate relaxation.
+
 ### Research D11 — one correction from retained central columns
 
 ADR 0096 bounds the next research question: one new direction from the D10 matrix,
