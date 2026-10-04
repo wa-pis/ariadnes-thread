@@ -86,7 +86,11 @@ of the retained central step, first improvement gets one frozen tighter repeat,
 3 controls / 4 evaluations / 12 arcs / 300 s. D12.2 verified in
 [ADR 0100](../docs/adr/0100-central-damping-implementation.md): 287 focused /
 3,947 full tests pass (609.93 s), Ruff/strict OpenSpec/legacy pass.
-Next: one D12.3 study. No automatic subsequent experiment.
+D12.3 at `08a2ce4`: [ADR 0101](../docs/adr/0101-central-fractions-do-not-improve.md)
+retains nine arcs / 7.87 s, exact replays, score ratios 1.05056/1.01401;
+neither fraction improves, no selection/tighter. Independent evidence checks and
+51 D12 tests pass; full suite reused from D12.2. Stop automatic research and
+review the targeting approach before agreeing further scope.
 No extra fractions, probes, repeated solves,
 automatic retries or production optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the
