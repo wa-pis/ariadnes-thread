@@ -1,5 +1,31 @@
 ## Context
 
+### Research D11 — one correction from retained central columns
+
+ADR 0096 bounds the next research question: one new direction from the D10 matrix,
+one nominal trial, one conditional tighter check. Bind 0079/0095 hashes, scenario,
+seed, target, runtime/resources/settings and reconstruct the six central columns
+from retained raw residuals. Require complete D10 and both passing slope checks;
+retain historical hashes separately from current source. No new native probes.
+
+Replay a nominal baseline against both references before a solve. If closed,
+stop baseline-closed. Otherwise reuse D7 solve/cap semantics with central J:
+NumPy least squares, rcond=1e-12, finite rank six, divisor=max(1,norm_inf(z)),
+physical dx=T*z/divisor. Record original and capped vectors, singular values,
+prediction and its score. Zero step or no representable predicted decrease stops.
+Reusing the fresh baseline r avoids assuming small allowed replay drift is zero.
+
+Evaluate seed+dx once at alpha=1 through shared command gates/composer and fresh
+nominal resources. Use existing alpha=1 sufficient-decrease/closure arithmetic.
+Non-improvement ends the study; only improvement gets one frozen fresh tighter
+repeat. Agreement and improvement are separate, with no fallback after failure.
+Keep one 300-second clock, two controls / three evaluations / nine arcs, stopping
+on existing failures and preserving complete diagnostics only. No extra fraction,
+solve, retry, rank fallback, production/UI change or scientific gate relaxation.
+D11.1 freezes the specification; D11.2 tests arithmetic/orchestration plus full
+regressions before completion; D11.3 then runs one native study and independently
+verifies its retained evidence, whether improving, non-improving or aborted.
+
 ### Research D10 — approved central-column diagnosis (2026-10-04)
 
 D9 central directional response is relatively stable across its sampled scales

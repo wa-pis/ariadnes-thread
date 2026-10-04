@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D10.3 at `812ebeb`: 39 arcs / 27.93 s; central discrepancies 0.00573/0.01358 pass <=0.10, no solve/selection. Next: agree one bounded central-matrix correction scope; no automatic study.
+D11.1 specified at `fa62e71`: one central-matrix correction, baseline + trial + conditional tighter, 2 controls / 3 evaluations / 9 arcs / 300 s. Next: D11.2 implementation/tests, then one D11.3 study.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D10.3 at `812ebeb`: 39 arcs / 27.93 s; central discrepancies 0.00573/0.01358 pas
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest evidence: [ADR 0095](docs/adr/0095-central-columns-match-local-response.md); 72 D10 tests and independent hashes/arithmetic pass; D10.2 full suite reused (3,856 tests). Ruff/OpenSpec/legacy pass; strict M3 open.
+- Latest physical evidence: [ADR 0095](docs/adr/0095-central-columns-match-local-response.md); next contract: [ADR 0096](docs/adr/0096-single-central-correction-contract.md). Documentation/OpenSpec/legacy checks pass; runtime tests not rerun; strict M3 open.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

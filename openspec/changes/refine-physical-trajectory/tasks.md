@@ -1,5 +1,11 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D11 — one central-matrix correction (specified 2026-10-04)
+
+- [x] D11.1 Specify pinned 0079/0095 binding, retained-matrix reconstruction, baseline replay/closed handling, one rank-six solve/cap, predicted-decrease guard, alpha=1 trial, conditional tighter agreement, 2/3/9 budget, stops and evidence semantics in ADR 0096 and OpenSpec. Verify strict validation, hashes, links, diff, legacy checksum and independent synthetic solve/cap algebra; no runtime or native experiment in this stage.
+- [ ] D11.2 Reuse preparation/composer, shared matrix solve/cap and improvement gates in a separately budgeted private mode. Verify independent linear matrix/sign/order/unit/cap oracles, rank loss, zero/nonfinite and predicted-decrease failure, retained matrix/reference/replay/resource mismatches, closed baseline, analytic/native/event failures, exact trial/frozen commands, improving/non-improving/tighter disagreement, 2/3/9 counters, shared deadline and exclusive finite evidence. Verify unchanged D4–D10, focused/native regressions, full suite, Ruff, strict OpenSpec and legacy; document implementation in an ADR before completion.
+- [ ] D11.3 After D11.2 passes, run one bounded 300-second/nine-arc study; retain finite evidence plus ADR even on non-improvement/abort. Independently check hashes, matrix, solve/rank/cap/prediction, commands, raw residuals, improvement/closure/optional agreement, counters and absence of retry/probes/second solve; update roadmap/state without strict M3 qualification or automatically starting further research.
+
 ### Research D10 — central columns (approved 2026-10-04)
 
 - [x] D10.1 Draft the bounded central-column question, thirteen-command nominal schedule, pinned 0079/0086/0092 bindings, baseline/positive replay gates, central/forward/even formulas, retained-direction comparison, exploratory thresholds, 13/13/39 budget, stops and honest evidence semantics. ADR 0093 was proposed, then approved by the user on 2026-10-04; strict OpenSpec, documentation links, diff and legacy checksum pass. The draft stage ran no native study and implied no approval by itself.

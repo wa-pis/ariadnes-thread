@@ -71,9 +71,12 @@ full tests pass (578.59 s), Ruff/strict OpenSpec/legacy pass. D10.3 completed at
 retains 39 arcs / 27.93 s, exact baseline/positive replays and two passing central
 response discrepancies (0.00573/0.01358 versus <=0.10). No solve or selection;
 individual columns and strict M3 remain unqualified. 72 D10 checks and independent
-evidence verification pass; D10.2 full suite reused. Next: agree a bounded
-central-matrix correction contract. No automatic repeat, second scale/profile,
-new solve or optimizer expansion.
+evidence verification pass; D10.2 full suite reused. D11.1 is specified in
+[ADR 0096](../docs/adr/0096-single-central-correction-contract.md): one baseline,
+one central-matrix capped solve/trial, conditional frozen tighter repeat,
+two controls / three evaluations / nine arcs under 300 s. Next: D11.2 implementation
+and verification, then one D11.3 study. No extra fractions, probes, repeated solves,
+automatic retries or production optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first
 improvement and validate it once with tighter settings. One shared 300 s budget,

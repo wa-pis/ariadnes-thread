@@ -1,5 +1,32 @@
 ## ADDED Requirements
 
+### Requirement: One retained-central-matrix research correction
+D11 SHALL test at most one correction computed from the retained D10 central
+matrix around the original seed, without re-probes, iterative targeting,
+additional fractions, changed settings or modifications to D4–D10 contracts.
+
+#### Scenario: Verify central evidence and replay the baseline
+- **WHEN** D11 receives pinned 0079 and 0095 with SHA256 17f03d9557be6e439af5f1c388e1eb092f55236b3c2afc3de65006d5f639c235 and 8be4356f4c339eaad9ca30ce2f49786d7e65498ae731fc468d8810836a97fb55
+- **THEN** it verifies completed D10 evidence, scenario/candidate/seed/target, reference/runtime/resource/settings identity, thirteen nominal runs, six finite ordered central columns reconstructed from raw endpoint residuals with the original scales, and both passing <=0.10 D10 nominal slope checks before preparing a correction
+- **AND** a fresh nominal baseline must match both retained nominal reports at all four identical epochs/frames within 10 m, 0.0001 m/s and 0.000001 kg; mismatch stops before the solve, and a baseline already within 1000 m and 0.01 m/s stops as baseline-closed without a solve or trial
+
+#### Scenario: Solve and cap one new direction
+- **WHEN** the baseline replay passes and is not closed
+- **THEN** D11 forms J with residual rows and central-control columns, solves J*z=-r once for the fresh scaled residual using NumPy least squares with rcond=0.000000000001, records finite singular values/rank and requires rank six without a fallback
+- **AND** it records uncapped z, divisor=max(1,norm_inf(z)), capped z, dx=T*z/divisor with T=(0.25 rad,0.25 rad,600 s) repeated twice, and the signed/scaled prediction r+J*(dx/T); a zero step, nonfinite result or predicted score not strictly below baseline stops before trial propagation
+
+#### Scenario: Evaluate one trial and optionally freeze it for tighter checking
+- **WHEN** the capped correction is available
+- **THEN** the sole nominal trial uses seed+dx at alpha=1 through existing canonical angle/window/mass gates, with the unchanged target and fresh matched environment
+- **AND** empirical improvement requires S_trial <= S_baseline*(1-0.0001) or both unchanged closure gates, with separate position/velocity misses, predicted/observed residual changes, score ratio and threshold; non-improvement stops without tighter propagation
+- **AND** only an improving trial receives one tighter evaluation with frozen canonical commands, initial and target states; all four boundaries use the existing 10 m, 0.0001 m/s and 0.000001 kg gates, and failed/unavailable agreement does not erase nominal improvement or trigger another command
+
+#### Scenario: Enforce a single invocation budget and preserve failure evidence
+- **WHEN** D11 completes or any replay/analytic/native/event/nonfinite/deadline gate fails
+- **THEN** one shared cooperative 300-second clock and limits of two control attempts, three evaluations and nine native launches apply from input verification through reporting, nominal attempts count before analytic validation, and the frozen tighter run adds no control attempt
+- **AND** finite exclusive-output JSON retains pinned/current/imported provenance, raw residuals, imported matrix, solve/cap/prediction, exact commands, available comparisons, attempted/completed counters, unavailable reasons and separate wall time; completed earlier diagnostics remain, unfinished endpoints do not
+- **AND** no retry, additional fraction, derivative probe, second solve or budget increase occurs, continuous_safety_verified stays false and improvement, closure and numerical agreement remain distinct from strict M3 or mission qualification
+
 ### Requirement: Approval-gated central-column research diagnosis
 D10's scope in ADR 0093 was explicitly approved by the user on 2026-10-04.
 D10 SHALL test a nominal central Jacobian at the
