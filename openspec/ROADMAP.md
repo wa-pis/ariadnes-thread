@@ -74,8 +74,10 @@ individual columns and strict M3 remain unqualified. 72 D10 checks and independe
 evidence verification pass; D10.2 full suite reused. D11.1 is specified in
 [ADR 0096](../docs/adr/0096-single-central-correction-contract.md): one baseline,
 one central-matrix capped solve/trial, conditional frozen tighter repeat,
-two controls / three evaluations / nine arcs under 300 s. Next: D11.2 implementation
-and verification, then one D11.3 study. No extra fractions, probes, repeated solves,
+two controls / three evaluations / nine arcs under 300 s. D11.2 is verified in
+[ADR 0097](../docs/adr/0097-central-correction-implementation.md): 236 focused /
+3,896 full tests pass (596.41 s), Ruff/strict OpenSpec/legacy pass. Next: one
+D11.3 study. No extra fractions, probes, repeated solves,
 automatic retries or production optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the
 retained D7 direction at alpha=0.5 and, only if needed, 0.25. Stop at the first

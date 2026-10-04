@@ -64,7 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
-- [0096 — One central-matrix correction contract](0096-single-central-correction-contract.md) — D11 specified: baseline, one capped solve/trial, conditional tighter repeat, 2/3/9 budget; implementation and native study pending.
+- [0097 — Central correction implementation](0097-central-correction-implementation.md) — D11.2 verified: 236 focused / 3,896 full tests; one bounded native study pending.
+- [0096 — One central-matrix correction contract](0096-single-central-correction-contract.md) — D11 specified: baseline, one capped solve/trial, conditional tighter repeat, 2/3/9 budget.
 - [0095 — Central columns match local response](0095-central-columns-match-local-response.md) — D10.3 complete: 39 arcs / 27.93 s; discrepancies 0.00573/0.01358 pass <=0.10, no solve/selection or mission qualification.
 - [0094 — Central-column implementation](0094-central-column-implementation.md) — D10.2 verified: 246 focused / 3,856 full tests; no live D10 study yet.
 - [0093 — Central-column study contract](0093-central-column-study-proposal.md) — approved 2026-10-04; thirteen nominal evaluations / 39 arcs, no solve or selection; implementation verified separately.

@@ -1,4 +1,4 @@
-"""Private bounded D7–D10 orchestration; no production targeting or safety claim."""
+"""Private bounded D7–D11 orchestration; no production targeting or safety claim."""
 
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ from .scenario import load_scenario
 
 _DAMPING_SHA256 = "c370c31f4a3dcd1f3ef324d0f2331bb46d707af0eae6d256ee935471a6c9233d"
 _COLUMN_REFERENCE_SHA256 = "164760a35451b3e8cf43bf2213e8466a331dbcb85004249e134e9daefa1a7374"
+_CENTRAL_REFERENCE_SHA256 = "8be4356f4c339eaad9ca30ce2f49786d7e65498ae731fc468d8810836a97fb55"
 _CONTROL_NAMES = ("departure_azimuth_rad", "departure_elevation_rad", "departure_duration_s",
                   "arrival_azimuth_rad", "arrival_elevation_rad", "arrival_duration_s")
 
@@ -132,6 +133,88 @@ class _ColumnBudget(_TargetingBudget):
                 or self.control_attempts != self.propagation_evaluations+int(first)):
             self._fail("D10-budget", "thirteen three-arc evaluations only; no retries")
         physical._RefinementBudget.begin_arc(self, first_in_evaluation=first_in_evaluation)
+
+
+@dataclass(slots=True)
+class _CentralBudget(_DampingBudget):
+    def begin_control(self) -> None:
+        if self.control_attempts >= 2:
+            self._fail("D11-budget", "baseline and one trial only")
+        _DampingBudget.begin_control(self)
+
+    def begin_tighter(self) -> None:
+        if self.control_attempts != 2:
+            self._fail("D11-budget", "tighter requires completed sole trial")
+        _DampingBudget.begin_tighter(self)
+
+    def begin_arc(self, *, first_in_evaluation: bool) -> None:
+        if self.native_arc_propagations >= 9:
+            self._fail("D11-budget", "three evaluations / nine arcs only")
+        _DampingBudget.begin_arc(self, first_in_evaluation=first_in_evaluation)
+
+
+def _load_central_reference(path: Path, stored: dict[str, Any]) -> dict[str, Any]:
+    raw = path.read_bytes()
+    if sha256(raw).hexdigest() != _CENTRAL_REFERENCE_SHA256:
+        raise ValueError("central reference digest differs from ADR 0095")
+    payload = json.loads(raw)
+    _validate_central_reference(payload, stored)
+    return payload
+
+
+def _validate_central_reference(payload: dict[str, Any], stored: dict[str, Any]) -> None:
+    """Bind completed D10 evidence and reconstruct every imported central column."""
+    json.dumps(payload, allow_nan=False)
+    data = payload["science"]
+    for key, expected in (("scenario", stored["scenario"]), ("candidate", stored["provenance"]["candidate"]),
+                          ("runtime", stored["provenance"]["runtime"]),
+                          ("environment", stored["provenance"]["environment"]),
+                          ("seed_controls", [stored["seed_commands"][n] for n in _CONTROL_NAMES]),
+                          ("reference_sha256", _REFERENCE_SHA256), ("response_reference_sha256", _DAMPING_SHA256),
+                          ("column_reference_sha256", _COLUMN_REFERENCE_SHA256), ("outcome", "completed")):
+        if data[key] != expected:
+            raise ValueError(f"central reference {key} mismatch")
+    checks = data["column_diagnostics"]["checks"]
+    if (len(data["runs"]) != 13 or len(data["column_pairs"]) != 6
+            or data["column_diagnostics"]["consistent"] is not True or len(checks) != 2):
+        raise ValueError("completed consistent central study required")
+    for alpha, check in zip((2**-14, 2**-15), checks):
+        ratio = physical._finite_float("retained central discrepancy", check["norm_ratio"])
+        if (check["alpha"] != alpha or check["threshold"] != .10 or check["within_threshold"] is not True
+                or not 0 <= ratio <= .10):
+            raise ValueError("central reference consistency check mismatch")
+    residuals = []
+    for j, entry in enumerate(data["runs"]):
+        run = entry["run"]
+        expected = list(data["seed_controls"])
+        if j:
+            i, sign = (j-1)//2, 1 if j % 2 else -1
+            h = correction._PROBE_STEPS[i]
+            expected[i] += sign*h
+            if (entry["column"], entry["sign"], entry["probe_step"]) != (i, sign, h):
+                raise ValueError("central reference column/sign mismatch")
+        if (entry["controls"] != expected or run["profile"] != "nominal" or run["outcome"] != "completed"
+                or run["integrator_settings"] != stored["nominal"]["integrator_settings"]
+                or run["target_state"] != stored["nominal"]["target_state"] or len(run["boundaries"]) != 4):
+            raise ValueError("central reference run identity mismatch")
+        end, target = run["boundaries"][-1], run["target_state"]
+        for key in ("epoch_tdb_s", "epoch_utc", "origin", "orientation"):
+            if end[key] != target[key]:
+                raise ValueError("central reference terminal frame/epoch mismatch")
+        raw = tuple(a-b for a, b in zip((*end["position_m"], *end["velocity_m_s"]),
+                                       (*target["position_m"], *target["velocity_m_s"])))
+        residual = correction._residual(raw)
+        if json.loads(json.dumps(asdict(residual))) != entry["residual"]:
+            raise ValueError("central reference raw residual mismatch")
+        residuals.append(residual.scaled)
+    for i, pair in enumerate(data["column_pairs"]):
+        historical = tuple(row[i] for row in data["retained_jacobian"])
+        rebuilt = columns._column_pair(residuals[0], residuals[1+2*i], residuals[2+2*i], i,
+                                       historical, tuple(data["retained_control_step"]))
+        if json.loads(json.dumps(rebuilt)) != pair:
+            raise ValueError("central reference reconstructed column mismatch")
+    if not all(d["within_thresholds"] for d in _compare_boundaries(data["runs"][0]["run"], stored["nominal"])):
+        raise ValueError("central reference baseline identity mismatch")
 
 
 def _load_column_reference(path: Path, retained: dict[str, Any], stored: dict[str, Any]) -> dict[str, Any]:
@@ -256,14 +339,16 @@ def _run_targeting(
     scenario: Scenario, reference: Path, *, damping_reference: Path | None = None,
     response_reference: Path | None = None,
     column_references: tuple[Path, Path] | None = None,
+    central_reference: Path | None = None,
 ) -> dict[str, Any]:
     """One update at most; preserve diagnostics after failure, never retry."""
     damping = damping_reference is not None
     local_response = response_reference is not None
     local_columns = column_references is not None
-    if sum((damping, local_response, local_columns)) > 1:
+    central = central_reference is not None
+    if sum((damping, local_response, local_columns, central)) > 1:
         raise ValueError("damping, response and column modes are mutually exclusive")
-    budget_type = (_ColumnBudget if local_columns else _ResponseBudget if local_response
+    budget_type = (_CentralBudget if central else _ColumnBudget if local_columns else _ResponseBudget if local_response
                    else _DampingBudget if damping else _TargetingBudget)
     budget = budget_type("d0001-t0035", 300.0)
     science: dict[str, Any] = {
@@ -304,6 +389,13 @@ def _run_targeting(
                        column_unavailable_reason="study-not-completed", selected_alpha=None,
                        interpretation="Nominal central-column diagnosis only; no solve or selection, "
                        "column/cross-profile accuracy, continuous safety or strict M3 qualification.")
+    if central:
+        science.update(maximum_controls=2, maximum_evaluations=3, maximum_native_arcs=9,
+                       expected_central_reference_sha256=_CENTRAL_REFERENCE_SHA256,
+                       central_reference_sha256=None, central_baseline_comparison=None, selected_alpha=None,
+                       tighter_status="not-started",
+                       interpretation="One research correction from retained central columns; improvement, "
+                       "closure and numerical agreement are distinct; no safety or strict M3 qualification.")
     stage = "reference-verification"
     previous: list[physical._PhysicalEnvironment] = []
     with SCIENCE_LOCK:
@@ -312,6 +404,13 @@ def _run_targeting(
             stored = _load_reference(reference, scenario)
             science["reference_sha256"] = _REFERENCE_SHA256
             budget.check()
+            if central:
+                stage = "central-reference-verification"
+                central_data = _load_central_reference(central_reference, stored)
+                science.update(central_reference_sha256=_CENTRAL_REFERENCE_SHA256,
+                               imported_source_sha256=central_data["source_sha256"],
+                               retained_jacobian=tuple(zip(*(p["central"] for p in central_data["science"]["column_pairs"]))))
+                budget.check()
             if damping or local_response or local_columns:
                 stage = "damping-reference-verification"
                 direction_path = (column_references[0] if local_columns else
@@ -386,12 +485,12 @@ def _run_targeting(
                 budget.check()
                 if not tighter and role != "baseline":
                     budget.begin_control()
-                if damping and tighter:
+                if (damping or central) and tighter:
                     budget.begin_tighter()
                 entry: dict[str, Any] = {"role": role, "controls": controls, "run": None, "reason": None}
                 if column is not None:
                     entry.update(column=column, sign=sign, probe_step=correction._PROBE_STEPS[column])
-                if damping or local_response:
+                if damping or local_response or central:
                     entry["alpha"] = alpha
                 science["runs"].append(entry)
                 prepared = physical._prepare_burn_controls(
@@ -432,7 +531,41 @@ def _run_targeting(
                 if not all(d["within_thresholds"] for d in science[comparison_key]):
                     raise ValueError("D7 baseline drift; damping not started")
             base_residual = _terminal_residual(baseline)
-            if local_columns:
+            if central:
+                stage = "central-baseline-replay"
+                science["central_baseline_comparison"] = _compare_boundaries(
+                    _run_data(baseline), central_data["science"]["runs"][0]["run"])
+                if not all(d["within_thresholds"] for d in science["central_baseline_comparison"]):
+                    raise ValueError("D10 baseline drift; solve not started")
+                if correction._residual(base_residual).closes:
+                    science["outcome"] = "baseline-closed"
+                else:
+                    stage = "central-correction-solve"
+                    update = correction._central_correction(tuple(tuple(row) for row in science["retained_jacobian"]), base_residual)
+                    science["correction"] = update
+                    if update["reason"] is not None:
+                        raise ValueError(update["reason"])
+                    trial_controls = tuple(v+d for v, d in zip(seed, update["control_step"]))
+                    trial = evaluate("central-trial", trial_controls, alpha=1.0)
+                    trial_residual = _terminal_residual(trial)
+                    improving, ratio, reason = correction._improvement(base_residual, trial_residual)
+                    actual = correction._residual(trial_residual).scaled
+                    base_scaled = correction._residual(base_residual).scaled
+                    science["improvement"] = dict(improving=improving, score_ratio=ratio,
+                        ratio_unavailable_reason=reason, score_threshold=correction._residual(base_residual).score*(1-1e-4),
+                        actual_change=physical._finite_cartesian_values(tuple(a-b for a, b in zip(actual, base_scaled)), "actual change"),
+                        model_error=physical._finite_cartesian_values(tuple(a-p for a, p in zip(actual, update["predicted_residual"])), "model error"))
+                    science["outcome"] = "not-improving"
+                    if improving:
+                        science["selected_alpha"] = 1.0
+                        science["tighter_status"] = "attempted"
+                        frozen = tuple(science["runs"][-1]["controls"])
+                        tighter = evaluate("central-tighter", frozen, tighter=True, alpha=1.0)
+                        science["tighter_comparison"] = _compare_boundaries(_run_data(trial), _run_data(tighter))
+                        science["numerical_agreement"] = all(d["within_thresholds"] for d in science["tighter_comparison"])
+                        science["tighter_status"] = "completed"
+                        science["outcome"] = "improving"
+            elif local_columns:
                 stage = "column-baseline-replay"
                 science["column_baseline_comparison"] = _compare_boundaries(
                     _run_data(baseline), column_reference["science"]["runs"][0]["run"])
@@ -546,6 +679,10 @@ def _run_targeting(
                 science["response_unavailable_reason"] = science["reason"]
             if local_columns and science["column_diagnostics"] is None:
                 science["column_unavailable_reason"] = science["reason"]
+            if central and science["tighter_status"] != "completed":
+                attempted = science["tighter_status"] == "attempted"
+                science["tighter_status"] = "failed" if attempted else "skipped"
+                science["tighter_reason"] = science["reason"] if science["reason"] else science["outcome"]
             if damping:
                 for fraction in science["fractions"]:
                     if fraction["status"] == "not-started":
@@ -573,10 +710,12 @@ def main(argv: list[str] | None = None) -> int:
     modes.add_argument("--response-reference", type=Path, help="Opt into D9 with retained Decision 0086 JSON")
     modes.add_argument("--column-references", type=Path, nargs=2, metavar=("D7", "D9"),
                        help="Opt into D10 with retained 0086 and 0092 JSON")
+    modes.add_argument("--central-reference", type=Path, help="Opt into D11 with retained 0095 JSON")
     args = parser.parse_args(argv)
     scenario = load_scenario(args.scenario)
     with args.output.open("x", encoding="utf-8") as stream:
-        options = ({"column_references": tuple(args.column_references)} if args.column_references is not None else
+        options = ({"central_reference": args.central_reference} if args.central_reference is not None else
+                   {"column_references": tuple(args.column_references)} if args.column_references is not None else
                    {"response_reference": args.response_reference} if args.response_reference is not None else
                    {"damping_reference": args.damping_reference} if args.damping_reference is not None else {})
         result = _run_targeting(scenario, args.reference, **options)

@@ -51,8 +51,6 @@ def _correction(
     baseline: tuple[float, ...], probes: tuple[tuple[float, ...], ...],
 ) -> _Correction:
     """One forward-difference solve; rank loss is a stopped result, not a retry."""
-    import numpy as np
-
     base = _residual(baseline)
     if len(probes) != 6:
         raise ValueError("six ordered probe residuals required")
@@ -65,19 +63,71 @@ def _correction(
         "scaled Jacobian column",
     ) for probe, h, s in zip(measured, _PROBE_STEPS, _TRUST_SCALES))
     matrix = tuple(zip(*columns))
+    result = _solve_matrix(matrix, base.scaled)
+    return _Correction(changes, matrix, result.rank, result.singular_values,
+                       result.control_step, result.reason)
+
+
+@dataclass(frozen=True, slots=True)
+class _MatrixStep:
+    rank: int
+    singular_values: tuple[float, ...]
+    uncapped: tuple[float, ...]
+    divisor: float | None
+    capped: tuple[float, ...] | None
+    control_step: tuple[float, ...] | None
+    reason: str | None
+
+
+def _solve_matrix(matrix: tuple[tuple[float, ...], ...], residual: tuple[float, ...]) -> _MatrixStep:
+    """Shared D7/D11 dimensionless least-squares solve and physical trust cap."""
+    import numpy as np
+
+    if len(matrix) != 6:
+        raise ValueError("six matrix rows required")
+    rows = tuple(physical._finite_cartesian_values(row, "matrix row") for row in matrix)
+    scaled = physical._finite_cartesian_values(residual, "scaled residual")
     try:
-        solution, _, rank, singular = np.linalg.lstsq(matrix, -np.array(base.scaled), rcond=1e-12)
+        solution, _, rank, singular = np.linalg.lstsq(rows, -np.array(scaled), rcond=1e-12)
     except np.linalg.LinAlgError as exc:
         raise ValueError("D7 least-squares solve failed") from exc
     dz = physical._finite_cartesian_values(solution, "least-squares solution")
     singular_values = physical._finite_cartesian_values(singular, "singular values")
     if rank < 6:
-        return _Correction(changes, matrix, int(rank), singular_values, None, "rank-deficient")
+        return _MatrixStep(int(rank), singular_values, dz, None, None, None, "rank-deficient")
     divisor = max(1.0, max(abs(v) for v in dz))
+    capped = physical._finite_cartesian_values(tuple(v/divisor for v in dz), "capped solution")
     step = physical._finite_cartesian_values(
         tuple(v / divisor * s for v, s in zip(dz, _TRUST_SCALES)), "control step",
     )
-    return _Correction(changes, matrix, int(rank), singular_values, step, None)
+    return _MatrixStep(int(rank), singular_values, dz, divisor, capped, step, None)
+
+
+def _central_correction(
+    matrix: tuple[tuple[float, ...], ...], baseline: tuple[float, ...],
+) -> dict[str, object]:
+    """D11 solve with a recorded prediction; guards apply only to this mode."""
+    from dataclasses import asdict
+
+    base = _residual(baseline)
+    result = _solve_matrix(matrix, base.scaled)
+    data: dict[str, object] = dict(asdict(result), jacobian=matrix, predicted_change=None,
+                                  predicted_residual=None, predicted_score=None)
+    if result.control_step is None:
+        return data
+    try:
+        change = physical._finite_cartesian_values(tuple(math.fsum(v*z for v, z in zip(row, result.capped))
+                                                       for row in matrix), "predicted change")
+    except OverflowError as exc:
+        raise ValueError("prediction overflow") from exc
+    predicted = physical._finite_cartesian_values(tuple(r+d for r, d in zip(base.scaled, change)), "predicted residual")
+    score = physical._finite_float("predicted score", math.hypot(*predicted))
+    data.update(predicted_change=change, predicted_residual=predicted, predicted_score=score)
+    if not any(result.control_step):
+        data["reason"] = "zero-control-step"
+    elif score >= base.score:
+        data["reason"] = "no-predicted-decrease"
+    return data
 
 
 def _trial_controls(
