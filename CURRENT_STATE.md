@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D13.2 implemented at base `0343852`: 436 focused / 3,996 full tests (598.51 s); pure local geometry and mass with explicit fixed/free phase. Next: non-propagating reference report. No native mission study until a separate finite-burn contract; strict M3 open.
+D13 complete at `34a1541`: 436 focused / 3,996 full tests (598.51 s); zero-native report: fixed phase fails, free phases 2.81/246.11 degrees and impulses 2.861/4.446 km/s. Second branch fails provisional mass. Next: agree finite-burn timing/guidance and matching contract; no native mission study yet.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D13.2 implemented at base `0343852`: 436 focused / 3,996 full tests (598.51 s); 
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest mission evidence: [ADR 0101](docs/adr/0101-central-fractions-do-not-improve.md); implementation: [ADR 0103](docs/adr/0103-lunar-departure-geometry-implementation.md). Full/focused tests, Ruff, strict OpenSpec and legacy pass. Automation paused.
+- Latest local reference: [ADR 0104](docs/adr/0104-lunar-reference-has-two-geometric-branches.md); implementation: [ADR 0103](docs/adr/0103-lunar-departure-geometry-implementation.md). Full suite reused for report stage; focused/independent/docs checks pass. Strict M3 open; automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

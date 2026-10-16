@@ -99,7 +99,12 @@ algebra passes; reference phases are approximately 2.81/246.11 degrees, not
 verified finite-burn solutions. D13.2 verified in
 [ADR 0103](../docs/adr/0103-lunar-departure-geometry-implementation.md): 436 focused /
 3,996 full tests pass (598.51 s), Ruff/strict OpenSpec/legacy pass.
-Next: a non-propagating reference report. Finite-burn timing/guidance, explicit
+D13.3 report at `34a1541` is retained in
+[ADR 0104](../docs/adr/0104-lunar-reference-has-two-geometric-branches.md): fixed
+phase zero fails; free phases 2.81/246.11 degrees require 2.861/4.446 km/s.
+Second branch fails the provisional mass budget; neither is selected. Independent
+geometry/mass/provenance checks and 49 D13 tests pass; zero native arcs, D13.2 full
+suite reused. Next: separately agree finite-burn timing/guidance, explicit
 comparison-radius matching and a native-run budget need a separate contract.
 No extra fractions, probes, repeated solves,
 automatic retries or production optimizer expansion.

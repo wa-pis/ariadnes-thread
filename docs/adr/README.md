@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0104 — Two local departure branches](0104-lunar-reference-has-two-geometric-branches.md) — D13.3: fixed phase fails; free phases 2.81/246.11 degrees, impulses 2.861/4.446 km/s; second branch fails provisional mass budget. Zero native arcs, no selection.
 - [0103 — Lunar departure geometry implementation](0103-lunar-departure-geometry-implementation.md) — D13.2: 436 focused / 3,996 full tests pass; no propagation or automatic selection.
 - [0102 — Consistent lunar departure design](0102-consistent-lunar-departure-design.md) — D13: explicit phase, outgoing hyperbola/vector impulse and mass; pure geometry first, finite-burn/native contract deferred.
 - [0101 — Central fractions do not improve](0101-central-fractions-do-not-improve.md) — D12.3: nine arcs / 7.87 s; scores +5.06%/+1.40%, no selection/tighter; stop automatic research sequence.

@@ -1,0 +1,238 @@
+{
+  "candidate": {
+    "arrival_delta_v_m_s": 1854.4257493964706,
+    "arrival_epoch_tdb_s": 1004169273.4122404,
+    "arrival_epoch_utc": "2031-10-27T19:53:24.229781Z",
+    "arrival_v_infinity_m_s": [
+      -3108.1654705134642,
+      -1265.3477240973953,
+      -1727.634550515887
+    ],
+    "candidate_id": "d0001-t0035",
+    "departure_delta_v_m_s": 1728.785076242533,
+    "departure_epoch_tdb_s": 978995455.2304223,
+    "departure_epoch_utc": "2031-01-09T11:09:46.046266Z",
+    "departure_v_infinity_m_s": [
+      -814.003983133065,
+      -1974.520539403131,
+      1186.1633021739854
+    ],
+    "final_mass_kg": 887.9664640409611,
+    "flight_time_s": 25173818.18181818,
+    "mass_feasible": true,
+    "propellant_mass_kg": 1112.033535959039,
+    "total_delta_v_m_s": 3583.210825639004
+  },
+  "comparison": "Non-propagating D13 two-body geometry only; old arrival impulse is provisional.",
+  "finite_burn_implemented": false,
+  "input_reference": "0098-central-correction-study.json",
+  "input_reference_sha256": "b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057",
+  "lunar_field_provenance": {
+    "actual_sha256": "3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d",
+    "associated_frame": "IAU_Moon",
+    "body": "Moon",
+    "degree": 200,
+    "expected_sha256": "3f4652c01db58e14a4e4c67fe8225874d10120a29cbd7699f5068469ef65b21d",
+    "file_name": "gggrx_1200l_sha.tab",
+    "gravitational_parameter_m3_s2": 4902800121846.8,
+    "model": "gggrx1200",
+    "normalization_radius_m": 1738000,
+    "orbit_shape_radius_m": 1737400,
+    "order": 200,
+    "rotation_base_frame": "J2000",
+    "rotation_target_frame": "IAU_Moon"
+  },
+  "measured_revision": "34a1541fa6e71f3150307c01097169461db615c7",
+  "mission_qualified": false,
+  "native_arc_propagations": 0,
+  "results": {
+    "fixed": {
+      "branches": [],
+      "excess_velocity_m_s": [
+        -814.003983133065,
+        -1974.520539403131,
+        1186.1633021739854
+      ],
+      "gravitational_parameter_m3_s2": 4902800121846.8,
+      "interpretation": "Local impulsive reference only; no finite-burn or mission feasibility.",
+      "orientation": "J2000",
+      "origin": "Moon",
+      "parking_radius_m": 1837400,
+      "phase_policy": "fixed",
+      "provisional_arrival_delta_v_m_s": 1854.4257493964706,
+      "status": "infeasible-fixed-phase",
+      "time_scale": "TDB seconds since J2000",
+      "units": "SI",
+      "virtual_periapsis_epoch_tdb_s": 978995455.2304223
+    },
+    "free": {
+      "branches": [
+        {
+          "angular_momentum_m2_s": [
+            257777247.2199402,
+            -3256320985.833834,
+            -5243663289.886478
+          ],
+          "asymptote_error_m_s": 3.410605131648481e-13,
+          "delta_v_m_s": [
+            -6.8121887466129465,
+            -2857.29596204098,
+            138.57244748957373
+          ],
+          "delta_v_norm_m_s": 2860.6623260731876,
+          "departure_duration_s": 4210.28368064889,
+          "departure_propellant_kg": 954.06545119868,
+          "eccentricity": 3.236718976048294,
+          "energy_error_m2_s2": 1.3969838619232178e-9,
+          "estimate_status": "ideal-estimate-only",
+          "hyperbolic_velocity_m_s": [
+            -87.01800817827409,
+            -2857.29596204098,
+            1770.1063222780854
+          ],
+          "parking_velocity_m_s": [
+            -80.20581943166114,
+            9.990263687301146e-14,
+            1631.5338747885116
+          ],
+          "phase_change_rad": 0.049120219648540075,
+          "phase_rad": 0.049120219648540075,
+          "position_error_m": 7.010588707933699e-10,
+          "position_m": [
+            1835183.8099896745,
+            5.524210387981993e-12,
+            90217.20208354219
+          ],
+          "post_departure_mass_kg": 1045.93454880132,
+          "provisional_arrival_duration_s": 1583.6352279288399,
+          "provisional_arrival_propellant_kg": 358.85744830267447,
+          "provisional_final_mass_kg": 687.0771004986456,
+          "radial_velocity_m_s": -8.590564947777177e-15,
+          "specific_energy_m2_s2": 2984158.612252808,
+          "velocity_error_m_s": 6.432668611612528e-13
+        },
+        {
+          "angular_momentum_m2_s": [
+            -4800026107.777205,
+            3256320985.8338337,
+            2126547241.78528
+          ],
+          "asymptote_error_m_s": 7.626344918775623e-13,
+          "delta_v_m_s": [
+            -3113.846342246272,
+            -2857.29596204098,
+            1379.5219446240444
+          ],
+          "delta_v_norm_m_s": 4445.588830910421,
+          "departure_duration_s": 5602.981253378357,
+          "departure_propellant_kg": 1269.6557389069567,
+          "eccentricity": 3.236718976048294,
+          "energy_error_m2_s2": 1.3969838619232178e-9,
+          "estimate_status": "rejected-dry-mass",
+          "hyperbolic_velocity_m_s": [
+            -1620.3474728943258,
+            -2857.29596204098,
+            717.8597307281799
+          ],
+          "parking_velocity_m_s": [
+            1493.4988693519463,
+            -4.05151256182161e-14,
+            -661.6622138958646
+          ],
+          "phase_change_rad": -1.9878374527829052,
+          "phase_rad": 4.295347854396681,
+          "position_error_m": 4.661607913924125e-10,
+          "position_m": [
+            -744251.6526241396,
+            -1.0286537843482898e-10,
+            -1679919.1163762133
+          ],
+          "post_departure_mass_kg": 730.3442610930434,
+          "provisional_arrival_duration_s": 1105.804279730608,
+          "provisional_arrival_propellant_kg": 250.57923387148475,
+          "provisional_final_mass_kg": 479.7650272215587,
+          "radial_velocity_m_s": 1.5996344314556122e-13,
+          "specific_energy_m2_s2": 2984158.612252808,
+          "velocity_error_m_s": 5.084229945850415e-13
+        }
+      ],
+      "excess_velocity_m_s": [
+        -814.003983133065,
+        -1974.520539403131,
+        1186.1633021739854
+      ],
+      "gravitational_parameter_m3_s2": 4902800121846.8,
+      "interpretation": "Local impulsive reference only; no finite-burn or mission feasibility.",
+      "orientation": "J2000",
+      "origin": "Moon",
+      "parking_radius_m": 1837400,
+      "phase_policy": "free",
+      "provisional_arrival_delta_v_m_s": 1854.4257493964706,
+      "status": "constructed",
+      "time_scale": "TDB seconds since J2000",
+      "units": "SI",
+      "virtual_periapsis_epoch_tdb_s": 978995455.2304223
+    }
+  },
+  "scenario": {
+    "departure_orbit": {
+      "apoapsis_altitude_m": 100000,
+      "argument_of_periapsis_rad": 0,
+      "central_body": "Moon",
+      "eccentricity": 0,
+      "inclination_rad": 1.5707963267948966,
+      "periapsis_altitude_m": 100000,
+      "raan_rad": 0,
+      "true_anomaly_rad": 0
+    },
+    "limits": {
+      "max_candidates": 2000,
+      "random_seed": 42,
+      "runtime_seconds": 300
+    },
+    "search": {
+      "departure_end_utc": "2031-12-31T00:00:00Z",
+      "departure_start_utc": "2031-01-01T00:00:00Z",
+      "time_of_flight_max_s": 27648000,
+      "time_of_flight_min_s": 15552000
+    },
+    "spacecraft": {
+      "dry_mass_kg": 500,
+      "initial_mass_kg": 2000,
+      "isp_s": 450,
+      "maneuver_magnitude_sigma_fraction": 0.001,
+      "maneuver_pointing_sigma_rad": 0.0008726646259971648,
+      "max_thrust_n": 1000,
+      "reflectivity_coefficient": 1.3,
+      "srp_area_m2": 20
+    },
+    "target_orbit": {
+      "apoapsis_altitude_m": 10000000,
+      "argument_of_periapsis_rad": 0,
+      "central_body": "Mars",
+      "eccentricity": 0.5679489431465542,
+      "inclination_rad": 0.4363323129985824,
+      "periapsis_altitude_m": 300000,
+      "raan_rad": 0,
+      "true_anomaly_rad": 0
+    },
+    "tracking": {
+      "angular_sigma_rad": 0.00000484813681109536,
+      "cadence_s": 21600,
+      "min_elevation_rad": 0.17453292519943295,
+      "range_rate_sigma_m_s": 0.0001,
+      "range_sigma_m": 10,
+      "stations": [
+        "DSS-14",
+        "DSS-43",
+        "DSS-63"
+      ]
+    }
+  },
+  "selected_branch": null,
+  "source_sha256": {
+    "lunar_departure.py": "7f17240c063ad72eed484e2f2d75547b701751e7da70b8f499cd7d35a7b6dffb",
+    "models.py": "2a6817fa0f26b1275264af1a20af798464c651ba1142114f27402ea8441123f8",
+    "trajectory.py": "029bd5f0d10802143aa87a75827f8cce4b97a1ff36c9da7fc479ad3e6d0f0790"
+  }
+}
