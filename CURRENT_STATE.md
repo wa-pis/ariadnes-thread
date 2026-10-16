@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-10-16. Keep this file under 60 lines; replace stale status instead
+Updated: 2026-10-17. Keep this file under 60 lines; replace stale status instead
 of appending a diary. This is a navigation aid, not an alternative specification.
 
 ## Goal and scheduling
@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D16.3 at `501516e` remains budget-exhausted (ADR 0113): 262 nominal / 524 arcs / 38.927206 s, best 59.203835 km / 246.398570 m/s, duration/reserve bound; last measured/accepted ID 249 is not best ID 262. D16.2 full 4,330 tests (604.70 s) and D16.3 366 focused (3.05 s) remain the latest runtime evidence, not rerun here. D17.1 at base `71d91e4` (ADR 0114) diagnoses nearly exhausted feasible saved linear response, not nonlinear infeasibility. Offline face/projection/KKT, chart embedding/envelope/rate, exact interior initialization, budget oracles, independent review, Ruff, strict OpenSpec, 107 links and immutable/source checks pass; no new spacecraft propagation. Next: implement/verify D17.2's private smooth quadratic-Bezier chart (eight controls/six residuals), fixed accepted interior seed 158 and two fresh replay gates; same physical target/time/fuel/thrust/forces/profiles. Separate ceiling: 40 objective requests / 40 sixteen-probe batches / 681 nominal / 682 total evaluations / 1364 arcs / 300 s. D17.2 implementation and separately authorized D17.3 study are not started. No runtime/dependency changes, automatic run, target/fuel relaxation, automation restart or strict M3 completion.
+D16.3 at `501516e` remains budget-exhausted (ADR 0113): 262 nominal / 524 arcs / 38.927206 s, best 59.203835 km / 246.398570 m/s, duration/reserve bound; last measured/accepted ID 249 is not best ID 262. D17.1 (ADR 0114) diagnoses nearly exhausted feasible saved linear response, not nonlinear infeasibility. D17.2 at base `e3e188c` is complete (ADR 0115): private smooth quadratic-Bezier chart, eight controls/six residuals, accepted interior seed 158, separate old/embedded replay gates, 6x8 bounded correction and truthful diagnostics. 258 new / 607 focused / 4,588 full tests pass (626.08 s), including independent synthetic native curved-chart checks in both original profiles; independent review, Ruff, strict OpenSpec, links and immutable/source/dependency/resource checks pass. D14/D15/D16, target/time/fuel/thrust/forces/profiles and dependencies remain unchanged. Separate ceiling: 40 objective requests / 40 sixteen-probe batches / 681 nominal / 682 total evaluations / 1364 arcs / 300 s. Next: one separately user-authorized D17.3 retained-reference study; it has NOT run, and real-branch closure is unverified. No public API/UI change, automatic run, target/fuel relaxation, automation restart or strict M3 completion.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D16.3 at `501516e` remains budget-exhausted (ADR 0113): 262 nominal / 524 arcs /
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest design: [ADR 0114](docs/adr/0114-quadratic-steering-freedom.md); runtime: [ADR 0112](docs/adr/0112-bound-aware-targeting-implementation.md); native study: [ADR 0113](docs/adr/0113-bound-aware-targeting-hits-budget.md). D17.1 complete, D17.2/D17.3 pending; strict M3 open; automation paused.
+- Latest design: [ADR 0114](docs/adr/0114-quadratic-steering-freedom.md); implementation: [ADR 0115](docs/adr/0115-bezier-targeting-implementation.md); last retained native study: [ADR 0113](docs/adr/0113-bound-aware-targeting-hits-budget.md). D17.1/D17.2 complete, D17.3 pending; strict M3 open; automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

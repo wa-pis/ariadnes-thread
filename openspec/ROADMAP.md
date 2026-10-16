@@ -63,9 +63,12 @@ unchanged target/time/fuel/thrust/forces. Explicit accepted interior ID 158 and
 two fresh replay gates preserve the old chart without hidden seed adjustment.
 New bounded contract: 6x8 Jacobian / sixteen probes, 40 objective requests and
 40 batches, 681 nominal / 682 total evaluations / 1364 arcs / 300 seconds.
-D17.2 implementation/verification comes first; D17.3 is a separately authorized
-single study, not executed by this design stage. No runtime/dependency changes,
-reachability promise, automatic research/automation restart or strict M3 completion.
+D17.2 is implemented/verified in
+[ADR 0115](../docs/adr/0115-bezier-targeting-implementation.md): 258 new / 607
+focused / 4,588 full tests pass (626.08 s); source/resource/immutable and strict
+checks pass, with D14/D15/D16 and dependencies unchanged. Next is D17.3, one
+separately user-authorized study; it has not run. No reachability promise,
+API/UI change, automatic research/automation restart or strict M3 completion.
 
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared

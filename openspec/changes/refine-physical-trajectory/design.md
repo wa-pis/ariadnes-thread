@@ -29,9 +29,12 @@ Separate D17 ceiling: two nominal replays + 39 later objectives + 40*16 probes
 300 seconds, with at most 40 objective requests including the initial cache.
 This is not an extension of the finished D16 study. Keep truthful objective,
 accepted-iterate and last-measured-Jacobian identities on interruption.
-D17.1 is offline diagnosis/design only. D17.2 implementation/native/full tests
-and a separately authorized single D17.3 run remain unchecked. No runtime,
-dependency, API/UI, automation state or strict M3 gate changes in this stage.
+D17.1 is offline diagnosis/design only. D17.2 is implemented and verified in
+[ADR 0115](../../../docs/adr/0115-bezier-targeting-implementation.md): 258 new,
+607 focused and 4,588 full tests pass, including independent native curved-chart
+oracles in both unchanged profiles. D14/D15/D16 and dependencies remain unchanged.
+A separately authorized single D17.3 study remains unchecked; no real-branch
+closure, API/UI, automation state or strict M3 gate change is claimed.
 
 ### Research D16 — bound-aware local targeting
 
