@@ -1,5 +1,29 @@
 ## Context
 
+### Research D16 — bound-aware local targeting
+
+[ADR 0111](../../../docs/adr/0111-bound-aware-local-targeting.md) diagnoses the
+four-iteration stop and uniformly capped unconstrained direction. Every raw
+Newton command exceeds ignition/duration bounds; the last measured Jacobian
+belongs to ID 39, not the final ID 52. Offline constrained linear fits predict
+better directions but are not propagated and do not prove nonlinear reachability.
+Design a separate private SciPy 1.17.1 TRF path with explicit scaling/settings,
+starting only from replayed 0110 ID 52, preserving the original six controls,
+physical bounds, mass reserve, target six-state/epoch and native profiles.
+Verify that the entire timing box guarantees >=1 s coast; reject unsupported
+coupled domains. Use callable fixed-h central or second-order inward one-sided
+derivatives, preflighting all twelve probes; retain independent diagnostics.
+Optimizer stationarity is not physical closure. The first closed non-probe
+objective stops before another Jacobian and gets one frozen tighter repeat;
+both closure and agreement remain mandatory, with no nominal-only success.
+Share 300 s across one seed replay, <=40 objective requests (one initial cache
+hit), <=20 twelve-probe batches, <=280 nominal / 281 total evaluations and
+<=562 native launches. Own counters include probes and failed attempts; all
+failures stop without penalties/retries. This is D16's explicit ceiling, not a
+D15 extension. D16.1 specifies only; pin SciPy and verify D16.2 before a separate
+user-authorized D16.3 study. No new steering node/force, target relaxation,
+public interface, automation restart or strict M3 qualification.
+
 ### Research D15 — local steering and ignition targeting
 
 ADR 0108 binds 0104/0107 and freezes the six target state components and absolute

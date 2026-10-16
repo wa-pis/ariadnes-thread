@@ -1,5 +1,49 @@
 ## ADDED Requirements
 
+### Requirement: Bound-aware local targeting follow-up
+
+D16 SHALL follow ADR 0111 as a separate private bounded experiment, preserving
+D14/D15 behavior and their immutable evidence. It SHALL use the existing six
+controls, two-node chart, forces, physical domain and fixed target state/epoch;
+only correction orchestration and its explicitly separate budget SHALL change.
+SciPy 1.17.1 SHALL be explicitly pinned with Conda before implementation completion.
+
+#### Scenario: Bind and replay the explicitly selected warm start
+
+- **WHEN** D16 is separately invoked after verified implementation
+- **THEN** it SHALL bind the pinned 0104/0107 references and 0110 SHA256 678287cc7aee2b3d83e89c9fbff1113a96d24c5b8960f047aeadb82d049c4274, reconstruct their commands/target/domain/resources, and start only from accepted proposal 52
+- **AND** a fresh nominal seed replay SHALL agree with that retained endpoint within 1 m / 0.001 m/s / 1e-6 kg before derivative work; target six-state and tm=979002340.6346419 TDB s, Moon-relative J2000/SI, thrust/Isp, all mass/reserve/window bounds and native profiles SHALL remain fixed
+- **AND** the complete timing box SHALL imply at least 1 s coast, not just its seed; an unsupported coupled constraint or changed input SHALL stop without clipping, alternate seed or hidden repair
+
+#### Scenario: Select bounded corrections rather than cap an unconstrained direction
+
+- **WHEN** replay passes without physical closure
+- **THEN** D16 SHALL use SciPy least_squares with method=trf, tr_solver=exact, loss=linear, x_scale=1, ftol=xtol=gtol=1e-10, max_nfev=40 and serial calls, in coordinates x=x_seed+T*y with y0=0 and T=(300 s,300 s,0.1,0.1,0.1,0.1)
+- **AND** physical bounds SHALL be transformed to those coordinates, residuals SHALL retain the 10 m / 0.01 m/s scales, and the initial request SHALL reconstruct the replayed seed exactly; no uniform D15 cap, dynamic scale, penalty residual, target refit, method switch or fallback start SHALL be introduced
+
+#### Scenario: Differentiate inside the admissible domain
+
+- **WHEN** a callable Jacobian is requested at a completed objective command
+- **THEN** each coordinate SHALL use fixed physical h=(1 s,1 s,0.001,0.001,0.001,0.001), preferring a feasible central pair, otherwise a feasible forward two-point pair, otherwise a feasible backward pair, with the second-order formulas of ADR 0111
+- **AND** all twelve probes SHALL pass domain preflight before any native launch; an unavailable complete pair SHALL stop without changing h, and center residual reuse SHALL launch no new arc
+- **AND** columns SHALL be scaled by T into dr/dy; all stencils, matrices and finite SVD rank/conditioning diagnostics SHALL be retained without treating local rank or a closed probe as physical success
+
+#### Scenario: Qualify only the unchanged physical target
+
+- **WHEN** replay or a completed non-probe objective first satisfies position-norm residual<=10 m AND velocity-norm residual<=0.01 m/s
+- **THEN** optimizer control flow SHALL stop before another Jacobian and exactly one fresh tighter repeat of that frozen command SHALL follow
+- **AND** local-qualified SHALL require both profiles to close, agreement<=1 m / 0.001 m/s / 1e-6 kg, analytic cutoff-mass error<=1e-6 kg and exact coast-mass preservation; tighter failure/disagreement SHALL stop unqualified without resuming correction
+- **AND** optimizer gtol success without closure SHALL be stationary-unclosed, ftol/xtol success without closure SHALL be stagnated-unclosed, and neither SHALL be labelled mission feasibility or proof of nonlinear impossibility
+
+#### Scenario: Bound every call and preserve failure evidence
+
+- **WHEN** D16 prepares, evaluates objectives/probes or attempts native launches
+- **THEN** one 300-second cooperative clock SHALL cover binding/setup and all work; counters SHALL include one replay, at most 40 objective requests including its single exact initial cache hit, and at most 20 complete twelve-probe Jacobians
+- **AND** the independent ceiling SHALL be 280 nominal evaluations plus at most one reserved tighter evaluation, 281 total evaluations / 562 attempted native launches including failures; SciPy nfev alone SHALL NOT stand in for probe/native counts
+- **AND** limits SHALL stop as budget-exhausted before excess work or an unaffordable batch; binding/domain/nonfinite/native/guard failure SHALL stop the entire study without substituted residual, retry or continuation after an incomplete arc
+- **AND** new finite JSON and ADR SHALL retain all commands/roles/cache/accepted-iterate identities, residuals, masses/epochs, settings, Jacobians, active bounds/status, own counters and reference/source/resource/runtime provenance even on failure, distinguishing best objectives from probes and unavailable agreement
+- **AND** implementation verification SHALL precede a separately user-authorized single native study; no automatic second study, relaxed fuel/target/time, new steering node, public API/UI, automation restart or strict M3 qualification SHALL follow
+
 ### Requirement: Bounded local steering and ignition targeting
 
 D15 SHALL follow ADR 0108 as a private local experiment, preserving D14 behavior

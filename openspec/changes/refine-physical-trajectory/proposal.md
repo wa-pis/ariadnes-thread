@@ -9,6 +9,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ## What Changes
 
+- Research D16 follows the measured D15 miss with a separately bounded, private constraint-aware TRF solve, starting from retained proposal 52. Preserve the same six controls, target state/epoch, physical bounds/reserve and native profiles; pin already-installed Conda SciPy 1.17.1 during implementation. Use in-domain second-order derivatives and independent 280 nominal / 281 total evaluations / 562-launch / 300-second limits; optimizer stationarity is not physical closure. Design, verified implementation and one separately authorized native study remain separate; no new force/steering node, target relaxation or strict M3 waiver.
 - Research D15 designs a bounded local six-control targeting study after the D14 miss: ignition, duration and smooth two-node inertial direction, fixed six-state/epoch target, central finite differences, rank-checked scaled least squares and prescribed damping. At most four corrections / 66 evaluations / 132 native arcs under 300 seconds, with one frozen tighter check only after nominal closure. Specification, verified implementation and one live study are separate; no global/production optimizer or M3 waiver.
 - Research D14 specifies one explicitly selected D13 branch's local point-Moon finite-burn diagnostic: centered constant inertial thrust, variable mass, analytic fixed-epoch outgoing target, separate closure/agreement gates and at most four arcs / 300 seconds. Design, verified implementation and one live report are separate stages; no optimizer or full-force/mission qualification.
 - Research D13 designs a geometrically consistent local lunar departure reference: explicit fixed/free phase, outgoing hyperbola and vector impulse, independent invariants and recomputed ideal mass. Finite-burn timing/guidance and outer matching remain separate future contracts; no native mission experiment or scientific gate relaxation.
@@ -57,7 +58,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 ## Impact
 
 - Adds trajectory-refinement code and tests under the existing `space_nav` package and one M3-only feasible example scenario.
-- Reuses the pinned TudatPy, Tudat resources, SPICE, NumPy, standard-library CLI, and existing M2 search; no new third-party dependency is proposed.
+- Reuses pinned TudatPy, Tudat resources, SPICE, NumPy, standard-library CLI and existing M2 search. D16 explicitly adds Conda SciPy 1.17.1 as a direct requirement during implementation; this version is already installed transitively on the measured machine. Preserve the other pins and verify the resolved environment/full regression before use.
 - Adds public `TrajectoryBoundaryState`, `FiniteBurnRecord`, `TrajectoryBoundaryDifference`, `PhysicalTrajectoryResult`, `TrajectoryRefinementError`, and `refine_physical_trajectory` interfaces.
 - Keeps `moon_to_mars.py` byte-for-byte unchanged and unimported.
 - Implements roadmap milestone M3, `refine-physical-trajectory`; M4-M6 remain out of scope until this change is complete and archived.

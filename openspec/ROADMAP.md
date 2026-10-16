@@ -34,6 +34,17 @@ unchanged D15.2. Stop for a separate scope review, not another automatic study.
 Measured local rank six is not proven global controllability/convergence,
 hardware qualification, a production optimizer or Mars feasibility; strict M3 stays open.
 
+D16.1 is specified in [ADR 0111](../docs/adr/0111-bound-aware-local-targeting.md):
+all four unconstrained commands violate ignition/duration bounds; uniform caps
+are not constrained least-squares steps. Independent offline 729-face/KKT checks
+confirm better linear box directions, not nonlinear closure. Next: D16.2, a
+separate private bound-aware TRF path with explicit Conda SciPy 1.17.1 pin,
+same six controls/fuel/target/epoch/profiles and in-domain second-order probes.
+Separate ceiling: 280 nominal / 281 total evaluations, 562 native launches,
+300 seconds; all probes counted. Verify implementation/full regression before
+a separately user-authorized D16.3. No runtime/native study or environment change
+in D16.1; no automatic repeat, new steering node or strict M3 completion.
+
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared
 scenario deadline. Implement active tasks D4.1–D4.5. Report endpoint miss and

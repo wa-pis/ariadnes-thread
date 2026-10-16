@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0111 — Bound-aware local targeting](0111-bound-aware-local-targeting.md) — D16.1: diagnose timing/fuel bounds and uniform caps; independent offline box-fit oracles pass. Design a separate SciPy TRF path from ID 52 with unchanged physics/target and 281 evaluations / 562 arcs / 300 s. Not implemented or propagated; strict M3 open.
 - [0110 — Local steering improves without closure](0110-local-steering-improves-without-closure.md) — D15.3: 53 evaluations / 106 arcs / 7.94 s, four accepted steps; errors 3868.62 km / 556.75 m/s, not-converged. Independent audit passes; no tighter/retry, strict M3 open.
 - [0109 — Local steering targeting implementation](0109-local-steering-targeting-implementation.md) — D15.2 complete: 119 new / 301 focused / 4,231 full tests pass (602.73 s); D14 preserved, D15.3 subsequently retained in 0110, strict M3 open.
 - [0108 — Bounded local steering targeting](0108-bounded-local-steering-targeting.md) — D15 design: ignition/duration plus two-node direction, fixed state/epoch, four corrections and 66 evaluations / 132 arcs / 300 seconds; implementation verified in 0109, non-converged reference study in 0110.

@@ -1,0 +1,314 @@
+{
+  "analysis": "retained-linear-model-only",
+  "base_revision": "74dbeb15c93060e0cd7ccfbbc8e770c5c6d2f144",
+  "coast_minimum_over_original_box_s": 1756.635988459775,
+  "d16_worst_case_budget": {
+    "deadline_s": 300,
+    "jacobian_batches": 20,
+    "maximum_native_arcs": 562,
+    "maximum_nominal_evaluations": 280,
+    "maximum_total_evaluations": 281,
+    "objective_calls_including_cached_initial": 40,
+    "probes_per_batch": 12
+  },
+  "final_margins": {
+    "lower_ignition_bound_s": 566.8649313817743,
+    "provisional_arrival_reserve_kg": 17.564916235361807,
+    "upper_duration_bound_s": 117.9989945563675
+  },
+  "input_sha256": "678287cc7aee2b3d83e89c9fbff1113a96d24c5b8960f047aeadb82d049c4274",
+  "iterations": [
+    {
+      "condition_number": 178.08180045637255,
+      "iteration": 1,
+      "linear_counterfactuals": {
+        "physical_and_unit_step_box": {
+          "active_mask": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "face_oracle_score": 294386.6631893255,
+          "linear_model_controls": [
+            300.0,
+            4510.28368064889,
+            0.1,
+            0.1,
+            -0.014965939282355215,
+            0.09999999999999998
+          ],
+          "predicted_position_error_m": 2938607.7287455653,
+          "predicted_scaled_score": 294386.6631893255,
+          "predicted_velocity_error_m_s": 175.8845158942765,
+          "scaled_kkt_inf": 4.214206588213797e-17
+        },
+        "physical_box": {
+          "active_mask": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "face_oracle_score": 19483.85523455826,
+          "linear_model_controls": [
+            -1434.700467365602,
+            5467.045140120176,
+            0.14181718714968455,
+            0.5375819629000372,
+            -0.9064467570556588,
+            -0.506183479532953
+          ],
+          "predicted_position_error_m": 37659.29573457406,
+          "predicted_scaled_score": 19483.85523455826,
+          "predicted_velocity_error_m_s": 191.16442902616123,
+          "scaled_kkt_inf": 3.1943428963901493e-14
+        }
+      },
+      "maximum_even_to_odd_probe_ratio": 0.0008627019922881033,
+      "observed_trial_score": 509236.5601890555,
+      "parent": 0,
+      "predicted_capped_score": 490359.16201026714,
+      "raw_linear_residual_norm": 1.7982005213785642e-09,
+      "raw_newton_controls": [
+        -2490.0244729603573,
+        6571.866742735199,
+        -0.5552249739283893,
+        0.24175592730475573,
+        -0.48313430296843685,
+        -0.33232257118381087
+      ],
+      "raw_violated_bounds": [
+        "ignition_shift_s",
+        "duration_s"
+      ],
+      "squared_reduction_ratio": 0.7319201183628674,
+      "uniform_cap_divisor": 8.300081576534524
+    },
+    {
+      "condition_number": 187.0510507685098,
+      "iteration": 2,
+      "linear_counterfactuals": {
+        "physical_and_unit_step_box": {
+          "active_mask": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "face_oracle_score": 206288.90547376388,
+          "linear_model_controls": [
+            0.0,
+            4794.8089639621085,
+            0.03310608229465033,
+            0.05120615730274483,
+            -0.05916839499968136,
+            0.059961529519982945
+          ],
+          "predicted_position_error_m": 2059894.0655427983,
+          "predicted_scaled_score": 206288.9054737639,
+          "predicted_velocity_error_m_s": 111.12016422734449,
+          "scaled_kkt_inf": 3.4037061265893655e-17
+        },
+        "physical_box": {
+          "active_mask": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "face_oracle_score": 22730.451529190534,
+          "linear_model_controls": [
+            -1312.9628565803969,
+            5467.045140120176,
+            0.2263001857924108,
+            0.37281453821956656,
+            -0.8473436112162653,
+            -0.29284578177776877
+          ],
+          "predicted_position_error_m": 43993.07195867935,
+          "predicted_scaled_score": 22730.451529190534,
+          "predicted_velocity_error_m_s": 223.0066193899331,
+          "scaled_kkt_inf": 2.1329884727511318e-15
+        }
+      },
+      "maximum_even_to_odd_probe_ratio": 0.0009664561008437833,
+      "observed_trial_score": 465448.9622179329,
+      "parent": 13,
+      "predicted_capped_score": 454677.0816668652,
+      "raw_linear_residual_norm": 1.5891972332743674e-10,
+      "raw_newton_controls": [
+        -3100.081162699935,
+        7190.635829407198,
+        -0.603511224354538,
+        0.20349039497311017,
+        -0.5187190914227311,
+        -0.20448172075672183
+      ],
+      "raw_violated_bounds": [
+        "ignition_shift_s",
+        "duration_s"
+      ],
+      "squared_reduction_ratio": 0.8115350841329597,
+      "uniform_cap_divisor": 9.33360387566645
+    },
+    {
+      "condition_number": 240.1411956856972,
+      "iteration": 3,
+      "linear_counterfactuals": {
+        "physical_and_unit_step_box": {
+          "active_mask": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "face_oracle_score": 114215.51941630193,
+          "linear_model_controls": [
+            -300.0,
+            5083.639184459612,
+            -0.02438696259963731,
+            -0.04078502874749673,
+            -0.17145984995732594,
+            0.04234312054663632
+          ],
+          "predicted_position_error_m": 1129905.533806601,
+          "predicted_scaled_score": 114215.51941630193,
+          "predicted_velocity_error_m_s": 166.82917079091422,
+          "scaled_kkt_inf": 4.94409261762297e-17
+        },
+        "physical_box": {
+          "active_mask": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "face_oracle_score": 23246.752759747425,
+          "linear_model_controls": [
+            -1254.2955665231116,
+            5467.045140120176,
+            0.2033598459532715,
+            0.2534815301925485,
+            -0.7435324159837645,
+            -0.14750965949883516
+          ],
+          "predicted_position_error_m": 44490.75388279607,
+          "predicted_scaled_score": 23246.752759747425,
+          "predicted_velocity_error_m_s": 228.17038415671504,
+          "scaled_kkt_inf": 7.562037353669133e-15
+        }
+      },
+      "maximum_even_to_odd_probe_ratio": 0.0010447189342578313,
+      "observed_trial_score": 426278.04282920336,
+      "parent": 26,
+      "predicted_capped_score": 422926.0823063568,
+      "raw_linear_residual_norm": 1.6599711011149096e-10,
+      "raw_newton_controls": [
+        -3883.7542743046147,
+        7914.914567861855,
+        -0.7287009983957838,
+        0.32886443939634097,
+        -0.5542953555181918,
+        -0.12942840905669079
+      ],
+      "raw_violated_bounds": [
+        "ignition_shift_s",
+        "duration_s"
+      ],
+      "squared_reduction_ratio": 0.9246484881957197,
+      "uniform_cap_divisor": 10.945847581015382
+    },
+    {
+      "condition_number": 380.35506182744155,
+      "iteration": 4,
+      "linear_counterfactuals": {
+        "physical_and_unit_step_box": {
+          "active_mask": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "face_oracle_score": 41674.669830839906,
+          "linear_model_controls": [
+            -600.0,
+            5369.708888996076,
+            -0.07959639533870419,
+            -0.008429908038507086,
+            -0.21195663615340388,
+            0.03578615644932799
+          ],
+          "predicted_position_error_m": 320723.61071086285,
+          "predicted_scaled_score": 41674.669830839906,
+          "predicted_velocity_error_m_s": 266.10933107190874,
+          "scaled_kkt_inf": 1.294542095820188e-16
+        },
+        "physical_box": {
+          "active_mask": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "face_oracle_score": 22317.51504578288,
+          "linear_model_controls": [
+            -1236.112017585864,
+            5467.045140120176,
+            0.1501485635138186,
+            0.16883098743154448,
+            -0.6458202170216003,
+            -0.05731113141949381
+          ],
+          "predicted_position_error_m": 42061.5608365223,
+          "predicted_scaled_score": 22317.51504578288,
+          "predicted_velocity_error_m_s": 219.17566671934648,
+          "scaled_kkt_inf": 5.633014202639483e-15
+        }
+      },
+      "maximum_even_to_odd_probe_ratio": 0.001142385700628342,
+      "observed_trial_score": 390847.8984188405,
+      "parent": 39,
+      "predicted_capped_score": 394619.561817411,
+      "raw_linear_residual_norm": 4.477855392990088e-10,
+      "raw_newton_controls": [
+        -4939.467743292106,
+        8830.95501367963,
+        -0.8661879107822333,
+        0.657722437152795,
+        -0.6152086985789094,
+        -0.0888467796119098
+      ],
+      "raw_violated_bounds": [
+        "ignition_shift_s",
+        "duration_s"
+      ],
+      "squared_reduction_ratio": 1.1139940184938437,
+      "uniform_cap_divisor": 13.464892477640355
+    }
+  ],
+  "jacobian_at_final_proposal_available": false,
+  "linear_commands_applied": false,
+  "native_arc_propagations": 0,
+  "nonlinear_targeting_runs": 0,
+  "runtime_versions": {
+    "numpy": "1.26.4",
+    "scipy": "1.17.1"
+  }
+}
