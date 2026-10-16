@@ -1,5 +1,41 @@
 ## ADDED Requirements
 
+### Requirement: Bounded local steering and ignition targeting
+
+D15 SHALL follow ADR 0108 as a private local experiment, preserving D14 behavior
+and immutable 0104/0107 evidence. It SHALL vary only ignition shift, burn duration
+and two dimensionless direction slopes at each of two steering nodes, with fixed
+thrust/Isp, circular parking history and Moon-point-mass gravity. Target position,
+velocity and absolute TDB epoch SHALL remain fixed; final mass SHALL be computed
+from duration, not constrained to the D14 target mass.
+
+#### Scenario: Construct an admissible steered command
+
+- **WHEN** the pinned references and initial command pass validation
+- **THEN** D15 SHALL use the fixed orthonormal inertial chart and normalized interpolated direction of ADR 0108, with zero slopes reproducing D14, abs(slopes)<=1 and norm(chart vector)>=1
+- **AND** ignition shift SHALL satisfy abs(delta_ti)<=P/4 and the original launch window, duration SHALL satisfy the specified 0.5*tau_D14 to mass-reserve-capped 1.5*tau_D14 interval, cutoff SHALL precede the fixed match epoch by at least 1 s, and dry-mass/provisional-reserve checks SHALL pass before native work
+- **AND** the circular initial state SHALL be rotated to actual ignition and steering-rate evidence SHALL NOT be labelled hardware qualification
+
+#### Scenario: Perform only the prescribed local correction
+
+- **WHEN** nominal baseline replay agrees with 0107 within 1 m / 0.001 m/s / 1e-6 kg and the target is not closed
+- **THEN** D15 SHALL perform at most four iterations with twelve central probes per iteration, fixed h=(1 s,1 s,0.001,0.001,0.001,0.001), residual scaling 10 m / 0.01 m/s and trust scales T=(300 s,300 s,0.1,0.1,0.1,0.1)
+- **AND** the scaled least-squares solve SHALL require rank six with rcond=1e-10 and condition number<=1e10, cap the normalized step once to infinity norm<=1 and require a strictly decreasing finite prediction
+- **AND** alpha=1,1/2,1/4,1/8 trials SHALL be relative to the same iterate, accepting the first closed trial or score_trial<=(1-1e-4*alpha)*score_current, without clipping, new scales, fallback solve or native retry
+
+#### Scenario: Qualify closure without changing the target
+
+- **WHEN** the baseline or an accepted nominal iterate first achieves position-norm residual<=10 m AND velocity-norm residual<=0.01 m/s at the fixed target epoch
+- **THEN** exactly one fresh tighter repeat of that command SHALL run, and local success SHALL require both profiles to close plus agreement<=1 m / 0.001 m/s / 1e-6 kg, analytic cutoff-mass error<=1e-6 kg and unchanged coast mass
+- **AND** tighter disagreement or failure SHALL stop unqualified without resuming iteration; iteration exhaustion without closure SHALL report not-converged and SHALL NOT launch a tighter repeat
+
+#### Scenario: Respect bounds, failures and total work
+
+- **WHEN** binding/replay, central-probe feasibility, rank, finite prediction, step acceptance, sampled guards, native integration or the deadline fails
+- **THEN** the study SHALL stop with the applicable unresolved/failure status; analytically infeasible line-search proposals alone SHALL be recorded/skipped within their prescribed slots, without native launch
+- **AND** the schedule SHALL remain within 65 nominal proposals, 66 total evaluations and 132 native launches under one 300-second clock including setup, counting attempted failed launches and retaining command/residual/matrix/step/provenance evidence with unavailable fields explicit
+- **AND** no alternate seed/branch, automatic follow-up, production-optimizer expansion, strict M3 qualification or automation restart SHALL occur
+
 ### Requirement: Bounded local finite-burn departure diagnostic
 
 The system SHALL implement D14 only as the private local diagnostic defined in

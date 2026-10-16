@@ -1,5 +1,24 @@
 ## Context
 
+### Research D15 — local steering and ignition targeting
+
+ADR 0108 binds 0104/0107 and freezes the six target state components and absolute
+epoch. Final mass varies analytically with duration and is not a seventh target.
+Use six controls: ignition shift, duration and two dimensionless tangent-plane
+slopes at each of two direction nodes. Normalize their linearly interpolated
+chart vector about a fixed D14 inertial basis; no TNW ambiguity or antipodal
+singularity. Keep maximum thrust/Isp and the Moon-only model; reconstruct circular
+ignition phase from actual time and enforce explicit timing/steering/mass bounds.
+Reuse D14 native profiles/guards, preserving its existing fixed-command behavior.
+Replay baseline, then at most four rank-six central-Jacobian corrections, fixed
+trust scaling and alpha=1/0.5/0.25/0.125 sufficient decrease. Fixed probes outside
+the domain stop; infeasible line-search trials are recorded/skipped, not clipped.
+Only nominal closure triggers one frozen tighter repeat; both must close and agree.
+All failures stop with evidence, not retries or schedule growth. Separate private
+D15 budget: 65 nominal proposals, 66 evaluations, 132 native launches, shared
+300-second clock. D15 implementation/tests and one study are separate later tasks.
+No public interface, dependency, hardware/mission claim or strict M3 gate change.
+
 ### Research D14 — local finite-burn construction
 
 Follow ADR 0105: pin 0104 and explicitly bind its first free-phase branch.

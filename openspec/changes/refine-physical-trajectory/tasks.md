@@ -1,5 +1,11 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D15 — local steering and ignition targeting (designed 2026-10-16)
+
+- [x] D15.1 Specify six controls, nonsingular inertial steering chart, actual-time circular ignition, variable cutoff mass with fixed six-state/epoch target, explicit bounds/reserve, baseline replay, central-probe/solve/trust/damping rules, closure/tighter gates and 65/66/132/300-second schedule in ADR 0108. Verify arithmetic/unit/budget oracles, strict OpenSpec, links, diff and immutable hashes; no runtime change, solve or native study.
+- [ ] D15.2 Implement the private bounded targeting path using existing native local profiles/guards without changing D14 or public interfaces. Verify independent chart/unit/rotation/mass/fixed-time oracles, synthetic linear/quadratic correction and central scaling, exact rank/condition/decrease thresholds, replay/binding mismatch, domain/equality/empty-bounds cases, common-parent probes/trials, skipped infeasible proposals, zero/nonfinite prediction, no-step/iteration-cap stops, first closure/frozen tighter success/failure, native guards/handoff/deadline/counters and preserved D14 behavior. Run focused/native and full tests, Ruff, strict OpenSpec and immutable checks; retain implementation ADR before completion.
+- [ ] D15.3 After D15.2 passes, execute one 300-second study within 65 nominal proposals / 66 evaluations / 132 launches. Retain new finite JSON and ADR even on failure; independently verify reference/source/resource identities, commands/time/target/mass/directions, residuals, central matrices and solve/cap/fractions, acceptance/closure/optional agreement, counters and no unscheduled retry. Update roadmap/state and validate docs/OpenSpec; no automatic second study, hardware or strict M3 qualification.
+
 ### Research D14 — local finite burn (designed 2026-10-16)
 
 - [x] D14.1 Specify explicit branch/reference binding, centered inertial guidance, circular ignition state, mass flow, local-only force model, fixed-radius analytic state/epoch, closure/agreement gates, stops and 4-launch/300-second budget in ADR 0105. Verify strict OpenSpec, links, retained reference/legacy hashes and diff; no runtime changes or native study.

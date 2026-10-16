@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D14.3 complete at `53229c3`: four arcs / 3.849491 s; frozen profiles agree (3.038e-6 m) but closure fails by 5520.40 km / 780.53 m/s. Independent evidence checks and 116 focused tests pass; unchanged D14.2 full-suite evidence reused (4,112 / 598.94 s), not rerun. No tuning/retry or mission qualification. Next: separately agree a controllable local boundary-value design; do not automatically start another trial or optimizer.
+D14.3: four arcs / 3.849491 s; profiles agree but closure fails by 5520.40 km / 780.53 m/s (ADR 0107). D15.1 designs six-control local targeting with fixed state/epoch and variable final mass: four corrections / 66 evaluations / 132 arcs / 300 seconds. Next D15.2 implementation and tests, then separately D15.3 one study. No runtime change, solve or propagation in this design stage; runtime tests not rerun. Controllability/convergence remain unverified.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D14.3 complete at `53229c3`: four arcs / 3.849491 s; frozen profiles agree (3.03
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest study: [ADR 0107](docs/adr/0107-local-burn-misses-analytic-target.md); implementation: [ADR 0106](docs/adr/0106-local-finite-burn-implementation.md). D14 diagnostic complete, local target not reached; strict M3 open; automation paused.
+- Latest design: [ADR 0108](docs/adr/0108-bounded-local-steering-targeting.md); study: [ADR 0107](docs/adr/0107-local-burn-misses-analytic-target.md). D15 implementation/study pending; strict M3 open; automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).
