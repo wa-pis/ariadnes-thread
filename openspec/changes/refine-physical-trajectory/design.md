@@ -1,5 +1,20 @@
 ## Context
 
+### Research D13 — consistent impulsive lunar departure before finite thrust
+
+ADR 0102 replaces no historical result: it specifies a new local seed diagnostic.
+Solve the parking-plane/periapsis/asymptote geometry, not just a scalar escape
+speed. Mandatory fixed/free phase preserves or explicitly varies initial phase;
+free phase may produce two alternatives or none. Use the vector velocity change,
+including plane change, and recompute sequential mass/duration estimates.
+Independent eccentricity-vector/energy/angular-momentum checks gate the result.
+All outputs remain local two-body impulsive references with explicit metadata.
+See ADR 0102 for formulas, degeneracy policy and measurable invariant tolerances.
+No finite burn is constructed in D13: virtual periapsis epoch is not ignition.
+A later contract must define finite-burn timing/guidance and finite-radius state
+matching, then perturbation/outer Lambert matching. No new propagator, optimizer,
+native experiment, arbitrary comparison radius, public API change or M3 waiver.
+
 ### Research D12 — damp the retained central correction
 
 ADR 0099 binds one half/quarter schedule to pinned 0079/0098, without solving

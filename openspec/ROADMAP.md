@@ -91,6 +91,14 @@ retains nine arcs / 7.87 s, exact replays, score ratios 1.05056/1.01401;
 neither fraction improves, no selection/tighter. Independent evidence checks and
 51 D12 tests pass; full suite reused from D12.2. Stop automatic research and
 review the targeting approach before agreeing further scope.
+The user requested a consistent lunar-departure design on 2026-10-16:
+[ADR 0102](../docs/adr/0102-consistent-lunar-departure-design.md) and D13 tasks
+specify pure local hyperbolic geometry, explicit fixed/free parking phase,
+vector impulse and recomputed mass with independent invariants. Synthetic
+algebra passes; reference phases are approximately 2.81/246.11 degrees, not
+verified finite-burn solutions. Next: pure implementation/full regression,
+then a non-propagating reference report. Finite-burn timing/guidance, explicit
+comparison-radius matching and a native-run budget need a separate contract.
 No extra fractions, probes, repeated solves,
 automatic retries or production optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the

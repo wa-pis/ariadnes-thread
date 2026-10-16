@@ -1,5 +1,11 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D13 — consistent lunar departure reference (designed 2026-10-16)
+
+- [x] D13.1 Record audit observations and design explicit fixed/free phase, outgoing hyperbola, vector impulse, independent invariant tolerances, recomputed mass and finite-burn/outer-matching limitations in ADR 0102 and OpenSpec. Verify synthetic algebra, strict validation, links, diff and legacy checksum; no runtime change or native mission experiment.
+- [ ] D13.2 Implement only the private pure local geometry diagnostic with explicit phase policy and no automatic branch selection. Verify independent eccentricity-vector/asymptote/energy/angular-momentum oracles, rotated/two-root/fixed/infeasible/near-degenerate cases, nonfinite/unsupported geometry rejection, metadata/units and high-precision sequential mass accounting; verify unchanged D4–D12, focused/full tests, Ruff, strict OpenSpec and legacy. Record implementation ADR; do not wire it into live propagation or public scenarios.
+- [ ] D13.3 After pure geometry verification, retain a non-propagating reference-case report with both branches or explicit infeasibility and independent arithmetic checks. Review direction, phase changes and recomputed fuel before separately specifying finite-burn timing/guidance, explicit comparison radius/state matching and a native-run budget. No native study is authorized by D13 alone.
+
 ### Research D12 — retained central-direction damping (approved 2026-10-04)
 
 - [x] D12.1 Specify pinned 0079/0098 bindings, retained algebra/raw-residual checks, baseline replay/closure, independent half/quarter schedule, alpha-dependent decrease, first selection/frozen tighter/no-fallback semantics and 3/4/12/300-second budget in ADR 0099 and OpenSpec. Verify hashes, links, strict validation, diff and legacy checksum; no runtime/native work in this stage.

@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0102 — Consistent lunar departure design](0102-consistent-lunar-departure-design.md) — D13: explicit phase, outgoing hyperbola/vector impulse and mass; pure geometry first, finite-burn/native contract deferred.
 - [0101 — Central fractions do not improve](0101-central-fractions-do-not-improve.md) — D12.3: nine arcs / 7.87 s; scores +5.06%/+1.40%, no selection/tighter; stop automatic research sequence.
 - [0100 — Central damping implementation](0100-central-damping-implementation.md) — D12.2: 287 focused / 3,947 full tests pass.
 - [0099 — Central-direction damping contract](0099-central-direction-damping-contract.md) — D12 approved: retained half/quarter steps, conditional tighter, 3/4/12 budget.

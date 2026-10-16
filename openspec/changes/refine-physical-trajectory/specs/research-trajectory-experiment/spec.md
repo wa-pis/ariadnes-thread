@@ -1,5 +1,24 @@
 ## ADDED Requirements
 
+### Requirement: Geometrically consistent local lunar departure seed
+D13 SHALL construct an explicitly labelled impulsive two-body lunar departure
+reference, not an executable finite-burn or qualified interplanetary trajectory.
+
+#### Scenario: Enforce explicit geometry and phase policy
+- **WHEN** given finite SI lunar mu, circular parking radius/oriented plane, nonzero outgoing Moon-relative J2000 excess velocity, TDB epoch and mandatory fixed/free phase policy
+- **THEN** D13 uses e=1+rp*norm(v_inf)^2/mu and requires dot(u,v_inf/norm(v_inf))=-1/e at periapsis; fixed phase must satisfy this equality within 1e-12, while free phase enumerates the two nondegenerate plane solutions in normalized phase order without hidden state/epoch/plane changes or automatic selection
+- **AND** with R the norm of the asymptote's projection into the parking plane, R<1/e-1e-12 is infeasible and abs(R-1/e)<=1e-12 is near-degenerate/unresolved; unsupported eccentric parking, nonfinite/zero inputs and nonrepresentable hyperbolic geometry fail explicitly rather than inventing a branch
+
+#### Scenario: Build and independently verify a vector impulse
+- **WHEN** a branch is geometrically admissible
+- **THEN** D13 computes t=(s+u/e)/sqrt(1-1/e^2), v_h=sqrt(norm(v_inf)^2+2*mu/rp)*t and delta_v=v_h-v_parking at identical position/epoch, retaining all three SI vectors, phase, eccentricity, angular momentum and energy with units/frame/time metadata
+- **AND** an independent angular-momentum/eccentricity-vector reconstruction matches the outgoing asymptote and velocity within 0.000001 m/s, position within 0.001 m and radial periapsis velocity within 0.000001 m/s; energy error is <=1e-10*max(mu/rp,norm(v_inf)^2/2) m^2/s^2, or the branch fails without tolerance relaxation
+
+#### Scenario: Recompute mass without claiming finite-burn feasibility
+- **WHEN** translating the branch's vector impulse into ideal propellant/duration estimates
+- **THEN** D13 uses norm(delta_v), actual mass, thrust and Isp; any old arrival impulse is explicitly provisional and applied sequentially to the new departure mass, never reusing old arrival duration/final mass or M2 feasibility labels
+- **AND** virtual impulse time is not silently treated as ignition; finite-burn timing/guidance and finite-radius state/epoch matching require a later specified contract, as do outer Lambert matching and Mars capture; no native mission run, automatic optimizer, UI change, public scenario mutation or strict M3 qualification occurs
+
 ### Requirement: Bounded damping of the retained central correction
 D12 SHALL evaluate only alpha=0.5 and conditionally alpha=0.25 of the retained
 D11 correction from the original seed, without a new solve, derivative probes,
