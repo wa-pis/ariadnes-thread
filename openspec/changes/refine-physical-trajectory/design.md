@@ -1,5 +1,20 @@
 ## Context
 
+### Research D14 — local finite-burn construction
+
+Follow ADR 0105: pin 0104 and explicitly bind its first free-phase branch.
+Construct a centered constant-J2000-direction burn using the vector impulse's
+rocket-equation duration and an analytically rotated circular ignition state.
+Use an explicitly labelled Moon-point-mass-only model with coupled mass and exact
+cutoff handoff. Check actual ignition against retained launch dates; no hidden
+date changes. Compare to the outgoing analytic hyperbola at Rmatch=10*rp and its
+fixed analytic epoch, not at an adjustable event time or against vInfinity.
+Keep 10 m / 0.01 m/s closure distinct from 1 m / 0.001 m/s / 1e-6 kg profile
+agreement. Verify private implementation first; then at most nominal+tighter
+burn/coast pairs under a shared 300-second/four-launch limit. A completed miss
+still receives the frozen tighter repeat; a failure stops without retry.
+No optimization, full-force model replacement, public interface or M3 waiver.
+
 ### Research D13 — consistent impulsive lunar departure before finite thrust
 
 ADR 0102 replaces no historical result: it specifies a new local seed diagnostic.

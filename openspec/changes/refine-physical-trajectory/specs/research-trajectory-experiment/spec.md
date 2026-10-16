@@ -1,5 +1,34 @@
 ## ADDED Requirements
 
+### Requirement: Bounded local finite-burn departure diagnostic
+
+The system SHALL implement D14 only as the private local diagnostic defined in
+ADR 0105, explicitly binding the immutable 0104 reference and its first free-phase
+branch. It SHALL use Moon-relative J2000 SI states, TDB seconds from J2000,
+constant inertial vector-impulse direction, centered rocket-equation duration,
+analytically rotated circular ignition state and lunar point gravity with coupled
+mass. It SHALL label omitted perturbations and SHALL NOT claim a full-force or
+flight-qualified result. Actual ignition SHALL satisfy retained launch bounds.
+
+#### Scenario: Fixed finite-radius state and time
+
+- **WHEN** the bound reference passes validation
+- **THEN** the target SHALL be the outgoing analytic hyperbola at explicitly recorded Rmatch=10*rp and its analytic time of flight, with independent state checks at the D13 invariant tolerances and time-of-flight agreement <=0.001 s
+- **AND** cutoff SHALL precede the target epoch, and closure SHALL require position-norm residual <=10 m and velocity-norm residual <=0.01 m/s at that exact epoch, without changing the epoch or substituting asymptotic velocity
+
+#### Scenario: Completed miss is distinct from integration agreement
+
+- **WHEN** verified D14 implementation executes one nominal burn/coast command without a guard failure
+- **THEN** one frozen tighter burn/coast repeat SHALL follow even if nominal closure fails, within four native launches and one 300-second deadline including setup
+- **AND** agreement SHALL require endpoint differences <=1 m, <=0.001 m/s and <=1e-6 kg, with analytic cutoff-mass error <=1e-6 kg for each profile
+- **AND** evidence SHALL report closure and agreement separately, including failed gates, explicit settings, hashes, raw residuals and model omissions, without optimizer, command tuning or retry
+
+#### Scenario: Invalid input or propagation failure
+
+- **WHEN** reference binding, physical/domain inputs, launch window, provisional mass reserve, impact/dry-mass guards, finite states, integration or shared budget fails
+- **THEN** execution SHALL stop with a contextual reason and skipped/unavailable remaining evidence, never a substituted successful result or a retry
+- **AND** D13 evidence SHALL remain immutable, strict M3 gates SHALL remain open and automation SHALL remain paused
+
 ### Requirement: Geometrically consistent local lunar departure seed
 D13 SHALL construct an explicitly labelled impulsive two-body lunar departure
 reference, not an executable finite-burn or qualified interplanetary trajectory.

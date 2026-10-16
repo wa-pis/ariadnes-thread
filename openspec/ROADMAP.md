@@ -13,6 +13,12 @@ Start with [current state](../CURRENT_STATE.md). Preserve previous results in th
 
 ## Near-term sequence
 
+Current next step: D14.2 implements the [local finite-burn contract](../docs/adr/0105-local-finite-burn-contract.md)
+for the explicitly selected first D13 branch; only after verification may D14.3
+run one four-launch/300-second nominal+tighter diagnostic. Fixed analytic target,
+constant inertial thrust and Moon-only gravity isolate local mismatch; no optimizer,
+full-force or Mars-feasibility claim. D14.1 is documentation only; strict M3 stays open.
+
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared
 scenario deadline. Implement active tasks D4.1–D4.5. Report endpoint miss and

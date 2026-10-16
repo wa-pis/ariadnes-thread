@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D13 complete at `34a1541`: 436 focused / 3,996 full tests (598.51 s); zero-native report: fixed phase fails, free phases 2.81/246.11 degrees and impulses 2.861/4.446 km/s. Second branch fails provisional mass. Next: agree finite-burn timing/guidance and matching contract; no native mission study yet.
+D13 complete: 436 focused / 3,996 full tests (598.51 s); report at `54d8e1d`: fixed phase fails, free phases 2.81/246.11 degrees; second branch fails provisional mass. D14.1 design binds the first branch: centered inertial burn, Moon-only gravity and fixed analytic state/epoch. Next D14.2 private implementation/tests, then separately D14.3 four-arc/300-second study. No native study or optimizer in this design stage; runtime tests not rerun.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D13 complete at `34a1541`: 436 focused / 3,996 full tests (598.51 s); zero-nativ
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest local reference: [ADR 0104](docs/adr/0104-lunar-reference-has-two-geometric-branches.md); implementation: [ADR 0103](docs/adr/0103-lunar-departure-geometry-implementation.md). Full suite reused for report stage; focused/independent/docs checks pass. Strict M3 open; automation paused.
+- Latest design: [ADR 0105](docs/adr/0105-local-finite-burn-contract.md); reference: [ADR 0104](docs/adr/0104-lunar-reference-has-two-geometric-branches.md). D14 implementation/propagation pending; strict M3 open; automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

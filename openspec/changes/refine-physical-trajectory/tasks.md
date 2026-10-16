@@ -1,5 +1,11 @@
 ## 0. D3 — M2 explorer provenance (specified 2026-09-23)
 
+### Research D14 — local finite burn (designed 2026-10-16)
+
+- [x] D14.1 Specify explicit branch/reference binding, centered inertial guidance, circular ignition state, mass flow, local-only force model, fixed-radius analytic state/epoch, closure/agreement gates, stops and 4-launch/300-second budget in ADR 0105. Verify strict OpenSpec, links, retained reference/legacy hashes and diff; no runtime changes or native study.
+- [ ] D14.2 Implement the private diagnostic without new public interfaces or optimizer. Pin explicit unit-aware nominal/tighter integration settings; test independent circular rotation, hyperbolic time-of-flight/state and mass oracles, full branch/reference mismatch, ignition-window/domain failures, exact handoff, impact/dry-mass/nonfinite/native failures, frozen profiles, closure versus agreement, 4-launch/shared-deadline stops and skipped evidence. Run focused/native and full regression tests, Ruff, strict OpenSpec and legacy checks; retain an implementation ADR before completion.
+- [ ] D14.3 After D14.2 passes, run one frozen nominal+tighter local study, at most four arcs under 300 seconds; retain new immutable JSON and ADR including failure. Independently check state/epoch/frame, guidance, analytic target/mass, raw residuals, separate closure/agreement, hashes, profiles, counters and no tuning/retry. Verify docs and strict OpenSpec; reuse verified full-suite evidence only if runtime code is unchanged. No automatic solver study, full-force or strict M3 qualification.
+
 ### Research D13 — consistent lunar departure reference (designed 2026-10-16)
 
 - [x] D13.1 Record audit observations and design explicit fixed/free phase, outgoing hyperbola, vector impulse, independent invariant tolerances, recomputed mass and finite-burn/outer-matching limitations in ADR 0102 and OpenSpec. Verify synthetic algebra, strict validation, links, diff and legacy checksum; no runtime change or native mission experiment.
