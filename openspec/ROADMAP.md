@@ -13,11 +13,13 @@ Start with [current state](../CURRENT_STATE.md). Preserve previous results in th
 
 ## Near-term sequence
 
-Current next step: D14.2 implements the [local finite-burn contract](../docs/adr/0105-local-finite-burn-contract.md)
-for the explicitly selected first D13 branch; only after verification may D14.3
-run one four-launch/300-second nominal+tighter diagnostic. Fixed analytic target,
-constant inertial thrust and Moon-only gravity isolate local mismatch; no optimizer,
-full-force or Mars-feasibility claim. D14.1 is documentation only; strict M3 stays open.
+D14.2 implements the [local finite-burn contract](../docs/adr/0105-local-finite-burn-contract.md):
+[ADR 0106](../docs/adr/0106-local-finite-burn-implementation.md) records 182 focused /
+4,112 full tests passing (598.94 s), Ruff, strict OpenSpec and immutable hashes.
+Next D14.3 is one four-launch/300-second nominal+tighter diagnostic for the
+explicitly selected first D13 branch. Fixed analytic target, constant inertial
+thrust and Moon-only gravity isolate local mismatch; no optimizer, full-force
+or Mars-feasibility claim. No reference study yet; strict M3 stays open.
 
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared
@@ -110,8 +112,9 @@ D13.3 report at `34a1541` is retained in
 phase zero fails; free phases 2.81/246.11 degrees require 2.861/4.446 km/s.
 Second branch fails the provisional mass budget; neither is selected. Independent
 geometry/mass/provenance checks and 49 D13 tests pass; zero native arcs, D13.2 full
-suite reused. Next: separately agree finite-burn timing/guidance, explicit
-comparison-radius matching and a native-run budget need a separate contract.
+suite reused. The subsequent finite-burn timing/guidance, comparison-radius
+matching and native-run budget are specified in ADR 0105 and implemented in
+ADR 0106; D14.3 remains pending. D13 itself made no branch selection.
 No extra fractions, probes, repeated solves,
 automatic retries or production optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the

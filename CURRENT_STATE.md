@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D13 complete: 436 focused / 3,996 full tests (598.51 s); report at `54d8e1d`: fixed phase fails, free phases 2.81/246.11 degrees; second branch fails provisional mass. D14.1 design binds the first branch: centered inertial burn, Moon-only gravity and fixed analytic state/epoch. Next D14.2 private implementation/tests, then separately D14.3 four-arc/300-second study. No native study or optimizer in this design stage; runtime tests not rerun.
+D14.2 complete, based on `d084f13`: private local finite burn, Moon-point gravity, coupled mass and fixed analytic target. 116 new / 182 focused / 4,112 full tests pass (598.94 s); Ruff, strict OpenSpec, links, diff and immutable hashes pass. Next D14.3: one frozen four-arc/300-second nominal+tighter study. No retained-reference propagation, optimizer, public API or UI change in D14.2; synthetic native tests do not validate the branch or a Mars mission.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D13 complete: 436 focused / 3,996 full tests (598.51 s); report at `54d8e1d`: fi
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest design: [ADR 0105](docs/adr/0105-local-finite-burn-contract.md); reference: [ADR 0104](docs/adr/0104-lunar-reference-has-two-geometric-branches.md). D14 implementation/propagation pending; strict M3 open; automation paused.
+- Latest implementation: [ADR 0106](docs/adr/0106-local-finite-burn-implementation.md); design: [ADR 0105](docs/adr/0105-local-finite-burn-contract.md); reference: [ADR 0104](docs/adr/0104-lunar-reference-has-two-geometric-branches.md). D14.3 pending; strict M3 open; automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

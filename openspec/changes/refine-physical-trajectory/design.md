@@ -15,6 +15,18 @@ burn/coast pairs under a shared 300-second/four-launch limit. A completed miss
 still receives the frozen tighter repeat; a failure stops without retry.
 No optimization, full-force model replacement, public interface or M3 waiver.
 
+D14.2 uses private `local_burn.py`, the D13 reconstruction and a two-arc
+subclass of the existing cooperative budget. Native propagation uses coupled
+Moon-central translation and custom mass flow; an explicitly fixed zero-position
+point Moon defines the isolated model, not real Solar-System ephemerides.
+Relative integration seconds map to the recorded absolute ignition TDB epoch.
+Both arcs use RKF 7/8 nominal / RKDP 8/7 tighter, relative tolerances 1e-11/1e-13,
+SI absolute tolerances (position 1e-3/1e-5 m, velocity 1e-6/1e-8 m/s,
+mass 1e-9/1e-11 kg), initial steps 1/0.25 s, minimum steps 1e-6/1e-8 s and
+maximum steps 10/2 s. Below-minimum and nonfinite steps fail, without fallback.
+Independent area-law quadrature checks analytic target time within 0.001 s.
+See ADR 0106 for native qualification and the unsupported custom-state alternative.
+
 ### Research D13 — consistent impulsive lunar departure before finite thrust
 
 ADR 0102 replaces no historical result: it specifies a new local seed diagnostic.

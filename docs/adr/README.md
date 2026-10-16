@@ -64,7 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
-- [0105 — Local finite-burn contract](0105-local-finite-burn-contract.md) — D14 design: explicit first branch, centered inertial burn, fixed analytic local target, four launches / 300 seconds; implementation and experiment pending.
+- [0106 — Local finite-burn implementation](0106-local-finite-burn-implementation.md) — D14.2: 182 focused / 4,112 full tests pass; private coupled native propagation, fixed local profiles and fail-stop evidence; reference experiment pending.
+- [0105 — Local finite-burn contract](0105-local-finite-burn-contract.md) — D14 design: explicit first branch, centered inertial burn, fixed analytic local target, four launches / 300 seconds; implementation verified in 0106, reference experiment pending.
 - [0104 — Two local departure branches](0104-lunar-reference-has-two-geometric-branches.md) — D13.3: fixed phase fails; free phases 2.81/246.11 degrees, impulses 2.861/4.446 km/s; second branch fails provisional mass budget. Zero native arcs, no selection.
 - [0103 — Lunar departure geometry implementation](0103-lunar-departure-geometry-implementation.md) — D13.2: 436 focused / 3,996 full tests pass; no propagation or automatic selection.
 - [0102 — Consistent lunar departure design](0102-consistent-lunar-departure-design.md) — D13: explicit phase, outgoing hyperbola/vector impulse and mass; pure geometry first, finite-burn/native contract deferred.
