@@ -54,6 +54,19 @@ infeasibility. Best objective 262 is not the last recorded accepted iterate 249.
 Audit/verification status is recorded in ADR 0113. Stop for separate scope review;
 no automatic repeat, budget increase, new node, automation restart or strict M3 completion.
 
+D17.1 diagnosis/design is recorded in
+[ADR 0114](../docs/adr/0114-quadratic-steering-freedom.md). At the last measured
+ID 249 the fuel-bound five-free-control and full-box linear minima nearly equal
+the retained score; this is not a nonlinear impossibility bound. Next is a
+separate smooth quadratic-Bezier steering chart, adding two shape controls with
+unchanged target/time/fuel/thrust/forces. Explicit accepted interior ID 158 and
+two fresh replay gates preserve the old chart without hidden seed adjustment.
+New bounded contract: 6x8 Jacobian / sixteen probes, 40 objective requests and
+40 batches, 681 nominal / 682 total evaluations / 1364 arcs / 300 seconds.
+D17.2 implementation/verification comes first; D17.3 is a separately authorized
+single study, not executed by this design stage. No runtime/dependency changes,
+reachability promise, automatic research/automation restart or strict M3 completion.
+
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared
 scenario deadline. Implement active tasks D4.1–D4.5. Report endpoint miss and

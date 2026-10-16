@@ -1,5 +1,38 @@
 ## Context
 
+### Research D17 — smooth steering freedom without more fuel
+
+[ADR 0114](../../../docs/adr/0114-quadratic-steering-freedom.md) diagnoses the
+saved ID-249 response, not an unmeasured final Jacobian at best ID 262. With
+duration at its reserve-derived ceiling, five-free-column and bounded-box
+linear minima nearly equal the retained score; independent face/KKT checks
+support a local control limitation, not nonlinear infeasibility or final stationarity.
+
+Specify a separate eight-control quadratic-Bezier inertial chart: endpoint and
+middle control-point slope pairs, with the middle pair NOT a midpoint-time value.
+Nonnegative Bernstein weights keep the whole physical curve inside the unchanged
+slope envelope. The endpoint-average middle pair embeds D16's line smoothly,
+without a kink, new force or third native arc. Keep the physical domain, target
+six-state/epoch, native profiles and closure/agreement gates unchanged.
+
+Explicit interior accepted 0113 proposal 158 avoids hidden TRF seed adjustment.
+Fresh old two-node and embedded Bezier replays must agree with retained/fresh
+endpoints before derivatives. Only the Bezier replay is an eligible seed/cache.
+Use pinned TRF/exact/linear, six residuals/eight controls, fixed scaled 6x8
+derivatives and sixteen fully preflighted in-domain probes per batch. Retain
+rank-six diagnostics, never demand rank eight or add a regularization target.
+First non-probe closure stops before another Jacobian and permits one frozen
+tighter repeat. No nominal-only or optimizer-status qualification.
+
+Separate D17 ceiling: two nominal replays + 39 later objectives + 40*16 probes
+=681 nominal, plus one reserved tighter =682 evaluations / 1364 launches under
+300 seconds, with at most 40 objective requests including the initial cache.
+This is not an extension of the finished D16 study. Keep truthful objective,
+accepted-iterate and last-measured-Jacobian identities on interruption.
+D17.1 is offline diagnosis/design only. D17.2 implementation/native/full tests
+and a separately authorized single D17.3 run remain unchecked. No runtime,
+dependency, API/UI, automation state or strict M3 gate changes in this stage.
+
 ### Research D16 — bound-aware local targeting
 
 [ADR 0111](../../../docs/adr/0111-bound-aware-local-targeting.md) diagnoses the

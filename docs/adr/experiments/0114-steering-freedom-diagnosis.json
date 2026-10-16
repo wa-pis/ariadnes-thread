@@ -1,0 +1,146 @@
+{
+  "analysis": "saved-linear-response-and-design-identities-only",
+  "base_revision": "71d91e4f80cd5c7422cb5fccb3f451bc728db6c4",
+  "best_duration_margin_s": 0.0,
+  "best_objective_score": 25341.14236711373,
+  "best_provisional_reserve_margin_kg": 6.673417374258861e-11,
+  "bezier_oracles": {
+    "coefficient_box_corners": 64,
+    "largest_angular_rate_to_bound_ratio": 0.7272727272727273,
+    "native_endpoint_embedding_verified": false,
+    "samples_per_corner": 33
+  },
+  "free_five_control_linear_rank": 5,
+  "free_five_control_score_floor": 25341.142309194016,
+  "gradient": [
+    10850.152310603456,
+    -200852128.24972236,
+    -10078.757072837725,
+    6147.448772229513,
+    -2889.868192973197,
+    2056.488462860105
+  ],
+  "input_sha256": "417f4a33e6407a37e9a41caff29330557f39d7a3bbfc34e9b908cc1d5589cb89",
+  "jacobian_at_best_262_available": false,
+  "last_measured_jacobian_parent": 249,
+  "last_objective_relative_score_improvement": 6.950058306642859e-10,
+  "last_parent_score": 25341.142384725972,
+  "limitation": "Conditional linear minima, not nonlinear impossibility; new guidance columns and native closure unmeasured",
+  "linear_commands_applied": false,
+  "linear_counterfactuals": {
+    "physical_and_unit_step_box": {
+      "active_mask": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "face_oracle_score": 25341.142309194016,
+      "linear_model_controls": [
+        -1094.3311985847445,
+        5467.045140120176,
+        0.11677321773768554,
+        0.03939748073726108,
+        -0.6129019164311016,
+        0.057074174558750905
+      ],
+      "predicted_position_error_m": 59203.83313253208,
+      "predicted_score": 25341.142309194016,
+      "predicted_velocity_error_m_s": 246.39857040148917,
+      "scaled_kkt_inf": 1.5368108751013935e-17
+    },
+    "physical_box": {
+      "active_mask": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "face_oracle_score": 25341.142309194016,
+      "linear_model_controls": [
+        -1094.3311985847445,
+        5467.045140120176,
+        0.11677321773768554,
+        0.03939748073726108,
+        -0.6129019164311016,
+        0.057074174558750905
+      ],
+      "predicted_position_error_m": 59203.83313253208,
+      "predicted_score": 25341.142309194016,
+      "predicted_velocity_error_m_s": 246.39857040148917,
+      "scaled_kkt_inf": 1.5368108751013935e-17
+    }
+  },
+  "maximum_free_normalized_gradient": 1.208820780246781e-06,
+  "native_arc_propagations": 0,
+  "normalized_gradient": [
+    1.208820780246781e-06,
+    -0.022377033928618863,
+    -1.1228792591970399e-06,
+    6.848902769882218e-07,
+    -3.219616300156735e-07,
+    2.2911438633111637e-07
+  ],
+  "normalized_gradient_definition": "J.T @ r / (norm(J,2)*norm(r,2)); not SciPy gtol",
+  "planned_seed": {
+    "controls8": [
+      -1094.4910010491465,
+      5467.042096122668,
+      0.11712983121190776,
+      0.03964718570666498,
+      -0.24799059467100915,
+      0.04826945627805249,
+      -0.6131110205539261,
+      0.05689172684944001
+    ],
+    "duration_margin_s": 0.003043997508029861,
+    "first_synthetic_solver_request": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum_chart_embedding_error": 2.220446049250313e-16,
+    "provisional_reserve_kg": 500.00045311885333,
+    "relative_score_above_best": 3.487155742387671e-06,
+    "retained_proposal": 158
+  },
+  "proposed_d17_budget": {
+    "bezier_seed_replays": 1,
+    "deadline_s": 300,
+    "jacobian_batches": 40,
+    "maximum_native_arcs": 1364,
+    "maximum_nominal_evaluations": 681,
+    "maximum_total_evaluations": 682,
+    "objective_requests_including_initial_cache": 40,
+    "probes_per_batch": 16,
+    "reference_replays": 1
+  },
+  "raw_extra_duration_s": 959.1711367540374,
+  "raw_newton_controls": [
+    -2521.121814461989,
+    6426.216276874214,
+    -0.3791704543621677,
+    0.2704146704423702,
+    -0.17894853399815847,
+    -0.023447285308759294
+  ],
+  "raw_violated_bounds": [
+    "ignition_shift_s",
+    "duration_s"
+  ],
+  "returned_scipy_result_available": false,
+  "runtime_versions": {
+    "numpy": "1.26.4",
+    "scipy": "1.17.1"
+  },
+  "spacecraft_targeting_runs": 0
+}

@@ -1,5 +1,61 @@
 ## ADDED Requirements
 
+### Requirement: Smooth additional steering freedom after the bound-limited study
+
+D17 SHALL follow ADR 0114 as a separate private experiment, preserving D14/D15/D16
+and all historical evidence. It SHALL change only the steering chart/control count
+and explicitly separate compute ceiling, not the physical target, fuel, thrust,
+force model, timing domain, native profiles or qualification thresholds.
+
+#### Scenario: Diagnose saved response without inventing final stationarity
+
+- **WHEN** D17.1 evaluates retained D16.3 evidence
+- **THEN** it SHALL bind 0113 SHA256 417f4a33e6407a37e9a41caff29330557f39d7a3bbfc34e9b908cc1d5589cb89 and distinguish best objective 262 from last accepted/measured parent 249
+- **AND** it SHALL independently check the active duration/reserve bound, saved-gradient normalization, five-free-column and bounded linear residual minima against exhaustive face/KKT oracles, without applying those commands or propagating a spacecraft
+- **AND** conditional linear minima SHALL NOT become nonlinear impossibility bounds, returned SciPy stationarity or a Jacobian at unmeasured ID 262
+
+#### Scenario: Add smooth curvature inside the unchanged chart envelope
+
+- **WHEN** D17 constructs an eight-control command x=(delta_ti,tau,p0,q0,pc,qc,p1,q1)
+- **THEN** for s=t/tau it SHALL use u(s)=(1-s)^2*u0+2*s*(1-s)*uc+s^2*u1 and normalize d0+u_p*e1+u_q*e2 in the original inertial basis; uc SHALL be labelled a Bezier control point, NOT a midpoint-time direction
+- **AND** all six slope coefficients SHALL remain in [-1,1], so the convex-hull property bounds the complete physical chart for 0<=s<=1; norm of its unnormalized direction SHALL be >=1
+- **AND** uc=(u0+u1)/2 SHALL embed the old linear chart; the same polynomial SHALL extend native trial stages outside the physical interval without clamping, guidance kinks or a new midpoint arc
+- **AND** the sampled/state/mass guards SHALL remain authoritative; rate bound 2*max(norm(uc-u0),norm(u1-uc))/tau SHALL be diagnostic, not hardware qualification
+
+#### Scenario: Bind a reproducible interior seed with separate model replay gates
+
+- **WHEN** the separately verified D17 runner starts
+- **THEN** it SHALL bind pinned 0104/0107/0110/0113 inputs, candidate d0001-t0035 and its original first free-phase branch, domain/resources/commands/target, explicitly selecting accepted 0113 proposal 158 only
+- **AND** a fresh old two-node replay SHALL agree with retained ID 158 within 1 m / 0.001 m/s / 1e-6 kg, then a fresh embedded Bezier seed SHALL agree within the same limits against BOTH that replay and retained ID 158, before derivative work
+- **AND** model ID SHALL be local-moon-point-mass-bezier-burn-v1 and algorithm ID bound-aware-bezier-trf-v1, with the old reference model separately identified; the old replay SHALL NOT qualify or become a new-model objective
+- **AND** only the embedded seed residual SHALL supply the single exact initial objective cache; its controls SHALL equal the eight values frozen in ADR 0114, with y0=0 unchanged by SciPy; mismatch SHALL stop without clipping, alternate start, epsilon repair or silent cache reuse
+- **AND** target six-state and tm=979002340.6346419 TDB s, Moon/J2000/SI, 1000 N / 450 s, 2000/500 kg masses, original reserve/window/ignition/duration bounds and >=1 s full-box coast SHALL remain unchanged; final mass SHALL vary analytically with duration, not become a seventh target
+
+#### Scenario: Correct an underdetermined six-state residual with bounded probes
+
+- **WHEN** the Bezier seed replay passes but the target is unclosed
+- **THEN** D17 SHALL use pinned SciPy 1.17.1 TRF/exact/linear, x_scale=1, ftol=xtol=gtol=1e-10, max_nfev=40, verbose=0, workers=None; x=x_seed+T*y with T=(300 s,300 s,0.1,0.1,0.1,0.1,0.1,0.1) and the unchanged six 10 m / 0.01 m/s residual scales
+- **AND** its callable 6x8 Jacobian SHALL use fixed h=(1 s,1 s,0.001,0.001,0.001,0.001,0.001,0.001), complete central pairs first, else forward or backward second-order pairs with the formulas of ADR 0111 and column scaling by T
+- **AND** all sixteen commands SHALL be preflighted before any probe launch; unavailable pairs SHALL stop derivative-domain-unresolved without smaller h, penalty residual or fallback
+- **AND** SVD SHALL retain six singular values and rcond=1e-10 full/free-column row-rank diagnostics; controls/gradients/active masks SHALL have eight components, with no rank-eight requirement, regularization residual, dynamic scale or changed physical merit
+- **AND** face-free columns SHALL be identified by strict physical comparisons L[j]<x[j]<U[j] with recorded margins at the matrix parent, not an inferred SciPy active-mask or a full feasible-tangent-cone claim; eight-control and six-residual shape validation SHALL remain distinct
+
+#### Scenario: Qualify only unchanged target closure and frozen tighter agreement
+
+- **WHEN** an eligible Bezier seed or non-probe objective first satisfies norm(dr)<=10 m AND norm(dv)<=0.01 m/s
+- **THEN** optimizer control flow SHALL stop before another Jacobian and exactly one fresh tighter burn/coast of that frozen eight-control command SHALL follow
+- **AND** local-qualified SHALL require both profiles to close, endpoint agreement<=1 m / 0.001 m/s / 1e-6 kg, analytic cutoff-mass error<=1e-6 kg and exact coast-mass preservation
+- **AND** a tighter failure/disagreement SHALL stop unqualified with no resumed correction; old-reference replays, probes, rank, lower score or optimizer success alone SHALL NOT qualify, and unclosed stationarity/stagnation SHALL retain D16's honest labels
+
+#### Scenario: Bound the new study without extending the previous experiment
+
+- **WHEN** D17 prepares or attempts any native work
+- **THEN** one shared 300-second cooperative clock SHALL include binding, two nominal replay evaluations, <=40 objective requests including one initial cache hit, <=40 sixteen-probe Jacobian batches, and at most one reserved tighter evaluation
+- **AND** own ceilings SHALL be 681 nominal evaluations (2+39+40*16), 682 total evaluations and 1364 native launches, with 1362 nominal launches and two reserved for the tighter check; attempted failures count before entry, and a complete sixteen-probe batch SHALL fit before its first launch
+- **AND** all domain/nonfinite/native/guard/limit failures SHALL stop with finite partial evidence and no retry, substituted dynamics or continuation from an incomplete arc; completed cutoff SHALL survive coast failure
+- **AND** evidence SHALL retain separate reference/current source provenance, roles/cache/parents/accepted IDs/best objective, eight controls/units, target/epoch/mass/endpoints, 6x8 matrices/stencils/SVD, bound-margin/gradient associations and independent counters; absent solver status/active-mask after interruption SHALL stay unavailable, not be inferred from an earlier matrix
+- **AND** verified D17.2 implementation SHALL precede a separately user-authorized single D17.3 native study; no automatic second study, target/fuel/domain relaxation, new force, public API/UI, automation restart or strict M3 qualification SHALL follow
+
 ### Requirement: Bound-aware local targeting follow-up
 
 D16 SHALL follow ADR 0111 as a separate private bounded experiment, preserving
