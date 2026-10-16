@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D14.2 complete, based on `d084f13`: private local finite burn, Moon-point gravity, coupled mass and fixed analytic target. 116 new / 182 focused / 4,112 full tests pass (598.94 s); Ruff, strict OpenSpec, links, diff and immutable hashes pass. Next D14.3: one frozen four-arc/300-second nominal+tighter study. No retained-reference propagation, optimizer, public API or UI change in D14.2; synthetic native tests do not validate the branch or a Mars mission.
+D14.3 complete at `53229c3`: four arcs / 3.849491 s; frozen profiles agree (3.038e-6 m) but closure fails by 5520.40 km / 780.53 m/s. Independent evidence checks and 116 focused tests pass; unchanged D14.2 full-suite evidence reused (4,112 / 598.94 s), not rerun. No tuning/retry or mission qualification. Next: separately agree a controllable local boundary-value design; do not automatically start another trial or optimizer.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D14.2 complete, based on `d084f13`: private local finite burn, Moon-point gravit
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest implementation: [ADR 0106](docs/adr/0106-local-finite-burn-implementation.md); design: [ADR 0105](docs/adr/0105-local-finite-burn-contract.md); reference: [ADR 0104](docs/adr/0104-lunar-reference-has-two-geometric-branches.md). D14.3 pending; strict M3 open; automation paused.
+- Latest study: [ADR 0107](docs/adr/0107-local-burn-misses-analytic-target.md); implementation: [ADR 0106](docs/adr/0106-local-finite-burn-implementation.md). D14 diagnostic complete, local target not reached; strict M3 open; automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

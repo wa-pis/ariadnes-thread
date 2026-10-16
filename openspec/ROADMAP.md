@@ -16,10 +16,12 @@ Start with [current state](../CURRENT_STATE.md). Preserve previous results in th
 D14.2 implements the [local finite-burn contract](../docs/adr/0105-local-finite-burn-contract.md):
 [ADR 0106](../docs/adr/0106-local-finite-burn-implementation.md) records 182 focused /
 4,112 full tests passing (598.94 s), Ruff, strict OpenSpec and immutable hashes.
-Next D14.3 is one four-launch/300-second nominal+tighter diagnostic for the
-explicitly selected first D13 branch. Fixed analytic target, constant inertial
-thrust and Moon-only gravity isolate local mismatch; no optimizer, full-force
-or Mars-feasibility claim. No reference study yet; strict M3 stays open.
+D14.3 completed at `53229c3`: [ADR 0107](../docs/adr/0107-local-burn-misses-analytic-target.md)
+retains four arcs / 3.849491 s. Frozen profiles agree (position difference
+3.038e-6 m), but target closure fails by 5520.40 km and 780.53 m/s.
+Independent evidence checks and 116 focused tests pass; full suite reused.
+Stop: separately agree a controllable local boundary-value design before any
+new trial. No optimizer, full-force or Mars-feasibility claim; strict M3 stays open.
 
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared
