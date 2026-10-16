@@ -44,9 +44,15 @@ same six controls/fuel/target/epoch/profiles and in-domain second-order probes.
 Separate ceiling: 280 nominal / 281 total evaluations, 562 native launches,
 300 seconds; all probes counted. 98 new / 366 focused / 4,330 full tests pass
 (604.70 s); Ruff, strict OpenSpec, links, dependency/source/immutable checks pass.
-D14/D15 and historical evidence are preserved. Next: a separately user-authorized
-D16.3 retained-reference study, not run in D16.2. No automatic repeat, new steering
-node, automation restart or strict M3 completion.
+D14/D15 and historical evidence are preserved. D16.3 subsequently ran once at
+`501516e`: [ADR 0113](../docs/adr/0113-bound-aware-targeting-hits-budget.md) retains
+262 nominal evaluations / 524 completed arcs / 38.927206 s, with exact seed replay.
+The independent 20-Jacobian cap stops the study as budget-exhausted; best eligible
+objective errors are 59.203835 km / 246.398570 m/s, not closure. Duration reaches
+the reserve-derived bound; no tighter repeat, returned solver status or proof of
+infeasibility. Best objective 262 is not the last recorded accepted iterate 249.
+Audit/verification status is recorded in ADR 0113. Stop for separate scope review;
+no automatic repeat, budget increase, new node, automation restart or strict M3 completion.
 
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared

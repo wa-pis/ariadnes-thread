@@ -31,7 +31,14 @@ runner reuses unchanged D14/D15 domain/native physics with its own counters,
 single initial replay cache and closure-before-Jacobian completion signal.
 Conda SciPy 1.17.1 is explicit, with no other dependency upgrade; preserve
 historical environment/snapshot identity separately from current provenance.
-D16.3 remains separately authorized and unexecuted; strict M3 stays open.
+D16.3 subsequently ran once at `501516e`, retained in
+[ADR 0113](../../../docs/adr/0113-bound-aware-targeting-hits-budget.md): exact seed
+replay, 262 nominal evaluations / 524 completed arcs / 38.927206 s. The independent
+20-Jacobian cap stops before a SciPy return; best objective 262 is not marked
+an accepted iterate (last recorded 249). Errors 59.203835 km / 246.398570 m/s
+remain unclosed; duration reaches the unchanged reserve-derived ceiling. No
+tighter repeat or stationary/infeasible claim. Audit status is recorded in the
+ADR. Stop for scope review, not automatic continuation; strict M3 stays open.
 
 ### Research D15 — local steering and ignition targeting
 

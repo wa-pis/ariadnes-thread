@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D15.2 delivered at `f4aed8f`; D15.3 at `74dbeb1` remains not-converged (3868.62 km / 556.75 m/s; ADR 0110). D16.1 diagnoses capped Newton directions outside timing/fuel bounds, with independent offline oracles (ADR 0111). D16.2 is verified at base `065f3ef` (ADR 0112): separate bound-aware TRF runner, SciPy 1.17.1 explicitly pinned; 98 new / 366 focused / 4,330 full tests pass (604.70 s). Ruff, strict OpenSpec, links, diff, dependency/source/immutable checks pass; D14/D15 physics/profiles/domain/target/epoch and historical evidence unchanged. Ceiling remains 280 nominal / 281 total evaluations, 562 arcs / 300 s. Next: separately user-authorized D16.3, not run here. No automatic study, automation restart or strict M3 completion.
+D16.2 is verified at `501516e` (ADR 0112): SciPy 1.17.1, 98 new / 366 focused / 4,330 full tests pass (604.70 s). D16.3 subsequently ran once at that clean revision (ADR 0113): exact seed replay, 262 nominal evaluations / 524 completed arcs / 38.927206 s. Outcome budget-exhausted at 20 complete Jacobians, not convergence. Best objective 262: 59.203835 km / 246.398570 m/s; duration at reserve-derived ceiling, provisional reserve ~500 kg. Best is not marked an accepted iterate (last recorded 249); no returned SciPy status or tighter repeat. Independent evidence audit, current 366 focused tests (3.05 s), Ruff, strict OpenSpec, links, diff and immutable/source/resource checks pass; prior full suite reused because runtime/tests/environment unchanged. Next: separate scope review of residual and reserve/control limits. No automatic rerun, relaxed target/bounds/budget, automation restart or strict M3 completion.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D15.2 delivered at `f4aed8f`; D15.3 at `74dbeb1` remains not-converged (3868.62 
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest implementation: [ADR 0112](docs/adr/0112-bound-aware-targeting-implementation.md); latest native study: [ADR 0110](docs/adr/0110-local-steering-improves-without-closure.md). D16.2 verified; D16.3 pending; strict M3 open; automation paused.
+- Latest implementation: [ADR 0112](docs/adr/0112-bound-aware-targeting-implementation.md); latest native study: [ADR 0113](docs/adr/0113-bound-aware-targeting-hits-budget.md). D16.3 evidence verified; strict M3 open; automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).
