@@ -33,7 +33,11 @@ def test_stored_mars_harmonic_profile(cutoff: int) -> None:
         "SSB", "J2000", "TDB seconds since J2000",
     )
     assert snapshot["model_id"] == trajectory.PHYSICAL_MODEL_IDENTIFIER
-    assert snapshot["environment_yml_sha256"] == sha256((ROOT / "environment.yml").read_bytes()).hexdigest()
+    # Preserve the measured environment, not a fabricated new snapshot after
+    # adding D16's explicit (already installed) SciPy pin. Compatibility is
+    # checked independently in test_environment.py.
+    historical_environment = ROOT / "tests/data/m3_fresh_harmonic_environment.yml"
+    assert snapshot["environment_yml_sha256"] == sha256(historical_environment.read_bytes()).hexdigest()
     recorded = snapshot["fields"]["Mars"]
     spec = next(item for item in trajectory._HARMONIC_FIELD_SPECS if item.body == "Mars")
     path = trajectory._default_gravity_models_path() / spec.body / spec.file_name

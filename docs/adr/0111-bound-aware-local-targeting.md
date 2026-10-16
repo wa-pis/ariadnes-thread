@@ -2,7 +2,7 @@
 
 Date: 2026-10-16
 Decision status: accepted
-Implementation: D16.1 diagnosis/design complete; D16.2 runtime and D16.3 native study not started.
+Implementation: D16.1 diagnosis/design complete; D16.2 subsequently verified in [0112](0112-bound-aware-targeting-implementation.md); D16.3 native study pending.
 Scope / milestone: M3 research D16, same local lunar departure boundary problem.
 Base revision: `74dbeb15c93060e0cd7ccfbbc8e770c5c6d2f144`, clean before this documentation/analysis stage.
 Related OpenSpec: [requirements](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md), [design](../../openspec/changes/refine-physical-trajectory/design.md), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md).
@@ -217,4 +217,5 @@ Pin/verify SciPy, run focused/native and full tests before implementation comple
 This design stage checks exact offline JSON reproduction, independent quadratic
 stencil/unit identities, coast/budget arithmetic, strict OpenSpec, Ruff, 91 local
 links, immutable hashes and diff; runtime tests/full suite are not rerun because runtime,
-tests and environment files are unchanged. D16.2/D16.3 remain unchecked.
+tests and environment files are unchanged in D16.1. D16.2 is subsequently verified
+in [0112](0112-bound-aware-targeting-implementation.md); D16.3 remains unchecked.

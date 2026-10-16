@@ -37,13 +37,16 @@ hardware qualification, a production optimizer or Mars feasibility; strict M3 st
 D16.1 is specified in [ADR 0111](../docs/adr/0111-bound-aware-local-targeting.md):
 all four unconstrained commands violate ignition/duration bounds; uniform caps
 are not constrained least-squares steps. Independent offline 729-face/KKT checks
-confirm better linear box directions, not nonlinear closure. Next: D16.2, a
+confirm better linear box directions, not nonlinear closure. D16.2 is verified in
+[ADR 0112](../docs/adr/0112-bound-aware-targeting-implementation.md): a
 separate private bound-aware TRF path with explicit Conda SciPy 1.17.1 pin,
 same six controls/fuel/target/epoch/profiles and in-domain second-order probes.
 Separate ceiling: 280 nominal / 281 total evaluations, 562 native launches,
-300 seconds; all probes counted. Verify implementation/full regression before
-a separately user-authorized D16.3. No runtime/native study or environment change
-in D16.1; no automatic repeat, new steering node or strict M3 completion.
+300 seconds; all probes counted. 98 new / 366 focused / 4,330 full tests pass
+(604.70 s); Ruff, strict OpenSpec, links, dependency/source/immutable checks pass.
+D14/D15 and historical evidence are preserved. Next: a separately user-authorized
+D16.3 retained-reference study, not run in D16.2. No automatic repeat, new steering
+node, automation restart or strict M3 completion.
 
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared

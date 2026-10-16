@@ -5938,7 +5938,12 @@ def _check_conditional_full_force_coast_domains(
                                         decoded_replay = json.loads(encoded_replay)
                                         assert decoded_replay == replay
                                         stored_replay = json.loads((ROOT / "tests/data/m3_fresh_harmonic_replay.json").read_text())
-                                        assert json.dumps(stored_replay, sort_keys=True, allow_nan=False) == encoded_replay
+                                        # Preserve the measured snapshot and its original environment.
+                                        # Compare fresh science exactly, while reporting today's hash.
+                                        historical_environment = ROOT / "tests/data/m3_fresh_harmonic_environment.yml"
+                                        assert stored_replay["environment_yml_sha256"] == sha256(historical_environment.read_bytes()).hexdigest()
+                                        comparable_replay = dict(stored_replay, environment_yml_sha256=replay["environment_yml_sha256"])
+                                        assert json.dumps(comparable_replay, sort_keys=True, allow_nan=False) == encoded_replay
                                         assert float(decoded_replay["epoch_tdb_s"]).hex() == handoff_epoch.hex()
                                         assert np.asarray(decoded_replay["spacecraft_position_m"] + decoded_replay["spacecraft_velocity_m_s"]
                                                           + [decoded_replay["spacecraft_mass_kg"]], dtype="<f8").tobytes() == probe_state.astype("<f8").tobytes()

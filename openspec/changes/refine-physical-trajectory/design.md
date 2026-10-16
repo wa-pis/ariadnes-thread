@@ -24,6 +24,15 @@ D15 extension. D16.1 specifies only; pin SciPy and verify D16.2 before a separat
 user-authorized D16.3 study. No new steering node/force, target relaxation,
 public interface, automation restart or strict M3 qualification.
 
+D16.2 is implemented in
+[ADR 0112](../../../docs/adr/0112-bound-aware-targeting-implementation.md):
+98 new / 366 focused / 4,330 full tests pass (604.70 s). A private bound-aware
+runner reuses unchanged D14/D15 domain/native physics with its own counters,
+single initial replay cache and closure-before-Jacobian completion signal.
+Conda SciPy 1.17.1 is explicit, with no other dependency upgrade; preserve
+historical environment/snapshot identity separately from current provenance.
+D16.3 remains separately authorized and unexecuted; strict M3 stays open.
+
 ### Research D15 — local steering and ignition targeting
 
 ADR 0108 binds 0104/0107 and freezes the six target state components and absolute

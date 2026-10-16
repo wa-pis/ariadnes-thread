@@ -37,6 +37,17 @@ def test_setuptools_security_pin_matches_build_environment() -> None:
     assert version("setuptools") == "83.0.0"
 
 
+def test_d16_scipy_pin_matches_conda_without_changing_historical_dependencies() -> None:
+    from tudatpy import __version__ as tudat_version
+
+    environment = (ROOT / "environment.yml").read_text(encoding="utf-8")
+    historical = (ROOT / "tests/data/m3_fresh_harmonic_environment.yml").read_text(encoding="utf-8")
+    assert environment == historical.replace("  - numpy=1.26.4\n", "  - numpy=1.26.4\n  - scipy=1.17.1\n")
+    assert version("scipy") == "1.17.1"
+    assert version("numpy") == "1.26.4"
+    assert tudat_version == "1.0.0"
+
+
 @pytest.mark.parametrize(
     "file_form,rule_form", [("NFD", "NFC"), ("NFC", "NFD"), ("NFC", "NFC")],
 )

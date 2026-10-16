@@ -9,6 +9,7 @@ dependencies:
   - tudat-resources=2.4
   - spiceypy=8.2.0
   - numpy=1.26.4
+  - scipy=1.17.1
   - pytest=8.4.2
   - uv=0.12.9
   - setuptools=83.0.0
