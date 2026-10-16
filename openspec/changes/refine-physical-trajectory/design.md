@@ -16,7 +16,12 @@ the domain stop; infeasible line-search trials are recorded/skipped, not clipped
 Only nominal closure triggers one frozen tighter repeat; both must close and agree.
 All failures stop with evidence, not retries or schedule growth. Separate private
 D15 budget: 65 nominal proposals, 66 evaluations, 132 native launches, shared
-300-second clock. D15 implementation/tests and one study are separate later tasks.
+300-second clock. D15.2 implementation is verified in
+[ADR 0109](../../../docs/adr/0109-local-steering-targeting-implementation.md):
+301 focused / 4,231 full tests pass. Preflight the complete central stencil;
+rotate by representable actual ignition time and keep the absolute match epoch
+fixed. Reuse the native arc with an optional smooth direction callback; its D14
+default and four-arc budget remain unchanged. D15.3 is separate and not run.
 No public interface, dependency, hardware/mission claim or strict M3 gate change.
 
 ### Research D14 — local finite-burn construction

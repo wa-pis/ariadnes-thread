@@ -2,7 +2,7 @@
 
 Date: 2026-10-16
 Decision status: accepted
-Implementation: not started; design verification only, no new propagation.
+Implementation: D15.2 verified in [0109](0109-local-steering-targeting-implementation.md); D15.3 reference study pending. This record retains the design-stage evidence.
 Scope / milestone: M3 research D15, fixed local departure boundary value problem.
 Base revision: `4a8a9be422d5b5062e5fd7ddfb2f70404cf639b1`.
 Related OpenSpec: [requirements](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md).

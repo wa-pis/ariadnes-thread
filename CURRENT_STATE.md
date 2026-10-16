@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D14.3: four arcs / 3.849491 s; profiles agree but closure fails by 5520.40 km / 780.53 m/s (ADR 0107). D15.1 designs six-control local targeting with fixed state/epoch and variable final mass: four corrections / 66 evaluations / 132 arcs / 300 seconds. Next D15.2 implementation and tests, then separately D15.3 one study. No runtime change, solve or propagation in this design stage; runtime tests not rerun. Controllability/convergence remain unverified.
+D14.3: four arcs / 3.849491 s; profiles agree but closure fails by 5520.40 km / 780.53 m/s (ADR 0107). D15.2 complete, based on `89bb3c1`: six-control local targeting, fixed state/epoch, variable mass and bounded fail-stop schedule; D14 preserved. ADR 0109: 119 new / 301 focused / 4,231 full tests pass (602.73 s); Ruff, strict OpenSpec, links, diff and immutable hashes pass. Next: separately authorize D15.3, one 300-second reference study; not run here. Real-branch controllability/convergence remain unverified.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D14.3: four arcs / 3.849491 s; profiles agree but closure fails by 5520.40 km / 
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest design: [ADR 0108](docs/adr/0108-bounded-local-steering-targeting.md); study: [ADR 0107](docs/adr/0107-local-burn-misses-analytic-target.md). D15 implementation/study pending; strict M3 open; automation paused.
+- Latest implementation: [ADR 0109](docs/adr/0109-local-steering-targeting-implementation.md); design: [ADR 0108](docs/adr/0108-bounded-local-steering-targeting.md). D15.3 pending; strict M3 open; automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).

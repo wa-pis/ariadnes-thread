@@ -179,6 +179,7 @@ def _check_local_state(command: _LocalCommand, state: State7) -> None:
 def _native_local_arc(
     command: _LocalCommand, initial: State7, start_s: float, end_s: float,
     burn: bool, tighter: bool, budget: _LocalBudget,
+    *, direction_at_s: Callable[[float], tuple[float, float, float]] | None = None,
 ) -> tuple[State7, int]:
     """Tudat coupled translation/mass; relative seconds avoid large-epoch loss.
 
@@ -214,7 +215,12 @@ def _native_local_arc(
             state = tuple(float(x) for x in np.asarray(body.state).reshape(-1))+(float(body.mass),)
             _check_local_state(command, state)
             force = command.thrust_n if burn else 0.
-            return np.asarray(command.direction_j2000)*force/state[6]
+            direction = (direction_at_s(at) if burn and direction_at_s is not None
+                         else command.direction_j2000)
+            vector = physical._finite_vector3_values(direction, "local thrust direction")
+            if abs(math.hypot(*vector)-1) > 1e-12:
+                raise ValueError("local thrust direction must be unit length")
+            return np.asarray(vector)*force/state[6]
 
         def mass_rate(at: float) -> float:
             budget.check()

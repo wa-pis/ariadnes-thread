@@ -20,12 +20,14 @@ D14.3 completed at `53229c3`: [ADR 0107](../docs/adr/0107-local-burn-misses-anal
 retains four arcs / 3.849491 s. Frozen profiles agree (position difference
 3.038e-6 m), but target closure fails by 5520.40 km and 780.53 m/s.
 Independent evidence checks and 116 focused tests pass; full suite reused.
-Next: D15.2 implements the [bounded local steering design](../docs/adr/0108-bounded-local-steering-targeting.md)
-before any D15.3 study. Six controls, fixed target state/epoch, at most four local
-corrections / 66 evaluations / 132 arcs / 300 seconds; rank, closure and frozen
-tighter gates are explicit. D15.1 is design only, not proven controllability or
-convergence. No global/production optimizer, full-force or Mars-feasibility claim;
-strict M3 stays open.
+D15.2 implements the [bounded local steering design](../docs/adr/0108-bounded-local-steering-targeting.md):
+[ADR 0109](../docs/adr/0109-local-steering-targeting-implementation.md) records
+119 new / 301 focused / 4,231 full tests passing (602.73 s), Ruff, strict OpenSpec,
+links and immutable hashes. Six controls, fixed target state/epoch, at most four
+corrections / 66 evaluations / 132 arcs / 300 seconds; D14 behavior is preserved.
+Next: separately authorize D15.3, one reference study; no such study ran in D15.2.
+Synthetic verification is not proven real-branch controllability/convergence,
+hardware qualification, a production optimizer or Mars feasibility; strict M3 stays open.
 
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared
