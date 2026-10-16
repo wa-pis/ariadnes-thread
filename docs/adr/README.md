@@ -64,8 +64,9 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
-- [0109 — Local steering targeting implementation](0109-local-steering-targeting-implementation.md) — D15.2 complete: 119 new / 301 focused / 4,231 full tests pass (602.73 s); D14 preserved, D15.3 not run, strict M3 open.
-- [0108 — Bounded local steering targeting](0108-bounded-local-steering-targeting.md) — D15 design: ignition/duration plus two-node direction, fixed state/epoch, four corrections and 66 evaluations / 132 arcs / 300 seconds; implementation verified in 0109, reference study pending.
+- [0110 — Local steering improves without closure](0110-local-steering-improves-without-closure.md) — D15.3: 53 evaluations / 106 arcs / 7.94 s, four accepted steps; errors 3868.62 km / 556.75 m/s, not-converged. Independent audit passes; no tighter/retry, strict M3 open.
+- [0109 — Local steering targeting implementation](0109-local-steering-targeting-implementation.md) — D15.2 complete: 119 new / 301 focused / 4,231 full tests pass (602.73 s); D14 preserved, D15.3 subsequently retained in 0110, strict M3 open.
+- [0108 — Bounded local steering targeting](0108-bounded-local-steering-targeting.md) — D15 design: ignition/duration plus two-node direction, fixed state/epoch, four corrections and 66 evaluations / 132 arcs / 300 seconds; implementation verified in 0109, non-converged reference study in 0110.
 - [0107 — Local burn misses analytic target](0107-local-burn-misses-analytic-target.md) — D14.3 complete: four arcs / 3.85 s, nominal/tighter agreement passes; closure fails by 5520.40 km / 780.53 m/s. No tuning or mission qualification.
 - [0106 — Local finite-burn implementation](0106-local-finite-burn-implementation.md) — D14.2: 182 focused / 4,112 full tests pass; private coupled native propagation, fixed local profiles and fail-stop evidence; reference experiment pending.
 - [0105 — Local finite-burn contract](0105-local-finite-burn-contract.md) — D14 design: explicit first branch, centered inertial burn, fixed analytic local target, four launches / 300 seconds; implementation verified in 0106, reference experiment pending.

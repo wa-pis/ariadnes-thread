@@ -21,7 +21,13 @@ D15 budget: 65 nominal proposals, 66 evaluations, 132 native launches, shared
 301 focused / 4,231 full tests pass. Preflight the complete central stencil;
 rotate by representable actual ignition time and keep the absolute match epoch
 fixed. Reuse the native arc with an optional smooth direction callback; its D14
-default and four-arc budget remain unchanged. D15.3 is separate and not run.
+default and four-arc budget remain unchanged. D15.3 is complete in
+[ADR 0110](../../../docs/adr/0110-local-steering-improves-without-closure.md):
+53 evaluations / 106 arcs in 7.939209 s at `f4aed8f`; four accepted alpha=1
+updates reduce errors to 3868.62 km / 556.75 m/s, without closure. All four
+scaled Jacobians have rank six; this does not prove eventual convergence.
+No tighter repeat is permitted without nominal closure. Independent evidence
+audit passes; stop for scope review, with no automatic second study.
 No public interface, dependency, hardware/mission claim or strict M3 gate change.
 
 ### Research D14 — local finite-burn construction

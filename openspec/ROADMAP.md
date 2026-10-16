@@ -25,8 +25,13 @@ D15.2 implements the [bounded local steering design](../docs/adr/0108-bounded-lo
 119 new / 301 focused / 4,231 full tests passing (602.73 s), Ruff, strict OpenSpec,
 links and immutable hashes. Six controls, fixed target state/epoch, at most four
 corrections / 66 evaluations / 132 arcs / 300 seconds; D14 behavior is preserved.
-Next: separately authorize D15.3, one reference study; no such study ran in D15.2.
-Synthetic verification is not proven real-branch controllability/convergence,
+D15.3 completed once at `f4aed8f`:
+[ADR 0110](../docs/adr/0110-local-steering-improves-without-closure.md) retains
+53 evaluations / 106 completed arcs / 7.939209 s and four accepted alpha=1 steps.
+Errors decrease to 3868.62 km / 556.75 m/s, but closure fails; no tighter repeat.
+Independent evidence audit and 119 focused tests pass; full suite reused from
+unchanged D15.2. Stop for a separate scope review, not another automatic study.
+Measured local rank six is not proven global controllability/convergence,
 hardware qualification, a production optimizer or Mars feasibility; strict M3 stays open.
 
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
