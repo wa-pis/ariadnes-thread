@@ -96,8 +96,10 @@ The user requested a consistent lunar-departure design on 2026-10-16:
 specify pure local hyperbolic geometry, explicit fixed/free parking phase,
 vector impulse and recomputed mass with independent invariants. Synthetic
 algebra passes; reference phases are approximately 2.81/246.11 degrees, not
-verified finite-burn solutions. Next: pure implementation/full regression,
-then a non-propagating reference report. Finite-burn timing/guidance, explicit
+verified finite-burn solutions. D13.2 verified in
+[ADR 0103](../docs/adr/0103-lunar-departure-geometry-implementation.md): 436 focused /
+3,996 full tests pass (598.51 s), Ruff/strict OpenSpec/legacy pass.
+Next: a non-propagating reference report. Finite-burn timing/guidance, explicit
 comparison-radius matching and a native-run budget need a separate contract.
 No extra fractions, probes, repeated solves,
 automatic retries or production optimizer expansion.

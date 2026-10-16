@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D12 complete: 3,947 tests; half/quarter scores +5.06%/+1.40%, no selection. D13 designed at `73de6b8`: next implement only consistent local lunar impulse geometry with explicit fixed/free phase and recomputed mass. No native mission study until a separate finite-burn contract; strict M3 open.
+D13.2 implemented at base `0343852`: 436 focused / 3,996 full tests (598.51 s); pure local geometry and mass with explicit fixed/free phase. Next: non-propagating reference report. No native mission study until a separate finite-burn contract; strict M3 open.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D12 complete: 3,947 tests; half/quarter scores +5.06%/+1.40%, no selection. D13 
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest evidence: [ADR 0101](docs/adr/0101-central-fractions-do-not-improve.md); next design: [ADR 0102](docs/adr/0102-consistent-lunar-departure-design.md). Synthetic algebra/strict OpenSpec/docs/legacy checks pass; runtime suite not rerun for design. Automation paused.
+- Latest mission evidence: [ADR 0101](docs/adr/0101-central-fractions-do-not-improve.md); implementation: [ADR 0103](docs/adr/0103-lunar-departure-geometry-implementation.md). Full/focused tests, Ruff, strict OpenSpec and legacy pass. Automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).
