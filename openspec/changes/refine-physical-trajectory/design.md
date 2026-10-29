@@ -33,8 +33,18 @@ D17.1 is offline diagnosis/design only. D17.2 is implemented and verified in
 [ADR 0115](../../../docs/adr/0115-bezier-targeting-implementation.md): 258 new,
 607 focused and 4,588 full tests pass, including independent native curved-chart
 oracles in both unchanged profiles. D14/D15/D16 and dependencies remain unchanged.
-A separately authorized single D17.3 study remains unchecked; no real-branch
-closure, API/UI, automation state or strict M3 gate change is claimed.
+D17.3 subsequently ran exactly once at clean `3434a31`, retained in
+[ADR 0116](../../../docs/adr/0116-quadratic-steering-stagnates-at-bounds.md): both
+replays match exactly, 503 nominal evaluations / 1006 completed arcs /
+76.614638 s; actual `ftol` status 2, stagnated-unclosed, not budget exhaustion.
+Best/returned accepted objective and last measured matrix parent are ID 487,
+44.386790 km / 185.850963 m/s, with duration at its reserve-derived ceiling.
+The near-lower-bound middle slope is still strictly interior despite SciPy's
+tolerance-based active mask. Full/free row ranks six and lower score are not
+stationarity or infeasibility certificates. No tighter repeat or selected
+objective; independent offline evidence/physical audits pass. Stop for separate
+scope review before further native work. No target/fuel/force/budget relaxation,
+API/UI, automation state or strict M3 gate change is claimed.
 
 ### Research D16 — bound-aware local targeting
 

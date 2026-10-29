@@ -66,9 +66,19 @@ New bounded contract: 6x8 Jacobian / sixteen probes, 40 objective requests and
 D17.2 is implemented/verified in
 [ADR 0115](../docs/adr/0115-bezier-targeting-implementation.md): 258 new / 607
 focused / 4,588 full tests pass (626.08 s); source/resource/immutable and strict
-checks pass, with D14/D15/D16 and dependencies unchanged. Next is D17.3, one
-separately user-authorized study; it has not run. No reachability promise,
-API/UI change, automatic research/automation restart or strict M3 completion.
+checks pass, with D14/D15/D16 and dependencies unchanged. D17.3 subsequently ran
+exactly once at clean `3434a31`, retained in
+[ADR 0116](../docs/adr/0116-quadratic-steering-stagnates-at-bounds.md): exact dual
+replay, 503 nominal evaluations / 1006 completed arcs / 76.614638 s. Returned
+SciPy status 2 (`ftol`), not budget exhaustion; best/accepted/final objective and
+last measured Jacobian parent are ID 487, unclosed at 44.386790 km /
+185.850963 m/s. Duration reaches the reserve ceiling; near-bound middle slope,
+full/free rank six and lower score do not prove stationarity or infeasibility.
+No selected objective or tighter repeat. Independent offline evidence/physical
+audits and 607 fresh focused tests pass (7.17 s); full suite reused from unchanged
+D17.2. Strict/static/provenance checks pass. Stop for separate scope review
+before more native work; no automatic retry, changed seed/target/fuel/budget,
+API/UI change, research/automation restart or strict M3 completion.
 
 User-approved research D4 now takes priority: one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared

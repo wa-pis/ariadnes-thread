@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-10-17. Keep this file under 60 lines; replace stale status instead
+Updated: 2026-10-29. Keep this file under 60 lines; replace stale status instead
 of appending a diary. This is a navigation aid, not an alternative specification.
 
 ## Goal and scheduling
@@ -45,7 +45,7 @@ D4.5 complete: replay 22.11 s; exact science/source match; 130 focused tests pas
 No whole-interval safety claim; strict M3 gates remain open. Catalogue screening
 is deferred. Do not automatically resume task-3.9 proof research.
 Browser visual QA was not performed; application behavior was checked by AppTest.
-D16.3 at `501516e` remains budget-exhausted (ADR 0113): 262 nominal / 524 arcs / 38.927206 s, best 59.203835 km / 246.398570 m/s, duration/reserve bound; last measured/accepted ID 249 is not best ID 262. D17.1 (ADR 0114) diagnoses nearly exhausted feasible saved linear response, not nonlinear infeasibility. D17.2 at base `e3e188c` is complete (ADR 0115): private smooth quadratic-Bezier chart, eight controls/six residuals, accepted interior seed 158, separate old/embedded replay gates, 6x8 bounded correction and truthful diagnostics. 258 new / 607 focused / 4,588 full tests pass (626.08 s), including independent synthetic native curved-chart checks in both original profiles; independent review, Ruff, strict OpenSpec, links and immutable/source/dependency/resource checks pass. D14/D15/D16, target/time/fuel/thrust/forces/profiles and dependencies remain unchanged. Separate ceiling: 40 objective requests / 40 sixteen-probe batches / 681 nominal / 682 total evaluations / 1364 arcs / 300 s. Next: one separately user-authorized D17.3 retained-reference study; it has NOT run, and real-branch closure is unverified. No public API/UI change, automatic run, target/fuel relaxation, automation restart or strict M3 completion.
+D17.3 ran exactly once at clean `3434a31` (ADR 0116), after verified D17.2 (ADR 0115): both old/embedded replays match exactly; 503 nominal evaluations / 1006 completed arcs / 76.614638 s. Actual SciPy status 2 (`ftol`), stagnated-unclosed, not budget-exhausted. Best/returned accepted objective and last measured Jacobian parent are ID 487: 44.386790 km / 185.850963 m/s, score 24.598% below the seed. Duration reaches the reserve-derived ceiling; middle pc is strictly interior but within 1.557e-12 of its lower bound. Full/free row ranks six do not prove stationarity or infeasibility. No closure, selected objective or tighter repeat; provisional arrival mass is effectively dry mass. Independent offline evidence/physical audits pass; 607 fresh focused tests pass (7.17 s), with 4,588 full-test evidence (626.08 s) reused from unchanged D17.2, not rerun. Final Ruff, strict OpenSpec, links, immutable/source/environment/resource checks pass. D14/D15/D16, runtime/tests/dependencies, target/time/fuel/thrust/forces/profiles and public API/UI remain unchanged. Next: separate scope review before further native work; no second study, alternate seed, widened bounds/budget, target/fuel relaxation, automatic research/automation restart or strict M3 completion.
 
 ## Boundaries and references
 
@@ -55,5 +55,5 @@ D16.3 at `501516e` remains budget-exhausted (ADR 0113): 262 nominal / 524 arcs /
 - Rules: [AGENTS.md](AGENTS.md) requires commit/push per verified stage; [docs/adr](docs/adr/README.md) is canonical; historical evidence preserved.
 - Plan: [roadmap](openspec/ROADMAP.md).
 - Outstanding checks: [active tasks](openspec/changes/refine-physical-trajectory/tasks.md).
-- Latest design: [ADR 0114](docs/adr/0114-quadratic-steering-freedom.md); implementation: [ADR 0115](docs/adr/0115-bezier-targeting-implementation.md); last retained native study: [ADR 0113](docs/adr/0113-bound-aware-targeting-hits-budget.md). D17.1/D17.2 complete, D17.3 pending; strict M3 open; automation paused.
+- Latest design: [ADR 0114](docs/adr/0114-quadratic-steering-freedom.md); implementation: [ADR 0115](docs/adr/0115-bezier-targeting-implementation.md); retained study: [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md). D17.1–D17.3 complete, target unclosed; separate scope review required, strict M3 open; automation paused.
 - Older detail: [historical roadmap](docs/roadmap-history-2026-09-16.md).
