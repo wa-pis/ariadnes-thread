@@ -1,5 +1,52 @@
 ## ADDED Requirements
 
+### Requirement: Mission-first demonstration readiness after local research
+
+R1 SHALL prioritize one reproducible research demonstrator with an independently
+checked calculation and exportable result, following ADR 0117. It SHALL preserve
+the long-term platform vision, historical evidence and all strict M3 gates.
+
+#### Scenario: Stop local targeting continuation without erasing evidence
+
+- **WHEN** next work is selected after the unclosed D17.3 study
+- **THEN** the active priority SHALL be R1 readiness, not an automatic D18, second D17 run, new seed, chart extension or larger budget
+- **AND** all historical JSON, targets, thresholds, model identities and results SHALL remain unchanged; an unclosed experiment SHALL NOT be relabelled successful or proof of global infeasibility
+- **AND** any later local targeting study SHALL require an explicitly accepted problem, user-visible purpose, physical constraints and execution budget; this planning record SHALL authorize zero native launches
+
+#### Scenario: Declare a positive reference at its actual fidelity
+
+- **WHEN** R1.1 specifies the first demonstration problem before selecting its fixture
+- **THEN** it SHALL declare the user-visible outcome, model/version and omissions, explicit physical inputs/dates, initial/final conditions, and rationale for every constrained state component and epoch
+- **AND** it SHALL distinguish mission boundary requirements from reproduction of an ideal impulsive endpoint, and justify the connection to the outer transfer before a finite-burn lunar departure is used as a mission boundary
+- **AND** it SHALL fix a finite numerical reserve strictly greater than zero in kg, the maneuvers/uncertainties covered by that allowance, numerical acceptance tolerances and verification budget before selection; a qualifying reference SHALL satisfy final_mass_kg >= dry_mass_kg + reserve_kg under the declared accounting
+- **AND** an M2-only reference SHALL be labelled ideal-model feasible, NOT finite-burn or full-mission feasible; changing a fixture SHALL create an explicit new scenario, not mutate the retained references or silently alter spacecraft defaults
+- **AND** missing inputs/reserve coverage or failed checks SHALL leave the reference unverified; simply changing dry mass, lowering a tolerance, optimizer success or lower residual SHALL NOT qualify it
+
+#### Scenario: Check a small physical benchmark independently before expanding optimization
+
+- **WHEN** R1.2 verifies a declared calculation before further optimizer complexity or end-to-end acceptance
+- **THEN** its contract SHALL name an independently implemented analytic oracle or external engine, versions/resources, frozen initial state/command/epochs, identical force and mass models, numeric position/velocity/mass/time tolerances in SI and execution limits before any run
+- **AND** it SHALL retain raw aligned states, differences, provenance and pass/fail/unavailable outcomes; every declared difference SHALL be within its predeclared tolerance to pass
+- **AND** a finite-burn claim SHALL require a benchmark with finite thrust and non-negligible gravity; two profiles sharing the same dynamics adapter or independently reoptimized commands SHALL NOT count as independent physical validation
+- **AND** unavailable tooling or a failed comparison SHALL stop the gate unverified or failed without automatic retries, increased budgets or fabricated reference data; agreement SHALL NOT establish mission feasibility, absolute accuracy or continuous safety
+- **AND** this small benchmark MAY precede M6, but SHALL NOT be reported as M6 full-mission GMAT/Monte Carlo completion or a waiver of strict M3
+
+#### Scenario: Specify traceable output and a narrow exchange profile before coding
+
+- **WHEN** R1.3 prepares the demonstration's result and OEM exchange specification
+- **THEN** it SHALL bind output to normalized actual inputs, model/fidelity, epochs/units/origin/orientation, physical and numerical status, reserve accounting and resource/source provenance
+- **AND** it SHALL select the exact OEM edition/corrections, encoding, supported metadata/frames/time scales, conversion tolerances, independent reader and positive/rejection fixtures before exporter implementation
+- **AND** exported epochs and physical states SHALL round-trip through that reader within the declared tolerances after explicit unit/frame/time conversion; successful parsing alone SHALL NOT qualify physics or interchange
+- **AND** unsupported semantics SHALL fail clearly; stale UI/export results SHALL be invalidated after input changes or failed calculations, and absent covariance/safety/measurement data SHALL NOT become fabricated zeros or success flags
+
+#### Scenario: Complete a usable path without closing the engineering milestone
+
+- **WHEN** R1.4 is separately implemented after the readiness/benchmark/profile gates pass
+- **THEN** one new positive reference SHALL traverse input, calculation, display, export and independent decoding, with all declared numerical/reserve checks and negative/stale-result tests passing
+- **AND** focused tests, the full pinned regression suite, strict OpenSpec validation and immutable legacy checks SHALL pass before implementation completion
+- **AND** the demonstration SHALL retain its declared research/M2 limitations; more private experiment records, passing component-test counts or format compatibility alone SHALL NOT constitute completion
+- **AND** strict M3/task 3.9 SHALL remain open until their original gates pass; M4 estimation, M5 corrections, M6 mission validation, ML, generic backend frameworks and automation restart SHALL remain outside R1
+
 ### Requirement: Smooth additional steering freedom after the bound-limited study
 
 D17 SHALL follow ADR 0114 as a separate private experiment, preserving D14/D15/D16

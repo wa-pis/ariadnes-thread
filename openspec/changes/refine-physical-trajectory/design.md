@@ -1,5 +1,32 @@
 ## Context
 
+### Current priority — R1 mission-first demonstration (2026-10-29)
+
+[ADR 0117](../../../docs/adr/0117-mission-first-demonstration-priority.md)
+sets the next priority after unclosed D17.3. Keep the long-term platform vision,
+but deliver a research demonstrator first, not operational navigation or another
+private optimizer by default. The sole active change and all strict M3 gates
+remain in force; historical D-work packages below are retained contracts/results,
+not authorization for a new study.
+
+The sequence is problem/reference readiness (R1.1), a small independent physical
+benchmark (R1.2), minimal result/OEM-profile specification (R1.3), then a separately
+instructed usable input/calculation/display/export/independent-decoding path
+(R1.4). Reuse the delivered M2 explorer and existing numerical tools. The first
+demo's fidelity, physical boundary rationale, explicit dates/spacecraft inputs,
+positive reserve and its coverage, tolerances and run budget must be fixed before
+fixture selection or new native work. Do not rename old unclosed data positive.
+
+Independent checking freezes inputs/forces/commands/epochs and compares aligned
+physical states, not two reoptimized trajectories. A finite-burn claim requires
+finite thrust with non-negligible gravity. An unavailable oracle/tool leaves the
+gate unverified. This early benchmark does not perform M6 mission verification.
+Before export code, specify the exact OEM edition/corrections/encoding, supported
+metadata/frames/time scales, numeric conversion gates and independent reader.
+Physics and format checks remain separate; stale or unsupported data must fail
+clearly. No new public interface, dependency, exporter, native run or profile is
+chosen by this planning edit. No automatic D18, relaxation or automation restart.
+
 ### Research D17 — smooth steering freedom without more fuel
 
 [ADR 0114](../../../docs/adr/0114-quadratic-steering-freedom.md) diagnoses the

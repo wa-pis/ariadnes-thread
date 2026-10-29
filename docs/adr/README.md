@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0117 — Mission-first demonstration priority](0117-mission-first-demonstration-priority.md) — user-approved R1 planning reset: explicit problem/positive reference with reserve, small independent benchmark, then a traceable UI/OEM path. Detailed fixture/profile and implementation remain open; no D18/rerun, stack rewrite, M3 waiver or automation restart.
 - [0116 — Quadratic steering improves without closure](0116-quadratic-steering-stagnates-at-bounds.md) — D17.3: exactly one study at clean `3434a31`, 503 evaluations / 1006 arcs / 76.61 s; returned `ftol`, best 44.39 km / 185.85 m/s, duration at reserve limit. Independent audits pass; no tighter/retry or stationarity claim. Scope review required, strict M3 open.
 - [0115 — Bezier targeting implementation](0115-bezier-targeting-implementation.md) — D17.2 complete: private eight-control chart, dual replay gates, 6x8 correction/diagnostics and independent limits; 258 new / 607 focused / 4,588 full tests pass (626.08 s). No dependency change; subsequent retained study in 0116, strict M3 open.
 - [0114 — Smooth additional steering freedom](0114-quadratic-steering-freedom.md) — D17.1: active-duration saved linear response nearly exhausted; independent face/projection/KKT oracles, not nonlinear infeasibility. Design eight-control quadratic Bezier, explicit interior ID-158/two replay gates, same fuel/target, 682 evaluations / 1364 arcs / 300 s. Implementation in 0115; subsequent native study in 0116.

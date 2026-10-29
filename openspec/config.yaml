@@ -13,7 +13,7 @@ context: |
   Search-window start and end dates are always required and never receive defaults.
   All spacecraft physical parameters are required; none receive hidden defaults.
   The current moon_to_mars.py file is an immutable legacy educational model and must remain untouched and unimported by the new package.
-  User approved resuming M3 on 2026-09-07 after Streamlit prototype archival. The sole active change refine-physical-trajectory restores unfinished high-fidelity work; openspec/deferred retains its historical snapshot. Preserve the delivered UI. M4-M6 and exporters remain deferred. Scheduled automation remains paused.
+  The sole active change remains refine-physical-trajectory; strict M3/task 3.9 remain open and openspec/deferred preserves the earlier snapshot. On 2026-10-29 the user approved R1 (ADR 0117): prioritize one research demonstrator, a positive reference with declared reserve, a small independent physical benchmark and a traceable UI/export path. Specify exact problem/fidelity, benchmark budgets/tolerances and OEM profile/independent reader before implementation; no exporter or native study is delivered/authorized by the planning edit. Preserve the delivered M2 UI, historical JSON and scientific gates. No automatic D18/repeated D17; M4-M6 full capabilities, ML and generic backend frameworks remain deferred. Scheduled automation remains paused.
 
 rules:
   proposal:

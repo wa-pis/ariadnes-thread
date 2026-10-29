@@ -85,10 +85,17 @@ Sources checked on 2026-09-06:
 
 ## Execution boundary
 
-Keep one active change. M3 was explicitly resumed on 2026-09-07 after prototype
-delivery and archival; retain the UI and resume the unfinished engineering gates.
-The earlier 2026-09-07 user priority override delivered a local
-Streamlit research prototype first; the original engineering sequence and M3
-plan were deferred, not completed. Assign the interoperability slice through explicit
-OpenSpec acceptance before implementing it. Preserve existing APIs, numerical
-gates, dependency pins, and the educational `moon_to_mars.py` file.
+Keep one active change, `refine-physical-trajectory`. On 2026-10-29 the user
+approved the [R1 priority reset](../docs/adr/0117-mission-first-demonstration-priority.md):
+the near-term product is one research demonstrator, not operational navigation.
+Retain the delivered M2 UI and explicitly select its demonstration fidelity,
+positive reference/reserve and small independent physical benchmark before
+expanding optimization. Then specify a minimal result/OEM profile with an
+independent reader before implementing the usable input-to-export path.
+
+This accepts the sequence and readiness requirements, not an unspecified OEM
+profile or an already implemented exporter. Strict M3 engineering gates remain
+unfinished and unchanged; R1 cannot archive them. The early small benchmark is
+not M6 full-mission verification. Preserve historical results, existing APIs,
+numerical gates, dependency pins and `moon_to_mars.py`. No automatic D18,
+research rerun or automation restart follows this direction.

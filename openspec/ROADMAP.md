@@ -1,17 +1,38 @@
 # Ariadna Space Navigation Roadmap
 
-## Current priority — end-to-end demonstration (2026-09-16)
+## Current priority — R1 mission-first demonstration (2026-10-29)
 
-Deliver one understandable Moon-to-Mars planning example before extending the
-numerical-certification investigation. The user approved this planning direction;
-it neither declares a trajectory feasible nor weakens existing scientific gates.
-Automation is paused. Do not resume it without an explicit user request.
+The user approved [ADR 0117](../docs/adr/0117-mission-first-demonstration-priority.md):
+deliver one reproducible research demonstrator with an independently checked
+calculation and exportable result before adding more private optimizer complexity.
+Keep the long-term platform vision and existing Python/TudatPy/SPICE/Streamlit.
+Explicitly select the demo's fidelity; an ideal M2 result is not a finite-burn
+mission solution. No automatic D18, second D17 study or automation restart.
 
 Start with [current state](../CURRENT_STATE.md). Preserve previous results in the
 [historical roadmap](../docs/roadmap-history-2026-09-16.md), the
 [decision journal](../docs/adr/README.md), and existing tests.
 
-## Near-term sequence
+| Gate | Status | Required result / verification |
+|---|---|---|
+| R1.0 — Record the priority reset | Planning complete | ADR, measurable OpenSpec requirements and consistent current context; strict validation, links and immutable checks. No new implementation or native work. |
+| R1.1 — Problem and positive reference | Next; not yet specified/verified | Explicit user outcome, fidelity, justified boundaries, dates/spacecraft and predeclared nonzero reserve/coverage, tolerances and budget; positive only after those checks pass. |
+| R1.2 — Small independent physical benchmark | Pending R1.1 and accepted benchmark contract | Same frozen inputs/commands/forces/epochs against an independent oracle/engine, with numeric SI tolerances and bounded execution; retain raw differences and stop on failure/unavailable evidence. |
+| R1.3 — Minimal result and OEM profile | Pending readiness/benchmark | Exact edition/corrections/encoding, metadata/frames/time conversions, independent reader and positive/rejection gates before exporter code. |
+| R1.4 — One usable path | Pending R1.1–R1.3 and implementation instruction | Input → calculation → display → export → independent decoding; declared reserve/numerical checks, error/stale-result tests, focused/full regressions and strict validation. |
+
+This accepts the sequence, not an already positive fixture, benchmark result or
+OEM implementation. Early independent checking is a small research benchmark,
+not M6 full-mission GMAT/Monte Carlo verification. Strict M3/task 3.9 remain open
+and unchanged; R1 completion cannot archive M3 or start M4–M6. No old target,
+fuel model, scientific gate or retained artifact is weakened to make a demo pass.
+The sole active change remains `refine-physical-trajectory`.
+
+## Retained research history — not the current schedule
+
+The work packages below preserve completed evidence and earlier scope. They do
+not override R1 or authorize another native run; their original scientific gates
+and measured outcomes remain in force.
 
 D14.2 implements the [local finite-burn contract](../docs/adr/0105-local-finite-burn-contract.md):
 [ADR 0106](../docs/adr/0106-local-finite-burn-implementation.md) records 182 focused /
@@ -80,9 +101,9 @@ D17.2. Strict/static/provenance checks pass. Stop for separate scope review
 before more native work; no automatic retry, changed seed/target/fuel/budget,
 API/UI change, research/automation restart or strict M3 completion.
 
-User-approved research D4 now takes priority: one explicit fixed-seed candidate,
+Historical user-approved D4 scope used one explicit fixed-seed candidate,
 three arcs plus a tighter repeat, at most six native launches and one shared
-scenario deadline. Implement active tasks D4.1–D4.5. Report endpoint miss and
+scenario deadline. Tasks D4.1–D4.5 and their results are retained below. Report endpoint miss and
 numerical agreement separately; never claim continuous safety or M3 completion.
 The strict M3 enclosure prerequisite is waived only for this isolated research
 experiment, not for production refinement. Optimizer and UI integration follow
@@ -106,11 +127,11 @@ budget/grid, Pareto priorities, ideal-fuel filter, Russian help and explicit
 unscreened-object warning. 33 focused checks and 3,506 full-suite tests pass;
 Ruff, strict OpenSpec and legacy checksum pass. No physical gates changed.
 
-D4 scope is approved in the active research-experiment specification. Complete
-its contracts and manufactured checks before its single bounded native experiment.
+D4 scope/results are retained in the active research-experiment specification;
+its contracts and manufactured checks preceded its single bounded experiment.
 Any further scope expansion needs a revised contract; strict M3 gates remain open.
 
-### Next bounded research step
+### Earlier bounded research sequence
 
 D8.2 completed one live study: [ADR 0088](../docs/adr/0088-damping-does-not-improve.md).
 Nine arcs completed in 10.51 s; alpha=0.5/0.25 increased scores by 5.01%/1.49%.
@@ -173,7 +194,7 @@ Second branch fails the provisional mass budget; neither is selected. Independen
 geometry/mass/provenance checks and 49 D13 tests pass; zero native arcs, D13.2 full
 suite reused. The subsequent finite-burn timing/guidance, comparison-radius
 matching and native-run budget are specified in ADR 0105 and implemented in
-ADR 0106; D14.3 remains pending. D13 itself made no branch selection.
+ADR 0106; D14.3 subsequently completed in ADR 0107, recorded above. D13 itself made no branch selection.
 No extra fractions, probes, repeated solves,
 automatic retries or production optimizer expansion.
 The completed D8 contract was to replay the baseline, then test the
@@ -191,7 +212,7 @@ implementation and the single subsequent experiment (D8.2). [Decision 0087](../d
 | M1 — `establish-navigation-foundation` | Archived 2026-09-04 | Reproducible environment, scenarios, SI/time/frame contract and SPICE diagnostics. |
 | M2 — `plan-impulsive-transfer` | Archived 2026-09-04 | Bounded 3D impulsive search and time/fuel Pareto front. |
 | Visual transfer explorer | Archived 2026-09-07 | Delivered Streamlit prototype with explicitly labelled simplified model. |
-| M3 — `refine-physical-trajectory` | Open; research D4 prioritized | Accepted physical-refinement requirements and end-to-end checks pass. Task 3.9 remains unresolved; component tests are not mission validation. |
+| M3 — `refine-physical-trajectory` | Open; R1 readiness/demonstration prioritized | Original physical-refinement requirements and end-to-end checks must pass. Task 3.9 remains unresolved; R1, component tests and exchange compatibility are not M3/mission validation. |
 | M4 — `estimate-navigation-state` | Deferred until M3 archival | Ground-station observations, batch estimation and state covariance. |
 | M5 — `schedule-course-corrections` | Deferred until M4 archival | Zero to three corrections using only observations available at maneuver time. |
 | M6 — `verify-and-report-mission` | Deferred until M5 archival | Monte Carlo reporting and independent GMAT comparison under agreed criteria. |
@@ -223,7 +244,8 @@ This increases search density, not the fidelity of the physical model.
   Git branch is created by this planning change.
 - Keep task-specific convergence checks, independent oracles and regressions.
   Nominal/tighter agreement is empirical evidence, not a rigorous error bound.
-- Derive reusable scenario/state/maneuver/result contracts from working examples.
-  Exporters, interchangeable backends and ML datasets remain future work.
+- Derive minimal reusable results from the working example through R1.3/R1.4;
+  OEM implementation remains blocked on its exact accepted profile and reader.
+  Interchangeable backend frameworks and ML datasets remain future work.
 - This is a ground engineering prototype, not onboard software, an adopted
   industry standard or flight-qualified navigation.

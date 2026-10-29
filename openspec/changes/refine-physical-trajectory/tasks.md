@@ -1,4 +1,15 @@
-## 0. D3 — M2 explorer provenance (specified 2026-09-23)
+## Current priority R1 — mission-first demonstration (accepted 2026-10-29)
+
+- [x] R1.0 Record the user-approved priority reset in ADR 0117, proposal/requirements/design, roadmap/context and compact current state; verify strict OpenSpec, scope consistency, local links, whitespace and unchanged code/environment/legacy/historical evidence. Planning only; zero native launches, runtime tests not rerun, no implementation or M3 gate completion.
+- [ ] R1.1 Specify the first user-visible demonstration problem and named fidelity, initial/final conditions and boundary/epoch rationale; justify outer-transfer coupling before any finite-burn departure is a mission boundary. Before fixture selection, fix explicit dates/spacecraft inputs, a numerical nonzero reserve in kg and its coverage, numerical tolerances and verification budget. Verify the new reference at that declared fidelity satisfies final mass >= dry mass + reserve; preserve old cases/results and reject missing coverage, silent parameter changes or ideal-only claims of finite-burn feasibility.
+- [ ] R1.2 Specify and, only after contract acceptance and a separate execution instruction, verify a small frozen physical benchmark with an independent analytic oracle or external engine. Predeclare reference/version/resources, identical initial state/commands/forces/epochs, numeric SI tolerances and execution limits; retain aligned raw states/differences/provenance and pass/fail/unavailable status. Include finite thrust/non-negligible gravity for a finite-burn claim; reject same-adapter profile parity or independently reoptimized commands as independent validation. Stop on missing evidence/failure without automatic retry; do not claim mission/M6/safety completion.
+- [ ] R1.3 Specify the minimal normalized-input/result/status/provenance and UI invalidation contract plus exact OEM edition/corrections/encoding, supported frames/time scales/metadata, independent reader and numerical conversion gates. Verify positive/rejection fixtures and a state/epoch round-trip acceptance procedure before implementation; unsupported semantics and stale results must fail, and parsing success must not qualify physics. Do not build a generic backend framework.
+- [ ] R1.4 After R1.1–R1.3 pass and a separate implementation instruction, implement one input → calculation → display → export → independent decoding path for the positive reference. Verify declared model/reserve/numerical checks, negative/error/stale-result behavior, focused tests, the full pinned regression suite, strict OpenSpec, compatibility and immutable legacy/evidence checks. Preserve research limitations and all strict M3/task 3.9 gates; do not auto-archive M3 or start M4/M5/M6, ML or automation.
+
+The retained D-work packages and engineering backlog below keep their original
+statuses and scientific gates; they do not override the R1 next-work sequence.
+
+## Retained work packages and engineering backlog
 
 ### Research D17 — smooth additional steering freedom (designed 2026-10-16)
 

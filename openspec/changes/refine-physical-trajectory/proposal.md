@@ -7,7 +7,21 @@ snapshot. Checked components are retained, not evidence of M3 completion.
 
 M2 finds useful time/propellant trade points, but its body-centre Lambert endpoints and scalar instantaneous burns are not executable trajectories. M3 must turn one explicitly selected M2 candidate into an honestly classified finite-burn propagation before navigation estimation can use it.
 
+User-approved review on 2026-10-29: D17's private local improvement does not yet
+justify another solver extension or establish an executable Moon-to-Mars mission.
+R1 now prioritizes one usable research demonstration with explicit problem/fidelity,
+a positive reference/reserve and early independent checking. Strict M3 remains
+open; the broader platform direction is not abandoned.
+
 ## What Changes
+
+### Current priority — R1 mission-first demonstration
+
+- Follow ADR 0117 and the R1 research-experiment readiness requirement: first specify the problem/boundary rationale, declared fidelity and a positive reference with a predeclared numerical reserve and verification budget, instead of automatically continuing D17.
+- Bring forward one small independent frozen-calculation physical benchmark; it is distinct from M6 full-mission comparison and cannot waive strict M3 gates. Missing/failing evidence stops the gate, not a silent retry or more optimizer complexity.
+- Specify minimal traceable results, the exact OEM profile/conversions and an independent reader before implementation; later deliver one input/calculation/display/export/decoding path. This revision is documentation only: no selected fixture/profile, new propagation, code, exporter or dependency.
+
+### Retained engineering and research scope — not the next-work schedule
 
 - Research D17 diagnoses the retained D16 active-duration response and designs a separate smooth quadratic-Bezier steering chart with two additional scalar controls. Preserve target/time, fuel/thrust, force model/domain/profiles and closure gates; explicitly bind interior accepted 0113 ID 158, fresh old/embedded replay agreement, eight-control/six-residual TRF and sixteen-probe derivatives. New bounded ceiling: two replays, 40 objective requests / 40 Jacobians / 681 nominal / 682 total evaluations / 1364 launches / 300 seconds. Design, verified implementation and separately authorized single study remain distinct; no promise of reachability, automatic D16 continuation or strict M3 waiver.
 - Research D16 follows the measured D15 miss with a separately bounded, private constraint-aware TRF solve, starting from retained proposal 52. Preserve the same six controls, target state/epoch, physical bounds/reserve and native profiles; pin already-installed Conda SciPy 1.17.1 during implementation. Use in-domain second-order derivatives and independent 280 nominal / 281 total evaluations / 562-launch / 300-second limits; optimizer stationarity is not physical closure. Design, verified implementation and one separately authorized native study remain separate; no new force/steering node, target relaxation or strict M3 waiver.
@@ -39,7 +53,8 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 - Tracking observations, orbit determination, covariance, or state estimation; these belong to M4.
 - TCM selection, closed-loop guidance, or use of measurements available during flight; these belong to M5.
-- Monte Carlo dispersion, stochastic maneuver-error application, mission reports, or GMAT comparison; these belong to M6.
+- Monte Carlo dispersion, stochastic maneuver-error application, mission reports, or full-mission GMAT comparison; these belong to M6. R1's small frozen-command independent physical benchmark is an explicit earlier exception, not M6 completion.
+- Unspecified exporter implementation, another D17 study, automatic D18, ML or a generic backend/plugin framework. R1 result/profile readiness and a separate implementation instruction must precede corresponding code or native work.
 - Optimizing the launch window, choosing a candidate implicitly, globally optimal thrust steering, atmospheric flight, aerocapture, attitude dynamics, or flight-qualified/onboard operation.
 - Claiming that numerical convergence bounds represent real-world ephemeris, gravity-field, optical-property, or maneuver uncertainty.
 
@@ -47,7 +62,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ### New Capabilities
 
-- `research-trajectory-experiment`: bounded single-candidate, fixed-command propagation and honest diagnostic reporting without a continuous-safety claim.
+- `research-trajectory-experiment`: bounded research and honest diagnostics, plus R1 mission/reference/independent-benchmark/result/interchange readiness before further implementation; no continuous-safety claim.
 - `physical-trajectory-refinement`: Deterministic candidate handoff, physical endpoint targeting, high-fidelity force propagation, finite burns, coupled mass, feasibility classification, numerical error budgets, and reproducible result records.
 
 ### Modified Capabilities
@@ -58,6 +73,7 @@ M2 finds useful time/propellant trade points, but its body-centre Lambert endpoi
 
 ## Impact
 
+- Current R1 revision changes planning/specification only. Preserve code, dependencies, public behavior and all retained evidence; detailed fixture, benchmark and exchange-profile values remain unselected. R1 demonstration completion cannot archive strict M3.
 - Adds trajectory-refinement code and tests under the existing `space_nav` package and one M3-only feasible example scenario.
 - Reuses pinned TudatPy, Tudat resources, SPICE, NumPy, standard-library CLI and existing M2 search. D16 explicitly adds Conda SciPy 1.17.1 as a direct requirement during implementation; this version is already installed transitively on the measured machine. Preserve the other pins and verify the resolved environment/full regression before use.
 - Adds public `TrajectoryBoundaryState`, `FiniteBurnRecord`, `TrajectoryBoundaryDifference`, `PhysicalTrajectoryResult`, `TrajectoryRefinementError`, and `refine_physical_trajectory` interfaces.
