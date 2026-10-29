@@ -6,6 +6,14 @@
 - [ ] R1.3 Specify the minimal normalized-input/result/status/provenance and UI invalidation contract plus exact OEM edition/corrections/encoding, supported frames/time scales/metadata, independent reader and numerical conversion gates. Verify positive/rejection fixtures and a state/epoch round-trip acceptance procedure before implementation; unsupported semantics and stale results must fail, and parsing success must not qualify physics. Do not build a generic backend framework.
 - [ ] R1.4 After R1.1–R1.3 pass and a separate implementation instruction, implement one input → calculation → display → export → independent decoding path for the positive reference. Verify declared model/reserve/numerical checks, negative/error/stale-result behavior, focused tests, the full pinned regression suite, strict OpenSpec, compatibility and immutable legacy/evidence checks. Preserve research limitations and all strict M3/task 3.9 gates; do not auto-archive M3 or start M4/M5/M6, ML or automation.
 
+[ADR 0118](../../../docs/adr/0118-m2-reference-and-historical-data-readiness.md)
+specifies the proposed R1.1 M2 problem, explicit template, 50 kg reserve/100 m/s
+ideal allocation, selection and cooperative 300 s repeatability procedure. Its
+MSL/GRAIL metadata audit is source readiness, not a same-force benchmark. Accept
+the contract before new fixture selection and request execution separately;
+R1.1/R1.2 stay unchecked until their observed checks pass. This documentation
+stage performs zero native runs and changes no runtime/public interface.
+
 The retained D-work packages and engineering backlog below keep their original
 statuses and scientific gates; they do not override the R1 next-work sequence.
 

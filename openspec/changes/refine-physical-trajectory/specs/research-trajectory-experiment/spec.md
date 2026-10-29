@@ -47,6 +47,37 @@ the long-term platform vision, historical evidence and all strict M3 gates.
 - **AND** the demonstration SHALL retain its declared research/M2 limitations; more private experiment records, passing component-test counts or format compatibility alone SHALL NOT constitute completion
 - **AND** strict M3/task 3.9 SHALL remain open until their original gates pass; M4 estimation, M5 corrections, M6 mission validation, ML, generic backend frameworks and automation restart SHALL remain outside R1
 
+### Requirement: Controlled M2 reference and historical evidence readiness
+
+R1 SHALL keep the proposed ADR 0118 reference, empirical mission comparisons and
+same-force independent numerical verification as separate claims. The proposal
+SHALL NOT authorize execution or change public scientific behavior by itself.
+
+#### Scenario: Accept explicit inputs and reserve before selecting the new reference
+
+- **WHEN** the ADR 0118 R1.1 contract is accepted before a separately instructed verification
+- **THEN** the new `r1-m2-reserve-reference` SHALL use model `sun-centered-zero-revolution-patched-conic-v1` and all explicit values from the unchanged hypothetical template `examples/m3_feasible_mission.toml`, SHA256 `2c3b2a140d6e6ea00c2173caab5c51b1c4be87a112d2dec28a40cd1e2a0a9b42`, not a GRAIL/MSL spacecraft or a relabelled D17 result
+- **AND** the 2031 UTC window, 180–320 day flight range, 2000/500 kg initial/dry masses, 450 s Isp and all other supplied fields SHALL remain explicit; the model's ignored orientation/thrust/tracking/error fields and body-centre/instantaneous-burn approximations SHALL be disclosed
+- **AND** before candidate selection the reserve SHALL be 50 kg, allocated only to aggregate additional ideal delta-v <=100 m/s at constant 450 s Isp, mass <=2000 kg and no staging/mass additions; `2000*(1-exp(-100/(9.80665*450))) < 50 kg` SHALL be independently checked, without claiming uncertainty coverage or scheduling a TCM
+- **AND** only a candidate with final_mass_kg >=550.0 and independently recomputed ideal mass within 1e-9 kg SHALL qualify; the returned Pareto front SHALL be filtered by reserve and selected by `(total_delta_v_m_s, flight_time_s, departure_epoch_tdb_s, candidate_id)`, then frozen for replay
+- **AND** the absence of a qualifying candidate SHALL leave R1.1 failed/unverified without changing the template, reserve, dates or historical evidence
+
+#### Scenario: Verify reproducibility within the declared M2 budget
+
+- **WHEN** the accepted R1.1 contract is separately executed
+- **THEN** it SHALL permit exactly two complete planner calls and two 121-state sampler calls, at most 3960 Lambert attempts and 242 two-body samples, under one cooperative 300 s wall-clock acceptance budget including scientific/resource setup
+- **AND** checks before/after every top-level call SHALL prevent further calls after exhaustion; a non-preemptible native-call overrun SHALL be reported with actual time as failure, not bounded success or permission to retry
+- **AND** inputs/source/resources/GMs/versions and selection SHALL match, scientific payloads SHALL be identical apart from separately recorded timing, and finite SI/SSB/J2000 samples at TDB epochs SHALL pass existing M2 endpoint checks of 100 m and 0.001 m/s
+- **AND** a reserve deficit SHALL NOT be admitted by numerical tolerance; resource mismatch, missing positive reference, error or overrun SHALL stop further calls, leave R1.1 open and SHALL NOT complete R1.2 or qualify finite burns/M3
+
+#### Scenario: Admit a historical arc only with inspected coverage and event evidence
+
+- **WHEN** an MSL or GRAIL historical trajectory is proposed for empirical comparison
+- **THEN** readiness SHALL record exact product URLs/versions/hashes, inspected binary body/centre/frame/coverage and time scale, companion kernels/load order, a maneuver-free interval supported by event data, force omissions, epochs, tolerances and execution limits before propagation
+- **AND** a directory entry, filename or label alone SHALL NOT certify continuous coverage, absence of thrust or full dynamics; conflicting generic/product-specific metadata SHALL be reconciled or leave readiness unverified
+- **AND** missing reconstruction uncertainty SHALL remain unavailable rather than zero; historical residuals SHALL be labelled empirical model discrepancy, not same-force numerical error, reserve feasibility or mission qualification
+- **AND** R1.2 SHALL still require its independently accepted frozen same-force oracle/engine contract; data discovery SHALL NOT start a replay, replace the Moon-to-Mars demonstration or bypass R1.1
+
 ### Requirement: Smooth additional steering freedom after the bound-limited study
 
 D17 SHALL follow ADR 0114 as a separate private experiment, preserving D14/D15/D16

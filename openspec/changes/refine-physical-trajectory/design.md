@@ -27,6 +27,32 @@ Physics and format checks remain separate; stale or unsupported data must fail
 clearly. No new public interface, dependency, exporter, native run or profile is
 chosen by this planning edit. No automatic D18, relaxation or automation restart.
 
+### R1.1 contract proposal and historical reference readiness (2026-10-30)
+
+[ADR 0118](../../../docs/adr/0118-m2-reference-and-historical-data-readiness.md)
+proposes `r1-m2-reserve-reference`, using all explicit values in the hash-bound
+hypothetical M3 input as a distinct M2-only scenario, not relabelling past results.
+Keep the current model ID and disclose body-centre/instantaneous-burn assumptions
+and ignored fields. Fix 50 kg after the two ideal maneuvers for aggregate extra
+ideal delta-v <=100 m/s (Isp 450 s, mass <=2000 kg, no staging/mass additions).
+Qualification requires final mass >=550 kg without a reserve-deficit tolerance,
+an independent 1e-9 kg mass-accounting check and deterministic reserve-filtered
+Pareto selection. None of these checks has selected/qualified a new fixture yet.
+
+After contract acceptance and separate execution instruction, two identical M2
+searches/two 121-state samplings must agree and pass existing endpoint checks.
+The shared 300 s acceptance budget is cooperative, checked before/after calls;
+an uninterruptible native-call overrun fails rather than silently restarting.
+Current production APIs/settings do not change to implement this proposal.
+
+MSL `msl_cruise_v1.bsp` is the preferred metadata candidate for later empirical
+comparison, not an accepted arc/oracle; uncertainty and maneuver-free coverage
+are unresolved. GRAIL's v02 product gravity label differs from its generic
+catalogue description. Resolve exact files, binary segments, frames/time scales,
+resources and events before any historical coast. Same-force independent conic
+verification and empirical model discrepancy are separate results. Preserve the
+R1 order, historical evidence and all strict M3 gates; no new native run here.
+
 ### Research D17 — smooth steering freedom without more fuel
 
 [ADR 0114](../../../docs/adr/0114-quadratic-steering-freedom.md) diagnoses the
