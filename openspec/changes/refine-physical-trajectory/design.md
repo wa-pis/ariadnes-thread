@@ -59,6 +59,29 @@ verification and empirical model discrepancy are separate results. Preserve the
 R1 order, historical evidence and all strict M3 gates. No historical native run
 or R1.2 independent propagation benchmark was performed in the R1.1 study.
 
+### R1.2 proposed independent coast-component check (2026-10-30)
+
+[ADR 0120](../../../docs/adr/0120-independent-elliptic-coast-benchmark.md) freezes
+one synthetic Sun-centred/J2000-oriented ellipse: a=149597870700m, e=0.2,
+P=(0.36,0.48,0.8), Q=(-0.8,0.6,0), R1.1's hash-bound Sun GM, explicit periapsis
+Cartesian input and t0. Use 17 epochs across one period; derive actual elapsed
+seconds by subtracting t0 from each rounded epoch for both paths.
+
+Compare unchanged `explorer.propagate_two_body` against independently written
+standard-library eccentric-anomaly bisection/Cartesian formulas, not native
+element conversion or returned states. Require 1m/1e-6m/s state agreement at
+every epoch, exact time alignment, 2e-14rad root/bracket bounds and 1e-12 relative
+energy/angular-momentum invariants. Pure periapsis/apoapsis/period checks precede
+native work. Mass is not modelled by the six-state adapter; report it unavailable.
+
+After acceptance and verified private-script preparation, a separate execution
+instruction permits one study of at most17 adapter calls under a shared30s
+cooperative budget including scientific imports/provenance/checks. Stop on first
+failure; retain raw states, differences, provenance/counters/partial failures and
+overrun data without retry. No new search, sampler, SPICE calls or dependencies.
+This is a coast-component gate, not the entire R1.1 coast/SSB translation, finite
+thrust, M6 or strict M3 qualification. This planning stage performs no native work.
+
 ### Research D17 — smooth steering freedom without more fuel
 
 [ADR 0114](../../../docs/adr/0114-quadratic-steering-freedom.md) diagnoses the

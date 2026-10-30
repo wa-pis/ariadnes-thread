@@ -78,6 +78,35 @@ SHALL NOT authorize execution or change public scientific behavior by itself.
 - **AND** missing reconstruction uncertainty SHALL remain unavailable rather than zero; historical residuals SHALL be labelled empirical model discrepancy, not same-force numerical error, reserve feasibility or mission qualification
 - **AND** R1.2 SHALL still require its independently accepted frozen same-force oracle/engine contract; data discovery SHALL NOT start a replay, replace the Moon-to-Mars demonstration or bypass R1.1
 
+### Requirement: Independent eccentric coast-component benchmark
+
+R1.2 SHALL follow the frozen ADR 0120 contract only after user acceptance and
+separate execution instruction. Its proposal alone SHALL authorize zero native
+calls and SHALL NOT change production physics or close R1.2.
+
+#### Scenario: Freeze a noncircular inclined synthetic problem
+
+- **WHEN** the R1.2 coast-component fixture is prepared after contract acceptance
+- **THEN** it SHALL use ADR 0120's literal periapsis six-state, a=149597870700m, e=0.2, P=(0.36,0.48,0.8), Q=(-0.8,0.6,0), mu=1.327124400420322e20m^3/s^2 and t0=978995455.2304223 TDB seconds since J2000
+- **AND** both paths SHALL use Sun-centred/J2000-oriented SI states, only point-mass acceleration, the same frozen Cartesian input and 17 rounded epochs t0+k*T/16, k=0..16, T=2*pi/sqrt(mu/a^3); actual elapsed seconds SHALL be epoch-t0, not separately rounded nominal durations
+- **AND** the scenario SHALL remain synthetic, not a changed R1.1 mission; the six-state adapter's absent mass dynamics/error SHALL be labelled not-modelled/unavailable, not zero or mass validation
+
+#### Scenario: Establish independent analytic state agreement
+
+- **WHEN** the existing coast adapter is compared with oracle `kepler-bisection-cartesian-v1`
+- **THEN** the oracle SHALL implement ADR 0120's radian-valued eccentric-anomaly bisection and differentiated Cartesian equations using only standard-library arithmetic, without Tudat/SPICE/production element conversions, native returned states or fitted parameters
+- **AND** no more than64 bisections SHALL achieve bracket width and equation residual each <=2e-14rad; pure periapsis/apoapsis/period closed-form checks SHALL pass 0.01m/1e-8m/s before native work
+- **AND** all17 aligned finite state pairs SHALL pass Euclidean position <=1m, velocity <=1e-6m/s and exact epoch/elapsed equality, plus relative specific-energy and vector angular-momentum errors <=1e-12 against the shared initial state in each path
+- **AND** invariants, repeatability or a circular-only check alone SHALL NOT qualify this comparison; its result SHALL NOT validate full-transfer targeting, Sun-to-SSB translation, finite thrust, mass, navigation uncertainty, continuous safety or M3/M6
+
+#### Scenario: Run one bounded study and preserve failures
+
+- **WHEN** verified private-script preparation is followed by separate user execution approval
+- **THEN** at most17 adapter invocations (17 Kepler propagations/34 visible element conversions) SHALL occur in epoch order under one cooperative30s budget including scientific imports, provenance, pure checks and comparisons, with checks before/after calls
+- **AND** no planner search, `sample_transfer`, SPICE request, historical download, extra native test/replay or retry SHALL occur; first mismatch/error/missing resource or overrun SHALL stop further calls and leave R1.2 failed/unavailable
+- **AND** evidence SHALL bind ADR 0120's R1.1-artifact/adapter hashes and unchanged pinned environment, record actual source/build/import-path/GM/time identity, both raw states/signed differences/norms/root/invariant diagnostics, attempted/completed counts and timings, and preserve partial/returned-overrun data in exclusively created new artifacts
+- **AND** only all17 passing pairs and offline evidence checks SHALL permit completion of R1.2; a non-preemptible overrun SHALL report actual time as failure without parameter/tolerance/budget changes
+
 ### Requirement: Smooth additional steering freedom after the bound-limited study
 
 D17 SHALL follow ADR 0114 as a separate private experiment, preserving D14/D15/D16
