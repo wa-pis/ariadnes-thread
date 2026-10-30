@@ -1,8 +1,8 @@
 # 0120 — Specify an independent elliptic coast benchmark
 
 Date: 2026-10-30
-Decision status: proposed (R1.2 contract; acceptance and execution remain separate).
-Implementation: specification only; no oracle/runner implemented and no native calls.
+Decision status: accepted (user approved the contract and requested preparation on 2026-10-30; execution remains separate).
+Implementation: private oracle/runner preparation verified in [ADR 0121](0121-elliptic-benchmark-preparation.md); native comparison not executed.
 Scope / milestone: small M2 coast-component benchmark for R1.2; not a mission replay.
 Base revision: `08e3fd19bb80b16d74952d4d1286a77763349685`, clean before this planning stage.
 Related OpenSpec: [requirements](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md), [design](../../openspec/changes/refine-physical-trajectory/design.md), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md).
@@ -151,11 +151,12 @@ or weaken these gates. Success permits R1.3 profile design, not M3 closure.
 Public API/UI/exporters, dependencies, strict M3/task 3.9, automation and historical
 missions stay unchanged. No independent finite-thrust/GMAT/M6 claim is permitted.
 
-## Evidence and verification
+## Evidence and verification — original planning stage
 
 Read the adapter and existing circular tests; checked official JPL/NAIF equations
 on 2026-10-30. Native-free input arithmetic reproduces the literal six-state,
 period and orthonormal basis. Strict OpenSpec, local links, diff/scope and legacy/
 historical-evidence hashes are checked for this planning stage. No runner/oracle
 implementation, native propagation or new scientific pass is claimed. Runtime
-tests were not rerun; R1.2 acceptance and separately instructed execution are pending.
+tests were not rerun in that stage. User acceptance and the native-free preparation
+were subsequently recorded in ADR 0121; separately instructed execution is pending.

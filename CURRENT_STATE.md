@@ -30,16 +30,16 @@ Automation `ariadna-m3` remains paused. No automatic D18 or repeated D17 study.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — accept R1.2 contract, then prepare its check
+## Next action — separately authorize the bounded R1.2 study
 
 [ADR 0117](docs/adr/0117-mission-first-demonstration-priority.md) fixes the order;
 [ADR 0118](docs/adr/0118-m2-reference-and-historical-data-readiness.md) is accepted
 and its R1.1 verification is retained separately in ADR 0119.
 
-1. [ADR 0120](docs/adr/0120-independent-elliptic-coast-benchmark.md) proposes the
-   R1.2 eccentric inclined Sun-point-mass case: independent Kepler oracle,
-   17 epochs, 1m/1e-6m/s gates, at most17 adapter calls/shared30s. Accept before
-   private-script preparation and separate execution. No native work run here.
+1. [ADR 0120](docs/adr/0120-independent-elliptic-coast-benchmark.md) is accepted;
+   [ADR 0121](docs/adr/0121-elliptic-benchmark-preparation.md): private oracle/runner,
+   51 native-free tests and closed-form self-checks pass. Separately authorize
+   the 17-call/shared30s comparison; no native study/result or R1.2 pass yet.
 2. R1.3 Specify minimal traceable results, exact OEM profile and independent
    reader/conversion/rejection gates before exporter implementation.
 3. R1.4 After readiness and separate implementation instruction, deliver one

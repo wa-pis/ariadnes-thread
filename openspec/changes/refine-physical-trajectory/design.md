@@ -59,7 +59,7 @@ verification and empirical model discrepancy are separate results. Preserve the
 R1 order, historical evidence and all strict M3 gates. No historical native run
 or R1.2 independent propagation benchmark was performed in the R1.1 study.
 
-### R1.2 proposed independent coast-component check (2026-10-30)
+### R1.2 accepted coast-component check and preparation (2026-10-30)
 
 [ADR 0120](../../../docs/adr/0120-independent-elliptic-coast-benchmark.md) freezes
 one synthetic Sun-centred/J2000-oriented ellipse: a=149597870700m, e=0.2,
@@ -80,7 +80,10 @@ cooperative budget including scientific imports/provenance/checks. Stop on first
 failure; retain raw states, differences, provenance/counters/partial failures and
 overrun data without retry. No new search, sampler, SPICE calls or dependencies.
 This is a coast-component gate, not the entire R1.1 coast/SSB translation, finite
-thrust, M6 or strict M3 qualification. This planning stage performs no native work.
+thrust, M6 or strict M3 qualification.
+[ADR 0121](../../../docs/adr/0121-elliptic-benchmark-preparation.md) records the
+private standard-library oracle/runner and 51 native-free preparation tests.
+The real comparison has not run; separate execution approval is still required.
 
 ### Research D17 — smooth steering freedom without more fuel
 
