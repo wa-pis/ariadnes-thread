@@ -16,13 +16,14 @@ Start with [current state](../CURRENT_STATE.md). Preserve previous results in th
 | Gate | Status | Required result / verification |
 |---|---|---|
 | R1.0 — Record the priority reset | Planning complete | ADR, measurable OpenSpec requirements and consistent current context; strict validation, links and immutable checks. No new implementation or native work. |
-| R1.1 — Problem and positive reference | Contract proposed in ADR 0118; acceptance/verification pending | Explicit M2 hypothetical inputs, 50 kg reserve/100 m/s ideal allocation, deterministic selection and cooperative 300 s repeatability procedure; no new positive fixture yet. |
-| R1.2 — Small independent physical benchmark | Pending R1.1 and accepted benchmark contract | Same frozen inputs/commands/forces/epochs against an independent oracle/engine, with numeric SI tolerances and bounded execution; retain raw differences and stop on failure/unavailable evidence. |
+| R1.1 — Problem and positive reference | Verified ideal M2 only, ADR 0119 | Two identical 1980-attempt searches/two 121-state samplings in shared 1.993807459 s; d0001-t0035, final 887.966464 kg >=550 kg. Decimal mass/reserve, endpoints and provenance checks pass; no finite-burn claim. |
+| R1.2 — Small independent physical benchmark | Next: specify and accept benchmark contract | Same frozen inputs/commands/forces/epochs against an independent oracle/engine, with numeric SI tolerances and bounded execution; retain raw differences and stop on failure/unavailable evidence. |
 | R1.3 — Minimal result and OEM profile | Pending readiness/benchmark | Exact edition/corrections/encoding, metadata/frames/time conversions, independent reader and positive/rejection gates before exporter code. |
 | R1.4 — One usable path | Pending R1.1–R1.3 and implementation instruction | Input → calculation → display → export → independent decoding; declared reserve/numerical checks, error/stale-result tests, focused/full regressions and strict validation. |
 
-This accepts the sequence, not an already positive fixture, benchmark result or
-OEM implementation. Early independent checking is a small research benchmark,
+The accepted sequence now has one ideal positive reference, not an independent
+propagation benchmark or OEM implementation. Early independent checking is a
+small research benchmark,
 not M6 full-mission GMAT/Monte Carlo verification. Strict M3/task 3.9 remain open
 and unchanged; R1 completion cannot archive M3 or start M4–M6. No old target,
 fuel model, scientific gate or retained artifact is weakened to make a demo pass.
@@ -31,7 +32,8 @@ The sole active change remains `refine-physical-trajectory`.
 [ADR 0118](../docs/adr/0118-m2-reference-and-historical-data-readiness.md)
 also records the MSL/GRAIL metadata audit. Historical residuals would measure
 empirical model discrepancy, not replace the same-force R1.2 oracle. No arc,
-native run, numerical gate pass or change to the mission-first order is implied.
+historical native run or change to the mission-first order is implied. The separate
+[R1.1 result](../docs/adr/0119-positive-ideal-m2-reference.md) does not close R1.2.
 
 ## Retained research history — not the current schedule
 

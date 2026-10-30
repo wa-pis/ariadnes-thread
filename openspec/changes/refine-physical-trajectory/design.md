@@ -25,19 +25,24 @@ Before export code, specify the exact OEM edition/corrections/encoding, supporte
 metadata/frames/time scales, numeric conversion gates and independent reader.
 Physics and format checks remain separate; stale or unsupported data must fail
 clearly. No new public interface, dependency, exporter, native run or profile is
-chosen by this planning edit. No automatic D18, relaxation or automation restart.
+chosen by the original priority-reset planning edit. The separately authorized
+R1.1 verification is recorded below. No automatic D18, relaxation or automation restart.
 
-### R1.1 contract proposal and historical reference readiness (2026-10-30)
+### R1.1 verified ideal reference and historical readiness (2026-10-30)
 
 [ADR 0118](../../../docs/adr/0118-m2-reference-and-historical-data-readiness.md)
-proposes `r1-m2-reserve-reference`, using all explicit values in the hash-bound
+specifies `r1-m2-reserve-reference`, using all explicit values in the hash-bound
 hypothetical M3 input as a distinct M2-only scenario, not relabelling past results.
 Keep the current model ID and disclose body-centre/instantaneous-burn assumptions
 and ignored fields. Fix 50 kg after the two ideal maneuvers for aggregate extra
 ideal delta-v <=100 m/s (Isp 450 s, mass <=2000 kg, no staging/mass additions).
 Qualification requires final mass >=550 kg without a reserve-deficit tolerance,
 an independent 1e-9 kg mass-accounting check and deterministic reserve-filtered
-Pareto selection. None of these checks has selected/qualified a new fixture yet.
+Pareto selection. After explicit user acceptance/execution approval,
+[ADR 0119](../../../docs/adr/0119-positive-ideal-m2-reference.md) verifies the
+distinct scenario: two identical searches/two 121-state samplings in 1.993807459 s,
+selected d0001-t0035, final mass 887.966464 kg. Independent mass/endpoint arithmetic,
+provenance and reserve checks pass; this closes only the ideal M2 R1.1 gate.
 
 After contract acceptance and separate execution instruction, two identical M2
 searches/two 121-state samplings must agree and pass existing endpoint checks.
@@ -51,7 +56,8 @@ are unresolved. GRAIL's v02 product gravity label differs from its generic
 catalogue description. Resolve exact files, binary segments, frames/time scales,
 resources and events before any historical coast. Same-force independent conic
 verification and empirical model discrepancy are separate results. Preserve the
-R1 order, historical evidence and all strict M3 gates; no new native run here.
+R1 order, historical evidence and all strict M3 gates. No historical native run
+or R1.2 independent propagation benchmark was performed in the R1.1 study.
 
 ### Research D17 — smooth steering freedom without more fuel
 

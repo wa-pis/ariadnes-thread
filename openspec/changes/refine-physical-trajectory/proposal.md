@@ -17,10 +17,10 @@ open; the broader platform direction is not abandoned.
 
 ### Current priority — R1 mission-first demonstration
 
-- ADR 0118 proposes the concrete M2 reference: unchanged explicit hypothetical inputs, 50 kg reserve for <=100 m/s additional ideal delta-v, deterministic selection and two bounded reproducibility checks. Its MSL/GRAIL source audit is not a historical replay or same-force oracle; contract acceptance/execution and all R1 scientific gates remain pending.
+- Accepted ADR 0118 fixes the concrete M2 reference: unchanged explicit hypothetical inputs, 50 kg reserve for <=100 m/s additional ideal delta-v, deterministic selection and two bounded reproducibility checks. Separately authorized ADR 0119 verification passes R1.1 (887.966464 kg final >=550 kg); R1.2–R1.4 and strict M3 remain open. The MSL/GRAIL source audit is not a historical replay or same-force oracle.
 - Follow ADR 0117 and the R1 research-experiment readiness requirement: first specify the problem/boundary rationale, declared fidelity and a positive reference with a predeclared numerical reserve and verification budget, instead of automatically continuing D17.
 - Bring forward one small independent frozen-calculation physical benchmark; it is distinct from M6 full-mission comparison and cannot waive strict M3 gates. Missing/failing evidence stops the gate, not a silent retry or more optimizer complexity.
-- Specify minimal traceable results, the exact OEM profile/conversions and an independent reader before implementation; later deliver one input/calculation/display/export/decoding path. This revision is documentation only: no selected fixture/profile, new propagation, code, exporter or dependency.
+- Specify minimal traceable results, the exact OEM profile/conversions and an independent reader before implementation; later deliver one input/calculation/display/export/decoding path. R1.1 adds only its explicit scenario and bounded evidence scripts/results, reusing unchanged production M2; no OEM profile/exporter, API/UI or dependency change.
 
 ### Retained engineering and research scope — not the next-work schedule
 

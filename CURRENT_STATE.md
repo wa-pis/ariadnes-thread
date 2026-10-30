@@ -7,49 +7,52 @@ here and at the top of the roadmap; retained detail belongs in the ADRs.
 
 Near-term product: one understandable research trajectory demonstrator with an
 independently checked calculation and exportable result, not operational navigation.
-Keep the long-term open-platform vision and Python/TudatPy/SPICE/Streamlit.
+Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
 Automation `ariadna-m3` remains paused. No automatic D18 or repeated D17 study.
 
 ## Verified baseline
 
-- Planning baseline: R1 priority at `ab9f2f5`; its earlier push failed. D17.3
-  evidence at `866e593` was pushed. Report this stage's actual push outcome.
-- M1/M2 and the visual explorer are archived. The working UI remains M2:
-  explicit scenarios, impulsive search/Pareto, trajectory display and provenance.
-- D17.3 ran once at clean `3434a31`: 503 nominal evaluations / 1006 arcs /
-  76.614638 s; `ftol`, unclosed at 44.386790 km / 185.850963 m/s.
-  Duration reached the reserve ceiling; no tighter repeat or mission qualification.
-  See [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
-- Last runtime verification: 607 focused tests pass (7.17 s); full 4588-test
-  evidence (626.08 s) is from unchanged D17.2, not rerun for documentation.
-- Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain
-  open. Local rank, lower residuals or format compatibility cannot close them.
+- R1.1 passed at measured base `5c7012c`, unchanged production/environment;
+  new runner/fixture were untracked (exact hashes/dirty state retained).
+  [ADR 0119](docs/adr/0119-positive-ideal-m2-reference.md): exactly two identical
+  1980-attempt searches/two 121-state samplings in shared 1.993807459 s.
+  Selected d0001-t0035: 291.363636 days, ideal delta-v 3583.210826 m/s,
+  final mass 887.966464 kg >=500 kg dry +50 kg reserve; spare 337.966464 kg.
+  Decimal mass/reserve, endpoint/provenance/repeatability/offline checks pass.
+- Only ideal M2 feasibility: Sun-point-mass coast/body-centre endpoints/scalar
+  instantaneous maneuvers. Not finite-burn, operational or full-mission feasibility.
+- 18 native-free runner checks, offline evidence audit, Ruff, strict OpenSpec,
+  links/diff/immutable checks pass. Production tests unchanged; full suite not
+  rerun for this bounded evidence stage. Prior full 4588 tests/626.08 s are D17.2
+  evidence; 607 focused/7.17 s are D17.3 evidence, not fresh R1 regressions.
+- M1/M2 and visual explorer are archived. UI remains M2, unchanged in R1.1.
+- D17.3 remains unclosed: 44.386790 km /185.850963 m/s; retained
+  [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
+- Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — R1, not another local solver
+## Next action — R1.2 contract, not another local solver
 
-[ADR 0117](docs/adr/0117-mission-first-demonstration-priority.md) records the
-user-approved priority reset. Only planning/source-readiness records are complete.
+[ADR 0117](docs/adr/0117-mission-first-demonstration-priority.md) fixes the order;
+[ADR 0118](docs/adr/0118-m2-reference-and-historical-data-readiness.md) is accepted
+and its R1.1 verification is retained separately in ADR 0119.
 
-1. R1.1 Accept [ADR 0118](docs/adr/0118-m2-reference-and-historical-data-readiness.md):
-   explicit M2 hypothetical inputs, 50 kg reserve/100 m/s ideal allocation and
-   bounded repeatability contract; separately instruct verification afterwards.
-2. R1.2 Verify a small frozen physical calculation against an independent oracle
-   or engine at that scope; stop on unavailable evidence or failed comparison.
-3. R1.3 Specify minimal traceable results and an exact OEM profile/independent
-   reader with conversion/rejection checks before implementing export.
-4. R1.4 After readiness and a separate implementation instruction, deliver one
-   input → calculation → display → export → independent decoding path; verify
-   focused/full regressions and strict OpenSpec at implementation completion.
+1. Specify a small frozen same-force R1.2 calculation and independent oracle:
+   inputs/state/commands/epochs/resources, SI tolerances and execution budget.
+   Accept that contract before a separately instructed verification. The R1.1
+   offline mass/endpoint audit is not an independent propagation benchmark.
+2. R1.3 Specify minimal traceable results, exact OEM profile and independent
+   reader/conversion/rejection gates before exporter implementation.
+3. R1.4 After readiness and separate implementation instruction, deliver one
+   input → calculation → display → export → independent decoding path;
+   verify focused/full regressions and strict OpenSpec at implementation completion.
 
-No native runs, new fixture or runtime/API/UI/exporter/dependency changes here.
-ADR 0118's contract is proposed, not a positive result. MSL cruise is a metadata
-candidate for later empirical comparison; maneuver-free coverage/uncertainty and
-GRAIL gravity-version reconciliation remain open. Historical agreement cannot
-replace a same-force oracle. R1.2 details and OEM profile remain unselected.
+Historical MSL/GRAIL metadata does not authorize replay; maneuver-free coverage,
+uncertainty and gravity-version reconciliation remain unverified. No retries,
+new solver/physics, API/UI/exporter/dependency changes or automation restart.
 
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
-- R1 success cannot archive M3. M4/M5/M6, ML and object screening remain deferred.
+- R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.
 - [Roadmap](openspec/ROADMAP.md), [active tasks](openspec/changes/refine-physical-trajectory/tasks.md), [requirements](openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md).
-- [Rules](AGENTS.md), [ADR index](docs/adr/README.md), [M2 audit](docs/demo-audit.md), [older history](docs/roadmap-history-2026-09-16.md).
+- [Rules](AGENTS.md), [ADR index](docs/adr/README.md), [M2 audit](docs/demo-audit.md).

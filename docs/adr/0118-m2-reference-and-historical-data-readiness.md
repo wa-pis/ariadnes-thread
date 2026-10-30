@@ -1,10 +1,10 @@
 # 0118 — Specify the M2 reference before a historical comparison
 
 Date: 2026-10-30
-Decision status: proposed (concrete R1.1 contract; not execution approval).
-Implementation: source/readiness audit complete; no new fixture, runner or propagation. R1.1–R1.4 remain open.
+Decision status: accepted (user approved the contract and bounded verification on 2026-10-30).
+Implementation: source/readiness audit complete; bounded R1.1 execution subsequently passed in [ADR 0119](0119-positive-ideal-m2-reference.md). Acceptance alone closes no scientific gate.
 Scope / milestone: R1 preparation within the sole active M3 change; no M3 qualification.
-Base revision: `ab9f2f5b14adcba59980cb783ba86b92e18e9511`, clean before this documentation stage. Its earlier push failed; this stage must report the actual push outcome.
+Base revision: `ab9f2f5b14adcba59980cb783ba86b92e18e9511`, clean before the original planning stage. Its preceding push failed; the planning stage was subsequently pushed successfully as `5c7012c`. Execution provenance is separate in ADR 0119.
 Related OpenSpec: [requirements](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md), [design](../../openspec/changes/refine-physical-trajectory/design.md), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md).
 Supersedes / Superseded by: none; elaborates [0117](0117-mission-first-demonstration-priority.md), preserving its order and gates.
 
@@ -27,12 +27,12 @@ R1 references. Keep their names, bytes, targets and results unchanged.
 - Replace Moon-to-Mars with a historical mission: defer; it would change the
   user-visible problem rather than verify the existing approximation.
 - Specify a distinct M2 reference with an explicit reserve, and audit historical
-  data separately: selected as the proposed next contract. Reuse the existing
+  data separately: selected; the user subsequently accepted the contract. Reuse the existing
   planner and sampler; no new production dynamics engine or dependency.
 
 ## Decision and rationale
 
-### R1.1 proposed problem and explicit inputs
+### R1.1 accepted problem and explicit inputs
 
 User outcome: choose an approximate Moon-to-Mars transfer, understand its time,
 ideal delta-v and propellant trade-off, and inspect a reproducible sampled coast.
@@ -43,14 +43,14 @@ orbit departure or Mars insertion states. Orbit-plane angles, finite thrust,
 perturbations, SRP, maneuver errors and tracking do not constrain this M2 path;
 retain and disclose its existing ignored-field manifest. No operational claim.
 
-The proposed new reference identity is `r1-m2-reserve-reference`, not D17 or a
+The new reference identity is `r1-m2-reserve-reference`, not D17 or a
 reclassification of the old M3 fixture. After contract acceptance, create a
 distinct scenario by copying every explicit TOML value from
 [the existing hypothetical input](../../examples/m3_feasible_mission.toml), SHA256
 `2c3b2a140d6e6ea00c2173caab5c51b1c4be87a112d2dec28a40cd1e2a0a9b42`.
 It is not a GRAIL/MSL spacecraft model. Its fixed values include:
 
-| Quantity | Proposed value and meaning |
+| Quantity | Fixed value and meaning |
 |---|---|
 | Departure window, UTC | 2031-01-01T00:00:00Z through 2031-12-31T00:00:00Z; explicit hypothetical search window, not an observed launch or optimized default |
 | Flight time | 180–320 days, each day 86400 s; grid coordinates determine each candidate's actual arrival epoch |
@@ -75,7 +75,7 @@ tuple `(total_delta_v_m_s, flight_time_s, departure_epoch_tdb_s, candidate_id)`.
 Freeze that identity for replay; no hand-picked retained candidate. If none
 qualifies, stop with a failed reference gate, not changed masses, dates or reserve.
 
-### Bounded future verification, not performed here
+### Bounded verification contract
 
 After acceptance and a separate execution instruction, allow exactly two
 identical complete planner calls and two 121-state sampler calls: at most 3960
@@ -126,21 +126,23 @@ No kernels were downloaded or loaded and no historical arc was selected here.
 
 ## Consequences and revisit conditions
 
-This supplies a concrete proposal, not evidence that its candidate passes.
-Accept the R1.1 contract before creating/selecting its new reference and request
-execution separately. If its checks fail, retain the failure and explicitly
+This supplies a concrete contract, not evidence that its candidate passes.
+The user accepted it and separately authorized its execution on 2026-10-30.
+If its checks fail, retain the failure and explicitly
 review the problem; do not silently adjust inputs or reinterpret an old success.
 Accept a same-force R1.2 contract before that benchmark, then follow R1.3/R1.4.
 Historical replay cannot bypass this sequence or validate finite thrust, the
 real parking/arrival planes, navigation uncertainty or a lunar-to-Mars mission.
 No API/UI/exporter, dependency, automation or strict M3/task 3.9 gate changes.
 
-## Evidence and verification
+## Evidence and verification — original planning stage
 
 The source audit read official metadata only. Local read-only checks verified the
 input SHA256, explicit values and 44×45 grid arithmetic. Independent 60-digit
 Decimal and binary64 calculations agree within 1e-9 kg for the contingency bound.
 Documentation checks include strict OpenSpec, local links, whitespace and scope
 review; code/tests/environment/examples/legacy and old evidence remain unchanged.
-Runtime tests and native scientific calculations were not rerun. No positive
-fixture, independent benchmark or mission validation is claimed.
+Runtime tests and native scientific calculations were not rerun in the original
+planning stage. No positive fixture, independent benchmark or mission validation
+was claimed there. Execution evidence is recorded separately, without rewriting
+those original observations.

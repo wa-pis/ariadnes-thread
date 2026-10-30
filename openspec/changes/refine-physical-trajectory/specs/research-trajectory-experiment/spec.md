@@ -49,7 +49,7 @@ the long-term platform vision, historical evidence and all strict M3 gates.
 
 ### Requirement: Controlled M2 reference and historical evidence readiness
 
-R1 SHALL keep the proposed ADR 0118 reference, empirical mission comparisons and
+R1 SHALL keep the accepted ADR 0118 reference, empirical mission comparisons and
 same-force independent numerical verification as separate claims. The proposal
 SHALL NOT authorize execution or change public scientific behavior by itself.
 
