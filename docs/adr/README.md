@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0123 — Traceable result and OEM profile](0123-traceable-result-and-oem-profile.md) — R1.3 draft: paired finite JSON/OEM KVN3.0, conditional SPICE J2000/ICRF mapping, explicit TDB/calendar and SI/km conversions, separate statuses and stale-result rules. Correction/originator readiness and independent-reader fixtures remain open; no exporter or conformance claim.
 - [0122 — Independent elliptic coast passes](0122-independent-elliptic-coast-passes.md) — R1.2 passes: 17 pairs in 0.555804 s; max 0.00159834 m / 3.66733e-10 m/s, offline arithmetic/provenance audit passes. Coast component only, no full-transfer/finite-burn/M3 claim.
 - [0121 — Elliptic benchmark preparation](0121-elliptic-benchmark-preparation.md) — R1.2b private independent oracle/evidence script verified with 51 native-free tests, closed-form self-checks and fail-stop/provenance/exclusive-output guards. Preparation-stage evidence only; subsequent execution retained in 0122.
 - [0120 — Independent elliptic coast benchmark](0120-independent-elliptic-coast-benchmark.md) — accepted R1.2 contract: synthetic inclined e=0.2 Sun-point-mass ellipse, independent standard-library Kepler bisection, 17 epochs/one period, 1 m/1e-6 m/s gates, at most17 adapter calls/shared30s. Preparation in 0121; subsequent execution in 0122; no mass/finite-burn/M3 claim.

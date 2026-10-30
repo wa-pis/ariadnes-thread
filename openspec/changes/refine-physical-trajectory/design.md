@@ -89,6 +89,26 @@ executes exactly one study: all 17 pairs pass in 0.5558036253787577s, maximum
 invariants and independent offline arithmetic/provenance checks pass. R1.2 is
 closed only at this synthetic coast-component scope; R1.3 profile design is next.
 
+### R1.3 draft traceable result and OEM profile (2026-10-30)
+
+[ADR 0123](../../../docs/adr/0123-traceable-result-and-oem-profile.md) and
+[result/profile requirements](specs/traceable-trajectory-result/spec.md) propose
+one canonical finite JSON result and one paired OEM KVN3.0 coast segment, not a
+generic backend or new propagation. Preserve actual normalized input/candidate/
+source/resource identity and distinct numeric, ideal-reserve and exchange status.
+Use TDB calendar labels, explicit SI-to-km conversion and conditionally admitted
+DE4xx-compatible SPICE J2000/ICRF axes; never relabel UTC or heliocentric samples.
+Independent stdlib reader/physical fixtures must precede writer implementation;
+wire gates are 1microsecond, 1mm and 1e-9m/s at every supplied node, not continuous
+accuracy or trajectory qualification. Invalidate stale sample/export UI state.
+
+The exact draft baseline is B-3 April2023/EC1 May2023 (`502x0b3e1.pdf`), not a
+claim of latest corrections. Later correction text and responsible originator/
+SANA identity are not verified. Reconcile them (or separately review an explicit
+research deviation), freeze source/reader identities and test fixtures before
+profile acceptance. R1.3 remains open; this planning stage implements no reader,
+writer, UI, dependency or native computation and does not authorize registration.
+
 ### Research D17 — smooth steering freedom without more fuel
 
 [ADR 0114](../../../docs/adr/0114-quadratic-steering-freedom.md) diagnoses the

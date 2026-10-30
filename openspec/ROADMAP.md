@@ -18,11 +18,11 @@ Start with [current state](../CURRENT_STATE.md). Preserve previous results in th
 | R1.0 — Record the priority reset | Planning complete | ADR, measurable OpenSpec requirements and consistent current context; strict validation, links and immutable checks. No new implementation or native work. |
 | R1.1 — Problem and positive reference | Verified ideal M2 only, ADR 0119 | Two identical 1980-attempt searches/two 121-state samplings in shared 1.993807459 s; d0001-t0035, final 887.966464 kg >=550 kg. Decimal mass/reserve, endpoints and provenance checks pass; no finite-burn claim. |
 | R1.2 — Small independent physical benchmark | Passed, ADR 0122 | One 17-call study in 0.555804s; maximum 0.00159834m/3.66733e-10m/s, conservation/root/identity and offline checks pass. Synthetic coast component, not full-transfer/finite-burn validation. |
-| R1.3 — Minimal result and OEM profile | Next: profile specification | Exact edition/corrections/encoding, metadata/frames/time conversions, independent reader and positive/rejection gates before exporter code. |
+| R1.3 — Minimal result and OEM profile | Draft specified, ADR 0123; readiness open | Paired JSON/OEM KVN3.0, TDB/ICRF/SSB and numerical/stale-result gates. Reconcile corrections and actual originator; verify independent reader/fixtures before accepting the profile or building export. |
 | R1.4 — One usable path | Pending R1.1–R1.3 and implementation instruction | Input → calculation → display → export → independent decoding; declared reserve/numerical checks, error/stale-result tests, focused/full regressions and strict validation. |
 
-The accepted sequence now has one ideal positive reference, not an independent
-propagation benchmark or OEM implementation. Early independent checking is a
+The accepted sequence now has one ideal positive reference and a passed synthetic
+coast-component benchmark, not an OEM implementation. Early independent checking is a
 small research benchmark,
 not M6 full-mission GMAT/Monte Carlo verification. Strict M3/task 3.9 remain open
 and unchanged; R1 completion cannot archive M3 or start M4–M6. No old target,

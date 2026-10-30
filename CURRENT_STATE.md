@@ -30,19 +30,19 @@ Automation `ariadna-m3` remains paused. No automatic D18 or repeated D17 study.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — design the R1.3 result and OEM profile
+## Next action — verify R1.3 profile readiness before exporter code
 
 [ADR 0117](docs/adr/0117-mission-first-demonstration-priority.md) fixes the order;
-[ADR 0118](docs/adr/0118-m2-reference-and-historical-data-readiness.md) is accepted
-and its R1.1 verification is retained separately in ADR 0119.
+accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
 
 1. [ADR 0122](docs/adr/0122-independent-elliptic-coast-passes.md): R1.2 passes at
    base `35ae8a3`, exactly17 adapter calls in 0.5558036253787577s, no retries.
    Max differences 0.00159834m /3.66733e-10m/s; roots/alignment/invariants and
    offline identity/arithmetic audit pass. Synthetic Sun-relative coast only.
-2. R1.3 Specify minimal traceable results, exact OEM profile and independent
-   reader/conversion/rejection gates before exporter implementation. 51 native-free
-   preparation tests, Ruff/strict OpenSpec/links pass; full native suite not rerun.
+2. [ADR 0123](docs/adr/0123-traceable-result-and-oem-profile.md): R1.3 draft JSON/
+   OEM KVN3.0 contracts specified; parent gate open. Next resolve corrections and
+   actual originator, then separately prepare independent reader/fixtures. No
+   exporter/native work; strict OpenSpec/links/history checks, no runtime rerun.
 3. R1.4 After readiness and separate implementation instruction, deliver one
    input → calculation → display → export → independent decoding path;
    verify focused/full regressions and strict OpenSpec at implementation completion.
