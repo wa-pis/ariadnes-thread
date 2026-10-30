@@ -17,8 +17,8 @@ Start with [current state](../CURRENT_STATE.md). Preserve previous results in th
 |---|---|---|
 | R1.0 — Record the priority reset | Planning complete | ADR, measurable OpenSpec requirements and consistent current context; strict validation, links and immutable checks. No new implementation or native work. |
 | R1.1 — Problem and positive reference | Verified ideal M2 only, ADR 0119 | Two identical 1980-attempt searches/two 121-state samplings in shared 1.993807459 s; d0001-t0035, final 887.966464 kg >=550 kg. Decimal mass/reserve, endpoints and provenance checks pass; no finite-burn claim. |
-| R1.2 — Small independent physical benchmark | ADR 0120 accepted; preparation verified in 0121; native execution pending | Private independent Kepler oracle/evidence runner, 51 native-free tests pass. Frozen 17 epochs/1m/1e-6m/s/17-call/shared30s contract; parent R1.2 remains open, not full-transfer/finite-burn validation. |
-| R1.3 — Minimal result and OEM profile | Pending readiness/benchmark | Exact edition/corrections/encoding, metadata/frames/time conversions, independent reader and positive/rejection gates before exporter code. |
+| R1.2 — Small independent physical benchmark | Passed, ADR 0122 | One 17-call study in 0.555804s; maximum 0.00159834m/3.66733e-10m/s, conservation/root/identity and offline checks pass. Synthetic coast component, not full-transfer/finite-burn validation. |
+| R1.3 — Minimal result and OEM profile | Next: profile specification | Exact edition/corrections/encoding, metadata/frames/time conversions, independent reader and positive/rejection gates before exporter code. |
 | R1.4 — One usable path | Pending R1.1–R1.3 and implementation instruction | Input → calculation → display → export → independent decoding; declared reserve/numerical checks, error/stale-result tests, focused/full regressions and strict validation. |
 
 The accepted sequence now has one ideal positive reference, not an independent

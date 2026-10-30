@@ -1,0 +1,1256 @@
+{
+  "benchmark": "r1-elliptic-coast-v1",
+  "oracle": "kepler-bisection-cartesian-v1",
+  "status": "passed",
+  "reference": {
+    "origin": "Sun",
+    "orientation": "J2000",
+    "position_units": "m",
+    "velocity_units": "m/s",
+    "time": "TDB seconds since J2000"
+  },
+  "inputs": {
+    "initial_state": [
+      43084186761.6,
+      57445582348.799995,
+      95742637248.0,
+      -29182.918856121985,
+      21887.189142091487,
+      0.0
+    ],
+    "gm_m3_s2": 1.327124400420322e+20,
+    "a_m": 149597870700.0,
+    "eccentricity": 0.2,
+    "P": [
+      0.36,
+      0.48,
+      0.8
+    ],
+    "Q": [
+      -0.8,
+      0.6,
+      0.0
+    ],
+    "t0_tdb_s": 978995455.2304223,
+    "period_s": 31558196.01538372
+  },
+  "mass": {
+    "status": "not-modelled",
+    "error_kg": null
+  },
+  "budget_s": 30.0,
+  "attempted_adapter_calls": 17,
+  "completed_adapter_calls": 17,
+  "calls": [
+    {
+      "label": "source checks",
+      "start_s": 2.750195562839508e-06,
+      "end_s": 0.000942625105381012,
+      "returned": true
+    },
+    {
+      "label": "pure oracle self-checks",
+      "start_s": 0.000944875180721283,
+      "end_s": 0.0009830831550061703,
+      "returned": true
+    },
+    {
+      "label": "initial provenance",
+      "start_s": 0.0009843329899013042,
+      "end_s": 0.4901501671411097,
+      "returned": true
+    },
+    {
+      "label": "adapter import",
+      "start_s": 0.4901580000296235,
+      "end_s": 0.49030516715720296,
+      "returned": true
+    },
+    {
+      "label": "oracle 0",
+      "start_s": 0.4903112081810832,
+      "end_s": 0.49032979225739837,
+      "returned": true
+    },
+    {
+      "label": "adapter 0",
+      "start_s": 0.490341458003968,
+      "end_s": 0.4948485833592713,
+      "returned": true
+    },
+    {
+      "label": "oracle 1",
+      "start_s": 0.4948690002784133,
+      "end_s": 0.49487804202362895,
+      "returned": true
+    },
+    {
+      "label": "adapter 1",
+      "start_s": 0.4948832499794662,
+      "end_s": 0.49489450035616755,
+      "returned": true
+    },
+    {
+      "label": "oracle 2",
+      "start_s": 0.4949037083424628,
+      "end_s": 0.49491037521511316,
+      "returned": true
+    },
+    {
+      "label": "adapter 2",
+      "start_s": 0.49491354217752814,
+      "end_s": 0.4949219170957804,
+      "returned": true
+    },
+    {
+      "label": "oracle 3",
+      "start_s": 0.4949284582398832,
+      "end_s": 0.4949342501349747,
+      "returned": true
+    },
+    {
+      "label": "adapter 3",
+      "start_s": 0.49493666738271713,
+      "end_s": 0.4949433752335608,
+      "returned": true
+    },
+    {
+      "label": "oracle 4",
+      "start_s": 0.49494916712865233,
+      "end_s": 0.49495470803231,
+      "returned": true
+    },
+    {
+      "label": "adapter 4",
+      "start_s": 0.49495687521994114,
+      "end_s": 0.4949632501229644,
+      "returned": true
+    },
+    {
+      "label": "oracle 5",
+      "start_s": 0.49496841710060835,
+      "end_s": 0.49497370794415474,
+      "returned": true
+    },
+    {
+      "label": "adapter 5",
+      "start_s": 0.49497575033456087,
+      "end_s": 0.49498183326795697,
+      "returned": true
+    },
+    {
+      "label": "oracle 6",
+      "start_s": 0.49498700024560094,
+      "end_s": 0.4949923329986632,
+      "returned": true
+    },
+    {
+      "label": "adapter 6",
+      "start_s": 0.4949943753890693,
+      "end_s": 0.49500183295458555,
+      "returned": true
+    },
+    {
+      "label": "oracle 7",
+      "start_s": 0.4950069999322295,
+      "end_s": 0.4950122502632439,
+      "returned": true
+    },
+    {
+      "label": "adapter 7",
+      "start_s": 0.49501441698521376,
+      "end_s": 0.4950204170309007,
+      "returned": true
+    },
+    {
+      "label": "oracle 8",
+      "start_s": 0.4950255420990288,
+      "end_s": 0.4950307500548661,
+      "returned": true
+    },
+    {
+      "label": "adapter 8",
+      "start_s": 0.4950326671823859,
+      "end_s": 0.49503850005567074,
+      "returned": true
+    },
+    {
+      "label": "oracle 9",
+      "start_s": 0.495043708011508,
+      "end_s": 0.4950488330796361,
+      "returned": true
+    },
+    {
+      "label": "adapter 9",
+      "start_s": 0.4950507921166718,
+      "end_s": 0.49506058311089873,
+      "returned": true
+    },
+    {
+      "label": "oracle 10",
+      "start_s": 0.4950656252913177,
+      "end_s": 0.49507083324715495,
+      "returned": true
+    },
+    {
+      "label": "adapter 10",
+      "start_s": 0.49507291708141565,
+      "end_s": 0.49507866706699133,
+      "returned": true
+    },
+    {
+      "label": "oracle 11",
+      "start_s": 0.49508354207500815,
+      "end_s": 0.4950887500308454,
+      "returned": true
+    },
+    {
+      "label": "adapter 11",
+      "start_s": 0.49509083293378353,
+      "end_s": 0.49509675009176135,
+      "returned": true
+    },
+    {
+      "label": "oracle 12",
+      "start_s": 0.49510154221206903,
+      "end_s": 0.49510654201731086,
+      "returned": true
+    },
+    {
+      "label": "adapter 12",
+      "start_s": 0.49510845821350813,
+      "end_s": 0.4951142081990838,
+      "returned": true
+    },
+    {
+      "label": "oracle 13",
+      "start_s": 0.49511879216879606,
+      "end_s": 0.4951238753274083,
+      "returned": true
+    },
+    {
+      "label": "adapter 13",
+      "start_s": 0.49512583296746016,
+      "end_s": 0.49513133335858583,
+      "returned": true
+    },
+    {
+      "label": "oracle 14",
+      "start_s": 0.4951362502761185,
+      "end_s": 0.4951413753442466,
+      "returned": true
+    },
+    {
+      "label": "adapter 14",
+      "start_s": 0.4951432920061052,
+      "end_s": 0.49514883337542415,
+      "returned": true
+    },
+    {
+      "label": "oracle 15",
+      "start_s": 0.4951534173451364,
+      "end_s": 0.4951584581285715,
+      "returned": true
+    },
+    {
+      "label": "adapter 15",
+      "start_s": 0.4951603333465755,
+      "end_s": 0.4951659170910716,
+      "returned": true
+    },
+    {
+      "label": "oracle 16",
+      "start_s": 0.4951709173619747,
+      "end_s": 0.49517354229465127,
+      "returned": true
+    },
+    {
+      "label": "adapter 16",
+      "start_s": 0.49517545802518725,
+      "end_s": 0.49518108321353793,
+      "returned": true
+    },
+    {
+      "label": "final provenance",
+      "start_s": 0.49518608301877975,
+      "end_s": 0.5557927503250539,
+      "returned": true
+    }
+  ],
+  "points": [
+    {
+      "index": 0,
+      "epoch_tdb_s": 978995455.2304223,
+      "elapsed_s": 0.0,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          43084186761.6,
+          57445582348.799995,
+          95742637248.0,
+          -29182.918856121978,
+          21887.189142091484,
+          0.0
+        ],
+        "mean_anomaly_rad": 0.0,
+        "eccentric_anomaly_rad": 0.0,
+        "updates": 1,
+        "bracket_width_rad": 0.0,
+        "residual_rad": 0.0
+      },
+      "native_state": [
+        43084186761.59998,
+        57445582348.799995,
+        95742637248.0,
+        -29182.918856121993,
+        21887.18914209149,
+        -4.692971279620518e-12
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          -1.52587890625e-05,
+          0.0,
+          0.0,
+          -1.4551915228366852e-11,
+          7.275957614183426e-12,
+          -4.692971279620518e-12
+        ],
+        "position_error_m": 1.52587890625e-05,
+        "velocity_error_m_s": 1.6932860817012343e-11,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 0.0,
+            "relative_angular_momentum_error": 2.064702792708235e-16
+          },
+          "oracle": {
+            "relative_energy_error": 8.062600256076294e-16,
+            "relative_angular_momentum_error": 2.624191451542901e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 1,
+      "epoch_tdb_s": 980967842.4813838,
+      "elapsed_s": 1972387.2509615421,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          -17941658876.477013,
+          90215831859.91779,
+          81876893549.39737,
+          -31161.441921937367,
+          10692.09337056164,
+          -13524.25394228414
+        ],
+        "mean_anomaly_rad": 0.392699081698736,
+        "eccentric_anomaly_rad": 0.48614291414920835,
+        "updates": 49,
+        "bracket_width_rad": 1.1157741397482823e-14,
+        "residual_rad": 5.440092820663267e-15
+      },
+      "native_state": [
+        -17941658876.477875,
+        90215831859.91809,
+        81876893549.39699,
+        -31161.441921937338,
+        10692.093370561472,
+        -13524.253942284304
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          -0.00086212158203125,
+          0.00030517578125,
+          -0.0003814697265625,
+          2.9103830456733704e-11,
+          -1.6916601452976465e-10,
+          -1.6370904631912708e-10
+        ],
+        "position_error_m": 0.0009909112129496173,
+        "velocity_error_m_s": 2.3720207685822853e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 2.687533418692098e-16,
+            "relative_angular_momentum_error": 1.619686127659817e-16
+          },
+          "oracle": {
+            "relative_energy_error": 8.062600256076294e-16,
+            "relative_angular_momentum_error": 1.9837022781154633e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 2,
+      "epoch_tdb_s": 982940229.7323452,
+      "elapsed_s": 3944774.501922965,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          -74582295016.8863,
+          98959005104.92328,
+          45890436098.409134,
+          -25279.508751694888,
+          -1579.2820182918986,
+          -21908.174487533935
+        ],
+        "mean_anomaly_rad": 0.7853981633974483,
+        "eccentric_anomaly_rad": 0.9478282237996012,
+        "updates": 49,
+        "bracket_width_rad": 1.1213252548714081e-14,
+        "residual_rad": 9.658940314238862e-15
+      },
+      "native_state": [
+        -74582295016.88509,
+        98959005104.92334,
+        45890436098.410164,
+        -25279.508751695095,
+        -1579.2820182916225,
+        -21908.17448753381
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          0.001220703125,
+          6.103515625e-05,
+          0.00102996826171875,
+          -2.0736479200422764e-10,
+          2.760316419880837e-10,
+          1.2369127944111824e-10
+        ],
+        "position_error_m": 0.0015983353934112736,
+        "velocity_error_m_s": 3.66733086796617e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 5.375066837384196e-16,
+            "relative_angular_momentum_error": 1.717936566393055e-16
+          },
+          "oracle": {
+            "relative_energy_error": 2.687533418692098e-16,
+            "relative_angular_momentum_error": 1.2804743144958173e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 3,
+      "epoch_tdb_s": 984912616.9833066,
+      "elapsed_s": 5917161.752884388,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          -115256427460.63136,
+          85913504108.82417,
+          -564070919.0926378,
+          -15688.00255365232,
+          -11032.879199677896,
+          -24318.80652257828
+        ],
+        "mean_anomaly_rad": 1.1780972450961607,
+        "eccentric_anomaly_rad": 1.3742464817601752,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 4.6629367034256575e-15
+      },
+      "native_state": [
+        -115256427460.631,
+        85913504108.8244,
+        -564070919.0921026,
+        -15688.002553652437,
+        -11032.879199677809,
+        -24318.80652257828
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          0.0003662109375,
+          0.0002288818359375,
+          0.000535130500793457,
+          -1.1641532182693481e-10,
+          8.731149137020111e-11,
+          0.0
+        ],
+        "position_error_m": 0.0006876496189529997,
+        "velocity_error_m_s": 1.4551915228366852e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 9.406366965422344e-16,
+            "relative_angular_momentum_error": 3.289598076141114e-16
+          },
+          "oracle": {
+            "relative_energy_error": 8.062600256076294e-16,
+            "relative_angular_momentum_error": 1.1452910442620368e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 4,
+      "epoch_tdb_s": 986885004.2342682,
+      "elapsed_s": 7889549.00384593,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          -136279312027.61072,
+          57901367659.4901,
+          -47261990785.29913,
+          -5742.588859305392,
+          -16781.10734583665,
+          -22493.91892300341
+        ],
+        "mean_anomaly_rad": 1.5707963267948966,
+        "eccentric_anomaly_rad": 1.7669606079827291,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 9.992007221626409e-15
+      },
+      "native_state": [
+        -136279312027.61101,
+        57901367659.48929,
+        -47261990785.30025,
+        -5742.588859305156,
+        -16781.107345836754,
+        -22493.918923003333
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          -0.0002899169921875,
+          -0.0008087158203125,
+          -0.0011138916015625,
+          2.3646862246096134e-10,
+          -1.0186340659856796e-10,
+          7.639755494892597e-11
+        ],
+        "position_error_m": 0.0014067080864252676,
+        "velocity_error_m_s": 2.685705669179406e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 0.0,
+            "relative_angular_momentum_error": 2.064702792708235e-16
+          },
+          "oracle": {
+            "relative_energy_error": 6.718833546730244e-16,
+            "relative_angular_momentum_error": 1.1452910442620368e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 5,
+      "epoch_tdb_s": 988857391.4852297,
+      "elapsed_s": 9861936.254807472,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          -138694981762.97925,
+          21798690998.395485,
+          -87704048345.4282,
+          3041.9045473849437,
+          -19364.29866566359,
+          -18221.728272133212
+        ],
+        "mean_anomaly_rad": 1.9634954084936327,
+        "eccentric_anomaly_rad": 2.132739656838361,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 8.881784197001252e-15
+      },
+      "native_state": [
+        -138694981762.9791,
+        21798690998.3946,
+        -87704048345.42905,
+        3041.9045473851324,
+        -19364.298665663628,
+        -18221.728272133096
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          0.000152587890625,
+          -0.000885009765625,
+          -0.0008392333984375,
+          1.887201506178826e-10,
+          -3.637978807091713e-11,
+          1.1641532182693481e-10
+        ],
+        "position_error_m": 0.001229161521798482,
+        "velocity_error_m_s": 2.2470271779707059e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 1.343766709346049e-16,
+            "relative_angular_momentum_error": 1.619686127659817e-16
+          },
+          "oracle": {
+            "relative_energy_error": 5.375066837384196e-16,
+            "relative_angular_momentum_error": 1.717936566393055e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 6,
+      "epoch_tdb_s": 990829778.7361912,
+      "elapsed_s": 11834323.505768895,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          -125353070283.7551,
+          -16895633178.55645,
+          -118304464950.7976,
+          10205.238719261186,
+          -19520.842509662187,
+          -12658.041034897387
+        ],
+        "mean_anomaly_rad": 2.356194490192345,
+        "eccentric_anomaly_rad": 2.479196151676949,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 1.1546319456101628e-14
+      },
+      "native_state": [
+        -125353070283.7545,
+        -16895633178.557592,
+        -118304464950.79839,
+        10205.238719261375,
+        -19520.84250966217,
+        -12658.041034897213
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          0.0005950927734375,
+          -0.0011425018310546875,
+          -0.0007781982421875,
+          1.8917489796876907e-10,
+          1.8189894035458565e-11,
+          1.7462298274040222e-10
+        ],
+        "position_error_m": 0.0015050044342474758,
+        "velocity_error_m_s": 2.580914573705806e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 1.343766709346049e-16,
+            "relative_angular_momentum_error": 2.3610779737831644e-16
+          },
+          "oracle": {
+            "relative_energy_error": 8.062600256076294e-16,
+            "relative_angular_momentum_error": 2.3610779737831644e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 7,
+      "epoch_tdb_s": 992802165.9871526,
+      "elapsed_s": 13806710.756730318,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          -99551803765.66096,
+          -53984591270.780945,
+          -137225007034.69513,
+          15675.686891240075,
+          -17811.59051094296,
+          -6458.480365347102
+        ],
+        "mean_anomaly_rad": 2.7488935718910574,
+        "eccentric_anomaly_rad": 2.8133664571369006,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 2.6645352591003757e-15
+      },
+      "native_state": [
+        -99551803765.66074,
+        -53984591270.78121,
+        -137225007034.69522,
+        15675.686891240108,
+        -17811.590510942944,
+        -6458.4803653470535
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          0.0002288818359375,
+          -0.00026702880859375,
+          -9.1552734375e-05,
+          3.2741809263825417e-11,
+          1.4551915228366852e-11,
+          4.8203219193965197e-11
+        ],
+        "position_error_m": 0.0003634187427921922,
+        "velocity_error_m_s": 6.006109099361877e-11,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 4.031300128038147e-16,
+            "relative_angular_momentum_error": 1.1452910442620368e-16
+          },
+          "oracle": {
+            "relative_energy_error": 5.375066837384196e-16,
+            "relative_angular_momentum_error": 1.2804743144958173e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 8,
+      "epoch_tdb_s": 994774553.2381141,
+      "elapsed_s": 15779098.00769186,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          -64626280142.40131,
+          -86168373523.199,
+          -143613955872.0,
+          19455.279237414554,
+          -14591.459428061125,
+          -2.2288271954062967e-10
+        ],
+        "mean_anomaly_rad": 3.141592653589793,
+        "eccentric_anomaly_rad": 3.141592653589782,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 1.3322676295501878e-14
+      },
+      "native_state": [
+        -64626280142.40007,
+        -86168373523.19995,
+        -143613955872.0,
+        19455.27923741465,
+        -14591.459428060998,
+        -1.0649432640774974e-11
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          0.00124359130859375,
+          -0.000946044921875,
+          0.0,
+          9.458744898438454e-11,
+          1.2732925824820995e-10,
+          2.122332868998547e-10
+        ],
+        "position_error_m": 0.0015625365074184317,
+        "velocity_error_m_s": 2.64957531653148e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 5.375066837384196e-16,
+            "relative_angular_momentum_error": 2.2905820885240735e-16
+          },
+          "oracle": {
+            "relative_energy_error": 5.375066837384196e-16,
+            "relative_angular_momentum_error": 1.619686127659817e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 9,
+      "epoch_tdb_s": 996746940.4890757,
+      "elapsed_s": 17751485.258653402,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          -23950702565.564636,
+          -110685417170.85318,
+          -137225007034.69513,
+          21488.319220052465,
+          -10061.414072526439,
+          6458.480365347102
+        ],
+        "mean_anomaly_rad": -2.748893571891057,
+        "eccentric_anomaly_rad": -2.8133664571369006,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 2.220446049250313e-15
+      },
+      "native_state": [
+        -23950702565.56493,
+        -110685417170.85306,
+        -137225007034.69522,
+        21488.319220052457,
+        -10061.414072526477,
+        6458.480365347059
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          -0.000293731689453125,
+          0.0001220703125,
+          -9.1552734375e-05,
+          -7.275957614183426e-12,
+          -3.8198777474462986e-11,
+          -4.274625098332763e-11
+        ],
+        "position_error_m": 0.00033100055854087926,
+        "velocity_error_m_s": 5.778692008470925e-11,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 4.031300128038147e-16,
+            "relative_angular_momentum_error": 1.1452910442620368e-16
+          },
+          "oracle": {
+            "relative_energy_error": 5.375066837384196e-16,
+            "relative_angular_momentum_error": 1.1452910442620368e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 10,
+      "epoch_tdb_s": 998719327.7400371,
+      "elapsed_s": 19723872.509614825,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          18879051828.03724,
+          -125069724762.40067,
+          -118304464950.7976,
+          21597.475650668835,
+          -4331.193267785325,
+          12658.041034897387
+        ],
+        "mean_anomaly_rad": -2.356194490192345,
+        "eccentric_anomaly_rad": -2.479196151676949,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 1.1546319456101628e-14
+      },
+      "native_state": [
+        18879051828.035927,
+        -125069724762.40042,
+        -118304464950.79839,
+        21597.475650668865,
+        -4331.1932677855175,
+        12658.04103489721
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          -0.001312255859375,
+          0.000244140625,
+          -0.0007781982421875,
+          2.9103830456733704e-11,
+          -1.9281287677586079e-10,
+          -1.7826096154749393e-10
+        ],
+        "position_error_m": 0.001545060707345548,
+        "velocity_error_m_s": 2.6419842696290734e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 2.687533418692098e-16,
+            "relative_angular_momentum_error": 1.619686127659817e-16
+          },
+          "oracle": {
+            "relative_energy_error": 6.718833546730244e-16,
+            "relative_angular_momentum_error": 1.9837022781154633e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 11,
+      "epoch_tdb_s": 1000691714.9909985,
+      "elapsed_s": 21696259.76057625,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          59761338252.09386,
+          -127043549012.90933,
+          -87704048345.4282,
+          19441.459992304834,
+          2501.7752608962583,
+          18221.728272133212
+        ],
+        "mean_anomaly_rad": -1.9634954084936327,
+        "eccentric_anomaly_rad": -2.132739656838361,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 8.881784197001252e-15
+      },
+      "native_state": [
+        59761338252.09304,
+        -127043549012.90945,
+        -87704048345.42899,
+        19441.45999230491,
+        2501.7752608961005,
+        18221.728272133103
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          -0.00081634521484375,
+          -0.0001220703125,
+          -0.0007781982421875,
+          7.639755494892597e-11,
+          -1.5779733075760305e-10,
+          -1.0913936421275139e-10
+        ],
+        "position_error_m": 0.001134421956388297,
+        "velocity_error_m_s": 2.0651388528900942e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 1.343766709346049e-16,
+            "relative_angular_momentum_error": 1.717936566393055e-16
+          },
+          "oracle": {
+            "relative_energy_error": 5.375066837384196e-16,
+            "relative_angular_momentum_error": 1.717936566393055e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 12,
+      "epoch_tdb_s": 1002664102.24196,
+      "elapsed_s": 23668647.01153779,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          93743520320.84149,
+          -114615756601.84904,
+          -47261990785.29913,
+          14501.938171397676,
+          10211.595361767439,
+          22493.91892300341
+        ],
+        "mean_anomaly_rad": -1.5707963267948966,
+        "eccentric_anomaly_rad": -1.7669606079827291,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 9.992007221626409e-15
+      },
+      "native_state": [
+        93743520320.84076,
+        -114615756601.8496,
+        -47261990785.30029,
+        14501.938171397851,
+        10211.59536176723,
+        22493.918923003326
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          -0.000732421875,
+          -0.00054931640625,
+          -0.00115966796875,
+          1.7462298274040222e-10,
+          -2.091837814077735e-10,
+          -8.36735125631094e-11
+        ],
+        "position_error_m": 0.0014775046920056402,
+        "velocity_error_m_s": 2.850478858189599e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 2.687533418692098e-16,
+            "relative_angular_momentum_error": 1.1452910442620368e-16
+          },
+          "oracle": {
+            "relative_energy_error": 6.718833546730244e-16,
+            "relative_angular_momentum_error": 1.9837022781154633e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 13,
+      "epoch_tdb_s": 1004636489.4929216,
+      "elapsed_s": 25641034.262499332,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          114748763633.44798,
+          -86590389211.73534,
+          -564070919.0926378,
+          6198.923316668131,
+          18149.68862741604,
+          24318.80652257828
+        ],
+        "mean_anomaly_rad": -1.1780972450961604,
+        "eccentric_anomaly_rad": -1.3742464817601752,
+        "updates": 49,
+        "bracket_width_rad": 1.1102230246251565e-14,
+        "residual_rad": 4.884981308350689e-15
+      },
+      "native_state": [
+        114748763633.44809,
+        -86590389211.73506,
+        -564070919.0922446,
+        6198.923316668048,
+        18149.6886274161,
+        24318.80652257828
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          0.0001068115234375,
+          0.000274658203125,
+          0.00039315223693847656,
+          -8.276401786133647e-11,
+          6.184563972055912e-11,
+          0.0
+        ],
+        "position_error_m": 0.0004913395073598513,
+        "velocity_error_m_s": 1.0331875824358722e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 5.375066837384196e-16,
+            "relative_angular_momentum_error": 1.1452910442620368e-16
+          },
+          "oracle": {
+            "relative_energy_error": 8.062600256076294e-16,
+            "relative_angular_momentum_error": 0.0
+          }
+        }
+      }
+    },
+    {
+      "index": 14,
+      "epoch_tdb_s": 1006608876.743883,
+      "elapsed_s": 27613421.513460755,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          115883687505.45451,
+          -43890481786.83231,
+          45890436098.409134,
+          -5562.151712914347,
+          24710.52736674882,
+          21908.174487533935
+        ],
+        "mean_anomaly_rad": -0.7853981633974483,
+        "eccentric_anomaly_rad": -0.9478282237996012,
+        "updates": 49,
+        "bracket_width_rad": 1.1213252548714081e-14,
+        "residual_rad": 9.658940314238862e-15
+      },
+      "native_state": [
+        115883687505.45428,
+        -43890481786.83131,
+        45890436098.41005,
+        -5562.151712914628,
+        24710.52736674893,
+        21908.174487533823
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          -0.0002288818359375,
+          0.001007080078125,
+          0.00091552734375,
+          -2.810338628478348e-10,
+          1.0913936421275139e-10,
+          -1.127773430198431e-10
+        ],
+        "position_error_m": 0.0013801403898634035,
+        "velocity_error_m_s": 3.218853242795555e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 2.687533418692098e-16,
+            "relative_angular_momentum_error": 1.9837022781154633e-16
+          },
+          "oracle": {
+            "relative_energy_error": 5.375066837384196e-16,
+            "relative_angular_momentum_error": 1.1452910442620368e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 15,
+      "epoch_tdb_s": 1008581263.9948444,
+      "elapsed_s": 29585808.76442218,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          91630863070.93463,
+          8036440399.359047,
+          81876893549.39737,
+          -18989.613373881642,
+          26921.19810130261,
+          13524.25394228414
+        ],
+        "mean_anomaly_rad": -0.39269908169873613,
+        "eccentric_anomaly_rad": -0.48614291414920835,
+        "updates": 49,
+        "bracket_width_rad": 1.1157741397482823e-14,
+        "residual_rad": 5.551115123125783e-15
+      },
+      "native_state": [
+        91630863070.9352,
+        8036440399.358281,
+        81876893549.397,
+        -18989.61337388146,
+        26921.198101302634,
+        13524.253942284306
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          0.0005645751953125,
+          -0.0007658004760742188,
+          -0.0003662109375,
+          1.8189894035458565e-10,
+          2.546585164964199e-11,
+          1.6552803572267294e-10
+        ],
+        "position_error_m": 0.0010194635702477437,
+        "velocity_error_m_s": 2.472554644746384e-10,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 2.687533418692098e-16,
+            "relative_angular_momentum_error": 3.43587313278611e-16
+          },
+          "oracle": {
+            "relative_energy_error": 1.3437667093460488e-15,
+            "relative_angular_momentum_error": 2.8053786654212935e-16
+          }
+        }
+      }
+    },
+    {
+      "index": 16,
+      "epoch_tdb_s": 1010553651.245806,
+      "elapsed_s": 31558196.01538372,
+      "status": "passed",
+      "oracle": {
+        "state": [
+          43084186761.6,
+          57445582348.799995,
+          95742637248.0,
+          -29182.918856121978,
+          21887.189142091484,
+          0.0
+        ],
+        "mean_anomaly_rad": 0.0,
+        "eccentric_anomaly_rad": 0.0,
+        "updates": 1,
+        "bracket_width_rad": 0.0,
+        "residual_rad": 0.0
+      },
+      "native_state": [
+        43084186761.60011,
+        57445582348.7999,
+        95742637248.0,
+        -29182.918856121974,
+        21887.189142091513,
+        2.9056294748822485e-11
+      ],
+      "comparison": {
+        "native_minus_oracle": [
+          0.00011444091796875,
+          -9.918212890625e-05,
+          0.0,
+          3.637978807091713e-12,
+          2.9103830456733704e-11,
+          2.9056294748822485e-11
+        ],
+        "position_error_m": 0.00015143915741942755,
+        "velocity_error_m_s": 4.128602792211425e-11,
+        "invariants": {
+          "native": {
+            "relative_energy_error": 2.687533418692098e-16,
+            "relative_angular_momentum_error": 2.064702792708235e-16
+          },
+          "oracle": {
+            "relative_energy_error": 8.062600256076294e-16,
+            "relative_angular_momentum_error": 2.624191451542901e-16
+          }
+        }
+      }
+    }
+  ],
+  "provenance": {
+    "base_revision": "35ae8a324ab38fa8da8bf74f5bfe775df78e338a",
+    "dirty_status": [
+      "?? docs/adr/experiments/0122-elliptic-coast.json"
+    ],
+    "source_sha256": {
+      "src/space_nav/__init__.py": "56af2f12a1b4ea3cf1b65201c560b1dff44cb786e9e81d2735c0430b8daa0174",
+      "src/space_nav/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/space_nav/bezier_local_targeting.py": "88621f68d2efee4d4f456617dd3b169964a813fd6fc713c7143b2cda01d6bd7f",
+      "src/space_nav/bounded_local_targeting.py": "f528e9668d8dfa59afab5717f8b75559a16f7967e849500fff2014d32d53faa1",
+      "src/space_nav/cli.py": "435b3788835cec0a40be65ff5b1057ef49eb3975a405be7ac91f76c83fbd2c5b",
+      "src/space_nav/coast_diagnostic.py": "eef6551783af3df0cefae2b039d3f5541fb1aaf452c59e67e5edbc8a25439ff5",
+      "src/space_nav/ephemeris.py": "70535eb56881ffbc197903e53b675716128ea4630fb4d377bcf63b1a5d56bfea",
+      "src/space_nav/errors.py": "ac5dc35b2953346e0f7b53973761b844e5a1572cfc753d5563975932e7feb5a7",
+      "src/space_nav/explorer.py": "0e151f806a8467adc11f88aa86b9721330e20c140c89d7583fbdfbf74b3b81b1",
+      "src/space_nav/explorer_help.py": "1ffc03c954a5e15c4f5641937b4189548fc7b2471e1d6352f34c4d86354ea5b2",
+      "src/space_nav/explorer_ui.py": "d8a9816b3331d728d9819e36a03e3273b493327cf683c36de79d63096adf8681",
+      "src/space_nav/local_burn.py": "2ccc39a486bb71f0b9ae4e0c75c4453a440f76611967b278df25e7abec31bd01",
+      "src/space_nav/local_targeting.py": "8c8b596800b4fd310dd5fe66e0a792147b0e46dd82cde9541440bc7973aa5cc7",
+      "src/space_nav/lunar_departure.py": "7f17240c063ad72eed484e2f2d75547b701751e7da70b8f499cd7d35a7b6dffb",
+      "src/space_nav/models.py": "2a6817fa0f26b1275264af1a20af798464c651ba1142114f27402ea8441123f8",
+      "src/space_nav/research.py": "1b85f7e91e1c0bff10c8b670a9df5ffb8968d458af1dd188bef67585574c590c",
+      "src/space_nav/research_columns.py": "c012e3485d708dd7e593030ce3ba7e2b73d72815320d5147fe703f05d2480530",
+      "src/space_nav/research_correction.py": "fbd502e1818f632ea9574fc2548331a3567f25e509f0df4132343a1e1cbca1b1",
+      "src/space_nav/research_experiment.py": "4c37dc5d90c25ee45b49192b00b4d38e2ff1e1cad1fa675e70d73173fe5e859a",
+      "src/space_nav/research_propagation.py": "94c315cd9d3a5b56bb404fb4a978401b10a0e75408b29ddfdb0b9f1fca95c527",
+      "src/space_nav/research_response.py": "533e735b99cbc3ca18181b84d3808a4e6c6a990f802a094ec4960166e211cc69",
+      "src/space_nav/scenario.py": "2564e84a756aabde9a3d387ebb6b2d9cbf845ff54fceff5215ff6a3d8397f16d",
+      "src/space_nav/targeting_experiment.py": "4e7bd91c3e2a0afdbf172fd8313a6ef159a4316c8909653063d41dd727340e99",
+      "src/space_nav/trajectory.py": "029bd5f0d10802143aa87a75827f8cce4b97a1ff36c9da7fc479ad3e6d0f0790",
+      "src/space_nav/transfer.py": "92ca8779a6d2077750c4953260c26b20be3395579d72ed27bca24faa37be0cdb",
+      "docs/adr/experiments/0121-elliptic-coast.py": "ed02d1299b646cff0686c474b67668dcff5e63f99b3c2fd69b72b7f8abb235bd",
+      "environment.yml": "c2948772bfbe09677354f803d9ba79e4c78eb44c5916c98b8d58126832c0e4b7",
+      "docs/adr/experiments/0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0"
+    },
+    "native_binary_sha256": {
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/kernel.so": "4b36447713fef9a6ec23a73bd5642833381a0645ee573573144ed492f88b1f12"
+    },
+    "python": "3.12.14",
+    "python_executable": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "tudatpy": "1.0.0",
+    "numpy": "1.26.4",
+    "space_nav_import": "/Users/agrudin/dev/my/ariadna/src/space_nav/__init__.py",
+    "tudatpy_import": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/__init__.py",
+    "conda_build": {
+      "name": "tudatpy",
+      "version": "1.0.0",
+      "build": "py312h2196d89_3",
+      "channel": "https://conda.anaconda.org/tudat-team/osx-arm64"
+    },
+    "conda_metadata_sha256": "26b84d68ee96cc430a708bd90d42d574954abfa79145c6fe12aed517a4390cc9",
+    "spice_requests": 0
+  },
+  "final_provenance": {
+    "base_revision": "35ae8a324ab38fa8da8bf74f5bfe775df78e338a",
+    "dirty_status": [
+      "?? docs/adr/experiments/0122-elliptic-coast.json"
+    ],
+    "source_sha256": {
+      "src/space_nav/__init__.py": "56af2f12a1b4ea3cf1b65201c560b1dff44cb786e9e81d2735c0430b8daa0174",
+      "src/space_nav/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "src/space_nav/bezier_local_targeting.py": "88621f68d2efee4d4f456617dd3b169964a813fd6fc713c7143b2cda01d6bd7f",
+      "src/space_nav/bounded_local_targeting.py": "f528e9668d8dfa59afab5717f8b75559a16f7967e849500fff2014d32d53faa1",
+      "src/space_nav/cli.py": "435b3788835cec0a40be65ff5b1057ef49eb3975a405be7ac91f76c83fbd2c5b",
+      "src/space_nav/coast_diagnostic.py": "eef6551783af3df0cefae2b039d3f5541fb1aaf452c59e67e5edbc8a25439ff5",
+      "src/space_nav/ephemeris.py": "70535eb56881ffbc197903e53b675716128ea4630fb4d377bcf63b1a5d56bfea",
+      "src/space_nav/errors.py": "ac5dc35b2953346e0f7b53973761b844e5a1572cfc753d5563975932e7feb5a7",
+      "src/space_nav/explorer.py": "0e151f806a8467adc11f88aa86b9721330e20c140c89d7583fbdfbf74b3b81b1",
+      "src/space_nav/explorer_help.py": "1ffc03c954a5e15c4f5641937b4189548fc7b2471e1d6352f34c4d86354ea5b2",
+      "src/space_nav/explorer_ui.py": "d8a9816b3331d728d9819e36a03e3273b493327cf683c36de79d63096adf8681",
+      "src/space_nav/local_burn.py": "2ccc39a486bb71f0b9ae4e0c75c4453a440f76611967b278df25e7abec31bd01",
+      "src/space_nav/local_targeting.py": "8c8b596800b4fd310dd5fe66e0a792147b0e46dd82cde9541440bc7973aa5cc7",
+      "src/space_nav/lunar_departure.py": "7f17240c063ad72eed484e2f2d75547b701751e7da70b8f499cd7d35a7b6dffb",
+      "src/space_nav/models.py": "2a6817fa0f26b1275264af1a20af798464c651ba1142114f27402ea8441123f8",
+      "src/space_nav/research.py": "1b85f7e91e1c0bff10c8b670a9df5ffb8968d458af1dd188bef67585574c590c",
+      "src/space_nav/research_columns.py": "c012e3485d708dd7e593030ce3ba7e2b73d72815320d5147fe703f05d2480530",
+      "src/space_nav/research_correction.py": "fbd502e1818f632ea9574fc2548331a3567f25e509f0df4132343a1e1cbca1b1",
+      "src/space_nav/research_experiment.py": "4c37dc5d90c25ee45b49192b00b4d38e2ff1e1cad1fa675e70d73173fe5e859a",
+      "src/space_nav/research_propagation.py": "94c315cd9d3a5b56bb404fb4a978401b10a0e75408b29ddfdb0b9f1fca95c527",
+      "src/space_nav/research_response.py": "533e735b99cbc3ca18181b84d3808a4e6c6a990f802a094ec4960166e211cc69",
+      "src/space_nav/scenario.py": "2564e84a756aabde9a3d387ebb6b2d9cbf845ff54fceff5215ff6a3d8397f16d",
+      "src/space_nav/targeting_experiment.py": "4e7bd91c3e2a0afdbf172fd8313a6ef159a4316c8909653063d41dd727340e99",
+      "src/space_nav/trajectory.py": "029bd5f0d10802143aa87a75827f8cce4b97a1ff36c9da7fc479ad3e6d0f0790",
+      "src/space_nav/transfer.py": "92ca8779a6d2077750c4953260c26b20be3395579d72ed27bca24faa37be0cdb",
+      "docs/adr/experiments/0121-elliptic-coast.py": "ed02d1299b646cff0686c474b67668dcff5e63f99b3c2fd69b72b7f8abb235bd",
+      "environment.yml": "c2948772bfbe09677354f803d9ba79e4c78eb44c5916c98b8d58126832c0e4b7",
+      "docs/adr/experiments/0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0"
+    },
+    "native_binary_sha256": {
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/kernel.so": "4b36447713fef9a6ec23a73bd5642833381a0645ee573573144ed492f88b1f12"
+    },
+    "python": "3.12.14",
+    "python_executable": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "tudatpy": "1.0.0",
+    "numpy": "1.26.4",
+    "space_nav_import": "/Users/agrudin/dev/my/ariadna/src/space_nav/__init__.py",
+    "tudatpy_import": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/__init__.py",
+    "conda_build": {
+      "name": "tudatpy",
+      "version": "1.0.0",
+      "build": "py312h2196d89_3",
+      "channel": "https://conda.anaconda.org/tudat-team/osx-arm64"
+    },
+    "conda_metadata_sha256": "26b84d68ee96cc430a708bd90d42d574954abfa79145c6fe12aed517a4390cc9",
+    "spice_requests": 0
+  },
+  "elapsed_seconds": 0.5558036253787577
+}

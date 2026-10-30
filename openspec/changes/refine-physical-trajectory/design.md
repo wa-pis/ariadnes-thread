@@ -83,7 +83,11 @@ This is a coast-component gate, not the entire R1.1 coast/SSB translation, finit
 thrust, M6 or strict M3 qualification.
 [ADR 0121](../../../docs/adr/0121-elliptic-benchmark-preparation.md) records the
 private standard-library oracle/runner and 51 native-free preparation tests.
-The real comparison has not run; separate execution approval is still required.
+Subsequently authorized [ADR 0122](../../../docs/adr/0122-independent-elliptic-coast-passes.md)
+executes exactly one study: all 17 pairs pass in 0.5558036253787577s, maximum
+0.0015983353934112736m /3.66733086796617e-10m/s. Root, exact alignment,
+invariants and independent offline arithmetic/provenance checks pass. R1.2 is
+closed only at this synthetic coast-component scope; R1.3 profile design is next.
 
 ### Research D17 — smooth steering freedom without more fuel
 
