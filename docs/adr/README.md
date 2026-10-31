@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0126 — Proposed actual-reference coast verification](0126-propose-reference-coast-verification.md): recommended successor; priority/contract acceptance and all implementation remain pending.
 - [0125 — Research export and usable path](0125-research-export-and-usable-path.md): R1.4 implementation; verification recorded in the ADR.
 - [0124 — Reader and research profile ready](0124-oem-reader-and-research-profile-ready.md) — R1.3 research readiness: corrected source hash, approved unregistered-originator exception, actual INPOP19a/ICRF admission and independent stdlib reader with 88 native-free tests. No writer/UI or full CCSDS conformity; R1.4 next.
 - [0123 — Traceable result and OEM profile](0123-traceable-result-and-oem-profile.md) — superseded draft, original limitations retained. Correction/originator and reader readiness subsequently resolved at explicit research scope in 0124; no exporter or conformance claim.

@@ -5961,3 +5961,13 @@ decoder, existing UI/sampler integration, independent accounting, all-node wire
 checks, explicit reserve example and stale-result/error handling. No solver,
 physics, dependency, CLI contract, immutable artifact or strict M3 gate is changed.
 Full regression acceptance is recorded in that ADR before task completion.
+
+
+## Proposed R2 scope review (2026-10-31)
+
+[ADR0126](../../../docs/adr/0126-propose-reference-coast-verification.md) separates
+synthetic component checks and serialization checks from independently checking
+the actual121-node reference coast. Saved Sun states are missing; initial-state,
+frame/time/resource alignment and independent initial-phase equations must be
+specified and accepted before preparation. No code, native study or new model is
+introduced by the scope proposal; strict M3 and existing R1 results are unchanged.

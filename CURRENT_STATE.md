@@ -30,8 +30,7 @@ Automation `ariadna-m3` remains paused. No automatic D18 or repeated D17 study.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — review the delivered R1 research demo
-
+## Next action — select the successor after completed R1
 [ADR 0117](docs/adr/0117-mission-first-demonstration-priority.md) fixes the order;
 accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
 
@@ -44,13 +43,14 @@ accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
    actual INPOP19a/ICRF mapping, independent reader/88 native-free tests. Strict
    OpenSpec/lint/links pass; no writer/UI/native or full-regression work here.
 3. [ADR0125](docs/adr/0125-research-export-and-usable-path.md): R1.4 implements the
-   input → calculation → display → verified JSON/OEM path is complete. 151 focused
+   input → calculation → display → verified JSON/OEM path; implementation complete. 151 focused
    and4766 full tests/630.19s pass; Ruff/strict OpenSpec/links/immutable checks pass.
    Local UI:127.0.0.1:8501. Original model/environment/evidence remain unchanged.
 
-Historical MSL/GRAIL replay, new targeting studies, M4–M6 and automation are not
-part of this delivery. Review the demo and select the next scope explicitly.
-
+[ADR0126](docs/adr/0126-propose-reference-coast-verification.md) proposes R2:
+independently verify the actual121-node reference coast. Sun track is not retained;
+accept the priority and detailed R2.1 contract before preparation or native work.
+No new study, physics, code, UI or automation is authorized by this proposal.
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.

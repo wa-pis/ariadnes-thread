@@ -35,6 +35,17 @@ empirical model discrepancy, not replace the same-force R1.2 oracle. No arc,
 historical native run or change to the mission-first order is implied. The separate
 [R1.1 result](../docs/adr/0119-positive-ideal-m2-reference.md) does not close R1.2.
 
+## Proposed successor — verify the actual reference coast
+
+[ADR0126](../docs/adr/0126-propose-reference-coast-verification.md) recommends
+checking all121 retained reference coast nodes with an independently derived
+same-model calculation. R1.2's synthetic ellipse and R1.4's wire checks remain
+separate evidence. The reference lacks a saved Sun track; resource/time alignment,
+initial-phase equations, numerical gates and budget need an accepted R2.1 contract.
+R2.0 scope review is documented; R2.1 contract, R2.2 preparation and R2.3 execution
+remain pending explicit direction and their stated gates. This proposal authorizes
+zero native calls and no runtime/UI changes, new physics or automatic study.
+
 ## Retained research history — not the current schedule
 
 The work packages below preserve completed evidence and earlier scope. They do

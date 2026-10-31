@@ -91,3 +91,8 @@ R1.4 implementation was explicitly instructed2026-10-31 after ADR0124 readiness.
 [ADR0125](../../../docs/adr/0125-research-export-and-usable-path.md) records the
 repository-based input/display/verified research JSON/OEM path and its checks;
 it does not claim strict M3 completion or full CCSDS conformity.
+
+
+After R1 delivery, [ADR0126](../../../docs/adr/0126-propose-reference-coast-verification.md)
+proposes actual-reference coast verification as a successor. Priority and detailed
+contract acceptance remain pending; no new native/runtime work is authorized.
