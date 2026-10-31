@@ -5982,3 +5982,12 @@ velocity, numeric domain, all-node relative/SSB/invariant gates and a single
 30s/121-Sun-read cap. It separates shared ephemeris translation from independent
 spacecraft coast arithmetic; actual oracle preparation/native execution remains
 unimplemented. Eight synthetic initial algebra checks are not reference evidence.
+
+
+## R2.2 private verifier preparation (2026-10-31)
+
+The user accepted continuation after ADR0127. [ADR0128](../../../docs/adr/0128-reference-coast-verifier-ready.md)
+records the independent Cartesian-phase/bisection runner, separate offline audit
+and86 new/225 combined native-free tests. Actual native wiring/comparison remains
+unexecuted; no new production behavior, dependencies, force model or qualified
+mission result. R2.3 requires its separately instructed bounded execution/audit.

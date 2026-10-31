@@ -3,8 +3,8 @@
 ### Requirement: Explicitly accept the successor scope before new physical work
 
 The user-selected R2 actual-reference coast verification SHALL preserve completed
-R1 and all existing scientific gates. ADR0126 priority is accepted; the new detailed
-ADR0127 contract SHALL remain proposed until explicitly accepted for preparation.
+R1 and all existing scientific gates. ADR0126 priority and ADR0127 preparation
+contract are accepted; ADR0128 records native-free preparation, not R2.3 execution.
 
 #### Scenario: Record a successor without automatically executing it
 

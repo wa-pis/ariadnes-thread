@@ -64,7 +64,9 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
-- [0127 — Reference-coast verification contract](0127-reference-coast-verification-contract.md): R2 priority selected; detailed equations/domain/alignment/gates/budget proposed, no native work.
+- [0128 — Reference-coast verifier ready](0128-reference-coast-verifier-ready.md): R2.2 private runner/audit and native-free tests; actual-reference comparison not launched.
+
+- [0127 — Reference-coast verification contract](0127-reference-coast-verification-contract.md): R2 detailed contract accepted for preparation; no native study.
 - [0126 — Proposed actual-reference coast verification](0126-propose-reference-coast-verification.md): user-selected R2 priority; detailed contract and implementation tracked separately.
 - [0125 — Research export and usable path](0125-research-export-and-usable-path.md): R1.4 implementation; verification recorded in the ADR.
 - [0124 — Reader and research profile ready](0124-oem-reader-and-research-profile-ready.md) — R1.3 research readiness: corrected source hash, approved unregistered-originator exception, actual INPOP19a/ICRF admission and independent stdlib reader with 88 native-free tests. No writer/UI or full CCSDS conformity; R1.4 next.

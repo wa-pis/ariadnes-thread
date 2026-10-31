@@ -103,3 +103,12 @@ The user selected R2 reference-coast verification. [ADR0127](../../../docs/adr/0
 records the proposed detailed initial-state/phase/domain/frame/time/gate/budget
 contract and eight offline initial algebra checks. Priority acceptance does not
 authorize native execution or imply detailed-contract/preparation acceptance.
+
+
+## R2.2 private verifier preparation (2026-10-31)
+
+The user accepted continuation after ADR0127. [ADR0128](../../../docs/adr/0128-reference-coast-verifier-ready.md)
+records the independent Cartesian-phase/bisection runner, separate offline audit
+and86 new/225 combined native-free tests. Actual native wiring/comparison remains
+unexecuted; no new production behavior, dependencies, force model or qualified
+mission result. R2.3 requires its separately instructed bounded execution/audit.

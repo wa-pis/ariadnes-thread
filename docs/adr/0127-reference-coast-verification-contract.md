@@ -1,8 +1,8 @@
 # 0127 — Specify independent verification of the retained reference coast
 
 Date: 2026-10-31
-Decision status: proposed detailed contract; user explicitly accepted R2 priority.
-Implementation: R2.1 contract and eight offline algebraic checks complete; verifier preparation and native execution not started.
+Decision status: accepted for preparation after user continuation on 2026-10-31; R2.3 execution remains separate.
+Implementation: R2.1 design complete; subsequent private preparation is recorded in [ADR0128](0128-reference-coast-verifier-ready.md); native execution not started.
 Scope / milestone: R2 actual-reference ideal coast, within active M3; no new dynamics.
 Base revision: `b5df9f2b597b45b6e683b149d38232ebc322271e`, clean before this documentation stage.
 Related OpenSpec: [requirements](../../openspec/changes/refine-physical-trajectory/specs/reference-coast-verification/spec.md), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md).

@@ -39,15 +39,16 @@ historical native run or change to the mission-first order is implied. The separ
 
 The user selected [ADR0126](../docs/adr/0126-propose-reference-coast-verification.md)'s
 reference-coast verification. [ADR0127](../docs/adr/0127-reference-coast-verification-contract.md)
-freezes the proposed detailed contract: original121 nodes, independent Cartesian
+freezes the preparation contract: original121 nodes, independent Cartesian
 initial phase, exact Sun/SSB/TDB alignment, 1m/1e-6m/s numerical gates, relative
 invariants<=1e-12, at most121 Sun reads/shared30s and zero native spacecraft
 propagations. Eight offline initial algebra checks pass; actual reference coverage,
 domain membership and numerical accuracy remain unverified.
-R2.1 contract design is recorded. Accept its details before R2.2 native-free
-verifier preparation; R2.3 requires verified preparation and a separate execution
-instruction. No native work, new force model/optimizer or automation is authorized
-by the contract document. R1 and all strict M3 gates remain unchanged.
+R2.1 contract is accepted for preparation; [ADR0128](../docs/adr/0128-reference-coast-verifier-ready.md)
+records R2.2's private independent runner, separate offline audit and86 new/225
+combined native-free tests. No actual-reference Sun query/comparison has run.
+Next: separately instructed R2.3 single comparison and audit, under the same gates.
+No new force model/optimizer or automation; R1 and all strict M3 gates are unchanged.
 
 ## Retained research history — not the current schedule
 
