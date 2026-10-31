@@ -2,9 +2,9 @@
 
 ### Requirement: Explicitly accept the successor scope before new physical work
 
-The proposed R2 actual-reference coast verification SHALL preserve completed R1
-and all existing scientific gates. ADR0126 SHALL remain a proposal until the
-next priority and detailed verification contract are explicitly accepted.
+The user-selected R2 actual-reference coast verification SHALL preserve completed
+R1 and all existing scientific gates. ADR0126 priority is accepted; the new detailed
+ADR0127 contract SHALL remain proposed until explicitly accepted for preparation.
 
 #### Scenario: Record a successor without automatically executing it
 
@@ -31,3 +31,33 @@ native execution. This requirement SHALL NOT assert that the contract is ready.
 
 - **WHEN** input identity, resource/time coverage, oracle domain, numerical gates or execution budget is unresolved
 - **THEN** preparation/execution SHALL remain unavailable with the missing check named; no native query, retry, tolerance relaxation, substitute trajectory or new propagation SHALL fill that gap without the separately accepted contract
+
+
+### Requirement: Freeze the independently derived reference-coast contract
+
+The R2 study SHALL use ADR0127's exact inputs, equations, admitted domain, gates
+and bounded procedure only after detailed-contract acceptance and verified
+preparation. Recording the contract SHALL NOT authorize native execution.
+
+#### Scenario: Recover the actual initial phase without fitting retained samples
+
+- **WHEN** the independent verifier is prepared under the accepted detailed contract
+- **THEN** its seed SHALL be retained Moon departure position/velocity minus matching Sun0, plus retained departure excess velocity with ADR0127's explicit operation order; no saved propagated spacecraft node or final state SHALL set or fit the seed
+- **AND** the oracle SHALL derive h, evec, a, P/Q/W, E0 via atan2 and M0, then solve remainder(M0+n*dt,2*pi) with at most64 bisections, bracket width and residual each<=2e-14rad; it SHALL use only stdlib scalar/vector arithmetic without production or native conversion/propagation helpers
+- **AND** its admitted domain SHALL be finite nondegenerate negative-energy input, 1e9<=a<=1e13m, 1e-6<=e<=0.95 and orthonormal/right-handed basis within1e-12; unsupported input SHALL stop unavailable without candidate substitution, fitting or clamping
+- **AND** eight tilted/prograde/retrograde initial fixtures at E0=0,+pi/2,pi,-pi/2 SHALL reconstruct within0.01m/1e-8m/s, relative a and absolute e errors<=1e-12 and wrapped phase<=2e-14rad; independent forward-phase/recurrence and negative/budget fixtures SHALL pass before native execution
+
+#### Scenario: Compare every retained point in explicitly aligned frames
+
+- **WHEN** the separately instructed study evaluates the frozen121-point reference
+- **THEN** at every original numeric TDB epoch, both Sun-relative and re-added SSB state differences SHALL be Euclidean<=1m position/1e-6m/s velocity with exact epoch/dt/GM alignment; no mean or median SHALL replace any node's gate
+- **AND** each path's Sun-relative specific-energy and vector-angular-momentum relative errors against the unchanged initial seed SHALL be<=1e-12; raw Sun states, seed operands, initial residual, signed differences, roots and frame translations SHALL be retained
+- **AND** the Sun ephemeris SHALL remain a shared authoritative input, not independently validated truth; successful comparison SHALL leave finite burns, scalar mass dynamics, mission safety, search optimality and strict M3/M6 unqualified
+
+#### Scenario: Stop one bounded study and preserve provenance and failures
+
+- **WHEN** verified preparation and a separate execution instruction permit R2.3
+- **THEN** a fresh pinned process SHALL admit only the original ordered13-kernel hashes and ADR0127 runtime/source identities; at most121 exact-epoch Sun provider calls and zero native spacecraft propagations/planner/sampler/extra-body/GM reads SHALL occur
+- **AND** one cooperative30s budget SHALL include imports, resources, pure checks, comparisons, final inventory and evidence finalization, with checks before/after calls; actual non-preemptible overrun SHALL fail and retain returned data
+- **AND** attempted/completed counts SHALL distinguish calls from returned states; first error/unavailable/domain/numeric/root/invariant gate SHALL stop further calls without retry, replacement samples or changed gates/budget
+- **AND** exclusive new output SHALL retain full/partial evidence, original/reference/runner/native/resource hashes, counters, timing and contextual error; a zero-native offline audit SHALL recalculate all available comparisons before any R2 success claim

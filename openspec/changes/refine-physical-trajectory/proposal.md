@@ -94,5 +94,12 @@ it does not claim strict M3 completion or full CCSDS conformity.
 
 
 After R1 delivery, [ADR0126](../../../docs/adr/0126-propose-reference-coast-verification.md)
-proposes actual-reference coast verification as a successor. Priority and detailed
-contract acceptance remain pending; no new native/runtime work is authorized.
+proposed actual-reference coast verification as a successor. The user has since
+selected this priority; detailed-contract acceptance remains pending and no new
+native/runtime work is authorized.
+
+
+The user selected R2 reference-coast verification. [ADR0127](../../../docs/adr/0127-reference-coast-verification-contract.md)
+records the proposed detailed initial-state/phase/domain/frame/time/gate/budget
+contract and eight offline initial algebra checks. Priority acceptance does not
+authorize native execution or imply detailed-contract/preparation acceptance.

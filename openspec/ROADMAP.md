@@ -35,16 +35,19 @@ empirical model discrepancy, not replace the same-force R1.2 oracle. No arc,
 historical native run or change to the mission-first order is implied. The separate
 [R1.1 result](../docs/adr/0119-positive-ideal-m2-reference.md) does not close R1.2.
 
-## Proposed successor — verify the actual reference coast
+## Current priority R2 — verify the actual reference coast (selected2026-10-31)
 
-[ADR0126](../docs/adr/0126-propose-reference-coast-verification.md) recommends
-checking all121 retained reference coast nodes with an independently derived
-same-model calculation. R1.2's synthetic ellipse and R1.4's wire checks remain
-separate evidence. The reference lacks a saved Sun track; resource/time alignment,
-initial-phase equations, numerical gates and budget need an accepted R2.1 contract.
-R2.0 scope review is documented; R2.1 contract, R2.2 preparation and R2.3 execution
-remain pending explicit direction and their stated gates. This proposal authorizes
-zero native calls and no runtime/UI changes, new physics or automatic study.
+The user selected [ADR0126](../docs/adr/0126-propose-reference-coast-verification.md)'s
+reference-coast verification. [ADR0127](../docs/adr/0127-reference-coast-verification-contract.md)
+freezes the proposed detailed contract: original121 nodes, independent Cartesian
+initial phase, exact Sun/SSB/TDB alignment, 1m/1e-6m/s numerical gates, relative
+invariants<=1e-12, at most121 Sun reads/shared30s and zero native spacecraft
+propagations. Eight offline initial algebra checks pass; actual reference coverage,
+domain membership and numerical accuracy remain unverified.
+R2.1 contract design is recorded. Accept its details before R2.2 native-free
+verifier preparation; R2.3 requires verified preparation and a separate execution
+instruction. No native work, new force model/optimizer or automation is authorized
+by the contract document. R1 and all strict M3 gates remain unchanged.
 
 ## Retained research history — not the current schedule
 

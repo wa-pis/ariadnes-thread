@@ -1,7 +1,7 @@
 # 0126 — Propose independent verification of the actual reference coast
 
 Date: 2026-10-31
-Decision status: proposed; next-priority choice and detailed execution contract remain unaccepted.
+Decision status: accepted for R2 priority by explicit user choice on2026-10-31; detailed contract proposed separately in [0127](0127-reference-coast-verification-contract.md).
 Implementation: scope proposal only; no oracle, runner, native calls or UI change.
 Scope / milestone: proposed R2 within the sole active M3 change; R1 remains complete.
 Base revision: `b84b04e87fe453d0146c56f2052d0d9f2254781f`, clean before review.

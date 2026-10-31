@@ -5971,3 +5971,14 @@ the actual121-node reference coast. Saved Sun states are missing; initial-state,
 frame/time/resource alignment and independent initial-phase equations must be
 specified and accepted before preparation. No code, native study or new model is
 introduced by the scope proposal; strict M3 and existing R1 results are unchanged.
+
+
+## R2.1 initial-state and independent phase contract (2026-10-31)
+
+[ADR0127](../../../docs/adr/0127-reference-coast-verification-contract.md) freezes
+the original Moon-minus-Sun seed plus retained excess velocity, Cartesian-derived
+ellipse basis and atan2 initial phase, independent bisection and derivative
+velocity, numeric domain, all-node relative/SSB/invariant gates and a single
+30s/121-Sun-read cap. It separates shared ephemeris translation from independent
+spacecraft coast arithmetic; actual oracle preparation/native execution remains
+unimplemented. Eight synthetic initial algebra checks are not reference evidence.

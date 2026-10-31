@@ -21,16 +21,14 @@ Automation `ariadna-m3` remains paused. No automatic D18 or repeated D17 study.
   Decimal mass/reserve, endpoint/provenance/repeatability/offline checks pass.
 - Only ideal M2 feasibility: Sun-point-mass coast/body-centre endpoints/scalar
   instantaneous maneuvers. Not finite-burn, operational or full-mission feasibility.
-- 18 native-free runner checks, offline evidence audit, Ruff, strict OpenSpec,
-  links/diff/immutable checks pass. Production tests unchanged; full suite not
-  rerun for this bounded evidence stage. Prior full 4588 tests/626.08 s are D17.2
-  evidence; 607 focused/7.17 s are D17.3 evidence, not fresh R1 regressions.
+- R1.1 offline/identity/reserve checks pass; R1.4 full regressions are below.
+  D17.2/D17.3 test counts remain historical evidence, not new reference checks.
 - M1/M2 and visual explorer are archived. UI uses M2 with R1 research export.
 - D17.3 remains unclosed: 44.386790 km /185.850963 m/s; retained
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — select the successor after completed R1
+## Next action — review R2.1 contract before verifier preparation
 [ADR 0117](docs/adr/0117-mission-first-demonstration-priority.md) fixes the order;
 accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
 
@@ -47,10 +45,11 @@ accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
    and4766 full tests/630.19s pass; Ruff/strict OpenSpec/links/immutable checks pass.
    Local UI:127.0.0.1:8501. Original model/environment/evidence remain unchanged.
 
-[ADR0126](docs/adr/0126-propose-reference-coast-verification.md) proposes R2:
-independently verify the actual121-node reference coast. Sun track is not retained;
-accept the priority and detailed R2.1 contract before preparation or native work.
-No new study, physics, code, UI or automation is authorized by this proposal.
+R2 priority is user-selected. [ADR0127](docs/adr/0127-reference-coast-verification-contract.md)
+proposes its detailed contract: independent initial phase, all121 nodes,
+1m/1e-6m/s gates, up to121 Sun reads/shared30s. Eight offline initial algebra
+checks pass; actual reference domain/accuracy remains unverified. Accept contract
+before R2.2 native-free preparation; R2.3 needs a separate execution instruction.
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
