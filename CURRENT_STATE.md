@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-10-30. Keep this file under 60 lines. Current instructions live
+Updated: 2026-10-31. Keep this file under 60 lines. Current instructions live
 here and at the top of the roadmap; retained detail belongs in the ADRs.
 
 ## Goal and scheduling
@@ -30,7 +30,7 @@ Automation `ariadna-m3` remains paused. No automatic D18 or repeated D17 study.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — verify R1.3 profile readiness before exporter code
+## Next action — separately implement the R1.4 usable path
 
 [ADR 0117](docs/adr/0117-mission-first-demonstration-priority.md) fixes the order;
 accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
@@ -39,10 +39,10 @@ accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
    base `35ae8a3`, exactly17 adapter calls in 0.5558036253787577s, no retries.
    Max differences 0.00159834m /3.66733e-10m/s; roots/alignment/invariants and
    offline identity/arithmetic audit pass. Synthetic Sun-relative coast only.
-2. [ADR 0123](docs/adr/0123-traceable-result-and-oem-profile.md): R1.3 draft JSON/
-   OEM KVN3.0 contracts specified; parent gate open. Next resolve corrections and
-   actual originator, then separately prepare independent reader/fixtures. No
-   exporter/native work; strict OpenSpec/links/history checks, no runtime rerun.
+2. [ADR 0124](docs/adr/0124-oem-reader-and-research-profile-ready.md): R1.3 research
+   readiness verified: corrected source, approved unregistered ARIADNA notice,
+   actual INPOP19a/ICRF mapping, independent reader/88 native-free tests. Strict
+   OpenSpec/lint/links pass; no writer/UI/native or full-regression work here.
 3. R1.4 After readiness and separate implementation instruction, deliver one
    input → calculation → display → export → independent decoding path;
    verify focused/full regressions and strict OpenSpec at implementation completion.

@@ -1,12 +1,12 @@
 # 0123 — Design a traceable result and narrow OEM profile
 
 Date: 2026-10-30
-Decision status: proposed; user requested the next R1 stage, not acceptance of an unspecified profile.
+Decision status: superseded by [0124](0124-oem-reader-and-research-profile-ready.md); original draft and unresolved checks below preserved.
 Implementation: specification draft only; no exporter, reader or fixtures implemented.
 Scope / milestone: R1.3a; parent R1.3 remains open pending readiness checks.
 Base revision: `0af58d0b33c89c35f4dcb9cfb4271dc43702b488`, clean before this stage.
 Related OpenSpec: [result/profile requirements](../../openspec/changes/refine-physical-trajectory/specs/traceable-trajectory-result/spec.md), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md).
-Supersedes / Superseded by: none; elaborates [0117](0117-mission-first-demonstration-priority.md) after [0122](0122-independent-elliptic-coast-passes.md).
+Supersedes: none. Superseded by [0124](0124-oem-reader-and-research-profile-ready.md); elaborates [0117](0117-mission-first-demonstration-priority.md) after [0122](0122-independent-elliptic-coast-passes.md).
 
 ## Context and constraints
 

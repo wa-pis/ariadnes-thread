@@ -109,6 +109,24 @@ research deviation), freeze source/reader identities and test fixtures before
 profile acceptance. R1.3 remains open; this planning stage implements no reader,
 writer, UI, dependency or native computation and does not authorize registration.
 
+### R1.3 verified research-profile readiness (2026-10-31)
+
+[ADR0124](../../../docs/adr/0124-oem-reader-and-research-profile-ready.md)
+supersedes the draft after user-approved preparation and explicit approval of
+ORIGINATOR=ARIADNA with an unregistered/no-full-conformity notice. Pin corrected
+`502x0b3e2tc11.pdf` by content hash; preserve differing catalogue/control-page
+dates rather than inventing a chronology. Correct the DE-only draft assumption:
+the actual hash-bound ADR0119 reference uses INPOP19a, documented by IMCCE in ICRF.
+Admit its complete ordered kernel manifest, not arbitrary J2000-labelled data.
+
+Private `r1-oem-audit-v1` uses independent stdlib Decimal/calendar decoding and
+external expected SI/TDB/ID/status, with 88 native-free tests and hand-authored
+mixed-sign/leap-day fixtures. Wrong units/axes/time and malformed files fail the
+predeclared conversion/profile gates; parsing cannot qualify physics. Bind result
+identity to actual scientific states as well as candidate/inputs/resources.
+R1.3 is ready only at research scope. R1.4 still needs separate implementation,
+actual writer/UI acceptance and full regression; no production/native change here.
+
 ### Research D17 — smooth steering freedom without more fuel
 
 [ADR 0114](../../../docs/adr/0114-quadratic-steering-freedom.md) diagnoses the

@@ -4,14 +4,15 @@
 
 The proposed `ariadna-result-v1` contract SHALL preserve the canonical SI/SSB/J2000
 states at numeric TDB seconds since J2000 and the actual M2 calculation identity.
-ADR 0123 SHALL remain a proposal until the R1.3 readiness checks pass.
+ADR 0124 supersedes the original ADR 0123 draft after verified R1.3 readiness;
+production implementation SHALL still require a separate R1.4 instruction.
 
 #### Scenario: Retain one reproducible ideal coast result
 
 - **WHEN** the separately instructed R1.4 implementation produces a completed result
 - **THEN** JSON SHALL contain schema version, normalized actual scenario and input digest, complete selected candidate, model ID/omissions, state count and ordered states, input/result identities, execution diagnostics and source/resource provenance
 - **AND** model ID SHALL remain `sun-centered-zero-revolution-patched-conic-v1`; the positive reference SHALL use 121 existing-sampler coast states, without new propagation during export or relabelling coast endpoints as parking-orbit states
-- **AND** normalized-input digest SHALL use ADR 0123's sorted compact finite UTF-8 JSON rules including supplied-but-ignored fields; result identity SHALL also bind candidate data, sample count, model, actual source/resource hashes and schema version, excluding timings/creation timestamps
+- **AND** normalized-input digest SHALL use ADR 0123's sorted compact finite UTF-8 JSON rules including supplied-but-ignored fields; result identity SHALL also bind actual scientific states/status/reserve, candidate data, sample count, model, actual source/resource hashes and schema version, excluding result_id itself and execution/exchange envelopes
 - **AND** actual Python/TudatPy versions, source revision/hashes/dirty state, kernel identities/order/hashes, GMs, selection policy, search completion/limits/seed and sampler conventions SHALL be retained; missing required provenance SHALL be unavailable, not invented
 
 #### Scenario: Keep distinct scientific and exchange conclusions
@@ -23,22 +24,24 @@ ADR 0123 SHALL remain a proposal until the R1.3 readiness checks pass.
 
 ### Requirement: Freeze a narrow OEM profile before exporter implementation
 
-The draft `ariadna-oem-kvn-v1` SHALL follow ADR 0123's explicit baseline and SHALL
-NOT imply latest-edition conformity, third-party certification or all-OEM support.
+The research `ariadna-oem-kvn-v1` SHALL follow ADR 0124's hash-pinned corrected
+baseline and explicit unregistered-originator deviation. It SHALL NOT imply full
+CCSDS conformity, third-party certification or all-OEM support.
 
 #### Scenario: Resolve the exact baseline and responsible originator
 
 - **WHEN** R1.3b prepares profile acceptance
-- **THEN** it SHALL freeze the inspected CCSDS 502.0-B-3 April 2023 EC1 May 2023 document bytes/hash and reconcile later advertised corrections or explicitly review retaining this older baseline; unavailable correction text SHALL NOT be asserted irrelevant
-- **AND** the actual responsible ORIGINATOR and its required SANA identity SHALL be verified, or a clearly labelled experimental deviation SHALL be separately proposed for user review; no Ariadna registration or authority to emit for another agency SHALL be assumed
+- **THEN** it SHALL use corrected CCSDS 502.0-B-3 file502x0b3e2tc11.pdf, 3776940bytes, SHA2569165f11d6111c05f9428a2870c9e218ac659af9951324ebe1c6105223efbcd7b; inconsistent catalogue/document-control dates SHALL be recorded rather than silently reconciled
+- **AND** the user-approved research exception SHALL use ORIGINATOR=ARIADNA with the exact unregistered/no-full-conformance notice; SANA registration and authority to emit for another agency SHALL NOT be assumed
 - **AND** the unresolved baseline/originator and unverified reader/fixtures SHALL leave R1.3 open and SHALL NOT authorize production exporter implementation or external registration
 
 #### Scenario: Represent only one admitted coast segment
 
 - **WHEN** an admitted result is serialized after profile acceptance
-- **THEN** OEM SHALL use version3.0, KVN ASCII/LF/final newline, one metadata/data segment, mandatory profile/research/result-ID comments immediately after the version, explicit UTC creation date, actual originator and result-ID MESSAGE_ID
+- **THEN** OEM SHALL use version3.0, KVN ASCII/LF/final newline, one metadata/data segment, ADR0124's five ordered profile/research/originator-caveat/qualification/result-ID comments immediately after the version, explicit UTC creation date, ARIADNA originator and result-ID MESSAGE_ID
 - **AND** hypothetical OBJECT_NAME/OBJECT_ID SHALL be UNKNOWN, CENTER_NAME SHALL be SOLAR SYSTEM BARYCENTER, REF_FRAME SHALL be ICRF and TIME_SYSTEM SHALL be TDB; START_TIME/STOP_TIME SHALL match encoded endpoint epochs
-- **AND** only provenance-admitted DE4xx-compatible SPICE J2000 axes SHALL map identically to ICRF; unsupported origin/frame/provenance/time SHALL fail without renaming, rotation, translation or automatic resource queries
+- **AND** the reference SHALL admit only ADR0119's complete ordered hash-bound kernel manifest with the documented INPOP19a ICRF convention and SPK SHA25601f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6; unsupported/changed origin/frame/provenance/time SHALL fail without renaming, fitted rotation, translation or automatic resource queries
+- **AND** the local strict subset SHALL require single-space fields, no empty/control/non-ASCII lines, line length<=1024bytes, file length<=2000000bytes, 2–1001 ordered nodes, 64-lowercase-hex result IDs and exact header/metadata order; these SHALL NOT be advertised as general CCSDS limits
 - **AND** acceleration, covariance, maneuvers, extra segments, interpolation recommendations, usable-time overrides, REF_FRAME_EPOCH and user-defined keywords SHALL be omitted/rejected by this subset; no between-node accuracy or safety guarantee SHALL be implied
 
 #### Scenario: Convert units and time without changing the physical samples
@@ -68,6 +71,7 @@ implementation; local decoding SHALL NOT be advertised as third-party validation
 - **THEN** decoded centre/frame/time tokens, sample count/order and metadata endpoints SHALL match the admitted contract exactly; every reconstructed epoch SHALL differ by <=1e-6s and every SI vector by Euclidean <=0.001m position /1e-9m/s velocity
 - **AND** JSON SHALL retain the OEM SHA256, profile/version, reader identity, maximum residuals and pass/fail/unavailable status; OEM MESSAGE_ID SHALL bind the result ID without a cyclic hash requirement
 - **AND** read/compare failure SHALL disable export publication and preserve diagnostic evidence, without retries, loosened gates or promotion of physical qualification
+- **AND** the private verify entry point SHALL compare the decoded comment/header ID and qualification to independently supplied expected result identity/status, not only to each other or to the six-state table
 
 ### Requirement: Invalidate stale display and download state
 
