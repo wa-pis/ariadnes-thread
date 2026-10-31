@@ -12,8 +12,8 @@ implementation. Python, TudatPy, and SPICE remain the implementation stack;
 
 See the [product vision](openspec/VISION.md) for the contract and interoperability
 direction, and the [roadmap](openspec/ROADMAP.md) for implemented versus planned
-capabilities. CCSDS interchange and interchangeable numerical backends are goals,
-not features delivered by this documentation update.
+capabilities. A narrow research OEM exchange is available in the local explorer;
+general CCSDS interoperability and interchangeable numerical backends remain goals.
 
 ## Local Streamlit explorer
 
@@ -27,6 +27,25 @@ Open http://127.0.0.1:8501, explicitly load the example, edit parameters, and
 calculate. Select a candidate and move the time slider. Changing input clears
 old results. The original example has an ideal propellant shortfall: this is
 shown as a warning, not hidden by choosing another spacecraft.
+
+For the positive research example, choose **С резервом 50 кг**, click
+**Загрузить пример**, then **Рассчитать перелёт**. After selecting a candidate,
+use **Скачать результат JSON** and **Скачать траекторию OEM** below the plot.
+JSON binds the actual normalized inputs, selected coast, scientific limitations,
+50 kg reserve accounting, source/kernel provenance and OEM hash. The OEM carries
+the same 121 coast nodes in km/km/s with TDB calendar tags. Every node must pass
+an independently implemented decoder before either download appears. Its gates
+are 1 microsecond / 1 mm / 1e-9 m/s for serialization only, not trajectory accuracy.
+
+The profile explicitly uses unregistered `ORIGINATOR=ARIADNA`; it is research-only
+and claims no full CCSDS conformity or operational safety. A coast that lacks the
+reserve remains `unqualified` even if its file decoding passes. Unsupported
+resources/frames or failed exchange checks disable downloads and retain diagnostics.
+Actual input, candidate, source or resource changes invalidate corresponding
+cached results/downloads; slider/sort edits preserve a still-matching candidate.
+Resource/source revalidation may read and hash kernels again; it does not rerun
+search or propagate new trajectory samples. The first export path is repository
+based: missing checkout/source provenance disables export rather than inventing it.
 
 The main controls expose a 1–10000 candidate budget (default 2000) and the actual date/duration
 grid. Sort the returned Pareto front by fuel, flight time or delta-v; optionally

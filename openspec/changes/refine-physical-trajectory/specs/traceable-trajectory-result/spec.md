@@ -2,10 +2,10 @@
 
 ### Requirement: Bind a research result to its actual inputs and scientific scope
 
-The proposed `ariadna-result-v1` contract SHALL preserve the canonical SI/SSB/J2000
+The `ariadna-result-v1` contract SHALL preserve the canonical SI/SSB/J2000
 states at numeric TDB seconds since J2000 and the actual M2 calculation identity.
 ADR 0124 supersedes the original ADR 0123 draft after verified R1.3 readiness;
-production implementation SHALL still require a separate R1.4 instruction.
+production implementation SHALL require a separate R1.4 instruction (received2026-10-31).
 
 #### Scenario: Retain one reproducible ideal coast result
 
@@ -84,3 +84,21 @@ visible/downloadable result to current normalized inputs, selection and resource
 - **THEN** old selected/sample/export caches and downloads SHALL be invalidated before presenting a current result; changed scenario/resources/model SHALL also invalidate the search
 - **AND** a late calculation SHALL be published only if its captured identity still matches current controls; candidate changes MAY preserve the search but SHALL discard the old sampled/exported result
 - **AND** sort/filter-only edits MAY preserve a still-selected matching candidate; stale UI/export behavior SHALL be tested independently of scientific and file-format success
+
+### Requirement: Deliver one verified repository-based research export path
+
+The R1.4 explorer SHALL reuse its current M2 search and sampler and publish only
+paired files that passed the frozen independently implemented decoder.
+
+#### Scenario: Select the explicit positive example
+
+- **WHEN** the user selects the reserve example, loads it, calculates and selects a matching candidate
+- **THEN** the UI SHALL display its121-node coast and offer JSON/OEM downloads only after input/model/endpoint checks, independent mass accounting within1e-9kg, explicit50kg reserve status and all-node wire verification
+- **AND** an unqualified but numerically completed coast SHALL retain unqualified status in JSON and OEM even when exchange passes; no new search or propagation SHALL occur inside serialization
+
+#### Scenario: Preserve the verifier and reject stale publication
+
+- **WHEN** a bundle is built or displayed
+- **THEN** the packaged reader SHALL be byte-identical to ADR0124's frozen source/hash; changing its bytes SHALL disable publication rather than reuse its identity
+- **AND** source/resource checks and input/selection generation guards SHALL reject late or mismatching results before download publication; sort/slider-only changes SHALL preserve a still-matching bundle without repeating search or sampling
+- **AND** calculation/exchange failures SHALL retain stage/message and available provenance with downloads absent; unavailable checkout provenance SHALL fail without an invented revision

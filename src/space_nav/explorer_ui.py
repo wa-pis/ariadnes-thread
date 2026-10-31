@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import math
+from datetime import UTC, datetime
 from pathlib import Path
+from time import monotonic
 import tomllib
 from typing import Any
 
@@ -17,6 +19,7 @@ from .explorer import SCIENCE_LOCK, sample_transfer
 from .explorer_help import CONTROL_HELP, FIELD_HELP, RESULT_HELP
 from .models import ImpulsiveTransferCandidate, Scenario
 from .scenario import scenario_from_mapping
+from .research_export import build_export, source_identity, ResultExportError
 from .transfer import (
     IGNORED_SCENARIO_FIELDS, _grid_shape, _transfer_model_manifest, search_impulsive_transfers,
 )
@@ -59,8 +62,16 @@ LABELS = {
 }
 
 
+def _discard_selected() -> None:
+    st.session_state["selection_generation"] = st.session_state.get("selection_generation", 0) + 1
+    for name in ("sampled", "sampled_id", "export", "export_error", "endpoints", "elapsed"):
+        st.session_state.pop(name, None)
+
+
 def _invalidate() -> None:
-    for name in ("result", "sampled", "sampled_id", "provenance", "elapsed", "candidate", "priority", "fuel_only"):
+    st.session_state["generation"] = st.session_state.get("generation", 0) + 1
+    _discard_selected()
+    for name in ("result", "sampled", "sampled_id", "provenance", "elapsed", "candidate", "priority", "fuel_only", "search_elapsed_s", "calculation_error"):
         st.session_state.pop(name, None)
 
 
@@ -70,6 +81,14 @@ def _search_provenance(scenario: Scenario) -> dict[str, Any]:
         **_runtime_manifest(scenario.limits.random_seed),
         "scenario": scenario.to_dict(),
         "transfer_model": _transfer_model_manifest(scenario),
+        "source": source_identity(),
+    }
+
+
+def _record_failure(stage: str, error: Exception, provenance: dict[str, Any] | None) -> None:
+    st.session_state["calculation_error"] = {
+        "stage": stage, "message": str(error), "calculation": "failed", "exchange": "unavailable",
+        "provenance": provenance,
     }
 
 
@@ -78,9 +97,9 @@ def _load_example() -> None:
     for key in list(st.session_state):
         if key.startswith("field:"):
             del st.session_state[key]
-    st.session_state["inputs"] = tomllib.loads(
-        (ROOT / "examples/reference_mission.toml").read_text(encoding="utf-8")
-    )
+    filename = ("r1_m2_reserve_reference.toml" if st.session_state.get("example_choice") == "С резервом 50 кг"
+                else "reference_mission.toml")
+    st.session_state["inputs"] = tomllib.loads((ROOT / "examples" / filename).read_text(encoding="utf-8"))
 
 
 def _input_fields(raw: dict[str, Any]) -> dict[str, Any]:
@@ -120,16 +139,75 @@ def _input_fields(raw: dict[str, Any]) -> dict[str, Any]:
 
 def _prepare_trajectory(candidate: ImpulsiveTransferCandidate) -> None:
     if st.session_state.get("sampled_id") != candidate.candidate_id:
-        st.session_state.pop("sampled", None)
+        _discard_selected()
+        generation = st.session_state.get("generation", 0)
+        selection_generation = st.session_state["selection_generation"]
+        provenance = st.session_state["provenance"]
         with SCIENCE_LOCK:
             states = sample_transfer(candidate)
             context = {
                 body: tuple(ephemeris._query_body_state_tdb(body, s.epoch_tdb_s) for s in states)
                 for body in ("Sun", "Earth", "Mars")
             }
+            endpoints = tuple(ephemeris._query_body_state_tdb(body, epoch) for body, epoch in (
+                ("Moon", states[0].epoch_tdb_s), ("Mars", states[-1].epoch_tdb_s),
+            ))
+            _check_resources(provenance)
+        if (generation != st.session_state.get("generation", 0)
+                or selection_generation != st.session_state.get("selection_generation", 0)):
+            raise ResultExportError("Входные данные изменились во время расчёта; повторите расчёт.")
         st.session_state["sampled"] = (states, context)
+        st.session_state["endpoints"] = endpoints
         st.session_state["sampled_id"] = candidate.candidate_id
         st.session_state.pop("elapsed", None)
+
+
+def _check_resources(provenance: dict[str, Any] | None = None) -> None:
+    """Revalidate actual resources/source without rerunning search or sampling."""
+    if provenance is None:
+        provenance = st.session_state["provenance"]
+    if (source_identity() != provenance["source"]
+            or ephemeris.kernel_metadata() != provenance["spice"]):
+        raise ResultExportError("Исходный код или ядра SPICE изменились; повторите расчёт.")
+
+
+def _render_export(candidate: ImpulsiveTransferCandidate) -> None:
+    if "export" not in st.session_state and "export_error" not in st.session_state:
+        try:
+            provenance = st.session_state["provenance"]
+            generation = st.session_state.get("generation", 0)
+            selection_generation = st.session_state.get("selection_generation", 0)
+            bundle = build_export(
+                scenario_from_mapping(st.session_state["current_inputs"]), candidate,
+                st.session_state["result"], st.session_state["sampled"][0], provenance,
+                creation_utc=datetime.now(UTC).isoformat(timespec="microseconds").replace("+00:00", "Z"),
+                selection_policy=PRIORITIES[st.session_state.get("priority", "Меньше топлива")],
+                endpoints=st.session_state["endpoints"],
+                search_elapsed_s=st.session_state["search_elapsed_s"],
+            )
+            with SCIENCE_LOCK:
+                _check_resources(provenance)
+            if (generation != st.session_state.get("generation", 0)
+                    or selection_generation != st.session_state.get("selection_generation", 0)):
+                raise ResultExportError("Входные данные изменились во время экспорта.")
+            st.session_state["export"] = bundle
+        except ResultExportError as exc:
+            st.session_state["export_error"] = {
+                "stage": "exchange", "status": "failed", "message": str(exc),
+                "provenance": st.session_state.get("provenance"),
+            }
+    if "export_error" in st.session_state:
+        st.error("Экспорт недоступен: " + st.session_state["export_error"]["message"])
+        with st.expander("Диагностика экспорта"):
+            st.json(st.session_state["export_error"])
+        return
+    bundle = st.session_state["export"]
+    st.caption("Исследовательский экспорт: все точки проверены независимым читателем. "
+               "ARIADNA не зарегистрирована в SANA; полное соответствие CCSDS не заявляется.")
+    st.download_button("Скачать результат JSON", bundle.json_bytes,
+                       file_name=f"ariadna-{bundle.result_id}.json", mime="application/json")
+    st.download_button("Скачать траекторию OEM", bundle.oem_bytes,
+                       file_name=f"ariadna-{bundle.result_id}.oem", mime="text/plain")
 
 
 def _render_trajectory(candidate: ImpulsiveTransferCandidate) -> None:
@@ -181,6 +259,8 @@ def main() -> None:
     st.caption("Исследуйте перелёт: параметры → варианты → траектория")
     st.warning("Исследовательская модель M2: движение вокруг Солнца и идеальные импульсы. "
                "Не моделирует реальные включения двигателя, выход с орбиты Луны или захват Марсом. Не план полёта.")
+    st.selectbox("Пример сценария", ["Учебный", "С резервом 50 кг"], key="example_choice",
+                 help="Выберите пример и загрузите его. Резерв 50 кг относится только к идеальной модели M2.")
     st.button("Загрузить пример", on_click=_load_example)
     if "inputs" not in st.session_state:
         st.info("Загрузите пример явно: даты и параметры аппарата не выбираются за вас.")
@@ -189,23 +269,54 @@ def main() -> None:
     with left:
         calculate = st.button("Рассчитать перелёт", type="primary")
         inputs = _input_fields(st.session_state["inputs"])
+        st.session_state["current_inputs"] = inputs
         if calculate:
             _invalidate()
+            generation = st.session_state["generation"]
+            stage = "scenario-validation"
+            diagnostic: dict[str, Any] = {}
             try:
                 scenario = scenario_from_mapping(inputs)
+                diagnostic["scenario"] = scenario.to_dict()
                 with st.spinner("Ищем варианты перелёта…"), SCIENCE_LOCK:
+                    stage = "initial-provenance"
+                    before_source = source_identity()
+                    before_resources = ephemeris.kernel_metadata()
+                    diagnostic.update(source=before_source, spice=before_resources)
+                    started = monotonic()
+                    stage = "search"
                     result = search_impulsive_transfers(scenario)
+                    search_elapsed_s = monotonic() - started
+                    stage = "final-provenance"
                     provenance = _search_provenance(scenario)
-                st.session_state.update(result=result, provenance=provenance)
+                if (generation != st.session_state["generation"]
+                        or provenance["source"] != before_source or provenance["spice"] != before_resources):
+                    raise ResultExportError("Данные или ресурсы изменились во время поиска; повторите расчёт.")
+                st.session_state.update(result=result, provenance=provenance, search_elapsed_s=search_elapsed_s)
             except (ScenarioValidationError, TransferSearchError, EphemerisError) as exc:
-                st.error(str(exc))
+                _record_failure(stage, exc, diagnostic)
     result_area = right.empty()
     with result_area.container():
+        if "calculation_error" in st.session_state:
+            st.error(st.session_state["calculation_error"]["message"])
+            with st.expander("Диагностика ошибки расчёта"):
+                st.json(st.session_state["calculation_error"])
         if "sampling_error" in st.session_state:
             st.error(st.session_state.pop("sampling_error"))
         result = st.session_state.get("result")
         if result is None:
             st.info("Задайте параметры и нажмите «Рассчитать перелёт».")
+            return
+        try:
+            if scenario_from_mapping(inputs).to_dict() != st.session_state["provenance"]["scenario"]:
+                raise ResultExportError("Параметры изменились; повторите расчёт.")
+            with SCIENCE_LOCK:
+                _check_resources()
+        except (ScenarioValidationError, TransferSearchError, EphemerisError) as exc:
+            diagnostic = st.session_state.get("provenance")
+            _invalidate()
+            _record_failure("stale-result", exc, diagnostic)
+            st.error(str(exc))
             return
         pending = [c for c in sorted(result.pareto_front, key=lambda c: (
             getattr(c, PRIORITIES[st.session_state.get("priority", "Меньше топлива")]), c.candidate_id))
@@ -215,7 +326,9 @@ def main() -> None:
             try:
                 _prepare_trajectory(selected)
             except (TransferSearchError, EphemerisError) as exc:
+                diagnostic = st.session_state.get("provenance")
                 _invalidate()
+                _record_failure("sampling", exc, diagnostic)
                 st.error(str(exc))
                 return
         st.selectbox("Приоритет выбора", list(PRIORITIES), key="priority", help=CONTROL_HELP["priority"])
@@ -233,6 +346,7 @@ def main() -> None:
             st.write(f"Оценено: {result.evaluated_candidates}; решено: {result.solved_candidates}; не решено: {result.failed_candidates}.")
             st.json(provenance)
         if not candidates:
+            _discard_selected()
             for key in ("sampled", "sampled_id", "elapsed", "candidate"):
                 st.session_state.pop(key, None)
             st.info("Нет подходящих вариантов. Отключите фильтр или измените параметры поиска.")
@@ -241,7 +355,7 @@ def main() -> None:
             st.session_state["candidate"] = next(iter(candidates))
         chosen = st.selectbox("Вариант перелёта", list(candidates),
                               index=list(candidates).index(st.session_state["candidate"]),
-                              key="candidate", help=CONTROL_HELP["candidate"])
+                              key="candidate", on_change=_discard_selected, help=CONTROL_HELP["candidate"])
         candidate = candidates[chosen]
         st.warning("Проверка столкновений с малыми телами и космическим мусором не выполнялась")
         a, b, c = st.columns(3)
@@ -256,8 +370,11 @@ def main() -> None:
         st.caption(f"Оценены {result.evaluated_candidates} вариантов; показан фронт время/топливо.")
         try:
             _render_trajectory(candidate)
+            _render_export(candidate)
         except (TransferSearchError, EphemerisError) as exc:
+            diagnostic = st.session_state.get("provenance")
             _invalidate()
+            _record_failure("sampling", exc, diagnostic)
             st.session_state["sampling_error"] = str(exc)
             result_area.empty()
             st.rerun()

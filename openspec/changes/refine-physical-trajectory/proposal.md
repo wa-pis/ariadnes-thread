@@ -85,3 +85,9 @@ open; the broader platform direction is not abandoned.
 ## Plan review — 2026-09-06
 
 The review adds missing interpolation, combined-force, per-arc PPN, safety-termination, and shared-deadline checks. It corrects the dry-mass fixture comparison and limits the preflight status to an M2 seed-budget decision. Earlier exploratory timing/accuracy numbers require checked-in reproduction before use as acceptance evidence. No production constant, dependency, target tolerance, or archived specification changes in this review; unfinished implementation work remains explicitly unchecked.
+
+
+R1.4 implementation was explicitly instructed2026-10-31 after ADR0124 readiness.
+[ADR0125](../../../docs/adr/0125-research-export-and-usable-path.md) records the
+repository-based input/display/verified research JSON/OEM path and its checks;
+it does not claim strict M3 completion or full CCSDS conformity.

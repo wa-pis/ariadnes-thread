@@ -25,12 +25,12 @@ Automation `ariadna-m3` remains paused. No automatic D18 or repeated D17 study.
   links/diff/immutable checks pass. Production tests unchanged; full suite not
   rerun for this bounded evidence stage. Prior full 4588 tests/626.08 s are D17.2
   evidence; 607 focused/7.17 s are D17.3 evidence, not fresh R1 regressions.
-- M1/M2 and visual explorer are archived. UI remains M2, unchanged in R1.1.
+- M1/M2 and visual explorer are archived. UI uses M2 with R1 research export.
 - D17.3 remains unclosed: 44.386790 km /185.850963 m/s; retained
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — separately implement the R1.4 usable path
+## Next action — review the delivered R1 research demo
 
 [ADR 0117](docs/adr/0117-mission-first-demonstration-priority.md) fixes the order;
 accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
@@ -43,13 +43,13 @@ accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
    readiness verified: corrected source, approved unregistered ARIADNA notice,
    actual INPOP19a/ICRF mapping, independent reader/88 native-free tests. Strict
    OpenSpec/lint/links pass; no writer/UI/native or full-regression work here.
-3. R1.4 After readiness and separate implementation instruction, deliver one
-   input → calculation → display → export → independent decoding path;
-   verify focused/full regressions and strict OpenSpec at implementation completion.
+3. [ADR0125](docs/adr/0125-research-export-and-usable-path.md): R1.4 implements the
+   input → calculation → display → verified JSON/OEM path is complete. 151 focused
+   and4766 full tests/630.19s pass; Ruff/strict OpenSpec/links/immutable checks pass.
+   Local UI:127.0.0.1:8501. Original model/environment/evidence remain unchanged.
 
-Historical MSL/GRAIL metadata does not authorize replay; maneuver-free coverage,
-uncertainty and gravity-version reconciliation remain unverified. No retries,
-new solver/physics, API/UI/exporter/dependency changes or automation restart.
+Historical MSL/GRAIL replay, new targeting studies, M4–M6 and automation are not
+part of this delivery. Review the demo and select the next scope explicitly.
 
 ## Boundaries and references
 

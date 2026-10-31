@@ -165,14 +165,12 @@ def test_kernel_manifest_lists_versions_and_hashes(
     assert all(item["version"] for item in manifest["kernels"])
 
 
-def test_real_tudatpy_parity_and_round_trip(
-    monkeypatch: pytest.MonkeyPatch,
-) -> None:
+def test_real_tudatpy_parity_and_round_trip() -> None:
     pytest.importorskip("tudatpy")
     from tudatpy.interface import spice
 
-    monkeypatch.setattr(ephemeris, "_spice", None)
-    monkeypatch.setattr(ephemeris, "_kernels_loaded", False)
+    # Resetting Python flags here duplicates real kernels loaded by earlier tests.
+    loaded_before = int(spice.get_total_count_of_kernels_loaded())
     epoch_utc = "2030-01-01T00:00:00Z"
     state = ephemeris.query_body_state("Moon", epoch_utc)
     direct = spice.get_body_cartesian_state_at_epoch(
@@ -200,6 +198,8 @@ def test_real_tudatpy_parity_and_round_trip(
     assert abs((round_trip_dt - original_dt).total_seconds()) <= 0.001
 
     manifest = ephemeris.kernel_metadata()
+    if loaded_before:
+        assert manifest["loaded_kernel_count"] == loaded_before
     assert manifest["kernel_list_status"] == "complete"
     assert manifest["loaded_kernel_count"] == len(manifest["kernels"])
     assert len(manifest["kernels"]) > 0

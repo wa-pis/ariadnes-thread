@@ -5951,3 +5951,13 @@ fields measure the wrapper call, not necessarily an uncached calculation.
 
 This test-only optimization changes no scientific formulas, production dynamics,
 coefficients, tolerances, native caps or milestone acceptance criteria.
+
+
+## R1.4 repository-based research delivery (2026-10-31)
+
+User instructed implementation after ADR0124 readiness. [ADR0125](../../../docs/adr/0125-research-export-and-usable-path.md)
+records the single stdlib paired-result/OEM writer, byte-identical packaged frozen
+decoder, existing UI/sampler integration, independent accounting, all-node wire
+checks, explicit reserve example and stale-result/error handling. No solver,
+physics, dependency, CLI contract, immutable artifact or strict M3 gate is changed.
+Full regression acceptance is recorded in that ADR before task completion.

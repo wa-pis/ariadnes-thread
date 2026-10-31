@@ -19,12 +19,12 @@ Start with [current state](../CURRENT_STATE.md). Preserve previous results in th
 | R1.1 — Problem and positive reference | Verified ideal M2 only, ADR 0119 | Two identical 1980-attempt searches/two 121-state samplings in shared 1.993807459 s; d0001-t0035, final 887.966464 kg >=550 kg. Decimal mass/reserve, endpoints and provenance checks pass; no finite-burn claim. |
 | R1.2 — Small independent physical benchmark | Passed, ADR 0122 | One 17-call study in 0.555804s; maximum 0.00159834m/3.66733e-10m/s, conservation/root/identity and offline checks pass. Synthetic coast component, not full-transfer/finite-burn validation. |
 | R1.3 — Minimal result and OEM profile | Research readiness verified, ADR 0124 | Corrected source hash, approved unregistered ARIADNA exception, actual INPOP19a/ICRF mapping; private independent decoder/fixtures pass 88 native-free tests. Not full CCSDS conformity or writer acceptance. |
-| R1.4 — One usable path | Next, separate implementation instruction required | Input → calculation → display → export → independent decoding; declared reserve/numerical checks, error/stale-result tests, focused/full regressions and strict validation. |
+| R1.4 — One usable path | Verified research delivery, ADR0125 | Input → calculation → display → verified JSON/OEM; all121 nodes within1microsecond/1mm/1e-9m/s wire gates, explicit50kg reserve, 151 focused and4766 full tests/630.19s, Ruff/strict validation/immutable checks. |
 
-The accepted sequence now has one ideal positive reference and a passed synthetic
-coast-component benchmark, not an OEM implementation. Early independent checking is a
-small research benchmark,
-not M6 full-mission GMAT/Monte Carlo verification. Strict M3/task 3.9 remain open
+The accepted sequence has one ideal positive reference, a passed synthetic coast
+benchmark and a narrow research OEM implementation (ADR0125). Early independent
+checking is a small research benchmark, not M6 full-mission GMAT/Monte Carlo
+verification. Strict M3/task 3.9 remain open
 and unchanged; R1 completion cannot archive M3 or start M4–M6. No old target,
 fuel model, scientific gate or retained artifact is weakened to make a demo pass.
 The sole active change remains `refine-physical-trajectory`.
@@ -252,7 +252,7 @@ This increases search density, not the fidelity of the physical model.
 - Keep task-specific convergence checks, independent oracles and regressions.
   Nominal/tighter agreement is empirical evidence, not a rigorous error bound.
 - Derive minimal reusable results from the working example through R1.3/R1.4;
-  OEM implementation remains blocked on its exact accepted profile and reader.
+  the accepted research profile and frozen reader bound the R1.4 implementation.
   Interchangeable backend frameworks and ML datasets remain future work.
 - This is a ground engineering prototype, not onboard software, an adopted
   industry standard or flight-qualified navigation.
