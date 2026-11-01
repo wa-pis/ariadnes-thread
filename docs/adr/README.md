@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0138 — Independent short-coast oracle preparation](0138-independent-short-coast-oracle.md):54 new/224 focused and4990 full tests pass; oracle unit verified, R5.2 overall pending remaining adapters.
+
 - [0137 — Short-coast Earth-gravity contract](0137-short-coast-earth-gravity-contract.md): fixed300s/two direct point-mass models, independent Tudat/SciPy profiles and60s/four-arc/four-oracle limits; preparation pending.
 
 - [0136 — Retained boundary arithmetic passes](0136-retained-boundaries-pass-arithmetic.md): both fixed endpoints pass binary64 and80/100-digit Decimal checks, zero native calls; no connecting trajectory claim.

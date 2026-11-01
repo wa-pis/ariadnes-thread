@@ -1,0 +1,34 @@
+{
+  "scope": "R5.2a independent-oracle preparation only",
+  "base_revision": "05b5d87e222fe1a825fbc2ca18565595267ade72",
+  "sources_sha256": {
+    "docs/adr/experiments/0138-short-coast-oracle.py": "d6a624f727e17de364f188f0941f2e1889741204ad035aefd9263728cf95e029",
+    "tests/test_r5_short_coast_oracle.py": "ee9611b32c3207f15f9b0e426c9b283f69452943a6a36da212f4387f1357204a"
+  },
+  "sources_untracked_during_verification": true,
+  "new_tests": 54,
+  "focused": {
+    "passed": 224,
+    "duration_s": 3.18
+  },
+  "full": {
+    "passed": 4990,
+    "duration_s": 671.36,
+    "exit_code": 0,
+    "log": "0138-full-pytest.txt",
+    "sha256": "4ad0e568b4793c8428e49b5eb03c5efc6a3b93abd88ae8558700f5c3e088878c",
+    "git_status_unchanged": true,
+    "git_status_sha256": "0f6900127bb8695cb49ff6e59c78649810d6145a85525ff0c625f7805ffbd947"
+  },
+  "previous_failed_full_run": "0138-provenance-drift-regression.json",
+  "affected_test_repeat": {
+    "passed": 1,
+    "duration_s": 3.11
+  },
+  "ruff": "passed",
+  "openspec_strict": "passed",
+  "protected_tracked_files_unchanged": 241,
+  "reference_R5_executed": false,
+  "native_test_scope": "SPICE/Tudat state parity at TDB0; synthetic SciPy circular and linear propagation; full-suite native counts not instrumented",
+  "R5_2_complete": false
+}

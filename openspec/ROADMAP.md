@@ -11,6 +11,9 @@ repeat successful studies or unchanged full regressions automatically.
 unpowered parked-state comparison: direct Sun/Moon versus Sun/Moon/Earth, same
 R4-audited SSB initial state and moving SPICE bodies. Compare native RK4 profiles
 against separately implemented pinned SciPy DOP853 profiles; no new dependency.
+[ADR0138](../docs/adr/0138-independent-short-coast-oracle.md) verifies the oracle
+unit:54 new/224 focused and4990 full tests pass. Native adapter, orchestration
+and offline audit remain pending; R5.2 overall is incomplete.
 Preparation/tests first, then one60s/four-native/four-oracle/10000-oracle-RHS
 study and offline audit. Numerical comparison and integrated model differences
 remain separate; no full-force/escape/capture/safety/M3 claim. No user action needed.

@@ -1,0 +1,14 @@
+{
+  "record": "ADR0138",
+  "full_regression_exit_code": 1,
+  "passed": 4989,
+  "failed": 1,
+  "duration_seconds": 677.1,
+  "failed_test": "tests/test_research_export.py::test_other_stale_identity_invalidates_downloads[model]",
+  "failure_message": "Данные или ресурсы изменились во время поиска; повторите расчёт.",
+  "captured_failure_local_time": "2026-11-01 11:34:09.014",
+  "new_adr_file_mtime_local": "2026-11-01 11:34:09",
+  "cause": "Agent created untracked ADR0138 during active UI search; source_identity includes git status --short, which changed. Production source and scientific data unchanged.",
+  "failed_log_sha256": "6a6a45f7ca8d14fe9b841352e06d2eb1037983bfc99fd6a4a6870ddecfa5c57d",
+  "recovery": "Repeat affected test, then full pytest with all workspace mutations suspended; no source/test/scientific gate modification."
+}

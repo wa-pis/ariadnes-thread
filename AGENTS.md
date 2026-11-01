@@ -64,6 +64,10 @@
 
 ## Verification
 
+- Freeze checkout mutations throughout the full test suite, including docs,
+  generated evidence, staging and commits: provenance tests include Git status.
+  Save live logs outside the repository and update artifacts after tests exit.
+
 - Group related changes into coherent verifiable units. Use focused checks during
   iteration and the full suite at implementation completion, not every prose edit.
   Documentation-only changes require accurate claims, working local links and a
