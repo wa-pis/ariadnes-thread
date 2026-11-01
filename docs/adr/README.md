@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0132 — Gravity-screening preparation](0132-gravity-screening-preparation.md):84 new/170 focused/4936 full tests pass; private binary64/Decimal diagnostic and offline audit, no native R3 study yet.
+
 - [0131 — Screen omitted gravity at fixed epochs](0131-screen-omitted-gravity-at-fixed-epochs.md): body-centre endpoint domain audit and bounded three-epoch differential-force contract; preparation/execution pending.
 
 - [0130 — Full regression after reference verification](0130-full-regression-after-reference-verification.md):4852 tests pass at7b22253; integrated regression only, no new physical-fidelity claim.

@@ -1,0 +1,42 @@
+{
+  "record": "ADR0132",
+  "date": "2026-11-01",
+  "stage": "R3.2 preparation only",
+  "base_revision": "629f53f3a9258d4ed7f35292c8cbcaba2a8f79a7",
+  "new_code_untracked_during_tests": [
+    "docs/adr/experiments/0132-gravity-screen.py",
+    "docs/adr/experiments/0132-gravity-audit.py",
+    "tests/test_r3_gravity_screen.py"
+  ],
+  "file_sha256": {
+    "docs/adr/experiments/0132-gravity-screen.py": "febc1e7728ac834895bb0daa65a4e2137ff91231e9f7f90453e5aecf615fbab3",
+    "docs/adr/experiments/0132-gravity-audit.py": "47d03f269d8ab9774d87416c31af39bdc25e5661b857c97437862cbe5460759d",
+    "tests/test_r3_gravity_screen.py": "3023a6ec834b1d3b5566472efc377d8a3d4b51f1149554b751e9354ceabedacf"
+  },
+  "focused": {
+    "passed": 170,
+    "duration_seconds": 1.98,
+    "native_imports_or_queries": 0
+  },
+  "full_regression": {
+    "passed": 4936,
+    "duration_seconds": 616.0,
+    "exit_code": 0,
+    "summary": "4936 passed in 616.00s (0:10:16)",
+    "log_sha256": "699102140d28cc88e684e5e70cd3ce6e53386b16a06bde86c9493d10fc27a9f8",
+    "command": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python -m pytest -q",
+    "native_query_counts": "not instrumented; existing native regressions included"
+  },
+  "earlier_aborted_regression": {
+    "exit_code": 2,
+    "passed_before_interrupt": 695,
+    "duration_seconds": 28.62,
+    "reason": "Stopped premature full run after focused missing-Earth-GM partial-audit test failure; fixed and passed focused tests before final full run."
+  },
+  "python": "3.12.14",
+  "new_test_count": 84,
+  "unchanged_protected_tracked_files": 232,
+  "native_r3_screening_executed": false,
+  "ruff": "passed",
+  "strict_openspec": "passed"
+}

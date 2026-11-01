@@ -133,3 +133,13 @@ Exact retained states/epochs/resources, exterior guards, separate Decimal oracle
 and seven-state/one-GM/shared30s cap are frozen before preparation. Expected invalid
 endpoint terms remain absent, never zero; no new spacecraft propagation, mission
 state or total-force/error/safety claim. R3.2/R3.3 remain pending; strict M3 unchanged.
+
+
+## R3.2 verified private preparation (2026-11-01)
+
+[ADR0132](../../../docs/adr/0132-gravity-screening-preparation.md) records the
+private binary64 calculator, separate Decimal oracle/offline audit and reuse of
+immutable R2 validation/identity/budget utilities.84 new/170 focused tests and
+4936 full tests/616.00s pass; exact sources and terminal evidence are retained.
+The specified seven-state/one-GM/shared30s R3.3 screening remains unexecuted; no
+production/environment/model/milestone qualification changed.

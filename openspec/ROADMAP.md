@@ -13,8 +13,9 @@ inside the lunar/Martian exterior-force domains. Preserve these ideal data;
 do not feed them directly to a full-gravity mission propagation.
 R3.1 is designed: diagnose Earth/Moon/Mars differential gravity at fixed nodes0,60,120,
 with explicit inadmissible endpoint terms, a separate Decimal oracle and frozen
-seven-state/one-GM/shared30s budget. Next: R3.2 private native-free preparation,
-then one verified R3.3 screening. No full-arc/total-force/safety inference or new
+seven-state/one-GM/shared30s budget. [ADR0132](../docs/adr/0132-gravity-screening-preparation.md)
+completes R3.2:84 new/170 focused/4936 full tests pass; private runner/Decimal
+oracle/offline audit prepared. Next: exactly one bounded R3.3 screening and audit. No full-arc/total-force/safety inference or new
 mission state, optimizer, UI qualification or M3 closure; no user input needed.
 
 ## Delivered foundation — R1 mission-first demonstration (2026-10-29)
