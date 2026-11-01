@@ -49,7 +49,6 @@ as endpoint arithmetic. Do not repeat R2/R3/R4/full tests on unchanged code.
 
 [ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes
 all121 nodes/both frames, max0.0021126122711470335m/3.9825899625221015e-10m/s.
-[ADR0130](docs/adr/0130-full-regression-after-reference-verification.md):4852 full tests pass at7b22253; do not repeat unchanged R2/full regression.
 Automation remains paused. Next: specify precision handling before any revised real-state study.
 
 ## Boundaries and references
