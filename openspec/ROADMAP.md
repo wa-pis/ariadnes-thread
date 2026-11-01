@@ -5,17 +5,15 @@ Continue bounded work from CURRENT_STATE; pause the automation when user
 participation is required and explain the exact needed decision/action. Do not
 repeat successful studies or unchanged full regressions automatically.
 
-## Next bounded design — integrated omitted-force sensitivity
+## Current priority R5 — short-coast Earth-gravity sensitivity
 
-[ADR0136](../docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes the
-offline R4 audit: both retained physical task endpoints satisfy the independent
-arithmetic gates, with zero native calls. This establishes no connecting coast.
-Next inspect existing independent-engine/physical adapters and verification for
-reuse, then specify a short-coast two-model sensitivity comparison from the fixed
-initial state. Declare interval, forces/omissions, same-model independent reference,
-separate numerical/model-sensitivity gates and native/time budget before work.
-No new candidate/phase/control, optimizer, propagation or dependency is selected;
-no user action is currently required for this bounded design review.
+[ADR0137](../docs/adr/0137-short-coast-earth-gravity-contract.md) freezes one300s
+unpowered parked-state comparison: direct Sun/Moon versus Sun/Moon/Earth, same
+R4-audited SSB initial state and moving SPICE bodies. Compare native RK4 profiles
+against separately implemented pinned SciPy DOP853 profiles; no new dependency.
+Preparation/tests first, then one60s/four-native/four-oracle/10000-oracle-RHS
+study and offline audit. Numerical comparison and integrated model differences
+remain separate; no full-force/escape/capture/safety/M3 claim. No user action needed.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

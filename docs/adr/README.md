@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0137 — Short-coast Earth-gravity contract](0137-short-coast-earth-gravity-contract.md): fixed300s/two direct point-mass models, independent Tudat/SciPy profiles and60s/four-arc/four-oracle limits; preparation pending.
+
 - [0136 — Retained boundary arithmetic passes](0136-retained-boundaries-pass-arithmetic.md): both fixed endpoints pass binary64 and80/100-digit Decimal checks, zero native calls; no connecting trajectory claim.
 
 - [0135 — Fixed orbital boundaries and burn interfaces](0135-fixed-orbit-boundary-contract.md): retained task endpoints, exact full-model arc joins and a10s/zero-native independent boundary-arithmetic audit contract; no mission run.

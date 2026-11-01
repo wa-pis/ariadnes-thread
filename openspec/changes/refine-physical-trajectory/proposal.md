@@ -143,3 +143,13 @@ immutable R2 validation/identity/budget utilities.84 new/170 focused tests and
 4936 full tests/616.00s pass; exact sources and terminal evidence are retained.
 The specified seven-state/one-GM/shared30s R3.3 screening remains unexecuted; no
 production/environment/model/milestone qualification changed.
+
+
+## R5 restricted integrated sensitivity contract (2026-11-01)
+
+[ADR0137](../../../docs/adr/0137-short-coast-earth-gravity-contract.md) and
+[requirements](specs/short-coast-sensitivity/spec.md) define a300s unpowered
+parked-state direct-SSB Sun/Moon versus Sun/Moon/Earth comparison from the fixed
+R4-audited initial state. Independent native RK4/SciPy DOP853 profiles, numeric
+versus model-sensitivity gates and60s/four-native/four-oracle limits are frozen.
+Prepare/test first; no reference study, full-force or mission qualification yet.

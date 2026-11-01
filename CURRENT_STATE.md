@@ -27,19 +27,19 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — bounded short-coast sensitivity design
+## Next action — R5.2 short-coast verifier preparation
 
-[ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md): R4.3 passes once.
-Both retained fixed orbital endpoints match binary64/80/100-digit Decimal
-arithmetic within0.001m/1e-6m/s,0.014713209122419357s pre-flush/final gate passed.
-Zero scientific imports/native reads/propagations; no connecting trajectory claim.
-[ADR0135](docs/adr/0135-fixed-orbit-boundary-contract.md) keeps phases/epochs/GMs
-and actual burn joins fixed; mission controls/dynamical reference remain unresolved.
-Next inspect existing independent-engine/physical adapters and evidence, then
-specify a short-coast two-force-model comparison from the audited initial state:
-exact interval/models/reference, separate numerical/sensitivity gates and budget.
-No new search/candidate/phase/controls/optimizer/propagation/dependency yet.
-Do not repeat R2/R3/R4 or unchanged full tests; ADR0132 retains4936 passes.
+[ADR0137](docs/adr/0137-short-coast-earth-gravity-contract.md) freezes a300s
+unpowered parked-state Sun/Moon versus Sun/Moon/Earth direct-SSB comparison.
+Same audited0098 initial state/R1 candidate; pinned SciPy1.17.1 already installed.
+Next prepare private native RK4 and independent DOP853 correction-variable oracle,
+evidence runner/offline audit, tests, identities and source hashes under R5.2.
+Reference execution only after verification: shared60s,4 native arcs/4 oracle
+solves/10000 oracle RHS; Python state reads capped separately from native internals.
+All profiles/numerical/sensitivity gates and omissions are frozen in the ADR.
+No study, new mission controls/phases/optimizer/dependency or full-force claim.
+[ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only
+as endpoint arithmetic. Do not repeat R2/R3/R4/full tests on unchanged code.
 
 [ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes
 all121 nodes/both frames, max0.0021126122711470335m/3.9825899625221015e-10m/s.
