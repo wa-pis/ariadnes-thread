@@ -125,3 +125,16 @@ contract, preserving the returned binary64 source-position floor and all R5 data
 - **AND** every retained force SHALL pass the existing envelope, every accepted endpoint and the final retained-control comparison SHALL pass1e-6m/1e-8m/s gates
 - **AND** first-trial acceptance and RHS<=241 SHALL be reported as separate predeclared behavioral/efficiency targets, not scientific tolerances
 - **AND** returned rounded source states, exact epoch low parts, raw phase residuals and compensated separations SHALL be retained; no successful synthetic result SHALL qualify a real-SPICE fix, historical R5 cause or mission safety
+
+
+### Requirement: Check real ephemeris compensation independently at the time boundary
+
+The real-source candidate SHALL follow ADR0153 before any new real-force solve.
+
+#### Scenario: Audit fixed source samples without spacecraft propagation
+
+- **WHEN** the user-authorized real boundary study executes after focused/full tests, Ruff and strict OpenSpec
+- **THEN** exactly seven frozen elapsed times and Sun/Earth/Moon SHALL use unchanged R5 inputs and13 kernels, SSB/J2000/NONE, under shared60s and21 state/28 selection/6 array-read caps with finite exclusive partial evidence on failure
+- **AND** exact rational evaluation of selected Type2 records and derivatives SHALL independently check SPICE rounded-epoch states within0.001m/0.000001m/s, and compensated increments within1e-12m plus the separate exact component Taylor/velocity/product-rounding bounds
+- **AND** unsupported types/frames/centres, changed identities, bad layouts or crossed record/segment coverage SHALL fail without fallback, retry, integration or scientific-gate changes
+- **AND** returned position floor, signed hi/lo, raw records, counters and correction errors SHALL remain auditable separately; success SHALL NOT imply real-force/solve qualification, independent ephemeris truth, historical R5 cause or mission safety

@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-11-01. Keep under60 lines; current instructions here/roadmap, detail in ADRs.
+Updated: 2026-11-02. Keep under60 lines; current instructions here/roadmap, detail in ADRs.
 
 ## Goal and scheduling
 
@@ -23,7 +23,6 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 - D17.3 remains unclosed: 44.386790 km /185.850963 m/s; retained
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
-
 ## Paused — R5.3 once-only attempt failed
 
 [ADR0148](docs/adr/0148-short-coast-oracle-rhs-limit.md): one attempt at clean24154be;
@@ -49,8 +48,9 @@ as endpoint arithmetic; do not repeat R2/R3/R4 or unchanged full tests.
 [ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes121 nodes/both frames; preserve evidence.
 [ADR0152](docs/adr/0152-compensated-synthetic-time-validation.md):34 focused/5319 full
 pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor retained.
-Automation paused. Next: real-ephemeris rephasing-error/velocity contract, no integration.
-
+[ADR0153](docs/adr/0153-real-ephemeris-time-boundary.md):90 focused pass; full5408 pass/1 old300s deadline failure.
+No real acquisition/retry. Pending sources shelved outside checkout; automation PAUSED.
+Next: reduce contention, restore exact pending bytes and pass full suite before R5.8.
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.

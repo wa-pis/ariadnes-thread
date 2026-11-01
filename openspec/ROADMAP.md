@@ -70,6 +70,10 @@ force/analytic/final-control gates and separate first-trial/10x targets pass.
 A zero-native saved-row audit passes in0.024034792091697454s; provider position
 rounding remains. No R5 replay or real-SPICE fix qualification. Next: bounded
 real-ephemeris position/velocity/rephasing-error contract before any integration.
+[ADR0153](../docs/adr/0153-real-ephemeris-time-boundary.md) freezes that boundary
+contract:90 focused pass; full5408 pass/1 unchanged native-readback300s deadline
+failure. No real acquisition/retry; pending source bytes retained outside checkout,
+full-suite prerequisite and R5.8 remain open, automation PAUSED.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 The retained attempt used the fixed60s/four-native/four-oracle/10000-RHS contract.

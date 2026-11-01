@@ -6032,3 +6032,13 @@ parked-state direct-SSB Sun/Moon versus Sun/Moon/Earth comparison from the fixed
 R4-audited initial state. Independent native RK4/SciPy DOP853 profiles, numeric
 versus model-sensitivity gates and60s/four-native/four-oracle limits are frozen.
 Prepare/test first; no reference study, full-force or mission qualification yet.
+
+
+## R5.8 real ephemeris time boundary (2026-11-02)
+
+[ADR0153](../../../docs/adr/0153-real-ephemeris-time-boundary.md) freezes seven
+real Sun/Earth/Moon source times, existing INPOP19a records, exact rational
+Type2/derivative/Taylor-chain evaluation and separate incremental/position-floor
+gates. No new spacecraft dynamics or failed-reference replay.90 focused tests pass;
+full verification failed on an unchanged300s native-readback deadline. No real
+acquisition/retry; pending code retained outside checkout, task remains open.
