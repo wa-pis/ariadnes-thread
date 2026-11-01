@@ -1,0 +1,106 @@
+"""Saved operands only; stdlib; no trajectory or source acquisition."""
+from time import monotonic
+START=monotonic()
+from decimal import Decimal,localcontext
+from hashlib import sha256
+import json,math
+from pathlib import Path
+import sys
+SOURCE=Path('/private/tmp/ariadna-0152-compensated-trace.json')
+OUTPUT=Path('/private/tmp/ariadna-0152-saved-audit.json')
+REPORT={'status':'partial','budget_s':5,'source_queries':0,'integrations':0,'scientific_imports':0}
+FIELDS=0
+
+def check(ok:bool=True,message:str='saved arithmetic') -> None:
+    if not ok: raise ValueError(message)
+    if not 0<=monotonic()-START<5: raise ValueError('saved-audit deadline')
+
+def field(delta:tuple[Decimal,...]) -> tuple[Decimal,...]:
+    global FIELDS
+    check(FIELDS<6000,'saved field cap')
+    FIELDS+=1
+    rr=sum(x*x for x in delta)
+    return tuple(Decimal.from_float(4902800121846.8)*x/(rr*rr.sqrt()) for x in delta)
+
+with OUTPUT.open('x') as stream:
+    try:
+        check(not any(k.startswith(('numpy','scipy','spiceypy','tudatpy','space_nav')) for k in sys.modules),'stdlib-only')
+        report=json.loads(SOURCE.read_text(),parse_constant=lambda x:(_ for _ in ()).throw(ValueError(x)))
+        case=report['candidate']
+        check(report['status']=='passed' and report['finalization_gate']=='passed','completed candidate')
+        check(all(report['scientific_gates'].values()) and all(report['behavioral_targets'].values()),'reported gates')
+        check(case['status']=='finished' and case['final_t_s']==10,'ten seconds')
+        check(case['rhs_evaluations']==case['nfev']==case['callback_attempts']==case['synthetic_provider_calls']==case['synthetic_provider_returned']==len(case['rhs'])==len(case['geometry_records']),'completed counts')
+        check(case['rhs_evaluations']<=3000 and len(case['trials'])<=300,'original work caps')
+        check(case['provider_position_floor_retained'] is True,'provider-floor label')
+        check(case['nfev']==1+12*len(case['trials']),'trial/RHS ledger')
+        check(case['trials'][0]['accepted'] and case['rhs_evaluations']<=241,'separate behavioral targets')
+        with localcontext() as ctx:
+            ctx.prec=100
+            d=Decimal.from_float
+            epoch=978995455.2304223
+            origin=(-47000000000.0,128000000000.0,55000000000.0)
+            v=(31246.224457,0.0,0.0)
+            radius=1837400.0
+            speed=math.sqrt(4902800121846.8/radius)
+            rounding_present=False
+            max_error=Decimal(0)
+            for rhs,g in zip(case['rhs'],case['geometry_records'],strict=True):
+                check(rhs['q']==g['q'] and rhs['elapsed_s']==g['elapsed_s'] and rhs['force_m_s2']==g['force_m_s2'],'paired operands')
+                s,q=g['elapsed_s'],g['q']
+                hi,lo=g['epoch_high_tdb_s'],g['epoch_low_s']
+                check(hi==epoch+s and d(hi)+d(lo)==d(epoch)+d(s),'exact two-part time')
+                check(Decimal(rhs['body_time_residual_s'])==-d(lo),'correction sign/raw phase')
+                check(g['source_velocity_m_s']==list(v),'returned velocity')
+                body=[math.fsum((origin[j],v[j]*(hi-epoch))) for j in range(3)]
+                check(g['source_position_m']==body,'plain rounded provider state')
+                check(g['rephasing_m']==[x*lo for x in v],'applied phase displacement')
+                rounding_present=rounding_present or any(d(body[j])!=d(origin[j])+d(v[j])*(d(hi)-d(epoch)) for j in range(3))
+                initial=(origin[0]+radius,origin[1],origin[2])
+                craftv=(v[0],speed,0.0)
+                separation=[math.fsum((body[j],-initial[j],-craftv[j]*s,-q[j],v[j]*lo)) for j in range(3)]
+                check(g['separation_m']==separation,'compensated relative assembly')
+                geometric=field(tuple(d(x) for x in separation))
+                ideal=field((-d(radius)-d(q[0]),-d(speed)*d(s)-d(q[1]),-d(q[2])))
+                actual=tuple(d(x) for x in rhs['force_m_s2'])
+                check(sum((x-y)**2 for x,y in zip(actual,geometric)).sqrt()<=Decimal('1e-14'),'independent geometry force')
+                error=sum((x-y)**2 for x,y in zip(actual,ideal)).sqrt()
+                limit=max(Decimal('1e-15'),Decimal('1e-11')*sum(x*x for x in ideal).sqrt())
+                check(error<=limit and not rhs['force_bad'],'original force gate')
+                check(all(abs(x-Decimal(y))<Decimal('1e-70') for x,y in zip(ideal,rhs['reference_force_m_s2'])),'saved Decimal reference')
+                max_error=max(max_error,error)
+            check(rounding_present,'source position bits were not secretly recovered')
+            check(sum(row['accepted'] for row in case['trials'])==len(case['accepted']),'accepted ledger')
+            previous=0.0
+            for row,point in zip(case['trials'],case['accepted'],strict=True):
+                check(row['accepted'] and row['t_start_s']==previous and row['t_end_s']==point['t_s'],'accepted grid')
+                previous=point['t_s']
+                e5=sum(d(x)**2 for x in row['error5_scaled'])
+                e3=sum(d(x)**2 for x in row['error3_scaled'])
+                norm=Decimal(0) if e5==e3==0 else abs(d(row['h_s']))*e5/(6*(e5+Decimal('0.01')*e3)).sqrt()
+                check(math.isclose(float(norm),row['error_norm'],rel_tol=1e-12,abs_tol=1e-20) and norm<1,'independent error norm')
+                theta=speed*point['t_s']/radius
+                half=math.sin(theta/2)
+                remainder=-theta**3/6+theta**5/120-theta**7/5040+theta**9/362880-theta**11/39916800
+                expected=(-2*radius*half*half,radius*remainder,0.0,-speed*math.sin(theta),-2*speed*half*half,0.0)
+                check(math.dist(point['q'][:3],expected[:3])<=1e-6 and math.dist(point['q'][3:],expected[3:])<=1e-8 and not point['analytic_bad'],'independent accepted analytic gate')
+            baseline_path=Path('/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0150-synthetic-trace.json')
+            check(sha256(baseline_path.read_bytes()).hexdigest()==report['baseline_trace_sha256'],'baseline identity')
+            baseline=json.loads(baseline_path.read_text())['cases'][0]
+            pos=math.dist(case['final_q'][:3],baseline['final_q'][:3])
+            vel=math.dist(case['final_q'][3:],baseline['final_q'][3:])
+            check(pos<=1e-6 and vel<=1e-8,'final retained-control gates')
+            check(report['final_control_difference']=={'position_m':pos,'velocity_m_s':vel},'reported final comparison')
+            check(report['rhs_reduction_factor']==2413/case['rhs_evaluations'],'reported efficiency')
+            REPORT.update(status='passed',checked_rhs=len(case['rhs']),checked_trials=len(case['trials']),max_relative_force_error_m_s2=str(max_error),source_position_rounding_present=rounding_present,final_control_difference={'position_m':pos,'velocity_m_s':vel})
+    except (ValueError,KeyError,TypeError,OSError,ArithmeticError) as exc:
+        REPORT['error']={'type':type(exc).__name__,'message':str(exc)}
+    REPORT.update(decimal_field_evaluations=FIELDS,input_sha256=sha256(SOURCE.read_bytes()).hexdigest(),invocation_sha256=sha256(Path(__file__).read_bytes()).hexdigest(),elapsed_before_flush_s=monotonic()-START,finalization_gate='passed')
+    json.dump(REPORT,stream,indent=2,allow_nan=False)
+    stream.flush()
+    try: check()
+    except ValueError as exc:
+        if 'error' in REPORT: REPORT['first_error']=REPORT['error']
+        REPORT.update(status='partial',finalization_gate='failed',error={'type':type(exc).__name__,'message':str(exc)})
+        stream.seek(0);stream.truncate();json.dump(REPORT,stream,indent=2,allow_nan=False);stream.flush()
+print(json.dumps(REPORT,indent=2,allow_nan=False))

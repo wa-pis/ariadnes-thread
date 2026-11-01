@@ -60,8 +60,16 @@ Clock-only frozen norm15.67924 is above1 while reference0.02889283 is below1;
 actual15.73394 is inside its arithmetic box. Signed E5/E3 velocity terms show
 timestamp noise is sufficient for this first synthetic rejection.300 protected
 files unchanged,5285 full tests/Ruff reused; no corrected trajectory, real-state
-model change or R5 causality proof. Next: contract a compensated-time candidate
-with explicit real-ephemeris approximation/velocity/coordinate checks, not a retry.
+model change or R5 causality proof. Its compensated-time synthetic candidate is
+verified in ADR0152 below; real-ephemeris approximation checks remain separate.
+[ADR0152](../docs/adr/0152-compensated-synthetic-time-validation.md) verifies the
+combined time-compensation/relative-assembly candidate:34 focused/5319 full tests
+pass,304 protected files unchanged. One10s solve finishes in0.3457699166610837s
+before flush,61 RHS/5 accepted/0 rejected versus saved2413/137/64; all original
+force/analytic/final-control gates and separate first-trial/10x targets pass.
+A zero-native saved-row audit passes in0.024034792091697454s; provider position
+rounding remains. No R5 replay or real-SPICE fix qualification. Next: bounded
+real-ephemeris position/velocity/rephasing-error contract before any integration.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 The retained attempt used the fixed60s/four-native/four-oracle/10000-RHS contract.

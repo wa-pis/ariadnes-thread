@@ -111,3 +111,17 @@ contract and preserve all reference and synthetic integration histories.
 - **AND** signed clock/reference, geometry/clock and actual/geometry field and E5/E3 differences SHALL telescope at fixed states/scales; rebuilt coefficient hashes, abscissae, counters, scales and observed error components SHALL pass the declared arithmetic bounds
 - **AND** scalar norm contributions SHALL NOT be added; diagnostic boxes spanning1 or failed1e-40 precision convergence SHALL remain ambiguous/failed without changing scientific gates
 - **AND** finite exclusive evidence SHALL distinguish this frozen-stage attribution from corrected-solver behavior, historical R5 causality, continuous crossing, physical fidelity and mission safety
+
+### Requirement: Validate a compensated synthetic solve before real-state changes
+
+The candidate SHALL follow ADR0152's combined compensated-time/relative-assembly
+contract, preserving the returned binary64 source-position floor and all R5 data.
+
+#### Scenario: Verify arithmetic and a bounded corrected solve
+
+- **WHEN** the user-authorized candidate is implemented
+- **THEN** exact TwoSum/Decimal/sign/invalid-input/source-isolation/candidate tracer-parity/cap/deadline/exclusive-output checks SHALL pass with focused/full pytest, Ruff and strict OpenSpec before one retained execution
+- **AND** that execution SHALL use only the unchanged10s synthetic fixture and original settings, at most3000 completed RHS/300 retained trials/shared10s budget, with zero SPICE/Tudat queries or R5 replays and finite partial evidence on failure
+- **AND** every retained force SHALL pass the existing envelope, every accepted endpoint and the final retained-control comparison SHALL pass1e-6m/1e-8m/s gates
+- **AND** first-trial acceptance and RHS<=241 SHALL be reported as separate predeclared behavioral/efficiency targets, not scientific tolerances
+- **AND** returned rounded source states, exact epoch low parts, raw phase residuals and compensated separations SHALL be retained; no successful synthetic result SHALL qualify a real-SPICE fix, historical R5 cause or mission safety

@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "error": null,
+  "elapsed_before_flush_s": 0.3457699166610837,
+  "finalization_gate": "passed",
+  "scientific_gates": {
+    "completed_ten_seconds": true,
+    "all_retained_forces": true,
+    "all_accepted_analytic": true,
+    "final_control_position": true,
+    "final_control_velocity": true
+  },
+  "behavioral_targets": {
+    "first_trial_accepted": true,
+    "rhs_at_most_241": true
+  },
+  "rhs_reduction_factor": 39.557377049180324,
+  "final_control_difference": {
+    "position_m": 6.899486159856413e-12,
+    "velocity_m_s": 2.027702143530707e-11
+  },
+  "candidate": {
+    "status": "finished",
+    "final_t_s": 10.0,
+    "rhs": 61,
+    "nfev": 61,
+    "trials": 5,
+    "accepted": 5,
+    "rejected": 0,
+    "first_trial": {
+      "t_start_s": 0.0,
+      "h_s": 1.0,
+      "t_end_s": 1.0,
+      "error_norm": 0.010576851882898817,
+      "accepted": true,
+      "scale": [
+        1.0000072611722606e-07,
+        1.0000000021518006e-07,
+        1e-07,
+        1.0145223435646341e-10,
+        1.0000064554016058e-10,
+        1e-10
+      ],
+      "error5_scaled": [
+        1.065783366025263e-05,
+        4.251095007526337e-09,
+        0.0,
+        0.026700675317181784,
+        1.771743404127302e-05,
+        0.0
+      ],
+      "error3_scaled": [
+        0.04836962452424849,
+        1.9584279211646395e-05,
+        0.0,
+        -0.015837955537434476,
+        0.04288904499362128,
+        0.0
+      ],
+      "nfev": 13
+    },
+    "max_position_error_m": 7.994318246131494e-11,
+    "max_velocity_error_m_s": 3.230265769342626e-11,
+    "first_events": {
+      "force": null,
+      "rejected": null,
+      "analytic": null
+    }
+  }
+}

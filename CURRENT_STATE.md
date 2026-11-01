@@ -28,10 +28,9 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 [ADR0148](docs/adr/0148-short-coast-oracle-rhs-limit.md): one attempt at clean24154be;
 A native h1/h0.5 arcs complete, first A oracle hits10000 RHS/30021 body reads.
-Study elapsed before flush1.8111813748255372s, finalization passed; no B model.
 Separate offline audit:partial/study_verified=false,0.07836870802566409s, zero native.
 No independent A agreement or Earth-force sensitivity result; final identity not reached.
-300 prior protected files unchanged; production/environment/legacy unchanged, no replay.
+304 prior protected files preserved; production/environment/legacy unchanged, no replay.
 [ADR0147](docs/adr/0147-short-coast-preparation-review.md): R5.2 preparation complete.
 [ADR0149](docs/adr/0149-oracle-time-precision-diagnosis.md): user-requested read-only diagnosis;
 119ns epoch grid/mixed time precision confirmed,7 scalar probes pass in0.03053s,
@@ -42,14 +41,15 @@ all endpoint gates pass; first bad callback at0.052600152s, not a time crossing.
 5285 full tests/Ruff reused; strict OpenSpec and saved-data checks pass.
 [ADR0151](docs/adr/0151-frozen-stage-error-attribution.md):39 frozen stages/234 fields
 pass in0.067s; clock-only norm15.679 versus reference0.02889, actual15.734.
-Explains first synthetic estimator rejection; corrected solver/R5 cause unverified.
+Explains first frozen synthetic estimator rejection; historical R5 cause unverified.
 Preserve raw partial study/audit0148, inputs/kernels/gates and all prior evidence.
 
 [ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only
 as endpoint arithmetic; do not repeat R2/R3/R4 or unchanged full tests.
-[ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes
-all121 nodes/both frames, max0.0021126122711470335m/3.9825899625221015e-10m/s.
-Automation paused. Next: contract compensated time/relative arithmetic before real-state revision.
+[ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes121 nodes/both frames; preserve evidence.
+[ADR0152](docs/adr/0152-compensated-synthetic-time-validation.md):34 focused/5319 full
+pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor retained.
+Automation paused. Next: real-ephemeris rephasing-error/velocity contract, no integration.
 
 ## Boundaries and references
 

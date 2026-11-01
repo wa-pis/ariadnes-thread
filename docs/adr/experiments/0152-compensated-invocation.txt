@@ -1,0 +1,11 @@
+from time import monotonic
+started = monotonic()
+from pathlib import Path
+import json
+source = Path('/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0152-compensated-time-diagnostic.py')
+namespace = {'__file__': str(source), '__name__': 'compensated_synthetic_diagnostic'}
+exec(compile(source.read_text(),str(source),'exec'),namespace)
+namespace['PROCESS_START'] = started
+report = namespace['execute'](Path('/private/tmp/ariadna-0152-compensated-trace.json'))
+case = report['candidate']
+print(json.dumps({'status':report['status'],'error':report.get('error'),'elapsed_before_flush_s':report['elapsed_before_flush_s'],'finalization_gate':report['finalization_gate'],'scientific_gates':report['scientific_gates'],'behavioral_targets':report['behavioral_targets'],'rhs_reduction_factor':report.get('rhs_reduction_factor'),'final_control_difference':report.get('final_control_difference'),'candidate':None if case is None else {'status':case['status'],'final_t_s':case['final_t_s'],'rhs':case['rhs_evaluations'],'nfev':case['nfev'],'trials':len(case['trials']),'accepted':len(case['accepted']),'rejected':sum(not r['accepted'] for r in case['trials']),'first_trial':case['trials'][0] if case['trials'] else None,'max_position_error_m':max((r['position_error_m'] for r in case['accepted']),default=None),'max_velocity_error_m_s':max((r['velocity_error_m_s'] for r in case['accepted']),default=None),'first_events':{k:v['index'] for k,v in case['first_events'].items()}}},indent=2,allow_nan=False))

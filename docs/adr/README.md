@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0152 — Compensated synthetic time validation](0152-compensated-synthetic-time-validation.md) — 34 focused/5319 full tests; one10s candidate uses61 vs2413 RHS, zero rejections/all gates pass; no real-SPICE qualification.
 - [0151 — Frozen-stage error attribution](0151-frozen-stage-error-attribution.md) — 39 saved stages/234 Decimal fields pass in0.067s; clock alone raises frozen norm0.02889 to15.679, no corrected trajectory or historical R5 proof.
 - [0150 — Synthetic step tracing and binary localization](0150-synthetic-step-trace-and-binary-localization.md) — 30 focused/5285 full tests; synthetic rounded-time arm requires2413 versus37 RHS, all endpoint gates pass; no R5 causality proof or replay.
 - [0149 — Oracle time/coordinate conditioning](0149-oracle-time-precision-diagnosis.md) —119ns absolute-time spacing and mixed local/absolute arithmetic confirmed; seven zero-native probes, cause unproven, no reference replay.
