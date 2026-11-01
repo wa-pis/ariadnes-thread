@@ -1,5 +1,10 @@
 # Ariadna Space Navigation Roadmap
 
+Automation `ariadna-m3` is active every 5 minutes by user instruction 2026-11-01.
+Continue bounded work from CURRENT_STATE; pause the automation when user
+participation is required and explain the exact needed decision/action. Do not
+repeat successful studies or unchanged full regressions automatically.
+
 ## Delivered foundation — R1 mission-first demonstration (2026-10-29)
 
 The user approved [ADR 0117](../docs/adr/0117-mission-first-demonstration-priority.md):
@@ -7,7 +12,7 @@ deliver one reproducible research demonstrator with an independently checked
 calculation and exportable result before adding more private optimizer complexity.
 Keep the long-term platform vision and existing Python/TudatPy/SPICE/Streamlit.
 Explicitly select the demo's fidelity; an ideal M2 result is not a finite-burn
-mission solution. No automatic D18, second D17 study or automation restart.
+mission solution. No automatic D18 or second D17 study; later automation authorization is above.
 
 Start with [current state](../CURRENT_STATE.md). Preserve previous results in the
 [historical roadmap](../docs/roadmap-history-2026-09-16.md), the

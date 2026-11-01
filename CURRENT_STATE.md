@@ -8,7 +8,8 @@ here and at the top of the roadmap; retained detail belongs in the ADRs.
 Near-term product: one understandable research trajectory demonstrator with an
 independently checked calculation and exportable result, not operational navigation.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. No automatic D18 or repeated D17 study.
+Automation `ariadna-m3`: active every 5 minutes by user instruction 2026-11-01.
+Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline
 
@@ -41,7 +42,6 @@ accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
 3. [ADR0125](docs/adr/0125-research-export-and-usable-path.md): R1.4 implements the
    input → calculation → display → verified JSON/OEM path; implementation complete. 151 focused
    and4766 full tests/630.19s pass; Ruff/strict OpenSpec/links/immutable checks pass.
-   Local UI:127.0.0.1:8501. Original model/environment/evidence remain unchanged.
 
 R2 complete for the retained ideal coast: [ADR0129](docs/adr/0129-reference-coast-verification-passes.md).
 Exactly121 Sun reads; all121 nodes/both frames pass at max0.0021126122711470335m /
@@ -50,7 +50,7 @@ Raw Sun track, comparisons and audit retained; no retries or runtime changes.
 Shared ephemeris truth, continuous safety, finite burns and strict M3 stay unverified.
 [ADR0130](docs/adr/0130-full-regression-after-reference-verification.md): full4852 tests
 pass in640.24s at7b22253; Ruff/strict OpenSpec and230 immutable-file checks pass.
-No automatic study, UI qualification or automation; scope physical work separately.
+Automatic bounded continuation is authorized; scope physical work before execution.
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.

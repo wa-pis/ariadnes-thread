@@ -13,7 +13,8 @@
 - Update `CURRENT_STATE.md` after a completed unit or material blocker with the
   verified revision/checks, next action and links. Keep it under 60 lines;
   durable rationale belongs in `docs/adr/`, not a growing status diary.
-- Automation is paused by user request. A work session does not authorize restart.
+- User enabled automation `ariadna-m3` every 5 minutes on 2026-11-01. If user
+  participation is required, pause it and report the exact needed decision/action.
   Use subagents only when explicitly requested by the user.
 
 ## Mission and scope
