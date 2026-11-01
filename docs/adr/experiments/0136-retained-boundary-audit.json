@@ -1,0 +1,336 @@
+{
+  "record": "ADR0136",
+  "contract": "ADR0135",
+  "base_revision": "186c20b0fac7d0acb636448b52fa196067c92fad",
+  "status": "passed",
+  "budget_s": 10,
+  "native_imports_or_calls": 0,
+  "spacecraft_propagations": 0,
+  "rows": [
+    {
+      "body": "Moon",
+      "stored_endpoint": {
+        "epoch_tdb_s": 978995455.2304223,
+        "epoch_utc": "2031-01-09T11:09:46.046266Z",
+        "label": "departure-ignition",
+        "orientation": "J2000",
+        "origin": "SSB",
+        "position_m": [
+          -47124635282.7281,
+          128473304107.83153,
+          55670397503.89886
+        ],
+        "velocity_m_s": [
+          -29590.75977762049,
+          -9186.174444867514,
+          -2407.2479826554863
+        ]
+      },
+      "stored_body": {
+        "body": "Moon",
+        "epoch_utc": "2031-01-09T11:09:46.046266Z",
+        "epoch_tdb_s": 978995455.2304223,
+        "origin": "SSB",
+        "orientation": "J2000",
+        "position_m": [
+          -47126472682.7281,
+          128473304107.83153,
+          55670397503.89886
+        ],
+        "velocity_m_s": [
+          -29590.75977762049,
+          -9186.174444867514,
+          -4040.7521173466475
+        ]
+      },
+      "orbit": {
+        "apoapsis_altitude_m": 100000.0,
+        "argument_of_periapsis_rad": 0.0,
+        "central_body": "Moon",
+        "eccentricity": 0.0,
+        "inclination_rad": 1.5707963267948966,
+        "periapsis_altitude_m": 100000.0,
+        "raan_rad": 0.0,
+        "true_anomaly_rad": 0.0
+      },
+      "shape_radius_m": 1737400.0,
+      "gm_m3_s2": 4902800121846.8,
+      "binary64_relative": [
+        1837400.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0002328049717485e-13,
+        1633.504134691161
+      ],
+      "decimal80_relative": [
+        "1837400",
+        "0",
+        "0",
+        "0",
+        "1.0002328049717485556619031911875453260542307898566449094059681084772941522080737E-13",
+        "1633.5041346911609304464839991563122622738466225876276206813981994360177822815680"
+      ],
+      "decimal100_relative": [
+        "1837400",
+        "0",
+        "0",
+        "0",
+        "1.000232804971748555661903191187545326054230789856644909405968108477294152243275477836731352343268810E-13",
+        "1633.504134691160930446483999156312262273846622587627620681398199436017782281567979427371263784244860"
+      ],
+      "oracle_convergence_norms": [
+        "0",
+        "2.0572628736215755140301168406516076964691583917349581593917625338786327242186195395897958130178887540437882838E-77"
+      ],
+      "retained_relative_exact": [
+        "1837400.0000000000000000",
+        "0E-16",
+        "0E-17",
+        "0E-38",
+        "0E-39",
+        "1633.5041346911611981340683996677398681640625"
+      ],
+      "comparisons": [
+        {
+          "method": "binary64",
+          "relative_signed_error": [
+            "0E-16",
+            "0E-16",
+            "0E-17",
+            "0E-38",
+            "-1.0002328049717485445626177807987129621432320636387203194317407906055450439453125E-13",
+            "2.27373675443232059478759765625E-13"
+          ],
+          "expected_ssb_exact": [
+            "-47124635282.7281036376953125",
+            "128473304107.8315277099609375",
+            "55670397503.89885711669921875",
+            "-29590.75977762048933072946965694427490234375",
+            "-9186.17444486751436672715503396451932303509692012870378567679363612796805682592093944549560546875",
+            "-2407.247982655486566727631725370883941650390625"
+          ],
+          "ssb_signed_error": [
+            "0E-16",
+            "0E-16",
+            "0E-17",
+            "0E-38",
+            "-1.0002328049717485445626177807987129621432320636387203194317407906055450439453125E-13",
+            "2.27373675443232059478759765625E-13"
+          ],
+          "norms_relative_position_m_velocity_m_s_ssb_position_m_velocity_m_s": [
+            "0E-17",
+            "2.4840178124558758743120375457787130367144863426921938973461557716971070492364489167871439086011473700319475063E-13",
+            "0E-17",
+            "2.4840178124558758743120375457787130367144863426921938973461557716971070492364489167871439086011473700319475063E-13"
+          ]
+        },
+        {
+          "method": "decimal80",
+          "relative_signed_error": [
+            "0E-16",
+            "0E-16",
+            "0E-17",
+            "0E-38",
+            "-1.0002328049717485556619031911875453260542307898566449094059681084772941522080737E-13",
+            "2.676875844005114276058902158774123723793186018005639822177184320E-13"
+          ],
+          "expected_ssb_exact": [
+            "-47124635282.7281036376953125",
+            "128473304107.8315277099609375",
+            "55670397503.89885711669921875",
+            "-29590.75977762048933072946965694427490234375",
+            "-9186.17444486751436672715503396451821310655588124546739457692101433550905940318915227058477919263",
+            "-2407.2479826554866070415406826502520687808408774123723793186018005639822177184320"
+          ],
+          "ssb_signed_error": [
+            "0E-16",
+            "0E-16",
+            "0E-17",
+            "0E-38",
+            "-1.0002328049717485556619031911875453260542307898566449094059681084772941522080737E-13",
+            "2.676875844005114276058902158774123723793186018005639822177184320E-13"
+          ],
+          "norms_relative_position_m_velocity_m_s_ssb_position_m_velocity_m_s": [
+            "0E-17",
+            "2.8576441255621289979445724072937833948087332275525739703274761839087294513266475939405174525004016322681258847E-13",
+            "0E-17",
+            "2.8576441255621289979445724072937833948087332275525739703274761839087294513266475939405174525004016322681258847E-13"
+          ]
+        }
+      ]
+    },
+    {
+      "body": "Mars",
+      "stored_endpoint": {
+        "epoch_tdb_s": 1004169273.4122404,
+        "epoch_utc": "2031-10-27T19:53:24.229781Z",
+        "label": "arrival-cutoff",
+        "orientation": "J2000",
+        "origin": "SSB",
+        "position_m": [
+          166618731287.60736,
+          -109354766688.84215,
+          -54649434090.925285
+        ],
+        "velocity_m_s": [
+          15223.562462486618,
+          23670.748593047167,
+          10476.354044428026
+        ]
+      },
+      "stored_body": {
+        "body": "Mars",
+        "epoch_utc": "2031-10-27T19:53:24.229781Z",
+        "epoch_tdb_s": 1004169273.4122404,
+        "origin": "SSB",
+        "orientation": "J2000",
+        "position_m": [
+          166615041787.60736,
+          -109354766688.84215,
+          -54649434090.925285
+        ],
+        "velocity_m_s": [
+          15223.562462486618,
+          19804.197841890473,
+          8673.351818518699
+        ]
+      },
+      "orbit": {
+        "apoapsis_altitude_m": 10000000.0,
+        "argument_of_periapsis_rad": 0.0,
+        "central_body": "Mars",
+        "eccentricity": 0.5679489431465542,
+        "inclination_rad": 0.4363323129985824,
+        "periapsis_altitude_m": 300000.0,
+        "raan_rad": 0.0,
+        "true_anomaly_rad": 0.0
+      },
+      "shape_radius_m": 3389500.0,
+      "gm_m3_s2": 42828375815756.1,
+      "binary64_relative": [
+        3689500.0000000005,
+        0.0,
+        0.0,
+        0.0,
+        3866.5507511566925,
+        1803.002225909328
+      ],
+      "decimal80_relative": [
+        "3689500.0000000004339306691747424338245764374732971191406250000000000000000000000",
+        "0",
+        "0",
+        "0",
+        "3866.5507511566931830132194081642536444570632441139456718284598797521196065133125",
+        "1803.0022259093282636982971425533095955279554537486627334806970582597700706935307"
+      ],
+      "decimal100_relative": [
+        "3689500.000000000433930669174742433824576437473297119140625000000000000000000000000000000000000000000",
+        "0",
+        "0",
+        "0",
+        "3866.550751156693183013219408164253644457063244113945671828459879752119606513312467345457978887780593",
+        "1803.002225909328263698297142553309595527955453748662733480697058259770070693530720380928692052985547"
+      ],
+      "oracle_convergence_norms": [
+        "0E-93",
+        "3.8492874262116778583393687593574678073882831374759953309919074579785052767240046720242859335722755968542503192E-77"
+      ],
+      "retained_relative_exact": [
+        "3689500.00000000000000",
+        "0E-16",
+        "0E-17",
+        "0E-34",
+        "3866.55075115669387741945683956146240234375",
+        "1803.00222590932753519155085086822509765625"
+      ],
+      "comparisons": [
+        {
+          "method": "binary64",
+          "relative_signed_error": [
+            "-4.656612873077392578125E-10",
+            "0E-16",
+            "0E-17",
+            "0E-34",
+            "1.36424205265939235687255859375E-12",
+            "-4.5474735088646411895751953125E-13"
+          ],
+          "expected_ssb_exact": [
+            "166618731287.6073608403094112873077392578125",
+            "-109354766688.8421478271484375",
+            "-54649434090.92528533935546875",
+            "15223.5624624866177327930927276611328125",
+            "23670.74859304716528640710748732089996337890625",
+            "10476.35404442802655466948635876178741455078125"
+          ],
+          "ssb_signed_error": [
+            "-4.656612873077392578125E-10",
+            "0E-16",
+            "0E-17",
+            "0E-34",
+            "1.36424205265939235687255859375E-12",
+            "-4.5474735088646411895751953125E-13"
+          ],
+          "norms_relative_position_m_velocity_m_s_ssb_position_m_velocity_m_s": [
+            "4.656612873077392578125E-10",
+            "1.4380373887290167349414757811394877233940656603068495436934903649637792289646487103456129754610175474169169702E-12",
+            "4.656612873077392578125E-10",
+            "1.4380373887290167349414757811394877233940656603068495436934903649637792289646487103456129754610175474169169702E-12"
+          ]
+        },
+        {
+          "method": "decimal80",
+          "relative_signed_error": [
+            "-4.339306691747424338245764374732971191406250000000000000000000000E-10",
+            "0E-16",
+            "0E-17",
+            "0E-34",
+            "6.944062374313972087578866867558860543281715401202478803934866875E-13",
+            "-7.285067462916850844978717054537486627334806970582597700706935307E-13"
+          ],
+          "expected_ssb_exact": [
+            "166618731287.6073608402776806691747424338245764374732971191406250000000000000000000000",
+            "-109354766688.8421478271484375",
+            "-54649434090.92528533935546875",
+            "15223.5624624866177327930927276611328125",
+            "23670.7485930471659562429227153160480780508132441139456718284598797521196065133125",
+            "10476.3540444280268284288817639827529549029554537486627334806970582597700706935307"
+          ],
+          "ssb_signed_error": [
+            "-4.339306691747424338245764374732971191406250000000000000000000000E-10",
+            "0E-16",
+            "0E-17",
+            "0E-34",
+            "6.944062374313972087578866867558860543281715401202478803934866875E-13",
+            "-7.285067462916850844978717054537486627334806970582597700706935307E-13"
+          ],
+          "norms_relative_position_m_velocity_m_s_ssb_position_m_velocity_m_s": [
+            "4.339306691747424338245764374732971191406250000000000000E-10",
+            "1.0064403121775913908046735883980345018984812171102291135009496216088632985472268613221649612674469787094127968E-12",
+            "4.339306691747424338245764374732971191406250000000000000E-10",
+            "1.0064403121775913908046735883980345018984812171102291135009496216088632985472268613221649612674469787094127968E-12"
+          ]
+        }
+      ]
+    }
+  ],
+  "input_sha256": {
+    "0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0",
+    "0098-central-correction-study.json": "b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057"
+  },
+  "reproduction_source": "# ruff: noqa: E402\n# Budget starts before the remaining standard-library imports.\nimport time\nSTART = time.monotonic()\nimport hashlib\nimport json\nimport math\nimport sys\nfrom decimal import Decimal, localcontext\nfrom pathlib import Path\n\nROOT = Path('/Users/agrudin/dev/my/ariadna')\nOUT = ROOT / 'docs/adr/experiments/0136-retained-boundary-audit.json'\nD = Decimal.from_float\nreport = {'record': 'ADR0136', 'contract': 'ADR0135', 'base_revision': '186c20b0fac7d0acb636448b52fa196067c92fad', 'status': 'incomplete', 'budget_s': 10, 'native_imports_or_calls': 0, 'spacecraft_propagations': 0, 'rows': []}\n\n\ndef require(ok: bool, message: str) -> None:\n    if not ok:\n        raise ValueError(message)\n\n\ndef gate() -> None:\n    require(time.monotonic()-START <= 10, 'shared10s budget exceeded')\n\n\ndef number(v: object) -> float:\n    require(isinstance(v, (int, float)) and not isinstance(v, bool), 'nonnumeric/bool input')\n    value = float(v)\n    require(math.isfinite(value), 'nonfinite input')\n    return value\n\n\ndef trig(x: Decimal, cosine: bool, precision: int) -> Decimal:\n    with localcontext() as ctx:\n        ctx.prec = precision+15\n        term = Decimal(1) if cosine else x\n        total = term\n        n = 0\n        while True:\n            n += 1\n            den = (2*n-1)*(2*n) if cosine else (2*n)*(2*n+1)\n            term *= -x*x/den\n            total += term\n            if abs(term) < Decimal(10)**(-precision-5):\n                break\n            require(n < 300, 'trig series convergence')\n        ctx.prec = precision\n        return +total\n\n\ndef decimal_orbit(orbit: dict, shape: float, mu: float, precision: int) -> list[Decimal]:\n    with localcontext() as ctx:\n        ctx.prec = precision\n        rp = D(shape)+D(number(orbit['periapsis_altitude_m']))\n        ra = D(shape)+D(number(orbit['apoapsis_altitude_m']))\n        a = (rp+ra)/2\n        e = D(number(orbit['eccentricity']))\n        p = a*(1-e*e)\n        radius = p/(1+e)\n        speed = (D(mu)/p).sqrt()*(1+e)\n        i = D(number(orbit['inclination_rad']))\n        return [radius, Decimal(0), Decimal(0), Decimal(0), speed*trig(i, True, precision), speed*trig(i, False, precision)]\n\n\ndef norm(v: list[Decimal]) -> Decimal:\n    return sum(x*x for x in v).sqrt()\n\n\nwith OUT.open('x', encoding='utf-8') as stream:\n    try:\n        gate()\n        require(not any(k.startswith(('space_nav', 'tudatpy', 'spiceypy')) for k in sys.modules), 'scientific import')\n        sources = {'0119-m2-reference.json': '3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0', '0098-central-correction-study.json': 'b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057'}\n        data = {}\n        for name, expected in sources.items():\n            raw = (ROOT / 'docs/adr/experiments' / name).read_bytes()\n            require(hashlib.sha256(raw).hexdigest() == expected, 'input digest drift '+name)\n            data[name] = json.loads(raw)\n        report['input_sha256'] = sources\n        report['reproduction_source'] = Path(__file__).read_text()\n        report['reproduction_source_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()\n        r1, old = data['0119-m2-reference.json'], data['0098-central-correction-study.json']['science']\n        require(old['scenario'] == r1['normalized_scenario'] and old['candidate'] == r1['runs'][0]['selected'], 'scenario/candidate drift')\n        report['units'] = {'position': 'm', 'velocity': 'm/s', 'gm': 'm^3/s^2', 'epoch': 'TDB seconds since J2000'}\n        report['frames'] = {'relative': 'body-relative J2000', 'absolute': 'SSB/J2000'}\n        report['input_equality'] = True\n        gate()\n        with localcontext() as ctx:\n            ctx.prec = 110\n            require(trig(Decimal(0), False, 80) == 0 and trig(Decimal(0), True, 80) == 1, 'analytic trig zeros')\n            # Frozen anomaly/RAAN/argument=0: an independent closed-form x-axis periapsis and x-axis inclination rotation.\n            definitions = [('Moon', 'departure_orbit', 'departure', 'departure-ignition', 1737400.0, 4902800121846.8, old['runs'][0]['run']['boundaries'][0]), ('Mars', 'target_orbit', 'arrival', 'arrival-cutoff', 3389500.0, 42828375815756.1, old['runs'][0]['run']['target_state'])]\n            for body, orbit_key, event, label, shape, mu, saved in definitions:\n                gate()\n                orbit = old['scenario'][orbit_key]\n                body_state = r1['runs'][0]['endpoints'][event]['body_state']\n                require(orbit['central_body'] == body and body_state['body'] == body, 'body mismatch')\n                require(saved['label'] == label and saved['origin'] == body_state['origin'] == 'SSB' and saved['orientation'] == body_state['orientation'] == 'J2000', 'label/frame mismatch')\n                for key in ('epoch_tdb_s', 'epoch_utc'):\n                    require(saved[key] == body_state[key] == old['candidate'][event+'_'+key], 'epoch mismatch')\n                for key in ('raan_rad', 'argument_of_periapsis_rad', 'true_anomaly_rad'):\n                    require(number(orbit[key]) == 0, 'fixed zero-angle contract drift')\n                rp = shape+number(orbit['periapsis_altitude_m'])\n                ra = shape+number(orbit['apoapsis_altitude_m'])\n                e = number(orbit['eccentricity'])\n                require(rp > shape > 0 and ra >= rp and mu > 0 and 0 <= e < 1, 'orbit domain')\n                a = (rp+ra)/2\n                radius = a*(1-e)\n                speed = math.sqrt(mu*(2/radius-1/a))\n                inclination = number(orbit['inclination_rad'])\n                binary = [radius, 0.0, 0.0, 0.0, speed*math.cos(inclination), speed*math.sin(inclination)]\n                oracle80 = decimal_orbit(orbit, shape, mu, 80)\n                oracle100 = decimal_orbit(orbit, shape, mu, 100)\n                convergence = [norm([a-b for a,b in zip(oracle80[:3],oracle100[:3])]), norm([a-b for a,b in zip(oracle80[3:],oracle100[3:])])]\n                require(convergence[0] <= Decimal('1e-12') and convergence[1] <= Decimal('1e-15'), 'Decimal convergence')\n                require(all(len(state[key]) == 3 for state in (body_state, saved) for key in ('position_m', 'velocity_m_s')), 'state shape')\n                body_values = [D(number(v)) for v in body_state['position_m']+body_state['velocity_m_s']]\n                saved_values = [D(number(v)) for v in saved['position_m']+saved['velocity_m_s']]\n                relative = [x-b for x,b in zip(saved_values, body_values)]\n                require(norm(relative[:3]) > D(shape), 'body-centre/interior endpoint')\n                row = {'body': body, 'stored_endpoint': saved, 'stored_body': body_state, 'orbit': orbit, 'shape_radius_m': shape, 'gm_m3_s2': mu, 'binary64_relative': binary, 'decimal80_relative': [str(v) for v in oracle80], 'decimal100_relative': [str(v) for v in oracle100], 'oracle_convergence_norms': [str(v) for v in convergence], 'retained_relative_exact': [str(v) for v in relative], 'comparisons': []}\n                report['rows'].append(row)\n                for method, values in [('binary64', [D(v) for v in binary]), ('decimal80', oracle80)]:\n                    rel_error = [x-y for x,y in zip(relative, values)]\n                    ssb_expected = [x+y for x,y in zip(body_values, values)]\n                    ssb_error = [x-y for x,y in zip(saved_values, ssb_expected)]\n                    errors = [norm(rel_error[:3]), norm(rel_error[3:]), norm(ssb_error[:3]), norm(ssb_error[3:])]\n                    row['comparisons'].append({'method': method, 'relative_signed_error': [str(v) for v in rel_error], 'expected_ssb_exact': [str(v) for v in ssb_expected], 'ssb_signed_error': [str(v) for v in ssb_error], 'norms_relative_position_m_velocity_m_s_ssb_position_m_velocity_m_s': [str(v) for v in errors]})\n                    require(all(v <= lim for v,lim in zip(errors,[Decimal('.001'),Decimal('.000001')]*2)), 'endpoint arithmetic mismatch '+body+' '+method)\n                gate()\n        report['status'] = 'passed'\n        gate()\n    except (ValueError, KeyError, TypeError, ArithmeticError, OSError) as exc:\n        report['status'] = 'failed'\n        report['error'] = {'type': type(exc).__name__, 'message': str(exc)}\n    report['finalization_gate'] = 'passed'\n    report['elapsed_before_flush_s'] = time.monotonic()-START\n    json.dump(report, stream, indent=2, allow_nan=False)\n    stream.flush()\n    if time.monotonic()-START > 10:\n        report['status'] = 'failed'\n        report['finalization_gate'] = 'failed'\n        report['error'] = {'message': 'post-flush10s budget exceeded'}\n        stream.seek(0)\n        stream.truncate()\n        json.dump(report, stream, indent=2, allow_nan=False)\n        stream.flush()\nprint(json.dumps({'status': report['status'], 'rows': len(report['rows']), 'elapsed_before_flush_s': report['elapsed_before_flush_s'], 'error': report.get('error')}))\nsys.exit(0 if report['status']=='passed' else 1)\n",
+  "reproduction_source_sha256": "33db3d0ef217066bd0f0ebe86dbdd294fdf117b47c6f92b22db64c3b17fc4f28",
+  "units": {
+    "position": "m",
+    "velocity": "m/s",
+    "gm": "m^3/s^2",
+    "epoch": "TDB seconds since J2000"
+  },
+  "frames": {
+    "relative": "body-relative J2000",
+    "absolute": "SSB/J2000"
+  },
+  "input_equality": true,
+  "finalization_gate": "passed",
+  "elapsed_before_flush_s": 0.014713209122419357
+}

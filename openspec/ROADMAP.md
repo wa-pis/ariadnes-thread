@@ -5,7 +5,19 @@ Continue bounded work from CURRENT_STATE; pause the automation when user
 participation is required and explain the exact needed decision/action. Do not
 repeat successful studies or unchanged full regressions automatically.
 
-## Current priority R4 — define finite-radius interfaces before new propagation
+## Next bounded design — integrated omitted-force sensitivity
+
+[ADR0136](../docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes the
+offline R4 audit: both retained physical task endpoints satisfy the independent
+arithmetic gates, with zero native calls. This establishes no connecting coast.
+Next inspect existing independent-engine/physical adapters and verification for
+reuse, then specify a short-coast two-model sensitivity comparison from the fixed
+initial state. Declare interval, forces/omissions, same-model independent reference,
+separate numerical/model-sensitivity gates and native/time budget before work.
+No new candidate/phase/control, optimizer, propagation or dependency is selected;
+no user action is currently required for this bounded design review.
+
+## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:
 R1 and D13 parsed scenario/candidate inputs are equal, so no repeated local geometry
@@ -13,10 +25,9 @@ is needed. Their event/phase/GM/model meanings and physical outer-transfer/captu
 connections remain distinct. Existing boundary conversion can be reused.
 [ADR0135](../docs/adr/0135-fixed-orbit-boundary-contract.md) specifies fixed retained
 physical endpoints and actual burn-cutoff/ignition joins under unchanged M3 forces.
-Next R4.3: once-only10s/zero-native independent retained-endpoint arithmetic audit;
-no new phases/controls/states, propagation or optimizer. This does not authorize
-a mission experiment: commands, independent dynamics and native budget remain
-unresolved. No user action is currently needed for the bounded offline check.
+[ADR0136](../docs/adr/0136-retained-boundaries-pass-arithmetic.md) records the
+once-only10s/zero-native audit pass. Mission commands, independent full-mission
+dynamics and native budget remain unresolved; no mission run or closure is claimed.
 
 ## Completed R3 — screen omitted gravity before propagation
 

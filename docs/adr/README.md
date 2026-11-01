@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0136 — Retained boundary arithmetic passes](0136-retained-boundaries-pass-arithmetic.md): both fixed endpoints pass binary64 and80/100-digit Decimal checks, zero native calls; no connecting trajectory claim.
+
 - [0135 — Fixed orbital boundaries and burn interfaces](0135-fixed-orbit-boundary-contract.md): retained task endpoints, exact full-model arc joins and a10s/zero-native independent boundary-arithmetic audit contract; no mission run.
 
 - [0134 — Reuse boundary evidence](0134-boundary-evidence-reuse.md): exact parsed R1/D13 inputs match; retain phase/event/GM/model distinctions, no local-state splice or repeated geometry.
