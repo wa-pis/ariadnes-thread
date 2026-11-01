@@ -11,10 +11,12 @@ repeat successful studies or unchanged full regressions automatically.
 R1 and D13 parsed scenario/candidate inputs are equal, so no repeated local geometry
 is needed. Their event/phase/GM/model meanings and physical outer-transfer/capture
 connections remain distinct. Existing boundary conversion can be reused.
-Next R4.2 is design only: specify exact states/events/models/mass/continuity gates,
-independent reference and a finite budget before any new implementation or study.
-No automatic phase/epoch/radius changes, D17 retry, optimizer or M3 closure.
-No user action is currently needed for the bounded specification work.
+[ADR0135](../docs/adr/0135-fixed-orbit-boundary-contract.md) specifies fixed retained
+physical endpoints and actual burn-cutoff/ignition joins under unchanged M3 forces.
+Next R4.3: once-only10s/zero-native independent retained-endpoint arithmetic audit;
+no new phases/controls/states, propagation or optimizer. This does not authorize
+a mission experiment: commands, independent dynamics and native budget remain
+unresolved. No user action is currently needed for the bounded offline check.
 
 ## Completed R3 — screen omitted gravity before propagation
 

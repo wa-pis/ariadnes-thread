@@ -617,3 +617,26 @@ It SHALL NOT treat equal candidate inputs as connected physical trajectories.
 - **WHEN** a new finite-radius experiment is proposed after the review
 - **THEN** its contract SHALL first bind exact initial/target states and epochs or deterministic construction, explicit phase/event/branch policy, local/outer interface states and models, shared mass history, six-component continuity residuals, numerical gates, independent reference and wall-time/native-call limits
 - **AND** unresolved values SHALL remain explicit and SHALL NOT authorize implementation, propagation, changed historical inputs, silent phase/epoch/radius selection, repeated failed studies or relaxed existing local/mission gates
+
+
+### Requirement: Preserve fixed orbital endpoints and distinguish interface assembly from physics
+
+R4 SHALL use ADR0135's unchanged configured orbital endpoints and exact burn
+interfaces; the retained M2 curve and D13/D14 local states SHALL NOT be spliced
+into a claimed physical solution. A future mission run requires its own complete
+command/reference/budget contract and SHALL NOT be authorized by an endpoint audit.
+
+#### Scenario: Fix endpoints and exact interfaces without selecting new controls
+
+- **WHEN** the R1-specific boundary contract is inspected
+- **THEN** complete retained0098 initial/target records and exact R1 scenario/candidate equality SHALL bind departure ignition and arrival cutoff, harmonic GMs, original orbital phases and SSB/J2000/SI/TDB conventions
+- **AND** any future explicitly supplied admissible burns SHALL join at t0+tau_d and tf-tau_a with unchanged production forces, positive burn durations and positive coast, preserving existing1e-6s/0.001m/1e-6m/s/1e-9kg join and1000m/0.01m/s target gates
+- **AND** shared sequential mass SHALL protect dry mass; a new R1 reserve claim SHALL require actual final mass>=550kg, with no copied M2 or provisional D13 feasibility
+
+#### Scenario: Audit only retained boundary arithmetic
+
+- **WHEN** the once-only R4.3 audit executes after the ADR0135 contract
+- **THEN** it SHALL bind unchanged0119/0098 digests and independently compare both retained endpoints against binary64 rotation/vis-viva and80-digit Decimal p-based orbital arithmetic using the stored eccentricity/angles, at0.001m/1e-6m/s Euclidean gates in relative and SSB coordinates
+- **AND** a100-digit Decimal repeat SHALL establish oracle agreement<=1e-12m/1e-15m/s; raw inputs, signed residuals, norms, labels/constants/digests/counters and failures SHALL be retained in exclusive new evidence
+- **AND** the shared10s read/check/arithmetic/serialization/flush budget SHALL permit zero scientific imports, native reads, propagation, optimization or new observed states; unexpected failure SHALL stop without changed gates/data or retry
+- **AND** an arithmetic/assembly pass SHALL NOT claim achieved interior states, independent dynamical validation, full-mission target closure, reserve, safety or strict M3 completion

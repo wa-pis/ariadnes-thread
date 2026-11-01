@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0135 — Fixed orbital boundaries and burn interfaces](0135-fixed-orbit-boundary-contract.md): retained task endpoints, exact full-model arc joins and a10s/zero-native independent boundary-arithmetic audit contract; no mission run.
+
 - [0134 — Reuse boundary evidence](0134-boundary-evidence-reuse.md): exact parsed R1/D13 inputs match; retain phase/event/GM/model distinctions, no local-state splice or repeated geometry.
 
 - [0133 — Three-epoch gravity screening](0133-three-epoch-gravity-screening.md): one bounded native study and independent arithmetic audit pass; local Earth departure term is40.2% of solar acceleration, endpoint lunar/Mars fields remain inadmissible.
