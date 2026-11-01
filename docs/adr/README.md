@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0140 — Native short-coast adapter preparation](0140-native-short-coast-adapter.md):61 new/115 focused and5051 full tests pass; native unit verified, shared runner/audit pending; no R5 reference run.
+
 - [0139 — Pinned native API readiness](0139-pinned-native-api-readiness.md): explicit constructors/GMs checked without propagation; opaque inventory and failed standalone derivative documented; native parity pending.
 
 - [0138 — Independent short-coast oracle preparation](0138-independent-short-coast-oracle.md):54 new/224 focused and4990 full tests pass; oracle unit verified, R5.2 overall pending remaining adapters.

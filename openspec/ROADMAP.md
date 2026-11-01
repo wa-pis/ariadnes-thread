@@ -12,7 +12,9 @@ unpowered parked-state comparison: direct Sun/Moon versus Sun/Moon/Earth, same
 R4-audited SSB initial state and moving SPICE bodies. Compare native RK4 profiles
 against separately implemented pinned SciPy DOP853 profiles; no new dependency.
 [ADR0138](../docs/adr/0138-independent-short-coast-oracle.md) verifies the oracle
-unit:54 new/224 focused and4990 full tests pass. Native adapter, orchestration
+unit:54 new/224 focused and4990 full tests pass.
+[ADR0140](../docs/adr/0140-native-short-coast-adapter.md) verifies the native
+adapter:61 new/115 focused and5051 full tests pass. Shared orchestration
 and offline audit remain pending; R5.2 overall is incomplete.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.

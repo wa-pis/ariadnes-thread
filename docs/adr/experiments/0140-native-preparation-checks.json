@@ -1,0 +1,45 @@
+{
+  "base_revision": "9b18ec0683ac323137b241f9b7a2e7d1220f0223",
+  "scope": "R5.2c native component preparation only",
+  "sources_sha256": {
+    "docs/adr/experiments/0140-short-coast-native.py": "8bc888d6e1c638251d8379d6d4c896393b5cd76fb71e85c65c7faf9aab9294e2",
+    "tests/test_r5_short_coast_native.py": "47f91ce5d5ccb9133f6c6df5933b382b1a05fe436ee5995c9cb4523b48d8ab9b"
+  },
+  "sources_untracked_during_checks": true,
+  "new_tests": 61,
+  "focused": {
+    "passed": 115,
+    "duration_s": 2.02
+  },
+  "full": {
+    "passed": 5051,
+    "duration_s": 650.86,
+    "exit_code": 0,
+    "log": "0140-full-pytest.txt",
+    "sha256": "0dcea7e19edfb830db8188e45c52c50d80ed9eed461cb7cd3d9cd3892090b7cc",
+    "git_status_unchanged": true,
+    "git_status_sha256": "55d20a7cd354d238835508661ab2c40f247ae7135fb0b82e7cf5e1ba661861eb"
+  },
+  "ruff": "passed",
+  "openspec_strict": "passed",
+  "protected_tracked_files_unchanged": 252,
+  "synthetic_native_arcs_per_native_test_file_run": 4,
+  "focused_native_test_file_runs": 3,
+  "full_native_test_file_runs": 1,
+  "new_fixture_synthetic_native_arcs_total": 16,
+  "other_suite_native_counts": "not instrumented",
+  "new_direct_spice_test_explicit_state_reads_per_invocation": 12,
+  "reference_R5_executed": false,
+  "R5_2_complete": false,
+  "numeric_gates": {
+    "circular_position_m": 1e-06,
+    "circular_velocity_m_s": 1e-08,
+    "circular_acceleration_norm_m_s2": 1e-12,
+    "axis_decimal_acceleration_component_m_s2": 1e-14,
+    "state_parity_position_m": 0.001,
+    "state_parity_velocity_m_s": 1e-06,
+    "telemetry_total_source_sum_m_s2": 1e-12
+  },
+  "initial_focus_failure": "1 failed/43 passed in0.81s: bitwise final line expected2, actual1.9999999999999998; only synthetic velocities changed2/3/4 to3/6/12 retaining exact gate; no R5 data/gate changed",
+  "initial_ruff": "24 style errors corrected by formatting new files"
+}
