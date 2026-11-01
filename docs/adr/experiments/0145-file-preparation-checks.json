@@ -1,0 +1,38 @@
+{
+  "stage": "R5.2g.2 strict JSON/frozen input/current-file identity preparation",
+  "base_revision": "ba738f332a13a7679d41ecbac6c2f4f6a7fefc8f",
+  "new_sources_untracked_during_checks": true,
+  "source_sha256": {
+    "docs/adr/experiments/0145-short-coast-evidence.py": "426fe4e0abe9b9dfcf6380d09e86e8dbf5748f66875f74b26b45dceb6ba5da14",
+    "tests/test_r5_short_coast_evidence.py": "23bfbdc158f3938a76388f9d04f1b341e1fa26aaf90cf40683428dc465ed6bd1"
+  },
+  "new_tests": 39,
+  "initial_focused": {
+    "passed": 39,
+    "seconds": 0.52
+  },
+  "final_focused": {
+    "passed": 128,
+    "seconds": 0.74
+  },
+  "full_pytest": {
+    "passed": 5223,
+    "seconds": 650.56,
+    "exit_code": 0,
+    "log": "0145-full-pytest.txt",
+    "log_sha256": "c0cd9cca4a7c3cf9bb63231086863813e0f091f2ab2bf63f3e81cddfd57a5c7f"
+  },
+  "workspace_status_unchanged_during_full_pytest": true,
+  "workspace_status_sha256": "88ef95311b9b5b95b0f9cd0e1ddfee80010b29ae64c3d28c6df088e6a02276fe",
+  "protected_tracked_files_unchanged": 269,
+  "ruff": "passed",
+  "strict_openspec": "passed",
+  "new_unit_native_imports": 0,
+  "new_unit_body_queries": 0,
+  "new_unit_propagations": 0,
+  "fixture_scope": "Frozen research JSON and copied source/unexecuted temporary runtime files only. Existing full-suite native counts not instrumented.",
+  "r5_reference_executed": false,
+  "complete_auditor_verified": false,
+  "r5_2_complete": false,
+  "remaining": "One private audit orchestrator: ledgers, comparison/outcome/partial semantics and exclusive10s output, plus final R5.2 preparation review."
+}

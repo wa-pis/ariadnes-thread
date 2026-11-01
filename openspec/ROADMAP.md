@@ -24,7 +24,9 @@ tests pass. [ADR0143](../docs/adr/0143-independent-saved-evidence-audit-contract
 defines independent offline arithmetic/raw-data/provenance audit and its separate
 zero-native10s budget. [ADR0144](../docs/adr/0144-independent-saved-node-arithmetic.md)
 verifies its arithmetic/raw-array core:52 new/89 focused and5184 full tests pass.
-File/provenance orchestration is next; R5.2 incomplete, no reference study launched.
+[ADR0145](../docs/adr/0145-independent-evidence-input-and-file-identity.md) verifies
+strict JSON/frozen inputs/current-file identity:39 new/128 focused and5223 full
+tests pass. Final audit orchestration is next; R5.2 incomplete, no reference run.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 Preparation/tests first, then one60s/four-native/four-oracle/10000-oracle-RHS

@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0145 — Independent input/file identity](0145-independent-evidence-input-and-file-identity.md):39 new/128 focused and5223 full pass; input/file unit verified, final audit orchestration remains required before R5.
+
 - [0144 — Independent saved-node arithmetic](0144-independent-saved-node-arithmetic.md):52 new/89 focused and5184 full pass; arithmetic unit verified, file/provenance orchestration still required before R5.
 
 - [0143 — Independent saved-evidence audit contract](0143-independent-saved-evidence-audit-contract.md): independent arithmetic/raw-data/provenance and zero-native10s design verified; implementation pending, no R5 run.

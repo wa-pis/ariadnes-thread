@@ -32,16 +32,16 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 [ADR0137](docs/adr/0137-short-coast-earth-gravity-contract.md) freezes a300s
 unpowered parked-state Sun/Moon versus Sun/Moon/Earth direct-SSB comparison.
 Same audited0098 initial state/R1 candidate; pinned SciPy1.17.1 already installed.
-Verified helpers: [oracle](docs/adr/0138-independent-short-coast-oracle.md),
-[native](docs/adr/0140-native-short-coast-adapter.md) and
+Helpers: [oracle](docs/adr/0138-independent-short-coast-oracle.md), [native](docs/adr/0140-native-short-coast-adapter.md) and
 [inputs/runtime](docs/adr/0141-short-coast-input-and-runtime-identity.md).
 [ADR0142](docs/adr/0142-short-coast-orchestration-and-evidence.md): runner implemented;
-37 new/81 focused and5132 full tests pass in647.31s; Ruff/strict OpenSpec pass.
-All260 protected tracked files unchanged; no R5 reference propagation.
+37 new/81 focused and5132 full tests pass; no reference propagation.
 [ADR0144](docs/adr/0144-independent-saved-node-arithmetic.md): arithmetic core implemented;
 52 new/89 focused and5184 full pass in648.51s; Ruff/strict OpenSpec pass.
-All265 protected files unchanged; new52 tests:0 native imports/queries/propagations.
-Next file/provenance orchestration under ADR0143; no R5.2 completion/reference run.
+[ADR0145](docs/adr/0145-independent-evidence-input-and-file-identity.md): input/file helpers;
+39 new/128 focused and5223 full pass in650.56s; Ruff/strict OpenSpec pass.
+All269 protected files unchanged; new39 tests:0 native imports/queries/propagations.
+Next final audit orchestration under ADR0143; no R5.2 completion/reference run.
 
 [ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only
 as endpoint arithmetic. Do not repeat R2/R3/R4/full tests on unchanged code.
