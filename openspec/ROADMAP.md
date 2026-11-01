@@ -1,8 +1,8 @@
 # Ariadna Space Navigation Roadmap
 
-Automation `ariadna-m3` is active every 5 minutes by user instruction 2026-11-01.
-Continue bounded work from CURRENT_STATE; pause the automation when user
-participation is required and explain the exact needed decision/action. Do not
+Automation `ariadna-m3` is PAUSED after ADR0148 by the user's stop-on-required-decision rule.
+Do not resume or repeat the failed once-only R5 study without the user decision
+and a separately justified experimental contract. Do not
 repeat successful studies or unchanged full regressions automatically.
 
 ## Current priority R5 — short-coast Earth-gravity sensitivity
@@ -14,7 +14,7 @@ against separately implemented pinned SciPy DOP853 profiles; no new dependency.
 [ADR0138](../docs/adr/0138-independent-short-coast-oracle.md) verifies the oracle
 unit:54 new/224 focused and4990 full tests pass.
 [ADR0140](../docs/adr/0140-native-short-coast-adapter.md) verifies the native
-adapter:61 new/115 focused and5051 full tests pass. Actual reference audit is not yet run.
+adapter:61 new/115 focused and5051 full tests pass. Reference audit outcome is below.
 [ADR0141](../docs/adr/0141-short-coast-input-and-runtime-identity.md) verifies
 frozen-input/extended-runtime identity helpers:44 new/130 focused and5095 full
 tests pass, no R5 reference propagation.
@@ -33,13 +33,17 @@ R5.2/R5.2g preparation:14 source/test hashes and seven full logs rechecked;
 277 protected files unchanged. One actual runtime/file-schema compatibility check
 passes in1.2859516250900924s with two equal snapshots and no body-state requests
 or propagation. Reuse5255 full tests/Ruff on identical code; strict OpenSpec passes.
-Next eligible step: exactly one ADR0137 study and separate ADR0143 audit in fresh
-processes; no additional readiness propagation. No reference result yet.
+[ADR0148](../docs/adr/0148-short-coast-oracle-rhs-limit.md) records the once-only
+reference failure: two A native arcs complete, first A oracle hits10000 RHS /
+30021 state reads in1.8111813748255372s before flush. B and model sensitivity are
+unavailable. Separate audit is partial/study_verified=false in0.07836870802566409s.
+Automation is PAUSED; R5.3 scientific completion remains open. Next requires a
+user decision on diagnosis/revised contract; no retry or cap/profile change.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
-Preparation/tests first, then one60s/four-native/four-oracle/10000-oracle-RHS
-study and offline audit. Numerical comparison and integrated model differences
-remain separate; no full-force/escape/capture/safety/M3 claim. No user action needed.
+The retained attempt used the fixed60s/four-native/four-oracle/10000-RHS contract.
+Numerical comparison and integrated model differences remain separate; no
+full-force/escape/capture/safety/M3 claim. User decision needed before new science.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

@@ -1,0 +1,182 @@
+{
+  "stage": "R5.3 once-only reference attempt; failed at oracle RHS cap",
+  "measured_revision": "24154beaa354422d89c4e23d71e1fa687e875d9d",
+  "measured_dirty": [],
+  "study_status": "failed",
+  "first_error": {
+    "stage": "A oracle normal",
+    "type": "OracleError",
+    "message": "oracle RHS cap10000"
+  },
+  "study_finalization_gate": "passed",
+  "study_budget_s": 60.0,
+  "study_elapsed_sample_before_flush_s": 1.8111813748255372,
+  "counts": {
+    "native_arcs_attempted": 2,
+    "native_arcs_returned": 2,
+    "native_arcs_completed": 2,
+    "native_guard_reads_attempted": 2712,
+    "native_guard_reads_returned": 2712,
+    "oracle": {
+      "rhs_attempted": 10000,
+      "rhs_completed": 10000,
+      "states_attempted": 30021,
+      "states_completed": 30021
+    }
+  },
+  "oracle_solves_attempted": 1,
+  "oracle_solves_returned": 0,
+  "oracle_solves_completed": 0,
+  "body_table_nodes": 7,
+  "body_table_states": 21,
+  "complete_native_profiles": [
+    "native-normal",
+    "native-tight"
+  ],
+  "native_only_posthoc_decimal_difference": [
+    {
+      "epoch_tdb_s": 978995455.2304223,
+      "tight_minus_normal_si": [
+        "0E-16",
+        "0E-16",
+        "0E-17",
+        "0E-38",
+        "0E-39",
+        "0E-39"
+      ],
+      "position_norm_m": "0E-17",
+      "velocity_norm_m_s": "0E-39"
+    },
+    {
+      "epoch_tdb_s": 978995505.2304223,
+      "tight_minus_normal_si": [
+        "-0.00003814697265625",
+        "-0.0000152587890625",
+        "-0.00001525878906250",
+        "-2.2555468603968620300292968750E-10",
+        "2.5829649530351161956787109375E-10",
+        "9.8225427791476249694824218750000E-10"
+      ],
+      "position_norm_m": "0.000043827534839920262602620021577598032518159976638662661496733684315230565807017552",
+      "velocity_norm_m_s": "1.0403919753450570969228526382848366703354347669063198892478578288426259464663445E-9"
+    },
+    {
+      "epoch_tdb_s": 978995555.2304223,
+      "tight_minus_normal_si": [
+        "-0.00005340576171875",
+        "-0.00012207031250",
+        "-0.00002288818359375",
+        "-3.67072061635553836822509765625E-9",
+        "2.906745066866278648376464843750E-9",
+        "1.282387529499828815460205078125E-9"
+      ],
+      "position_norm_m": "0.00013519321553550224610894107893017818642224186066916984304945159685447639254370900",
+      "velocity_norm_m_s": "4.8546755301364585166430968150469613507121252597011753846509299217633969389942996E-9"
+    },
+    {
+      "epoch_tdb_s": 978995605.2304223,
+      "tight_minus_normal_si": [
+        "-0.00007629394531250",
+        "-0.000122070312500",
+        "-0.0000457763671875",
+        "-8.46557668410241603851318359375E-9",
+        "7.756170816719532012939453125E-9",
+        "1.58024704433046281337738037109375E-9"
+      ],
+      "position_norm_m": "0.00015105430506304420992449678145550363998394322399350946826533139291282848128104781",
+      "velocity_norm_m_s": "1.1589709015055785837471455898830175940239967044245153593629963846044337750129605E-8"
+    },
+    {
+      "epoch_tdb_s": 978995655.2304223,
+      "tight_minus_normal_si": [
+        "-0.00008392333984375",
+        "-0.0001373291015625",
+        "-0.00002288818359375",
+        "-1.414082362316548824310302734375E-8",
+        "1.2743839761242270469665527343750E-8",
+        "1.5725163393653929233551025390625E-9"
+      ],
+      "position_norm_m": "0.00016256161310319912939781581366178025035067329686693277434569332317317605340398729",
+      "velocity_norm_m_s": "1.9100815486236856244942440008066291810759019505510186707710590931297628910091786E-8"
+    },
+    {
+      "epoch_tdb_s": 978995705.2304223,
+      "tight_minus_normal_si": [
+        "-0.00006103515625000",
+        "-0.00018310546875",
+        "0E-17",
+        "-2.11657606996595859527587890625E-8",
+        "1.8733771867118775844573974609375E-8",
+        "-1.3233147910796105861663818359375E-10"
+      ],
+      "position_norm_m": "0.00019301011109426143383782309231156729331784394160920512859237700517532925040522694",
+      "velocity_norm_m_s": "2.8265900763727096391228519562442490319366311791708021773157120212899370340424553E-8"
+    },
+    {
+      "epoch_tdb_s": 978995755.2304223,
+      "tight_minus_normal_si": [
+        "-0.00004577636718750",
+        "-0.0001220703125",
+        "0.0000152587890625",
+        "-2.398519427515566349029541015625E-8",
+        "2.4572727852500975131988525390625E-8",
+        "-1.87719706445932388305664062500000E-9"
+      ],
+      "position_norm_m": "0.00013126106669681742510573537498549978076213890926041771880352852846126444907627895",
+      "velocity_norm_m_s": "3.4389422317754218154896709926631122274476083831323381076259823005732261858771786E-8"
+    }
+  ],
+  "native_only_posthoc_scope": "Saved-array subtraction only; no missing oracle result, model comparison or sensitivity gate is inferred.",
+  "last_retained_oracle_body_epoch_tdb_s": 978995503.8354224,
+  "last_retained_oracle_body_offset_s": 48.605000138282776,
+  "last_retained_oracle_body_scope": "Last successful body query, not an accepted-step endpoint or a saved RHS/solver trace.",
+  "audit_status": "partial",
+  "study_verified": false,
+  "audit_budget_s": 10.0,
+  "audit_elapsed_before_flush_s": 0.07836870802566409,
+  "audit_finalization_gate": "passed",
+  "audit_native_calls": 0,
+  "audited_node_force_rows": 14,
+  "audited_call_events": 26,
+  "audit_unavailable": [
+    {
+      "profile": "A oracle normal",
+      "reason": "'result'"
+    }
+  ],
+  "no_reference_or_audit_retry": true,
+  "protected_tracked_files_unchanged": 281,
+  "runtime_code_and_tests_changed": false,
+  "full_tests_rerun": false,
+  "full_tests_reused": {
+    "passed": 5255,
+    "seconds": 647.52,
+    "log": "0146-full-pytest.txt"
+  },
+  "unavailable": [
+    "A native-oracle numerical agreement",
+    "A oracle profile agreement",
+    "model B",
+    "signed B-minus-A sensitivity",
+    "final runtime identity snapshot",
+    "mission accuracy",
+    "continuous safety"
+  ],
+  "automation": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "reason": "Once-only science failed at fixed RHS limit; no new run or changed contract without user decision."
+  },
+  "artifacts_sha256": {
+    "0148-short-coast-study.json": "8bbe6f5f7d08f4e220ee3cff450488531da0776b8a69cb4c37e1c9af9872b096",
+    "0148-short-coast-audit.json": "62d0d73538b914a8b03e39242fc5d1c0eac53a3670f06cde3ae43b9fbf533253",
+    "0148-study-output.txt": "ec176b9498ea08edb4ced48cbfd172fd1ba169518d5f3e47ee6b5ba5744cb456",
+    "0148-audit-output.txt": "49e294780b64d9567887bcb934cf475fb53354ba8e00b0078f31a9fe6647bdec"
+  },
+  "execution_invocation_sha256": "11db6daf946e2282cbac212b9b6377737cac12b3d3bdef57aabca960483ef132",
+  "strict_openspec": "passed",
+  "finite_duplicate_checked_json": "passed",
+  "local_links_checked": 168,
+  "source_input_and_evidence_digests": "passed",
+  "automation_pause_confirmed": true
+}

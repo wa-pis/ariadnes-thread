@@ -8,7 +8,7 @@ here and at the top of the roadmap; retained detail belongs in the ADRs.
 Near-term product: one understandable research trajectory demonstrator with an
 independently checked calculation and exportable result, not operational navigation.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3`: active every 5 minutes by user instruction 2026-11-01.
+Automation `ariadna-m3`: PAUSED after R5.3 cap failure, per user instruction.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline
@@ -27,21 +27,19 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — R5.3 once-only reference study
+## Paused — R5.3 once-only attempt failed
 
-[ADR0137](docs/adr/0137-short-coast-earth-gravity-contract.md) freezes300s unpowered
-parked-state Sun/Moon versus Sun/Moon/Earth direct-SSB dynamics from0098/R1.
-[ADR0147](docs/adr/0147-short-coast-preparation-review.md) completes R5.2/R5.2g:
-14 prepared helper/test hashes/seven full logs/six pin maps verified;277 protected unchanged.
-Actual runtime producer/file verifier: two equal snapshots in1.2859516250900924s,
-43 sources/native binary/9 modules/5 Conda records checked;0 body states/propagations.
-[ADR0146](docs/adr/0146-offline-audit-orchestration.md):5255 full tests pass in647.52s;
-Ruff/strict OpenSpec pass, reused unchanged code at a20cbf0. No reference result yet.
-Next: exactly one fresh pinned-process runner0142 execute and separate fresh auditor0146
-execute, exclusive new evidence;60s/four-native/four-oracle/10000-RHS study,10s offline.
-Keep all exact inputs/kernels/profiles/gates and first-failure stop; no prewarming/retry.
-Do not rerun unchanged full/synthetic/reference work. Pause for required user action
-or contract-changing failure; preserve finite partial outputs and measured identities.
+[ADR0148](docs/adr/0148-short-coast-oracle-rhs-limit.md): one attempt at clean24154be;
+A native h1/h0.5 arcs complete, first A oracle hits10000 RHS/30021 body reads.
+Study elapsed before flush1.8111813748255372s, finalization passed; no B model.
+Separate offline audit:partial/study_verified=false,0.07836870802566409s, zero native.
+No independent A agreement or Earth-force sensitivity result; final identity not reached.
+All281 protected files unchanged; no runtime/test/environment changes or science retry.
+[ADR0147](docs/adr/0147-short-coast-preparation-review.md): R5.2 preparation complete.
+Reuse5255 full tests/Ruff from ADR0146; strict OpenSpec/evidence/link checks pass.
+Automation ariadna-m3 confirmedPAUSED. Await user decision for diagnosis/new contract
+before any new scientific execution; do not increase caps/change profiles or replay.
+Preserve raw partial study/audit0148, inputs/kernels/gates and all prior evidence.
 
 [ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only
 as endpoint arithmetic. Do not repeat R2/R3/R4/full tests on unchanged code.
@@ -50,7 +48,7 @@ as endpoint arithmetic. Do not repeat R2/R3/R4/full tests on unchanged code.
 all121 nodes/both frames, max0.0021126122711470335m/3.9825899625221015e-10m/s.
 [ADR0130](docs/adr/0130-full-regression-after-reference-verification.md):4852 full
 tests pass in640.24s at7b22253. Do not repeat unchanged R2/full regression.
-Automatic bounded continuation is authorized; pause if user input/action is needed.
+Automation remains paused; no further study is authorized by this failure record.
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.

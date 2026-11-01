@@ -1,0 +1,17 @@
+Measured from clean dev at24154beaa354422d89c4e23d71e1fa687e875d9d.
+Exactly one study process and one separate offline process; no prewarming/retry.
+Both used /opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python.
+The prepared sources are executed unchanged with their actual __file__ paths;
+PROCESS_START remains the prepared module baseline before remaining imports.
+
+Study invocation:
+/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python -c '__file__="/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0142-short-coast-runner.py"; exec(compile(open(__file__).read(), __file__, "exec")); result=execute(Path("/private/tmp/ariadna-0148-short-coast-study.json")); print({"status":result["status"],"error":result.get("error"),"counts":result["counts"],"elapsed_sample_before_flush_s":result["elapsed_sample_before_flush_s"]})' > /private/tmp/ariadna-0148-study-output.txt 2>&1
+Process exit0; scientific report status failed. No second study process.
+
+Offline invocation:
+/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python -c '__file__="/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0146-audit-short-coast.py"; exec(compile(open(__file__).read(), __file__, "exec")); result=execute(Path("/private/tmp/ariadna-0148-short-coast-study.json"),Path("/private/tmp/ariadna-0148-short-coast-audit.json")); print({"audit_status":result["audit_status"],"study_verified":result["study_verified"],"error":result.get("error"),"elapsed_before_flush_s":result.get("elapsed_before_flush_s")})' > /private/tmp/ariadna-0148-audit-output.txt 2>&1
+Process exit0; audit_status partial, study_verified false. No second audit process.
+
+Both outputs were created exclusively outside the checkout, checked after exit,
+and copied byte-for-byte into this journal. Git status stayed empty across both
+processes. Neither script, tests, inputs, kernels nor scientific gates were changed.
