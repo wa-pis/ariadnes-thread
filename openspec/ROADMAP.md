@@ -14,7 +14,7 @@ against separately implemented pinned SciPy DOP853 profiles; no new dependency.
 [ADR0138](../docs/adr/0138-independent-short-coast-oracle.md) verifies the oracle
 unit:54 new/224 focused and4990 full tests pass.
 [ADR0140](../docs/adr/0140-native-short-coast-adapter.md) verifies the native
-adapter:61 new/115 focused and5051 full tests pass. The offline audit remains pending; R5.2 overall is incomplete.
+adapter:61 new/115 focused and5051 full tests pass. Actual reference audit is not yet run.
 [ADR0141](../docs/adr/0141-short-coast-input-and-runtime-identity.md) verifies
 frozen-input/extended-runtime identity helpers:44 new/130 focused and5095 full
 tests pass, no R5 reference propagation.
@@ -28,7 +28,13 @@ verifies its arithmetic/raw-array core:52 new/89 focused and5184 full tests pass
 strict JSON/frozen inputs/current-file identity:39 new/128 focused and5223 full
 tests pass. [ADR0146](../docs/adr/0146-offline-audit-orchestration.md) verifies
 final offline orchestration:32 new/160 focused and5255 full tests pass.
-Aggregate R5.2 preparation review remains; no reference run.
+[ADR0147](../docs/adr/0147-short-coast-preparation-review.md) completes aggregate
+R5.2/R5.2g preparation:14 source/test hashes and seven full logs rechecked;
+277 protected files unchanged. One actual runtime/file-schema compatibility check
+passes in1.2859516250900924s with two equal snapshots and no body-state requests
+or propagation. Reuse5255 full tests/Ruff on identical code; strict OpenSpec passes.
+Next eligible step: exactly one ADR0137 study and separate ADR0143 audit in fresh
+processes; no additional readiness propagation. No reference result yet.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 Preparation/tests first, then one60s/four-native/four-oracle/10000-oracle-RHS

@@ -1,0 +1,60 @@
+from time import monotonic
+started = monotonic()
+import hashlib
+import json
+from pathlib import Path
+import runpy
+import subprocess
+import sys
+
+root = Path('/Users/agrudin/dev/my/ariadna')
+result = {'stage': 'R5.2 aggregate runtime/file-schema readiness', 'status': 'failed',
+          'budget_s': 10.0, 'body_state_requests': 0, 'spacecraft_propagations': 0,
+          'reference_study_executed': False, 'identity_snapshots_completed': 0}
+def check():
+    elapsed = monotonic() - started
+    if not 0 <= elapsed < 10.0:
+        raise ValueError('readiness deadline/clock')
+try:
+    check()
+    assert not any(k.startswith(('space_nav', 'numpy', 'scipy', 'tudatpy', 'spiceypy')) for k in sys.modules)
+    before_status = subprocess.check_output(['git', 'status', '--short'], cwd=root)
+    result['base_revision'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
+    result['dirty_before'] = before_status.decode().splitlines()
+    runner = runpy.run_path(str(root / 'docs/adr/experiments/0142-short-coast-runner.py'))
+    files = runpy.run_path(str(root / 'docs/adr/experiments/0145-short-coast-evidence.py'))
+    bundle = runner['inputs'].load_inputs(check)
+    before = runner['identity'](check)
+    result['identity_snapshots_completed'] += 1
+    files['same'](before['kernels'], bundle['original_kernel_manifest'], 'original kernels')
+    result['file_checks'] = files['verify_snapshot'](before, bundle['original_kernel_manifest'], check)
+    after = runner['identity'](check)
+    result['identity_snapshots_completed'] += 1
+    files['same'](before, after, 'actual before/after snapshots')
+    assert subprocess.check_output(['git', 'status', '--short'], cwd=root) == before_status
+    result['git_status_unchanged'] = True
+    result['snapshot_sha256'] = hashlib.sha256(files['canonical'](before).encode()).hexdigest()
+    result['runtime_versions'] = before['versions']
+    result['saved_source_sha256'] = before['source_sha256']
+    result['original_kernel_manifest'] = before['kernels']
+    result['historical_loaded_memory_verified'] = False
+    check()
+    result['status'] = 'passed'
+except (ValueError, TypeError, KeyError, OSError, ImportError, RuntimeError, AssertionError, subprocess.SubprocessError) as exc:
+    result['error'] = {'type': type(exc).__name__, 'message': str(exc)}
+result['elapsed_before_flush_s'] = monotonic() - started
+path = Path('/private/tmp/ariadna-0147-readiness.json')
+with path.open('x') as stream:
+    json.dump(result, stream, indent=2, allow_nan=False)
+    stream.flush()
+    try:
+        check()
+    except ValueError as exc:
+        result['status'] = 'failed'
+        result['error'] = {'type': type(exc).__name__, 'message': str(exc)}
+        result['actual_elapsed_after_flush_s'] = monotonic() - started
+        stream.seek(0)
+        stream.truncate()
+        json.dump(result, stream, indent=2, allow_nan=False)
+        stream.flush()
+print(json.dumps({'status': result['status'], 'snapshots': result['identity_snapshots_completed'], 'elapsed_before_flush_s': result['elapsed_before_flush_s'], 'error': result.get('error')}, allow_nan=False))

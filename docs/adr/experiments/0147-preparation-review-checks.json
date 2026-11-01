@@ -1,0 +1,144 @@
+{
+  "stage": "R5.2 aggregate preparation review",
+  "base_revision": "a20cbf052433d1c3d9ad2dbb61437a05e1fac106",
+  "review_status": "passed",
+  "r5_2_complete": true,
+  "reference_study_executed": false,
+  "prepared_source_sha256": {
+    "docs/adr/experiments/0138-short-coast-oracle.py": "d6a624f727e17de364f188f0941f2e1889741204ad035aefd9263728cf95e029",
+    "tests/test_r5_short_coast_oracle.py": "ee9611b32c3207f15f9b0e426c9b283f69452943a6a36da212f4387f1357204a",
+    "docs/adr/experiments/0140-short-coast-native.py": "8bc888d6e1c638251d8379d6d4c896393b5cd76fb71e85c65c7faf9aab9294e2",
+    "tests/test_r5_short_coast_native.py": "47f91ce5d5ccb9133f6c6df5933b382b1a05fe436ee5995c9cb4523b48d8ab9b",
+    "docs/adr/experiments/0141-short-coast-inputs.py": "4457d9094afe3e8b674a46704b6789fdd724469cb8e1efe5cc054ce39d34c37c",
+    "tests/test_r5_short_coast_inputs.py": "998d9f09c84c24a242584dd45c4e00f8d8c4b857d9a3b5052567aed9c182a5cc",
+    "docs/adr/experiments/0142-short-coast-runner.py": "a1e6c74d7316d876f05c8d9527170ed633aeef86726dab91da9e2fdce96524ab",
+    "tests/test_r5_short_coast_runner.py": "f0c6c5c7c0db83c6f52be3d5a4dd84a276442e20f23e0c521f73afb47d4bf332",
+    "docs/adr/experiments/0144-short-coast-audit.py": "307ad5abb4b56c93abb9843ba5d657ab54d6a7954af238b07c21e342dcfbbdea",
+    "tests/test_r5_short_coast_audit.py": "4d0bddc4a2c71c623a588f83a3ee3408c8069e21644a06d3bf004c96a2223a02",
+    "docs/adr/experiments/0145-short-coast-evidence.py": "426fe4e0abe9b9dfcf6380d09e86e8dbf5748f66875f74b26b45dceb6ba5da14",
+    "tests/test_r5_short_coast_evidence.py": "23bfbdc158f3938a76388f9d04f1b341e1fa26aaf90cf40683428dc465ed6bd1",
+    "docs/adr/experiments/0146-audit-short-coast.py": "074886270d1a602dd9f7ffddb02f5e43bf75af77a72bde06fdd0057d1b23ee92",
+    "tests/test_r5_short_coast_offline.py": "cbaaa9586448bf225ac54cb040d5eeed1298fe5b8c907cd7793c5666e0c1d9f1"
+  },
+  "receipts_rehashed": [
+    {
+      "path": "docs/adr/experiments/0138-oracle-preparation-checks.json",
+      "sha256": "c8faf6a586744c3b40b98850b0765025da77497fbd6230dc8ffa501e96f14d05",
+      "full_passed": 4990,
+      "full_log_sha256": "4ad0e568b4793c8428e49b5eb03c5efc6a3b93abd88ae8558700f5c3e088878c"
+    },
+    {
+      "path": "docs/adr/experiments/0140-native-preparation-checks.json",
+      "sha256": "723b0f6244ddf6c86526ba068e04636f5272d39b1d5a53860a74a0382cab0e73",
+      "full_passed": 5051,
+      "full_log_sha256": "0dcea7e19edfb830db8188e45c52c50d80ed9eed461cb7cd3d9cd3892090b7cc"
+    },
+    {
+      "path": "docs/adr/experiments/0141-input-identity-preparation-checks.json",
+      "sha256": "0376be30dbee3ffeff425423da931df40c2ff6bd7f2bbbffbb5484bfde85a3b9",
+      "full_passed": 5095,
+      "full_log_sha256": "fbb7a2ff5ab8d8c1440ed5e6daab902a9919c08fa06c0938b01dcd29ccbc65f4"
+    },
+    {
+      "path": "docs/adr/experiments/0142-runner-preparation-checks.json",
+      "sha256": "b553a3b50d11be506b8349d30685fd1b9b43e26c6c9617e84353734bfba4d124",
+      "full_passed": 5132,
+      "full_log_sha256": "da2836e3a128596f545492fdd46cfa994e19aea28cb424ed97afc76cce86d802"
+    },
+    {
+      "path": "docs/adr/experiments/0144-arithmetic-preparation-checks.json",
+      "sha256": "21e480fb7c5836bd6a9ac940db081db95e2a650c7cdc349ede65ff6320afca8e",
+      "full_passed": 5184,
+      "full_log_sha256": "40f5530327923e7a94105cac0de5447a72d2a25925946e0952ae763b7af31f77"
+    },
+    {
+      "path": "docs/adr/experiments/0145-file-preparation-checks.json",
+      "sha256": "27ef86ce1ec1414b19cd7b6f3e94a7f7acf1baf17d1091d17084e82127e0e46d",
+      "full_passed": 5223,
+      "full_log_sha256": "c0cd9cca4a7c3cf9bb63231086863813e0f091f2ab2bf63f3e81cddfd57a5c7f"
+    },
+    {
+      "path": "docs/adr/experiments/0146-offline-preparation-checks.json",
+      "sha256": "16bf98678c9b5f16b8c1c55fc6789f9ff1f122d98b52e64320cee31beb43a5de",
+      "full_passed": 5255,
+      "full_log_sha256": "451b9ac4ac6e83bd37227f1dd1d821d5845ea0d9f43e459c54af328e3e8e1bb0"
+    }
+  ],
+  "source_pin_bindings_checked": [
+    {
+      "source": "0141-short-coast-inputs.py",
+      "field": "INPUT_SHA",
+      "bound_files": 4
+    },
+    {
+      "source": "0141-short-coast-inputs.py",
+      "field": "PREPARED_SHA",
+      "bound_files": 3
+    },
+    {
+      "source": "0142-short-coast-runner.py",
+      "field": "SOURCE_SHA",
+      "bound_files": 3
+    },
+    {
+      "source": "0145-short-coast-evidence.py",
+      "field": "INPUT_SHA",
+      "bound_files": 4
+    },
+    {
+      "source": "0145-short-coast-evidence.py",
+      "field": "PREPARED_SHA",
+      "bound_files": 6
+    },
+    {
+      "source": "0146-audit-short-coast.py",
+      "field": "PINS",
+      "bound_files": 2
+    }
+  ],
+  "protected_tracked_files_unchanged": 277,
+  "preparation_tests_added": 319,
+  "full_pytest_reused": {
+    "passed": 5255,
+    "seconds": 647.52,
+    "log": "0146-full-pytest.txt",
+    "sha256": "451b9ac4ac6e83bd37227f1dd1d821d5845ea0d9f43e459c54af328e3e8e1bb0",
+    "reason": "No runtime or test changes since verified prepared source hashes."
+  },
+  "tests_rerun": false,
+  "runtime_readiness": {
+    "path": "0147-runtime-file-readiness.json",
+    "sha256": "7961d8ae55d9e34aa2aaf0f7dcc2567d088fa0f8d1439624569dda2d1f456877",
+    "budget_s": 10.0,
+    "elapsed_before_flush_s": 1.2859516250900924,
+    "status": "passed",
+    "identity_snapshots": 2,
+    "explicit_body_state_requests": 0,
+    "spacecraft_propagations": 0,
+    "scientific_imports_and_kernel_inventory_initialization_allowed": true
+  },
+  "invocation_sha256": "1d89c51650c853f08b74e7c45bdf464923b6aabe1cfc0ff5689e53f65e367fe1",
+  "invocation_output_sha256": "ac54d3a769157b7059c8f54e348e5bd275ff7f4cf7bfde7cba17270954532c55",
+  "reviewed_boundaries": [
+    "Frozen0119/0098/0133/0136 bytes and initial state/epochs match both loaders.",
+    "Native direct SSB RK4 and separate SciPy DOP853 correction-coordinate force/propagation code; common SPICE inputs are not independent ephemeris truth.",
+    "Actual native synthetic line/circular/three-source Decimal and epoch-zero SPICE tests retained; four synthetic native arcs per native test-file invocation, other full-suite counts uninstrumented.",
+    "Actual runtime producer/current-file verifier source inventory and build/callable/schema compatible in one bounded fresh process.",
+    "Four native/four oracle sequence, 21 node reads, 10000 RHS/30021 oracle+node reads and 5424 native guard reads; internal native ephemeris calls excluded.",
+    "Offline core checks raw histories/corrections, native telemetry, signed state/model differences and unchanged scientific gates; toy fixtures cannot verify reference evidence.",
+    "Fresh/exclusive/finite/error/first-failure/finalization paths tested; cooperative deadlines do not hard-interrupt blocked I/O."
+  ],
+  "next_eligible_task": "R5.3 once-only ADR0137 study and separate ADR0143 audit in fresh processes; no retry or prewarming reference process.",
+  "deferred": [
+    "Full mission accuracy",
+    "finite burns",
+    "escape/capture",
+    "continuous safety",
+    "strict M3/task3.9",
+    "M4-M6",
+    "ML",
+    "UI qualification"
+  ],
+  "ruff": "passed in ADR0146 on identical runtime/test bytes",
+  "strict_openspec": "passed"
+}

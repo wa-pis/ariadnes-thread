@@ -27,21 +27,21 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — R5.2 short-coast verifier preparation
+## Next action — R5.3 once-only reference study
 
-[ADR0137](docs/adr/0137-short-coast-earth-gravity-contract.md) freezes a300s
-unpowered parked-state Sun/Moon versus Sun/Moon/Earth direct-SSB comparison.
-Same audited0098 initial state/R1 candidate; pinned SciPy1.17.1 already installed.
-Helpers: [oracle](docs/adr/0138-independent-short-coast-oracle.md), [native](docs/adr/0140-native-short-coast-adapter.md) and
-[inputs/runtime](docs/adr/0141-short-coast-input-and-runtime-identity.md).
-[ADR0142](docs/adr/0142-short-coast-orchestration-and-evidence.md): runner verified, no reference run.
-[ADR0144](docs/adr/0144-independent-saved-node-arithmetic.md): arithmetic core implemented;
-52 new/89 focused and5184 full pass in648.51s; Ruff/strict OpenSpec pass.
-[ADR0145](docs/adr/0145-independent-evidence-input-and-file-identity.md): input/file helpers;
-39 new/128 focused and5223 full pass in650.56s; Ruff/strict OpenSpec pass.
-[ADR0146](docs/adr/0146-offline-audit-orchestration.md): final offline orchestrator;
-32 new/160 focused and5255 full pass in647.52s; Ruff/strict OpenSpec pass;273 protected unchanged.
-Next: final aggregate R5.2 review; no parent completion/reference run.
+[ADR0137](docs/adr/0137-short-coast-earth-gravity-contract.md) freezes300s unpowered
+parked-state Sun/Moon versus Sun/Moon/Earth direct-SSB dynamics from0098/R1.
+[ADR0147](docs/adr/0147-short-coast-preparation-review.md) completes R5.2/R5.2g:
+14 prepared helper/test hashes/seven full logs/six pin maps verified;277 protected unchanged.
+Actual runtime producer/file verifier: two equal snapshots in1.2859516250900924s,
+43 sources/native binary/9 modules/5 Conda records checked;0 body states/propagations.
+[ADR0146](docs/adr/0146-offline-audit-orchestration.md):5255 full tests pass in647.52s;
+Ruff/strict OpenSpec pass, reused unchanged code at a20cbf0. No reference result yet.
+Next: exactly one fresh pinned-process runner0142 execute and separate fresh auditor0146
+execute, exclusive new evidence;60s/four-native/four-oracle/10000-RHS study,10s offline.
+Keep all exact inputs/kernels/profiles/gates and first-failure stop; no prewarming/retry.
+Do not rerun unchanged full/synthetic/reference work. Pause for required user action
+or contract-changing failure; preserve finite partial outputs and measured identities.
 
 [ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only
 as endpoint arithmetic. Do not repeat R2/R3/R4/full tests on unchanged code.
