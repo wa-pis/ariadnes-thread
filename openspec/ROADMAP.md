@@ -11,12 +11,15 @@ repeat successful studies or unchanged full regressions automatically.
 zero-native endpoint audit: the ideal reference begins/ends near body centres,
 inside the lunar/Martian exterior-force domains. Preserve these ideal data;
 do not feed them directly to a full-gravity mission propagation.
-R3.1 is designed: diagnose Earth/Moon/Mars differential gravity at fixed nodes0,60,120,
-with explicit inadmissible endpoint terms, a separate Decimal oracle and frozen
-seven-state/one-GM/shared30s budget. [ADR0132](../docs/adr/0132-gravity-screening-preparation.md)
-completes R3.2:84 new/170 focused/4936 full tests pass; private runner/Decimal
-oracle/offline audit prepared. Next: exactly one bounded R3.3 screening and audit. No full-arc/total-force/safety inference or new
-mission state, optimizer, UI qualification or M3 closure; no user input needed.
+[ADR0133](../docs/adr/0133-three-epoch-gravity-screening.md) completes R3.3:
+one seven-state/one-GM/shared30s screening and independent offline audit pass.
+Earth's departure term is40.2% of solar; node60 three-body sum ratio is3.8894e-05.
+Endpoint Moon/Mars terms remain absent, not zero. This is local force evidence,
+not full-arc accuracy or mission safety. R3 is complete at this scope.
+Next: bounded design review of existing finite-radius departure and arrival /
+outer-transfer contracts; predeclare any new experiment before implementation.
+No new mission states, optimizer, UI qualification or M3 closure is authorized
+by these measurements; no user input is currently needed.
 
 ## Delivered foundation — R1 mission-first demonstration (2026-10-29)
 

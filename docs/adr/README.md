@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0133 — Three-epoch gravity screening](0133-three-epoch-gravity-screening.md): one bounded native study and independent arithmetic audit pass; local Earth departure term is40.2% of solar acceleration, endpoint lunar/Mars fields remain inadmissible.
+
 - [0132 — Gravity-screening preparation](0132-gravity-screening-preparation.md):84 new/170 focused/4936 full tests pass; private binary64/Decimal diagnostic and offline audit, no native R3 study yet.
 
 - [0131 — Screen omitted gravity at fixed epochs](0131-screen-omitted-gravity-at-fixed-epochs.md): body-centre endpoint domain audit and bounded three-epoch differential-force contract; preparation/execution pending.

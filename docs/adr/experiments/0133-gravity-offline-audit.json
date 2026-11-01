@@ -1,0 +1,13 @@
+{
+  "record": "ADR0133",
+  "base_revision": "bf674850a2014c79b01b1e1a91f0c55502b06e8f",
+  "evidence_sha256": "74238edd641e1b5fda42a209672c68e5bc201b20d3cffba24169e6f9b3b6a580",
+  "audit_script_sha256": "47d03f269d8ab9774d87416c31af39bdc25e5661b857c97437862cbe5460759d",
+  "result": {
+    "audit": "passed",
+    "screening_status": "passed",
+    "terms_checked": 9,
+    "screening_verified": true
+  },
+  "native_imports_or_queries": 0
+}
