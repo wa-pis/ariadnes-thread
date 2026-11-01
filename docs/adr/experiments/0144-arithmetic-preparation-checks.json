@@ -1,0 +1,38 @@
+{
+  "stage": "R5.2g.1 independent saved-node arithmetic/profile core",
+  "base_revision": "4dab14e9a03e297b254a143589a74b7d54f8eb47",
+  "new_sources_untracked_during_checks": true,
+  "source_sha256": {
+    "docs/adr/experiments/0144-short-coast-audit.py": "307ad5abb4b56c93abb9843ba5d657ab54d6a7954af238b07c21e342dcfbbdea",
+    "tests/test_r5_short_coast_audit.py": "4d0bddc4a2c71c623a588f83a3ee3408c8069e21644a06d3bf004c96a2223a02"
+  },
+  "new_tests": 52,
+  "initial_focused": {
+    "passed": 49,
+    "seconds": 0.12
+  },
+  "final_focused": {
+    "passed": 89,
+    "seconds": 0.25
+  },
+  "full_pytest": {
+    "passed": 5184,
+    "seconds": 648.51,
+    "exit_code": 0,
+    "log": "0144-full-pytest.txt",
+    "log_sha256": "40f5530327923e7a94105cac0de5447a72d2a25925946e0952ae763b7af31f77"
+  },
+  "workspace_status_unchanged_during_full_pytest": true,
+  "workspace_status_sha256": "1b72f832a5e347cafa9b7d8829e5da08a7e3292b06c74573b0465a9ce42d9417",
+  "protected_tracked_files_unchanged": 265,
+  "ruff": "passed",
+  "strict_openspec": "passed",
+  "new_unit_native_imports": 0,
+  "new_unit_native_propagations": 0,
+  "new_unit_body_queries": 0,
+  "fixture_scope": "Hand-built static arrays/analytic fields only; no trajectories generated. Existing full-suite native counts not instrumented.",
+  "r5_reference_executed": false,
+  "complete_file_auditor_verified": false,
+  "r5_2_complete": false,
+  "remaining": "File/provenance/call-count/comparison/outcome/partial/deadline/exclusive-output orchestration, tests and full R5.2 preparation review."
+}

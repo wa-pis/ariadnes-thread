@@ -22,7 +22,9 @@ tests pass, no R5 reference propagation.
 shared bounded orchestration/partial evidence:37 new/81 focused and5132 full
 tests pass. [ADR0143](../docs/adr/0143-independent-saved-evidence-audit-contract.md)
 defines independent offline arithmetic/raw-data/provenance audit and its separate
-zero-native10s budget. Auditor implementation is next; no reference study launched.
+zero-native10s budget. [ADR0144](../docs/adr/0144-independent-saved-node-arithmetic.md)
+verifies its arithmetic/raw-array core:52 new/89 focused and5184 full tests pass.
+File/provenance orchestration is next; R5.2 incomplete, no reference study launched.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 Preparation/tests first, then one60s/four-native/four-oracle/10000-oracle-RHS
