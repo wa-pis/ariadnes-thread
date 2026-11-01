@@ -1,0 +1,19 @@
+{
+  "record": "ADR0134",
+  "base_revision": "103e8d36d069de78ced4258987d45fe6f75fe286",
+  "scope": "offline retained-input comparison; no geometry recomputation or new state construction",
+  "inputs_sha256": {
+    "docs/adr/experiments/0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0",
+    "docs/adr/experiments/0104-lunar-departure-reference.json": "bbcfa37e2e259af0f5545aeb12e9784f8826122f1ad5a66c52698aef856b7134"
+  },
+  "normalized_scenario_numeric_equality": true,
+  "complete_selected_candidate_numeric_equality": true,
+  "candidate_id": "d0001-t0035",
+  "fixed_phase_status_retained": "infeasible-fixed-phase",
+  "d13_selected_branch": null,
+  "r1_spice_moon_gm_m3_s2": 4902800205346.301,
+  "d13_harmonic_moon_gm_m3_s2": 4902800121846.8,
+  "new_native_calls": 0,
+  "new_spacecraft_states": 0,
+  "mission_qualified": false
+}

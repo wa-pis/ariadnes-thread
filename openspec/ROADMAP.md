@@ -5,7 +5,18 @@ Continue bounded work from CURRENT_STATE; pause the automation when user
 participation is required and explain the exact needed decision/action. Do not
 repeat successful studies or unchanged full regressions automatically.
 
-## Current priority R3 — screen omitted gravity before propagation
+## Current priority R4 — define finite-radius interfaces before new propagation
+
+[ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:
+R1 and D13 parsed scenario/candidate inputs are equal, so no repeated local geometry
+is needed. Their event/phase/GM/model meanings and physical outer-transfer/capture
+connections remain distinct. Existing boundary conversion can be reused.
+Next R4.2 is design only: specify exact states/events/models/mass/continuity gates,
+independent reference and a finite budget before any new implementation or study.
+No automatic phase/epoch/radius changes, D17 retry, optimizer or M3 closure.
+No user action is currently needed for the bounded specification work.
+
+## Completed R3 — screen omitted gravity before propagation
 
 [ADR0131](../docs/adr/0131-screen-omitted-gravity-at-fixed-epochs.md) records a
 zero-native endpoint audit: the ideal reference begins/ends near body centres,
@@ -16,8 +27,7 @@ one seven-state/one-GM/shared30s screening and independent offline audit pass.
 Earth's departure term is40.2% of solar; node60 three-body sum ratio is3.8894e-05.
 Endpoint Moon/Mars terms remain absent, not zero. This is local force evidence,
 not full-arc accuracy or mission safety. R3 is complete at this scope.
-Next: bounded design review of existing finite-radius departure and arrival /
-outer-transfer contracts; predeclare any new experiment before implementation.
+Boundary review is recorded in ADR0134; the next design contract is R4.2.
 No new mission states, optimizer, UI qualification or M3 closure is authorized
 by these measurements; no user input is currently needed.
 

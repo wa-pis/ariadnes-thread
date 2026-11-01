@@ -597,3 +597,23 @@ are permitted. D5 reference/resource verification and sampled guards SHALL apply
 - **WHEN** input verification fails, a sampled event is rejected, a native call fails or the shared deadline expires
 - **THEN** no further profile starts, attempted/completed arc counts and contextual reasons are retained, incomplete profiles expose no endpoint, and comparisons requiring missing endpoints are unavailable
 - **AND** evidence is finite JSON, records source/reference/resource/settings identity and guard coverage, separates wall time, never overwrites earlier artifacts and always disclaims continuous safety and mission qualification
+
+
+### Requirement: Review retained finite-radius evidence before a new boundary experiment
+
+The R4 boundary review SHALL preserve R1–R3 and D13–D17 evidence and existing
+public M3 ignition/cutoff, orbital-state, force-model and closure contracts.
+It SHALL NOT treat equal candidate inputs as connected physical trajectories.
+
+#### Scenario: Reuse identical inputs without conflating models
+
+- **WHEN** the frozen ADR0119 and ADR0104 records are reviewed for R4.1
+- **THEN** the review SHALL compare every normalized scenario and selected-candidate field, retain both input digests and report numerical equality separately from model/provenance identity
+- **AND** it SHALL distinguish the retained SPICE and harmonic GMs, fixed/free phase, virtual-periapsis versus ignition/cutoff events, provisional mass and unresolved outer-transfer/Mars-capture links without new states, native calls or repeated geometry
+- **AND** D13 fixed-phase infeasibility SHALL refer only to its constrained local construction, not general finite-thrust or mission impossibility
+
+#### Scenario: Require a complete contract before new boundary work
+
+- **WHEN** a new finite-radius experiment is proposed after the review
+- **THEN** its contract SHALL first bind exact initial/target states and epochs or deterministic construction, explicit phase/event/branch policy, local/outer interface states and models, shared mass history, six-component continuity residuals, numerical gates, independent reference and wall-time/native-call limits
+- **AND** unresolved values SHALL remain explicit and SHALL NOT authorize implementation, propagation, changed historical inputs, silent phase/epoch/radius selection, repeated failed studies or relaxed existing local/mission gates

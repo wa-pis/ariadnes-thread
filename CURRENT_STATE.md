@@ -27,18 +27,19 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — bounded finite-radius boundary design review
+## Next action — specify finite-radius interfaces before new propagation
 
-[ADR0133](docs/adr/0133-three-epoch-gravity-screening.md): R3.3 passes once,
-7 states/1 Earth GM/zero propagation;0.9007711252197623s pre-flush, final gate pass.
-Independent offline audit verifies9 classifications/7 admitted differential terms.
-Earth's departure term is40.2% of solar; middle three-body sum ratio3.8894e-05.
-Moon0/Mars120 remain inadmissible body-centre fields; no full-arc/safety claim.
-[ADR0132](docs/adr/0132-gravity-screening-preparation.md):4936 tests/Ruff pass
-atbf67485; code unchanged. Do not repeat R3 or unchanged runtime regression.
-Next: review existing finite-radius lunar departure and Mars arrival/outer-transfer
-contracts; freeze the smallest new question/reference/gates/budget before work.
-No new states, optimization or propagation yet; pause if user decision is required.
+[ADR0134](docs/adr/0134-boundary-evidence-reuse.md): offline boundary review passes.
+R1/D13 complete parsed scenario/candidate inputs match; no repeat geometry needed.
+Existing physical boundary conversion is reusable, but event/phase/GM/model/mass
+contracts and outer-transfer/capture connections cannot be silently equated.
+Next R4.2: design explicit states/events/interfaces/models/sequential mass,
+continuity/target gates, independent reference and finite budget. No new native
+calls, states, phase/epoch/radius choices, propagation or optimizer yet.
+[ADR0133](docs/adr/0133-three-epoch-gravity-screening.md): local force audit passes;
+Earth departure term40.2% of solar; middle sum ratio3.8894e-05, endpoints invalid.
+R3 is complete only locally; do not repeat it. [ADR0132](docs/adr/0132-gravity-screening-preparation.md)
+retains4936 tests/Ruff atbf67485; unchanged runtime tests are not rerun.
 
 [ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes
 all121 nodes/both frames, max0.0021126122711470335m/3.9825899625221015e-10m/s.
