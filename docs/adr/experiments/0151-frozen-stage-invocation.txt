@@ -1,0 +1,225 @@
+"""Single saved-stage arithmetic invocation; no scientific imports or integration."""
+from time import monotonic
+START = monotonic()
+import ast
+from decimal import Decimal, localcontext
+from hashlib import sha256
+import json
+import math
+from pathlib import Path
+import struct
+import sys
+from typing import Any
+
+ROOT = Path('/Users/agrudin/dev/my/ariadna')
+OUT = Path('/private/tmp/ariadna-0151-frozen-stage-audit.json')
+INPUTS = {
+    'docs/adr/experiments/0150-synthetic-trace.json': '7c8843f85771a5b98aee542ad2bac7c8f6ee65d0650c00b9811c24f98aca1242',
+    'docs/adr/experiments/0150-verification.json': '5e8c7942931a3cf3a40f05c115b241f53315e60d5f81444bd05896b0752df1ae',
+    'docs/adr/experiments/0148-short-coast-study.json': '8bbe6f5f7d08f4e220ee3cff450488531da0776b8a69cb4c37e1c9af9872b096',
+}
+PREFIX = Path('/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/scipy/integrate/_ivp')
+PINNED = {'rk.py': 'fa5d6300917f4f949e699b116f59ae147159d5c6147d55d940dc9d3303891056', 'dop853_coefficients.py': '3ab62f5b41eee97eec3a1dfb154e7c80d9200bbeca56961c95ec2ffc04463001'}
+FIELDS = 0
+REPORT: dict[str, Any] = {'contract':'ADR0151','status':'partial','budget_s':5.0,'source_queries':0,'integrations':0,'scientific_imports':0,'historical_r5_causality_proven':False,'corrected_solver_verified':False,'precisions':{},'input_sha256':INPUTS,'installed_source_sha256':PINNED}
+
+
+def check(ok: bool = True, message: str = 'arithmetic check') -> None:
+    if not ok:
+        raise ValueError(message)
+    if not 0 <= monotonic()-START < 5:
+        raise ValueError('five-second offline budget')
+
+
+def load(path: Path) -> Any:
+    def reject(value: str) -> None:
+        raise ValueError('nonfinite JSON '+value)
+    return json.loads(path.read_text(),parse_constant=reject)
+
+
+def force(delta: tuple[Decimal, ...], mu: Decimal) -> tuple[Decimal, ...]:
+    global FIELDS
+    check(FIELDS < 234, 'Decimal field cap')
+    FIELDS += 1
+    r2 = sum(v*v for v in delta)
+    check(r2 > 0, 'positive separation')
+    return tuple(mu*v/(r2*r2.sqrt()) for v in delta)
+
+
+def estimate(stages: list[tuple[Decimal, ...]], e3: list[float], e5: list[float], scale: list[float]) -> dict[str, Any]:
+    d = Decimal.from_float
+    u = Decimal(2)**-53
+    gamma = 32*u/(1-32*u)
+    vectors, bounds = {}, {}
+    for name, coeff in (('E3',e3),('E5',e5)):
+        raw = [sum(stages[i][j]*d(coeff[i]) for i in range(13))/d(scale[j]) for j in range(6)]
+        bound = [gamma*sum(abs(stages[i][j]*d(coeff[i])) for i in range(13))/d(scale[j])+u*abs(raw[j])+Decimal('1e-40') for j in range(6)]
+        vectors[name], bounds[name] = raw,bound
+    a = sum(v*v for v in vectors['E5'])
+    b = sum(v*v for v in vectors['E3'])
+    norm = Decimal(0) if a == b == 0 else a/(6*(a+Decimal('0.01')*b)).sqrt()
+    lower5 = sum(max(Decimal(0),abs(x)-z)**2 for x,z in zip(vectors['E5'],bounds['E5']))
+    upper5 = sum((abs(x)+z)**2 for x,z in zip(vectors['E5'],bounds['E5']))
+    lower3 = sum(max(Decimal(0),abs(x)-z)**2 for x,z in zip(vectors['E3'],bounds['E3']))
+    upper3 = sum((abs(x)+z)**2 for x,z in zip(vectors['E3'],bounds['E3']))
+    low = Decimal(0) if lower5 == 0 else max(Decimal(0),lower5/(6*(lower5+Decimal('0.01')*upper3)).sqrt()-Decimal('1e-40'))
+    high = Decimal(0) if upper5 == 0 else upper5/(6*(upper5+Decimal('0.01')*lower3)).sqrt()+Decimal('1e-40')
+    return {'E3':vectors['E3'],'E5':vectors['E5'],'E3_arithmetic_bound':bounds['E3'],'E5_arithmetic_bound':bounds['E5'],'norm':norm,'norm_box':[low,high],'box_classification':'below_one' if high < 1 else 'above_one' if low > 1 else 'ambiguous'}
+
+
+def wire(value: Any) -> Any:
+    if isinstance(value,Decimal):
+        check(value.is_finite(), 'finite Decimal output')
+        return str(value)
+    if isinstance(value,dict):
+        return {k:wire(v) for k,v in value.items()}
+    if isinstance(value,(list,tuple)):
+        return [wire(v) for v in value]
+    return value
+
+
+with OUT.open('x') as stream:
+    try:
+        check(not any(k.startswith(('numpy','scipy','spiceypy','tudatpy','space_nav')) for k in sys.modules),'fresh stdlib-only process')
+        for path,digest in INPUTS.items():
+            check(sha256((ROOT/path).read_bytes()).hexdigest()==digest,'frozen input '+path)
+        data = load(ROOT/'docs/adr/experiments/0150-synthetic-trace.json')
+        verified = load(ROOT/'docs/adr/experiments/0150-verification.json')
+        historical = load(ROOT/'docs/adr/experiments/0148-short-coast-study.json')
+        runtime = historical['identity']['r5_runtime']
+        for name,module in (('rk.py','scipy.integrate._ivp.rk'),('dop853_coefficients.py','scipy.integrate._ivp.dop853_coefficients')):
+            check(runtime['modules'][module]=={'path':str(PREFIX/name),'sha256':PINNED[name]},'retained runtime source identity')
+        check(data['source_sha256']==verified['new_source_sha256'],'retained trace/helper identity')
+        check(all(c['runtime']=={'scipy':'1.17.1','numpy':'1.26.4','rk_source_sha256':PINNED['rk.py']} for c in data['cases']),'retained trace runtime')
+        for path in ('docs/adr/experiments/0150-synthetic-step-diagnostic.py','tests/test_synthetic_step_diagnostic.py'):
+            check(sha256((ROOT/path).read_bytes()).hexdigest()==verified['artifact_hashes'][path],'unchanged measured helper/test')
+        for name,digest in PINNED.items():
+            check(sha256((PREFIX/name).read_bytes()).hexdigest()==digest,'installed source '+name)
+        tree = ast.parse((PREFIX/'dop853_coefficients.py').read_text())
+        b,e5,c = [0.0]*12,[0.0]*13,[]
+        changes = []
+        for node in tree.body:
+            if isinstance(node,ast.Assign):
+                target = node.targets[0]
+                if isinstance(target,ast.Name) and target.id == 'C':
+                    c = list(ast.literal_eval(node.value.args[0]))
+                if isinstance(target,ast.Subscript) and isinstance(target.value,ast.Name):
+                    if target.value.id == 'A' and isinstance(target.slice,ast.Tuple):
+                        row,column = ast.literal_eval(target.slice)
+                        if row == 12:
+                            b[column] = float(ast.literal_eval(node.value))
+                    if target.value.id == 'E5':
+                        e5[ast.literal_eval(target.slice)] = float(ast.literal_eval(node.value))
+            if isinstance(node,ast.AugAssign) and isinstance(node.target,ast.Subscript) and isinstance(node.target.value,ast.Name) and node.target.value.id == 'E3':
+                check(isinstance(node.op,ast.Sub),'E3 subtraction')
+                changes.append((ast.literal_eval(node.target.slice),float(ast.literal_eval(node.value))))
+        e3 = b+[0.0]
+        for j,value in changes:
+            e3[j] -= value
+        check(len(c)==16 and len(changes)==3 and sys.byteorder=='little','coefficient extraction shape/byte order')
+        actual_hashes = {name:sha256(struct.pack('<13d',*values)).hexdigest() for name,values in (('E3',e3),('E5',e5))}
+        check(all(actual_hashes[name]==runtime['coefficients'][name]['sha256'] for name in actual_hashes),'runtime coefficient byte identity')
+        REPORT['coefficient_values'] = {'E3':e3,'E5':e5,'C':c}
+        REPORT['coefficient_sha256'] = actual_hashes
+        REPORT['coefficient_input_source_identity'] = runtime['modules']['scipy.integrate._ivp.dop853_coefficients']
+        cases = data['cases']
+        check([x['mode'] for x in cases]==['relative','absolute-local','absolute-rounded'],'three frozen arms')
+        for precision in (80,100):
+            results = []
+            REPORT["precisions"][str(precision)] = results
+            REPORT["current_precision"] = precision
+            with localcontext() as ctx:
+                ctx.prec = precision
+                d = Decimal.from_float
+                radius,mu = d(data['radius_m']),d(data['mu_m3_s2'])
+                speed_float = math.sqrt(data['mu_m3_s2']/data['radius_m'])
+                origin,velocity = data['origin_m'],data['source_velocity_m_s']
+                t0 = data['epoch_tdb_s']
+                for case in cases:
+                    REPORT['current_mode'] = case['mode']
+                    trial,rows = case['trials'][0],case['rhs'][:13]
+                    check(trial['t_start_s']==0 and trial['t_end_s']==trial['h_s']==1 and trial['nfev']==13 and len(rows)==13,'first-trial shape')
+                    check(all(row['elapsed_s']==c[i] for i,row in enumerate(rows)),'stage abscissae')
+                    scale = trial['scale']
+                    check(scale==[a+1e-12*abs(q) for a,q in zip([1e-7]*3+[1e-10]*3,rows[12]['q'])],'original scales')
+                    all_fields = {level:[] for level in ('reference','clock','geometry','actual')}
+                    operands = []
+                    for row in rows:
+                        REPORT['current_stage_index'] = len(operands)
+                        s,q = row['elapsed_s'],row['q']
+                        residual = d(t0+s)-d(t0)-d(s)
+                        check(residual==Decimal(row['body_time_residual_s']),'saved phase residual')
+                        shift = residual if case['mode']=='absolute-rounded' else Decimal(0)
+                        relative = (-radius-d(q[0]),-d(speed_float)*d(s)-d(q[1]),-d(q[2]))
+                        clock_delta = tuple(x+d(v)*shift for x,v in zip(relative,velocity))
+                        check(all(abs(x-d(v)*shift-y)<Decimal('1e-60') for x,y,v in zip(clock_delta,relative,velocity)),'linear rephasing identity at Decimal precision')
+                        if case['mode']=='relative':
+                            geometry_float = (-math.fsum((data['radius_m'],q[0])),-math.fsum((speed_float*s,q[1])),-q[2])
+                        else:
+                            source_s = (t0+s)-t0 if case['mode']=='absolute-rounded' else s
+                            initial = (origin[0]+data['radius_m'],origin[1],origin[2])
+                            craft = [math.fsum((initial[j],(velocity[0],speed_float,0.0)[j]*s,q[j])) for j in range(3)]
+                            body = [math.fsum((origin[j],velocity[j]*source_s)) for j in range(3)]
+                            geometry_float = tuple(y-x for x,y in zip(craft,body))
+                        rr = math.hypot(*geometry_float)
+                        replay = [data['mu_m3_s2']*(x/rr)/(rr*rr) for x in geometry_float]
+                        check(replay==row['force_m_s2'],'saved binary64 field formula')
+                        values = {'reference':force(relative,mu),'clock':force(clock_delta,mu),'geometry':force(tuple(d(x) for x in geometry_float),mu),'actual':tuple(d(x) for x in row['force_m_s2'])}
+                        check(all(abs(x-Decimal(y))<Decimal('1e-70') for x,y in zip(values['reference'],row['reference_force_m_s2'])),'saved independent reference')
+                        if s==0:
+                            check(values['reference']==(-mu/(radius*radius),Decimal(0),Decimal(0)),'analytic radial/sign identity')
+                        if case['mode']!='absolute-rounded':
+                            check(values['clock']==values['reference'],'zero actual clock shift in control')
+                        contributions = {name:tuple(a-b for a,b in zip(values[left],values[right])) for name,left,right in (('clock','clock','reference'),('geometry','geometry','clock'),('field','actual','geometry'))}
+                        check(all(abs(sum(contributions[k][j] for k in contributions)-(values['actual'][j]-values['reference'][j]))<Decimal('1e-60') for j in range(3)),'force telescoping')
+                        for level,field in values.items():
+                            all_fields[level].append(tuple(d(x) for x in q[3:])+field)
+                        operands.append({'elapsed_s':s,'q':q,'actual_clock_shift_s':shift,'separation_reference_m':relative,'separation_geometry_m':geometry_float,'forces_m_s2':values,'signed_field_contributions_m_s2':contributions})
+                    estimates = {level:estimate(stages,e3,e5,scale) for level,stages in all_fields.items()}
+                    u = Decimal(2)**-53
+                    gamma = 32*u/(1-32*u)
+                    for order in ('E3','E5'):
+                        coeff = e3 if order=='E3' else e5
+                        for j,saved in enumerate(trial['error3_scaled' if order=='E3' else 'error5_scaled']):
+                            bound = gamma*sum(abs(all_fields['actual'][i][j]*d(coeff[i])) for i in range(13))/d(scale[j])+u*abs(d(saved))
+                            check(abs(estimates['actual'][order][j]-d(saved))<=bound,'observed dot parity envelope')
+                    check(estimates['actual']['norm_box'][0] <= d(trial['error_norm']) <= estimates['actual']['norm_box'][1],'observed norm inside arithmetic box')
+                    terms = {name:{order:[a-b for a,b in zip(estimates[left][order],estimates[right][order])] for order in ('E3','E5')} for name,left,right in (('clock','clock','reference'),('geometry','geometry','clock'),('field','actual','geometry'))}
+                    check(all(abs(sum(terms[k][order][j] for k in terms)-(estimates['actual'][order][j]-estimates['reference'][order][j]))<Decimal('1e-40') for order in ('E3','E5') for j in range(6)),'error-vector telescoping')
+                    results.append(wire({'mode':case['mode'],'observed_error_norm':trial['error_norm'],'observed_accepted':trial['accepted'],'stage_operands':operands,'estimates':estimates,'signed_error_vector_contributions':terms}))
+                REPORT['precisions'][str(precision)] = wire(results)
+        first,second = REPORT['precisions']['80'],REPORT['precisions']['100']
+        max_difference = Decimal(0)
+        for x,y in zip(first,second):
+            for level in ('reference','clock','geometry','actual'):
+                for key in ('E3','E5','norm_box'):
+                    for a,bv in zip(x['estimates'][level][key],y['estimates'][level][key]):
+                        max_difference = max(max_difference,abs(Decimal(a)-Decimal(bv)))
+                max_difference = max(max_difference,abs(Decimal(x['estimates'][level]['norm'])-Decimal(y['estimates'][level]['norm'])))
+            for sx,sy in zip(x['stage_operands'],y['stage_operands']):
+                for level in ('reference','clock','geometry','actual'):
+                    for a,bv in zip(sx['forces_m_s2'][level],sy['forces_m_s2'][level]):
+                        max_difference = max(max_difference,abs(Decimal(a)-Decimal(bv)))
+        check(max_difference<=Decimal('1e-40'),'80/100 precision convergence')
+        check(FIELDS==234,'fixed Decimal field count')
+        check(not any(k.startswith(('numpy','scipy','spiceypy','tudatpy','space_nav')) for k in sys.modules),'zero scientific imports')
+        REPORT.update(status='passed',saved_stage_operands=39,decimal_field_evaluations=FIELDS,max_precision_difference=str(max_difference))
+    except (ValueError,KeyError,TypeError,OSError,ArithmeticError) as exc:
+        REPORT['error']={'type':type(exc).__name__,'message':str(exc)}
+    REPORT['decimal_field_evaluations'] = FIELDS
+    REPORT['elapsed_before_flush_s'] = monotonic()-START
+    REPORT['invocation_sha256'] = sha256(Path(__file__).read_bytes()).hexdigest()
+    REPORT['finalization_gate']='passed'
+    json.dump(REPORT,stream,indent=2,allow_nan=False)
+    stream.flush()
+    try:
+        check()
+    except ValueError as exc:
+        if 'error' in REPORT:
+            REPORT['first_error']=REPORT['error']
+        REPORT.update(status='partial',finalization_gate='failed',error={'type':type(exc).__name__,'message':str(exc)},elapsed_after_flush_s=monotonic()-START)
+        stream.seek(0)
+        stream.truncate()
+        json.dump(REPORT,stream,indent=2,allow_nan=False)
+        stream.flush()
+print(json.dumps({'status':REPORT['status'],'error':REPORT.get('error'),'elapsed_s':REPORT['elapsed_before_flush_s'],'cases':[{'mode':c['mode'],'observed_norm':c['observed_error_norm'],'levels':{k:{'norm':v['norm'],'box':v['norm_box'],'classification':v['box_classification']} for k,v in c['estimates'].items()}} for c in REPORT['precisions'].get('100',[])]},indent=2,allow_nan=False))

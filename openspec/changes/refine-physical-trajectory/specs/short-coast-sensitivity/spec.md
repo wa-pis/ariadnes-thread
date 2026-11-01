@@ -98,3 +98,16 @@ and accepted endpoint without modifying the pinned integration controller.
 - **THEN** separate cumulative prefix-any-failure predicates SHALL locate the first recorded force-envelope failure, controller rejection and accepted analytic-gate failure, with binary probes, record index and adjacent-record or trial interval retained
 - **AND** oscillating raw error SHALL NOT be assumed monotone; searching SHALL NOT rerun shortened integrations, claim an exact continuous crossing or infer the historical R5 failure point
 - **AND** absent events and incomplete trial decisions SHALL remain explicit rather than fabricated or promoted to mission accuracy
+
+### Requirement: Attribute a synthetic rejection without reintegration
+
+The next R5 diagnosis SHALL follow ADR0151's bounded frozen-stage arithmetic
+contract and preserve all reference and synthetic integration histories.
+
+#### Scenario: Separate clock, geometry and field contributions
+
+- **WHEN** the saved first trial of each ADR0150 arm is inspected
+- **THEN** exactly39 retained stage operands SHALL be checked at80/100 Decimal digits under5s with zero scientific imports, body queries or integrations
+- **AND** signed clock/reference, geometry/clock and actual/geometry field and E5/E3 differences SHALL telescope at fixed states/scales; rebuilt coefficient hashes, abscissae, counters, scales and observed error components SHALL pass the declared arithmetic bounds
+- **AND** scalar norm contributions SHALL NOT be added; diagnostic boxes spanning1 or failed1e-40 precision convergence SHALL remain ambiguous/failed without changing scientific gates
+- **AND** finite exclusive evidence SHALL distinguish this frozen-stage attribution from corrected-solver behavior, historical R5 causality, continuous crossing, physical fidelity and mission safety

@@ -54,6 +54,14 @@ sample a bad force at0.033544769276316236s. All accepted analytic gates pass.
 This identifies synthetic noise/cost, not a continuous crossing or historical R5
 cause. No reference replay or schedule resumption; a precision strategy requires
 a separate contract before any revised real-state study.
+[ADR0151](../docs/adr/0151-frozen-stage-error-attribution.md) completes the zero-solve
+39-stage/80 and100-digit attribution in0.06713104108348489s,234 Decimal fields.
+Clock-only frozen norm15.67924 is above1 while reference0.02889283 is below1;
+actual15.73394 is inside its arithmetic box. Signed E5/E3 velocity terms show
+timestamp noise is sufficient for this first synthetic rejection.300 protected
+files unchanged,5285 full tests/Ruff reused; no corrected trajectory, real-state
+model change or R5 causality proof. Next: contract a compensated-time candidate
+with explicit real-ephemeris approximation/velocity/coordinate checks, not a retry.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 The retained attempt used the fixed60s/four-native/four-oracle/10000-RHS contract.
