@@ -1,0 +1,37 @@
+{
+  "scope": "R5.2d frozen inputs and extended runtime identity only",
+  "base_revision": "31edb278d9c0bf18f09aafe144bec239d1218069",
+  "sources_sha256": {
+    "docs/adr/experiments/0141-short-coast-inputs.py": "4457d9094afe3e8b674a46704b6789fdd724469cb8e1efe5cc054ce39d34c37c",
+    "tests/test_r5_short_coast_inputs.py": "998d9f09c84c24a242584dd45c4e00f8d8c4b857d9a3b5052567aed9c182a5cc"
+  },
+  "sources_untracked_during_checks": true,
+  "new_tests": 44,
+  "initial_focused": {
+    "passed": 42,
+    "duration_s": 1.43
+  },
+  "final_focused": {
+    "passed": 130,
+    "duration_s": 2.14
+  },
+  "full": {
+    "passed": 5095,
+    "duration_s": 661.07,
+    "exit_code": 0,
+    "log": "0141-full-pytest.txt",
+    "sha256": "fbb7a2ff5ab8d8c1440ed5e6daab902a9919c08fa06c0938b01dcd29ccbc65f4",
+    "git_status_unchanged": true,
+    "git_status_sha256": "ab55264c8e6d90dc729fec4b7b2499577ed8cdc3bc14d311a3e57e801a93d4e7"
+  },
+  "ruff": "passed",
+  "openspec_strict": "passed",
+  "protected_tracked_files_unchanged": 256,
+  "new_unit_spacecraft_propagations": 0,
+  "new_unit_body_state_queries": 0,
+  "new_unit_runtime_scope": "actual stable native/kernel/SciPy/NumPy identity pair, R1 ordered kernel parity; original pinned pool may be initialized; no body-state or force requests",
+  "other_suite_native_counts": "not instrumented",
+  "reference_R5_executed": false,
+  "R5_2_complete": false,
+  "initial_style_failure": "one unused test import removed; no pytest failure or scientific gate change"
+}

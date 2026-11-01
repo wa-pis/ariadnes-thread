@@ -16,6 +16,9 @@ unit:54 new/224 focused and4990 full tests pass.
 [ADR0140](../docs/adr/0140-native-short-coast-adapter.md) verifies the native
 adapter:61 new/115 focused and5051 full tests pass. Shared orchestration
 and offline audit remain pending; R5.2 overall is incomplete.
+[ADR0141](../docs/adr/0141-short-coast-input-and-runtime-identity.md) verifies
+frozen-input/extended-runtime identity helpers:44 new/130 focused and5095 full
+tests pass, no R5 reference propagation.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 Preparation/tests first, then one60s/four-native/four-oracle/10000-oracle-RHS
