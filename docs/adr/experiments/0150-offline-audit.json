@@ -1,0 +1,43 @@
+{
+  "offline_verified": true,
+  "scope": "saved synthetic operands/flags/counters/search only; no historical R5 causality or continuous boundary",
+  "total_rhs": 2523,
+  "cases": [
+    {
+      "mode": "relative",
+      "rhs": 37,
+      "trials": 3,
+      "accepted": 3,
+      "rejected": 0,
+      "first_force_callback_index": null,
+      "earliest_sampled_bad_force": null,
+      "max_position_error_m": 1.4210963135005665e-14,
+      "max_velocity_error_m_s": 5.329088588206323e-15
+    },
+    {
+      "mode": "absolute-local",
+      "rhs": 73,
+      "trials": 6,
+      "accepted": 6,
+      "rejected": 0,
+      "first_force_callback_index": null,
+      "earliest_sampled_bad_force": null,
+      "max_position_error_m": 7.580300572150461e-10,
+      "max_velocity_error_m_s": 1.770353562765357e-10
+    },
+    {
+      "mode": "absolute-rounded",
+      "rhs": 2413,
+      "trials": 201,
+      "accepted": 137,
+      "rejected": 64,
+      "first_force_callback_index": 1,
+      "earliest_sampled_bad_force": {
+        "index": 13,
+        "elapsed_s": 0.033544769276316236
+      },
+      "max_position_error_m": 2.125456864035197e-08,
+      "max_velocity_error_m_s": 5.904221760771842e-09
+    }
+  ]
+}

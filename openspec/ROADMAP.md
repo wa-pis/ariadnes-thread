@@ -44,6 +44,16 @@ immediate read-only check: mixed local/absolute time precision and119ns TDB
 spacing confirmed; seven5s-bounded scalar probes pass without scientific imports,
 body queries or integration. No counter/wiring error found. Rejection causality
 remains unproven without step/error traces; automation staysPAUSED.
+[ADR0150](../docs/adr/0150-synthetic-step-trace-and-binary-localization.md) specifies
+the verified synthetic every-trial diagnostic and prefix binary search:30 focused /
+5285 full tests,290 protected files and saved-row offline checks pass. One three-case
+demonstration finishes in0.44547345815226436s/2523 RHS; rounded-time arm needs2413
+RHS versus37 relative and73 absolute-local, with64 rejected trials versus zero.
+First observed force failure is callback1 at0.05260015195876773s; retries also
+sample a bad force at0.033544769276316236s. All accepted analytic gates pass.
+This identifies synthetic noise/cost, not a continuous crossing or historical R5
+cause. No reference replay or schedule resumption; a precision strategy requires
+a separate contract before any revised real-state study.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 The retained attempt used the fixed60s/four-native/four-oracle/10000-RHS contract.

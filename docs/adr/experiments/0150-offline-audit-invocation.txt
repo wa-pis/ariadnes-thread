@@ -1,0 +1,74 @@
+"""Offline retained-row verification only: stdlib, no solver imports or replay."""
+import json, math
+from decimal import Decimal, localcontext
+from pathlib import Path
+p = Path("/private/tmp/ariadna-0150-synthetic-trace.json")
+r = json.loads(p.read_text(), parse_constant=lambda x: (_ for _ in ()).throw(ValueError(x)))
+assert r["status"] == "finished" and r["finalization_gate"] == "passed"
+assert [c["mode"] for c in r["cases"]] == ["relative", "absolute-local", "absolute-rounded"]
+assert r["spice_queries"] == r["tudat_propagations"] == r["r5_reference_replays"] == 0
+assert r["historical_r5_causality_proven"] is r["continuous_crossing_located"] is False
+radius = 1837400.0
+mu = 4902800121846.8
+speed = math.sqrt(mu/radius)
+summary = []
+for c in r["cases"]:
+    assert c["status"] == "finished" and c["final_t_s"] == 10.0
+    assert c["nfev"] == c["callback_attempts"] == c["rhs_evaluations"] == len(c["rhs"]) <= 3000
+    assert c["callbacks_without_force_record"] == 0
+    assert c["nfev"] == 1+12*len(c["trials"])
+    assert len(c["trials"]) <= 300
+    with localcontext() as ctx:
+        ctx.prec = 80
+        d = Decimal.from_float
+        for row in c["rhs"]:
+            delta = (-d(radius)-d(row["q"][0]), -d(speed)*d(row["elapsed_s"])-d(row["q"][1]), -d(row["q"][2]))
+            distance = sum(x*x for x in delta).sqrt()
+            force = tuple(d(mu)*x/distance**3 for x in delta)
+            assert all(abs(x-Decimal(y)) < Decimal("1e-70") for x,y in zip(force,row["reference_force_m_s2"]))
+            error = sum((d(x)-y)**2 for x,y in zip(row["force_m_s2"],force)).sqrt()
+            limit = max(Decimal("1e-15"),Decimal("1e-11")*sum(x*x for x in force).sqrt())
+            assert row["force_bad"] == (error>limit)
+            assert math.isclose(row["force_error_m_s2"],float(error),rel_tol=1e-12,abs_tol=1e-70)
+            residual = d(r["epoch_tdb_s"]+row["elapsed_s"])-d(r["epoch_tdb_s"])-d(row["elapsed_s"])
+            assert Decimal(row["body_time_residual_s"]) == residual
+        for row in c["trials"]:
+            assert row["accepted"] == (row["error_norm"] < 1)
+            e5 = sum(d(x)**2 for x in row["error5_scaled"])
+            e3 = sum(d(x)**2 for x in row["error3_scaled"])
+            norm = Decimal(0) if e5 == e3 == 0 else abs(d(row["h_s"]))*e5/((e5+Decimal("0.01")*e3)*6).sqrt()
+            assert math.isclose(row["error_norm"],float(norm),rel_tol=1e-12,abs_tol=1e-20)
+    accepted_trials = [row for row in c["trials"] if row["accepted"]]
+    assert len(accepted_trials) == len(c["accepted"])
+    for trial, point in zip(accepted_trials,c["accepted"]):
+        assert trial["t_end_s"] == point["t_s"]
+        theta = speed*point["t_s"]/radius
+        half = math.sin(theta/2)
+        remainder = -theta**3/6+theta**5/120-theta**7/5040+theta**9/362880-theta**11/39916800
+        expected = (-2*radius*half*half,radius*remainder,0.0,-speed*math.sin(theta),-2*speed*half*half,0.0)
+        assert math.dist(point["q"][:3],expected[:3]) <= 1e-6
+        assert math.dist(point["q"][3:],expected[3:]) <= 1e-8
+        assert not point["analytic_bad"]
+    for kind, rows, key in (("force",c["rhs"],"force_bad"),("rejected",c["trials"],"accepted"),("analytic",c["accepted"],"analytic_bad")):
+        flags = [not row[key] if kind == "rejected" else row[key] for row in rows]
+        index = next((j for j,bad in enumerate(flags) if bad),None)
+        event = c["first_events"][kind]
+        assert event["index"] == index
+        assert event["record"] == (rows[index] if index is not None else None)
+        previous = index-1 if index is not None and index else None
+        assert event["previous_index"] == previous
+        assert event["previous_record"] == (rows[previous] if previous is not None else None)
+        lo,hi = 0,len(rows)
+        for probe in event["probes"]:
+            mid = (lo+hi)//2
+            bad = any(flags[:mid+1])
+            assert probe == {"lo":lo,"hi":hi,"mid":mid,"prefix_bad":bad}
+            if bad: hi=mid
+            else: lo=mid+1
+        assert lo == hi == (len(rows) if index is None else index)
+    bad_rows = [(j,x) for j,x in enumerate(c["rhs"]) if x["force_bad"]]
+    earliest = min(bad_rows,key=lambda pair:pair[1]["elapsed_s"]) if bad_rows else None
+    summary.append({"mode":c["mode"],"rhs":len(c["rhs"]),"trials":len(c["trials"]),"accepted":len(c["accepted"]),"rejected":len(c["trials"])-len(c["accepted"]),"first_force_callback_index":c["first_events"]["force"]["index"],"earliest_sampled_bad_force":None if earliest is None else {"index":earliest[0],"elapsed_s":earliest[1]["elapsed_s"]},"max_position_error_m":max(x["position_error_m"] for x in c["accepted"]),"max_velocity_error_m_s":max(x["velocity_error_m_s"] for x in c["accepted"])})
+assert sum(c["rhs_evaluations"] for c in r["cases"]) == 2523 <= 9000
+assert r["elapsed_before_flush_s"] < 10
+print(json.dumps({"offline_verified":True,"scope":"saved synthetic operands/flags/counters/search only; no historical R5 causality or continuous boundary","total_rhs":2523,"cases":summary},indent=2,allow_nan=False))

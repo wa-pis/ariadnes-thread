@@ -77,3 +77,24 @@ complete verification, partial failed-study evidence and rejected inconsistencie
 - **AND** it SHALL check initial/final snapshots, the original ordered13-kernel manifest, pinned source/runtime/build metadata and declared current source/binary file digests without executing evidence-specified code
 - **AND** complete counts SHALL satisfy four native/four oracle, total RHS<=10000, Python state reads=3*RHS+21<=30021 and5424 retained-state native guard reads with matching available call/profile ledgers
 - **AND** it SHALL label saved snapshot assertions, current file rehashes and checked-node arithmetic separately, without claiming historical-memory/flush timing proof, a newly queried kernel pool, independent ephemeris truth, unsaved RHS replay or continuous safety
+
+### Requirement: Observe bounded synthetic solver attempts before reference changes
+
+The R5 failure diagnosis SHALL follow ADR0150's independent synthetic translating-body
+fixture and preserve the failed reference. It SHALL inspect each recorded RHS, trial
+and accepted endpoint without modifying the pinned integration controller.
+
+#### Scenario: Trace a fixed analytic fixture without acquiring mission states
+
+- **WHEN** the user-authorized synthetic diagnosis executes after implementation verification
+- **THEN** it SHALL run only the three fixed10s relative/absolute-local/absolute-rounded-time cases with the declared analytic translating-body orbit, original normal solver settings and zero SPICE/Tudat state requests or R5 reference replays
+- **AND** each case SHALL preserve at most3000 completed RHS and300 trial rows, with9000 total RHS and a shared10s cooperative process/import/output budget, retaining finite partial traces on failure
+- **AND** RHS field consistency SHALL use independent Decimal relative operands and the existing force envelope; each trial SHALL retain h/error/scales/decision, and accepted endpoints SHALL be checked within1e-6m/1e-8m/s of the independent analytic solution
+- **AND** a deterministic analytic control SHALL show exact traced-versus-vanilla final t/q/nfev parity before diagnostic use
+
+#### Scenario: Binary search the first observed event with a monotone predicate
+
+- **WHEN** the retained trace is searched for a deviation
+- **THEN** separate cumulative prefix-any-failure predicates SHALL locate the first recorded force-envelope failure, controller rejection and accepted analytic-gate failure, with binary probes, record index and adjacent-record or trial interval retained
+- **AND** oscillating raw error SHALL NOT be assumed monotone; searching SHALL NOT rerun shortened integrations, claim an exact continuous crossing or infer the historical R5 failure point
+- **AND** absent events and incomplete trial decisions SHALL remain explicit rather than fabricated or promoted to mission accuracy

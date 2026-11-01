@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0150 — Synthetic step tracing and binary localization](0150-synthetic-step-trace-and-binary-localization.md) — 30 focused/5285 full tests; synthetic rounded-time arm requires2413 versus37 RHS, all endpoint gates pass; no R5 causality proof or replay.
 - [0149 — Oracle time/coordinate conditioning](0149-oracle-time-precision-diagnosis.md) —119ns absolute-time spacing and mixed local/absolute arithmetic confirmed; seven zero-native probes, cause unproven, no reference replay.
 - [0148 — Short-coast oracle RHS limit](0148-short-coast-oracle-rhs-limit.md) —one reference attempt stops at10000 RHS; partial audit, no model sensitivity; automation paused.
 - [0147 — Aggregate short-coast preparation review](0147-short-coast-preparation-review.md) —R5.2 complete; actual snapshot/file compatibility passes,5255 full tests reused; once-only reference study next.

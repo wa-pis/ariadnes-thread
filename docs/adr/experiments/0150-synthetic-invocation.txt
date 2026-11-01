@@ -1,0 +1,10 @@
+from time import monotonic
+started = monotonic()
+from pathlib import Path
+import json
+source = Path("/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0150-synthetic-step-diagnostic.py")
+namespace = {"__file__": str(source), "__name__": "synthetic_diagnostic"}
+exec(compile(source.read_text(), str(source), "exec"), namespace)
+namespace["PROCESS_START"] = started
+report = namespace["execute"](Path("/private/tmp/ariadna-0150-synthetic-trace.json"))
+print(json.dumps({"status": report["status"], "elapsed_before_flush_s": report["elapsed_before_flush_s"], "finalization_gate": report["finalization_gate"], "cases": [{"mode": c["mode"], "status": c["status"], "final_t_s": c["final_t_s"], "rhs": c["rhs_evaluations"], "attempts": c["callback_attempts"], "trials": len(c["trials"]), "accepted": len(c["accepted"]), "first_events": {k: {"index": v["index"], "record": v["record"], "previous_index": v["previous_index"]} for k,v in c["first_events"].items()}, "max_position_error_m": max((r["position_error_m"] for r in c["accepted"]), default=None), "max_velocity_error_m_s": max((r["velocity_error_m_s"] for r in c["accepted"]), default=None)} for c in report["cases"]]}, indent=2, allow_nan=False))
