@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0130 — Full regression after reference verification](0130-full-regression-after-reference-verification.md):4852 tests pass at7b22253; integrated regression only, no new physical-fidelity claim.
+
 - [0129 — Reference-coast verification passes](0129-reference-coast-verification-passes.md): all121 actual reference nodes and independent offline audit pass; ideal coast only, strict M3 remains open.
 
 - [0128 — Reference-coast verifier ready](0128-reference-coast-verifier-ready.md): R2.2 private runner/audit and native-free tests; actual-reference comparison not launched.

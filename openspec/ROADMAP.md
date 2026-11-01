@@ -1,6 +1,6 @@
 # Ariadna Space Navigation Roadmap
 
-## Current priority — R1 mission-first demonstration (2026-10-29)
+## Delivered foundation — R1 mission-first demonstration (2026-10-29)
 
 The user approved [ADR 0117](../docs/adr/0117-mission-first-demonstration-priority.md):
 deliver one reproducible research demonstrator with an independently checked
@@ -53,6 +53,14 @@ all121 actual reference nodes pass both frames, maximum0.0021126122711470335m /
 and30s gates, plus independent offline audit pass. Evidence is retained; no retry.
 R2 completes only this ideal coast. Select the next user-visible priority separately;
 no new force model/optimizer/UI qualification or automation, strict M3 remains open.
+
+## Integrated verification after R2 (2026-11-01)
+
+[ADR0130](../docs/adr/0130-full-regression-after-reference-verification.md): the
+unchanged7b22253 checkout passes all4852 tests in640.24s, including86 R2 tests.
+Ruff, strict OpenSpec and230 immutable-file checks pass. This verifies integration,
+not additional forces or mission fidelity. Do not rerun unchanged R2 automatically;
+scope the next physical-fidelity question separately, retaining strict M3 gates.
 
 ## Retained research history — not the current schedule
 

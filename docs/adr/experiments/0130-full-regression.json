@@ -1,0 +1,39 @@
+{
+  "record": "ADR0130",
+  "date": "2026-11-01",
+  "kind": "full-regression-not-a-trajectory-study",
+  "measured_revision": "7b222534ee88d81daea579699652d89e84b9b2ac",
+  "checkout_clean_before_verification": true,
+  "python_version": "3.12.14",
+  "python_executable": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+  "command": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python -m pytest -q",
+  "exit_code": 0,
+  "pytest_terminal_summary": "4852 passed in 640.24s (0:10:40)",
+  "passed": 4852,
+  "failed": 0,
+  "duration_seconds_reported_by_pytest": 640.24,
+  "ruff": {
+    "status": "passed",
+    "command": "ruff check --no-cache src tests docs/adr/experiments/0128-reference-coast.py docs/adr/experiments/0128-audit-reference-coast.py"
+  },
+  "openspec": {
+    "status": "passed",
+    "command": "openspec validate refine-physical-trajectory --strict"
+  },
+  "unchanged_protected_tracked_files": 230,
+  "file_sha256": {
+    "environment.yml": "c2948772bfbe09677354f803d9ba79e4c78eb44c5916c98b8d58126832c0e4b7",
+    "moon_to_mars.py": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "docs/adr/experiments/0129-reference-coast.json": "e2c5d077285fe0218d1c93f3000f319048006eb55477d680f83041f6c70ce9d7",
+    "docs/adr/experiments/0129-reference-coast-audit.json": "41a8d4434db26752e3cae96e965480710f36eabbff885ed957b2766e957456c7",
+    "docs/adr/experiments/0128-reference-coast.py": "027d0b4e45f9ebd941249e427963e365fd7205f9594a96365a587eb0e8cd7e81",
+    "docs/adr/experiments/0128-audit-reference-coast.py": "138d6c98b9f914dbcc7b26355e0e8c2019bece997f1d18b089a90b3cce095ad9",
+    "tests/test_r2_reference_coast.py": "54b60754ff6647822efc27ae0f414664dd84022ef260399d8babf9db149eac06"
+  },
+  "limitations": [
+    "Existing native regression tests are included; native query counts were not instrumented.",
+    "No repeat of the ADR0129 native comparison and no new physical-fidelity study.",
+    "Full regression duration is distinct from the frozen R2 study thirty-second budget.",
+    "Passing regression tests does not close strict M3 or validate physical model omissions."
+  ]
+}
