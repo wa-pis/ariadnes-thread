@@ -34,11 +34,13 @@ A native h1/h0.5 arcs complete, first A oracle hits10000 RHS/30021 body reads.
 Study elapsed before flush1.8111813748255372s, finalization passed; no B model.
 Separate offline audit:partial/study_verified=false,0.07836870802566409s, zero native.
 No independent A agreement or Earth-force sensitivity result; final identity not reached.
-All281 protected files unchanged; no runtime/test/environment changes or science retry.
+287 protected files unchanged in diagnosis; no runtime/test/environment changes or replay.
 [ADR0147](docs/adr/0147-short-coast-preparation-review.md): R5.2 preparation complete.
 Reuse5255 full tests/Ruff from ADR0146; strict OpenSpec/evidence/link checks pass.
-Automation ariadna-m3 confirmedPAUSED. Await user decision for diagnosis/new contract
-before any new scientific execution; do not increase caps/change profiles or replay.
+[ADR0149](docs/adr/0149-oracle-time-precision-diagnosis.md): user-requested read-only diagnosis;
+119ns epoch grid/mixed time precision confirmed,7 scalar probes pass in0.03053s,
+zero scientific imports/body queries/integrations; actual rejection cause unproven.
+Automation remainsPAUSED. Instrumented solve needs a separate contract; no replay.
 Preserve raw partial study/audit0148, inputs/kernels/gates and all prior evidence.
 
 [ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only

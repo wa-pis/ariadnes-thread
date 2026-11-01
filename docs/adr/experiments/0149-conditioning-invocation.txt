@@ -1,0 +1,81 @@
+from time import monotonic
+started=monotonic()
+from decimal import Decimal, localcontext
+from hashlib import sha256
+import json
+import math
+from pathlib import Path
+import sys
+root=Path('/Users/agrudin/dev/my/ariadna')
+source=root/'docs/adr/experiments/0148-short-coast-study.json'
+
+def check():
+    assert 0 <= monotonic()-started < 5.0, '5s scalar arithmetic deadline'
+    assert not any(k.startswith(('numpy','scipy','tudatpy','spiceypy','space_nav')) for k in sys.modules)
+
+def norm(values):
+    return sum(x*x for x in values).sqrt()
+
+def force(delta, mu):
+    radius=norm(delta)
+    return tuple(mu*x/(radius*radius*radius) for x in delta)
+
+check()
+raw=source.read_bytes()
+assert sha256(raw).hexdigest()=='8bbe6f5f7d08f4e220ee3cff450488531da0776b8a69cb4c37e1c9af9872b096'
+r=json.loads(raw)
+t0=r['inputs']['epoch_tdb_s']
+moon=r['body_table'][0]['states']['Moon']
+initial=r['inputs']['state_si']
+counts=r['counts']['oracle']
+assert counts['states_completed']==3*counts['rhs_completed']+21==30021
+with localcontext() as ctx:
+    ctx.prec=100
+    D=Decimal.from_float
+    delta=tuple(D(float(b))-D(float(x)) for b,x in zip(moon['position_m'],initial[:3],strict=True))
+    velocity=tuple(D(float(v)) for v in moon['velocity_m_s'])
+    mu=D(float(r['models']['A']['gm_m3_s2']['Moon']))
+    radius=norm(delta)
+    speed=norm(velocity)
+    time_ulp=D(math.ulp(t0))
+    assert math.ulp(t0)==2.0**-23
+    half_ulp=time_ulp/2
+    jacobian_norm=2*mu/(radius**3)
+    rows=[]
+    baseline=force(delta,mu)
+    for elapsed in (0.1,0.2,1.0/3.0,1.0,48.605,50.0,300.0):
+        phase=D(t0+elapsed)-D(t0)-D(elapsed)
+        assert abs(phase)<=half_ulp
+        shift=tuple(v*phase for v in velocity)
+        perturbed=force(tuple(x+q for x,q in zip(delta,shift,strict=True)),mu)
+        rows.append({'synthetic_elapsed_s':elapsed,'absolute_time_rounding_residual_s':str(phase),
+                     'velocity_times_residual_norm_m':str(norm(shift)),
+                     'synthetic_local_force_change_norm_m_s2':str(norm(tuple(b-a for a,b in zip(baseline,perturbed,strict=True))))})
+    assert any(Decimal(x['absolute_time_rounding_residual_s'])!=0 for x in rows)
+    assert all(x['absolute_time_rounding_residual_s']=='0' or Decimal(x['absolute_time_rounding_residual_s'])==0 for x in rows if x['synthetic_elapsed_s'] in (1.0,50.0,300.0))
+    result={'scope':'Saved-input conditioning and seven scalar synthetic time probes; not a trajectory or measured source-force error.',
+            'budget_s':5.0,'source_sha256':sha256(raw).hexdigest(),'epoch_tdb_s':t0,
+            'absolute_time_ulp_s':str(time_ulp),'half_ulp_s':str(half_ulp),
+            'initial_moon_separation_m':str(radius),'saved_moon_ssb_speed_m_s':str(speed),
+            'one_time_ulp_moon_motion_scale_m':str(speed*time_ulp),
+            'half_time_ulp_moon_motion_scale_m':str(speed*half_ulp),
+            'local_point_force_jacobian_spectral_norm_s_2':str(jacobian_norm),
+            'half_ulp_first_order_worst_direction_force_scale_m_s2':str(jacobian_norm*speed*half_ulp),
+            'force_scale_scope':'First-order local conditioning scale assuming displacement v*dt, not an observed error or rigorous trajectory bound.',
+            'initial_absolute_position_ulps_m':[math.ulp(float(x)) for x in initial[:3]],
+            'normal_correction_atol_position_m':1e-7,'normal_correction_atol_velocity_m_s':1e-10,
+            'oracle_count_equation_verified':True,'probe_rows':rows,
+            'scientific_imports':0,'body_queries':0,'integrations':0,'reference_replays':0,
+            'actual_root_cause_proven':False,'accepted_rejected_step_counts_available':False}
+    files=['docs/adr/experiments/0138-short-coast-oracle.py','docs/adr/experiments/0142-short-coast-runner.py','tests/test_r5_short_coast_oracle.py']
+    result['reviewed_source_sha256']={name:sha256((root/name).read_bytes()).hexdigest() for name in files}
+    rk=Path(sys.prefix)/'lib/python3.12/site-packages/scipy/integrate/_ivp/rk.py'
+    result['installed_solver_source']={'path':str(rk),'sha256':sha256(rk.read_bytes()).hexdigest()}
+check()
+result['elapsed_before_flush_s']=monotonic()-started
+output=Path('/private/tmp/ariadna-0149-conditioning.json')
+with output.open('x') as stream:
+    json.dump(result,stream,indent=2,allow_nan=False)
+    stream.flush()
+    check()
+print(json.dumps({k:result[k] for k in ('absolute_time_ulp_s','one_time_ulp_moon_motion_scale_m','half_ulp_first_order_worst_direction_force_scale_m_s2','initial_absolute_position_ulps_m','elapsed_before_flush_s')}))

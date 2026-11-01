@@ -37,8 +37,13 @@ or propagation. Reuse5255 full tests/Ruff on identical code; strict OpenSpec pas
 reference failure: two A native arcs complete, first A oracle hits10000 RHS /
 30021 state reads in1.8111813748255372s before flush. B and model sensitivity are
 unavailable. Separate audit is partial/study_verified=false in0.07836870802566409s.
-Automation is PAUSED; R5.3 scientific completion remains open. Next requires a
-user decision on diagnosis/revised contract; no retry or cap/profile change.
+Automation is PAUSED; R5.3 scientific completion remains open. Next requires
+a separately specified diagnostic/revised contract; no retry or cap/profile change.
+[ADR0149](../docs/adr/0149-oracle-time-precision-diagnosis.md) records the user's
+immediate read-only check: mixed local/absolute time precision and119ns TDB
+spacing confirmed; seven5s-bounded scalar probes pass without scientific imports,
+body queries or integration. No counter/wiring error found. Rejection causality
+remains unproven without step/error traces; automation staysPAUSED.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 The retained attempt used the fixed60s/four-native/four-oracle/10000-RHS contract.

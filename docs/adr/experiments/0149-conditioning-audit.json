@@ -1,0 +1,83 @@
+{
+  "scope": "Saved-input conditioning and seven scalar synthetic time probes; not a trajectory or measured source-force error.",
+  "budget_s": 5.0,
+  "source_sha256": "8bbe6f5f7d08f4e220ee3cff450488531da0776b8a69cb4c37e1c9af9872b096",
+  "epoch_tdb_s": 978995455.2304223,
+  "absolute_time_ulp_s": "1.1920928955078125E-7",
+  "half_ulp_s": "5.9604644775390625E-8",
+  "initial_moon_separation_m": "1837400.00000000000000000",
+  "saved_moon_ssb_speed_m_s": "31246.22445707994644542067249961218572548499464003058027462447870481890462812400023047778909905239184",
+  "one_time_ulp_moon_motion_scale_m": "0.003724840218672745996167739927722476211248039560321638616874751890280116156116008786020015370732830982",
+  "half_time_ulp_moon_motion_scale_m": "0.001862420109336372998083869963861238105624019780160819308437375945140058078058004393010007685366415491",
+  "local_point_force_jacobian_spectral_norm_s_2": "0.000001580749480526176441626481556478952677823179240576777044440068382339570250372717090509099142547508039",
+  "half_ulp_first_order_worst_direction_force_scale_m_s2": "2.944019620354976347751333906656293626547021212872429451522009216653972972971149111016456591244550276E-9",
+  "force_scale_scope": "First-order local conditioning scale assuming displacement v*dt, not an observed error or rigorous trajectory bound.",
+  "initial_absolute_position_ulps_m": [
+    7.62939453125e-06,
+    1.52587890625e-05,
+    7.62939453125e-06
+  ],
+  "normal_correction_atol_position_m": 1e-07,
+  "normal_correction_atol_velocity_m_s": 1e-10,
+  "oracle_count_equation_verified": true,
+  "probe_rows": [
+    {
+      "synthetic_elapsed_s": 0.1,
+      "absolute_time_rounding_residual_s": "2.38418579046051348768742172978818416595458984375E-8",
+      "velocity_times_residual_norm_m": "0.0007449680435610978101092687958680884523189552614673794033139056749638415537457620707288672790254843072",
+      "synthetic_local_force_change_norm_m_s2": "1.131137151102771280449231081545010904414962869273161514474273053627651118485606800167489061488328221E-9"
+    },
+    {
+      "synthetic_elapsed_s": 0.2,
+      "absolute_time_rounding_residual_s": "4.7683715809210269753748434595763683319091796875E-8",
+      "velocity_times_residual_norm_m": "0.001489936087122195620218537591736176904637910522934758806627811349927683107491524141457734558050968614",
+      "synthetic_local_force_change_norm_m_s2": "2.262274300939008115529696895742316701174482121814948816956886460931720568514579384384477594868851479E-9"
+    },
+    {
+      "synthetic_elapsed_s": 0.3333333333333333,
+      "absolute_time_rounding_residual_s": "3.9736429868764133743752609007060527801513671875E-8",
+      "velocity_times_residual_norm_m": "0.001241613406802419962470177274828848036851522022097040605828399640400644310296801883590457773981216625",
+      "synthetic_local_force_change_norm_m_s2": "1.885228585784472173223491009827049355885207853009385416367791231435210601470265230505794419597868109E-9"
+    },
+    {
+      "synthetic_elapsed_s": 1.0,
+      "absolute_time_rounding_residual_s": "0E-22",
+      "velocity_times_residual_norm_m": "0E-62",
+      "synthetic_local_force_change_norm_m_s2": "0E-99"
+    },
+    {
+      "synthetic_elapsed_s": 48.605,
+      "absolute_time_rounding_residual_s": "1.907348945451303734444081783294677734375E-8",
+      "velocity_times_residual_norm_m": "0.0005959745326754617141808780141879002827432591458527560370803370839615393402725928285596822715105729407",
+      "synthetic_local_force_change_norm_m_s2": "9.049098695204922616989129568540390854472021746414695169502200996810699797953819185596202447311253261E-10"
+    },
+    {
+      "synthetic_elapsed_s": 50.0,
+      "absolute_time_rounding_residual_s": "0E-22",
+      "velocity_times_residual_norm_m": "0E-62",
+      "synthetic_local_force_change_norm_m_s2": "0E-99"
+    },
+    {
+      "synthetic_elapsed_s": 300.0,
+      "absolute_time_rounding_residual_s": "0E-22",
+      "velocity_times_residual_norm_m": "0E-62",
+      "synthetic_local_force_change_norm_m_s2": "0E-99"
+    }
+  ],
+  "scientific_imports": 0,
+  "body_queries": 0,
+  "integrations": 0,
+  "reference_replays": 0,
+  "actual_root_cause_proven": false,
+  "accepted_rejected_step_counts_available": false,
+  "reviewed_source_sha256": {
+    "docs/adr/experiments/0138-short-coast-oracle.py": "d6a624f727e17de364f188f0941f2e1889741204ad035aefd9263728cf95e029",
+    "docs/adr/experiments/0142-short-coast-runner.py": "a1e6c74d7316d876f05c8d9527170ed633aeef86726dab91da9e2fdce96524ab",
+    "tests/test_r5_short_coast_oracle.py": "ee9611b32c3207f15f9b0e426c9b283f69452943a6a36da212f4387f1357204a"
+  },
+  "installed_solver_source": {
+    "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/scipy/integrate/_ivp/rk.py",
+    "sha256": "fa5d6300917f4f949e699b116f59ae147159d5c6147d55d940dc9d3303891056"
+  },
+  "elapsed_before_flush_s": 0.03053345810621977
+}

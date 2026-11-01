@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0149 — Oracle time/coordinate conditioning](0149-oracle-time-precision-diagnosis.md) —119ns absolute-time spacing and mixed local/absolute arithmetic confirmed; seven zero-native probes, cause unproven, no reference replay.
 - [0148 — Short-coast oracle RHS limit](0148-short-coast-oracle-rhs-limit.md) —one reference attempt stops at10000 RHS; partial audit, no model sensitivity; automation paused.
 - [0147 — Aggregate short-coast preparation review](0147-short-coast-preparation-review.md) —R5.2 complete; actual snapshot/file compatibility passes,5255 full tests reused; once-only reference study next.
 - [0146 — Offline audit orchestration](0146-offline-audit-orchestration.md) —32 new/160 focused and5255 full pass; final R5.2 review pending, no reference run.
