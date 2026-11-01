@@ -89,8 +89,14 @@ This is not a failed R5 scientific run and does not authorize reference retries.
   Two synthetic body/model systems were constructed; one simulator was created
   with simulation disabled and one derivative call failed. Zero native propagated
   arcs, zero mission ephemeris queries/kernel loads; no R5 reference experiment.
-- Strict OpenSpec,149 local links, JSON/digests and clean diff checks pass;
+- Strict OpenSpec,149 local links, JSON/digests and documentation diff checks pass;
   all247 previously tracked protected files remain byte-identical to the base.
+  The two raw API docstring transcripts intentionally retain trailing whitespace.
+  The first staged all-file whitespace check flagged those13 lines; a shell
+  sequence incorrectly continued to commit after that nonzero check. No evidence
+  was rewritten. Subsequent checks passed normally for docs/JSON/construction
+  output, and for the two raw transcripts with only end-of-line whitespace
+  detection disabled. This exception applies only to preserved docstrings.
   Existing4990-test result is reused
   from ADR0138: no project runtime code/test/dependency changed and pytest was not rerun.
 
