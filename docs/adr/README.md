@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0142 — Short-coast orchestration and evidence](0142-short-coast-orchestration-and-evidence.md):37 injected runner tests/81 focused and5132 full pass; orchestration unit verified, offline audit remains required before R5.
+
 - [0141 — R5 frozen inputs and extended runtime identity](0141-short-coast-input-and-runtime-identity.md):44 new/130 focused and5095 full tests pass; input/identity unit verified, runner/audit pending; no R5 run.
 
 - [0140 — Native short-coast adapter preparation](0140-native-short-coast-adapter.md):61 new/115 focused and5051 full tests pass; native unit verified, shared runner/audit pending; no R5 reference run.

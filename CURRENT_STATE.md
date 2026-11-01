@@ -32,16 +32,14 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 [ADR0137](docs/adr/0137-short-coast-earth-gravity-contract.md) freezes a300s
 unpowered parked-state Sun/Moon versus Sun/Moon/Earth direct-SSB comparison.
 Same audited0098 initial state/R1 candidate; pinned SciPy1.17.1 already installed.
-[ADR0138](docs/adr/0138-independent-short-coast-oracle.md): R5.2a oracle verified;
-54 new/224 focused and4990 full tests pass (671.36s), Ruff/strict OpenSpec pass.
-[ADR0140](docs/adr/0140-native-short-coast-adapter.md): R5.2c native verified;
-61 new/115 focused and5051 full tests pass (650.86s), Ruff/strict OpenSpec pass.
-Four synthetic native arcs per test-file run; no R5 reference state propagated.
-[ADR0141](docs/adr/0141-short-coast-input-and-runtime-identity.md): R5.2d verified;
-44 new/130 focused and5095 full tests pass (661.07s), Ruff/strict OpenSpec pass.
-Frozen input/runtime/kernel identities checked; no new state/force/trajectory requests.
-Next shared60s runner/orchestration/evidence handling, then independent offline audit
-and preparation checks. R5.2 incomplete; no R5 run. Limits:4 native/4 oracle/10000 RHS.
+Verified helpers: [oracle](docs/adr/0138-independent-short-coast-oracle.md),
+[native](docs/adr/0140-native-short-coast-adapter.md) and
+[inputs/runtime](docs/adr/0141-short-coast-input-and-runtime-identity.md).
+ADR0141 baseline:5095 full tests pass; no R5 reference state propagated.
+[ADR0142](docs/adr/0142-short-coast-orchestration-and-evidence.md): runner implemented;
+37 new/81 focused and5132 full tests pass in647.31s; Ruff/strict OpenSpec pass.
+All260 protected tracked files unchanged; no R5 reference propagation.
+Next independent zero-native saved-evidence auditor before R5.2 completion.
 
 [ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only
 as endpoint arithmetic. Do not repeat R2/R3/R4/full tests on unchanged code.

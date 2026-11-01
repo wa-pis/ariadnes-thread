@@ -1,0 +1,37 @@
+{
+  "base_revision": "2fef4c5deb841f3ec83a78991f7c40da2d0320ef",
+  "stage": "R5.2e orchestration and evidence preparation",
+  "source_sha256": {
+    "docs/adr/experiments/0142-short-coast-runner.py": "a1e6c74d7316d876f05c8d9527170ed633aeef86726dab91da9e2fdce96524ab",
+    "tests/test_r5_short_coast_runner.py": "f0c6c5c7c0db83c6f52be3d5a4dd84a276442e20f23e0c521f73afb47d4bf332"
+  },
+  "new_tests": 37,
+  "initial_focused": {
+    "passed": 28,
+    "seconds": 0.13
+  },
+  "final_focused": {
+    "passed": 81,
+    "seconds": 1.44
+  },
+  "full_pytest": {
+    "passed": 5132,
+    "seconds": 647.31,
+    "exit_code": 0,
+    "log": "0142-full-pytest.txt",
+    "log_sha256": "da2836e3a128596f545492fdd46cfa994e19aea28cb424ed97afc76cce86d802"
+  },
+  "workspace_status_unchanged_during_full_pytest": true,
+  "workspace_status_sha256": "6df6925e4d80f55ab181260eb88aabfc8485df680171df285ad51017b6744e2a",
+  "protected_tracked_files_unchanged": 260,
+  "ruff": "passed",
+  "strict_openspec": "passed",
+  "runner_unit_actual_native_propagations": 0,
+  "runner_unit_actual_spice_body_queries": 0,
+  "runner_unit_mode": "injected-test",
+  "prior_input_identity_tests": "Actual runtime/kernel inventory; no new reference trajectory or SPICE state query. Full-suite native call totals not instrumented.",
+  "r5_reference_executed": false,
+  "r5_2_complete": false,
+  "remaining": "Independent zero-native saved-evidence auditor and overall preparation verification.",
+  "preparation_findings": "Initial Ruff E402 findings resolved by narrow explained module exemption for process-start timing; no pytest failure or scientific retry."
+}
