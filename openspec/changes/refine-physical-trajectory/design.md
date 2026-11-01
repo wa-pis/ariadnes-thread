@@ -5991,3 +5991,13 @@ records the independent Cartesian-phase/bisection runner, separate offline audit
 and86 new/225 combined native-free tests. Actual native wiring/comparison remains
 unexecuted; no new production behavior, dependencies, force model or qualified
 mission result. R2.3 requires its separately instructed bounded execution/audit.
+
+
+## R2.3 retained-reference result (2026-11-01)
+
+[ADR0129](../../../docs/adr/0129-reference-coast-verification-passes.md) records one
+frozen comparison:121 exact-epoch Sun calls, all121 nodes pass both frames with
+max0.0021126122711470335m/3.9825899625221015e-10m/s; roots/invariants/resources,
+cooperative budget and independent offline audit pass. No runtime changes or retry.
+R2 verifies this sampled ideal coast only; shared Sun ephemerides, strict M3 and
+mission safety remain outside its evidence. No automatic next implementation.

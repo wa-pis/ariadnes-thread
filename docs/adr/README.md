@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0129 — Reference-coast verification passes](0129-reference-coast-verification-passes.md): all121 actual reference nodes and independent offline audit pass; ideal coast only, strict M3 remains open.
+
 - [0128 — Reference-coast verifier ready](0128-reference-coast-verifier-ready.md): R2.2 private runner/audit and native-free tests; actual-reference comparison not launched.
 
 - [0127 — Reference-coast verification contract](0127-reference-coast-verification-contract.md): R2 detailed contract accepted for preparation; no native study.

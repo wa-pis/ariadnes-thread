@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-10-31. Keep this file under 60 lines. Current instructions live
+Updated: 2026-11-01. Keep this file under 60 lines. Current instructions live
 here and at the top of the roadmap; retained detail belongs in the ADRs.
 
 ## Goal and scheduling
@@ -28,7 +28,7 @@ Automation `ariadna-m3` remains paused. No automatic D18 or repeated D17 study.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — separately instructed R2.3 comparison and audit
+## Next action — choose the next user-visible priority
 [ADR 0117](docs/adr/0117-mission-first-demonstration-priority.md) fixes the order;
 accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
 
@@ -45,12 +45,12 @@ accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
    and4766 full tests/630.19s pass; Ruff/strict OpenSpec/links/immutable checks pass.
    Local UI:127.0.0.1:8501. Original model/environment/evidence remain unchanged.
 
-R2 preparation contract [ADR0127](docs/adr/0127-reference-coast-verification-contract.md)
-is accepted. [ADR0128](docs/adr/0128-reference-coast-verifier-ready.md) records R2.2:
-private independent runner/separate audit,86 new/225 combined native-free tests.
-All121-node/1m/1e-6m/s/invariant gates and121 Sun reads/shared30s remain frozen.
-No actual Sun reads; reference domain/accuracy and native wiring remain unverified.
-R2.3 requires a separate execution instruction; no automatic launch or retry.
+R2 complete for the retained ideal coast: [ADR0129](docs/adr/0129-reference-coast-verification-passes.md).
+Exactly121 Sun reads; all121 nodes/both frames pass at max0.0021126122711470335m /
+3.9825899625221015e-10m/s; root/invariant/resource/budget gates and offline audit pass.
+Raw Sun track, comparisons and audit retained; no retries or runtime changes.
+Shared ephemeris truth, continuous safety, finite burns and strict M3 stay unverified.
+Choose the next priority separately; no automatic study, UI qualification or automation.
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.

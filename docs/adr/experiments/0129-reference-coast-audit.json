@@ -1,0 +1,11 @@
+{
+  "evidence_sha256": "e2c5d077285fe0218d1c93f3000f319048006eb55477d680f83041f6c70ce9d7",
+  "audit_source_sha256": "138d6c98b9f914dbcc7b26355e0e8c2019bece997f1d18b089a90b3cce095ad9",
+  "result": {
+    "audit": "passed",
+    "study_status": "passed",
+    "arithmetic_nodes_checked": 121,
+    "reference_coast_verified": true
+  },
+  "native_calls": 0
+}

@@ -35,20 +35,24 @@ empirical model discrepancy, not replace the same-force R1.2 oracle. No arc,
 historical native run or change to the mission-first order is implied. The separate
 [R1.1 result](../docs/adr/0119-positive-ideal-m2-reference.md) does not close R1.2.
 
-## Current priority R2 — verify the actual reference coast (selected2026-10-31)
+## Completed R2 — retained ideal reference coast (verified2026-11-01)
 
 The user selected [ADR0126](../docs/adr/0126-propose-reference-coast-verification.md)'s
 reference-coast verification. [ADR0127](../docs/adr/0127-reference-coast-verification-contract.md)
 freezes the preparation contract: original121 nodes, independent Cartesian
 initial phase, exact Sun/SSB/TDB alignment, 1m/1e-6m/s numerical gates, relative
 invariants<=1e-12, at most121 Sun reads/shared30s and zero native spacecraft
-propagations. Eight offline initial algebra checks pass; actual reference coverage,
-domain membership and numerical accuracy remain unverified.
+propagations. Preparation used eight offline initial algebra checks; the actual
+reference outcome and admitted-domain evidence are now recorded below.
 R2.1 contract is accepted for preparation; [ADR0128](../docs/adr/0128-reference-coast-verifier-ready.md)
 records R2.2's private independent runner, separate offline audit and86 new/225
-combined native-free tests. No actual-reference Sun query/comparison has run.
-Next: separately instructed R2.3 single comparison and audit, under the same gates.
-No new force model/optimizer or automation; R1 and all strict M3 gates are unchanged.
+combined native-free tests. Actual-reference comparison is recorded below.
+[ADR0129](../docs/adr/0129-reference-coast-verification-passes.md) completes R2.3:
+all121 actual reference nodes pass both frames, maximum0.0021126122711470335m /
+3.9825899625221015e-10m/s. Exactly121 Sun reads, unchanged resources, root/invariant
+and30s gates, plus independent offline audit pass. Evidence is retained; no retry.
+R2 completes only this ideal coast. Select the next user-visible priority separately;
+no new force model/optimizer/UI qualification or automation, strict M3 remains open.
 
 ## Retained research history — not the current schedule
 
