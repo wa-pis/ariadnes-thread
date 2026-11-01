@@ -1,0 +1,26 @@
+{
+  "stage": "R5.2f saved-evidence auditor interface and arithmetic design",
+  "base_revision": "5b5266798e1004546deabc01c8f4fd2dee521720",
+  "initial_workspace_clean": true,
+  "reviewed_source_sha256": {
+    "docs/adr/experiments/0142-short-coast-runner.py": "a1e6c74d7316d876f05c8d9527170ed633aeef86726dab91da9e2fdce96524ab",
+    "docs/adr/experiments/0140-short-coast-native.py": "8bc888d6e1c638251d8379d6d4c896393b5cd76fb71e85c65c7faf9aab9294e2",
+    "docs/adr/experiments/0138-short-coast-oracle.py": "d6a624f727e17de364f188f0941f2e1889741204ad035aefd9263728cf95e029",
+    "docs/adr/experiments/0141-short-coast-inputs.py": "4457d9094afe3e8b674a46704b6789fdd724469cb8e1efe5cc054ce39d34c37c",
+    "docs/adr/experiments/0132-gravity-audit.py": "47d03f269d8ab9774d87416c31af39bdc25e5661b857c97437862cbe5460759d"
+  },
+  "protected_tracked_files_unchanged": 264,
+  "actual_native_imports": 0,
+  "actual_native_propagations": 0,
+  "actual_spice_state_queries": 0,
+  "new_reference_executions": 0,
+  "implementation_started": false,
+  "r5_2_complete": false,
+  "verification": "Static local-source/schema review only; prior5132 full tests reused on unchanged code.",
+  "prior_full_regression": {
+    "passed": 5132,
+    "seconds": 647.31,
+    "evidence": "0142-full-pytest.txt"
+  },
+  "auditor_required_before_reference": true
+}

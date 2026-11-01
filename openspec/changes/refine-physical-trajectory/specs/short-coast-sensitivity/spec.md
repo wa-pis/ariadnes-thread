@@ -49,3 +49,31 @@ comparison/serialization/flush budget, preserving finite exclusive partial evide
 - **WHEN** the single study produces evidence
 - **THEN** a separate zero-native offline audit SHALL recompute saved-node forces, signed state/model differences, gate outcomes and identities from retained operands
 - **AND** it SHALL NOT claim a replay of unsaved internal stages, independent ephemeris truth or an achieved mission
+
+### Requirement: Independently validate saved operands and audit scope
+
+The private R5 offline auditor SHALL follow ADR0143 without importing the runner,
+force adapters, production package or scientific libraries. It SHALL distinguish
+complete verification, partial failed-study evidence and rejected inconsistencies.
+
+#### Scenario: Verify complete evidence without trusting passed flags
+
+- **WHEN** complete reference evidence is audited
+- **THEN** the auditor SHALL bind the four immutable input files and exact scenario/candidate/initial state, seven epochs, eight profiles,56 node-force rows,14 numerical rows and seven signed-model rows
+- **AND** it SHALL independently recalculate direct forces in80/100-digit Decimal from exact saved binary64 operands and check explanatory fields and actual native node telemetry using ADR0143's retained force-arithmetic envelope, separately from the unchanged scientific state gates
+- **AND** it SHALL recalculate signed differences and B-minus-A vectors, validate rounded components/norms and independently replay gate booleans at0.01m/1e-5m/s,0.001m/1e-6m/s and0.02m/2e-5m/s as applicable, without enlarging those thresholds for arithmetic agreement
+- **AND** native node states/forces SHALL match raw histories and exact1s/0.5s grids with301/601 states; oracle states SHALL match the retained corrections and offsets with zero initial corrections
+
+#### Scenario: Reject corruption and distinguish incomplete evidence
+
+- **WHEN** evidence contains duplicate keys, nonfinite constants, boolean numbers, mismatched vectors/epochs/units/source inventory, altered raw operands/identities/counters, or a falsely successful gate
+- **THEN** it SHALL be rejected rather than promoted to a verified study
+- **AND** a declared failed study with unavailable downstream results SHALL produce at most a partial audit, retain available false gates/diagnostics and set study_verified=false; injected-test evidence SHALL never verify R5
+
+#### Scenario: Audit provenance and bounded coverage honestly
+
+- **WHEN** the separate offline audit executes
+- **THEN** it SHALL make zero native imports/body queries/propagations and use a separate10s cooperative process/import/read/hash/compute/serialization/flush budget with exclusive finite output
+- **AND** it SHALL check initial/final snapshots, the original ordered13-kernel manifest, pinned source/runtime/build metadata and declared current source/binary file digests without executing evidence-specified code
+- **AND** complete counts SHALL satisfy four native/four oracle, total RHS<=10000, Python state reads=3*RHS+21<=30021 and5424 retained-state native guard reads with matching available call/profile ledgers
+- **AND** it SHALL label saved snapshot assertions, current file rehashes and checked-node arithmetic separately, without claiming historical-memory/flush timing proof, a newly queried kernel pool, independent ephemeris truth, unsaved RHS replay or continuous safety

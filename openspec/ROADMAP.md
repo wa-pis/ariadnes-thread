@@ -20,7 +20,9 @@ frozen-input/extended-runtime identity helpers:44 new/130 focused and5095 full
 tests pass, no R5 reference propagation.
 [ADR0142](../docs/adr/0142-short-coast-orchestration-and-evidence.md) verifies
 shared bounded orchestration/partial evidence:37 new/81 focused and5132 full
-tests pass. Independent offline auditor is next; no reference study launched.
+tests pass. [ADR0143](../docs/adr/0143-independent-saved-evidence-audit-contract.md)
+defines independent offline arithmetic/raw-data/provenance audit and its separate
+zero-native10s budget. Auditor implementation is next; no reference study launched.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 Preparation/tests first, then one60s/four-native/four-oracle/10000-oracle-RHS

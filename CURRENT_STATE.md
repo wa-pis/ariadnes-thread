@@ -39,7 +39,8 @@ ADR0141 baseline:5095 full tests pass; no R5 reference state propagated.
 [ADR0142](docs/adr/0142-short-coast-orchestration-and-evidence.md): runner implemented;
 37 new/81 focused and5132 full tests pass in647.31s; Ruff/strict OpenSpec pass.
 All260 protected tracked files unchanged; no R5 reference propagation.
-Next independent zero-native saved-evidence auditor before R5.2 completion.
+[ADR0143](docs/adr/0143-independent-saved-evidence-audit-contract.md): audit design verified;
+next implement private0144 offline auditor with its tests before R5.2 completion.
 
 [ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only
 as endpoint arithmetic. Do not repeat R2/R3/R4/full tests on unchanged code.
