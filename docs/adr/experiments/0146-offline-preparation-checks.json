@@ -1,0 +1,39 @@
+{
+  "stage": "R5.2g.3 final offline audit orchestration preparation",
+  "base_revision": "bf71dd62a01faecd8f957b233e024777e5b3524a",
+  "new_sources_untracked_during_checks": true,
+  "source_sha256": {
+    "docs/adr/experiments/0146-audit-short-coast.py": "074886270d1a602dd9f7ffddb02f5e43bf75af77a72bde06fdd0057d1b23ee92",
+    "tests/test_r5_short_coast_offline.py": "cbaaa9586448bf225ac54cb040d5eeed1298fe5b8c907cd7793c5666e0c1d9f1"
+  },
+  "new_tests": 32,
+  "initial_focused": {
+    "passed": 32,
+    "seconds": 0.35
+  },
+  "final_focused": {
+    "passed": 160,
+    "seconds": 1.05
+  },
+  "full_pytest": {
+    "passed": 5255,
+    "seconds": 647.52,
+    "exit_code": 0,
+    "log": "0146-full-pytest.txt",
+    "log_sha256": "451b9ac4ac6e83bd37227f1dd1d821d5845ea0d9f43e459c54af328e3e8e1bb0"
+  },
+  "workspace_status_unchanged_during_full_pytest": true,
+  "workspace_status_sha256": "e2d2c01f02d90f24724f52d66c690f084e09fdaaa408425f408dfcac8a93c046",
+  "protected_tracked_files_unchanged": 273,
+  "ruff": "passed",
+  "strict_openspec": "passed",
+  "new_unit_native_imports": 0,
+  "new_unit_body_queries": 0,
+  "new_unit_propagations": 0,
+  "fixture_scope": "Hand-built complete arrays and partial/malformed files only. Fresh subprocess checks no scientific modules. Existing full-suite native counts not instrumented.",
+  "r5_reference_executed": false,
+  "auditor_fixture_preparation_verified": true,
+  "complete_reference_file_audit_executed": false,
+  "r5_2_complete": false,
+  "remaining": "Final review of all R5.2 components and reference execution prerequisites; no R5.3 run yet."
+}

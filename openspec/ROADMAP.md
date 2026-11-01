@@ -26,7 +26,9 @@ zero-native10s budget. [ADR0144](../docs/adr/0144-independent-saved-node-arithme
 verifies its arithmetic/raw-array core:52 new/89 focused and5184 full tests pass.
 [ADR0145](../docs/adr/0145-independent-evidence-input-and-file-identity.md) verifies
 strict JSON/frozen inputs/current-file identity:39 new/128 focused and5223 full
-tests pass. Final audit orchestration is next; R5.2 incomplete, no reference run.
+tests pass. [ADR0146](../docs/adr/0146-offline-audit-orchestration.md) verifies
+final offline orchestration:32 new/160 focused and5255 full tests pass.
+Aggregate R5.2 preparation review remains; no reference run.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 Preparation/tests first, then one60s/four-native/four-oracle/10000-oracle-RHS
