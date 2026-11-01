@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0139 — Pinned native API readiness](0139-pinned-native-api-readiness.md): explicit constructors/GMs checked without propagation; opaque inventory and failed standalone derivative documented; native parity pending.
+
 - [0138 — Independent short-coast oracle preparation](0138-independent-short-coast-oracle.md):54 new/224 focused and4990 full tests pass; oracle unit verified, R5.2 overall pending remaining adapters.
 
 - [0137 — Short-coast Earth-gravity contract](0137-short-coast-earth-gravity-contract.md): fixed300s/two direct point-mass models, independent Tudat/SciPy profiles and60s/four-arc/four-oracle limits; preparation pending.

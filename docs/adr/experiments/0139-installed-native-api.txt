@@ -1,0 +1,399 @@
+module /opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/__init__.py
+conda tudatpy 1.0.0 py312h2196d89_3
+
+API BodyListSettings
+
+
+         Class for defining settings for the creation of a system of bodies.
+
+         Class for defining settings for the creation of a system of bodies. This object is typically created from default settings, and
+         then adapted to the user's specific needs.
+
+
+
+
+
+      
+
+API ephemeris.direct_spice
+direct_spice(frame_origin: str = 'SSB', frame_orientation: str = 'ECLIPJ2000', body_name_to_use: str = '') -> tudatpy.kernel.dynamics.environment_setup.ephemeris.EphemerisSettings
+
+
+
+ Function for creating ephemeris model settings entirely from Spice.
+
+ Function for settings object, defining ephemeris model directly and entirely from Spice.
+ Requires an appropriate Spice kernel to be loaded.
+
+
+ Parameters
+ ----------
+ frame_origin : str, default="SSB"
+     Origin of frame in which ephemeris data is defined.
+ frame_orientation : str, default="ECLIPJ2000"
+     Orientation of frame in which ephemeris data is defined.
+ body_name_to_use : str, default = ""
+     Body from which Spice ephemeris is to be created (if empty, it uses the name of the body to which the settings are assigned, see below for example).
+ Returns
+ -------
+ DirectSpiceEphemerisSettings
+     Instance of the :class:`~tudatpy.dynamics.environment_setup.ephemeris.EphemerisSettings` derived :class:`~tudatpy.dynamics.environment_setup.ephemeris.DirectSpiceEphemerisSettings` class
+
+
+
+
+
+ Examples
+ --------
+ In this example, we create barycentric (origin: SSB) :class:`~tudatpy.dynamics.environment_setup.ephemeris.EphemerisSettings` with axes along J2000, using data directly from spice:
+
+ .. code-block:: python
+
+    frame_origin = "SSB"
+    frame_orientation = "J2000"
+    body_settings.get( "Jupiter" ).ephemeris_settings = environment_setup.ephemeris.direct_spice(
+        frame_origin, frame_orientation)
+
+
+ Alternatively, we can assign the DirectSpiceEphemerisSettings of Jupiter (or any other body for which a direct Spice ephemeris is available) to any custom body:
+
+ .. code-block:: python
+
+    frame_origin = "SSB"
+    frame_orientation = "J2000"
+    body_name_to_use =  "Jupiter"
+    # create ephemeris settings from "Jupiter" spice data and add to body settings of body "CustomBody"
+    body_settings.get( "CustomBody" ).ephemeris_settings = environment_setup.ephemeris.direct_spice(
+        frame_origin, frame_orientation, body_name_to_use )
+
+
+     
+
+
+API gravity_field.central
+central(gravitational_parameter: typing.SupportsFloat) -> tudatpy.kernel.dynamics.environment_setup.gravity_field.GravityFieldSettings
+
+
+
+ Function for central gravity field settings object.
+
+ Function for settings object, defining a point-mass gravity field model with user-defined gravitational parameter :math:`\mu`. The gravitational potential is the defined as:
+
+ .. math::
+    U(\mathbf{r})=\frac{\mu}{||\mathbf{r}||}
+
+ with :math:`\mathbf{r}` the position vector measured from the body's center of mass.
+
+
+ Parameters
+ ----------
+ gravitational_parameter : float
+     Gravitational parameter defining the point-mass gravity field.
+ Returns
+ -------
+ CentralGravityFieldSettings
+     Instance of the :class:`~tudatpy.dynamics.environment_setup.gravity_field.GravityFieldSettings` derived :class:`~tudatpy.dynamics.environment_setup.gravity_field.CentralGravityFieldSettings` class
+
+
+
+
+
+ Examples
+ --------
+ In this example, we create :class:`~tudatpy.dynamics.environment_setup.gravity_field.GravityFieldSettings` for Earth using a simple central gravity field model:
+
+ .. code-block:: python
+
+    # define parameters describing central gravity model
+    gravitational_parameter = 3.986e14
+    # create gravity field settings
+    body_settings.get( "Earth" ).gravity_field_settings = environment_setup.gravity_field.central( gravitational_parameter )
+
+
+     
+
+
+API acceleration.point_mass_gravity
+point_mass_gravity() -> tudatpy.kernel.dynamics.propagation_setup.acceleration.AccelerationSettings
+
+
+
+ Creates settings for the point-mass gravity acceleration.
+
+ Creates settings for the point-mass gravity acceleration. The direct acceleration (acceleration w.r.t. an inertial frame) is computed from:
+
+ .. math::
+    \mathbf{a}=\frac{\mu}{{r}^{2}}\hat{\mathbf{r}}
+
+ with :math:`\mathbf{r}` the position vector measured from the center of mass of the body exerting the acceleration, and :math:`\mu` this body's gravitational parameter.
+
+ Depending on the body undergoing the acceleration :math:`A`, the body exerting the acceleration :math:`B`, and the central body of propagation :math:`C`, choosing this option may create a direct point-mass attraction (:math:`\mu=\mu_{B}`), a central point-mass attraction (:math:`\mu=\mu_{B}+\mu_{A}`) or a third-body point-mass attraction (see `dedicated user guide page <https://docs.tudat.space/en/latest/_src_user_guide/state_propagation/propagation_setup/translational/third_body_acceleration.html>`_ for more details).
+
+ The body exerting the acceleration needs to have a gravity field model (:ref:`gravity_field` module) defined to use this acceleration.
+
+ Returns
+ -------
+ AccelerationSettings
+     Acceleration settings object.
+
+
+
+
+
+ Examples
+ --------
+ In this example, we define the point mass gravity acceleration exerted by the Earth on the vehicle:
+
+ .. code-block:: python
+
+    # Create acceleration dict
+    accelerations_acting_on_vehicle = dict()
+    # Add point-mass gravity acceleration exerted by Earth
+    accelerations_acting_on_vehicle["Earth"] = [propagation_setup.acceleration.point_mass_gravity()]
+
+
+     
+
+
+API create_acceleration_models
+create_acceleration_models(body_system: tudatpy.kernel.dynamics.environment.SystemOfBodies, selected_acceleration_per_body: collections.abc.Mapping[str, collections.abc.Mapping[str, collections.abc.Sequence[tudatpy.kernel.dynamics.propagation_setup.acceleration.AccelerationSettings]]], bodies_to_propagate: collections.abc.Sequence[str], central_bodies: collections.abc.Sequence[str]) -> dict[str, dict[str, list[tudat::basic_astrodynamics::AccelerationModel<Eigen::Matrix<double, 3, 1, 0, 3, 1>>]]]
+
+
+
+ Function to create a set of acceleration models from a dictionary of bodies linked to acceleration model types.
+
+ Function to create a set of acceleration models from a map of bodies and acceleration model types. The propagated
+ bodies and central bodies are provided as two separate lists with the same order.
+
+
+ Parameters
+ ----------
+ body_system : SystemOfBodies
+     System of bodies to be used in the propagation.
+ selected_acceleration_per_body : Dict[str, Dict[str, List[AccelerationSettings]]]
+     Key-value container, with key denoting the body undergoing the acceleration, and the value containing an additional key-value container, with the body exerting acceleration, and list of acceleration settings exerted by this body.
+ bodies_to_propagate : list
+     List of bodies to propagate.
+ central_bodies : list
+     List of central bodies, each referred to each propagated body in the same order.
+ Returns
+ -------
+ AccelerationMap : dict[str, list[AccelerationModel]]
+    Set of accelerations acting on the bodies to propagate, provided as dual key-value container (dictionary), similar to the acceleration settings input, but now with ``AccelerationModel`` lists as inner value
+
+
+
+
+
+ Examples
+ --------
+ In this example, the acceleration model includes a spherical harmonic (degree and order 5) gravitational acceleration
+ and aerodynamic acceleration exerted by the Earth, as well as point-mass gravity exerted by the Sun and the Moon.
+ The variable ``accelerations_settings_vehicle`` denotes the list of bodies exerting accelerations and the types of
+ accelerations, while the variable ``acceleration_settings`` associates this list with the body undergoing the
+ acceleration (``"Vehicle"``).
+
+ .. code-block:: python
+
+    # Define bodies that are propagated.
+    bodies_to_propagate = ["Vehicle"]
+
+    # Define central bodies.
+    central_bodies = ["Earth"]
+
+    # Define accelerations acting on Vehicle
+    accelerations_settings_vehicle = dict(
+        Sun=[propagation_setup.acceleration.point_mass_gravity()],
+        Moon=[propagation_setup.acceleration.point_mass_gravity()],
+        Earth=[propagation_setup.acceleration.spherical_harmonic_gravity(5, 5),
+               propagation_setup.acceleration.aerodynamic()]
+    )
+
+    # Create global accelerations settings dictionary
+    acceleration_settings = {"Vehicle": accelerations_settings_vehicle}
+
+    # Create acceleration models
+    acceleration_models = propagation_setup.create_acceleration_models(
+        bodies, acceleration_settings,  bodies_to_propagate, central_bodies)
+
+
+     
+
+
+API integrator.runge_kutta_fixed_step
+runge_kutta_fixed_step(time_step: tudatpy.kernel.astro.time_representation.Time, coefficient_set: tudatpy.kernel.dynamics.propagation_setup.integrator.CoefficientSets, order_to_use: tudatpy.kernel.dynamics.propagation_setup.integrator.OrderToIntegrate = <OrderToIntegrate.lower: 0>, assess_termination_on_minor_steps: bool = False) -> tudatpy.kernel.dynamics.propagation_setup.integrator.IntegratorSettings
+
+
+
+ Creates the settings for the Runge-Kutta fixed step size integrator.
+
+ Function to create settings for the Runge-Kutta integrator with a constant step size.
+ Different coefficient sets (Butcher's tableau) can be used (see the `CoefficientSets` enum).
+
+
+ Parameters
+ ----------
+ time_step : float
+     Initial time step to be used.
+ coefficient_set : CoefficientSets
+     Coefficient set (Butcher's tableau) to be used in the integration.
+ order_to_use : OrderToIntegrate, default=OrderToIntegrate.lower
+     If the coefficient set is supposed to be for variable step sizes (with an embedded method of a different order),
+     this parameter can be used to set the order that will be used.
+
+ assess_termination_on_minor_steps : bool, default=false
+     Whether the propagation termination conditions should be evaluated during the intermediate sub-steps of the
+     integrator (true) or only at the end of each integration step (false).
+
+ Returns
+ -------
+ IntegratorSettings
+     Object containing settings for the integrator.
+
+
+
+
+
+ Examples
+ --------
+ In this example, settings for the classical RK4 integrator with 30 second time step are created
+
+ .. code-block:: python
+
+   # Create RK4 settings
+   integrator_settings = integrator.runge_kutta_fixed_step(
+       time_step = 30.0,
+       coefficient_set = integrator.CoefficientSets.rk_4 )
+
+ In this example, settings for fixed-step integration using the higher-order (8th-order) of the two
+ embedded propagators of the RKF7(8) method are created, with a time-step of 120 seconds.
+
+ .. code-block:: python
+
+   # Create 8th order RKF settings
+   integrator_settings = integrator.runge_kutta_fixed_step(
+       time_step = 120.0,
+       coefficient_set = integrator.CoefficientSets.rkf_78,
+       order_to_use = integrator.OrderToIntegrate.higher )
+
+
+
+     
+
+
+API propagator.translational
+translational(*args, **kwargs)
+Overloaded function.
+
+1. translational(central_bodies: collections.abc.Sequence[str], acceleration_models: collections.abc.Mapping[str, collections.abc.Mapping[str, collections.abc.Sequence[tudat::basic_astrodynamics::AccelerationModel<Eigen::Matrix<double, 3, 1, 0, 3, 1>>]]], bodies_to_integrate: collections.abc.Sequence[str], initial_states: typing.Annotated[numpy.typing.ArrayLike, numpy.float64, "[m, 1]"], termination_settings: tudatpy.kernel.dynamics.propagation_setup.propagator.PropagationTerminationSettings, propagator: tudatpy.kernel.dynamics.propagation_setup.propagator.TranslationalPropagatorType = <TranslationalPropagatorType.cowell: 0>, output_variables: collections.abc.Sequence[tudatpy.kernel.dynamics.propagation_setup.dependent_variable.SingleDependentVariableSaveSettings] = [], print_interval: typing.SupportsFloat = nan) -> tudatpy.kernel.dynamics.propagation_setup.propagator.TranslationalStatePropagatorSettings
+
+2. translational(central_bodies: collections.abc.Sequence[str], acceleration_models: collections.abc.Mapping[str, collections.abc.Mapping[str, collections.abc.Sequence[tudat::basic_astrodynamics::AccelerationModel<Eigen::Matrix<double, 3, 1, 0, 3, 1>>]]], bodies_to_integrate: collections.abc.Sequence[str], initial_states: typing.Annotated[numpy.typing.ArrayLike, numpy.float64, "[m, 1]"], initial_time: tudatpy.kernel.astro.time_representation.Time, integrator_settings: tudatpy.kernel.dynamics.propagation_setup.integrator.IntegratorSettings, termination_settings: tudatpy.kernel.dynamics.propagation_setup.propagator.PropagationTerminationSettings, propagator: tudatpy.kernel.dynamics.propagation_setup.propagator.TranslationalPropagatorType = <TranslationalPropagatorType.cowell: 0>, output_variables: collections.abc.Sequence[tudatpy.kernel.dynamics.propagation_setup.dependent_variable.SingleDependentVariableSaveSettings] = [], processing_settings: tudatpy.kernel.dynamics.propagation_setup.propagator.SingleArcPropagatorProcessingSettings = None) -> tudatpy.kernel.dynamics.propagation_setup.propagator.TranslationalStatePropagatorSettings
+
+
+
+Function to create translational state propagator settings with stopping condition at given final time.
+
+Function to create translational state propagator settings for N bodies.
+The propagated state vector is defined by the combination of integrated bodies, and their central body, the combination
+of which define the relative translational states for which a differential equation is to be solved. The propagator
+input defines the formulation in which the differential equations are set up
+The dynamical models are defined by an ``AccelerationMap`` (dict[str, list[AccelerationModel]]), as created by :func:`~tudatpy.dynamics.propagation_setup.create_acceleration_models` function.
+Details on the usage of this function are discussed in more detail in the `user guide <https://docs.tudat.space/en/latest/_src_user_guide/state_propagation/propagation_setup/translational.html>`__.
+
+Parameters
+----------
+central_bodies : list[str]
+    List of central bodies with respect to which the bodies to be integrated are propagated.
+acceleration_models : dict[str, list[AccelerationModel]]
+    Set of accelerations acting on the bodies to propagate, provided as acceleration models.
+bodies_to_integrate : list[str]
+    List of bodies to be numerically propagated, whose order reflects the order of the central bodies.
+initial_states : numpy.ndarray
+    Initial states of the bodies to integrate (one initial state for each body, concatenated into a single array), provided in the same order as the bodies to integrate. The initial states must be expressed in Cartesian elements, w.r.t. the central body of each integrated body. The states must be defined with the same frame orientation as the global frame orientation of the environment (specified when creating a system of bodies, see for instance :func:`~tudatpy.dynamics.environment_setup.get_default_body_settings` and :func:`~tudatpy.dynamics.environment_setup.create_system_of_bodies`). Consequently, for N integrated bodies, this input is a vector with size size 6N.
+initial_time : astro.time_representation.Time
+    Initial epoch of the numerical propagation
+integrator_settings : IntegratorSettings
+    Settings defining the numerical integrator that is to be used for the propagation
+
+    .. note:: The sign of the initial time step in the integrator settings defines whether the propagation will be forward or backward in time
+
+termination_settings : PropagationTerminationSettings
+    Generic termination settings object to check whether the propagation should be ended.
+propagator : TranslationalPropagatorType, default=cowell
+    Type of translational propagator to be used (see `TranslationalPropagatorType` enum).
+output_variables : list[SingleDependentVariableSaveSettings], default=[]
+    Object to define settings on how the numerical results are to be used, both during the propagation (printing to console) and after propagation (resetting environment)
+processing_settings: SingleArcPropagatorProcessingSettings, default=[]
+    Object to define how the numerical results are to be processed after the propagation terminates, and which information to print to the console during the propagation. See `our user guide <https://docs.tudat.space/en/latest/_src_user_guide/state_propagation/propagation_setup/printing_processing_results.html>`__ for details on all options.
+    If this object is left empty default settings of the :class:`~SingleArcPropagatorProcessingSettings` class are used.
+
+Returns
+-------
+TranslationalStatePropagatorSettings
+    Translational state propagator settings object.
+
+
+
+
+
+
+     
+
+
+API propagator.time_termination
+time_termination(termination_time: typing.SupportsFloat, terminate_exactly_on_final_condition: bool = False) -> tudatpy.kernel.dynamics.propagation_setup.propagator.PropagationTerminationSettings
+
+
+
+ Function to create time termination settings for the propagation.
+
+ Function to create time termination settings for the propagation.
+ The propagation is stopped when the final time provided is reached. Note that the termination time is set as the
+ absolute time (in seconds since J2000), not the time since the start of the propagation.
+ Depending on the sign of the time step of the numerical integrator, the termination time will be treated as an
+ upper bound (for positive time step) or lower bound (for negative time step).
+ The simulator will normally finish the final time-step, which may cause the termination time to be slightly exceeded.
+ This behaviour can be suppressed by providing the optional input argument
+ ``terminate_exactly_on_final_condition=True``, in which case the final propagation step will be *exactly* on the
+ specified time.
+
+ Parameters
+ ----------
+ termination_time : float
+     Final time of the propagation.
+ terminate_exactly_on_final_condition : bool, default=False
+     Denotes whether the propagation is to terminate exactly on the final condition, or whether it is to terminate on the first step where it is violated.
+ Returns
+ -------
+ PropagationTimeTerminationSettings
+     Time termination settings object.
+
+
+
+ Notes
+ -----
+ To reach *exactly* the final time, state derivative function evaluations beyond the final
+ time may be required by the propagator. Reaching the final condition exactly is an iterative process and
+ very minor deviations from the specified final condition can occur.
+
+
+
+ Examples
+ --------
+ In this example, we set the termination time of the propagation equal to one day (86400 s).
+
+ .. code-block:: python
+
+   # Set termination time (in seconds since J2000)
+   termination_time = simulation_start_epoch + 86400.0
+   # Create time termination settings
+   termination_settings = propagation_setup.propagator.time_termination( termination_time )
+
+
+     
+
+acceleration enum {'undefined_acceleration_type': <AvailableAcceleration.undefined_acceleration_type: 0>, 'point_mass_gravity_type': <AvailableAcceleration.point_mass_gravity_type: 1>, 'aerodynamic_type': <AvailableAcceleration.aerodynamic_type: 2>, 'cannonball_radiation_pressure_type': <AvailableAcceleration.cannonball_radiation_pressure_type: 3>, 'spherical_harmonic_gravity_type': <AvailableAcceleration.spherical_harmonic_gravity_type: 4>, 'mutual_spherical_harmonic_gravity_type': <AvailableAcceleration.mutual_spherical_harmonic_gravity_type: 5>, 'polyhedron_gravity_type': <AvailableAcceleration.polyhedron_gravity_type: 6>, 'ring_gravity_type': <AvailableAcceleration.ring_gravity_type: 7>, 'thrust_acceleration_type': <AvailableAcceleration.thrust_acceleration_type: 13>, 'relativistic_correction_acceleration_type': <AvailableAcceleration.relativistic_correction_acceleration_type: 14>, 'empirical_acceleration_type': <AvailableAcceleration.empirical_acceleration_type: 15>, 'rtg_acceleration_type': <AvailableAcceleration.rtg_acceleration_type: 23>, 'direct_tidal_dissipation_in_central_body_acceleration_type': <AvailableAcceleration.direct_tidal_dissipation_in_central_body_acceleration_type: 16>, 'direct_tidal_dissipation_in_orbiting_body_acceleration_type': <AvailableAcceleration.direct_tidal_dissipation_in_orbiting_body_acceleration_type: 17>, 'quasi_impulsive_shots_acceleration_type': <AvailableAcceleration.quasi_impulsive_shots_acceleration_type: 19>, 'custom_acceleration_type': <AvailableAcceleration.custom_acceleration_type: 20>, 'radiation_pressure_type': <AvailableAcceleration.radiation_pressure_type: 18>, 'einstein_infeld_hoffmann_acceleration_type': <AvailableAcceleration.einstein_infeld_hoffmann_acceleration_type: 21>, 'yarkovsky_acceleration_type': <AvailableAcceleration.yarkovsky_acceleration_type: 22>}
+rk enum {'euler_forward': <CoefficientSets.euler_forward: 0>, 'rk_4': <CoefficientSets.rk_4: 1>, 'explicit_mid_point': <CoefficientSets.explicit_mid_point: 2>, 'explicit_trapezoid_rule': <CoefficientSets.explicit_trapezoid_rule: 3>, 'ralston': <CoefficientSets.ralston: 4>, 'rk_3': <CoefficientSets.rk_3: 5>, 'ralston_3': <CoefficientSets.ralston_3: 6>, 'SSPRK3': <CoefficientSets.SSPRK3: 7>, 'ralston_4': <CoefficientSets.ralston_4: 8>, 'three_eight_rule_rk_4': <CoefficientSets.three_eight_rule_rk_4: 9>, 'heun_euler': <CoefficientSets.heun_euler: 10>, 'rkf_12': <CoefficientSets.rkf_12: 11>, 'rkf_45': <CoefficientSets.rkf_45: 12>, 'rkf_56': <CoefficientSets.rkf_56: 13>, 'rkf_78': <CoefficientSets.rkf_78: 14>, 'rkdp_87': <CoefficientSets.rkdp_87: 15>, 'rkf_89': <CoefficientSets.rkf_89: 16>, 'rkv_89': <CoefficientSets.rkv_89: 17>, 'rkf_108': <CoefficientSets.rkf_108: 18>, 'rkf_1210': <CoefficientSets.rkf_1210: 19>, 'rkf_1412': <CoefficientSets.rkf_1412: 20>}
+environment gravity attributes ['get_gravitational_parameter', 'gravitational_parameter']
+settings fields []
+simulator types ['HybridArcSimulator', 'MultiArcSimulator', 'SingleArcSimulator', 'SingleArcVariationalSimulator']

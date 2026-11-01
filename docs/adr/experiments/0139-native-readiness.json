@@ -1,0 +1,49 @@
+{
+  "base_revision": "b98a48bfcd58d15f87a41dfc8a55b587354453e9",
+  "scope": "R5.2 native API readiness only; documentation/evidence, no project runtime changes",
+  "artifacts_sha256": {
+    "0139-installed-native-api.txt": "6a18387b219059039fdd19cbfdb68c8fa3213f99fa17bbd48c061cefb88beebd",
+    "0139-synthetic-construction.txt": "8763ecda7c61a672a49baa7a6377ce593b78bcd3f6dcb38d957dbf6e748b4837",
+    "0139-native-inspection.txt": "fc0c238aa954b4810ae4d8994b624541f4a2880fa23475ed7885ecf9530c906d",
+    "0139-installed-identity.json": "d76645fb90d602209dd3ae5874110c8e13e7ceddd90ffcd85e15b92849183eb7"
+  },
+  "native_propagations": 0,
+  "mission_ephemeris_queries": 0,
+  "spice_kernel_loads": 0,
+  "synthetic_body_systems_constructed": 2,
+  "simulators_created_with_simulation_disabled": 1,
+  "standalone_derivative_calls_attempted": 1,
+  "standalone_derivative_calls_returned": 0,
+  "failures": [
+    {
+      "stage": "initial metadata lookup",
+      "error": "importlib.metadata.PackageNotFoundError: No package metadata was found for tudatpy",
+      "resolution": "read existing Conda metadata; no package change"
+    },
+    {
+      "stage": "synthetic state_derivative_function at epoch0 with simulation disabled",
+      "error": "RuntimeError: Error when updating environment, input size is inconsistent 0 0 1",
+      "resolution": "retain as unsupported/unverified direct-callback path; do not use it as verified force parity or retry the R5 reference"
+    }
+  ],
+  "failure_text_origin": "tool-returned exception summaries, not copied raw stderr files",
+  "observed_map_order": [
+    "Earth",
+    "Sun",
+    "Moon"
+  ],
+  "map_body_sets_match": true,
+  "map_one_model_per_source": true,
+  "assigned_GM_exact_match": true,
+  "acceleration_model_python_public_attributes": [],
+  "profile_readback": "RungeKuttaFixedStepSizeSettings exposes initial_time only; coefficient/step readback unavailable",
+  "native_force_numerical_parity": "not verified",
+  "reference_R5_executed": false,
+  "R5_2_complete": false,
+  "runtime_tests_rerun": false,
+  "prior_full_regression": {
+    "revision": "b98a48b",
+    "passed": 4990,
+    "evidence": "0138-oracle-preparation-checks.json"
+  }
+}

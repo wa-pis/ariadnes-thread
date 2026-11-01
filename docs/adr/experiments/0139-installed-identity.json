@@ -1,0 +1,32 @@
+{
+  "python": "3.12.14 (main, Sep  3 2026, 03:46:19) [Clang 21.1.8 ]",
+  "prefix": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav",
+  "modules": {
+    "tudatpy": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/__init__.py",
+      "sha256": "77b9158af39852d29744e2942380d7406208b7935a03071de5fed693d907b49d"
+    },
+    "environment_setup": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/dynamics/environment_setup/__init__.py",
+      "sha256": "b3543dedbf01b3531fd22232675a95872b36136d639b499a3e9ce2345a194920"
+    },
+    "propagation_setup": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/dynamics/propagation_setup/__init__.py",
+      "sha256": "8262b19860f5167574c567bae342e1e254565115784aa57d9b429b665f1d8757"
+    },
+    "simulator": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/dynamics/simulator/__init__.py",
+      "sha256": "7e68657349fc5be3168318864edd1a31951e6efe6cd1d7a97868e270690ef05c"
+    }
+  },
+  "conda": [
+    {
+      "name": "tudatpy",
+      "version": "1.0.0",
+      "build": "py312h2196d89_3",
+      "subdir": "osx-arm64",
+      "metadata_path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/tudatpy-1.0.0-py312h2196d89_3.json",
+      "metadata_sha256": "26b84d68ee96cc430a708bd90d42d574954abfa79145c6fe12aed517a4390cc9"
+    }
+  ]
+}

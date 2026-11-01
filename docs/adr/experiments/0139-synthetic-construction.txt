@@ -1,0 +1,15 @@
+frame SSB J2000
+GM Sun GravityFieldModel 1.327124400420322e+20 1.327124400420322e+20
+GM Moon GravityFieldModel 4902800121846.8 4902800121846.8
+GM Earth GravityFieldModel 398600435468295.9 398600435468295.9
+map <class 'dict'> ('Spacecraft',) ('Earth', 'Sun', 'Moon')
+model Earth 1 ['AccelerationModel']
+model public fields []
+model Sun 1 ['AccelerationModel']
+model public fields []
+model Moon 1 ['AccelerationModel']
+model public fields []
+simulator public props ['bodies', 'cumulative_computation_time_history', 'cumulative_number_of_function_evaluations', 'dependent_variable_history', 'dependent_variable_history_time_object', 'environment_updater', 'integrate_equations_of_motion', 'integration_completed_successfully', 'propagation_results', 'propagation_termination_details', 'propagator_settings', 'state_derivative_function', 'state_history', 'state_history_time_object', 'unprocessed_state_history', 'unprocessed_state_history_time_object']
+integrator class RungeKuttaFixedStepSizeSettings fields ['initial_time']
+propagator fields ['get_propagated_state_size', 'initial_states', 'integrator_settings', 'print_settings', 'processing_settings', 'reset_and_recreate_acceleration_models', 'termination_settings']
+constructed only; no simulator instantiated; no SPICE kernels loaded

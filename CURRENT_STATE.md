@@ -35,7 +35,10 @@ Same audited0098 initial state/R1 candidate; pinned SciPy1.17.1 already installe
 [ADR0138](docs/adr/0138-independent-short-coast-oracle.md): R5.2a oracle verified;
 54 new/224 focused and4990 full tests pass (671.36s), Ruff/strict OpenSpec pass.
 Earlier verification-process provenance drift is retained with its failed log.
-Next prepare the native RK4 adapter, shared runner/identities and offline audit.
+[ADR0139](docs/adr/0139-pinned-native-api-readiness.md): pinned API readiness inspected;
+no propagation. Map order/types are opaque; standalone derivative setup failed.
+Next implement/test explicit native RK4 with analytic/force telemetry checks,
+then shared runner/extended identities and offline audit.
 R5.2 and reference execution remain incomplete. No R5 study has been launched.
 Frozen reference limits:60s,4 native/4 oracle/10000 RHS, separate query cap.
 

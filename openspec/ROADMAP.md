@@ -14,6 +14,8 @@ against separately implemented pinned SciPy DOP853 profiles; no new dependency.
 [ADR0138](../docs/adr/0138-independent-short-coast-oracle.md) verifies the oracle
 unit:54 new/224 focused and4990 full tests pass. Native adapter, orchestration
 and offline audit remain pending; R5.2 overall is incomplete.
+[ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
+construction readiness and binding limitations, without native propagation.
 Preparation/tests first, then one60s/four-native/four-oracle/10000-oracle-RHS
 study and offline audit. Numerical comparison and integrated model differences
 remain separate; no full-force/escape/capture/safety/M3 claim. No user action needed.
