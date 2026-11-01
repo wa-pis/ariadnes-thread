@@ -27,30 +27,20 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 
-## Next action — scope the next physical-fidelity question
-[ADR 0117](docs/adr/0117-mission-first-demonstration-priority.md) fixes the order;
-accepted ADR 0118 and its verified R1.1 result remain retained in ADR 0119.
+## Next action — R3.2 private force-screening preparation
 
-1. [ADR 0122](docs/adr/0122-independent-elliptic-coast-passes.md): R1.2 passes at
-   base `35ae8a3`, exactly17 adapter calls in 0.5558036253787577s, no retries.
-   Max differences 0.00159834m /3.66733e-10m/s; roots/alignment/invariants and
-   offline identity/arithmetic audit pass. Synthetic Sun-relative coast only.
-2. [ADR 0124](docs/adr/0124-oem-reader-and-research-profile-ready.md): R1.3 research
-   readiness verified: corrected source, approved unregistered ARIADNA notice,
-   actual INPOP19a/ICRF mapping, independent reader/88 native-free tests. Strict
-   OpenSpec/lint/links pass; no writer/UI/native or full-regression work here.
-3. [ADR0125](docs/adr/0125-research-export-and-usable-path.md): R1.4 implements the
-   input → calculation → display → verified JSON/OEM path; implementation complete. 151 focused
-   and4766 full tests/630.19s pass; Ruff/strict OpenSpec/links/immutable checks pass.
+[ADR0131](docs/adr/0131-screen-omitted-gravity-at-fixed-epochs.md): offline endpoint
+geometry audit passes; body-centre endpoints are invalid for exterior lunar/Mars
+fields. R3 freezes Earth/Moon/Mars differential-force samples at nodes0,60,120,
+explicit absent endpoint terms, independent Decimal arithmetic and seven states /
+one Earth GM/shared30s/zero propagation. Prepare native-free runner/audit/tests next;
+no native screening yet, no whole-arc/total-force/mission-safety claim.
 
-R2 complete for the retained ideal coast: [ADR0129](docs/adr/0129-reference-coast-verification-passes.md).
-Exactly121 Sun reads; all121 nodes/both frames pass at max0.0021126122711470335m /
-3.9825899625221015e-10m/s; root/invariant/resource/budget gates and offline audit pass.
-Raw Sun track, comparisons and audit retained; no retries or runtime changes.
-Shared ephemeris truth, continuous safety, finite burns and strict M3 stay unverified.
-[ADR0130](docs/adr/0130-full-regression-after-reference-verification.md): full4852 tests
-pass in640.24s at7b22253; Ruff/strict OpenSpec and230 immutable-file checks pass.
-Automatic bounded continuation is authorized; scope physical work before execution.
+[ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes
+all121 nodes/both frames, max0.0021126122711470335m/3.9825899625221015e-10m/s.
+[ADR0130](docs/adr/0130-full-regression-after-reference-verification.md):4852 full
+tests pass in640.24s at7b22253. Do not repeat unchanged R2/full regression.
+Automatic bounded continuation is authorized; pause if user input/action is needed.
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.

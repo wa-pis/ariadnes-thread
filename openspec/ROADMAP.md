@@ -5,6 +5,18 @@ Continue bounded work from CURRENT_STATE; pause the automation when user
 participation is required and explain the exact needed decision/action. Do not
 repeat successful studies or unchanged full regressions automatically.
 
+## Current priority R3 — screen omitted gravity before propagation
+
+[ADR0131](../docs/adr/0131-screen-omitted-gravity-at-fixed-epochs.md) records a
+zero-native endpoint audit: the ideal reference begins/ends near body centres,
+inside the lunar/Martian exterior-force domains. Preserve these ideal data;
+do not feed them directly to a full-gravity mission propagation.
+R3.1 is designed: diagnose Earth/Moon/Mars differential gravity at fixed nodes0,60,120,
+with explicit inadmissible endpoint terms, a separate Decimal oracle and frozen
+seven-state/one-GM/shared30s budget. Next: R3.2 private native-free preparation,
+then one verified R3.3 screening. No full-arc/total-force/safety inference or new
+mission state, optimizer, UI qualification or M3 closure; no user input needed.
+
 ## Delivered foundation — R1 mission-first demonstration (2026-10-29)
 
 The user approved [ADR 0117](../docs/adr/0117-mission-first-demonstration-priority.md):
@@ -56,8 +68,8 @@ combined native-free tests. Actual-reference comparison is recorded below.
 all121 actual reference nodes pass both frames, maximum0.0021126122711470335m /
 3.9825899625221015e-10m/s. Exactly121 Sun reads, unchanged resources, root/invariant
 and30s gates, plus independent offline audit pass. Evidence is retained; no retry.
-R2 completes only this ideal coast. Select the next user-visible priority separately;
-no new force model/optimizer/UI qualification or automation, strict M3 remains open.
+R2 completes only this ideal coast. The later authorized R3 diagnostic is above;
+R2 itself authorizes no optimizer/UI qualification or strict M3 closure.
 
 ## Integrated verification after R2 (2026-11-01)
 

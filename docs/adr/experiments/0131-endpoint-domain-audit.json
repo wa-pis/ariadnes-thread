@@ -1,0 +1,64 @@
+{
+  "record": "ADR0131",
+  "date": "2026-11-01",
+  "measured_revision": "b794ebfadbe74409109b0f79f4a36a3528a6582d",
+  "reference_sha256": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0",
+  "native_imports": 0,
+  "native_calls": 0,
+  "method": "binary64 differences and hypot, independent Decimal.from_float position differences and80-digit sqrt",
+  "rows": [
+    {
+      "index": 0,
+      "body": "Moon",
+      "epoch_tdb_s": 978995455.2304223,
+      "spacecraft_position_m": [
+        -47126472682.7278,
+        128473304107.83165,
+        55670397503.89893
+      ],
+      "body_position_m": [
+        -47126472682.7281,
+        128473304107.83153,
+        55670397503.89886
+      ],
+      "difference_m": [
+        0.00030517578125,
+        0.0001220703125,
+        7.62939453125e-05
+      ],
+      "distance_m": 0.00033742285747521945,
+      "decimal_distance_m": "0.00033742285747521943557801530032227865017585509403573244255217618444860475112220382",
+      "norm_difference_m": "1.076504127263441924146508744970930845100251131555139524887779618E-20",
+      "spherical_exclusion_radius_m": 1737400.0,
+      "classification": "inside-body-guard",
+      "point_mass_force_admissible": false
+    },
+    {
+      "index": 120,
+      "body": "Mars",
+      "epoch_tdb_s": 1004169273.4122404,
+      "spacecraft_position_m": [
+        166615041787.60635,
+        -109354766688.8442,
+        -54649434090.926125
+      ],
+      "body_position_m": [
+        166615041787.60736,
+        -109354766688.84215,
+        -54649434090.925285
+      ],
+      "difference_m": [
+        -0.001007080078125,
+        -0.002044677734375,
+        -0.0008392333984375
+      ],
+      "distance_m": 0.002428833056893391,
+      "decimal_distance_m": "0.0024288330568933910957936807246657808973328959620140652203528809472909386922760182",
+      "norm_difference_m": "2.22107478204922772674696337855003933453528809472909386922760182E-20",
+      "spherical_exclusion_radius_m": 3396190.0,
+      "classification": "inside-body-guard",
+      "point_mass_force_admissible": false
+    }
+  ],
+  "finding": "The ideal body-centre endpoints are inadmissible for adding exterior Moon/Mars point-mass fields; this does not invalidate the declared Sun-only R1/R2 calculation."
+}

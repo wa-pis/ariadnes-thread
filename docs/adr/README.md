@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0131 — Screen omitted gravity at fixed epochs](0131-screen-omitted-gravity-at-fixed-epochs.md): body-centre endpoint domain audit and bounded three-epoch differential-force contract; preparation/execution pending.
+
 - [0130 — Full regression after reference verification](0130-full-regression-after-reference-verification.md):4852 tests pass at7b22253; integrated regression only, no new physical-fidelity claim.
 
 - [0129 — Reference-coast verification passes](0129-reference-coast-verification-passes.md): all121 actual reference nodes and independent offline audit pass; ideal coast only, strict M3 remains open.

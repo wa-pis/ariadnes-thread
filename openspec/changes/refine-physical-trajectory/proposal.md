@@ -122,3 +122,14 @@ max0.0021126122711470335m/3.9825899625221015e-10m/s; roots/invariants/resources,
 cooperative budget and independent offline audit pass. No runtime changes or retry.
 R2 verifies this sampled ideal coast only; shared Sun ephemerides, strict M3 and
 mission safety remain outside its evidence. No automatic next implementation.
+
+
+## R3 omitted-gravity screening before physical refinement (2026-11-01)
+
+[ADR0131](../../../docs/adr/0131-screen-omitted-gravity-at-fixed-epochs.md) records
+an independent offline check of the ideal body-centre endpoints and selects a
+private three-epoch Earth/Moon/Mars direct-minus-indirect acceleration diagnostic.
+Exact retained states/epochs/resources, exterior guards, separate Decimal oracle
+and seven-state/one-GM/shared30s cap are frozen before preparation. Expected invalid
+endpoint terms remain absent, never zero; no new spacecraft propagation, mission
+state or total-force/error/safety claim. R3.2/R3.3 remain pending; strict M3 unchanged.
