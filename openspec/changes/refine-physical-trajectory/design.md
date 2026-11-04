@@ -6042,3 +6042,11 @@ Type2/derivative/Taylor-chain evaluation and separate incremental/position-floor
 gates. No new spacecraft dynamics or failed-reference replay.90 focused tests pass;
 full verification failed on an unchanged300s native-readback deadline. No real
 acquisition/retry; pending code retained outside checkout, task remains open.
+
+
+## R5.8 restored preparation verified (2026-11-04)
+
+[ADR0154](../../../docs/adr/0154-resume-real-ephemeris-verification.md) records the
+user-authorized same-limit readiness pass and90 focused/5409 full passing tests
+on the exact shelved bytes. No numerical gate was changed. The source-only
+ADR0153 acquisition is eligible but unexecuted; no R5 reference replay.

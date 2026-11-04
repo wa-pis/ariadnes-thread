@@ -74,6 +74,10 @@ real-ephemeris position/velocity/rephasing-error contract before any integration
 contract:90 focused pass; full5408 pass/1 unchanged native-readback300s deadline
 failure. No real acquisition/retry; pending source bytes retained outside checkout,
 full-suite prerequisite and R5.8 remain open, automation PAUSED.
+[ADR0154](../docs/adr/0154-resume-real-ephemeris-verification.md) restores the
+exact pending sources: readiness passes132.76s under300s,90 focused and5409 full
+tests pass in665.51s; Ruff/strict OpenSpec and115 protected files pass. Real
+source acquisition remains the next stage under unchanged ADR0153 limits.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 The retained attempt used the fixed60s/four-native/four-oracle/10000-RHS contract.

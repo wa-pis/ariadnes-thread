@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-11-02. Keep under60 lines; current instructions here/roadmap, detail in ADRs.
+Updated: 2026-11-04. Keep under60 lines; current instructions here/roadmap, detail in ADRs.
 
 ## Goal and scheduling
 
@@ -49,8 +49,8 @@ as endpoint arithmetic; do not repeat R2/R3/R4 or unchanged full tests.
 [ADR0152](docs/adr/0152-compensated-synthetic-time-validation.md):34 focused/5319 full
 pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor retained.
 [ADR0153](docs/adr/0153-real-ephemeris-time-boundary.md):90 focused pass; full5408 pass/1 old300s deadline failure.
-No real acquisition/retry. Pending sources shelved outside checkout; automation PAUSED.
-Next: reduce contention, restore exact pending bytes and pass full suite before R5.8.
+[ADR0154](docs/adr/0154-resume-real-ephemeris-verification.md): exact sources restored; readiness/90 focused/5409 full pass, gates unchanged.
+Next: once-only ADR0153 source audit, no integration; automation stays PAUSED.
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.

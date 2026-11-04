@@ -1,0 +1,17 @@
+Working directory: /Users/agrudin/dev/my/ariadna
+Pinned interpreter: /opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python
+Restored exactly the four sources listed in0153-verification.json after patch and source SHA256 checks.
+
+Readiness (one attempt, frozen checkout):
+/usr/bin/perl -e 'alarm 360; exec @ARGV' /opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python -m pytest -q 'tests/test_trajectory_spk.py::test_loaded_spk_chain_coverage_contains_candidate_interval[native-readback]'
+
+Focused:
+/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python -m pytest -q tests/test_real_ephemeris_time_oracle.py tests/test_real_ephemeris_time_study.py
+
+Full (one attempt, checkout frozen; live output outside repository):
+/usr/bin/perl -e 'alarm 1800; exec @ARGV' /opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python -m pytest -q
+
+/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/ruff check .
+/opt/homebrew/bin/openspec validate refine-physical-trajectory --strict
+
+No kernel, scientific tolerance, per-test deadline, candidate or initial state changed.
