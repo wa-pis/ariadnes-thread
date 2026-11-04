@@ -1,0 +1,22 @@
+from time import monotonic
+started = monotonic()
+from pathlib import Path
+import hashlib
+import json
+import runpy
+import sys
+
+root = Path('/Users/agrudin/dev/my/ariadna')
+assert not any(k.startswith(('space_nav', 'numpy', 'scipy', 'tudatpy', 'spiceypy')) for k in sys.modules)
+study = runpy.run_path(str(root / 'docs/adr/experiments/0153-real-ephemeris-study.py'))
+result = study['audit_saved'](Path('/private/tmp/ariadna-0155-real-source.json'))
+assert not any(k.startswith(('space_nav', 'numpy', 'scipy', 'tudatpy', 'spiceypy')) for k in sys.modules)
+result['scientific_imports'] = 0
+result['elapsed_before_flush_s'] = monotonic()-started
+assert result['elapsed_before_flush_s'] < 10.0
+result['invocation_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+with Path('/private/tmp/ariadna-0155-saved-audit.json').open('x') as stream:
+    json.dump(result, stream, indent=2, allow_nan=False)
+    stream.flush()
+assert monotonic()-started < 10.0
+print(json.dumps(result, allow_nan=False))

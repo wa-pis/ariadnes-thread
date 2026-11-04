@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0155 — Real ephemeris time boundary passes](0155-real-ephemeris-time-boundary-passes.md) — all21 sampled states/gates pass;84 returns reconciled; max increment1.5152e-17m, source discrepancy11.4um retained; no force/solve qualification.
 - [0154 — Resume real ephemeris verification](0154-resume-real-ephemeris-verification.md) — exact pending bytes restored; readiness passes132.76s/300s,90 focused and5409 full tests pass; source-only acquisition eligible, unexecuted.
 - [0153 — Real ephemeris time boundary](0153-real-ephemeris-time-boundary.md) — seven-time source contract;90 focused pass/full5408 pass+1 old300s deadline failure, no real acquisition; pending sources shelved.
 - [0152 — Compensated synthetic time validation](0152-compensated-synthetic-time-validation.md) — 34 focused/5319 full tests; one10s candidate uses61 vs2413 RHS, zero rejections/all gates pass; no real-SPICE qualification.

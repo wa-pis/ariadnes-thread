@@ -1,0 +1,21 @@
+from time import monotonic
+started = monotonic()
+from pathlib import Path
+import hashlib
+import json
+import runpy
+
+root = Path('/Users/agrudin/dev/my/ariadna')
+module = runpy.run_path(str(root / 'docs/adr/experiments/0153-real-ephemeris-study.py'))
+first = True
+def process_clock():
+    global first
+    if first:
+        first = False
+        return started
+    return monotonic()
+result = module['execute'](Path('/private/tmp/ariadna-0155-real-source.json'), clock=process_clock)
+print(json.dumps({'status': result['status'], 'rows': len(result['rows']),
+ 'counts': result['counts'], 'elapsed_before_flush_s': result['elapsed_before_flush_s'],
+ 'error': result.get('error'), 'import_inclusive_elapsed_s': monotonic()-started,
+ 'invocation_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}, allow_nan=False))

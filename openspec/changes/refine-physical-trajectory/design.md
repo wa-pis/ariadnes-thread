@@ -6050,3 +6050,13 @@ acquisition/retry; pending code retained outside checkout, task remains open.
 user-authorized same-limit readiness pass and90 focused/5409 full passing tests
 on the exact shelved bytes. No numerical gate was changed. The source-only
 ADR0153 acquisition is eligible but unexecuted; no R5 reference replay.
+
+
+## R5.8 real source-time result (2026-11-04)
+
+[ADR0155](../../../docs/adr/0155-real-ephemeris-time-boundary-passes.md) records
+one21-state acquisition, unchanged identity and all fixed parity/increment/Taylor
+gates. Independent arithmetic evaluates the same pinned INPOP19a model; the
+retained11.4um source discrepancy is not astronomical uncertainty. Saved rows and
+all84 raw returns pass separate zero-native audits. R5.8 closes only this boundary;
+real-force/solve qualification and failed R5.3 remain open, no reference replay.

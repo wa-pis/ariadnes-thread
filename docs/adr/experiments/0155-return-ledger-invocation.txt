@@ -1,0 +1,58 @@
+from time import monotonic
+started = monotonic()
+from collections import Counter
+from fractions import Fraction as F
+from pathlib import Path
+import hashlib
+import json
+import struct
+import sys
+
+path = Path('/private/tmp/ariadna-0155-real-source.json')
+r = json.loads(path.read_text())
+assert r['status'] == 'passed' and r['identity_before'] == r['identity_after']
+events = iter(r['native_returns'])
+consumed = Counter()
+def take(kind):
+    event = next(events)
+    assert event['call'] == kind
+    consumed[kind] += 1
+    return event['returned']
+handles = set()
+records = set()
+for row in r['rows']:
+    assert F(row['hi_tdb_s']) + F(row['lo_s']) == F(r['t0_tdb_s']) + F(row['elapsed_s'])
+    for segment in row['segments']:
+        handle, descriptor, label = take('selections')
+        fields = take('descriptors')
+        first, last, body, centre, frame, kind, begin, end = struct.unpack('=2d6i', struct.pack('=5d', *descriptor))
+        assert fields == [body, centre, frame, kind, first, last, begin, end]
+        assert descriptor == segment['descriptor'] and label == segment['label']
+        assert fields == [segment[k] for k in ('body','centre','frame','type','first_tdb_s','last_tdb_s','begin','end')]
+        if handle not in handles:
+            filekind, source, loaded = take('paths')
+            assert filekind == 'SPK' and loaded == handle
+            handles.add(handle)
+        key = (handle,begin,end)
+        if key not in records:
+            assert take('arrays') == segment['trailer']
+            assert take('arrays') == segment['words']
+            records.add(key)
+    native, light_time = take('states')
+    assert native == row['state_km_km_s']
+    assert row['state_si'] == [v*1000 for v in native]
+    assert row['assessment']['passed'] and all(row['assessment']['checks'].values())
+assert list(events) == []
+assert dict(consumed) == {'selections':28,'descriptors':28,'paths':1,'arrays':6,'states':21}
+assert len(records) == 3 and len(r['rows']) == 21
+assert not any(k.startswith(('space_nav','numpy','scipy','tudatpy','spiceypy')) for k in sys.modules)
+result = {'status':'passed','rows':21,'native_returns_reconciled':sum(consumed.values()),
+          'counts':dict(consumed),'unique_records':3,'native_calls':0,'scientific_imports':0,
+          'input_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
+          'elapsed_before_flush_s':monotonic()-started}
+assert result['elapsed_before_flush_s'] < 5.0
+with Path('/private/tmp/ariadna-0155-return-ledger.json').open('x') as f:
+    json.dump(result,f,indent=2,allow_nan=False)
+    f.flush()
+assert monotonic()-started < 5.0
+print(json.dumps(result,allow_nan=False))

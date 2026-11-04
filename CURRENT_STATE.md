@@ -48,9 +48,9 @@ as endpoint arithmetic; do not repeat R2/R3/R4 or unchanged full tests.
 [ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes121 nodes/both frames; preserve evidence.
 [ADR0152](docs/adr/0152-compensated-synthetic-time-validation.md):34 focused/5319 full
 pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor retained.
-[ADR0153](docs/adr/0153-real-ephemeris-time-boundary.md):90 focused pass; full5408 pass/1 old300s deadline failure.
-[ADR0154](docs/adr/0154-resume-real-ephemeris-verification.md): exact sources restored; readiness/90 focused/5409 full pass, gates unchanged.
-Next: once-only ADR0153 source audit, no integration; automation stays PAUSED.
+[ADR0154](docs/adr/0154-resume-real-ephemeris-verification.md): readiness/90 focused/5409 full pass, exact restored sources/gates unchanged.
+[ADR0155](docs/adr/0155-real-ephemeris-time-boundary-passes.md):21 real source states/all gates pass;84 returns audited; same-model arithmetic only.
+Max increment1.5153e-17m; source discrepancy11.4um retained. Next: fixed-state real-force contract, no solve/replay; automation PAUSED.
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.

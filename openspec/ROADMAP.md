@@ -78,6 +78,12 @@ full-suite prerequisite and R5.8 remain open, automation PAUSED.
 exact pending sources: readiness passes132.76s under300s,90 focused and5409 full
 tests pass in665.51s; Ruff/strict OpenSpec and115 protected files pass. Real
 source acquisition remains the next stage under unchanged ADR0153 limits.
+[ADR0155](../docs/adr/0155-real-ephemeris-time-boundary-passes.md) completes R5.8:
+all21 real source states/fixed arithmetic gates pass in2.14s; separate saved-row
+and84-return audits pass with zero native calls. Increment error<=1.5153e-17m;
+source-position discrepancy remains<=1.1390e-5m in samples. This checks the same
+INPOP19a representation only; R5.3/real-force/solve/strict M3 stay open. Next is a
+separate fixed-state real-force/relative-assembly contract, no integration/replay.
 [ADR0139](../docs/adr/0139-pinned-native-api-readiness.md) records pinned API
 construction readiness and binding limitations, without native propagation.
 The retained attempt used the fixed60s/four-native/four-oracle/10000-RHS contract.
