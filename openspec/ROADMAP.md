@@ -90,6 +90,15 @@ The retained attempt used the fixed60s/four-native/four-oracle/10000-RHS contrac
 Numerical comparison and integrated model differences remain separate; no
 full-force/escape/capture/safety/M3 claim. User decision needed before new science.
 
+[ADR0156](../docs/adr/0156-fixed-state-real-gravity-contract.md) completes R5.9
+design: one unchanged saved spacecraft position,21 saved real-source rows and
+R5 GMs; independent signed four-geometry force attribution and both original
+force gates, including the native source discrepancy. Freeze zero-native10s /
+168-reference-field study and separate10s audit budgets. No force computation
+or integration in this stage. Next: R5.10 implementation/preparation with tests;
+R5.11 execution remains pending, failed R5.3 and strict M3 stay open. Automation
+remains PAUSED; no failed-reference replay is authorized.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

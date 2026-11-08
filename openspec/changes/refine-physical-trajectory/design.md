@@ -6060,3 +6060,24 @@ gates. Independent arithmetic evaluates the same pinned INPOP19a model; the
 retained11.4um source discrepancy is not astronomical uncertainty. Saved rows and
 all84 raw returns pass separate zero-native audits. R5.8 closes only this boundary;
 real-force/solve qualification and failed R5.3 remain open, no reference replay.
+
+
+## R5.9 fixed-position real-source gravity contract (2026-11-08)
+
+[ADR0156](../../../docs/adr/0156-fixed-state-real-gravity-contract.md) freezes one
+retained0136/0148 SSB spacecraft position and all21 saved0155 real-source rows.
+This is a fixed spatial probe, not seven matched trajectory states; only elapsed
+zero matches a saved spacecraft epoch. Preserve R5's harmonic lunar GM rather
+than substituting the different SPICE value. No new native acquisition is needed.
+
+Exact Type2 reconstruction supplies four reference geometries; independent80/100
+Decimal fields attribute native-source, rephasing, assembly and field errors as
+signed vectors. Both returned-geometry and overall same-polynomial comparisons
+retain the original1e-15m/s^2 /1e-11 force envelope and sum-of-source-norm total
+scale. Source discrepancy is never subtracted from the overall gate. Models A/B,
+all three domain guards and diagnostic control semantics remain explicit.
+
+Preparation precedes one future zero-native10s/21-row/168-reference-field study
+and separate10s saved-data audit. This stage specifies only the contract; code,
+force errors and execution are pending. No moving-spacecraft drift/correction
+assembly, corrected solve, R5 replay, strict M3 closure or automation restart.

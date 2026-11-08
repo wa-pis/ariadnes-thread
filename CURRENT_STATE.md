@@ -1,16 +1,14 @@
 # Current State
 
-Updated: 2026-11-04. Keep under60 lines; current instructions here/roadmap, detail in ADRs.
+Updated: 2026-11-08. Keep under60 lines; current instructions here/roadmap, detail in ADRs.
 
 ## Goal and scheduling
-
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
 Automation `ariadna-m3`: PAUSED after R5.3 cap failure, per user instruction.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline
-
 - R1.1 passed at base `5c7012c`; runner/fixture untracked, exact hashes in ADR0119;
   [ADR 0119](docs/adr/0119-positive-ideal-m2-reference.md): exactly two identical
   1980-attempt searches/two 121-state samplings in shared 1.993807459 s.
@@ -50,7 +48,9 @@ as endpoint arithmetic; do not repeat R2/R3/R4 or unchanged full tests.
 pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor retained.
 [ADR0154](docs/adr/0154-resume-real-ephemeris-verification.md): readiness/90 focused/5409 full pass, exact restored sources/gates unchanged.
 [ADR0155](docs/adr/0155-real-ephemeris-time-boundary-passes.md):21 real source states/all gates pass;84 returns audited; same-model arithmetic only.
-Max increment1.5153e-17m; source discrepancy11.4um retained. Next: fixed-state real-force contract, no solve/replay; automation PAUSED.
+Max increment1.5153e-17m; source discrepancy11.4um retained.
+[ADR0156](docs/adr/0156-fixed-state-real-gravity-contract.md): R5.9 fixed-position force contract specified; no force computation/solve/replay.
+Next: R5.10 preparation/tests, then separate R5.11 execution. Automation PAUSED.
 ## Boundaries and references
 
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.

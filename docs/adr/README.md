@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0156 — Fixed-position real-source gravity contract](0156-fixed-state-real-gravity-contract.md) — design only;21 saved sources, both unchanged force gates, four signed error terms and zero-native10s budget; implementation/execution pending.
 - [0155 — Real ephemeris time boundary passes](0155-real-ephemeris-time-boundary-passes.md) — all21 sampled states/gates pass;84 returns reconciled; max increment1.5152e-17m, source discrepancy11.4um retained; no force/solve qualification.
 - [0154 — Resume real ephemeris verification](0154-resume-real-ephemeris-verification.md) — exact pending bytes restored; readiness passes132.76s/300s,90 focused and5409 full tests pass; source-only acquisition eligible, unexecuted.
 - [0153 — Real ephemeris time boundary](0153-real-ephemeris-time-boundary.md) — seven-time source contract;90 focused pass/full5408 pass+1 old300s deadline failure, no real acquisition; pending sources shelved.

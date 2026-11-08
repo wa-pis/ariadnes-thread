@@ -138,3 +138,35 @@ The real-source candidate SHALL follow ADR0153 before any new real-force solve.
 - **AND** exact rational evaluation of selected Type2 records and derivatives SHALL independently check SPICE rounded-epoch states within0.001m/0.000001m/s, and compensated increments within1e-12m plus the separate exact component Taylor/velocity/product-rounding bounds
 - **AND** unsupported types/frames/centres, changed identities, bad layouts or crossed record/segment coverage SHALL fail without fallback, retry, integration or scientific-gate changes
 - **AND** returned position floor, signed hi/lo, raw records, counters and correction errors SHALL remain auditable separately; success SHALL NOT imply real-force/solve qualification, independent ephemeris truth, historical R5 cause or mission safety
+
+
+### Requirement: Check real-source gravity at a frozen spacecraft position
+
+The next force check SHALL follow ADR0156, independently of any new integration.
+The retained native source discrepancy SHALL remain included in overall agreement.
+
+#### Scenario: Freeze genuine saved operands without inventing a trajectory
+
+- **WHEN** R5.9's fixed-position check is prepared
+- **THEN** it SHALL bind ADR0156's0136/0148/0155 digests, exact0136/0148 endpoint equality and the unchanged saved binary64 X position at all seven ADR0155 source offsets, producing exactly21 source rows and14 A/B model totals on completion
+- **AND** the repeated X SHALL be labelled a spatial arithmetic probe, not propagated or interpolated spacecraft states; no nearby native grid epoch SHALL be substituted for an exact hi+lo epoch
+- **AND** SI/SSB/J2000/NONE, the saved13-kernel provenance, Type2/frame/centre/coverage checks and R5 Sun/Moon/Earth GMs SHALL remain unchanged; the different ADR0133 SPICE lunar GM SHALL NOT replace the frozen R5 coefficient
+- **AND** both models SHALL use direct SSB point gravity only, with A=Sun/Moon and B=Sun/Moon/Earth; omissions, zero native acquisition and unqualified moving-spacecraft drift/correction assembly SHALL be explicit
+
+#### Scenario: Separate error attribution while preserving the overall gate
+
+- **WHEN** the21 real-source rows are evaluated after verified preparation
+- **THEN** binary64 source positions and velocity-times-low-time corrections SHALL remain separate through ADR0156's fsum relative assembly and fixed force expression; uncorrected and wrong-sign arms SHALL remain labelled diagnostic controls
+- **AND** exact rational Type2 reconstruction and independent80/100-digit Decimal force evaluation SHALL check ADR0156's four geometries, relative1e-60 precision convergence, vector telescoping, unchanged gate classifications and all three exterior-domain guards before fields
+- **AND** per-source returned-geometry and overall exact-polynomial force discrepancies SHALL each satisfy max(1e-15m/s^2,1e-11 times their corresponding reference norm); each model-total scale SHALL use the sum of constituent reference norms
+- **AND** native source, residual rephasing, relative-assembly and field-evaluation contributions SHALL remain signed and separately auditable; the overall gate SHALL include all four without subtracting a source floor or adding allowances
+- **AND** diagnostic false gates SHALL NOT stop required checks; a failed/ambiguous required gate SHALL stop with downstream checks unavailable, without tuning inputs, precision, constants, tolerances or budgets
+
+#### Scenario: Verify preparation and bounded saved-data execution separately
+
+- **WHEN** R5.10 preparation or a later R5.11 retained execution is undertaken
+- **THEN** independent analytic3D/zero/cancellation and mutation fixtures, exact-input/epoch/domain/source/GM/hash checks, precision/gate boundaries and partial/count/deadline/exclusive-output paths SHALL pass focused/full pytest, Ruff and strict OpenSpec before the retained study
+- **AND** one future offline study SHALL use shared10s from process start through flush/post-flush checks, at most21 source rows/168 Decimal reference fields/63 binary64 source fields, with zero scientific imports, native calls, kernel loads, GM acquisitions, propagations or R5 replays
+- **AND** a separate independent saved-data audit SHALL use its own10s/168-reference-field cap and zero native/scientific calls, reconstructing raw operands, signed vectors, model sums, gates and counters without candidate force/assembly imports or trusted passed flags
+- **AND** fresh finite exclusive evidence SHALL preserve exact operands/identities, attempted/completed counters and failures; complete success requires all21 rows/14 totals and both required gates plus precision/domain/identity/budget/audit checks, without retry or overwritten history
+- **AND** success SHALL NOT qualify an independent ephemeris, moving-spacecraft force adapter, corrected integration, historical R5 cause, omitted-force sensitivity, strict M3 or mission safety; automation SHALL remain PAUSED
