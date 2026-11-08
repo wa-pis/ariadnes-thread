@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0163 — Prepare corrected integration](0163-prepare-corrected-integration.md): R5.16 complete;301 focused/6182 full tests and Ruff pass, independent artificial-orbit/negative-gate audit, frozen source hashes retained. R5.17 real solve unexecuted.
 - [0162 — Corrected real-input integration contract](0162-corrected-real-integration-contract.md): R5.15 design; two future A-only300s solves, original gates, bounded live queries and sampled independent audit. R5.16 preparation/R5.17 execution pending; no new science.
 - [0161 — Moving-coordinate arithmetic passes](0161-moving-coordinate-arithmetic-passes.md) — R5.14 once-only study/audit pass7/21/168/63/14 in0.630s/0.574s; controlled q/w and real-source arithmetic only, no corrected integration/M3 claim.
 - [0160 — Prepare the moving-coordinate check](0160-prepare-moving-coordinate-check.md) — R5.13 preparation verified:251 focused/5881 full tests, independent synthetic audit and354 protected files; followed by R5.14 in ADR0161.

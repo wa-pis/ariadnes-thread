@@ -6219,3 +6219,24 @@ binary64 fields; one separate saved-data audit has10s and zero native/scientific
 calls. No new native propagation, GM lookup, B model, retry or real parity solve.
 Before/after current identity cannot repair0148 provenance. This design performs
 no new states/fields/solves; R5.3/M3/mission safety remain open, automation PAUSED.
+
+
+## R5.16 corrected-integration preparation verified (2026-11-09)
+
+[ADR0163](../../../docs/adr/0163-prepare-corrected-integration.md) implements the
+five private input/integrator/reference/study/audit helpers under unchanged0162.
+301 focused/6182 full tests pass in672.14s; Ruff, strict OpenSpec,
+frozen checkout/source hashes and protected historical bytes pass. Actual q/w
+in an artificial circular orbit pass independent analytic checks and exact
+observed/vanilla solver parity. The complete artificial study and separate
+saved-data audit pass; a0.1mm artificial source bias preserves a measured force
+gate failure as independently audited partial evidence, without retry.
+
+TwoSum/split force assembly, all-body guards, fixed observations, every work cap,
+pre-bound executed bytes, before/after identities/inputs, raw partial returns,
+trial unavailable decisions and exclusive deadline/finalization paths are tested.
+Retained-input preflight is metadata only; no R5.17 real study/audit or new mission
+state/force/propagation was executed. Full regression includes existing native
+component tests. Real convergence and60s/10s budget feasibility remain unmeasured;
+R5.3/M3/mission safety remain open, automation PAUSED. Next is separately
+authorized R5.17 using exactly the tested bytes and unchanged0162 contract.

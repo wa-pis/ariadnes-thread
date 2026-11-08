@@ -1,0 +1,136 @@
+{
+  "stage": "R5.16 preparation complete; R5.17 not executed",
+  "date": "2026-11-09",
+  "base_revision": "0c8d7b660ceae7a00d53fc0a160d0ead419a2362",
+  "preparation_complete": true,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0163-corrected-audit.py": "18d8bcae5f544f5176be5c9070e7cfc4fc00accadc634dee45ea952e4c265bc5",
+    "docs/adr/experiments/0163-corrected-inputs.py": "329067092b86c853ae909cac71076b74ede7fa321c67501237e714c381e5ce9c",
+    "docs/adr/experiments/0163-corrected-integrator.py": "fbc8411ca6d8ad3ebde72563d8b4134f9d5e2d2235e5441f945e4aa10873efed",
+    "docs/adr/experiments/0163-corrected-reference.py": "2500e52496289cc75c93dba8825cd222d70f56cc97f48171b8e01328fe2bde65",
+    "docs/adr/experiments/0163-corrected-study.py": "df695319272f270065c6e03928872d604a40e11100b7c860a52f00ef2c8fdefa",
+    "tests/test_corrected_audit.py": "21caa009eb80f910e31fb888a731df476c15f82140758f41e8bfe3d3742c1486",
+    "tests/test_corrected_inputs.py": "047d2784d3a30c6b79e1d8c4faf399e250179ba4844fab8aede9e872a6a0f2b4",
+    "tests/test_corrected_integrator.py": "13e3929337a0cef8e63c93892f40901436dab847a379c8d78bdc6872fa5d4677",
+    "tests/test_corrected_reference.py": "1cd8ea722b39fddfc9190a089d5a41f3e015fd29a207289c0d94072f958f1350",
+    "tests/test_corrected_study.py": "b87f5c86678a643facada7874d288a4a222feb3828fe416a8d3e04cab45387c6"
+  },
+  "historical_manifest": {
+    "path": "docs/adr/experiments/0162-verification.json",
+    "sha256": "b909d15c3270a16b3c75cf50f4257b9900d3e5d90b3427933848a017c30520fa",
+    "protected_count_with_manifest": 382
+  },
+  "all_protected_bytes_unchanged": true,
+  "protected_count": 382,
+  "unchanged_contract_sha256": {
+    "docs/adr/0162-corrected-real-integration-contract.md": "72bbc1056186b010aa6f8437aed07614c1a1b5b636e588e0a5f9a0876f33be20"
+  },
+  "artifact_sha256": {
+    "docs/adr/experiments/0163-test-receipt.json": "47c25aea66fbe507a676bd4210adac94afb2867fdf9ce2f77d22cf05968231e4",
+    "docs/adr/experiments/0163-input-preflight.json": "979582d523c55f0a0c13c4fa65dbc98c24cbca4cf3564bceab9714c60f8d1bba",
+    "docs/adr/experiments/0163-full-pytest.txt": "d84efad137d606ec91db3bc04c54ab00e4a8a0bce734554ff5c340c5bc1bd94c",
+    "docs/adr/experiments/0163-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/adr/experiments/0163-checkout-freeze.json": "67d2c69c9572eb765d52dc495925bfc1ee9877acb88d0e4cfaf5ca402a445045"
+  },
+  "document_sha256": {
+    "CURRENT_STATE.md": "a1af8ded67f0831251d3b915d26539eaf100a63da7b4519b35701962810de61c",
+    "docs/adr/README.md": "c8dd1017b386248096066b9e3171ad57036ec7471fc9a8ea026d0411e7231fc9",
+    "docs/adr/0163-prepare-corrected-integration.md": "c1b22f59e5455166ed33044475b4d88a23ab246c1f3ca2b16da8ae4986d6f0db",
+    "openspec/ROADMAP.md": "31d09bf3785d72ff35979f23b78f5a165717b7d7ece33e5d7dd1e99feccc07b8",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "9cce89dfbff4ee90b8e2d3d6b8b87af0b4f18f0674d86e5041d049dec0743d8d",
+    "openspec/changes/refine-physical-trajectory/design.md": "53931bdb13b0ba57d62fb3c21b00aed2cb16ec2ab9ca786df81ef3a51f391f64"
+  },
+  "focused_tests": 301,
+  "full_tests": 6182,
+  "full_elapsed_s": 674.6996834580787,
+  "checkout_frozen": true,
+  "frozen_checkout_files": 633,
+  "checks": {
+    "ruff": {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/ruff",
+        "check",
+        "--no-cache",
+        "."
+      ],
+      "returncode": 0,
+      "elapsed_s": 0.02555283298715949
+    },
+    "strict_openspec": {
+      "returncode": 0,
+      "stdout": "Change 'refine-physical-trajectory' is valid\n",
+      "stderr": ""
+    },
+    "current_state_lines": 59,
+    "local_links_checked": 262,
+    "finite_duplicate_free_json_files": 4,
+    "git_diff_check": "passed; repeat staged check before commit"
+  },
+  "preflight": {
+    "stage": "R5.16 metadata-only preflight",
+    "date": "2026-11-09",
+    "base_revision": "0c8d7b660ceae7a00d53fc0a160d0ead419a2362",
+    "protected_files_checked": 381,
+    "input_sha256": {
+      "0136-retained-boundary-audit.json": "81d78ecf6e4e80b55e9d909f929a879b2e392667387ec2569632aa99a6b41063",
+      "0148-short-coast-study.json": "8bbe6f5f7d08f4e220ee3cff450488531da0776b8a69cb4c37e1c9af9872b096",
+      "0155-real-source.json": "278b094cff6dd417ac15c04d3b4e4da137acede17de7147babd72fe9e3812102"
+    },
+    "initial": {
+      "epoch_tdb_s": 978995455.2304223,
+      "position_m": [
+        -47124635282.7281,
+        128473304107.83153,
+        55670397503.89886
+      ],
+      "velocity_m_s": [
+        -29590.75977762049,
+        -9186.174444867514,
+        -2407.2479826554863
+      ]
+    },
+    "output_offsets_s": [
+      0.0,
+      50.0,
+      100.0,
+      150.0,
+      200.0,
+      250.0,
+      300.0
+    ],
+    "native_retained_states": {
+      "normal": 301,
+      "tighter": 601
+    },
+    "source_template_bodies": [
+      "Sun",
+      "Moon",
+      "Earth"
+    ],
+    "kernel_count": 13,
+    "historical_final_identity_available": false,
+    "new_scientific_imports": [],
+    "new_state_queries": 0,
+    "new_polynomial_evaluations": 0,
+    "new_spacecraft_states": 0,
+    "new_force_evaluations": 0,
+    "new_native_calls": 0,
+    "r517_attempts": 0,
+    "elapsed_s": 0.10974879190325737
+  },
+  "r517_study_attempts": 0,
+  "r517_audit_attempts": 0,
+  "new_tests_source_model": "artificial source polynomials/circular orbit or retained metadata only; full regression includes existing native component tests",
+  "synthetic_end_to_end": {
+    "study_and_separate_audit": "passed; injected-test verdict cannot qualify science",
+    "negative_force_gate": "0.1mm artificial source bias passes source-state parity but fails required force gate; separate audit confirms partial evidence"
+  },
+  "real_convergence_verified": false,
+  "real_numerical_agreement_verified": false,
+  "real_study_and_audit_budget_feasibility_verified": false,
+  "historical_0148_final_identity_repaired": false,
+  "strict_m3_closed": false,
+  "mission_safety_verified": false,
+  "automation": "PAUSED; unchanged",
+  "next": "R5.17 only after separate execution instruction; use these tested hashes and unchanged ADR0162 inputs/gates/caps"
+}

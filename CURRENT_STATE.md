@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-11-08. Keep under60 lines; current instructions here/roadmap, detail in ADRs.
+Updated: 2026-11-09. Keep under60 lines; current instructions here/roadmap, detail in ADRs.
 
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
@@ -40,7 +40,6 @@ pass in0.067s; clock-only norm15.679 versus reference0.02889, actual15.734.
 Explains first frozen synthetic estimator rejection; historical R5 cause unverified.
 Preserve raw partial study/audit0148, inputs/kernels/gates and all prior evidence.
 
-[ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only as endpoint arithmetic; do not repeat R2/R3/R4 or unchanged full tests.
 [ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes121 nodes/both frames; preserve evidence.
 [ADR0152](docs/adr/0152-compensated-synthetic-time-validation.md):34 focused/5319 full
 pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor retained.
@@ -51,7 +50,8 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0160](docs/adr/0160-prepare-moving-coordinate-check.md):ADR0159 preparation;251 focused/5881 full/Ruff pass; tested bytes unchanged.
 [ADR0161](docs/adr/0161-moving-coordinate-arithmetic-passes.md):R5.14 study/audit pass7/21/168/63/14 in0.630s/0.574s;370 protected files unchanged. Controlled q/w and real-source arithmetic only.
 [ADR0162](docs/adr/0162-corrected-real-integration-contract.md):R5.15 design complete; two future A-only300s solves, original gates/inputs, bounded sampled audit.
-Next:R5.16 private preparation/tests before separately authorized R5.17 execution; R5.3/M3/safety open, automation PAUSED.
+[ADR0163](docs/adr/0163-prepare-corrected-integration.md):R5.16 complete;301 focused/6182 full/Ruff pass, tested hashes frozen. Artificial-source checks only.
+Next:separately authorized R5.17 once-only real-input A solves/audit under ADR0162 caps; R5.3/M3/safety open, automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.

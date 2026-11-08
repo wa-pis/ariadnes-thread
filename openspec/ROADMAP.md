@@ -169,6 +169,18 @@ or retry. This stage checks metadata/docs only;5881 tests/Ruff reused on unchang
 bytes. Numerical/physical/mission conclusions stay open; automation PAUSED.
 
 
+[ADR0163](../docs/adr/0163-prepare-corrected-integration.md) completes R5.16:
+five private corrected A integration/reference/audit helpers,301 focused/6182
+full tests in672.14s, Ruff/strict OpenSpec and frozen-source checks pass.
+An artificial circular study passes analytic/observer parity and an independent
+saved-data audit; a deliberately biased artificial source retains its force-gate
+failure as audited partial evidence. Retained real inputs are checked as metadata
+only, with no R5.17 attempt. Historical bytes, original gates/physics/dependencies
+and the0148 final-identity gap are preserved. Next: separately authorized R5.17
+under unchanged0162 time/count caps; real convergence/budget feasibility,
+R5.3/M3/mission safety remain open, automation PAUSED.
+
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

@@ -1,0 +1,52 @@
+{
+  "stage": "R5.16 metadata-only preflight",
+  "date": "2026-11-09",
+  "base_revision": "0c8d7b660ceae7a00d53fc0a160d0ead419a2362",
+  "protected_files_checked": 381,
+  "input_sha256": {
+    "0136-retained-boundary-audit.json": "81d78ecf6e4e80b55e9d909f929a879b2e392667387ec2569632aa99a6b41063",
+    "0148-short-coast-study.json": "8bbe6f5f7d08f4e220ee3cff450488531da0776b8a69cb4c37e1c9af9872b096",
+    "0155-real-source.json": "278b094cff6dd417ac15c04d3b4e4da137acede17de7147babd72fe9e3812102"
+  },
+  "initial": {
+    "epoch_tdb_s": 978995455.2304223,
+    "position_m": [
+      -47124635282.7281,
+      128473304107.83153,
+      55670397503.89886
+    ],
+    "velocity_m_s": [
+      -29590.75977762049,
+      -9186.174444867514,
+      -2407.2479826554863
+    ]
+  },
+  "output_offsets_s": [
+    0.0,
+    50.0,
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    300.0
+  ],
+  "native_retained_states": {
+    "normal": 301,
+    "tighter": 601
+  },
+  "source_template_bodies": [
+    "Sun",
+    "Moon",
+    "Earth"
+  ],
+  "kernel_count": 13,
+  "historical_final_identity_available": false,
+  "new_scientific_imports": [],
+  "new_state_queries": 0,
+  "new_polynomial_evaluations": 0,
+  "new_spacecraft_states": 0,
+  "new_force_evaluations": 0,
+  "new_native_calls": 0,
+  "r517_attempts": 0,
+  "elapsed_s": 0.10974879190325737
+}

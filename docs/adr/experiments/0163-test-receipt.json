@@ -1,0 +1,53 @@
+{
+  "base_revision": "0c8d7b660ceae7a00d53fc0a160d0ead419a2362",
+  "started_utc": "2026-11-08T20:05:06.957996+00:00",
+  "focused": {
+    "returncode": 0,
+    "tests": 301,
+    "elapsed_s": 17.15,
+    "scope": "five tests/test_corrected_*.py modules; captured tool summary"
+  },
+  "runs": {
+    "ruff": {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/ruff",
+        "check",
+        "--no-cache",
+        "."
+      ],
+      "returncode": 0,
+      "elapsed_s": 0.02555283298715949
+    },
+    "full": {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/bin/conda",
+        "run",
+        "--no-capture-output",
+        "-n",
+        "space-nav",
+        "python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "returncode": 0,
+      "elapsed_s": 674.6996834580787
+    }
+  },
+  "checkout_frozen": true,
+  "frozen_files": 633,
+  "source_sha256": {
+    "docs/adr/experiments/0163-corrected-audit.py": "18d8bcae5f544f5176be5c9070e7cfc4fc00accadc634dee45ea952e4c265bc5",
+    "docs/adr/experiments/0163-corrected-inputs.py": "329067092b86c853ae909cac71076b74ede7fa321c67501237e714c381e5ce9c",
+    "docs/adr/experiments/0163-corrected-integrator.py": "fbc8411ca6d8ad3ebde72563d8b4134f9d5e2d2235e5441f945e4aa10873efed",
+    "docs/adr/experiments/0163-corrected-reference.py": "2500e52496289cc75c93dba8825cd222d70f56cc97f48171b8e01328fe2bde65",
+    "docs/adr/experiments/0163-corrected-study.py": "df695319272f270065c6e03928872d604a40e11100b7c860a52f00ef2c8fdefa",
+    "tests/test_corrected_audit.py": "21caa009eb80f910e31fb888a731df476c15f82140758f41e8bfe3d3742c1486",
+    "tests/test_corrected_inputs.py": "047d2784d3a30c6b79e1d8c4faf399e250179ba4844fab8aede9e872a6a0f2b4",
+    "tests/test_corrected_integrator.py": "13e3929337a0cef8e63c93892f40901436dab847a379c8d78bdc6872fa5d4677",
+    "tests/test_corrected_reference.py": "1cd8ea722b39fddfc9190a089d5a41f3e015fd29a207289c0d94072f958f1350",
+    "tests/test_corrected_study.py": "b87f5c86678a643facada7874d288a4a222feb3828fe416a8d3e04cab45387c6"
+  },
+  "freeze_sha256": "67d2c69c9572eb765d52dc495925bfc1ee9877acb88d0e4cfaf5ca402a445045"
+}
