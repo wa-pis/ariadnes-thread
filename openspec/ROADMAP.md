@@ -181,6 +181,18 @@ under unchanged0162 time/count caps; real convergence/budget feasibility,
 R5.3/M3/mission safety remain open, automation PAUSED.
 
 
+[ADR0164](../docs/adr/0164-corrected-coast-force-gate-fails.md) records the consumed
+R5.17 attempt: both300s A solves complete and21 trajectory comparisons pass, but
+normal RHS ordinal6 at0.25s fails the unchanged Moon overall force gate by8.8864%.
+The separate audit confirms partial/scientific_verified=false;13 complete plus
+one partial observation, final runtime identity unavailable.5132 RHS/15417 live
+states/424 trials fit caps; external2.704s/1.643s and finalizations pass. No retry,
+native propagation or gate/physics/input change.640 tracked files stay frozen;
+unchanged6182 tests/Ruff reused, evidence/docs/strict checks retained. Scientific
+acceptance, R5.3/Earth sensitivity/M3 remain open, automation PAUSED. Next: read-only
+saved-source discrepancy diagnosis before any separately justified experiment.
+
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

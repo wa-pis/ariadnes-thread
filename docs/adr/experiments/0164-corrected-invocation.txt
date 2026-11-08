@@ -1,0 +1,120 @@
+"""Once-only ADR0162 execution after verified R5.16; no scientific warm-up."""
+from datetime import datetime, timezone
+from hashlib import sha256
+import json
+from pathlib import Path
+import subprocess
+import sys
+from time import monotonic
+
+ROOT = Path('/Users/agrudin/dev/my/ariadna')
+PYTHON = '/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python'
+GIT = '/opt/homebrew/bin/git'
+BASE = 'e3d07ed19b1cca06484947087a1dc83d637141c7'
+MANIFEST = '518eea292547b4bfc4a379e3e8a2ce63632d49fcdef2761d504d09a34d485844'
+mode = sys.argv[1]
+assert mode in ('study', 'audit')
+manifest_raw = (ROOT/'docs/adr/experiments/0163-verification.json').read_bytes()
+assert sha256(manifest_raw).hexdigest() == MANIFEST
+manifest = json.loads(manifest_raw)
+assert manifest['preparation_complete'] is True
+for group in ('tested_source_sha256', 'artifact_sha256', 'document_sha256', 'unchanged_contract_sha256'):
+    for name, expected in manifest[group].items():
+        assert sha256((ROOT/name).read_bytes()).hexdigest() == expected, name
+history = manifest['historical_manifest']
+assert sha256((ROOT/history['path']).read_bytes()).hexdigest() == history['sha256']
+for ref in ('HEAD', 'origin/dev'):
+    assert subprocess.check_output([GIT, 'rev-parse', ref], cwd=ROOT, text=True).strip() == BASE
+assert subprocess.check_output([GIT, 'branch', '--show-current'], cwd=ROOT, text=True).strip() == 'dev'
+assert subprocess.check_output([GIT, 'status', '--porcelain'], cwd=ROOT, text=True) == ''
+tracked = subprocess.check_output([GIT, 'ls-files', '-z'], cwd=ROOT).decode().split('\0')
+frozen = {name: sha256((ROOT/name).read_bytes()).hexdigest() for name in tracked if name}
+baseline = Path('/private/tmp/ariadna-0164-baseline.json')
+if mode == 'study':
+    with baseline.open('x') as stream:
+        json.dump({'base_revision': BASE, 'tracked_sha256': frozen,
+                   'preparation_manifest_sha256': MANIFEST}, stream, indent=2, allow_nan=False)
+else:
+    assert json.loads(baseline.read_text())['tracked_sha256'] == frozen
+
+output = Path('/private/tmp/ariadna-0164-corrected-'+mode+'.json')
+parent_receipt = Path('/private/tmp/ariadna-0164-'+mode+'-parent-receipt.json')
+parent_marker = Path('/private/tmp/ariadna-0164-'+mode+'-parent-attempt.json')
+assert not any(p.exists() for p in (output, output.with_suffix('.attempt.json'),
+    output.with_suffix('.receipt.json'), parent_receipt, parent_marker)), 'once-only evidence already exists'
+if mode == 'audit':
+    assert Path('/private/tmp/ariadna-0164-corrected-study.json').is_file()
+
+CHILD = r'''
+from time import monotonic
+import sys
+start = float(sys.argv[2])
+from hashlib import sha256
+import json
+from pathlib import Path
+from types import ModuleType
+root = Path('/Users/agrudin/dev/my/ariadna')
+raw = (root/'docs/adr/experiments/0163-verification.json').read_bytes()
+assert sha256(raw).hexdigest() == '518eea292547b4bfc4a379e3e8a2ce63632d49fcdef2761d504d09a34d485844'
+manifest = json.loads(raw)
+checked = {}
+for name, expected in manifest['tested_source_sha256'].items():
+    source = (root/name).read_bytes()
+    assert sha256(source).hexdigest() == expected, name
+    checked[name] = source
+assert len(checked) == 10
+mode = sys.argv[1]
+assert 0 <= monotonic()-start < (60.0 if mode == 'study' else 10.0)
+name = 'docs/adr/experiments/0163-corrected-'+mode+'.py'
+module = ModuleType('r517_'+mode)
+module.__file__ = str(root/name)
+sys.modules[module.__name__] = module
+exec(compile(checked[name], module.__file__, 'exec'), module.__dict__)
+output = Path('/private/tmp/ariadna-0164-corrected-'+mode+'.json')
+if mode == 'study':
+    result = module.execute(output, root=root, started_s=start)
+    keys = ('status', 'adapter_mode', 'counts', 'finalization_gate', 'elapsed_before_flush_s', 'error')
+    passed = result['status'] == 'passed' and result['finalization_gate'] == 'passed'
+else:
+    result = module.audit(Path('/private/tmp/ariadna-0164-corrected-study.json'), output,
+                          root=root, started_s=start)
+    keys = ('audit_status', 'scientific_verified', 'adapter_mode', 'counts', 'finalization_gate', 'elapsed_before_flush_s', 'error', 'first_error')
+    passed = result['audit_status'] == 'passed' and result['finalization_gate'] == 'passed'
+print(json.dumps({k: result[k] for k in keys if k in result}, allow_nan=False))
+raise SystemExit(0 if passed else 2)
+'''
+with parent_marker.open('x') as stream:
+    json.dump({'mode': mode, 'base_revision': BASE, 'created_utc': datetime.now(timezone.utc).isoformat(),
+        'invocation_sha256': sha256(Path(__file__).read_bytes()).hexdigest(),
+        'note': 'Exclusive once-only parent marker; not a scientific outcome.'}, stream, indent=2, allow_nan=False)
+    stream.flush()
+flags = ['-I', '-B'] if mode == 'study' else ['-I', '-S', '-B']
+watchdog = 65 if mode == 'study' else 15
+started_utc = datetime.now(timezone.utc).isoformat()
+started = monotonic()
+try:
+    completed = subprocess.run([PYTHON, *flags, '-c', CHILD, mode, repr(started)],
+        cwd=ROOT, capture_output=True, text=True, timeout=watchdog, check=False)
+    result = {'returncode': completed.returncode, 'stdout': completed.stdout, 'stderr': completed.stderr}
+except subprocess.TimeoutExpired as exc:
+    result = {'returncode': None, 'watchdog_timeout_s': watchdog, 'error': str(exc)}
+elapsed = monotonic()-started
+after = {name: sha256((ROOT/name).read_bytes()).hexdigest() for name in frozen}
+status_after = subprocess.check_output([GIT, 'status', '--porcelain'], cwd=ROOT, text=True)
+result.update(mode=mode, base_revision=BASE, started_utc=started_utc, process_elapsed_s=elapsed,
+    external_budget_s=60.0 if mode == 'study' else 10.0,
+    external_time_gate=0 <= elapsed < (60.0 if mode == 'study' else 10.0),
+    tested_source_sha256=manifest['tested_source_sha256'], preparation_manifest_sha256=MANIFEST,
+    python=PYTHON, child_flags=flags,
+    start_capture='parent monotonic immediately before child creation; passed unchanged',
+    invocation_sha256=sha256(Path(__file__).read_bytes()).hexdigest(),
+    parent_marker_sha256=sha256(parent_marker.read_bytes()).hexdigest(),
+    output_sha256=sha256(output.read_bytes()).hexdigest() if output.exists() else None,
+    frozen_checkout_files=len(frozen), frozen_checkout_unchanged=after == frozen,
+    git_status_after=status_after)
+with parent_receipt.open('x') as stream:
+    json.dump(result, stream, indent=2, allow_nan=False)
+    stream.write('\n')
+    stream.flush()
+print(json.dumps(result, indent=2, allow_nan=False))
+raise SystemExit(0 if result['returncode'] == 0 else 2)

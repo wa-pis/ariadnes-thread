@@ -22,7 +22,6 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
   [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
 - Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
 ## Paused — R5.3 once-only attempt failed
-
 [ADR0148](docs/adr/0148-short-coast-oracle-rhs-limit.md): one attempt at clean24154be;
 A native h1/h0.5 arcs complete, first A oracle hits10000 RHS/30021 body reads.
 Separate offline audit:partial/study_verified=false,0.07836870802566409s, zero native.
@@ -39,7 +38,6 @@ all endpoint gates pass; first bad callback at0.052600152s, not a time crossing.
 pass in0.067s; clock-only norm15.679 versus reference0.02889, actual15.734.
 Explains first frozen synthetic estimator rejection; historical R5 cause unverified.
 Preserve raw partial study/audit0148, inputs/kernels/gates and all prior evidence.
-
 [ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes121 nodes/both frames; preserve evidence.
 [ADR0152](docs/adr/0152-compensated-synthetic-time-validation.md):34 focused/5319 full
 pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor retained.
@@ -51,7 +49,9 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0161](docs/adr/0161-moving-coordinate-arithmetic-passes.md):R5.14 study/audit pass7/21/168/63/14 in0.630s/0.574s;370 protected files unchanged. Controlled q/w and real-source arithmetic only.
 [ADR0162](docs/adr/0162-corrected-real-integration-contract.md):R5.15 design complete; two future A-only300s solves, original gates/inputs, bounded sampled audit.
 [ADR0163](docs/adr/0163-prepare-corrected-integration.md):R5.16 complete;301 focused/6182 full/Ruff pass, tested hashes frozen. Artificial-source checks only.
-Next:separately authorized R5.17 once-only real-input A solves/audit under ADR0162 caps; R5.3/M3/safety open, automation PAUSED.
+[ADR0164](docs/adr/0164-corrected-coast-force-gate-fails.md):R5.17 attempt consumed;both300s solves/21 trajectory comparisons pass, but Moon overall force gate fails at normal RHS6/local0.25s by8.8864%; audit partial/scientific_verified=false, final identity unavailable.
+External2.704s/1.643s, finalizations/caps pass;5132 RHS/15417 states/424 trials, no native propagation.6182 tests/Ruff reused on unchanged bytes.
+Next:read-only saved-source discrepancy diagnosis before a new justified contract; no retry/tuning. R5.17 scientific acceptance/R5.3/M3/safety open; automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.

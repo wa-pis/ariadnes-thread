@@ -6240,3 +6240,28 @@ state/force/propagation was executed. Full regression includes existing native
 component tests. Real convergence and60s/10s budget feasibility remain unmeasured;
 R5.3/M3/mission safety remain open, automation PAUSED. Next is separately
 authorized R5.17 using exactly the tested bytes and unchanged0162 contract.
+
+
+## R5.17 corrected real-input execution: required force gate fails (2026-11-09)
+
+[ADR0164](../../../docs/adr/0164-corrected-coast-force-gate-fails.md) consumes the
+separately authorized once-only ADR0162 execution on clean e3d07ed and unchanged
+R5.16 tested bytes. Both300s A solves complete (normal790/tighter4342 RHS), all21
+seven-node trajectory comparisons pass; maximum native-tighter position error is
+0.0001632761730883232m. This is sampled numerical agreement, not physical accuracy.
+After both solves, selected-force validation stops at normal RHS ordinal6,
+local0.25s/lo=0: Moon overall error1.5812863028714074e-11 exceeds unchanged
+1.452234547810968e-11m/s^2 envelope at both80/100 digits. Returned-geometry force,
+source-state parity, assembly/domain/precision/telescope checks pass. Saved source
+attribution dominates; the source discrepancy's underlying cause is unproven.
+Thirteen observations complete plus one partial,42 body checks/27 of28 source
+rows/224 Decimal fields/13 sampled totals; tighter qualification and final identity
+are unavailable. The separate zero-native audit reconstructs5132 RHS/424 trials/
+10292 binary64 fields and confirms partial/scientific_verified=false. External
+times2.704184083s/1.642614791s and both finalizations pass;15417 state requests,
+one setup/15 explicit metadata APIs, zero new native propagation/GM/optimizer.
+Both complete raw outputs are preserved losslessly.640 tracked files stay frozen
+across execution/audit; reuse unchanged301 focused/6182 full tests/Ruff and verify
+saved evidence/links/digests/diff/strict OpenSpec. R5.17 scientific acceptance,
+R5.3, Earth sensitivity and strict M3/safety remain open, automation PAUSED.
+No repeat/tuning; inspect saved source discrepancy before any new justified contract.

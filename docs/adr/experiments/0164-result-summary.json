@@ -1,0 +1,435 @@
+{
+  "stage": "R5.17 once-only execution consumed; scientific qualification failed",
+  "date": "2026-11-09",
+  "timezone": "Europe/Samara",
+  "base_revision": "e3d07ed19b1cca06484947087a1dc83d637141c7",
+  "study_attempts": 1,
+  "separate_audit_attempts": 1,
+  "retries": 0,
+  "study_status": "failed",
+  "audit_status": "partial",
+  "scientific_verified": false,
+  "first_study_error": {
+    "stage": "selected-force-reference",
+    "type": "ValueError",
+    "message": "required force/precision/telescope gate: Moon"
+  },
+  "finalization_gates": {
+    "study": "passed",
+    "audit": "passed"
+  },
+  "external_process_elapsed_s": {
+    "study": 2.7041840832680464,
+    "audit": 1.6426147911697626
+  },
+  "inclusive_receipt_elapsed_s": {
+    "study": 2.4967775833792984,
+    "audit": 1.6232542912475765
+  },
+  "study_counts": {
+    "identities": {
+      "attempted": 1,
+      "returned": 1,
+      "completed": 1
+    },
+    "initializations": {
+      "attempted": 1,
+      "returned": 1,
+      "completed": 1
+    },
+    "metadata": {
+      "attempted": 15,
+      "returned": 15,
+      "completed": 15
+    },
+    "states": {
+      "attempted": 15417,
+      "returned": 15417,
+      "completed": 15417
+    },
+    "native_guards": {
+      "attempted": 42,
+      "returned": 0,
+      "completed": 42
+    },
+    "solves": {
+      "attempted": 2,
+      "returned": 2,
+      "completed": 2
+    },
+    "rhs": {
+      "attempted": 5132,
+      "returned": 0,
+      "completed": 5132
+    },
+    "binary64_fields": {
+      "attempted": 10292,
+      "returned": 0,
+      "completed": 10292
+    },
+    "dynamic_totals": {
+      "attempted": 5146,
+      "returned": 0,
+      "completed": 5146
+    },
+    "trials": {
+      "attempted": 424,
+      "returned": 0,
+      "completed": 424
+    },
+    "body_checks": {
+      "attempted": 42,
+      "returned": 0,
+      "completed": 42
+    },
+    "source_rows": {
+      "attempted": 28,
+      "returned": 0,
+      "completed": 27
+    },
+    "reference_fields": {
+      "attempted": 224,
+      "returned": 0,
+      "completed": 224
+    },
+    "model_totals": {
+      "attempted": 13,
+      "returned": 0,
+      "completed": 13
+    }
+  },
+  "audit_counts": {
+    "rhs": {
+      "attempted": 5132,
+      "completed": 5132
+    },
+    "trials": {
+      "attempted": 424,
+      "completed": 424
+    },
+    "binary64_fields": {
+      "attempted": 10292,
+      "completed": 10292
+    },
+    "body_checks": {
+      "attempted": 42,
+      "completed": 42
+    },
+    "source_rows": {
+      "attempted": 28,
+      "completed": 27
+    },
+    "reference_fields": {
+      "attempted": 224,
+      "completed": 224
+    },
+    "model_totals": {
+      "attempted": 13,
+      "completed": 13
+    },
+    "native_guards": {
+      "attempted": 42,
+      "completed": 42
+    }
+  },
+  "profiles": [
+    {
+      "name": "normal",
+      "rhs_completed": 790,
+      "trials": 64,
+      "accepted": 64,
+      "rejected": 0,
+      "final_local_time_s": 300.0,
+      "first_seven_low_epochs_s": [
+        0.0,
+        6.618801909330507e-09,
+        9.928202870934655e-09,
+        -4.471234046898864e-08,
+        -5.065509117718747e-08,
+        -3.9736429868764134e-08,
+        0.0
+      ],
+      "final_actual_correction": [
+        -64877.13495581015,
+        -239.30765416609347,
+        -5892.981421689296,
+        -429.9465369366631,
+        -1.5990609503576991,
+        -58.449088405953304
+      ],
+      "final_correction_units": [
+        "m",
+        "m",
+        "m",
+        "m/s",
+        "m/s",
+        "m/s"
+      ]
+    },
+    {
+      "name": "tighter",
+      "rhs_completed": 4342,
+      "trials": 360,
+      "accepted": 341,
+      "rejected": 19,
+      "final_local_time_s": 300.0,
+      "first_seven_low_epochs_s": [
+        0.0,
+        3.3094009546652536e-09,
+        -5.46405433399233e-08,
+        3.7248474540896304e-08,
+        3.427709918679689e-08,
+        3.973642984100856e-08,
+        0.0
+      ],
+      "final_actual_correction": [
+        -64877.13495545057,
+        -239.30765467949809,
+        -5892.981421669218,
+        -429.94653693652845,
+        -1.5990609531868991,
+        -58.44908840657502
+      ],
+      "final_correction_units": [
+        "m",
+        "m",
+        "m",
+        "m/s",
+        "m/s",
+        "m/s"
+      ]
+    }
+  ],
+  "trajectory_comparisons": {
+    "native_step": {
+      "count": 7,
+      "all_passed": true,
+      "max_position_error_m": "0.0001930101110942614338378230923115672933178439416092051285923770051753292504052269422207182683336975278",
+      "max_velocity_error_m_s": "3.438942231775421815489670992663112227447608383132338107625982300573226185877178610231633507956986890E-8",
+      "position_limit_m": 0.01,
+      "velocity_limit_m_s": 1e-05
+    },
+    "native_tighter": {
+      "count": 7,
+      "all_passed": true,
+      "max_position_error_m": "0.0001632761730883231857166466042319069827660176661526936345395839874816596025671391883262142753545534926",
+      "max_velocity_error_m_s": "2.730216742863825434231744327193196940420482964746402388681828298261986634944076338805914600411582821E-8",
+      "position_limit_m": 0.01,
+      "velocity_limit_m_s": 1e-05
+    },
+    "oracle_step": {
+      "count": 7,
+      "all_passed": true,
+      "max_position_error_m": "0",
+      "max_velocity_error_m_s": "3.494491245742144934203544842109191481281015288634599006407790055060258153807358759749668726766168121E-9",
+      "position_limit_m": 0.001,
+      "velocity_limit_m_s": 1e-06
+    }
+  },
+  "sampled_reference": {
+    "observations_attempted": 14,
+    "observations_completed": 13,
+    "required_for_success": 28,
+    "failure_sample": {
+      "profile": "normal",
+      "kind": "rhs",
+      "ordinal": 6,
+      "elapsed_s": 0.25,
+      "lo_s": 0.0,
+      "hi_tdb_s": 978995455.4804223,
+      "actual_correction": [
+        -0.04532162758902133,
+        -0.0001658026611058782,
+        -7.519438446003789e-05,
+        -0.3625730192040859,
+        -0.0013264212865533296,
+        -0.0006150038306977441
+      ],
+      "overall_force_gates": {
+        "80": {
+          "returned_geometry": {
+            "error_norm_m_s2": "3.7108634870920694813918095450394485322337590148819370091316718036206205727732853E-17",
+            "envelope_m_s2": "1.4522345478008374152517518282183202408846625255897335247571662463845318911564653E-11",
+            "passed": true
+          },
+          "overall": {
+            "error_norm_m_s2": "1.5812863028714073579845088390587746645572050758280215196658156032113395467636583E-11",
+            "envelope_m_s2": "1.4522345478109679807409329954775358828605445317238284058169753266183365322510785E-11",
+            "passed": false
+          }
+        },
+        "100": {
+          "returned_geometry": {
+            "error_norm_m_s2": "3.710863487092069481391809545039448532233759014881937009131671806705315582200246089600395131512862174E-17",
+            "envelope_m_s2": "1.452234547800837415251751828218320240884662525589733524757166246384531891156465284897614745343696866E-11",
+            "passed": true
+          },
+          "overall": {
+            "error_norm_m_s2": "1.581286302871407357984508839058774664557205075828021519665815603211344227625280611391024376664081192E-11",
+            "envelope_m_s2": "1.452234547810967980740932995477535882860544531723828405816975326618336532251078509508182963346807723E-11",
+            "passed": false
+          }
+        }
+      },
+      "error_to_envelope_ratio_100digits": "1.088864264560408714786615756252690914885450421853556747077096818935286931303631019043167164937784827",
+      "precision": {
+        "reference_fields": {
+          "d0": {
+            "difference_norm_m_s2": "7.306046706891003813778570472669466214029773841054495765212077715542728256069336021010028535445545889E-80",
+            "limit_m_s2": "1.452234547810967980740932995477535882860544531723828405816975326618336532251078509508182963346807723E-60",
+            "zero_preserved": true,
+            "passed": true
+          },
+          "d1": {
+            "difference_norm_m_s2": "4.753991264625122229387627202025621168031673380689743250014669993312975844789209732046594917235434586E-80",
+            "limit_m_s2": "1.452234547800837545883259082380434780843905816824787307733245509298236400029895132353697224964946494E-60",
+            "zero_preserved": true,
+            "passed": true
+          },
+          "d2": {
+            "difference_norm_m_s2": "4.753991264625122229387627202025621168031673380689743250014669993312975844789209732046594917235434586E-80",
+            "limit_m_s2": "1.452234547800837545883259082380434780843905816824787307733245509298236400029895132353697224964946494E-60",
+            "zero_preserved": true,
+            "passed": true
+          },
+          "d3": {
+            "difference_norm_m_s2": "3.084695235469643434835038609544469295334307010491034255132517596477446578179126168260598748457452418E-80",
+            "limit_m_s2": "1.452234547800837415251751828218320240884662525589733524757166246384531891156465284897614745343696866E-60",
+            "zero_preserved": true,
+            "passed": true
+          }
+        },
+        "gate_classifications_stable": true,
+        "passed": true
+      },
+      "telescope": {
+        "80": {
+          "residual_m_s2": [
+            "0E-79",
+            "0E-90",
+            "0E-83"
+          ],
+          "error_norm_m_s2": "0E-90",
+          "limit_m_s2": "5.8089381912134804877592029884567256854330186909631365460406325915993412234673342E-60",
+          "passed": true
+        },
+        "100": {
+          "residual_m_s2": [
+            "0E-99",
+            "0E-110",
+            "0E-103"
+          ],
+          "error_norm_m_s2": "0E-110",
+          "limit_m_s2": "5.808938191213480487759202988456725685433018690963136546040632591599341223467334059113192158620397577E-60",
+          "passed": true
+        }
+      },
+      "contributions_100digits_m_s2": {
+        "native_source": [
+          "1.0131431919399411989877470599060305617952398283888285263845704887429620600378476028983963E-11",
+          "1.128202733132106831342210946392888853778113591876707446653623034207751523388351195193797797411987879E-11",
+          "-4.4849402700056649414940544631944165774225434412789264256781263373596927832849760510909907322E-12"
+        ],
+        "rephasing_and_drift": [
+          "0E-99",
+          "0E-110",
+          "0E-103"
+        ],
+        "relative_assembly": [
+          "1.30631499965682936587093021853563623240561524490656969099665588083307040512894521479E-16",
+          "6.55661213889198820651533370317406438265579898394662422453336435540879131541653132393E-27",
+          "4.73098603400898978602147495578756501478679309736627883071969008011760962140160406299E-20"
+        ],
+        "field_evaluation": [
+          "-3.7108632115747032254636245605892121362897300171685323964997555930846952354598593027E-17",
+          "-1.017151648355871275561958538618665365146927324172983935693906010771385517095687439616E-26",
+          "1.42997013713117078292557499410142620104805869733108719522279522500776930701824047131E-20"
+        ]
+      },
+      "moon_source_position_error_m": 1.6645034321071922e-05,
+      "moon_source_velocity_error_m_s": 1.4696601137466275e-12,
+      "source_state_parity_passed": true,
+      "motion_and_component_guards_passed": true
+    },
+    "tighter_high_precision_checks": "unavailable; validation stopped on normal RHS ordinal6",
+    "failed_sample_A_total": "unavailable; Moon source failed before total"
+  },
+  "identity_before_passed": true,
+  "identity_after": "unavailable; stopped before final snapshot",
+  "historical_0148_final_identity_repaired": false,
+  "audit_snapshot_checks": {
+    "current_source_files_checked": 43,
+    "current_native_binary_checked": true,
+    "current_module_files_checked": 9,
+    "current_conda_records_checked": 5,
+    "kernel_scope": "saved ordered manifest equal to R1; no current kernel-byte/pool read",
+    "coefficient_callable_scope": "saved shapes/roles/digest syntax only; compare snapshots separately",
+    "historical_loaded_memory_verified": false,
+    "reference_study_verified": false
+  },
+  "audit_zero_work": {
+    "native_calls": 0,
+    "scientific_imports": 0,
+    "kernel_loads": 0,
+    "spacecraft_propagations": 0
+  },
+  "new_native_propagations": 0,
+  "new_gm_lookups": 0,
+  "optimizer_calls": 0,
+  "full_tests_reused": 6182,
+  "focused_tests_reused": 301,
+  "tests_and_ruff_rerun": false,
+  "unchanged_tested_source_sha256": {
+    "docs/adr/experiments/0163-corrected-audit.py": "18d8bcae5f544f5176be5c9070e7cfc4fc00accadc634dee45ea952e4c265bc5",
+    "docs/adr/experiments/0163-corrected-inputs.py": "329067092b86c853ae909cac71076b74ede7fa321c67501237e714c381e5ce9c",
+    "docs/adr/experiments/0163-corrected-integrator.py": "fbc8411ca6d8ad3ebde72563d8b4134f9d5e2d2235e5441f945e4aa10873efed",
+    "docs/adr/experiments/0163-corrected-reference.py": "2500e52496289cc75c93dba8825cd222d70f56cc97f48171b8e01328fe2bde65",
+    "docs/adr/experiments/0163-corrected-study.py": "df695319272f270065c6e03928872d604a40e11100b7c860a52f00ef2c8fdefa",
+    "tests/test_corrected_audit.py": "21caa009eb80f910e31fb888a731df476c15f82140758f41e8bfe3d3742c1486",
+    "tests/test_corrected_inputs.py": "047d2784d3a30c6b79e1d8c4faf399e250179ba4844fab8aede9e872a6a0f2b4",
+    "tests/test_corrected_integrator.py": "13e3929337a0cef8e63c93892f40901436dab847a379c8d78bdc6872fa5d4677",
+    "tests/test_corrected_reference.py": "1cd8ea722b39fddfc9190a089d5a41f3e015fd29a207289c0d94072f958f1350",
+    "tests/test_corrected_study.py": "b87f5c86678a643facada7874d288a4a222feb3828fe416a8d3e04cab45387c6"
+  },
+  "preparation_manifest_sha256": "518eea292547b4bfc4a379e3e8a2ce63632d49fcdef2761d504d09a34d485844",
+  "frozen_checkout_files": 640,
+  "frozen_checkout_across_both_processes": true,
+  "archives": {
+    "study": {
+      "path": "docs/adr/experiments/0164-corrected-study.json.gz",
+      "compressed_bytes": 5038392,
+      "compressed_sha256": "33a39f7d04161c08f1d3f6f0740fae6f0259997e41f62cfb839ed7db19365572",
+      "uncompressed_bytes": 25051806,
+      "uncompressed_sha256": "ddebc41daa32141a57c3e9d9d1addb216a20864a0d68a32a78102dfb15781b82",
+      "lossless_original_utf8_bytes": true
+    },
+    "audit": {
+      "path": "docs/adr/experiments/0164-corrected-audit.json.gz",
+      "compressed_bytes": 11269,
+      "compressed_sha256": "4891768a5ae12b194f7f3b89dcc4da3da79007b0092f73153b1e35ab63ec0eb1",
+      "uncompressed_bytes": 2348630,
+      "uncompressed_sha256": "3312a43b417a6af0248fa98c3d0b00d74a51d3f6c4603a0e3596bdfe5c6a5288",
+      "lossless_original_utf8_bytes": true
+    }
+  },
+  "archival_artifact_sha256": {
+    "docs/adr/experiments/0164-corrected-study.json.gz": "33a39f7d04161c08f1d3f6f0740fae6f0259997e41f62cfb839ed7db19365572",
+    "docs/adr/experiments/0164-corrected-audit.json.gz": "4891768a5ae12b194f7f3b89dcc4da3da79007b0092f73153b1e35ab63ec0eb1",
+    "docs/adr/experiments/0164-corrected-invocation.txt": "5b66295a1dac8a583749a9bf6c693c4d2f68a9b077acf676dc8e2d08d3be6f75",
+    "docs/adr/experiments/0164-saved-summary-analysis.txt": "4576735f1e49fe170cd853ad52dc0c43dae110994bf61880c61f47329c9878f9",
+    "docs/adr/experiments/0164-baseline.json": "ed8d9a74132a38c1194614ce303d2eb3401cb6164f99d1340ae65dfaa5ec5b8a",
+    "docs/adr/experiments/0164-study-attempt.json": "38167214b7839e350eb2cb38338dcbd138cde609462e15a9745bf29d0b0f4115",
+    "docs/adr/experiments/0164-study-receipt.json": "064747667975e8ccd10179455ae0c0f24c9f1a39e59855525556c08a4e836a66",
+    "docs/adr/experiments/0164-audit-receipt.json": "67e90ac64799b13656df0f40705063786400f9f7a32c4bb0266fb94aaca9d1aa",
+    "docs/adr/experiments/0164-study-parent-attempt.json": "76439e3ebad93d97efbfead80c02569a473f142104c4a7db29749338ff15d7dd",
+    "docs/adr/experiments/0164-study-parent-receipt.json": "672f45c711c544c9d1d14110c887d1d0c5b40833a783284ab6ab2b724206a487",
+    "docs/adr/experiments/0164-audit-parent-attempt.json": "f1b543829a9e4a6a12cbd3ea080cc33269cc5cd9ce432a205afd7d4207ce50a8",
+    "docs/adr/experiments/0164-audit-parent-receipt.json": "1cc57222710c9244469f0dfe72a3d4888b1d34c6ec0a1fd48f6bed1a5f2788fc"
+  },
+  "interpretation": "Both solves and sampled trajectory comparisons complete; source-inclusive Moon force qualification fails. Source discrepancy attribution is observed, its underlying cause unproven.",
+  "strict_m3_closed": false,
+  "earth_sensitivity_verified": false,
+  "mission_safety_verified": false,
+  "automation": "PAUSED; unchanged",
+  "next": "Read-only saved-source discrepancy diagnosis and a separate justified contract before any further scientific execution; no replay/tuning under ADR0162."
+}

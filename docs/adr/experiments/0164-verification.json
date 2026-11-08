@@ -1,0 +1,1780 @@
+{
+  "stage": "R5.17 once-only execution/evidence verified; scientific gate failed",
+  "date": "2026-11-09",
+  "timezone": "Europe/Samara",
+  "base_revision": "e3d07ed19b1cca06484947087a1dc83d637141c7",
+  "study_attempts": 1,
+  "separate_audit_attempts": 1,
+  "retries": 0,
+  "scientific_verified": false,
+  "outcome": "two complete300s A solves/21 trajectory comparisons; required sampled Moon overall force failure; independent audit partial",
+  "protected_sha256": {
+    ".agents/skills/.openspec-target": "243b0dc9b847e66c440dca985e10fe0ce9e29c379b018ddd5747ba8948f84cc8",
+    ".agents/skills/openspec-apply-change/SKILL.md": "576a910af3021a6fd159140f864b17f07d654d72086eab3da8fb32e6d5e6aa88",
+    ".agents/skills/openspec-archive-change/SKILL.md": "581ae5679612e832e93170a727216e714fbed17ba947848f806cacceb3228963",
+    ".agents/skills/openspec-explore/SKILL.md": "28dba6d130b984c28ae3a3b9fa054e4e38b54cf6000c04bbceee6483529c8ba6",
+    ".agents/skills/openspec-propose/SKILL.md": "5a1997695e482429e2f2a23301cd18cc028b9f5bdbab77d8ed262912316e3e81",
+    ".agents/skills/openspec-sync-specs/SKILL.md": "e8d926b302b87319a25ca65842cc1ed971412891f79ae197702c6857708ae385",
+    ".agents/skills/openspec-update-change/SKILL.md": "30181d7c0957c55420503c82f01e39a51cabba86bc1c266a191106b913087b76",
+    ".editorconfig": "d281133cfcbead3aa8ae6f161eaa66d27b370671c796a2f51a19a540e0ee6063",
+    ".gitattributes": "6031fb63a88ca328c3d76085a9f7387207f9b723f3a45888021014d1c5a01011",
+    ".github/dependabot.yml": "da4341fb3f5c358bffb5eedb80a53e6b46983361a52a5e4fb315a3a8884eb19b",
+    ".github/pull_request_template.md": "a66dea098c9bb5f1114c3001686c8775400705e43c041f2aff7a6c3770f7039b",
+    ".github/workflows/ci.yml": "68c9effd045f87116449c053673a2ef3b9c1b1fbe904dc337c57fb5cdb64371d",
+    ".gitignore": "1b6f0d2074d56cbda90a2ef23ea9485303c781f42b4714942ecddffaae620871",
+    "AGENTS.md": "11e16a9f197a95fa6d20a99116ff6cad750b4b5e6c228f68497c32291258cb32",
+    "CONTRIBUTING.md": "195344d805cbfc3da1b4b2923e802fe82455dc41e5cacbb98cea8cac6f1b5153",
+    "Makefile": "665a20b90e6841b3c938ce67d75e593db13f7ca7d69642bfe3105187f8ec43d7",
+    "README.md": "6eead77a012e8f94b76c4c89d4d7fce8c49e199eb9814707561505cd0718bdef",
+    "docs/adr/0001-inventory-runtime-investigation.md": "3462974aebc1557e615f03744c0fbd21324c72dff40dfea66d8fe1d15702b2f5",
+    "docs/adr/0002-exact-harmonic-input-duplicate.md": "527173f213d3e98db3940297d9dee9661529f1f783e27a78d987488ddebcd985",
+    "docs/adr/0003-local-harmonic-reuse.md": "edad5c0b04de0e871dc65f9c5203c7d15bbe8915e56d807f7bcd063bae92f5ad",
+    "docs/adr/0004-separate-harmonic-tail.md": "5a6f3539712987fab563f1bd2657e97da3184185163155ce7052cf273759c76a",
+    "docs/adr/0005-fresh-full-force-ledger.md": "47d446c211666964a930cec3374848a04578d4505c2526a038ecf1df2d9df2e6",
+    "docs/adr/0006-point-gravity-intervals.md": "269b846ff677e730a4d7b7888eaa8ed47644427a0a5dc79a7577b9fc7286dde1",
+    "docs/adr/0007-fresh-point-gravity-binding.md": "748d0ac22b206014f12a1dd250abc08b5e3e00ac74d423386f9d1dca4e878df5",
+    "docs/adr/0008-source-allowance-coverage.md": "a1bdb4190125c8097793121730e3c8e964d7e68ac732516984a1dc9a98942ef5",
+    "docs/adr/0009-fresh-source-consumer-binding.md": "7e6e025303dda4766503000ad91f9582d103dd1d3f3895f2fd7cc86d32d3f81c",
+    "docs/adr/0010-fresh-source-chord-floors.md": "c9543c2d723a1cf4359b12efc83b111a8c63d0dad958c51ebfb0b645227f4151",
+    "docs/adr/0011-fresh-point-source-force-errors.md": "6a76ddc5a2ff82a1ca6e2b12ae034054a0c1360b4292bac0089d0ab4735e331c",
+    "docs/adr/0012-stored-harmonic-source-bound.md": "42e89a291d0a61c04c45b6f6358814f4e98e747a21969ba47c355a40fb58573f",
+    "docs/adr/0013-fresh-harmonic-source-errors.md": "00733628a2a6cae81fe13e7116b2d85a63e393356cd58e23fbb8cc8ce4ca1b4a",
+    "docs/adr/0014-common-source-gravity-ledger.md": "334d4ff0852e76c534ac8c93ff389a75503ee81ab4ef7ed818cb06326459fad4",
+    "docs/adr/0015-gravity-only-assembly.md": "3f9b6636a19ed4d171e1a3f2c98fabd90054d78158274ff6039dbc4a4a9de80e",
+    "docs/adr/0016-fresh-nongravity-prerequisites.md": "f61d0514fb3860a89c5308ceb962ea598ef052328adcc7a65ab1a1e93780c7de",
+    "docs/adr/0017-fresh-light-and-sun-state.md": "4966b62a2c9a84721822ec10e899aa2722ce46e552b51cbc7ac7e67dade40d29",
+    "docs/adr/0018-fresh-srp-vector.md": "10be7b109835e509e1b938b7691bd21232a62dd4c58e5abe00b4c0d5727819ff",
+    "docs/adr/0019-fresh-sun-velocity-representation.md": "b6e8f7382e496a7d65af1ecef263bbde2cc24e81989f3dad0539be982bba803f",
+    "docs/adr/0020-fresh-sun-velocity-binding.md": "59b30207863351ce3feca673d65474cc8523a66db0b9bba70b0eea91201b968f",
+    "docs/adr/0021-fresh-schwarzschild-vector.md": "500dee4575a769e2b7910c0ba0f828f3a5882dda156c8825ff4d89015df8a10f",
+    "docs/adr/0022-fresh-force-assembly.md": "eae43efe307da4df36db4e3775b07655e28498de9b2d0a9f87a6259716c02be1",
+    "docs/adr/0023-fresh-pck-bridge-prerequisites.md": "49de4be57cc4079ecff1149c183f2a4c7fd25eaa367c10a857c6ac35a9e479ed",
+    "docs/adr/0024-fresh-pck-matrix-errors.md": "93ca5b34501db125e4a1ce5a69ee0e102864018fd79d5e5e8c7c343420742691",
+    "docs/adr/0025-fresh-pck-force-errors.md": "0cffcb1bfb1ab36c693ae9f447cb281c53c9cc215a24323a76240eebbedafec1",
+    "docs/adr/0026-fresh-native-force-comparison.md": "608e9d918f10a5c743a1fb8c6fca5aaebadab1b168b3c49c0d4846a3fc5b4512",
+    "docs/adr/0027-fresh-reference-prerequisites.md": "1441f868dbad93cf92f8f9bb703a6fdf0eb23c48e8e256721c3473fd240f4e0d",
+    "docs/adr/0028-fresh-cubic-reference.md": "a35ce2a14bc7b9ff6721eebbf15b725c84ed269616e5db7c575e1e07c355edb4",
+    "docs/adr/0029-fresh-defect-channel-contract.md": "77db850ac7a3c0feb9dd3a2c02d10ec86d849afdb6daf74658620bc89cbbd2e3",
+    "docs/adr/0030-fresh-defect-analytic-controls.md": "86f2823e2bdcde74ea8348a099e6b55ca5b356523bc5dd229f7f553c6d9b236b",
+    "docs/adr/0031-fresh-live-defect-channels.md": "60270f2877eda134b6a5e8d7597d660b0a94f5fba931ef4058e56e63247d5066",
+    "docs/adr/0032-fresh-endpoint-error-transport.md": "a3e35ae94bb534b20aacd4eb5c39b504c360ee4bf1ace50bc35a88c37ff96a71",
+    "docs/adr/0033-interval-safety-prerequisite-audit.md": "8eebcf9d8c15c341827d27615e72f6af529f944346e51724f48c2c27d2169c74",
+    "docs/adr/0034-fresh-conditional-clearance.md": "8814c2ecea45ca1bb74dec07afceb1c1ed24e4d519d835edd89fa3b8243e6f2f",
+    "docs/adr/0035-screening-outcome-contract.md": "f82d1d52e8067607429b21ecad4f6bbd0d89f8b9be69ccb8a0cb784c3eff6a8c",
+    "docs/adr/0036-screened-outcome-controls.md": "42fafc9e5421be6a556e1d769934b6f78671100bb86e8e32b64e32dc1efc4865",
+    "docs/adr/0037-adaptive-child-handoff-checks.md": "265234a1643a5cdf0ac54e9b49fc100355851910ddf7d88664ae486c9bef1fa9",
+    "docs/adr/0038-successful-child-composition.md": "f3b51a8c2466873fdcc27836532ec55c5fac651b71b1267f76e6194e4bc598b7",
+    "docs/adr/0039-physical-evidence-binding-audit.md": "17833ede6b37ad3eb1044aefda3a6921ece5792b5937919f1d2134340b01f01e",
+    "docs/adr/0040-retained-native-endpoint-binding.md": "c5608b9fcba69b5cbc8e1d479c86b9694cc52079a49a8494e57deaece99bd1f9",
+    "docs/adr/0041-selected-spk-record-binding.md": "5b6b82d528aee511d4984e397adf70a079ad0d7d48b031b8aa022bb33a0f5827",
+    "docs/adr/0042-nominal-force-context-binding.md": "c22418d81c6e6b4c36bf231fa5da2c8e8446d9e715e529516622eda2f9995500",
+    "docs/adr/0043-existing-four-arc-handoff-audit.md": "9bcfc278a17d0bda2bdfd0dc2067dfc9b392dc77c67261876c154a5914c2405d",
+    "docs/adr/0044-retained-four-arc-lineage.md": "39ff9e3594599079791bca658153a8c8c452179eedfdae7e98fa0aedb0c37581",
+    "docs/adr/0045-tolerance-purpose-and-step-limit-audit.md": "66e548a9de17966a88a509ce59e034beef6e275f4c4bb3d2b1ed2d4e8a6626c5",
+    "docs/adr/0046-geometric-safety-contract.md": "08cf4209311bdc5c9a0a4953d237bd7a097a9f6705d6f14759e57c69c2e973ff",
+    "docs/adr/0047-bound-the-next-domain-only-probe.md": "f878d87ba7595d32ceca1dd0ae1d3889d1ecd4d8a568fb654e7aa583416ed5a1",
+    "docs/adr/0048-quarter-second-initial-domain.md": "5ac8df87e784c69d893469b5bd9ce09f625bfbb95d49f807126ad1c2ccee6e40",
+    "docs/adr/0049-carry-fourth-endpoint-into-quarter-domain.md": "00d13b87f1cec30f7f62d6f0138f3fe77950268da3fb0c3b0ca5caf66a547bfb",
+    "docs/adr/0050-quarter-interval-defect-budget.md": "9f97383bda69d7ab6f68d98786f33ae4cee39ab9c9c34b96c0f8a726f49755f2",
+    "docs/adr/0051-quarter-domain-force-sensitivities.md": "2e866aedb71e660dae84d6457da548d9662b2741d5d2a230ae70bde3bb6ad7eb",
+    "docs/adr/0052-fourth-endpoint-source-reanchor.md": "8551987ff6e5072857ed0c74ae7ec30f63804f003bef8d06b3dbde80245b3617",
+    "docs/adr/0053-fourth-endpoint-point-gravity.md": "e9cc8176c6a00263912e393d2a44363ff291b1bb0af42db334c79aa70f4db531",
+    "docs/adr/0054-harmonic-anchor-tail-budget.md": "e3c883a221d2354b44f683dbaabb8b971333ca9b384688325b4f4d956c015c82",
+    "docs/adr/0055-fourth-endpoint-rotation-bridge.md": "4e1f807241cc434b3c2a5cdae6ce88fba621b1fe0fad615552ef6e701ccbae0d",
+    "docs/adr/0056-fourth-endpoint-matrix-force-bridge.md": "dc518b092e7f191f2c19d3b2e3e223550f42611527f4ba9deb0ec2664fc6a20d",
+    "docs/adr/0057-fourth-endpoint-harmonic-source-bridge.md": "f17534530e543e988f87c9d9ce418e89de2d6c4f92a76edd43358e5b6086ed31",
+    "docs/adr/0058-fourth-endpoint-point-source-bridge.md": "1bb6d6c7482a5b1004b28251081cd638601364a22af1614e7b767aef57a8eda5",
+    "docs/adr/0059-fourth-anchor-ledger-and-reference-choice.md": "fe9160769dd669a846fad154861bcd3d9c9c71cdbf034d80350807bd306b99bb",
+    "docs/adr/0060-gravity-reference-analytic-controls.md": "a2f70f955909bba10c59dec8e8336e76d8356f4cc2ccb40038792a04d9e49111",
+    "docs/adr/0061-fourth-endpoint-monopole-jerk.md": "82167c80b7c0a86d7b377bd467ae24602daacc48eac40dbcd73b5f4b04540220",
+    "docs/adr/0062-conditional-fourth-monopole-curvature.md": "5121fd9bd1c9bc9f45887d777e5ddbf9b369d1bdc127ef3860331918e48e7f36",
+    "docs/adr/0063-fourth-nonmonopole-translation-screen.md": "a55118748f13adc3cb95b512241a5d3591270f8af85d441c4881eb8c27f63c34",
+    "docs/adr/0064-mars-translation-degree-attribution.md": "3200a5db30ecb3ea882c3f0237443330287b45b8bcfe79bf4edf48d3439a6363",
+    "docs/adr/0065-local-reference-translation-geometry.md": "4eac34415e2f4f02950381c57116cf940ba9c03ebcd9861266dbb6908dd6e9b6",
+    "docs/adr/0066-isotropic-translation-method-limit.md": "3f203675db052ef54c37d5ce4057299c467dbef0a51dcdcff7fa80fe8c0158fa",
+    "docs/adr/0067-subdivision-error-cost-accounting.md": "0429c00ca7887d12484bf1567b03c47566d2a20fe3628c2db5f1934c4f87499c",
+    "docs/adr/0068-bounded-significand-arithmetic-controls.md": "f47196160eef774d38f7c25178ca993b468c8583e77584890dbf450dcadd43de",
+    "docs/adr/0069-low-degree-interval-harmonic-jets.md": "882d8d98bc291d9e1adf3597a42990d356c6e4f7914a0a4ead5e8a0b91222edc",
+    "docs/adr/0070-low-degree-bounded-force-assembly.md": "9f26b9598e7da9304c43c2fe1f302dd5843b36d57714320d1c82d80d90c7910f",
+    "docs/adr/0071-stored-mars-degree20-bounded-comparison.md": "dd5e441e7c2e532a73c17469b8fffd059214685ff5047fa7b7b8c7f6139e7d6b",
+    "docs/adr/0072-stored-mars-degree40-bounded-comparison.md": "5afef585e7e098c81878164bf07cd0e3d8bc4d1c672bbb75524c85fbeed8f27c",
+    "docs/adr/0073-stored-mars-degree100-bounded-comparison.md": "475b80b79f370e9917be2e8ab9ea28f7fc06a98566eb7fda1531650e750ee498",
+    "docs/adr/0074-stored-mars-degree120-bounded-evaluation.md": "54e4161959574946a92554e4c59dc22121629299a97353a6a9bb80513d09d9d5",
+    "docs/adr/0075-fourth-mars-binary64-input-binding.md": "173440d25d2fea9d9e6285a54c722b2b5e6107d575b0e3e0174c1217389de5ad",
+    "docs/adr/0076-fourth-mars-bounded-force.md": "8ae148c0cd14186914219371e31a657cb2c2b27d7cc1d82a32eb9b6ddef4759f",
+    "docs/adr/0077-fourth-moon-finite-tail.md": "03f98b57e69db779d7fa6e63c9a033c9aad6dae03e29780069795b8738d6f205",
+    "docs/adr/0078-fourth-gravity-sum.md": "77f729027386b3292a9a59d6dea439137d15f3df6402a2eb39c21c19f9afb47d",
+    "docs/adr/0079-research-reference.md": "923ffc77d6684ee3df42b61b219807d23df4e0af39048f2cda079d9ac36bd90d",
+    "docs/adr/0080-seed-and-integration-diagnosis.md": "60625383d3e4a9c9762ffbf1b7735aeec314496025f0634a44d6d9c9227dae8a",
+    "docs/adr/0081-research-reproducibility.md": "303316e17c2962d2c6577ddcc809c5a6845d6add1ccf121971b6136e1f874b58",
+    "docs/adr/0082-identical-start-coast.md": "483eaa34bec5ebeb3413b45349354905d633b0ef98033a015f55642da97673df",
+    "docs/adr/0083-coast-step-study.md": "c9c2c976ccf0084d5b87868c941146ac851c953b4de97efc0d2dd5f689c72a09",
+    "docs/adr/0084-one-step-correction-arithmetic.md": "8d220b897c3b74ed587e1d8e8649881d29753afdbffd55b53d7acb18488606e6",
+    "docs/adr/0085-bounded-targeting-orchestration.md": "4b2c2920a2b5dc0ca5b1d4a693813f1a2d78d1205a3761439d3967268edeb388",
+    "docs/adr/0086-targeting-step-does-not-improve.md": "2abe31269ec6594661719fba8e6bdd3fdc49f1504aba08aaffa077062c2cfc60",
+    "docs/adr/0087-retained-direction-damping.md": "e8d1f2b6e659f840d5154492a65a0f9c2121806cb586aafb0e581d3dda4d556a",
+    "docs/adr/0088-damping-does-not-improve.md": "aa99918b188884818c508cdd64ba1524eca2c3d47a74928d3ab751eceb3352ad",
+    "docs/adr/0089-local-response-diagnosis.md": "76302d4c321731ce560668fa55efce553c2380240d7fd4e3d7fd52133a0513a3",
+    "docs/adr/0090-local-response-study-contract.md": "e0632ed6f502003447f6b3093176c80c38b44cfc76aa9d81eb4a06bc7a085e17",
+    "docs/adr/0091-local-response-implementation.md": "077be94c48919794b7fabd8930fb85f0d1bde7a6bd03ce681c9022eb14cfad30",
+    "docs/adr/0092-local-response-disagrees-with-jacobian.md": "0491a0bfa4a7e930f5c0dcdfa99d1df55367956dd0583f439c82cf83f0d2d24f",
+    "docs/adr/0093-central-column-study-proposal.md": "d140a9167465d05a2b81b236009fade6993e6f1afef80b109ed9dd4f64229218",
+    "docs/adr/0094-central-column-implementation.md": "2a7749c1fb7f992a626695353d962d3bbd91d14cee5f326c64efbe09f1acabf0",
+    "docs/adr/0095-central-columns-match-local-response.md": "d5be27b11019ea6288c8af488507e9f1545df0ea3ae7f50e0190537a06fd0017",
+    "docs/adr/0096-single-central-correction-contract.md": "7fbd4a8b1bfaa0c119b251e3e3d1497ad87b4ebe9b8d0ce7429785881ad5179c",
+    "docs/adr/0097-central-correction-implementation.md": "dcb2917f4d5fe9908af1efc83722ddd4ecdcb2fd648fec41a70c7f00ab7b1c74",
+    "docs/adr/0098-central-correction-does-not-improve.md": "e208cbcc996166aea92497ce5274e4b053b35fb540c2fd84e8caf5f03679d3cf",
+    "docs/adr/0099-central-direction-damping-contract.md": "60d72c62365a1253a43c37a9e7d1f4df239983bc129be57cb02caf59cf93f7e3",
+    "docs/adr/0100-central-damping-implementation.md": "06f84ab05d43dabbad4c00bb1f8262eae1daf6af48f206343ef33ae5c6da8491",
+    "docs/adr/0101-central-fractions-do-not-improve.md": "63ad651cc91b43ceddb198581a4ea407b1fe97ac3eab268ac308c6ad07a33e60",
+    "docs/adr/0102-consistent-lunar-departure-design.md": "e8ef9e05ba70b8c6498ba787cb972869dee6fa52d2ebbfc5f386369de45d7368",
+    "docs/adr/0103-lunar-departure-geometry-implementation.md": "f34d349ff888aee9e2f680c886aea48fc266392c8201d18e7bf1fd5b8845f722",
+    "docs/adr/0104-lunar-reference-has-two-geometric-branches.md": "45c0a541b4783460a1a327126125de9349c585e9dee0adf4c6fa128c03dc66b7",
+    "docs/adr/0105-local-finite-burn-contract.md": "0f48489c23a9b6b3172561aca70996674ad640c0cbb6ceac692be7529bcf69fb",
+    "docs/adr/0106-local-finite-burn-implementation.md": "cd9a4bef6d1fda32a95d86e42cbd2d173669987de5e982e204fdf276732448ae",
+    "docs/adr/0107-local-burn-misses-analytic-target.md": "915c6975ae67545093ee132473eb4f08e45c7602b27266a799352482e4c4a1f5",
+    "docs/adr/0108-bounded-local-steering-targeting.md": "f24e95f3a0c1e724860a3feb85b04d1733fe9641ce8d838068b16bbc81e5c53b",
+    "docs/adr/0109-local-steering-targeting-implementation.md": "057a5897279796530d878c920eb5e411550a90c609a96b3f74fc75ec2ccf54e2",
+    "docs/adr/0110-local-steering-improves-without-closure.md": "b5dc11d5e458f3a7964c944634f84a8f8996c66bd02284ff93f0d8a519c14775",
+    "docs/adr/0111-bound-aware-local-targeting.md": "06e86b1868a8653e2ceb1f990344e76caa70c93d9ca19b87959ed370f8343047",
+    "docs/adr/0112-bound-aware-targeting-implementation.md": "50601c4aedcbf65c44b37daba6b78a5ffa22f19e87270ef02210c5b25b7ef8f6",
+    "docs/adr/0113-bound-aware-targeting-hits-budget.md": "81efefbd8b7201385178b08a6e4533e98fe27b9124c5b9ef424386c38858495a",
+    "docs/adr/0114-quadratic-steering-freedom.md": "c7f074c3786ee404a8302137afe6f996e83f22109d5c008c4a8e903a75e171d4",
+    "docs/adr/0115-bezier-targeting-implementation.md": "27affd6ef60da33494744522f97401f00f55eb0b5d709b8cd0be8e7dc4e3a187",
+    "docs/adr/0116-quadratic-steering-stagnates-at-bounds.md": "082f2f1e57c7b12b024f67c7b6624392fc7af12819ea8582ff43da19897d1335",
+    "docs/adr/0117-mission-first-demonstration-priority.md": "6be3e1358791522b022cb5d60d905f3ad3560c581fff844c60956e1f18bf9197",
+    "docs/adr/0118-m2-reference-and-historical-data-readiness.md": "57d68b7c5b4517f3bf946261f9e404fc32731d544b953b6a010e6bbdfcba54fd",
+    "docs/adr/0119-positive-ideal-m2-reference.md": "ff88200a62a4c18108b487dc31e5f11fca6f1123bb0ed072fbbe998086c0790e",
+    "docs/adr/0120-independent-elliptic-coast-benchmark.md": "2578e07cb48889be6787fb718edee8f57b47f1da38f79948eb369809b0210745",
+    "docs/adr/0121-elliptic-benchmark-preparation.md": "43a690eecbcb89ef9005f96284a3b047101b3c9198c9d0050258afc0d310892f",
+    "docs/adr/0122-independent-elliptic-coast-passes.md": "afe7659a6edbb5ef84998c5d74de9a23a8e6de3dde27d8af79a61e0554778f7c",
+    "docs/adr/0123-traceable-result-and-oem-profile.md": "1eddf0fa89972577c10d1df3311383132ae92901faae59be6aac983a05b76ec4",
+    "docs/adr/0124-oem-reader-and-research-profile-ready.md": "10be776752f000585f9972f33e3ff2d03c36a7c35ab4e58e0ff533e53377eeb5",
+    "docs/adr/0125-research-export-and-usable-path.md": "34c5ab6678c4d46ac54606c4bcef4abf8b60aa8cf70cf2bc0e2ea48d68df94e6",
+    "docs/adr/0126-propose-reference-coast-verification.md": "c3a9f8b7d08bc199c1a5d855d94ddb5e87adb94f5af25a7e8a7cb1faf3b3c6f3",
+    "docs/adr/0127-reference-coast-verification-contract.md": "315c5d46f1b18a47edd1fa400dd20d27c7144bc1e9cdc757b2e8ffb359a4afab",
+    "docs/adr/0128-reference-coast-verifier-ready.md": "8f68149c905427c28cb3f467103dde600e4ef7ff161e25f47c6e1d10eb07c211",
+    "docs/adr/0129-reference-coast-verification-passes.md": "47e909df41a0544af46ad39b041d36df8217d3a51f36dc3a85eea1a5dfbbc450",
+    "docs/adr/0130-full-regression-after-reference-verification.md": "518410a9178933059cb4dad7d072aa2801767e21cb02585f42f2df2d3bebd439",
+    "docs/adr/0131-screen-omitted-gravity-at-fixed-epochs.md": "a8b28427545beca8c2cb9b5de04f8b9f5ecbe5ec6ad0bd9208fe2bfd4ee3827d",
+    "docs/adr/0132-gravity-screening-preparation.md": "d5b3316c80af8e5364472e8b3f0e828c5e5386239e76fca168c64f474a238a63",
+    "docs/adr/0133-three-epoch-gravity-screening.md": "4fa8cce49157ba53474b623a32b50b0727f4364badf8f63869d001910fd9405b",
+    "docs/adr/0134-boundary-evidence-reuse.md": "2ab3c0db73f5258509183a5a4d56882412de289c6e084bbe62231dc6a0c5116b",
+    "docs/adr/0135-fixed-orbit-boundary-contract.md": "5e89b69ea0a13a546715ddd269ac23fcae7ee1edd8bf7d7f068b638c90b03ac9",
+    "docs/adr/0136-retained-boundaries-pass-arithmetic.md": "27a4e305378bf50259babc7f3e52eb90b59b8e318eed389d08b004772a7f9363",
+    "docs/adr/0137-short-coast-earth-gravity-contract.md": "73951a6251be7e27a3e7e0adcf84f25b072ba52c94ee1d8668e802040a97ef29",
+    "docs/adr/0138-independent-short-coast-oracle.md": "9fc76642145d480cbf09c8a661c0adebc3a9c23be319cc427824061e996aa5a4",
+    "docs/adr/0139-pinned-native-api-readiness.md": "182fef25279b6a4d862429242e26d625ec863b6f33c240500e98c2e62b38c97b",
+    "docs/adr/0140-native-short-coast-adapter.md": "b719e1657960c9106e1f1a4764c5437e90c4f0ea18b2009b315e163d1f67fccf",
+    "docs/adr/0141-short-coast-input-and-runtime-identity.md": "4613972076bea6c766ed0f966d8258df730475e2f431491f741736aa0e2afb2a",
+    "docs/adr/0142-short-coast-orchestration-and-evidence.md": "1e91538137e1667d5c87c9cf9491c161b8493b34cbb52aade388e532e4d5fd84",
+    "docs/adr/0143-independent-saved-evidence-audit-contract.md": "a4022b2dfa96190521fae79cfe057f65935b87fb99a0fa783873ee92420bba0e",
+    "docs/adr/0144-independent-saved-node-arithmetic.md": "2b7e2bd5ac383cc339c46ad5f1d15985bb09d20d20bbab65c6cda8c0cd452348",
+    "docs/adr/0145-independent-evidence-input-and-file-identity.md": "ea2dba16000767966a4ab9ed095c16100028761ae05c500fd3bb11c3a058cb5c",
+    "docs/adr/0146-offline-audit-orchestration.md": "b157d13e7d437050b2bb54967d89948089ba7f7b41b586e0b2774a4e4e3d5908",
+    "docs/adr/0147-short-coast-preparation-review.md": "b5628d4ea43867cb970570343fcab4ff26da81dbec6464f76fbf2c765874b911",
+    "docs/adr/0148-short-coast-oracle-rhs-limit.md": "3824f613c30c89b2ebb81acd5ba05a505d18d0eec6f73e8b9ea893131d013411",
+    "docs/adr/0149-oracle-time-precision-diagnosis.md": "7591e64c1897ccd590aabcde5620fe54a0488db3571f632d81ab5a6fd41b7a0b",
+    "docs/adr/0150-synthetic-step-trace-and-binary-localization.md": "e35c0550b9fcb04d657cb06a8ec7913a88f5fc74e0b87f84eab44c85b9f90847",
+    "docs/adr/0151-frozen-stage-error-attribution.md": "a2459c8be687cfa5fc3a859495c8b7e738134394deaf0595d89c8c4cd4777dcf",
+    "docs/adr/0152-compensated-synthetic-time-validation.md": "02df9e3694c6abe1507dd2025d8f7de76cd1a38c87e46529270cec9ae971f2b5",
+    "docs/adr/0153-real-ephemeris-time-boundary.md": "e6efb545dcb6bfc2f7f8187bcac7a0e393f0c0ad629b5c2dfad8af2f60af3f3d",
+    "docs/adr/0154-resume-real-ephemeris-verification.md": "dfdfb597297e592617d47a37eb9d17cc24fc33060f4dce5894e0629dbbfe8fc3",
+    "docs/adr/0155-real-ephemeris-time-boundary-passes.md": "1a93224f8a5621df72ecfead2861dcb0b6188cb8ae06fe3a42014865921aba3e",
+    "docs/adr/0156-fixed-state-real-gravity-contract.md": "80e5e7f91de2c37fb6e547f0333fb2c8c4aad7b660f331815101234e78196abb",
+    "docs/adr/0157-prepare-fixed-state-gravity-check.md": "d497f8c7ea2caf527c75e98fbed29b834916f344f1ea55c091af9b446d9f6b70",
+    "docs/adr/0158-fixed-position-real-gravity-passes.md": "bccac12b3646b8ecdde3d36efd0db43ec5dcb87ba98d37e83e67ac28e3f3cdd1",
+    "docs/adr/0159-moving-coordinate-assembly-contract.md": "dfaf2c52c9cbe4b59ee25aec616423b1ef632dce0a4af4dee79cb56bbd9343a1",
+    "docs/adr/0160-prepare-moving-coordinate-check.md": "3ab0eb7f10ac11d83c8cb8b3fce1e7967b56150f14acdb371e3443688eb8bc57",
+    "docs/adr/0161-moving-coordinate-arithmetic-passes.md": "a953a2aff27f59cb732afe77a969b13eedf060b7f99c1cd0d94f0694a907f57b",
+    "docs/adr/0162-corrected-real-integration-contract.md": "72bbc1056186b010aa6f8437aed07614c1a1b5b636e588e0a5f9a0876f33be20",
+    "docs/adr/0163-prepare-corrected-integration.md": "c1b22f59e5455166ed33044475b4d88a23ab246c1f3ca2b16da8ae4986d6f0db",
+    "docs/adr/ADR_TEMPLATE.md": "367100b0f35da5428d9e0c0a5fabae4297627a1ab4481df85547d6b26ce81e7b",
+    "docs/adr/experiments/0002-check-duplicates.py": "fb00f5d86e8d614917138b23436317fefaf53d411c77ec08b9811caa1cb48c7a",
+    "docs/adr/experiments/0054-harmonic-tail-budget.json": "fbd136139c5c7797e0ff3ff553435e2620a0807a7ea3c7ef8ad87916d7c54157",
+    "docs/adr/experiments/0054-harmonic-tail-budget.py": "6b07e2a7dcdc60af4c2f08441fadbd3a81940fd1ae15825e3ab76600e93c6adc",
+    "docs/adr/experiments/0079-research-reference.json": "17f03d9557be6e439af5f1c388e1eb092f55236b3c2afc3de65006d5f639c235",
+    "docs/adr/experiments/0081-research-replay.json": "578cab5fc4ed5bd4a94544b9eb578b2f9dd405d54eaec521313da58bb903dc26",
+    "docs/adr/experiments/0082-identical-start-coast.json": "1a62dd55c642e71530a7092522ff5c6c3408444e4f9e7bea149894f25d1928a2",
+    "docs/adr/experiments/0083-coast-step-study.json": "078d5acf319deb7fe7cc9910e1b7b336841cc40b2d156777036c28f62318d5e2",
+    "docs/adr/experiments/0086-targeting-study.json": "c370c31f4a3dcd1f3ef324d0f2331bb46d707af0eae6d256ee935471a6c9233d",
+    "docs/adr/experiments/0088-damping-study.json": "3832d4fc5c5f399e148ce38a7c26594c0d51434d22b2e5e22c8cbba1b363891e",
+    "docs/adr/experiments/0092-local-response-study.json": "164760a35451b3e8cf43bf2213e8466a331dbcb85004249e134e9daefa1a7374",
+    "docs/adr/experiments/0095-central-column-study.json": "8be4356f4c339eaad9ca30ce2f49786d7e65498ae731fc468d8810836a97fb55",
+    "docs/adr/experiments/0098-central-correction-study.json": "b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057",
+    "docs/adr/experiments/0101-central-damping-study.json": "70bd01122433fea421d27b44edd9bc1f5324e834aa80f8979af4e2d3b6af9c07",
+    "docs/adr/experiments/0104-lunar-departure-reference.json": "bbcfa37e2e259af0f5545aeb12e9784f8826122f1ad5a66c52698aef856b7134",
+    "docs/adr/experiments/0107-local-finite-burn-study.json": "01b653b72fb9a25b00f53d17cd7d88da9e9c8102fbec0f908b27da3cae9a34dc",
+    "docs/adr/experiments/0110-check-local-steering.py": "e93f73874eba2ed1dbf7a7d4343d938275303d3c82e3a4e6a8ef76926ffe7267",
+    "docs/adr/experiments/0110-local-steering-study.json": "678287cc7aee2b3d83e89c9fbff1113a96d24c5b8960f047aeadb82d049c4274",
+    "docs/adr/experiments/0111-diagnose-local-targeting.py": "3f60c63eaaa53b17b034069d432b52c458a94297e20f272ff7b7596baed411ea",
+    "docs/adr/experiments/0111-local-targeting-diagnosis.json": "b48c627f98efedc0e11f50a5eecc5db87cbb2099ab51bd00c354e4c527cb39f1",
+    "docs/adr/experiments/0113-bound-aware-local-study.json": "417f4a33e6407a37e9a41caff29330557f39d7a3bbfc34e9b908cc1d5589cb89",
+    "docs/adr/experiments/0113-check-bounded-local-targeting.py": "6019f2f7a17a1869fcfcb1a4707a7f07ad8137e19132b1f1589b4c500cd296ca",
+    "docs/adr/experiments/0114-diagnose-steering-freedom.py": "08f3887c29690e8c2dc0bcda6854e9b26ffc9682beb6b591869efd2ae468927b",
+    "docs/adr/experiments/0114-steering-freedom-diagnosis.json": "b9ea186692872463dc3482cf2441206044c12dc063525395726a8689348779ec",
+    "docs/adr/experiments/0116-bezier-local-study.json": "93e5b224ade1038616e11951d5d45f2ca717e10544c2b67aac2120de6103b566",
+    "docs/adr/experiments/0116-check-bezier-local-targeting.py": "25347723fd96e2b0351ce6701a54b120b8148c926e8f1e66f62bf04fb967fddf",
+    "docs/adr/experiments/0119-check-m2-reference.py": "388cfbb4b3052dc75fc3d9cabc92e7ef77a4b5e3d19c12d13bda016ff8a3aa82",
+    "docs/adr/experiments/0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0",
+    "docs/adr/experiments/0119-run-m2-reference.py": "2969a4b89650d0e996722e4fee1fe1477643fc3ba1f8498be60e40247880bb5e",
+    "docs/adr/experiments/0121-elliptic-coast.py": "ed02d1299b646cff0686c474b67668dcff5e63f99b3c2fd69b72b7f8abb235bd",
+    "docs/adr/experiments/0122-check-elliptic-coast.py": "092aac236b76c5e897acc567e47fb1befdb264d818c599e673ff0be9d8a50e57",
+    "docs/adr/experiments/0122-elliptic-coast.json": "2274cc0453f8da0c637f1172f25a92637a92f1650809cf49a97a31829cbae247",
+    "docs/adr/experiments/0124-oem-reader.py": "a531dec0b774f29a78b02a2b65c7418bd27919bacbcf8f2893372c9b80541247",
+    "docs/adr/experiments/0128-audit-reference-coast.py": "138d6c98b9f914dbcc7b26355e0e8c2019bece997f1d18b089a90b3cce095ad9",
+    "docs/adr/experiments/0128-reference-coast.py": "027d0b4e45f9ebd941249e427963e365fd7205f9594a96365a587eb0e8cd7e81",
+    "docs/adr/experiments/0129-reference-coast-audit.json": "41a8d4434db26752e3cae96e965480710f36eabbff885ed957b2766e957456c7",
+    "docs/adr/experiments/0129-reference-coast.json": "e2c5d077285fe0218d1c93f3000f319048006eb55477d680f83041f6c70ce9d7",
+    "docs/adr/experiments/0130-full-regression.json": "4a8591b36b768bec5dd60e520002fd6544d64f56f1d2e0d2216048574506fb93",
+    "docs/adr/experiments/0131-endpoint-domain-audit.json": "5f934404dd0a0da11bc1586b28adf3504307361075b20fceb550407cadd4063a",
+    "docs/adr/experiments/0132-full-pytest.txt": "699102140d28cc88e684e5e70cd3ce6e53386b16a06bde86c9493d10fc27a9f8",
+    "docs/adr/experiments/0132-gravity-audit.py": "47d03f269d8ab9774d87416c31af39bdc25e5661b857c97437862cbe5460759d",
+    "docs/adr/experiments/0132-gravity-screen.py": "febc1e7728ac834895bb0daa65a4e2137ff91231e9f7f90453e5aecf615fbab3",
+    "docs/adr/experiments/0132-preparation-checks.json": "5f00d19ee0b683bd534268d2d112075fddbf49cbbd38b2eab35c922bf3ef4a20",
+    "docs/adr/experiments/0133-gravity-offline-audit.json": "682d6232fbd015870f985565af2f8c22c7bb5dbf39ea78a0cc26b10f0314ce86",
+    "docs/adr/experiments/0133-gravity-screen.json": "74238edd641e1b5fda42a209672c68e5bc201b20d3cffba24169e6f9b3b6a580",
+    "docs/adr/experiments/0134-boundary-input-audit.json": "f0e582f9d64fc42d55357cfd610aadf26d5e062abeaf06c88e985147b6844f56",
+    "docs/adr/experiments/0136-retained-boundary-audit.json": "81d78ecf6e4e80b55e9d909f929a879b2e392667387ec2569632aa99a6b41063",
+    "docs/adr/experiments/0138-full-pytest.txt": "4ad0e568b4793c8428e49b5eb03c5efc6a3b93abd88ae8558700f5c3e088878c",
+    "docs/adr/experiments/0138-oracle-preparation-checks.json": "c8faf6a586744c3b40b98850b0765025da77497fbd6230dc8ffa501e96f14d05",
+    "docs/adr/experiments/0138-provenance-drift-pytest.txt": "6a6a45f7ca8d14fe9b841352e06d2eb1037983bfc99fd6a4a6870ddecfa5c57d",
+    "docs/adr/experiments/0138-provenance-drift-regression.json": "373acfaf73685b80b25a8451248d8581190a9248bd9c973d867cfc54cf8a8643",
+    "docs/adr/experiments/0138-short-coast-oracle.py": "d6a624f727e17de364f188f0941f2e1889741204ad035aefd9263728cf95e029",
+    "docs/adr/experiments/0139-installed-identity.json": "d76645fb90d602209dd3ae5874110c8e13e7ceddd90ffcd85e15b92849183eb7",
+    "docs/adr/experiments/0139-installed-native-api.txt": "6a18387b219059039fdd19cbfdb68c8fa3213f99fa17bbd48c061cefb88beebd",
+    "docs/adr/experiments/0139-native-inspection.txt": "fc0c238aa954b4810ae4d8994b624541f4a2880fa23475ed7885ecf9530c906d",
+    "docs/adr/experiments/0139-native-readiness.json": "60631aa1344c0d3401d0decafcf0617dd1cb02e598c730d9789be2db5cbdf1de",
+    "docs/adr/experiments/0139-synthetic-construction.txt": "8763ecda7c61a672a49baa7a6377ce593b78bcd3f6dcb38d957dbf6e748b4837",
+    "docs/adr/experiments/0140-full-pytest.txt": "0dcea7e19edfb830db8188e45c52c50d80ed9eed461cb7cd3d9cd3892090b7cc",
+    "docs/adr/experiments/0140-native-preparation-checks.json": "723b0f6244ddf6c86526ba068e04636f5272d39b1d5a53860a74a0382cab0e73",
+    "docs/adr/experiments/0140-short-coast-native.py": "8bc888d6e1c638251d8379d6d4c896393b5cd76fb71e85c65c7faf9aab9294e2",
+    "docs/adr/experiments/0141-full-pytest.txt": "fbb7a2ff5ab8d8c1440ed5e6daab902a9919c08fa06c0938b01dcd29ccbc65f4",
+    "docs/adr/experiments/0141-input-identity-preparation-checks.json": "0376be30dbee3ffeff425423da931df40c2ff6bd7f2bbbffbb5484bfde85a3b9",
+    "docs/adr/experiments/0141-short-coast-inputs.py": "4457d9094afe3e8b674a46704b6789fdd724469cb8e1efe5cc054ce39d34c37c",
+    "docs/adr/experiments/0142-full-pytest.txt": "da2836e3a128596f545492fdd46cfa994e19aea28cb424ed97afc76cce86d802",
+    "docs/adr/experiments/0142-runner-preparation-checks.json": "b553a3b50d11be506b8349d30685fd1b9b43e26c6c9617e84353734bfba4d124",
+    "docs/adr/experiments/0142-short-coast-runner.py": "a1e6c74d7316d876f05c8d9527170ed633aeef86726dab91da9e2fdce96524ab",
+    "docs/adr/experiments/0143-offline-audit-design-checks.json": "c020e64524204323269d9252fe6561402438d16866e3e4b58abc0eb5cabfabda",
+    "docs/adr/experiments/0144-arithmetic-preparation-checks.json": "21e480fb7c5836bd6a9ac940db081db95e2a650c7cdc349ede65ff6320afca8e",
+    "docs/adr/experiments/0144-full-pytest.txt": "40f5530327923e7a94105cac0de5447a72d2a25925946e0952ae763b7af31f77",
+    "docs/adr/experiments/0144-short-coast-audit.py": "307ad5abb4b56c93abb9843ba5d657ab54d6a7954af238b07c21e342dcfbbdea",
+    "docs/adr/experiments/0145-file-preparation-checks.json": "27ef86ce1ec1414b19cd7b6f3e94a7f7acf1baf17d1091d17084e82127e0e46d",
+    "docs/adr/experiments/0145-full-pytest.txt": "c0cd9cca4a7c3cf9bb63231086863813e0f091f2ab2bf63f3e81cddfd57a5c7f",
+    "docs/adr/experiments/0145-short-coast-evidence.py": "426fe4e0abe9b9dfcf6380d09e86e8dbf5748f66875f74b26b45dceb6ba5da14",
+    "docs/adr/experiments/0146-audit-short-coast.py": "074886270d1a602dd9f7ffddb02f5e43bf75af77a72bde06fdd0057d1b23ee92",
+    "docs/adr/experiments/0146-full-pytest.txt": "451b9ac4ac6e83bd37227f1dd1d821d5845ea0d9f43e459c54af328e3e8e1bb0",
+    "docs/adr/experiments/0146-offline-preparation-checks.json": "16bf98678c9b5f16b8c1c55fc6789f9ff1f122d98b52e64320cee31beb43a5de",
+    "docs/adr/experiments/0147-preparation-review-checks.json": "a74795802507b43a67672b7dd143100b70e0dd259500b9f0cbd9c9ec07483109",
+    "docs/adr/experiments/0147-readiness-invocation.txt": "1d89c51650c853f08b74e7c45bdf464923b6aabe1cfc0ff5689e53f65e367fe1",
+    "docs/adr/experiments/0147-readiness-output.txt": "ac54d3a769157b7059c8f54e348e5bd275ff7f4cf7bfde7cba17270954532c55",
+    "docs/adr/experiments/0147-runtime-file-readiness.json": "7961d8ae55d9e34aa2aaf0f7dcc2567d088fa0f8d1439624569dda2d1f456877",
+    "docs/adr/experiments/0148-audit-output.txt": "49e294780b64d9567887bcb934cf475fb53354ba8e00b0078f31a9fe6647bdec",
+    "docs/adr/experiments/0148-execution-invocation.txt": "11db6daf946e2282cbac212b9b6377737cac12b3d3bdef57aabca960483ef132",
+    "docs/adr/experiments/0148-failed-study-checks.json": "a1834b24523cf1494737f57625c8e6fd6972ebc8048cd60e3724b07dc28f4429",
+    "docs/adr/experiments/0148-short-coast-audit.json": "62d0d73538b914a8b03e39242fc5d1c0eac53a3670f06cde3ae43b9fbf533253",
+    "docs/adr/experiments/0148-short-coast-study.json": "8bbe6f5f7d08f4e220ee3cff450488531da0776b8a69cb4c37e1c9af9872b096",
+    "docs/adr/experiments/0148-study-output.txt": "ec176b9498ea08edb4ced48cbfd172fd1ba169518d5f3e47ee6b5ba5744cb456",
+    "docs/adr/experiments/0149-conditioning-audit.json": "ddcea528b772f1aa1e0da181d4c5132d8d4f8041424b7a80c8e5b2f21b854bee",
+    "docs/adr/experiments/0149-conditioning-invocation.txt": "f59f9d64197eb4650a0971f7a625175a5017132306bb0af2defb4f8396c64e78",
+    "docs/adr/experiments/0149-conditioning-output.txt": "2311325d6f285c4610fee5ae34690c7d2109e935154f112e9182a07dd6bdfd12",
+    "docs/adr/experiments/0150-focused-pytest.txt": "cd59925731b2dcebcad419eef8e93468a15d74aa723ae103709be4201acf2fd1",
+    "docs/adr/experiments/0150-full-pytest.txt": "bac31e1bab28b067008345cae65e958cb47c8927ebd087762b8b0ca4914f6a6d",
+    "docs/adr/experiments/0150-offline-audit-invocation.txt": "47a656840cf236c346697aa88aab4d532875bd0793522774014ba172478ed626",
+    "docs/adr/experiments/0150-offline-audit.json": "22f43932b724dd0787fffd3713bce7bd4d966b3f4773be70d8e27884714b817b",
+    "docs/adr/experiments/0150-synthetic-invocation.txt": "712b15b96176fd4509653637b649b3c67c47de28bb4af1b7c5bf95eb560ac6ad",
+    "docs/adr/experiments/0150-synthetic-output.txt": "c5d918fe53d4fc07763e027271424347c0e05d5dfa67abf0183542bb921bbb34",
+    "docs/adr/experiments/0150-synthetic-step-diagnostic.py": "ef2b6ff36379fee0a440a38471d5f56e7b0eda11344db475964c5afc9066352e",
+    "docs/adr/experiments/0150-synthetic-trace.json": "7c8843f85771a5b98aee542ad2bac7c8f6ee65d0650c00b9811c24f98aca1242",
+    "docs/adr/experiments/0150-verification.json": "5e8c7942931a3cf3a40f05c115b241f53315e60d5f81444bd05896b0752df1ae",
+    "docs/adr/experiments/0151-frozen-stage-audit.json": "7f3897cf18b33b0f9e9dea547df75e38cd150dd0d028157adcce75f574a68b5c",
+    "docs/adr/experiments/0151-frozen-stage-invocation.txt": "c6b48d63092e3f8fe859a42a929b864a01cc33dcf6d094bb7764751cbc8ff572",
+    "docs/adr/experiments/0151-frozen-stage-output.txt": "35654eb3497ed03e5f1b535d7488fc47ec9c72e815b7a8df5ade4f6a9ef8f90e",
+    "docs/adr/experiments/0151-verification.json": "1eee7a6aaa332695d62b9620273d78fe89160889cda7d72ada69d7d12787a586",
+    "docs/adr/experiments/0152-compensated-invocation.txt": "5acebd8b2988f447851733d43118c4c1f503cada87274b4dc48f2bad5772d9de",
+    "docs/adr/experiments/0152-compensated-output.txt": "a43ba5406cc735d027629d8ad2b763b6596cb01f35bf6cd7cfa64009abeb2da1",
+    "docs/adr/experiments/0152-compensated-time-diagnostic.py": "b462ebbae0243366493d66363a5f9343f65d85e40352a538017a2304705bf77f",
+    "docs/adr/experiments/0152-compensated-trace.json": "786135db3aa67c5c346d644099947234f0d12774a7acd83964bde406f9f67656",
+    "docs/adr/experiments/0152-focused-pytest.txt": "e8fe902744fabde94c7038b9af6feceeb88df75a253355b72501f27a55930d4f",
+    "docs/adr/experiments/0152-full-pytest.txt": "c2e137a701713eaeb26f12ea0287f23548f2be0dc3825c7821197a1ec91a51c0",
+    "docs/adr/experiments/0152-saved-audit-invocation.txt": "4b3e919e881caa78dc69025c396a8d9e022049a9d0a8e9ac8b0d61e9a1db6ea8",
+    "docs/adr/experiments/0152-saved-audit-output.txt": "024236f9de7b0db15dd90c209e2075df7b9240b3e162c8e76ec091d104a70b5d",
+    "docs/adr/experiments/0152-saved-audit.json": "a3b23b7ac8563520c412d1a9a74aa4049673522116619cea328a843ff81b7d0f",
+    "docs/adr/experiments/0152-verification.json": "41dc285e99d3a032469e10aa52e9a42bcf98cfc8e3aaaf27393c881bded8e410",
+    "docs/adr/experiments/0153-focused-pytest.txt": "6724adbbe6436a745ad026958464e68a77128fd55daab47e4e708dbe601accc6",
+    "docs/adr/experiments/0153-full-pytest.txt": "f0f692de7034a4acc2643e2d1cb485e0fb07e2348f773ed302d165a7336190b6",
+    "docs/adr/experiments/0153-real-ephemeris-oracle.py": "23915fee1feacca37f4a4c0f794feec177aac777407b9c87cc0f8176b0b4a6c8",
+    "docs/adr/experiments/0153-real-ephemeris-study.py": "8cb930aadf9a6e718ec05e6ddce26533e8e33ccc642ff75a387153021c2d174d",
+    "docs/adr/experiments/0153-verification.json": "43f69b6cfcd3defa7670b69730c08c89ee4970c5387e8a08b0876be8c59575fe",
+    "docs/adr/experiments/0154-focused-pytest.txt": "041334fd7fc30cd4206b31e0fe61cad60718c13232af1286dfc31ee360b31480",
+    "docs/adr/experiments/0154-full-pytest.txt": "021f19eee8b314206be3604782f5235f64bd78bb8f1a2476d31ba2ecb9288b73",
+    "docs/adr/experiments/0154-readiness-pytest.txt": "7744929e3f492b122fde25a3985dfd516de7f81d539a58efe2a738a58f536dd9",
+    "docs/adr/experiments/0154-verification-invocation.txt": "dc27fd2a184f45100700ee9c21513a8fc436f76b9bfd686907b7d0c142eafe04",
+    "docs/adr/experiments/0154-verification.json": "2ee6e5514cc7d4a1c51c50075e8b584e8d1f6e324f73c7ecb05148278c01092c",
+    "docs/adr/experiments/0155-real-source-invocation.txt": "22fa5abfa4dffb8423658b8712b28c679837223a160e7f8d5983992f616d99ed",
+    "docs/adr/experiments/0155-real-source-output.txt": "533f69e19d29cc09c706e6986904cd335aed1830d8f67ef44a1cbbd91931959a",
+    "docs/adr/experiments/0155-real-source.json": "278b094cff6dd417ac15c04d3b4e4da137acede17de7147babd72fe9e3812102",
+    "docs/adr/experiments/0155-return-ledger-invocation.txt": "224362a58ba6439b8a998d826b5f404b7f3f267076da240d278de8621749fac4",
+    "docs/adr/experiments/0155-return-ledger-output.txt": "7e5361e8f395c15a1a7ae1119f2f7d608d86f4d1e4cb75f950097c9ffb9a63bd",
+    "docs/adr/experiments/0155-return-ledger.json": "a8c2be113a43e35056a70c790e538b18ba2eddf084c51e5ad0522cb0c4ec4cea",
+    "docs/adr/experiments/0155-saved-audit-invocation.txt": "9877376b0e7be8cea7a9b0b6a2499425ad155a3f399c30d5ea2e55e0b06538d1",
+    "docs/adr/experiments/0155-saved-audit-output.txt": "1af884a873f162cc119b45886626bbaca792f38cb7ce21cb2bab129db7e0ead3",
+    "docs/adr/experiments/0155-saved-audit.json": "0b7c90bd46df55b8648a22af1de59f204eb796eebea840dff6b4beb1a4a29c4e",
+    "docs/adr/experiments/0155-verification.json": "03fa673436bf6f84fb11a71ac5a748d3de5c9d93ac6f1d0e2caccb5cb81f15e9",
+    "docs/adr/experiments/0157-fixed-gravity-audit.py": "c53cdbe8b556029dac311a3065bf31a07b0211235fa2af2c548a33387a976ef2",
+    "docs/adr/experiments/0157-fixed-gravity-inputs.py": "5592d0295da35351a37795865f5ccaab0bcc64961b2dc0173245bbfe81e20f97",
+    "docs/adr/experiments/0157-fixed-gravity-reference.py": "1337ba2b1fea94381e175603a501ec36b992a2194faf46dea6a3e429a7aef9b8",
+    "docs/adr/experiments/0157-fixed-gravity-study.py": "9bcbfe35e14bdb0f25e68e0e3c76b5303fa0ca8ee61bcb178131dbd02f0d7ad4",
+    "docs/adr/experiments/0157-focused-pytest.txt": "8946ba6d44441b348d5d28d29a58e2de1786f898d1fd91e905fed2d29d8b4071",
+    "docs/adr/experiments/0157-full-pytest.txt": "240c1f8dc55210c06da4ed6efca0f4c70078551456b1485a4f77cfe3643fea42",
+    "docs/adr/experiments/0157-input-preflight.json": "ed267cb4365cedbec74ec8098f424e4b92058ec7f61a6361bf4e407a34325661",
+    "docs/adr/experiments/0157-verification.json": "35872b5037270a866a273f3f338c888cd7fbe0a66122743b8fc8323f0846c05f",
+    "docs/adr/experiments/0158-audit-receipt.json": "af8e469cef6b7692992ae321453b24ddf8b268b568c9bd1ab9d94ec08a7d61e2",
+    "docs/adr/experiments/0158-fixed-gravity-audit.json": "19f89eda69d5d4b184a21f611a07287ea29c41041f72d6e305c1cb896c2d442d",
+    "docs/adr/experiments/0158-fixed-gravity-invocation.txt": "74926934957846fb48defa05531625a0dd6bdf3cc67bacfba06fe9e879b2acbb",
+    "docs/adr/experiments/0158-fixed-gravity-study.json": "08b37c96df1bff965e0a93015085e5acf733747ddd1f97805b5b21f135bd02ed",
+    "docs/adr/experiments/0158-result-summary.json": "9fa06235380a712b6a6cd07e5abf18c0c747679ba214f33545fea876eebeb5bc",
+    "docs/adr/experiments/0158-study-receipt.json": "696284590ae3aaf355a4174561196636ec0ac4fbd91cd35d85087d152c2a386b",
+    "docs/adr/experiments/0158-verification.json": "834268e321b96355b3a2cb0ac7928bf6b8a0f2a39387735f90eec88f8007d3f9",
+    "docs/adr/experiments/0159-verification.json": "9f7c6e691e84262e019a25530a1c4e84ffa48e2c0ae98920bd3c89c0f8de4007",
+    "docs/adr/experiments/0160-first-full-failure.txt.gz": "68a008e17219ae633ccd40f79654b00ad0bd2203d98c6bad97c4c01d08612e61",
+    "docs/adr/experiments/0160-first-regression.json": "e00fb792cff13cdb83f9137e3c900f840ef195cd48480b60b7d795b253045542",
+    "docs/adr/experiments/0160-focused-pytest.txt": "fdade9b703e2592355587b16efc70e6b93659c306fa2a107d7f53fc42b315895",
+    "docs/adr/experiments/0160-full-pytest.txt": "58a7ae500a137c64c8acbc94e73b07a95b4962e03b483ef9b2f05749559c7cb5",
+    "docs/adr/experiments/0160-input-preflight.json": "49d0c71425dc2d89f9a4bc02c31d890065a84287a880355714f23d6501447fb8",
+    "docs/adr/experiments/0160-input-preflight.json.gz": "46190548f2faa5dd30f8cd4e0ed6ba399b748fe256550002bb63293c269294f9",
+    "docs/adr/experiments/0160-moving-audit.py": "902670cfa5c7ac280d24a1c2d62b72cfb7785e06f0fee509190c301ef65e463b",
+    "docs/adr/experiments/0160-moving-inputs.py": "3712085a867ce03b2fda9c99fe8c8e3fa75be1e3e71e52fe9b29b1105285b210",
+    "docs/adr/experiments/0160-moving-reference.py": "3562d4aa1bc2a41d546520ffbd1a1bc67169fe8b77718ec1a808ecc43132bde6",
+    "docs/adr/experiments/0160-moving-study.py": "6452a7d2d5debcfb560f941b9b8c4f916dacca1cc5bf0377a1be276f4a2d8a2f",
+    "docs/adr/experiments/0160-test-receipt.json": "ffbedf178048a15f4ab5b16901dcbb6135810f6c1b4bc1ef208a0b3f8f8d51e1",
+    "docs/adr/experiments/0160-verification.json": "dbc5f6a31dc143f5936cb5ad209d0a21f2f1daa312a4ea44d330c5ff0a9edd50",
+    "docs/adr/experiments/0161-audit-attempt.json": "1fc196cb01b1dc75cac9b26c51f1d772a092f09cc05e99433e7e9c49a9fa6c53",
+    "docs/adr/experiments/0161-audit-receipt.json": "86df44c8bb1c7244225bb2f37d21fdacf43c68491d40c33ce6013df6bd2028ee",
+    "docs/adr/experiments/0161-baseline.json": "6132f082546b41f1075322f454b451acb054eb0c1a7ac7ccbcb18008e3bf2298",
+    "docs/adr/experiments/0161-moving-audit.json.gz": "d1dedaf2989d05af5784b7cc1f9fec502f7131e46a886378d5f71526f3d8364e",
+    "docs/adr/experiments/0161-moving-invocation.txt": "bb8adbddca82ec0f6a8cb23ffd1c5fc80dce4a14d20a77a862cb30c70f6d4242",
+    "docs/adr/experiments/0161-moving-study.json.gz": "b810721f699e0916a19a8d05bed024c0102b5415297af14d352fc7cafaa6ec23",
+    "docs/adr/experiments/0161-result-summary.json": "c7160d81ee6792f4d530182ab090064c05354fa5f52cd31486fa7e0966bba4b9",
+    "docs/adr/experiments/0161-saved-summary-analysis.txt": "e748382b696a7aeedb4a506cd4a702a675b6c2077e126859c127046d89371079",
+    "docs/adr/experiments/0161-study-attempt.json": "dfff9a48f71f02b7cd5106143b2d0e77f327d8dcb6f684877f708f95ddf6b7ee",
+    "docs/adr/experiments/0161-study-receipt.json": "0cd179cb4e521d270e0f2d18ab5412ec997a404058c8a1b43b6a0087e54dc7f1",
+    "docs/adr/experiments/0161-verification.json": "d8397b00362e4a3464ec9895351a10d34e96a18132dfa6fd9d08e86834cfce99",
+    "docs/adr/experiments/0162-verification.json": "b909d15c3270a16b3c75cf50f4257b9900d3e5d90b3427933848a017c30520fa",
+    "docs/adr/experiments/0163-checkout-freeze.json": "67d2c69c9572eb765d52dc495925bfc1ee9877acb88d0e4cfaf5ca402a445045",
+    "docs/adr/experiments/0163-corrected-audit.py": "18d8bcae5f544f5176be5c9070e7cfc4fc00accadc634dee45ea952e4c265bc5",
+    "docs/adr/experiments/0163-corrected-inputs.py": "329067092b86c853ae909cac71076b74ede7fa321c67501237e714c381e5ce9c",
+    "docs/adr/experiments/0163-corrected-integrator.py": "fbc8411ca6d8ad3ebde72563d8b4134f9d5e2d2235e5441f945e4aa10873efed",
+    "docs/adr/experiments/0163-corrected-reference.py": "2500e52496289cc75c93dba8825cd222d70f56cc97f48171b8e01328fe2bde65",
+    "docs/adr/experiments/0163-corrected-study.py": "df695319272f270065c6e03928872d604a40e11100b7c860a52f00ef2c8fdefa",
+    "docs/adr/experiments/0163-full-pytest.txt": "d84efad137d606ec91db3bc04c54ab00e4a8a0bce734554ff5c340c5bc1bd94c",
+    "docs/adr/experiments/0163-input-preflight.json": "979582d523c55f0a0c13c4fa65dbc98c24cbca4cf3564bceab9714c60f8d1bba",
+    "docs/adr/experiments/0163-ruff.txt": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "docs/adr/experiments/0163-test-receipt.json": "47c25aea66fbe507a676bd4210adac94afb2867fdf9ce2f77d22cf05968231e4",
+    "docs/adr/experiments/0163-verification.json": "518eea292547b4bfc4a379e3e8a2ce63632d49fcdef2761d504d09a34d485844",
+    "docs/demo-audit.md": "8de2c1b45cba8c1af614efd136179ff0b43edb80d3fab2f5876270dcff13cddf",
+    "docs/roadmap-history-2026-09-16.md": "9cfbaab880480d779c36f6aa3217926c7d94a00709ae03969dbbd95b5f1e8fab",
+    "environment.yml": "c2948772bfbe09677354f803d9ba79e4c78eb44c5916c98b8d58126832c0e4b7",
+    "examples/m3_feasible_mission.toml": "2c3b2a140d6e6ea00c2173caab5c51b1c4be87a112d2dec28a40cd1e2a0a9b42",
+    "examples/r1_m2_reserve_reference.toml": "f54eddf329d602fb91ff04973acc025abb8cb61b284cf0ad6e6149e369dbed2b",
+    "examples/reference_mission.toml": "1f0732946d088468eb00b31066daca0b5127ea2a9b49b16851d2ff244008c015",
+    "moon_to_mars.csv": "aca63a469a06b65782cefdccb3cb5a5d851f1ad1fe1b29a932c41d982a2560b2",
+    "moon_to_mars.py": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "moon_to_mars.svg": "b3eb6905f51982cfd8b093f88feb96e9c2757db4c6fc4e980c7dfd4c11c8fed1",
+    "openspec/PROTOTYPE.md": "a7edb9269bf9a9d728056a4814f97ae2c6ccff69912107e04d2323cbd3c6343d",
+    "openspec/VISION.md": "c10c6f99d1ae06d35a347ebeed71baf05202d3871c593fdce67a02fa18875b3a",
+    "openspec/changes/archive/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "openspec/changes/archive/2026-09-04-establish-navigation-foundation/.openspec.yaml": "d612751ea74db7310fb72eea452668b4fe243c950df13937d76bc3c269b740ac",
+    "openspec/changes/archive/2026-09-04-establish-navigation-foundation/design.md": "7896727aec0bb6b235ced34499ec42b4b6fcaf1d72cc53c52997e70fb7861652",
+    "openspec/changes/archive/2026-09-04-establish-navigation-foundation/proposal.md": "dfdd7fdb59d01a801ad171706c2f8a2ee6b4edb451608c0f47a5495113533cb1",
+    "openspec/changes/archive/2026-09-04-establish-navigation-foundation/specs/diagnostic-cli/spec.md": "bfb86b65470857f3a79ea55d414e4774f29bae3034d2abab5bbbc52d04237a2c",
+    "openspec/changes/archive/2026-09-04-establish-navigation-foundation/specs/mission-scenario/spec.md": "5c7ce90da3211fd77a6f47e7bda7da5f8b6f743ffdd76cffccad9e9099a714ec",
+    "openspec/changes/archive/2026-09-04-establish-navigation-foundation/specs/reference-state/spec.md": "e9fd86be000cadc222708bc5ff095479ccbe0c0541d59ab1eade53546dd80305",
+    "openspec/changes/archive/2026-09-04-establish-navigation-foundation/tasks.md": "3b5b5b7286506857c7e91d920ee366436ba5feeec51664419a8753af526b8800",
+    "openspec/changes/archive/2026-09-04-plan-impulsive-transfer/.openspec.yaml": "d612751ea74db7310fb72eea452668b4fe243c950df13937d76bc3c269b740ac",
+    "openspec/changes/archive/2026-09-04-plan-impulsive-transfer/design.md": "6309412819cd55cf7ef8624d0e603137def59efd107a7a090f321e33cf2d4f71",
+    "openspec/changes/archive/2026-09-04-plan-impulsive-transfer/proposal.md": "451b9518d7970ac59986e6bb69dddd3da2c8dd042f22123e9fa7464979980278",
+    "openspec/changes/archive/2026-09-04-plan-impulsive-transfer/specs/diagnostic-cli/spec.md": "759aa1f87988fd1c296a594fd0cb84c12daf58e13dabfaa8b69d235e251080d8",
+    "openspec/changes/archive/2026-09-04-plan-impulsive-transfer/specs/impulsive-transfer-search/spec.md": "25f08d4c58c7cc4424e36b539c1b9980362bc79f10505531024e234124d0809e",
+    "openspec/changes/archive/2026-09-04-plan-impulsive-transfer/tasks.md": "4f61af46148595b0ba7ab86c359f53430999917ee15a2cc56110f2e9ade94dc2",
+    "openspec/changes/archive/2026-09-07-refine-physical-trajectory/.openspec.yaml": "d612751ea74db7310fb72eea452668b4fe243c950df13937d76bc3c269b740ac",
+    "openspec/changes/archive/2026-09-07-refine-physical-trajectory/design.md": "2b2b8bfa97517681836d6c5f06207cbca90d4e706bd55f5d90bac0fd31bcc81f",
+    "openspec/changes/archive/2026-09-07-refine-physical-trajectory/proposal.md": "1a2b5f01ee643ace2c3821bfd33382a80ace77c482513b84e712645c17e034d9",
+    "openspec/changes/archive/2026-09-07-refine-physical-trajectory/specs/visual-transfer-explorer/spec.md": "753192a064aeace7053225459b80d6d1c83b0a59d33c7b24ae65e7d8a8da08e1",
+    "openspec/changes/archive/2026-09-07-refine-physical-trajectory/tasks.md": "341597154e39a35e14e62095afc2955659a499eb533ddc9be5113c02611be78f",
+    "openspec/changes/refine-physical-trajectory/.openspec.yaml": "809ac3c46e63d1b130c6bdbabf9d3028c43db36239b37b690705030f453a9ea6",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "56adf89c1330a4fcfa3b9462721f525f12840056dbda4b63ae53540421087cf5",
+    "openspec/changes/refine-physical-trajectory/specs/diagnostic-cli/spec.md": "5b1e14ce5f4af56389c90893a6f74c1ac5ec0cef4576126f7a59f80b081a786f",
+    "openspec/changes/refine-physical-trajectory/specs/impulsive-transfer-search/spec.md": "79ededdc67a6ccbe59c555cd7779f1f21edc3d041f45c0f7ffc3ccdd520b5451",
+    "openspec/changes/refine-physical-trajectory/specs/mission-scenario/spec.md": "a2e621ddbde05aa8a6fa0b9e4315ab142257bc6404daa06a439769852f71d3fa",
+    "openspec/changes/refine-physical-trajectory/specs/omitted-gravity-screening/spec.md": "a7e6890057d03d3be54750b7de845dbbb55125e139640724c4359eb47ed4b853",
+    "openspec/changes/refine-physical-trajectory/specs/physical-trajectory-refinement/spec.md": "391f853753e73f6703f36a0177571b4c92ad856cddd66b361509d412be268185",
+    "openspec/changes/refine-physical-trajectory/specs/reference-coast-verification/spec.md": "477ead75105ed202df69195b662c03deae4225ac703df3761cd63a59a1572322",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "0a1333bd90935e611d45af17cfe1a356ea89492858bea6d2b5b0fcdfaeec0e87",
+    "openspec/changes/refine-physical-trajectory/specs/short-coast-sensitivity/spec.md": "0b52f8fa176c7d2a94dfad249650445d87a917a742ec3d7a7f99396c66da2141",
+    "openspec/changes/refine-physical-trajectory/specs/traceable-trajectory-result/spec.md": "e7502b8101c1027847090837253159b0410240e64d9852715207200336d0975a",
+    "openspec/changes/refine-physical-trajectory/specs/visual-transfer-explorer/spec.md": "1c973cb947a4b9cd19fbbacc4aedba3298a0741c18d2bd1f2fc665c6ca92b9a8",
+    "openspec/config.yaml": "0f25cc4e5de658d9b663495b51dd23c7ad554bf78bbf750cd7f5fbc94bb60219",
+    "openspec/deferred/optional-object-analysis/spec.md": "b13f3a71fb73e91cc39900501f5cdc3a6da5f1772dd7852ae3a049f6b9e106e7",
+    "openspec/deferred/refine-physical-trajectory/design.md": "03456826e59495c4ba73a19600acd186505c9552f22c2d54cbeb88a31fad57a9",
+    "openspec/deferred/refine-physical-trajectory/proposal.md": "bbccded2f952441c948b97d37e68c1e8c0463cf971109b003649cf20de603a44",
+    "openspec/deferred/refine-physical-trajectory/specs/diagnostic-cli/spec.md": "5b1e14ce5f4af56389c90893a6f74c1ac5ec0cef4576126f7a59f80b081a786f",
+    "openspec/deferred/refine-physical-trajectory/specs/mission-scenario/spec.md": "f58c25c7957630e6201451541e139513690934c9a009721fd43d8c17474cf8db",
+    "openspec/deferred/refine-physical-trajectory/specs/physical-trajectory-refinement/spec.md": "0e0229d8f764514630a9383d0a07b8b0234c4e73cfa0ef6e5375763341ad3b85",
+    "openspec/deferred/refine-physical-trajectory/tasks.md": "192d4e7d3cf1cdf6e130a5f521e7494234c05fb223ed37f6070ceaae1ada2caa",
+    "openspec/specs/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "openspec/specs/diagnostic-cli/spec.md": "d734d8e903f69301bbec34285625ffea1a5b03e7b83c03627fce6d408288699b",
+    "openspec/specs/impulsive-transfer-search/spec.md": "20e89b4d71f3aac81046251c99686ec05f8717f8fcfc2f6f0ffde99f57c03817",
+    "openspec/specs/mission-scenario/spec.md": "3f0b341e7812449cd2689df546a8ff1ba6b6a8e7351b82caf27694953c48804b",
+    "openspec/specs/reference-state/spec.md": "a0d5ad823490dd4af57c086992c6926af2414c9e42bfbabf08ba4d543359677b",
+    "openspec/specs/visual-transfer-explorer/spec.md": "7d9f73103b865053dfecfc26eaa4f7985bdf1c16df57ca59e4acfe1bf9d2a6a9",
+    "pyproject.toml": "2768b4d1bac530c518e9900207d0253a48662aa514a6db2622b211bf9d77b53c",
+    "src/space_nav/__init__.py": "56af2f12a1b4ea3cf1b65201c560b1dff44cb786e9e81d2735c0430b8daa0174",
+    "src/space_nav/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "src/space_nav/_oem_audit.py": "a531dec0b774f29a78b02a2b65c7418bd27919bacbcf8f2893372c9b80541247",
+    "src/space_nav/bezier_local_targeting.py": "88621f68d2efee4d4f456617dd3b169964a813fd6fc713c7143b2cda01d6bd7f",
+    "src/space_nav/bounded_local_targeting.py": "f528e9668d8dfa59afab5717f8b75559a16f7967e849500fff2014d32d53faa1",
+    "src/space_nav/cli.py": "435b3788835cec0a40be65ff5b1057ef49eb3975a405be7ac91f76c83fbd2c5b",
+    "src/space_nav/coast_diagnostic.py": "eef6551783af3df0cefae2b039d3f5541fb1aaf452c59e67e5edbc8a25439ff5",
+    "src/space_nav/ephemeris.py": "70535eb56881ffbc197903e53b675716128ea4630fb4d377bcf63b1a5d56bfea",
+    "src/space_nav/errors.py": "ac5dc35b2953346e0f7b53973761b844e5a1572cfc753d5563975932e7feb5a7",
+    "src/space_nav/explorer.py": "0e151f806a8467adc11f88aa86b9721330e20c140c89d7583fbdfbf74b3b81b1",
+    "src/space_nav/explorer_help.py": "1ffc03c954a5e15c4f5641937b4189548fc7b2471e1d6352f34c4d86354ea5b2",
+    "src/space_nav/explorer_ui.py": "14da24cdb5802ebcb3cc775a31ef0b6da1af229a6aa887e7946258095906eb0b",
+    "src/space_nav/local_burn.py": "2ccc39a486bb71f0b9ae4e0c75c4453a440f76611967b278df25e7abec31bd01",
+    "src/space_nav/local_targeting.py": "8c8b596800b4fd310dd5fe66e0a792147b0e46dd82cde9541440bc7973aa5cc7",
+    "src/space_nav/lunar_departure.py": "7f17240c063ad72eed484e2f2d75547b701751e7da70b8f499cd7d35a7b6dffb",
+    "src/space_nav/models.py": "2a6817fa0f26b1275264af1a20af798464c651ba1142114f27402ea8441123f8",
+    "src/space_nav/research.py": "1b85f7e91e1c0bff10c8b670a9df5ffb8968d458af1dd188bef67585574c590c",
+    "src/space_nav/research_columns.py": "c012e3485d708dd7e593030ce3ba7e2b73d72815320d5147fe703f05d2480530",
+    "src/space_nav/research_correction.py": "fbd502e1818f632ea9574fc2548331a3567f25e509f0df4132343a1e1cbca1b1",
+    "src/space_nav/research_experiment.py": "4c37dc5d90c25ee45b49192b00b4d38e2ff1e1cad1fa675e70d73173fe5e859a",
+    "src/space_nav/research_export.py": "4c4001539f4169de7e32c833ded8eb5fc9a9e22e007e86391b6a73d117470eb2",
+    "src/space_nav/research_propagation.py": "94c315cd9d3a5b56bb404fb4a978401b10a0e75408b29ddfdb0b9f1fca95c527",
+    "src/space_nav/research_response.py": "533e735b99cbc3ca18181b84d3808a4e6c6a990f802a094ec4960166e211cc69",
+    "src/space_nav/scenario.py": "2564e84a756aabde9a3d387ebb6b2d9cbf845ff54fceff5215ff6a3d8397f16d",
+    "src/space_nav/targeting_experiment.py": "4e7bd91c3e2a0afdbf172fd8313a6ef159a4316c8909653063d41dd727340e99",
+    "src/space_nav/trajectory.py": "029bd5f0d10802143aa87a75827f8cce4b97a1ff36c9da7fc479ad3e6d0f0790",
+    "src/space_nav/transfer.py": "92ca8779a6d2077750c4953260c26b20be3395579d72ed27bca24faa37be0cdb",
+    "streamlit_app.py": "994e548c2ab370e2ef1742f2aebeb81fd64fe6528ad3b69d631f04aff44a4c1a",
+    "tests/data/m3_degree100_runtime_failure.json": "13b57b54c7ac3726c10e33b7bd08a4ed018bb7b45ac6985ad8a9c54787a3b433",
+    "tests/data/m3_degree100_runtime_failure.patch": "ba0ff885c69e60fe2d73fbb3e549112d282a8aa2aa926da766ea14f81209f6da",
+    "tests/data/m3_degree100_suite_deadline_observation.json": "59ed73bd864a0df961e91a04f5eae42193d4a1fcbc891fdaa82d316e2928646a",
+    "tests/data/m3_ephemeris_qualification.json": "86d2530d8d5767f2a675f4db47e09732142c44912974d9ed0f7c0fd50e7e4efc",
+    "tests/data/m3_fourth_conditional_local_translation.json": "c63d0fa72256dd4ec3b5c1518838f6921d156402ca062f28b8a420a1e99b0198",
+    "tests/data/m3_fourth_conditional_monopole_curvature.json": "3bb682930f7c38ca6d83b7173236cd224b5070bc66c1e49571ff09a958ea8a47",
+    "tests/data/m3_fourth_conditional_nonmonopole_translation.json": "a10357b36fe459b8496a17018d560186f6e397e1fc0e7d6330026abb5a74a300",
+    "tests/data/m3_fourth_endpoint_gravity_sum.json": "17afe365c9ef23fa282e0590ea9f857aad70e4c3b0a243a5ab2e35b6161b5793",
+    "tests/data/m3_fourth_endpoint_harmonic_source_bridge.json": "8fb05b56a5aa93be1e662d474ce9afd71cfb909b4f5e6deae60790a0606b72ca",
+    "tests/data/m3_fourth_endpoint_monopole_jerk.json": "d14933925c64e421917d0b0e9c4dbd2f1aedd5a5ea4ba43d6808a93fbc21f832",
+    "tests/data/m3_fourth_endpoint_point_gravity.json": "5b271412ca8a08ed166b565627907004f69b1efb83feeda4b5ea0f7699857dbe",
+    "tests/data/m3_fourth_endpoint_point_source_bridge.json": "0e3172dfe654fa94f9179157f46acf802673a53f94a2a3d485704cf5bfc193fe",
+    "tests/data/m3_fourth_endpoint_rotation_bridge.json": "3672fd0501a222b96ea9a98b6bb9d0b7353c680ef4d9e46cf9192250bcb47fa9",
+    "tests/data/m3_fourth_endpoint_rotation_force_bridge.json": "2f24608d2a5dad8fe70309963ea5bd10ecbd8a639eacbf67af8ed5db9ac534f6",
+    "tests/data/m3_fourth_endpoint_source_anchor.json": "4d4353ddbd2f37db76eebfce1621af1e0a42f2857aed437b768f7f1711a86c9d",
+    "tests/data/m3_fourth_hypothetical_subdivision_allowances.json": "4e1103153e2924cd7c479352e0c62bb4d00bba0b222db17d3558340e5c694f2f",
+    "tests/data/m3_fourth_isotropic_translation_method_limit.json": "f74a0ea4c9e87ce5acfc969b78f83eb5890516dcc821af6af3b00cdecdd885bb",
+    "tests/data/m3_fourth_mars_binary64_input_binding.json": "f85f62fc15960a339279223558305e9a48da22143766f71474cfb2bd5888aa33",
+    "tests/data/m3_fourth_mars_bounded_force.json": "91c567c06cafc25a092ead5dba09919d49f1ec42c3c5d3e7670f0c99d3e1dc22",
+    "tests/data/m3_fourth_mars_translation_degree_audit.json": "f6af76b4fc441d4a8cc5d517b444b6b995bc9a460bca0388fceec2733506c978",
+    "tests/data/m3_fourth_moon_bounded_force.json": "ffdc0bf99a2986f222f395d6e35bbd22ca8b71a11481915e6397b724986db2fb",
+    "tests/data/m3_fresh_conditional_clearance.json": "70674b65f518bed24f74288b02f6b3ac3d1cbcd9149d6d98c72d9a92e9006fed",
+    "tests/data/m3_fresh_cubic_reference.json": "ca4cbdfabef6c23eebda61896916c2933a03259db07a8f660470a39a9b985bbf",
+    "tests/data/m3_fresh_defect_channels.json": "1a4570146a4b88fdbc2a2575359e1054cda4abb51d23dbca70c07264da421f8e",
+    "tests/data/m3_fresh_endpoint_binding.json": "deb80a846e1529faa59e0dc39d62e2d227888051d9ee55234f1a1f19457fb772",
+    "tests/data/m3_fresh_error_transport.json": "dc21a8934236d578b1404ca5774da18efe1b5ede0ece4aee59d6514e6a610bf9",
+    "tests/data/m3_fresh_force_assembly.json": "4e12c784996cf07315bebe88dbd648d96b4485c5aa3c7548b6aa12d890ccad45",
+    "tests/data/m3_fresh_force_context.json": "1152f520c207b73402bb3d2bdc56b013cad1970f25d5bf76d2ed5f4df06d7355",
+    "tests/data/m3_fresh_harmonic_environment.yml": "f5ec3d3cc82bbefb25244f6a17f8f2781b5a94539083982d8957fdefe0b6160e",
+    "tests/data/m3_fresh_harmonic_replay.json": "e401d88cbdd0110ac6c0357612b0053a34f87f8953856ac3372360e5ea3dca99",
+    "tests/data/m3_fresh_harmonic_source_errors.json": "f647c2b3de1b0b9b7102d7367fac152ca4b2eaf9cc2622cc22121e3d91be9948",
+    "tests/data/m3_fresh_light_inputs.json": "78228d371cf23325aaf7ad10559157513d95fa24f7d7a5703e5ed495cd12b7e4",
+    "tests/data/m3_fresh_native_force_comparison.json": "fd8ed7ce800e6f7cde00d2b970687b00262839276f49d1ae60a95bbe29d6aa7e",
+    "tests/data/m3_fresh_pck_force_errors.json": "4fe46a59136c2a82bd0cd5a5f4455a7a4df473755b478b181ebdc2167dc796ab",
+    "tests/data/m3_fresh_pck_matrix_errors.json": "6d0440a32635b72979ac98d216485905e9596c088066c86096debe23def7259a",
+    "tests/data/m3_fresh_point_gravity_intervals.json": "999c3e42ada06ae568485f66adf0d62dae8e71120c400495381053120dd4beac",
+    "tests/data/m3_fresh_point_source_errors.json": "3b27db7ecb608b2d92bc23829971e5a0d33ca13ba44bc810a07e0f54b693ab9e",
+    "tests/data/m3_fresh_schwarzschild_vector.json": "33252c0de39b7621e5ee742f96a6929838accd225453db50c8bd332138b85c0c",
+    "tests/data/m3_fresh_source_consumer_binding.json": "0a5df5efd3f84e5d86c0829e8b3197afe2701c69b39acdc057253beac19ae9c6",
+    "tests/data/m3_fresh_spk_context.json": "752dc4fae6a6c74b9ce8ea70de13e71a780dc226e8d9262bd38a1b1cd717d26a",
+    "tests/data/m3_fresh_srp_vector.json": "e383d36894b6eb7597ea5bcee002c70b25e2d3a91b82b2f6de68587176bae01c",
+    "tests/data/m3_fresh_sun_velocity_binding.json": "e56c7ac5c31edc16b11bac74df4d76428cf1e3b71f74d780592b39a4c3f53836",
+    "tests/data/m3_gravity_assembly_inputs.json": "3cb3c87bcfa85aa7009e11941f4bae940cbf1ec6546a06d1a4ba00ef8a38fed5",
+    "tests/data/m3_gravity_only_assembly.json": "a10cbb8627452fcb93776d6b47b0a1dad085f021c80e8923d112a443d8c1bca4",
+    "tests/data/m3_harmonic_duplicate_observation.json": "b10d142eecdfe186a60888cc24da2051a4b2eee66a1522a6e73564a3546d86f2",
+    "tests/data/m3_harmonic_reuse_verification.json": "0667f56b7c6192174349397078d0c25f8603b3d3acc0ed379d778c3392a80530",
+    "tests/data/m3_inventory_runtime_profile.json": "89f4adc4d83d1d2693c9c5e60c4b837e217ba51c7ac88fefdd176d40c00312b8",
+    "tests/data/m3_low_degree_bounded_force.json": "ba25ff593a4b0e01aca79fbb3562e0b840119b94b3b26c9bf2aa4db5f120c85d",
+    "tests/data/m3_low_degree_interval_jets.json": "663af91eedf38ee0927b332a6216f665796069b2ab1fab4d0327eaa11f8c3e44",
+    "tests/data/m3_mars_degree100_bounded_comparison.json": "f0e96b06c1ba6f85e7b51a71a930e89264c7e889823480271bc6f9fcb4f3b109",
+    "tests/data/m3_mars_degree100_evaluation.json": "d579363f4811bc204d4df53820e246e61c22b0147b72d6928b16c25ce4f2d5e8",
+    "tests/data/m3_mars_degree120_bounded_evaluation.json": "63d5e9107abaa923a3a69d5d9c93dfbdbdb034200dcc93c81ad9aac12339397f",
+    "tests/data/m3_mars_degree20_bounded_comparison.json": "e603d976133c10ed90e4132ca762de98b6a32c63dad5541bbaf35a1f7427d183",
+    "tests/data/m3_mars_degree20_profile.json": "4314193993ac81a05c4268391d116b35a40cd9a2668f6b3dd361cc7b20643511",
+    "tests/data/m3_mars_degree40_bounded_comparison.json": "1805b8678ab56f92d68a08accfaccfda7ffa6a2151e88f08e67584a24a9a1a30",
+    "tests/data/m3_mars_degree40_profile.json": "d1a72e31c726d23af00f98d273adb9d57c84da065f3da109012b724a1f134ea3",
+    "tests/data/m3_midpoint_suite_deadline_observation.json": "9f485176bb27b4fcb7b68350077b3f978f260d616cfd2cdde4189c5d735480c7",
+    "tests/data/m3_native_arithmetic_observation.json": "3eb89be50aaca34f8bbed728b7e3993b9a41d1ae468240751e4af26254af527e",
+    "tests/data/m3_nominal_four_arc_lineage.json": "bf85d63566e5f76d13743182bc3d350bd6fec8ab6c1ee4cadb25e580e9330633",
+    "tests/data/m3_quarter_second_carried_domain.json": "96b54b2cb3cf948fe63e0a9ddbafa8c2f67fc2bd7aa749d7ad66e8581ae6dba5",
+    "tests/data/m3_quarter_second_force_sensitivities.json": "dd5ad63f697e25368da71d5ab0888a04e4a064bb2a6bffc6ce0612192d2194e0",
+    "tests/data/m3_quarter_second_initial_domain.json": "7beb57a90448e24abf73e490e23ecf1fcb2e5c2175c886a4edf14f9e7ce7fc8d",
+    "tests/data/m3_separate_tail_midpoint_verification.json": "3f92897bc0242c68501ea8c7ede291ecd3f580eb59d7f85c6f11ee2b67fdda74",
+    "tests/data/m3_source_allowance_coverage.json": "cea516c6359d0541f7af000d6e68af2b0ddb12a5eb57a415856912dcbfdbd8c0",
+    "tests/data/m3_spk_selector_observation.json": "df14a4fb14d4e99600d47a57d94f5cdb7e124869ef76c99f1bc60e043661ad06",
+    "tests/data/reference_kernel_baseline.json": "3e8f83250ecb068ac71311f187cc25a41a0230c511b881a4408f83fb9791ef9f",
+    "tests/fixtures/r1_oem/asymmetric.oem": "add16a68ca777ccde5d5f89b4fc4867de9a4179e4c24ff320e7c63767ef23270",
+    "tests/fixtures/r1_oem/expected-si.json": "cee6dba5dd9d8be26b4351bd8abe82a882ac66ceeba8d4347235930ef9cf6a9a",
+    "tests/fixtures/r1_oem/leap-day.oem": "fa3d2505981acf7edd3a77df67e250c513e0b5383261f70bf2938da7b8555acf",
+    "tests/test_bezier_local_physics.py": "2444a462b43fd77e872f6459e1e3c0a261dd04184c8022b717882372f903d399",
+    "tests/test_bezier_local_targeting.py": "27ef5995ac2d9d8bf371dcac70003ce2bf627eedd062da12527ca73200e5d72e",
+    "tests/test_bounded_local_targeting.py": "3817adbec24de4f9f1edc6211db9089623c010f5e04e935f53924c375e9b2088",
+    "tests/test_central_correction.py": "405b263f1db66a0aa5236fa0e0815bf563019f2297538020d6240e704a85b1e0",
+    "tests/test_central_damping_experiment.py": "60f43f6b704c8612f25b9c79d4bd367b4c737992f0818041963f00f4894f8ffe",
+    "tests/test_central_experiment.py": "35f2ddac1364ac7e0e93d2e729b3248e307e9c67cb7c22e75cdc458682c72117",
+    "tests/test_cli.py": "48aa0eb21f545f57915a12116d8f2f890d1d1c272902103498aa24190a486839",
+    "tests/test_coast_diagnostic.py": "5bd39c8541d1718d7314ef1e71e6c03135b9d136d4ccfcb4e30256d0af4f3c2f",
+    "tests/test_coast_step_study.py": "158dd3dd3271d8998a51ba6fc193f4253065aee83ccdb6ba6f92fb72fb6ac1a8",
+    "tests/test_column_experiment.py": "e1fce5332d6d806329dae402972c24c32e05150c15775e5667d218d24c14dd83",
+    "tests/test_compensated_time_diagnostic.py": "3e42419b640c2850feff5a29b2db4cb8b24f55d9c396c201bd73e1c53f308e0f",
+    "tests/test_corrected_audit.py": "21caa009eb80f910e31fb888a731df476c15f82140758f41e8bfe3d3742c1486",
+    "tests/test_corrected_inputs.py": "047d2784d3a30c6b79e1d8c4faf399e250179ba4844fab8aede9e872a6a0f2b4",
+    "tests/test_corrected_integrator.py": "13e3929337a0cef8e63c93892f40901436dab847a379c8d78bdc6872fa5d4677",
+    "tests/test_corrected_reference.py": "1cd8ea722b39fddfc9190a089d5a41f3e015fd29a207289c0d94072f958f1350",
+    "tests/test_corrected_study.py": "b87f5c86678a643facada7874d288a4a222feb3828fe416a8d3e04cab45387c6",
+    "tests/test_damping_experiment.py": "f0e2cf3112cc67eb79f2ec7a11cb3cc9029020ae1b4392aa308d4903cfe1a4f8",
+    "tests/test_environment.py": "ed6edcc68a1f52ba9803a621d425c6f00c0762834033aa019bc7898c0acb2ca9",
+    "tests/test_ephemeris.py": "9a4f5a6d87f7429323287187e5257702c85bbfe79da07bf562ea0925e76a0f6f",
+    "tests/test_ephemeris_cell_bound.py": "aa44c59a5636658a8e023d294126f08d564d183ef798dfe311011ed7cffdeb96",
+    "tests/test_explorer.py": "9489e48fc985bd03c15da13dccff4fda232d03bf61c068be63ea06f7248a1720",
+    "tests/test_explorer_ui.py": "d72c454af6b6ad3f1e5f23fbf5b16eabf06110ea45010854b9a7019e471e484a",
+    "tests/test_fixed_gravity_audit.py": "2e67dab465a976562ee182707603d19657d8ea06188bc55ea3455870b16b787e",
+    "tests/test_fixed_gravity_inputs.py": "bbf8cf17e6eb821d3f4fe9249896a20f242dcc20510b7253ef0bc4f90055a93a",
+    "tests/test_fixed_gravity_reference.py": "add8dba03ea12cee590086748dcc453aeee82335801fac37f648c13b120cc315",
+    "tests/test_fixed_gravity_study.py": "18232fe558f9b820ef1ba69b5d2545fad877b3f8988521823ecbf57b06d8669e",
+    "tests/test_local_burn.py": "9a885c6e7e3f947ec1a4bb7121a941900d09a703ddaa52e3e2d0516d3923a82b",
+    "tests/test_local_targeting.py": "7cfd52a86ec7afb36f050f9729cc940bdeb48a4a5dc692f1d87f8a20cc6e843f",
+    "tests/test_lunar_departure.py": "f46ec36f4d5659d8ed4e77ce3cbbda607c37c3181c7d9bedd3c51a53bb6613da",
+    "tests/test_m3_fixture.py": "48c8830ea864ab320a50865c40c93e201fc8d1d854ae6e2e8dd3fca7e584dcaf",
+    "tests/test_moving_audit.py": "ea269679de77c70627b7fefed1723bff627de8eef936b90fa8e8f007b989bbbd",
+    "tests/test_moving_inputs.py": "09abc24657f79a6d034b51a2b5bdb6d16686d7c882c0fe399cd2f441bee57c66",
+    "tests/test_moving_reference.py": "f5ac7e4a19ccc9cf339b759cd1dff8a8b5d3e780a017fbc1e960ddaaec2fdb68",
+    "tests/test_moving_study.py": "11d8ecf5dd3fdc80b4bd52b26d9a43e607bc70972f1af18f627c3712404081e1",
+    "tests/test_native_adaptive_safety.py": "8e788deede0868103b1a3643139572a0e62b81efbf9dd38f2d77a3fe9e7e77db",
+    "tests/test_native_arc_handoff.py": "fbea34c873ab9854186e7d8b3c41d6090ff3b5bea15f99859fac6d5220140765",
+    "tests/test_native_burn.py": "ce6472aef9e5c42429355ae8309b9ddf172f5fb591af0585f864b8d72a40e9a4",
+    "tests/test_native_minimum_step.py": "b2c49c07d6eb0dc855229012a6cfa9d52917040d8bd17a3d5b2ff1a679e127e6",
+    "tests/test_native_safety_sampling.py": "498b0a90ade2f78e4594bfdd005ec0772a7795c9f3507f48bddd25b597f57ee6",
+    "tests/test_plan_cli.py": "421793a911a310df62bcbe5edf3a36b7114e8606a82dfe8910999f780601ac68",
+    "tests/test_r1_elliptic_benchmark.py": "c5314ce26d7c561da7345c90d10fb28212841e0aa9ef4c74c841c909c26df17d",
+    "tests/test_r1_oem_reader.py": "1e6df59fe6f72a8ee101a30a69b3563828e2d0ce376b9aaef6f173b495e2c836",
+    "tests/test_r2_reference_coast.py": "54b60754ff6647822efc27ae0f414664dd84022ef260399d8babf9db149eac06",
+    "tests/test_r3_gravity_screen.py": "3023a6ec834b1d3b5566472efc377d8a3d4b51f1149554b751e9354ceabedacf",
+    "tests/test_r5_short_coast_audit.py": "4d0bddc4a2c71c623a588f83a3ee3408c8069e21644a06d3bf004c96a2223a02",
+    "tests/test_r5_short_coast_evidence.py": "23bfbdc158f3938a76388f9d04f1b341e1fa26aaf90cf40683428dc465ed6bd1",
+    "tests/test_r5_short_coast_inputs.py": "998d9f09c84c24a242584dd45c4e00f8d8c4b857d9a3b5052567aed9c182a5cc",
+    "tests/test_r5_short_coast_native.py": "47f91ce5d5ccb9133f6c6df5933b382b1a05fe436ee5995c9cb4523b48d8ab9b",
+    "tests/test_r5_short_coast_offline.py": "cbaaa9586448bf225ac54cb040d5eeed1298fe5b8c907cd7793c5666e0c1d9f1",
+    "tests/test_r5_short_coast_oracle.py": "ee9611b32c3207f15f9b0e426c9b283f69452943a6a36da212f4387f1357204a",
+    "tests/test_r5_short_coast_runner.py": "f0c6c5c7c0db83c6f52be3d5a4dd84a276442e20f23e0c521f73afb47d4bf332",
+    "tests/test_real_ephemeris_time_oracle.py": "aa171db77c715782fecb1c4361328033d7a1b3217ba1c0311ad19184822cb155",
+    "tests/test_real_ephemeris_time_study.py": "0e7ec4bde8e1d80aa7f77cc851f20e12d40581b60f1204a397041cd446db60ae",
+    "tests/test_reference_plan.py": "834a3a6c9cb2e36fc8319fec8173722830c4f7aa30d8672c9af0cd7e1e380b6d",
+    "tests/test_research_budget.py": "ffcf3d039de9d32b97e97462a162983e0ee57cf135a813e55e4bb2d61e06de20",
+    "tests/test_research_columns.py": "518f068c676ba0d5db68581b79ad335476b138a8a4fceda2e8fbc57d373a60fe",
+    "tests/test_research_comparison.py": "b4973ce527fad034b4c78fb8abdd974f8d4075dcc6d108d4b40806dfa62d5314",
+    "tests/test_research_correction.py": "2f67cb10acf38901c836bb43ccae34c41bbb1cb9970df9a7b71e353722801063",
+    "tests/test_research_experiment.py": "332bb34e04020642b0e02a2ad013dea9911de628a33d4ccc1e389ee693273ef5",
+    "tests/test_research_export.py": "b2c137ac4d5c73f8d1cf027e0f3e87ceb75c1327c220097fb898748dd35b2423",
+    "tests/test_research_propagation.py": "c5c218b161f2062a7b1fa34bb7051e496d500fa0fffaf64a42288080b1161b8e",
+    "tests/test_research_report.py": "30138dcf1d88a2c82b47dd7ff9bdb508aec81676bbadfe839b58e0a031ec024a",
+    "tests/test_research_response.py": "3e7d82cf8004d926adbdcb6bcab59fc7f921d0fb569d15f207753ad110b89b34",
+    "tests/test_response_experiment.py": "60cebd4258aac33d21560a3ec0d264d434fa2a557df468119ca04cf48a972ede",
+    "tests/test_scenario.py": "7fa49ee3375d939b467b209fec44e429f9326eb79dae2fe40c402e6dd04d431a",
+    "tests/test_synthetic_step_diagnostic.py": "e0340149f1f3de13f4efe9e52ef232ab11a00b75b2b7a17106dba05223c3d051",
+    "tests/test_targeting_experiment.py": "7f02acf6a3ca27bb7120921b81d6bf66a8ce8ba1602a1ba96e87ec86c6ee21a6",
+    "tests/test_trajectory_arc_completion.py": "e524a35495f45a0ba4ce157149b16fbb051a4392815d9422e69cb13a8bd2e98b",
+    "tests/test_trajectory_bounded_force.py": "68dc7bc1a333c9bac2a71472321eaf408d1e84f61b828dffc7387b8e7d393e8c",
+    "tests/test_trajectory_budget.py": "2f44a0b32e54f5b6e41aad666016efcbabcd6cef3c915cfda5223b20d62c5887",
+    "tests/test_trajectory_c20.py": "2632d6f9939e39e17622ac18d9eb3300d58d2cef249058fc8e206941ce09f921",
+    "tests/test_trajectory_collision.py": "cb0f57fe1efb3f9f8bae9889bd9cf3e2e026c2ecc1629c189a6a20f345cf0621",
+    "tests/test_trajectory_conservation.py": "816606e66078d00c20f9a99bd7b97faf32b11443bbb68fbf7067f3cc53ca7793",
+    "tests/test_trajectory_contracts.py": "bfdda50d2deba54d2617cc129ad13edec155c6b88d521b1517e8b8903480da36",
+    "tests/test_trajectory_controls.py": "3e741429be230c562888e03d73194a1eb9a5b2d7887086ab1c2ec79f23b4260c",
+    "tests/test_trajectory_coupling.py": "8846809d3f4a88afd8ab0e803203fc2655cf07b892e06d5c347fd63c9837f0ca",
+    "tests/test_trajectory_degree_map.py": "c167a1ff1ab828c80955eef3f594754cf34e5253296b1d4afa9c61af64c7906a",
+    "tests/test_trajectory_distance_bound.py": "dcd3eae8c0ae98113927e06a82b10bcdf05d43f676d30b066ea23ca4d1fb6a6c",
+    "tests/test_trajectory_duration_seed.py": "11db0e9949532f07036cf0ce225d79ab08643faced6f5e3dee0d77c2ee33750a",
+    "tests/test_trajectory_endpoint_binding.py": "666682dc9c513f6cab0b118d1c426889b88f3aa89eef19bab6b0793b01e6069c",
+    "tests/test_trajectory_engine.py": "4ea63a04a6cf63d209ceac54a682b103835688dab0dcebd16a21793eb679bf35",
+    "tests/test_trajectory_environment.py": "9ea23009d0f730d2bdbb3918463a16271e989e51878a95ddb4056c7b7ec313fe",
+    "tests/test_trajectory_ephemeris.py": "0ff49b622fa8c703cab6fec3d64d0d454a44d5c97eb261b353382d2cdabfb697",
+    "tests/test_trajectory_error_transport.py": "ce3810faca5522ec92384925dea8e7051c401a59aa78d1133ed000ef5a4a6313",
+    "tests/test_trajectory_force_assembly.py": "cb7f5a3ab66d28aa51485965c4bf6eafd1e5b6b8ecf3ad4e155ecb668cbe7a8e",
+    "tests/test_trajectory_force_derivatives.py": "adae5e9c92fa7ef42c7631bd1a79eff3a0a040ca1822b188e56c4f88828bd859",
+    "tests/test_trajectory_fourth_curvature.py": "5dbb9ae9fa8fb265448b67386a2919bb72b428ee0e3b9b29af28d4fd05e53552",
+    "tests/test_trajectory_fourth_inputs.py": "1c1c99fdaa2157dfb22803828c97f021460b4dc18cff29eb602ae98fa476aa91",
+    "tests/test_trajectory_gravity.py": "f64c1a3e8c8eb3d68fa7b7282c05504e58aee592d9b8c79ce28646ea592abd65",
+    "tests/test_trajectory_gravity_assembly.py": "4648017b1a69dc0431486a7c9132397a011a5c52530758abd5175fef28095a7a",
+    "tests/test_trajectory_gravity_bound.py": "dcd5fd006ab42cafed63b27e43d818b77b2967141065d8106a2a5e194869b0b0",
+    "tests/test_trajectory_gravity_reference.py": "ddb9a3afe6fe826c02567355200906de58a9aaf5227f122daa9b9d5e68aebc24",
+    "tests/test_trajectory_gravity_sum.py": "ce91304e7ef2afbfccf313d3d5be31599c86472e2fff19c944c5d8954d2a9768",
+    "tests/test_trajectory_guidance.py": "f608b3fb5a2a7945b0988d4f08cef09eedb51768fef5cf24568f526761901648",
+    "tests/test_trajectory_handoff.py": "8ebc4d457dffc93b522c3b98a3b8b1e6252670d16fd69f91e19f56675a7b4662",
+    "tests/test_trajectory_harmonic_profile.py": "c839a1f3666da668ff608ada45de9620364ae9a4c6aec01fa48d607ab79cb774",
+    "tests/test_trajectory_harmonic_reuse.py": "3c0bd019c81cc3743a49930fb098530edfa904c7074d8ddbb333f302a34932ae",
+    "tests/test_trajectory_harmonic_source.py": "d24bcf560935fc864135e6a027b242d863587bdc83a06b884bd30d41a433f0d6",
+    "tests/test_trajectory_integrator.py": "0c120a2aa5d1c6b7d8f781e39b9cd6a59fa1573297b357da540945ad52e7b37b",
+    "tests/test_trajectory_interval_jets.py": "e95ea940c8dc8e63122a026f6b6151dab3b5c5a89993931717727d91309cda0d",
+    "tests/test_trajectory_lineage.py": "f0fde18dd5cad181f4b309e345696c852136b23861bb46c952c254845cabedf8",
+    "tests/test_trajectory_mass_bound.py": "caf3c0f64bf0b10d0266484edebcd6274b3d980c7617050cb42e2f97a75d79ad",
+    "tests/test_trajectory_midpoint.py": "84873306947047957b1602b2dfbad39f485f08cbf5f0164f1781588ef051ce2c",
+    "tests/test_trajectory_native_runner.py": "7a223e047972a5fdae03ec74321d7b855c174a260eec653e72929e499861b4aa",
+    "tests/test_trajectory_pck_angles.py": "67c27b42ce1d8d7dadb34a21ceb578ff363767b40c6aea6b3d425293d3421d44",
+    "tests/test_trajectory_point_vector.py": "df901755e43891217edf5f8f96d0faf94fa0afd12bb79d832504ca462dc2a896",
+    "tests/test_trajectory_radiation.py": "be078a0603e450dfbacd9a48a0ac01df616725632c9fbf0a6f974100424911d0",
+    "tests/test_trajectory_relativity.py": "79034fb983cef3398a4cd7e4836402a1ce82e8e1440bee8c2d7f4cd9326cfe9d",
+    "tests/test_trajectory_rounded_arithmetic.py": "9b55506cdf9106a7424738dafd3dc772905cdbdafd934b8300ef520b83d79975",
+    "tests/test_trajectory_schwarzschild_vector.py": "854db4e869c1b0a680937551580935d1e990928e5209bff557c01f267ac1b6b4",
+    "tests/test_trajectory_spk.py": "459dd01f625131928c5ff02b6b43a56157bac3dd9df8286df4e8b7ce1926e047",
+    "tests/test_trajectory_srp_vector.py": "b8d724b2a7aefac84222d4882cbd58de38a141b723cd92a680c460a0069eb212",
+    "tests/test_trajectory_subdivision_accounting.py": "4ac4920d0c7d68e217dd81d07d4132291462e8d1f51839a0ac80f6d8b8ab3688",
+    "tests/test_trajectory_tracefree.py": "254bb98647df1cdc94d78a8d774051b807bf31a8a59850a69899d14ab9333788",
+    "tests/test_trajectory_zonal_rotation.py": "34d20842d0c7fdcfc7f15ebe4791ced3665880c84b4a0a0f754b474cbb1c9c1d",
+    "tests/test_transfer.py": "c39570b94f3b6d6c98753fdfd194c0b6642c17416b62e094dfc34e2926b7e989",
+    "tests/test_transfer_contracts.py": "2769aba2498578d28de2f6a4eb8c69cc557001901bbc2ec194885f9873e91628",
+    "tests/test_transfer_scientific_parity.py": "29d7ad3c9f8d372c254b122c4451c6cb4fcb5504c81b869847c3eb50e41efd0f"
+  },
+  "protected_checkout_files": 635,
+  "original_frozen_checkout_files": 640,
+  "deliberately_updated_context_files": [
+    "CURRENT_STATE.md",
+    "docs/adr/README.md",
+    "openspec/ROADMAP.md",
+    "openspec/changes/refine-physical-trajectory/design.md",
+    "openspec/changes/refine-physical-trajectory/tasks.md"
+  ],
+  "all_protected_bytes_unchanged": true,
+  "historical_chain_protected_files": 382,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0163-corrected-audit.py": "18d8bcae5f544f5176be5c9070e7cfc4fc00accadc634dee45ea952e4c265bc5",
+    "docs/adr/experiments/0163-corrected-inputs.py": "329067092b86c853ae909cac71076b74ede7fa321c67501237e714c381e5ce9c",
+    "docs/adr/experiments/0163-corrected-integrator.py": "fbc8411ca6d8ad3ebde72563d8b4134f9d5e2d2235e5441f945e4aa10873efed",
+    "docs/adr/experiments/0163-corrected-reference.py": "2500e52496289cc75c93dba8825cd222d70f56cc97f48171b8e01328fe2bde65",
+    "docs/adr/experiments/0163-corrected-study.py": "df695319272f270065c6e03928872d604a40e11100b7c860a52f00ef2c8fdefa",
+    "tests/test_corrected_audit.py": "21caa009eb80f910e31fb888a731df476c15f82140758f41e8bfe3d3742c1486",
+    "tests/test_corrected_inputs.py": "047d2784d3a30c6b79e1d8c4faf399e250179ba4844fab8aede9e872a6a0f2b4",
+    "tests/test_corrected_integrator.py": "13e3929337a0cef8e63c93892f40901436dab847a379c8d78bdc6872fa5d4677",
+    "tests/test_corrected_reference.py": "1cd8ea722b39fddfc9190a089d5a41f3e015fd29a207289c0d94072f958f1350",
+    "tests/test_corrected_study.py": "b87f5c86678a643facada7874d288a4a222feb3828fe416a8d3e04cab45387c6"
+  },
+  "preparation_manifest": {
+    "path": "docs/adr/experiments/0163-verification.json",
+    "sha256": "518eea292547b4bfc4a379e3e8a2ce63632d49fcdef2761d504d09a34d485844"
+  },
+  "artifact_sha256": {
+    "docs/adr/experiments/0164-audit-parent-attempt.json": "f1b543829a9e4a6a12cbd3ea080cc33269cc5cd9ce432a205afd7d4207ce50a8",
+    "docs/adr/experiments/0164-audit-parent-receipt.json": "1cc57222710c9244469f0dfe72a3d4888b1d34c6ec0a1fd48f6bed1a5f2788fc",
+    "docs/adr/experiments/0164-audit-receipt.json": "67e90ac64799b13656df0f40705063786400f9f7a32c4bb0266fb94aaca9d1aa",
+    "docs/adr/experiments/0164-baseline.json": "ed8d9a74132a38c1194614ce303d2eb3401cb6164f99d1340ae65dfaa5ec5b8a",
+    "docs/adr/experiments/0164-corrected-audit.json.gz": "4891768a5ae12b194f7f3b89dcc4da3da79007b0092f73153b1e35ab63ec0eb1",
+    "docs/adr/experiments/0164-corrected-invocation.txt": "5b66295a1dac8a583749a9bf6c693c4d2f68a9b077acf676dc8e2d08d3be6f75",
+    "docs/adr/experiments/0164-corrected-study.json.gz": "33a39f7d04161c08f1d3f6f0740fae6f0259997e41f62cfb839ed7db19365572",
+    "docs/adr/experiments/0164-result-summary.json": "427bb8dd444935ebdfb8a003566b27162b94a88a8a56cd911b61dc647c7c9201",
+    "docs/adr/experiments/0164-saved-summary-analysis.txt": "4576735f1e49fe170cd853ad52dc0c43dae110994bf61880c61f47329c9878f9",
+    "docs/adr/experiments/0164-study-attempt.json": "38167214b7839e350eb2cb38338dcbd138cde609462e15a9745bf29d0b0f4115",
+    "docs/adr/experiments/0164-study-parent-attempt.json": "76439e3ebad93d97efbfead80c02569a473f142104c4a7db29749338ff15d7dd",
+    "docs/adr/experiments/0164-study-parent-receipt.json": "672f45c711c544c9d1d14110c887d1d0c5b40833a783284ab6ab2b724206a487",
+    "docs/adr/experiments/0164-study-receipt.json": "064747667975e8ccd10179455ae0c0f24c9f1a39e59855525556c08a4e836a66"
+  },
+  "archives": {
+    "study": {
+      "path": "docs/adr/experiments/0164-corrected-study.json.gz",
+      "compressed_bytes": 5038392,
+      "compressed_sha256": "33a39f7d04161c08f1d3f6f0740fae6f0259997e41f62cfb839ed7db19365572",
+      "uncompressed_bytes": 25051806,
+      "uncompressed_sha256": "ddebc41daa32141a57c3e9d9d1addb216a20864a0d68a32a78102dfb15781b82",
+      "lossless_original_utf8_bytes": true
+    },
+    "audit": {
+      "path": "docs/adr/experiments/0164-corrected-audit.json.gz",
+      "compressed_bytes": 11269,
+      "compressed_sha256": "4891768a5ae12b194f7f3b89dcc4da3da79007b0092f73153b1e35ab63ec0eb1",
+      "uncompressed_bytes": 2348630,
+      "uncompressed_sha256": "3312a43b417a6af0248fa98c3d0b00d74a51d3f6c4603a0e3596bdfe5c6a5288",
+      "lossless_original_utf8_bytes": true
+    }
+  },
+  "document_sha256": {
+    "CURRENT_STATE.md": "12ec384461cb5147ceb0d739bda5fb860297dba790caaa6b215376e661ce7373",
+    "docs/adr/README.md": "9c586e12a45362b45e34cb7c2df0e2892844d72b09320cfda20dd608e4dd51ea",
+    "openspec/ROADMAP.md": "aea148cb3d5b4aa7fef27096bebb01f618a40f3fd470b35377ab7953ec42cbf8",
+    "openspec/changes/refine-physical-trajectory/design.md": "6934da3aa81dc4d5acbd5ea6ed4b232a4c461f416b41c45f6b1aeade750313a3",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "d9170b4d8ea6a9405886f22657a8322404fcc5b8fbc38c80f6c75dc89f4caf26",
+    "docs/adr/0164-corrected-coast-force-gate-fails.md": "befae2f91b65806a69f61782c1b08cbdf54add8432f4a8f47a564215e9cb1291"
+  },
+  "checks": {
+    "git_diff_check": {
+      "command": [
+        "/opt/homebrew/bin/git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "strict_openspec": {
+      "command": [
+        "/opt/homebrew/bin/openspec",
+        "validate",
+        "refine-physical-trajectory",
+        "--strict"
+      ],
+      "returncode": 0,
+      "stdout": "Change 'refine-physical-trajectory' is valid\n",
+      "stderr": ""
+    }
+  },
+  "finite_duplicate_free_json_files": 11,
+  "local_links_checked": 256,
+  "local_links": [
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0119-positive-ideal-m2-reference.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0116-quadratic-steering-stagnates-at-bounds.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0148-short-coast-oracle-rhs-limit.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0149-oracle-time-precision-diagnosis.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0150-synthetic-step-trace-and-binary-localization.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0151-frozen-stage-error-attribution.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0129-reference-coast-verification-passes.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0152-compensated-synthetic-time-validation.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0154-resume-real-ephemeris-verification.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0155-real-ephemeris-time-boundary-passes.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0157-prepare-fixed-state-gravity-check.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0158-fixed-position-real-gravity-passes.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0160-prepare-moving-coordinate-check.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0161-moving-coordinate-arithmetic-passes.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0162-corrected-real-integration-contract.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0163-prepare-corrected-integration.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/0164-corrected-coast-force-gate-fails.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "openspec/ROADMAP.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "openspec/changes/refine-physical-trajectory/tasks.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "AGENTS.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/adr/README.md"
+    },
+    {
+      "from": "CURRENT_STATE.md",
+      "to": "docs/demo-audit.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/ADR_TEMPLATE.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0164-corrected-coast-force-gate-fails.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0163-prepare-corrected-integration.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0162-corrected-real-integration-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0161-moving-coordinate-arithmetic-passes.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0160-prepare-moving-coordinate-check.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0159-moving-coordinate-assembly-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0158-fixed-position-real-gravity-passes.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0157-prepare-fixed-state-gravity-check.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0156-fixed-state-real-gravity-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0155-real-ephemeris-time-boundary-passes.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0154-resume-real-ephemeris-verification.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0153-real-ephemeris-time-boundary.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0152-compensated-synthetic-time-validation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0151-frozen-stage-error-attribution.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0150-synthetic-step-trace-and-binary-localization.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0149-oracle-time-precision-diagnosis.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0148-short-coast-oracle-rhs-limit.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0147-short-coast-preparation-review.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0146-offline-audit-orchestration.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0145-independent-evidence-input-and-file-identity.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0144-independent-saved-node-arithmetic.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0143-independent-saved-evidence-audit-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0142-short-coast-orchestration-and-evidence.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0141-short-coast-input-and-runtime-identity.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0140-native-short-coast-adapter.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0139-pinned-native-api-readiness.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0138-independent-short-coast-oracle.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0137-short-coast-earth-gravity-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0136-retained-boundaries-pass-arithmetic.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0135-fixed-orbit-boundary-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0134-boundary-evidence-reuse.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0133-three-epoch-gravity-screening.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0132-gravity-screening-preparation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0131-screen-omitted-gravity-at-fixed-epochs.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0130-full-regression-after-reference-verification.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0129-reference-coast-verification-passes.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0128-reference-coast-verifier-ready.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0127-reference-coast-verification-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0126-propose-reference-coast-verification.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0125-research-export-and-usable-path.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0124-oem-reader-and-research-profile-ready.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0123-traceable-result-and-oem-profile.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0122-independent-elliptic-coast-passes.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0121-elliptic-benchmark-preparation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0120-independent-elliptic-coast-benchmark.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0119-positive-ideal-m2-reference.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0118-m2-reference-and-historical-data-readiness.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0117-mission-first-demonstration-priority.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0116-quadratic-steering-stagnates-at-bounds.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0115-bezier-targeting-implementation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0114-quadratic-steering-freedom.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0113-bound-aware-targeting-hits-budget.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0112-bound-aware-targeting-implementation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0111-bound-aware-local-targeting.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0110-local-steering-improves-without-closure.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0109-local-steering-targeting-implementation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0108-bounded-local-steering-targeting.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0107-local-burn-misses-analytic-target.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0106-local-finite-burn-implementation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0105-local-finite-burn-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0104-lunar-reference-has-two-geometric-branches.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0103-lunar-departure-geometry-implementation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0102-consistent-lunar-departure-design.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0101-central-fractions-do-not-improve.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0100-central-damping-implementation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0099-central-direction-damping-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0098-central-correction-does-not-improve.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0097-central-correction-implementation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0096-single-central-correction-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0095-central-columns-match-local-response.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0094-central-column-implementation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0093-central-column-study-proposal.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0092-local-response-disagrees-with-jacobian.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0091-local-response-implementation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0090-local-response-study-contract.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0089-local-response-diagnosis.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0088-damping-does-not-improve.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0087-retained-direction-damping.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0001-inventory-runtime-investigation.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0002-exact-harmonic-input-duplicate.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0003-local-harmonic-reuse.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0004-separate-harmonic-tail.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0005-fresh-full-force-ledger.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0006-point-gravity-intervals.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0007-fresh-point-gravity-binding.md"
+    },
+    {
+      "from": "docs/adr/README.md",
+      "to": "docs/adr/0008-source-allowance-coverage.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0137-short-coast-earth-gravity-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0138-independent-short-coast-oracle.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0140-native-short-coast-adapter.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0141-short-coast-input-and-runtime-identity.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0142-short-coast-orchestration-and-evidence.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0143-independent-saved-evidence-audit-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0144-independent-saved-node-arithmetic.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0145-independent-evidence-input-and-file-identity.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0146-offline-audit-orchestration.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0147-short-coast-preparation-review.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0148-short-coast-oracle-rhs-limit.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0149-oracle-time-precision-diagnosis.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0150-synthetic-step-trace-and-binary-localization.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0151-frozen-stage-error-attribution.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0152-compensated-synthetic-time-validation.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0153-real-ephemeris-time-boundary.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0154-resume-real-ephemeris-verification.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0155-real-ephemeris-time-boundary-passes.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0139-pinned-native-api-readiness.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0156-fixed-state-real-gravity-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0157-prepare-fixed-state-gravity-check.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0158-fixed-position-real-gravity-passes.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0159-moving-coordinate-assembly-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0160-prepare-moving-coordinate-check.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0161-moving-coordinate-arithmetic-passes.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0162-corrected-real-integration-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0163-prepare-corrected-integration.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0164-corrected-coast-force-gate-fails.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0134-boundary-evidence-reuse.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0135-fixed-orbit-boundary-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0136-retained-boundaries-pass-arithmetic.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0131-screen-omitted-gravity-at-fixed-epochs.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0133-three-epoch-gravity-screening.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0117-mission-first-demonstration-priority.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "CURRENT_STATE.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/roadmap-history-2026-09-16.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/README.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0118-m2-reference-and-historical-data-readiness.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0119-positive-ideal-m2-reference.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0126-propose-reference-coast-verification.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0127-reference-coast-verification-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0128-reference-coast-verifier-ready.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0129-reference-coast-verification-passes.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0130-full-regression-after-reference-verification.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0105-local-finite-burn-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0106-local-finite-burn-implementation.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0107-local-burn-misses-analytic-target.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0108-bounded-local-steering-targeting.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0109-local-steering-targeting-implementation.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0110-local-steering-improves-without-closure.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0111-bound-aware-local-targeting.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0112-bound-aware-targeting-implementation.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0113-bound-aware-targeting-hits-budget.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0114-quadratic-steering-freedom.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0115-bezier-targeting-implementation.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0116-quadratic-steering-stagnates-at-bounds.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/demo-audit.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0081-research-reproducibility.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0082-identical-start-coast.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0083-coast-step-study.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0086-targeting-step-does-not-improve.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0088-damping-does-not-improve.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0089-local-response-diagnosis.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0090-local-response-study-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0091-local-response-implementation.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0092-local-response-disagrees-with-jacobian.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0093-central-column-study-proposal.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0094-central-column-implementation.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0095-central-columns-match-local-response.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0096-single-central-correction-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0097-central-correction-implementation.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0098-central-correction-does-not-improve.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0099-central-direction-damping-contract.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0100-central-damping-implementation.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0101-central-fractions-do-not-improve.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0102-consistent-lunar-departure-design.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0103-lunar-departure-geometry-implementation.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0104-lunar-reference-has-two-geometric-branches.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "docs/adr/0087-retained-direction-damping.md"
+    },
+    {
+      "from": "openspec/ROADMAP.md",
+      "to": "openspec/deferred/optional-object-analysis/spec.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0117-mission-first-demonstration-priority.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0118-m2-reference-and-historical-data-readiness.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0119-positive-ideal-m2-reference.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0120-independent-elliptic-coast-benchmark.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0121-elliptic-benchmark-preparation.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0122-independent-elliptic-coast-passes.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0123-traceable-result-and-oem-profile.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "openspec/changes/refine-physical-trajectory/specs/traceable-trajectory-result/spec.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0124-oem-reader-and-research-profile-ready.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0114-quadratic-steering-freedom.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0115-bezier-targeting-implementation.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0116-quadratic-steering-stagnates-at-bounds.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0111-bound-aware-local-targeting.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0112-bound-aware-targeting-implementation.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0113-bound-aware-targeting-hits-budget.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0109-local-steering-targeting-implementation.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0110-local-steering-improves-without-closure.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0125-research-export-and-usable-path.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0126-propose-reference-coast-verification.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0127-reference-coast-verification-contract.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0128-reference-coast-verifier-ready.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0129-reference-coast-verification-passes.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0131-screen-omitted-gravity-at-fixed-epochs.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0132-gravity-screening-preparation.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0137-short-coast-earth-gravity-contract.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "openspec/changes/refine-physical-trajectory/specs/short-coast-sensitivity/spec.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0153-real-ephemeris-time-boundary.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0154-resume-real-ephemeris-verification.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0155-real-ephemeris-time-boundary-passes.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0156-fixed-state-real-gravity-contract.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0157-prepare-fixed-state-gravity-check.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0158-fixed-position-real-gravity-passes.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0159-moving-coordinate-assembly-contract.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0160-prepare-moving-coordinate-check.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0161-moving-coordinate-arithmetic-passes.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0162-corrected-real-integration-contract.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0163-prepare-corrected-integration.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/design.md",
+      "to": "docs/adr/0164-corrected-coast-force-gate-fails.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/tasks.md",
+      "to": "docs/adr/0118-m2-reference-and-historical-data-readiness.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/tasks.md",
+      "to": "docs/adr/0119-positive-ideal-m2-reference.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/tasks.md",
+      "to": "docs/adr/0120-independent-elliptic-coast-benchmark.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/tasks.md",
+      "to": "docs/adr/0121-elliptic-benchmark-preparation.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/tasks.md",
+      "to": "docs/adr/0122-independent-elliptic-coast-passes.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/tasks.md",
+      "to": "docs/adr/0082-identical-start-coast.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/tasks.md",
+      "to": "docs/adr/0081-research-reproducibility.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/tasks.md",
+      "to": "docs/adr/0080-seed-and-integration-diagnosis.md"
+    },
+    {
+      "from": "openspec/changes/refine-physical-trajectory/tasks.md",
+      "to": "docs/adr/0079-research-reference.md"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "openspec/changes/refine-physical-trajectory/specs/short-coast-sensitivity/spec.md"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "openspec/changes/refine-physical-trajectory/design.md"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "openspec/changes/refine-physical-trajectory/tasks.md"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/0162-corrected-real-integration-contract.md"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/0163-prepare-corrected-integration.md"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-corrected-invocation.txt"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-baseline.json"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-corrected-study.json.gz"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-corrected-audit.json.gz"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-study-receipt.json"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-audit-receipt.json"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-study-attempt.json"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-study-parent-attempt.json"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-study-parent-receipt.json"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-audit-parent-attempt.json"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-audit-parent-receipt.json"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-result-summary.json"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-saved-summary-analysis.txt"
+    },
+    {
+      "from": "docs/adr/0164-corrected-coast-force-gate-fails.md",
+      "to": "docs/adr/experiments/0164-verification.json"
+    }
+  ],
+  "current_state_lines": 59,
+  "full_tests_reused": 6182,
+  "focused_tests_reused": 301,
+  "ruff": "reused ADR0163 pass on unchanged bytes",
+  "runtime_tests_rerun": false,
+  "new_runtime_or_test_or_dependency_changes": false,
+  "r517_scientific_task_checked": false,
+  "historical_0148_final_identity_repaired": false,
+  "strict_m3_closed": false,
+  "earth_sensitivity_verified": false,
+  "mission_safety_verified": false,
+  "automation": "PAUSED; unchanged",
+  "study_or_audit_replayed_during_review": false
+}

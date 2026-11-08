@@ -1,0 +1,213 @@
+"""Saved-data review and lossless archival only; no scientific helper execution."""
+from collections import Counter
+from decimal import Decimal, localcontext
+import gzip
+from hashlib import sha256
+import json
+import math
+from pathlib import Path
+import shutil
+
+ROOT = Path('/Users/agrudin/dev/my/ariadna')
+DEST = ROOT/'docs/adr/experiments'
+TEMP = Path('/private/tmp')
+BASE = 'e3d07ed19b1cca06484947087a1dc83d637141c7'
+
+def parse(raw):
+    def pairs(items):
+        result = {}
+        for key, value in items:
+            assert key not in result, ('duplicate key', key)
+            result[key] = value
+        return result
+    def invalid(value):
+        raise AssertionError(('nonfinite JSON constant', value))
+    value = json.loads(raw, object_pairs_hook=pairs, parse_constant=invalid)
+    def finite(item):
+        if isinstance(item, dict):
+            for v in item.values():
+                finite(v)
+        elif isinstance(item, list):
+            for v in item:
+                finite(v)
+        elif type(item) is float:
+            assert math.isfinite(item)
+    finite(value)
+    return value
+
+baseline_raw = (TEMP/'ariadna-0164-baseline.json').read_bytes()
+baseline = parse(baseline_raw)
+assert baseline['base_revision'] == BASE and len(baseline['tracked_sha256']) == 640
+assert all(sha256((ROOT/name).read_bytes()).hexdigest() == digest
+           for name,digest in baseline['tracked_sha256'].items())
+manifest_raw = (DEST/'0163-verification.json').read_bytes()
+assert sha256(manifest_raw).hexdigest() == '518eea292547b4bfc4a379e3e8a2ce63632d49fcdef2761d504d09a34d485844'
+manifest = parse(manifest_raw)
+study_raw = (TEMP/'ariadna-0164-corrected-study.json').read_bytes()
+audit_raw = (TEMP/'ariadna-0164-corrected-audit.json').read_bytes()
+study, audit = parse(study_raw), parse(audit_raw)
+assert sha256(study_raw).hexdigest() == 'ddebc41daa32141a57c3e9d9d1addb216a20864a0d68a32a78102dfb15781b82'
+assert sha256(audit_raw).hexdigest() == '3312a43b417a6af0248fa98c3d0b00d74a51d3f6c4603a0e3596bdfe5c6a5288'
+assert study['status'] == 'failed' and study['finalization_gate'] == 'passed'
+assert audit['audit_status'] == 'partial' and audit['scientific_verified'] is False
+assert audit['finalization_gate'] == 'passed' and 'error' not in audit
+assert audit['evidence_sha256'] == sha256(study_raw).hexdigest()
+assert study['error'] == {'stage':'selected-force-reference','type':'ValueError',
+    'message':'required force/precision/telescope gate: Moon'}
+assert study['adapter_mode'] == audit['adapter_mode'] == 'reference'
+assert set(study['identities']) == {'before'}
+assert study['identities']['before']['kernels']['loaded_kernel_count'] == 13
+assert len(study['rhs']) == 5132 and len(study['trials']) == 424
+assert len(study['node_table']) == 7 and len(study['native_guards']) == 42
+assert len(study['comparisons']) == 21 and all(c['assessment']['passed'] for c in study['comparisons'])
+assert len(study['observations']) == 14
+assert sum('assessment' in o for o in study['observations']) == 13
+assert all(o['assessment']['passed'] for o in study['observations'] if 'assessment' in o)
+last = study['observations'][-1]
+assert (last['profile'],last['kind'],last['index']) == ('normal','rhs',6)
+row = [r for r in study['rhs'] if r['profile'] == 'normal' and r['index'] == 6][0]
+assert row['elapsed_s'] == .25 and row['lo_s'] == 0
+moon = last['progress']['sources']['Moon']
+assert moon['passed'] is False and moon['precision']['passed']
+for precision in ('80','100'):
+    assert moon['gates'][precision]['overall']['passed'] is False
+    assert moon['gates'][precision]['returned_geometry']['passed']
+    assert moon['telescope'][precision]['passed']
+assert last['progress']['motion']['passed']
+assert all(b['source_assessment']['passed'] and b['geometry_error_identity'] and all(b['domain_guards'].values())
+           for b in last['progress']['bodies'].values())
+for operation, expected in [('rhs',5132),('trials',424),('binary64_fields',10292),
+    ('body_checks',42),('reference_fields',224),('model_totals',13),('native_guards',42)]:
+    for report in (study,audit):
+        counts = report['counts'][operation]
+        assert counts['attempted'] == counts['completed'] == expected
+for report in (study,audit):
+    assert report['counts']['source_rows']['attempted'] == 28
+    assert report['counts']['source_rows']['completed'] == 27
+assert study['counts']['states'] == {'attempted':15417,'returned':15417,'completed':15417}
+assert study['counts']['solves'] == {'attempted':2,'returned':2,'completed':2}
+assert study['counts']['initializations'] == {'attempted':1,'returned':1,'completed':1}
+assert study['counts']['metadata'] == {'attempted':15,'returned':15,'completed':15}
+assert len(study['native_metadata_returns']) == 16
+assert all(study[k] == 0 for k in ('native_propagations','gm_acquisitions','optimizer_calls'))
+assert all(audit[k] == 0 for k in ('native_calls','scientific_imports','kernel_loads','spacecraft_propagations'))
+
+profiles = []
+for profile in study['profiles']:
+    name = profile['name']
+    rhs = [r for r in study['rhs'] if r['profile'] == name]
+    trials = [t for t in study['trials'] if t['profile'] == name]
+    assert profile['raw_returned']['success'] is True and len(profile['outputs']) == 7
+    assert profile['raw_returned']['t'] == [0.,50.,100.,150.,200.,250.,300.]
+    assert profile['solver_state']['status'] == 'finished' and profile['solver_state']['t_s'] == 300.
+    assert len(rhs) == profile['raw_returned']['nfev'] and any(r['lo_s'] != 0 for r in rhs[:7])
+    assert all(t['decision'] in ('accepted','rejected') for t in trials)
+    profiles.append({'name':name,'rhs_completed':len(rhs),'trials':len(trials),
+        'accepted':sum(t['accepted'] for t in trials),'rejected':sum(not t['accepted'] for t in trials),
+        'final_local_time_s':300.,'first_seven_low_epochs_s':[r['lo_s'] for r in rhs[:7]],
+        'final_actual_correction':profile['raw_returned']['y'] and [v[-1] for v in profile['raw_returned']['y']],
+        'final_correction_units':['m','m','m','m/s','m/s','m/s']})
+comparisons = {}
+for name in ('native_step','native_tighter','oracle_step'):
+    selected = [c for c in study['comparisons'] if c['name'] == name]
+    assert len(selected) == 7
+    comparisons[name] = {'count':7,'all_passed':True,
+        'max_position_error_m':str(max(Decimal(c['assessment']['position_error_m']) for c in selected)),
+        'max_velocity_error_m_s':str(max(Decimal(c['assessment']['velocity_error_m_s']) for c in selected)),
+        'position_limit_m':selected[0]['assessment']['position_limit_m'],
+        'velocity_limit_m_s':selected[0]['assessment']['velocity_limit_m_s']}
+gate = moon['gates']['100']['overall']
+with localcontext() as ctx:
+    ctx.prec = 100
+    ratio = Decimal(gate['error_norm_m_s2'])/Decimal(gate['envelope_m_s2'])
+
+copies = {
+    'ariadna-0164-invocation.txt':'0164-corrected-invocation.txt',
+    'ariadna-0164-archive.py':'0164-saved-summary-analysis.txt',
+    'ariadna-0164-baseline.json':'0164-baseline.json',
+    'ariadna-0164-corrected-study.attempt.json':'0164-study-attempt.json',
+    'ariadna-0164-corrected-study.receipt.json':'0164-study-receipt.json',
+    'ariadna-0164-corrected-audit.receipt.json':'0164-audit-receipt.json',
+    'ariadna-0164-study-parent-attempt.json':'0164-study-parent-attempt.json',
+    'ariadna-0164-study-parent-receipt.json':'0164-study-parent-receipt.json',
+    'ariadna-0164-audit-parent-attempt.json':'0164-audit-parent-attempt.json',
+    'ariadna-0164-audit-parent-receipt.json':'0164-audit-parent-receipt.json',
+}
+parents = {}
+for mode in ('study','audit'):
+    parent = parse((TEMP/('ariadna-0164-'+mode+'-parent-receipt.json')).read_bytes())
+    assert parent['returncode'] == 2 and parent['stderr'] == ''
+    assert parent['frozen_checkout_unchanged'] and parent['git_status_after'] == ''
+    assert parent['frozen_checkout_files'] == 640 and parent['external_time_gate']
+    assert parent['tested_source_sha256'] == manifest['tested_source_sha256']
+    output_raw = study_raw if mode == 'study' else audit_raw
+    assert parent['output_sha256'] == sha256(output_raw).hexdigest()
+    assert parent['invocation_sha256'] == sha256((TEMP/'ariadna-0164-invocation.txt').read_bytes()).hexdigest()
+    assert parent['parent_marker_sha256'] == sha256((TEMP/('ariadna-0164-'+mode+'-parent-attempt.json')).read_bytes()).hexdigest()
+    parents[mode] = parent
+study_receipt = parse((TEMP/'ariadna-0164-corrected-study.receipt.json').read_bytes())
+audit_receipt = parse((TEMP/'ariadna-0164-corrected-audit.receipt.json').read_bytes())
+assert study_receipt['status'] == 'failed' and study_receipt['finalization_gate'] == 'passed'
+assert study['elapsed_before_flush_s'] <= study_receipt['elapsed_s'] < parents['study']['process_elapsed_s'] < 60
+assert audit_receipt['evidence_sha256'] == sha256(audit_raw).hexdigest()
+assert audit_receipt['finalization_gate'] == 'passed'
+assert audit['elapsed_before_flush_s'] <= audit_receipt['elapsed_s'] < parents['audit']['process_elapsed_s'] < 10
+
+artifacts, archives = {}, {}
+for mode, raw in (('study',study_raw),('audit',audit_raw)):
+    name = '0164-corrected-'+mode+'.json.gz'
+    data = gzip.compress(raw, compresslevel=9, mtime=0)
+    assert gzip.decompress(data) == raw
+    with (DEST/name).open('xb') as stream:
+        stream.write(data)
+    artifacts['docs/adr/experiments/'+name] = sha256(data).hexdigest()
+    archives[mode] = {'path':'docs/adr/experiments/'+name,'compressed_bytes':len(data),
+        'compressed_sha256':sha256(data).hexdigest(),'uncompressed_bytes':len(raw),
+        'uncompressed_sha256':sha256(raw).hexdigest(),'lossless_original_utf8_bytes':True}
+for old, new in copies.items():
+    raw = (TEMP/old).read_bytes()
+    if new.endswith('.json'):
+        parse(raw)
+    with (DEST/new).open('xb') as stream:
+        stream.write(raw)
+    artifacts['docs/adr/experiments/'+new] = sha256(raw).hexdigest()
+summary = {'stage':'R5.17 once-only execution consumed; scientific qualification failed',
+    'date':'2026-11-09','timezone':'Europe/Samara','base_revision':BASE,
+    'study_attempts':1,'separate_audit_attempts':1,'retries':0,
+    'study_status':study['status'],'audit_status':audit['audit_status'],
+    'scientific_verified':False,'first_study_error':study['error'],
+    'finalization_gates':{'study':study['finalization_gate'],'audit':audit['finalization_gate']},
+    'external_process_elapsed_s':{m:p['process_elapsed_s'] for m,p in parents.items()},
+    'inclusive_receipt_elapsed_s':{'study':study_receipt['elapsed_s'],'audit':audit_receipt['elapsed_s']},
+    'study_counts':study['counts'],'audit_counts':audit['counts'],'profiles':profiles,
+    'trajectory_comparisons':comparisons,
+    'sampled_reference':{'observations_attempted':14,'observations_completed':13,'required_for_success':28,
+        'failure_sample':{'profile':'normal','kind':'rhs','ordinal':6,'elapsed_s':.25,'lo_s':0.,
+            'hi_tdb_s':row['hi_tdb_s'],'actual_correction':row['correction'],
+            'overall_force_gates':moon['gates'],'error_to_envelope_ratio_100digits':str(ratio),
+            'precision':moon['precision'],'telescope':moon['telescope'],
+            'contributions_100digits_m_s2':moon['contributions_m_s2']['100'],
+            'moon_source_position_error_m':last['progress']['bodies']['Moon']['source_assessment']['position_error_norm_m'],
+            'moon_source_velocity_error_m_s':last['progress']['bodies']['Moon']['source_assessment']['velocity_error_norm_m_s'],
+            'source_state_parity_passed':True,'motion_and_component_guards_passed':True},
+        'tighter_high_precision_checks':'unavailable; validation stopped on normal RHS ordinal6',
+        'failed_sample_A_total':'unavailable; Moon source failed before total'},
+    'identity_before_passed':True,'identity_after':'unavailable; stopped before final snapshot',
+    'historical_0148_final_identity_repaired':False,
+    'audit_snapshot_checks':audit['snapshot_checks'],
+    'audit_zero_work':{k:audit[k] for k in ('native_calls','scientific_imports','kernel_loads','spacecraft_propagations')},
+    'new_native_propagations':0,'new_gm_lookups':0,'optimizer_calls':0,
+    'full_tests_reused':6182,'focused_tests_reused':301,'tests_and_ruff_rerun':False,
+    'unchanged_tested_source_sha256':manifest['tested_source_sha256'],
+    'preparation_manifest_sha256':sha256(manifest_raw).hexdigest(),
+    'frozen_checkout_files':640,'frozen_checkout_across_both_processes':True,
+    'archives':archives,'archival_artifact_sha256':artifacts,
+    'interpretation':'Both solves and sampled trajectory comparisons complete; source-inclusive Moon force qualification fails. Source discrepancy attribution is observed, its underlying cause unproven.',
+    'strict_m3_closed':False,'earth_sensitivity_verified':False,'mission_safety_verified':False,
+    'automation':'PAUSED; unchanged',
+    'next':'Read-only saved-source discrepancy diagnosis and a separate justified contract before any further scientific execution; no replay/tuning under ADR0162.'}
+with (DEST/'0164-result-summary.json').open('x') as stream:
+    json.dump(summary,stream,indent=2,allow_nan=False)
+    stream.write('\n')
+print(json.dumps({'archives':archives,'profile_counts':profiles,'failure_ratio':str(ratio),
+    'artifacts_retained':len(artifacts)+1,'all_saved_data_assertions':'passed'},indent=2))

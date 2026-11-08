@@ -1,0 +1,37 @@
+{
+  "returncode": 2,
+  "stdout": "{\"audit_status\": \"partial\", \"scientific_verified\": false, \"adapter_mode\": \"reference\", \"counts\": {\"rhs\": {\"attempted\": 5132, \"completed\": 5132}, \"trials\": {\"attempted\": 424, \"completed\": 424}, \"binary64_fields\": {\"attempted\": 10292, \"completed\": 10292}, \"body_checks\": {\"attempted\": 42, \"completed\": 42}, \"source_rows\": {\"attempted\": 28, \"completed\": 27}, \"reference_fields\": {\"attempted\": 224, \"completed\": 224}, \"model_totals\": {\"attempted\": 13, \"completed\": 13}, \"native_guards\": {\"attempted\": 42, \"completed\": 42}}, \"finalization_gate\": \"passed\", \"elapsed_before_flush_s\": 1.5797519581392407}\n",
+  "stderr": "",
+  "mode": "audit",
+  "base_revision": "e3d07ed19b1cca06484947087a1dc83d637141c7",
+  "started_utc": "2026-11-08T20:34:40.393068+00:00",
+  "process_elapsed_s": 1.6426147911697626,
+  "external_budget_s": 10.0,
+  "external_time_gate": true,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0163-corrected-audit.py": "18d8bcae5f544f5176be5c9070e7cfc4fc00accadc634dee45ea952e4c265bc5",
+    "docs/adr/experiments/0163-corrected-inputs.py": "329067092b86c853ae909cac71076b74ede7fa321c67501237e714c381e5ce9c",
+    "docs/adr/experiments/0163-corrected-integrator.py": "fbc8411ca6d8ad3ebde72563d8b4134f9d5e2d2235e5441f945e4aa10873efed",
+    "docs/adr/experiments/0163-corrected-reference.py": "2500e52496289cc75c93dba8825cd222d70f56cc97f48171b8e01328fe2bde65",
+    "docs/adr/experiments/0163-corrected-study.py": "df695319272f270065c6e03928872d604a40e11100b7c860a52f00ef2c8fdefa",
+    "tests/test_corrected_audit.py": "21caa009eb80f910e31fb888a731df476c15f82140758f41e8bfe3d3742c1486",
+    "tests/test_corrected_inputs.py": "047d2784d3a30c6b79e1d8c4faf399e250179ba4844fab8aede9e872a6a0f2b4",
+    "tests/test_corrected_integrator.py": "13e3929337a0cef8e63c93892f40901436dab847a379c8d78bdc6872fa5d4677",
+    "tests/test_corrected_reference.py": "1cd8ea722b39fddfc9190a089d5a41f3e015fd29a207289c0d94072f958f1350",
+    "tests/test_corrected_study.py": "b87f5c86678a643facada7874d288a4a222feb3828fe416a8d3e04cab45387c6"
+  },
+  "preparation_manifest_sha256": "518eea292547b4bfc4a379e3e8a2ce63632d49fcdef2761d504d09a34d485844",
+  "python": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+  "child_flags": [
+    "-I",
+    "-S",
+    "-B"
+  ],
+  "start_capture": "parent monotonic immediately before child creation; passed unchanged",
+  "invocation_sha256": "5b66295a1dac8a583749a9bf6c693c4d2f68a9b077acf676dc8e2d08d3be6f75",
+  "parent_marker_sha256": "f1b543829a9e4a6a12cbd3ea080cc33269cc5cd9ce432a205afd7d4207ce50a8",
+  "output_sha256": "3312a43b417a6af0248fa98c3d0b00d74a51d3f6c4603a0e3596bdfe5c6a5288",
+  "frozen_checkout_files": 640,
+  "frozen_checkout_unchanged": true,
+  "git_status_after": ""
+}
