@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0157 — Prepare fixed-position gravity check](0157-prepare-fixed-state-gravity-check.md) — R5.10 complete;221 new/5630 full tests, Ruff/strict OpenSpec and input-only preflight pass; no R5.11 real-source force execution.
 - [0156 — Fixed-position real-source gravity contract](0156-fixed-state-real-gravity-contract.md) — design only;21 saved sources, both unchanged force gates, four signed error terms and zero-native10s budget; implementation/execution pending.
 - [0155 — Real ephemeris time boundary passes](0155-real-ephemeris-time-boundary-passes.md) — all21 sampled states/gates pass;84 returns reconciled; max increment1.5152e-17m, source discrepancy11.4um retained; no force/solve qualification.
 - [0154 — Resume real ephemeris verification](0154-resume-real-ephemeris-verification.md) — exact pending bytes restored; readiness passes132.76s/300s,90 focused and5409 full tests pass; source-only acquisition eligible, unexecuted.

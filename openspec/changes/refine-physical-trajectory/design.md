@@ -6081,3 +6081,18 @@ Preparation precedes one future zero-native10s/21-row/168-reference-field study
 and separate10s saved-data audit. This stage specifies only the contract; code,
 force errors and execution are pending. No moving-spacecraft drift/correction
 assembly, corrected solve, R5 replay, strict M3 closure or automation restart.
+
+
+## R5.10 fixed-position force preparation verified (2026-11-08)
+
+[ADR0157](../../../docs/adr/0157-prepare-fixed-state-gravity-check.md) prepares
+private input, binary64 calculator, independent Fraction/Decimal reference and
+saved-data audit modules under unchanged ADR0156 gates. Both required force gates,
+signed decomposition, cancellation scales, exact operation prefixes, partial
+field/model retention, checked-byte imports and bounded exclusive output are
+covered by221 new synthetic/component tests;5630 full tests/Ruff/strict OpenSpec
+pass with frozen checkout/eight source hashes and338 protected files unchanged.
+A fresh21-row metadata preflight performs zero force/native/propagation work.
+No R5.11 execution, real-force result, corrected integration or R5 replay. Bind
+these tested hashes before a separately authorized retained study; automation
+remains PAUSED and strict M3 remains open.

@@ -99,6 +99,15 @@ or integration in this stage. Next: R5.10 implementation/preparation with tests;
 R5.11 execution remains pending, failed R5.3 and strict M3 stay open. Automation
 remains PAUSED; no failed-reference replay is authorized.
 
+[ADR0157](../docs/adr/0157-prepare-fixed-state-gravity-check.md) completes R5.10
+preparation:221 new/5630 full tests, repository Ruff and strict OpenSpec pass;
+eight tested source hashes/frozen checkout and338 protected files unchanged.
+Input-only21-row preflight makes zero force/native calls. Calculator/reference /
+auditor preserve signed errors, both force gates and partial evidence. Next is
+separately authorized R5.11 with these exact tested hashes, unchanged10s budgets
+and no replay. Real force errors and experiment feasibility remain unmeasured;
+automation PAUSED, failed R5.3 and strict M3 remain open.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

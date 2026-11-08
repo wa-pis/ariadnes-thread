@@ -49,10 +49,10 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0154](docs/adr/0154-resume-real-ephemeris-verification.md): readiness/90 focused/5409 full pass, exact restored sources/gates unchanged.
 [ADR0155](docs/adr/0155-real-ephemeris-time-boundary-passes.md):21 real source states/all gates pass;84 returns audited; same-model arithmetic only.
 Max increment1.5153e-17m; source discrepancy11.4um retained.
-[ADR0156](docs/adr/0156-fixed-state-real-gravity-contract.md): R5.9 fixed-position force contract specified; no force computation/solve/replay.
-Next: R5.10 preparation/tests, then separate R5.11 execution. Automation PAUSED.
+[ADR0156](docs/adr/0156-fixed-state-real-gravity-contract.md): R5.9 fixed-position contract; unchanged force gates/data.
+[ADR0157](docs/adr/0157-prepare-fixed-state-gravity-check.md): R5.10 ready;221 new/5630 full tests/Ruff/strict OpenSpec pass;338 protected files unchanged.
+Next: separately authorized R5.11, binding tested hashes; no real-force study/solve/replay yet. Automation PAUSED.
 ## Boundaries and references
-
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.
 - [Roadmap](openspec/ROADMAP.md), [active tasks](openspec/changes/refine-physical-trajectory/tasks.md), [requirements](openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md).
