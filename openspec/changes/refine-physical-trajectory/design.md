@@ -6096,3 +6096,23 @@ A fresh21-row metadata preflight performs zero force/native/propagation work.
 No R5.11 execution, real-force result, corrected integration or R5 replay. Bind
 these tested hashes before a separately authorized retained study; automation
 remains PAUSED and strict M3 remains open.
+
+
+## R5.11 fixed-position real gravity verified (2026-11-08)
+
+[ADR0158](../../../docs/adr/0158-fixed-position-real-gravity-passes.md) executes
+ADR0156 once using ADR0157's unchanged tested bytes, then a separate saved-data
+audit. Both pass21 source rows/168 Decimal fields/63 binary64 fields/14 model
+totals; all140 required gate flags and147 exterior-domain flags pass. Worst
+overall source ratio0.628793 retains the native source discrepancy; worst total
+ratio0.626164 uses sum-of-source norms. All80/100-digit reference checks and
+classifications agree, signed contributions telescope, and no gate is relaxed.
+Controls remain diagnostic: Sun/Earth pass all seven offsets, Moon and A/B only
+offset zero. Total process intervals0.437204458s/0.344669542s include child
+startup and exit, below the separate10s budgets; zero native calls/scientific imports,
+kernel/GM acquisition, propagation or replay. Eight tested source hashes and338
+older protected files remain unchanged; reuse5630 passing tests/Ruff, checking
+new evidence/docs/strict OpenSpec. Only fixed-X same-INPOP19a-polynomial direct
+SSB arithmetic is verified. Moving-spacecraft drift/correction assembly needs
+a separate contract before any new solve; failed R5.3, strict M3/task3.9 and
+mission fidelity/safety remain open. Automation remains PAUSED.

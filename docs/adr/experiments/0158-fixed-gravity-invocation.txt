@@ -1,0 +1,86 @@
+"""Once-only ADR0156 invocation; select study or saved-data audit explicitly."""
+from hashlib import sha256
+import json
+from pathlib import Path
+import subprocess
+import sys
+from time import monotonic
+from datetime import datetime, timezone
+
+ROOT = Path('/Users/agrudin/dev/my/ariadna')
+PYTHON = '/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python'
+BASE = '1c3921c686f720eba23cdc29e035a054b0fc4c97'
+MANIFEST = '35872b5037270a866a273f3f338c888cd7fbe0a66122743b8fc8323f0846c05f'
+mode = sys.argv[1]
+assert mode in ('study', 'audit')
+manifest_raw = (ROOT / 'docs/adr/experiments/0157-verification.json').read_bytes()
+assert sha256(manifest_raw).hexdigest() == MANIFEST
+manifest = json.loads(manifest_raw)
+for group in ('new_source_sha256', 'protected_sha256'):
+    for name, expected in manifest[group].items():
+        assert sha256((ROOT / name).read_bytes()).hexdigest() == expected, name
+for ref in ('HEAD', 'origin/dev'):
+    assert subprocess.check_output(['git', 'rev-parse', ref], cwd=ROOT, text=True).strip() == BASE
+assert subprocess.check_output(['git', 'branch', '--show-current'], cwd=ROOT, text=True).strip() == 'dev'
+assert subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True) == ''
+output = Path('/private/tmp/ariadna-0158-fixed-gravity-' + mode + '.json')
+receipt = Path('/private/tmp/ariadna-0158-' + mode + '-receipt.json')
+assert not output.exists() and not receipt.exists(), 'exclusive evidence/receipt already exists'
+if mode == 'audit':
+    assert Path('/private/tmp/ariadna-0158-fixed-gravity-study.json').is_file()
+
+CHILD = r'''
+from time import monotonic
+import sys
+start = float(sys.argv[2])
+from hashlib import sha256
+import json
+from pathlib import Path
+from types import ModuleType
+root = Path('/Users/agrudin/dev/my/ariadna')
+raw = (root / 'docs/adr/experiments/0157-verification.json').read_bytes()
+assert sha256(raw).hexdigest() == '35872b5037270a866a273f3f338c888cd7fbe0a66122743b8fc8323f0846c05f'
+manifest = json.loads(raw)
+checked = {}
+for name, expected in manifest['new_source_sha256'].items():
+    source = (root / name).read_bytes()
+    assert sha256(source).hexdigest() == expected, name
+    checked[name] = source
+assert len(checked) == 8 and 0 <= monotonic() - start < 10.0
+mode = sys.argv[1]
+name = 'docs/adr/experiments/0157-fixed-gravity-' + mode + '.py'
+module = ModuleType('r511_' + mode)
+module.__file__ = str(root / name)
+sys.modules[module.__name__] = module
+exec(compile(checked[name], module.__file__, 'exec'), module.__dict__)
+output = Path('/private/tmp/ariadna-0158-fixed-gravity-' + mode + '.json')
+if mode == 'study':
+    result = module.execute(output, root=root, start_s=start)
+    keys = ('status', 'adapter_mode', 'counts', 'finalization_gate', 'elapsed_before_flush_s', 'error', 'first_error')
+else:
+    result = module.audit(Path('/private/tmp/ariadna-0158-fixed-gravity-study.json'), output, root=root, start_s=start)
+    keys = ('audit_status', 'scientific_verified', 'adapter_mode', 'counts', 'finalization_gate', 'elapsed_before_flush_s', 'error')
+print(json.dumps({k: result[k] for k in keys if k in result}, allow_nan=False))
+'''
+started_utc = datetime.now(timezone.utc).isoformat()
+started = monotonic()
+try:
+    completed = subprocess.run([PYTHON, '-I', '-S', '-B', '-c', CHILD, mode, repr(started)],
+                               cwd=ROOT, capture_output=True, text=True, timeout=15, check=False)
+    result = {'returncode': completed.returncode, 'stdout': completed.stdout, 'stderr': completed.stderr}
+except subprocess.TimeoutExpired as exc:
+    result = {'returncode': None, 'watchdog_timeout_s': 15, 'error': str(exc)}
+elapsed = monotonic() - started
+result.update(mode=mode, base_revision=BASE, started_utc=started_utc,
+              process_elapsed_s=elapsed, tested_source_sha256=manifest['new_source_sha256'],
+              protected_file_count=len(manifest['protected_sha256']),
+              manifest_sha256=MANIFEST, python=PYTHON, child_flags=['-I', '-S', '-B'],
+              start_capture='parent monotonic immediately before child creation; passed unchanged',
+              invocation_sha256=sha256(Path(__file__).read_bytes()).hexdigest(),
+              output_sha256=sha256(output.read_bytes()).hexdigest() if output.exists() else None)
+with receipt.open('x', encoding='utf-8') as stream:
+    json.dump(result, stream, allow_nan=False, indent=2)
+    stream.write('\n')
+    stream.flush()
+print(json.dumps(result, allow_nan=False, indent=2))
+raise SystemExit(0 if result['returncode'] == 0 else 1)

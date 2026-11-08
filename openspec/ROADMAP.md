@@ -95,18 +95,29 @@ design: one unchanged saved spacecraft position,21 saved real-source rows and
 R5 GMs; independent signed four-geometry force attribution and both original
 force gates, including the native source discrepancy. Freeze zero-native10s /
 168-reference-field study and separate10s audit budgets. No force computation
-or integration in this stage. Next: R5.10 implementation/preparation with tests;
-R5.11 execution remains pending, failed R5.3 and strict M3 stay open. Automation
-remains PAUSED; no failed-reference replay is authorized.
+or integration occurred in that design stage; R5.10 preparation and R5.11 results
+are recorded below. Failed R5.3 and strict M3 stay open. Automation remains
+PAUSED; no failed-reference replay is authorized.
 
 [ADR0157](../docs/adr/0157-prepare-fixed-state-gravity-check.md) completes R5.10
 preparation:221 new/5630 full tests, repository Ruff and strict OpenSpec pass;
 eight tested source hashes/frozen checkout and338 protected files unchanged.
 Input-only21-row preflight makes zero force/native calls. Calculator/reference /
-auditor preserve signed errors, both force gates and partial evidence. Next is
-separately authorized R5.11 with these exact tested hashes, unchanged10s budgets
-and no replay. Real force errors and experiment feasibility remain unmeasured;
-automation PAUSED, failed R5.3 and strict M3 remain open.
+auditor preserve signed errors, both force gates and partial evidence. This
+prepared the exact tested bytes for R5.11; no force result was measured during
+R5.10. Subsequent R5.11 evidence is recorded below.
+
+[ADR0158](../docs/adr/0158-fixed-position-real-gravity-passes.md) completes R5.11:
+one fixed-X study and one separate saved-data audit pass21 source rows/14 model
+totals, both original force gates, precision/domain/identity/count checks within
+0.437204458s/0.344669542s total process intervals and separate10s budgets. All140
+required gate flags pass; the worst source overall error uses62.8793% of its
+envelope with the source discrepancy retained. Zero native calls, scientific
+imports, propagations or retries. Reuse5630 tests/Ruff on unchanged tested code;
+new evidence/docs pass strict validation and byte/digest/link checks. Next is a
+separately specified moving-spacecraft drift/correction arithmetic check before
+any new solve; no corrected integration or Earth-force trajectory sensitivity
+result exists. Automation PAUSED, failed R5.3 and strict M3 remain open.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

@@ -50,8 +50,8 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0155](docs/adr/0155-real-ephemeris-time-boundary-passes.md):21 real source states/all gates pass;84 returns audited; same-model arithmetic only.
 Max increment1.5153e-17m; source discrepancy11.4um retained.
 [ADR0156](docs/adr/0156-fixed-state-real-gravity-contract.md): R5.9 fixed-position contract; unchanged force gates/data.
-[ADR0157](docs/adr/0157-prepare-fixed-state-gravity-check.md): R5.10 ready;221 new/5630 full tests/Ruff/strict OpenSpec pass;338 protected files unchanged.
-Next: separately authorized R5.11, binding tested hashes; no real-force study/solve/replay yet. Automation PAUSED.
+[ADR0157](docs/adr/0157-prepare-fixed-state-gravity-check.md):221 new/5630 full tests/Ruff reused;8 tested+338 older protected files unchanged.
+[ADR0158](docs/adr/0158-fixed-position-real-gravity-passes.md):R5.11 study/audit pass21 rows/14 totals,0.4372s/0.3447s, zero native calls; fixed-X arithmetic only. Next: specify moving-spacecraft drift/correction arithmetic before any solve; automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.

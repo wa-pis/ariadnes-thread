@@ -1,0 +1,30 @@
+{
+  "returncode": 0,
+  "stdout": "{\"status\": \"passed\", \"adapter_mode\": \"reference\", \"counts\": {\"source_rows\": {\"attempted\": 21, \"completed\": 21}, \"reference_fields\": {\"attempted\": 168, \"completed\": 168}, \"binary64_fields\": {\"attempted\": 63, \"completed\": 63}, \"model_totals\": {\"attempted\": 14, \"completed\": 14}}, \"finalization_gate\": \"passed\", \"elapsed_before_flush_s\": 0.31602774979546666}\n",
+  "stderr": "",
+  "mode": "study",
+  "base_revision": "1c3921c686f720eba23cdc29e035a054b0fc4c97",
+  "started_utc": "2026-11-08T10:53:45.213948+00:00",
+  "process_elapsed_s": 0.4372044578194618,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0157-fixed-gravity-audit.py": "c53cdbe8b556029dac311a3065bf31a07b0211235fa2af2c548a33387a976ef2",
+    "docs/adr/experiments/0157-fixed-gravity-inputs.py": "5592d0295da35351a37795865f5ccaab0bcc64961b2dc0173245bbfe81e20f97",
+    "docs/adr/experiments/0157-fixed-gravity-reference.py": "1337ba2b1fea94381e175603a501ec36b992a2194faf46dea6a3e429a7aef9b8",
+    "docs/adr/experiments/0157-fixed-gravity-study.py": "9bcbfe35e14bdb0f25e68e0e3c76b5303fa0ca8ee61bcb178131dbd02f0d7ad4",
+    "tests/test_fixed_gravity_audit.py": "2e67dab465a976562ee182707603d19657d8ea06188bc55ea3455870b16b787e",
+    "tests/test_fixed_gravity_inputs.py": "bbf8cf17e6eb821d3f4fe9249896a20f242dcc20510b7253ef0bc4f90055a93a",
+    "tests/test_fixed_gravity_reference.py": "add8dba03ea12cee590086748dcc453aeee82335801fac37f648c13b120cc315",
+    "tests/test_fixed_gravity_study.py": "18232fe558f9b820ef1ba69b5d2545fad877b3f8988521823ecbf57b06d8669e"
+  },
+  "protected_file_count": 338,
+  "manifest_sha256": "35872b5037270a866a273f3f338c888cd7fbe0a66122743b8fc8323f0846c05f",
+  "python": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+  "child_flags": [
+    "-I",
+    "-S",
+    "-B"
+  ],
+  "start_capture": "parent monotonic immediately before child creation; passed unchanged",
+  "invocation_sha256": "74926934957846fb48defa05531625a0dd6bdf3cc67bacfba06fe9e879b2acbb",
+  "output_sha256": "08b37c96df1bff965e0a93015085e5acf733747ddd1f97805b5b21f135bd02ed"
+}
