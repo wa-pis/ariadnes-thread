@@ -6116,3 +6116,35 @@ new evidence/docs/strict OpenSpec. Only fixed-X same-INPOP19a-polynomial direct
 SSB arithmetic is verified. Moving-spacecraft drift/correction assembly needs
 a separate contract before any new solve; failed R5.3, strict M3/task3.9 and
 mission fidelity/safety remain open. Automation remains PAUSED.
+
+
+## R5.12 controlled moving-coordinate contract (2026-11-08)
+
+[ADR0159](../../../docs/adr/0159-moving-coordinate-assembly-contract.md) freezes
+the next arithmetic boundary without a new solve. Only elapsed zero of the seven
+retained source times matches0148's native grids; other times use explicitly
+prescribed q/w from exact a_fixture=(-1,1/2,-1/4)m/s^2, with nearest/ties-even
+rounding. These are controlled kinematic inputs, not saved or propagated mission
+states. Exact targets use the returned binary64 corrections, with fixture
+quantization reported separately. Bind the six original input/evidence hashes,
+r0/v0, exact s and hi+lo, GMs, INPOP19a provenance and old force/domain gates.
+
+Candidate relative sums keep Bhat,-r0,-RN(v0*s),-q,RN(Vhat_body*lo) separate;
+exported absolute coordinates are not reused as force inputs. Independent
+Fraction products/sums check the specified half/one-ulp component bounds and
+zero/tie/subnormal cases. Four independent80/100-digit Decimal geometries
+d0..d3 retain native, rephasing-plus-drift, relative-sum and field errors; exact
+d2-d1 equals source-increment error minus drift-product error. Both old force
+gates include the source floor, with sum-of-source-norm total scales. Flattened
+craft and omitted-q controls are diagnostic; strict exterior guards cover all
+bodies/arms. First sample reproduces0158's saved vectors, with no replay.
+
+R5.13 is private preparation with focused/full tests, Ruff, strict OpenSpec and
+checked-byte/protected-history verification. Only afterward, an authorized
+R5.14 may execute once with separate10s study/audit budgets and caps seven
+six-state assemblies/21 source rows/168 Decimal fields/63 binary64 fields/14
+model totals; zero native calls/scientific-library imports, acquisitions, propagation
+or optimizer work. Keep exclusive finite partial evidence, ordered counts,
+identities and first-failure/late-finalization behavior. This design performs
+none of that work. Moving-probe results, correction accuracy, a corrected solver,
+R5.3 causality and strict M3/task3.9 remain unverified; automation remains PAUSED.

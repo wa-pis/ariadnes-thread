@@ -170,3 +170,46 @@ The retained native source discrepancy SHALL remain included in overall agreemen
 - **AND** a separate independent saved-data audit SHALL use its own10s/168-reference-field cap and zero native/scientific calls, reconstructing raw operands, signed vectors, model sums, gates and counters without candidate force/assembly imports or trusted passed flags
 - **AND** fresh finite exclusive evidence SHALL preserve exact operands/identities, attempted/completed counters and failures; complete success requires all21 rows/14 totals and both required gates plus precision/domain/identity/budget/audit checks, without retry or overwritten history
 - **AND** success SHALL NOT qualify an independent ephemeris, moving-spacecraft force adapter, corrected integration, historical R5 cause, omitted-force sensitivity, strict M3 or mission safety; automation SHALL remain PAUSED
+
+
+### Requirement: Verify controlled moving-coordinate assembly before propagation
+
+R5.12-R5.14 SHALL follow ADR0159 to isolate drift/correction-coordinate arithmetic
+using the retained real sources and a labelled controlled kinematic probe.
+This contract SHALL preserve previous force gates and SHALL NOT start a solve.
+
+#### Scenario: Bind genuine anchors and explicitly manufacture correction inputs
+
+- **WHEN** the moving-coordinate check is prepared
+- **THEN** it SHALL bind ADR0159's six artifact hashes, exact0136/0148 initial r0/v0, seven0155 offsets and exact T=t0+s=hi+lo identities, unchanged SI/SSB/J2000/NONE, saved13-kernel INPOP19a provenance/coverage and R5 GMs
+- **AND** one controlled probe SHALL prescribe a_fixture=(-1,1/2,-1/4)m/s^2, exact rational q_ideal=a_fixture*s^2/2 and w_ideal=a_fixture*s, rounded once to binary64 q(m)/w(m/s) with nearest/ties-even, half-ulp and exact-zero checks; fractions/hex/errors and manufactured provenance SHALL be retained
+- **AND** assembly targets SHALL be exact(r0)+exact(v0)*exact(s)+exact(q) and exact(v0)+exact(w); fixture quantization SHALL remain separately reported input construction, without claiming accuracy of future solver corrections
+- **AND** no nearby0148 native grid state, interpolation, new acquisition or solver-produced correction SHALL be substituted; only elapsed zero is a genuine saved coepoch spacecraft state
+- **AND** labels SHALL identify controlled-kinematic-arithmetic-probe, not a physically integrated trajectory or new mission parameter/default; the first six-state and compensated source/model vectors SHALL exactly reproduce saved0158 elapsed-zero values without replay
+
+#### Scenario: Compare split assembly with exact operands and unchanged force gates
+
+- **WHEN** each prescribed six-state and its three body separations are assembled
+- **THEN** the candidate SHALL keep Dhat=RN(v0*s), q, Bhat and c=RN(Vhat_body*lo) separate, exporting Xhat=fsum(r0,Dhat,q), Uhat=fsum(v0,w) but using dhat=fsum(Bhat,-r0,-Dhat,-q,c) directly for the unchanged binary64 force expression
+- **AND** an independent Fraction oracle SHALL require per-component product error<=ulp(Dhat)/2 m, position error<=ulp(Dhat)/2+ulp(Xhat) m, velocity error<=ulp(Uhat) m/s and relative-sum error<=ulp(dhat) m, with exact rational bounds including subnormals and even-significand tie checks for fixture conversions/RN products; zero results SHALL be required for exact-zero sums of actual fsum operands, not R* before product rounding, and ulp criteria SHALL be predeclared pinned-build acceptance to be tested, not a measured result or universal theorem
+- **AND** four exact geometries d0=P(T)-R*, d1=P(T)+eB-R*, d2=exact(Bhat)+exact(c)-exact(r0)-exact(Dhat)-exact(q), d3=exact(dhat), eB=exact(Bhat)-P(hi), SHALL use hash-pinned Type2 reconstruction and independent80/100-digit Decimal forces
+- **AND** exact d2-d1 SHALL equal the source-increment error minus the drift-product error; retained signed force terms SHALL distinguish native source, combined rephasing/drift-product, relative assembly and field evaluation, telescoping before norms and model aggregation
+- **AND** every source and A/B total SHALL satisfy both original max(1e-15m/s^2,1e-11*Sk) force gates, with source reference norms and model sums of constituent norms; source/drift errors SHALL remain included without allowances or floor subtraction, with relative1e-60 precision convergence and unchanged classifications
+- **AND** flattened-craft and omitted-q controls SHALL be compared only with F(d0) under its overall envelope; false diagnostic force gates alone SHALL NOT stop, and universal control failure/improvement SHALL NOT be presumed
+- **AND** all reference/candidate/control geometries SHALL satisfy original strict Sun/Moon/Earth exterior guards before fields, including Earth for A; invalid domain, required assembly/force/precision/identity failure SHALL stop without changing operands/gates
+
+#### Scenario: Verify preparation without promoting unimplemented work
+
+- **WHEN** R5.13 prepares private assembly, reference and saved-data audit paths
+- **THEN** independent analytic3D/zero/cancellation, nonzero drift/q/w, sign/component/source/time/GM/hash/domain mutations, omitted terms/early flattening, rounding/tie/subnormal and partial/count/deadline/exclusive-output fixtures SHALL pass focused/full pytest, Ruff and strict OpenSpec with frozen checkout/source hashes
+- **AND** each required mutation SHALL fail at least one named independent fixture; historical helpers/evidence/production/dependencies SHALL remain unchanged, with tested hashes saved before retained execution
+- **AND** design acceptance or prior5630 tests SHALL NOT count as implementation coverage or a measured moving-probe result
+
+#### Scenario: Bound one later study and an independent saved-data audit
+
+- **WHEN** verified R5.13 and execution authorization permit R5.14
+- **THEN** one stdlib-only study SHALL use shared10s from an external pre-child-start timestamp through imports/setup/reads/hashes/fixture construction/computation/serialization/flush/post-flush check, with caps seven six-state assemblies/21 source rows/168 Decimal fields/63 binary64 source fields/14 model totals and ordered attempted/completed ledgers
+- **AND** a separate saved-data auditor SHALL use its own10s and the same caps, independently rebuilding prescribed inputs, exact sums/geometries, fields/gates and identities without candidate assembly/force imports or trusted flags; sharing the pinned independent reference SHALL NOT be called an independent ephemeris or second reference-force implementation
+- **AND** both SHALL make zero scientific-library imports/native calls/kernel loads/GM acquisitions/propagations/optimizer calls/R5 replays, bind tested code/pinned runtime and before/after inputs/helpers, and preserve finite exclusive raw/partial evidence, earliest failure and late-finalization downgrades
+- **AND** complete success SHALL require all seven/21/168/63/14 operations and required component/force/domain/precision/identity/budget gates plus the separate audit; incomplete/corrupt records SHALL remain partial/rejected without retry, added profiles or operand/gate/budget changes
+- **AND** success SHALL qualify only assembly with the prescribed binary64 inputs; corrected integration, physical correction accuracy, historical R5 cause, trajectory sensitivity, continuous safety and strict M3/mission closure SHALL remain unverified, with automation PAUSED

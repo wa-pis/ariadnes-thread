@@ -114,10 +114,22 @@ totals, both original force gates, precision/domain/identity/count checks within
 required gate flags pass; the worst source overall error uses62.8793% of its
 envelope with the source discrepancy retained. Zero native calls, scientific
 imports, propagations or retries. Reuse5630 tests/Ruff on unchanged tested code;
-new evidence/docs pass strict validation and byte/digest/link checks. Next is a
-separately specified moving-spacecraft drift/correction arithmetic check before
-any new solve; no corrected integration or Earth-force trajectory sensitivity
-result exists. Automation PAUSED, failed R5.3 and strict M3 remain open.
+new evidence/docs pass strict validation and byte/digest/link checks. Its next
+moving-coordinate arithmetic question is specified in ADR0159 below; no corrected
+integration or Earth-force trajectory sensitivity result exists. Automation PAUSED,
+failed R5.3 and strict M3 remain open.
+
+[ADR0159](../docs/adr/0159-moving-coordinate-assembly-contract.md) completes R5.12
+design only: one controlled kinematic probe from retained r0/v0, seven exact
+source times and prescribed q/w; only elapsed zero matches a saved native state.
+Freeze split relative assembly, independent Fraction component bounds and four
+Decimal force geometries with unchanged source-inclusive force gates. Next:
+R5.13 private preparation with tests and tested hashes, then separately authorized
+R5.14 once-only study plus audit under separate10s and seven/21/168/63/14 work
+caps. No new coordinates, fields or solves evaluated in this design stage.
+Kinematic input/correction quality, moving results, R5.3/M3 and mission safety
+remain unverified; automation PAUSED. Preserve all historical evidence.
+
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 
