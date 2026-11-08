@@ -213,3 +213,37 @@ This contract SHALL preserve previous force gates and SHALL NOT start a solve.
 - **AND** both SHALL make zero scientific-library imports/native calls/kernel loads/GM acquisitions/propagations/optimizer calls/R5 replays, bind tested code/pinned runtime and before/after inputs/helpers, and preserve finite exclusive raw/partial evidence, earliest failure and late-finalization downgrades
 - **AND** complete success SHALL require all seven/21/168/63/14 operations and required component/force/domain/precision/identity/budget gates plus the separate audit; incomplete/corrupt records SHALL remain partial/rejected without retry, added profiles or operand/gate/budget changes
 - **AND** success SHALL qualify only assembly with the prescribed binary64 inputs; corrected integration, physical correction accuracy, historical R5 cause, trajectory sensitivity, continuous safety and strict M3/mission closure SHALL remain unverified, with automation PAUSED
+
+
+### Requirement: Bound a corrected real-input integration before force sensitivity
+
+R5.15-R5.17 SHALL follow ADR0162's A-only numerical-verification contract,
+preserving the failed R5.3 evidence, original physical inputs and scientific gates.
+Design acceptance SHALL NOT count as preparation or execution completion.
+
+#### Scenario: Freeze a genuine correction-coordinate integration
+
+- **WHEN** R5.16 prepares the candidate after R5.15 design acceptance
+- **THEN** it SHALL bind ADR0162's saved initial six-state/t0,300s interval, seven exact50s output nodes, retained301/601 native grids,13 ordered kernels, SI/SSB/J2000/TDB/NONE and original Sun/Moon GMs, using Earth only as guard/source-chain input
+- **AND** it SHALL use genuine q'=w,w'=a and zero q/w initial state, TwoSum epochs, unchanged live spkezr-to-SI operations and ADR0159's split separation/field order, without manufactured corrections or flattened force inputs
+- **AND** normal/tighter DOP853 SHALL retain ADR0162's original rtol/atol/max_step/first_step settings; observer parity SHALL be exact on analytic fixtures, with no extra real solve or change to controller behavior
+- **AND** independent arithmetic/force/profile/coepoch/identity/domain/mutation and partial/count/deadline/exclusive-finalization fixtures SHALL pass focused/full pytest, Ruff, strict OpenSpec and frozen-source checks before retained execution
+
+#### Scenario: Compare unchanged trajectory gates and predetermined force samples
+
+- **WHEN** verified preparation and separate execution authorization permit R5.17
+- **THEN** at most two A solve attempts SHALL run normal then tighter, with fail-stop before tighter if normal or an already-checkable required gate fails; full success SHALL require both complete profiles and every fixed output comparison: saved h1/h0.5 and saved h0.5/corrected tighter within0.01m/1e-5m/s, corrected normal/tighter within0.001m/1e-6m/s
+- **AND** each profile SHALL preselect seven outputs and first seven completed RHS by ordinal, requiring a nonzero-lo RHS sample per profile, without backfill or adaptive source queries; full success SHALL include28 observations/84 body checks/56 included-source rows/448 Decimal fields/28 sampled A totals
+- **AND** selected raw returns SHALL pass original0.001m/1e-6m/s Type2 source parity,1e-12m plus explicit Taylor/velocity/product terms, independent Fraction assembly bounds and four-geometry80/100-digit force checks with relative1e-60 convergence/stable classifications/telescoping
+- **AND** both returned-geometry and overall source/model force errors SHALL satisfy max(1e-15m/s^2,1e-11*Sk), with source or constituent-norm scales and no source-floor subtraction/allowance; actual q/w accuracy SHALL NOT be inferred from operand bounds
+- **AND** the14 native comparison states SHALL pass42 guard-separation checks using the shared node table, and every runtime geometry and every selected independent reference geometry SHALL pass all original Sun/Moon/Earth exterior guards before its fields; deferred reference failures SHALL stop when checked without claiming earlier detection
+
+#### Scenario: Retain one bounded study and independently audit its saved data
+
+- **WHEN** R5.17 executes the frozen tested helpers
+- **THEN** one study SHALL share60s through process start/import/setup/identity/two solves/checks/flush, with global caps10000 attempted RHS,3*N_RHS+21<=30021 live state requests,1000 trial descriptors,2*(N_RHS+14)<=20028 binary64 fields andN_RHS+14<=10014 dynamic A totals
+- **AND** it SHALL acquire one shared21-call node table, initialize the unchanged13-kernel pool once, inventory it before/after in at most two snapshots with separately counted metadata APIs, and make zero new native spacecraft propagations/GM lookups/selector reads/optimizer calls; the state-request cap SHALL NOT be described as a total native-call count
+- **AND** a separate fresh stdlib-only audit SHALL use its own inclusive10s, zero scientific/native queries or solves, at most20028 independently reconstructed binary64 fields and the same28/84/56/448/28 sample caps, rebuilding all RHS arithmetic/epochs/guards/counters, trajectory comparisons, sampled references and required gates without candidate imports or trusted flags
+- **AND** exclusive finite raw/partial evidence SHALL retain before/after identities, every returned operand/array before post-call checks, ordered counters/traces, unavailable downstream checks, earliest failure and finalization; no retry, profile/budget/input/gate change or real parity replay SHALL be allowed
+- **AND** full success SHALL require both completed solves, all seven outputs, required gates/counts/identities/budgets and both finalizations plus the separate audit; missing historical0148 final identity SHALL remain explicit, with no retroactive provenance repair
+- **AND** sampled numerical agreement SHALL NOT qualify unsampled source selection, continuous safety, R5.3 causality, Earth-force sensitivity, astronomical truth or strict M3/mission readiness; automation SHALL remain PAUSED

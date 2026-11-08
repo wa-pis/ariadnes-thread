@@ -1,0 +1,213 @@
+{
+  "stage": "R5.15 design only; corrected integration not implemented or run",
+  "date": "2026-11-08",
+  "base_revision": "4db0e34d0414652195dd62b344433e95d7b88eb4",
+  "prior_manifest": {
+    "path": "docs/adr/experiments/0161-verification.json",
+    "sha256": "d8397b00362e4a3464ec9895351a10d34e96a18132dfa6fd9d08e86834cfce99",
+    "protected_entries": 370
+  },
+  "additional_protected_sha256": {
+    "docs/adr/experiments/0161-audit-attempt.json": "1fc196cb01b1dc75cac9b26c51f1d772a092f09cc05e99433e7e9c49a9fa6c53",
+    "docs/adr/experiments/0161-audit-receipt.json": "86df44c8bb1c7244225bb2f37d21fdacf43c68491d40c33ce6013df6bd2028ee",
+    "docs/adr/experiments/0161-baseline.json": "6132f082546b41f1075322f454b451acb054eb0c1a7ac7ccbcb18008e3bf2298",
+    "docs/adr/experiments/0161-moving-audit.json.gz": "d1dedaf2989d05af5784b7cc1f9fec502f7131e46a886378d5f71526f3d8364e",
+    "docs/adr/experiments/0161-moving-invocation.txt": "bb8adbddca82ec0f6a8cb23ffd1c5fc80dce4a14d20a77a862cb30c70f6d4242",
+    "docs/adr/experiments/0161-moving-study.json.gz": "b810721f699e0916a19a8d05bed024c0102b5415297af14d352fc7cafaa6ec23",
+    "docs/adr/experiments/0161-result-summary.json": "c7160d81ee6792f4d530182ab090064c05354fa5f52cd31486fa7e0966bba4b9",
+    "docs/adr/experiments/0161-saved-summary-analysis.txt": "e748382b696a7aeedb4a506cd4a702a675b6c2077e126859c127046d89371079",
+    "docs/adr/experiments/0161-study-attempt.json": "dfff9a48f71f02b7cd5106143b2d0e77f327d8dcb6f684877f708f95ddf6b7ee",
+    "docs/adr/experiments/0161-study-receipt.json": "0cd179cb4e521d270e0f2d18ab5412ec997a404058c8a1b43b6a0087e54dc7f1",
+    "docs/adr/experiments/0161-verification.json": "d8397b00362e4a3464ec9895351a10d34e96a18132dfa6fd9d08e86834cfce99"
+  },
+  "protected_count": 381,
+  "all_protected_bytes_unchanged": true,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0160-moving-inputs.py": "3712085a867ce03b2fda9c99fe8c8e3fa75be1e3e71e52fe9b29b1105285b210",
+    "docs/adr/experiments/0160-moving-reference.py": "3562d4aa1bc2a41d546520ffbd1a1bc67169fe8b77718ec1a808ecc43132bde6",
+    "docs/adr/experiments/0160-moving-study.py": "6452a7d2d5debcfb560f941b9b8c4f916dacca1cc5bf0377a1be276f4a2d8a2f",
+    "docs/adr/experiments/0160-moving-audit.py": "902670cfa5c7ac280d24a1c2d62b72cfb7785e06f0fee509190c301ef65e463b",
+    "tests/test_moving_inputs.py": "09abc24657f79a6d034b51a2b5bdb6d16686d7c882c0fe399cd2f441bee57c66",
+    "tests/test_moving_reference.py": "f5ac7e4a19ccc9cf339b759cd1dff8a8b5d3e780a017fbc1e960ddaaec2fdb68",
+    "tests/test_moving_study.py": "11d8ecf5dd3fdc80b4bd52b26d9a43e607bc70972f1af18f627c3712404081e1",
+    "tests/test_moving_audit.py": "ea269679de77c70627b7fefed1723bff627de8eef936b90fa8e8f007b989bbbd"
+  },
+  "input_contract_sha256": {
+    "docs/adr/0137-short-coast-earth-gravity-contract.md": "73951a6251be7e27a3e7e0adcf84f25b072ba52c94ee1d8668e802040a97ef29",
+    "docs/adr/0159-moving-coordinate-assembly-contract.md": "dfaf2c52c9cbe4b59ee25aec616423b1ef632dce0a4af4dee79cb56bbd9343a1",
+    "docs/adr/0161-moving-coordinate-arithmetic-passes.md": "a953a2aff27f59cb732afe77a969b13eedf060b7f99c1cd0d94f0694a907f57b",
+    "docs/adr/experiments/0136-retained-boundary-audit.json": "81d78ecf6e4e80b55e9d909f929a879b2e392667387ec2569632aa99a6b41063",
+    "docs/adr/experiments/0148-short-coast-study.json": "8bbe6f5f7d08f4e220ee3cff450488531da0776b8a69cb4c37e1c9af9872b096",
+    "docs/adr/experiments/0155-real-source.json": "278b094cff6dd417ac15c04d3b4e4da137acede17de7147babd72fe9e3812102",
+    "docs/adr/experiments/0153-real-ephemeris-oracle.py": "23915fee1feacca37f4a4c0f794feec177aac777407b9c87cc0f8176b0b4a6c8"
+  },
+  "metadata_only": {
+    "t0_exact_tdb_s": "4106204553854781/4194304",
+    "final_exact_tdb_s": "4106205812145981/4194304",
+    "output_offsets_s": [
+      0,
+      50,
+      100,
+      150,
+      200,
+      250,
+      300
+    ],
+    "native_histories": [
+      {
+        "profile": "native-normal",
+        "step_s": "1",
+        "states": 301,
+        "all_seven_nodes_exact_coepochs": true,
+        "initial_state_exactly_equal": true,
+        "raw_and_saved_sample_values_equal": true,
+        "retained_guarded_states": 301,
+        "retained_minimum_checked_distances_m": {
+          "Sun": 147502450978.4336,
+          "Moon": 1837361.0876699074,
+          "Earth": 402383122.9262908
+        },
+        "historical_guards_not_independently_recomputed": true
+      },
+      {
+        "profile": "native-tight",
+        "step_s": "1/2",
+        "states": 601,
+        "all_seven_nodes_exact_coepochs": true,
+        "initial_state_exactly_equal": true,
+        "raw_and_saved_sample_values_equal": true,
+        "retained_guarded_states": 601,
+        "retained_minimum_checked_distances_m": {
+          "Sun": 147502450978.4336,
+          "Moon": 1837361.0876297655,
+          "Earth": 402383122.9262908
+        },
+        "historical_guards_not_independently_recomputed": true
+      }
+    ],
+    "retained_type2_records": [
+      {
+        "body": 10,
+        "centre": 0,
+        "frame": 1,
+        "type": 2,
+        "degree": 10,
+        "words": 35,
+        "index": 3048,
+        "copies": 7,
+        "record_interval_tdb_s": [
+          "978739200",
+          "980121600"
+        ],
+        "segment_interval_tdb_s": [
+          "-3234816000",
+          "3234816000"
+        ],
+        "complete_interval_covered": true,
+        "selection_parity_over_continuum_proven": false
+      },
+      {
+        "body": 399,
+        "centre": 0,
+        "frame": 1,
+        "type": 2,
+        "degree": 12,
+        "words": 41,
+        "index": 12192,
+        "copies": 14,
+        "record_interval_tdb_s": [
+          "978739200",
+          "979084800"
+        ],
+        "segment_interval_tdb_s": [
+          "-3234816000",
+          "3234816000"
+        ],
+        "complete_interval_covered": true,
+        "selection_parity_over_continuum_proven": false
+      },
+      {
+        "body": 301,
+        "centre": 399,
+        "frame": 1,
+        "type": 2,
+        "degree": 12,
+        "words": 41,
+        "index": 12192,
+        "copies": 7,
+        "record_interval_tdb_s": [
+          "978739200",
+          "979084800"
+        ],
+        "segment_interval_tdb_s": [
+          "-3234816000",
+          "3234816000"
+        ],
+        "complete_interval_covered": true,
+        "selection_parity_over_continuum_proven": false
+      }
+    ],
+    "retained_source_rows": 21,
+    "segment_occurrences": 28,
+    "historical_0148_final_identity_complete": false,
+    "retained_native_guard_reads": {
+      "native_guard_reads_attempted": 2712,
+      "native_guard_reads_returned": 2712
+    },
+    "no_new_state_or_force_derivations": true
+  },
+  "document_sha256": {
+    "CURRENT_STATE.md": "4039087eddac2a44426e19d29c185a78698b53d6c76c0ba9eb4e42dca503de05",
+    "docs/adr/README.md": "b3d3804dd6fe3096ed6ee2998189b8ffaea4a815cd27f0fa6bffe267a5202a22",
+    "docs/adr/0162-corrected-real-integration-contract.md": "72bbc1056186b010aa6f8437aed07614c1a1b5b636e588e0a5f9a0876f33be20",
+    "openspec/ROADMAP.md": "a8e5167009dbee29e94f2ca323dfea047654513031190e4a6b4dadb2469ae2b8",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "96c35731ed6f6eed5fe8891ee72fd786da8cfc1e37667ca18f052b7c279ccb40",
+    "openspec/changes/refine-physical-trajectory/design.md": "2ad17c8f3d0093ce0cc2ce3918bc0887e733382b574678d8e5551579f42f0e40",
+    "openspec/changes/refine-physical-trajectory/specs/short-coast-sensitivity/spec.md": "0b52f8fa176c7d2a94dfad249650445d87a917a742ec3d7a7f99396c66da2141"
+  },
+  "design_caps_not_executed": {
+    "study_s": 60,
+    "audit_s": 10,
+    "solve_attempts": 2,
+    "rhs_attempts": 10000,
+    "live_state_attempts": 30021,
+    "trial_descriptors": 1000,
+    "native_comparison_guard_separations_per_process": 42,
+    "binary64_fields_per_process": 20028,
+    "dynamic_model_totals": 10014,
+    "high_precision_observations": 28,
+    "body_checks": 84,
+    "included_source_rows": 56,
+    "decimal_fields": 448,
+    "sampled_a_totals": 28
+  },
+  "verification": {
+    "runtime_tests_rerun": false,
+    "ruff_rerun": false,
+    "reused_full_tests": 5881,
+    "reused_focused_tests": 251,
+    "reason": "documentation-only change; all protected runtime/test/helper/dependency bytes unchanged",
+    "local_links_checked": 244,
+    "current_state_lines": 59,
+    "strict_openspec": {
+      "returncode": 0,
+      "stdout": "Change 'refine-physical-trajectory' is valid\n",
+      "stderr": ""
+    },
+    "git_diff_check": "passed; repeat staged check before commit"
+  },
+  "new_scientific_imports": 0,
+  "new_kernel_initializations": 0,
+  "new_native_calls": 0,
+  "new_state_queries": 0,
+  "new_polynomial_evaluations": 0,
+  "new_spacecraft_states": 0,
+  "new_force_evaluations": 0,
+  "new_integrations": 0,
+  "preparation_complete": false,
+  "execution_complete": false,
+  "numerical_agreement_verified": false,
+  "strict_m3_closed": false,
+  "automation": "PAUSED; unchanged",
+  "next": "R5.16 private preparation and tests; R5.17 execution only after separate authorization"
+}

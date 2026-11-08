@@ -155,6 +155,20 @@ flight motion. A corrected integration needs a separate bounded contract; no new
 solve is scheduled. R5.3/M3/mission safety stay open, automation PAUSED.
 
 
+[ADR0162](../docs/adr/0162-corrected-real-integration-contract.md) completes R5.15
+design only: two future corrected A-only300s solves with genuine dynamic q/w,
+unchanged initial conditions/live13-kernel SPICE/physical model and original
+native/profile gates. Seven50s nodes are exact coepochs of saved301/601 histories;
+0148 final provenance remains incomplete. Predetermined28 observations receive
+84 source checks/56 force rows/448 Decimal fields/28 A totals, with unchanged
+source-inclusive gates. All-RHS arithmetic replay is separately bounded.
+R5.16 preparation is next; R5.17 execution needs its own instruction after checks.
+Future caps: shared60s/10000 RHS/30021 live states/1000 trials/20028 binary64
+fields, separate10s zero-native audit. No new native propagation/B sensitivity
+or retry. This stage checks metadata/docs only;5881 tests/Ruff reused on unchanged
+bytes. Numerical/physical/mission conclusions stay open; automation PAUSED.
+
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

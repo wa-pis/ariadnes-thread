@@ -28,7 +28,6 @@ A native h1/h0.5 arcs complete, first A oracle hits10000 RHS/30021 body reads.
 Separate offline audit:partial/study_verified=false,0.07836870802566409s, zero native.
 No independent A agreement or Earth-force sensitivity result; final identity not reached.
 304 prior protected files preserved; production/environment/legacy unchanged, no replay.
-[ADR0147](docs/adr/0147-short-coast-preparation-review.md): R5.2 preparation complete.
 [ADR0149](docs/adr/0149-oracle-time-precision-diagnosis.md): user-requested read-only diagnosis;
 119ns epoch grid/mixed time precision confirmed,7 scalar probes pass in0.03053s,
 zero scientific imports/body queries/integrations; actual rejection cause unproven.
@@ -51,7 +50,8 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0158](docs/adr/0158-fixed-position-real-gravity-passes.md):R5.11 study/audit pass21 rows/14 totals,0.4372s/0.3447s; fixed-X arithmetic only.
 [ADR0160](docs/adr/0160-prepare-moving-coordinate-check.md):ADR0159 preparation;251 focused/5881 full/Ruff pass; tested bytes unchanged.
 [ADR0161](docs/adr/0161-moving-coordinate-arithmetic-passes.md):R5.14 study/audit pass7/21/168/63/14 in0.630s/0.574s;370 protected files unchanged. Controlled q/w and real-source arithmetic only.
-Next:separate bounded corrected-integration contract before any new solve; R5.3/M3/mission safety open, automation PAUSED.
+[ADR0162](docs/adr/0162-corrected-real-integration-contract.md):R5.15 design complete; two future A-only300s solves, original gates/inputs, bounded sampled audit.
+Next:R5.16 private preparation/tests before separately authorized R5.17 execution; R5.3/M3/safety open, automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.

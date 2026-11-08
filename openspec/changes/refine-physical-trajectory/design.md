@@ -6193,3 +6193,29 @@ The q/w inputs remain manufactured, not integrated/observed spacecraft motion.
 This closes R5.14 only; corrected integration, R5.3 causality, Earth-force
 trajectory sensitivity, strict M3/task3.9 and mission safety remain unverified.
 A new solve requires a separate contract; automation remains PAUSED.
+
+
+## R5.15 bounded corrected-integration contract (2026-11-08)
+
+[ADR0162](../../../docs/adr/0162-corrected-real-integration-contract.md) freezes
+an A-only300s numerical check: two genuine correction-coordinate DOP853 solves,
+normal then tighter, unchanged physical initial data/13 kernels/Sun-Moon GMs,
+live geometric SPICE provider, combined TwoSum/split relative assembly and the
+verified0159 field operation order. Reuse saved0148 native301/601 histories at
+seven genuine50s coepochs; preserve their missing historical final identity.
+Original0.01m/1e-5m/s native and0.001m/1e-6m/s oracle-profile gates remain.
+
+High-precision qualification uses predetermined28 observations (seven outputs
+plus first seven completed RHS per profile),84 body checks/56 source rows/
+448 Decimal fields/28 A totals, requiring a nonzero-lo RHS per profile. Every
+RHS retains arithmetic/guard/derivative evidence, but high-precision qualification
+is sampled. Source floor remains included; no uniform source-error or q/w
+accuracy bound follows from retained polynomial coverage/operand arithmetic.
+
+R5.16 private preparation must pass independent fixtures, exact analytic observer
+parity, focused/full pytest, Ruff and strict validation before R5.17 authorization.
+One future study has shared60s/10000 RHS/30021 live states/1000 trials/20028
+binary64 fields; one separate saved-data audit has10s and zero native/scientific
+calls. No new native propagation, GM lookup, B model, retry or real parity solve.
+Before/after current identity cannot repair0148 provenance. This design performs
+no new states/fields/solves; R5.3/M3/mission safety remain open, automation PAUSED.
