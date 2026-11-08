@@ -1,0 +1,87 @@
+{
+  "stage": "R5.13 input-only preparation",
+  "contract": "ADR0159",
+  "passed": true,
+  "source_rows": 21,
+  "elapsed_offsets_s": [
+    0.0,
+    2.9802322387695312e-08,
+    5.960464477539063e-08,
+    8.940696716308594e-08,
+    0.05260015195876773,
+    150.00000008940697,
+    299.9999999701977
+  ],
+  "input_sha256": {
+    "0136-retained-boundary-audit.json": "81d78ecf6e4e80b55e9d909f929a879b2e392667387ec2569632aa99a6b41063",
+    "0148-short-coast-study.json": "8bbe6f5f7d08f4e220ee3cff450488531da0776b8a69cb4c37e1c9af9872b096",
+    "0155-real-source.json": "278b094cff6dd417ac15c04d3b4e4da137acede17de7147babd72fe9e3812102",
+    "0158-fixed-gravity-study.json": "08b37c96df1bff965e0a93015085e5acf733747ddd1f97805b5b21f135bd02ed",
+    "0158-fixed-gravity-audit.json": "19f89eda69d5d4b184a21f611a07287ea29c41041f72d6e305c1cb896c2d442d",
+    "0158-verification.json": "834268e321b96355b3a2cb0ac7928bf6b8a0f2a39387735f90eec88f8007d3f9"
+  },
+  "helper_sha256": {
+    "0157-fixed-gravity-inputs.py": "5592d0295da35351a37795865f5ccaab0bcc64961b2dc0173245bbfe81e20f97",
+    "0157-fixed-gravity-reference.py": "1337ba2b1fea94381e175603a501ec36b992a2194faf46dea6a3e429a7aef9b8",
+    "0157-fixed-gravity-study.py": "9bcbfe35e14bdb0f25e68e0e3c76b5303fa0ca8ee61bcb178131dbd02f0d7ad4",
+    "0157-fixed-gravity-audit.py": "c53cdbe8b556029dac311a3065bf31a07b0211235fa2af2c548a33387a976ef2",
+    "0153-real-ephemeris-oracle.py": "23915fee1feacca37f4a4c0f794feec177aac777407b9c87cc0f8176b0b4a6c8",
+    "0145-short-coast-evidence.py": "426fe4e0abe9b9dfcf6380d09e86e8dbf5748f66875f74b26b45dceb6ba5da14"
+  },
+  "input_helper_sha256": "3712085a867ce03b2fda9c99fe8c8e3fa75be1e3e71e52fe9b29b1105285b210",
+  "initial": {
+    "epoch_tdb_s": 978995455.2304223,
+    "epoch_utc": "2031-01-09T11:09:46.046266Z",
+    "label": "departure-ignition",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "position_m": [
+      -47124635282.7281,
+      128473304107.83153,
+      55670397503.89886
+    ],
+    "velocity_m_s": [
+      -29590.75977762049,
+      -9186.174444867514,
+      -2407.2479826554863
+    ]
+  },
+  "gm_m3_s2": {
+    "Sun": 1.327124400420322e+20,
+    "Moon": 4902800121846.8,
+    "Earth": 398600435468295.9
+  },
+  "identity": {
+    "python_version": "3.12.14",
+    "prefix": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav",
+    "executable": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python3.12",
+    "executable_sha256": "795d8316b7dabff1c64e56d5f5787caf0fe1b1e18580d34fc3a4956d501475c2",
+    "conda_metadata_path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/python-3.12.14-hd05a0c4_3_cpython.json",
+    "conda_metadata_sha256": "1ac066bc02e3b470f5e7fa74b0f91f9cfe21a8c87d76417f2a8c7531f38e5201",
+    "conda_build": "hd05a0c4_3_cpython",
+    "scientific_packages_imported": false,
+    "current_kernel_pool_queried": false
+  },
+  "zero_reference": "saved0158 source/model vectors validated as metadata only",
+  "new_moving_states_evaluated": 0,
+  "new_force_fields_evaluated": 0,
+  "scientific_imports": 0,
+  "native_calls": 0,
+  "spacecraft_propagations": 0,
+  "retained_study_runs": 0,
+  "retained_audit_runs": 0,
+  "elapsed_before_output_s": 0.1844879579730332,
+  "process_elapsed_s": 0.2336635417304933,
+  "source_provenance_summary": {
+    "kernel_scope": "saved ordered manifest only; no current kernel bytes or pool queried",
+    "adr0148_final_identity_available": false,
+    "historical_loaded_memory_verified": false
+  },
+  "source_provenance_sha256": "7619f313ad527c6905efc6c849a329fb0bec9b41f7c2c7422f11ea6a23de202c",
+  "full_output": {
+    "archive": "0160-input-preflight.json.gz",
+    "uncompressed_sha256": "33141750b14d4b2aef9fb5fe005f6e2f1ac31297abe42f091b16828c8f0dd52b",
+    "gzip_sha256": "46190548f2faa5dd30f8cd4e0ed6ba399b748fe256550002bb63293c269294f9",
+    "note": "Lossless original metadata report; compact summary avoids repeating retained kernel tables."
+  }
+}

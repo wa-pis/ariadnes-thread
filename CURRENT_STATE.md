@@ -41,17 +41,17 @@ pass in0.067s; clock-only norm15.679 versus reference0.02889, actual15.734.
 Explains first frozen synthetic estimator rejection; historical R5 cause unverified.
 Preserve raw partial study/audit0148, inputs/kernels/gates and all prior evidence.
 
-[ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only
-as endpoint arithmetic; do not repeat R2/R3/R4 or unchanged full tests.
+[ADR0136](docs/adr/0136-retained-boundaries-pass-arithmetic.md) completes R4 only as endpoint arithmetic; do not repeat R2/R3/R4 or unchanged full tests.
 [ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes121 nodes/both frames; preserve evidence.
 [ADR0152](docs/adr/0152-compensated-synthetic-time-validation.md):34 focused/5319 full
 pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor retained.
 [ADR0154](docs/adr/0154-resume-real-ephemeris-verification.md): readiness/90 focused/5409 full pass, exact restored sources/gates unchanged.
-[ADR0155](docs/adr/0155-real-ephemeris-time-boundary-passes.md):21 real source states/all gates pass;84 returns audited; same-model arithmetic only.
-Max increment1.5153e-17m; source discrepancy11.4um retained.
+[ADR0155](docs/adr/0155-real-ephemeris-time-boundary-passes.md):21 real source states/all gates pass;84 returns audited; same-model arithmetic only; source discrepancy11.4um retained.
 [ADR0157](docs/adr/0157-prepare-fixed-state-gravity-check.md):221 new/5630 full tests/Ruff passed; tested code remains unchanged.
 [ADR0158](docs/adr/0158-fixed-position-real-gravity-passes.md):R5.11 study/audit pass21 rows/14 totals,0.4372s/0.3447s; fixed-X arithmetic only.
-[ADR0159](docs/adr/0159-moving-coordinate-assembly-contract.md):R5.12 design only, controlled moving q/w probe; no new states/forces/solve. Next:R5.13 preparation/tests before any R5.14 retained study; automation PAUSED.
+[ADR0159](docs/adr/0159-moving-coordinate-assembly-contract.md):R5.12 controlled moving q/w contract frozen; no solver claim.
+[ADR0160](docs/adr/0160-prepare-moving-coordinate-check.md):R5.13 prepared;251 focused/5881 full/Ruff pass,354 protected files unchanged.
+Next:R5.14 once-only retained study/audit pending separate execution instruction; input-only preflight passes, no new real motion/fields; automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.

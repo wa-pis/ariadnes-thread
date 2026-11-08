@@ -6148,3 +6148,23 @@ or optimizer work. Keep exclusive finite partial evidence, ordered counts,
 identities and first-failure/late-finalization behavior. This design performs
 none of that work. Moving-probe results, correction accuracy, a corrected solver,
 R5.3 causality and strict M3/task3.9 remain unverified; automation remains PAUSED.
+
+
+## R5.13 controlled moving-coordinate preparation verified (2026-11-08)
+
+[ADR0160](../../../docs/adr/0160-prepare-moving-coordinate-check.md) implements
+ADR0159 with private input, candidate, independent Fraction/Decimal reference
+and saved-data audit helpers. Historical/production/dependency bytes remain
+unchanged. The candidate keeps drift/q/source rephasing separate through the
+relative sum; the reference checks all exact/arm domains before any field.
+The auditor imports no candidate/study code and independently reconstructs
+raw motion, force operands, field prefixes and totals. Both paths preserve
+10s/cap/identity/finite-exclusive-output and first-failure semantics.
+
+251 focused and5881 full tests pass, with checkout/source hashes frozen during
+regression; Ruff, strict OpenSpec and354 protected-file checks pass. Real saved
+inputs are checked only as metadata, with no new moving-state/force evaluation.
+R5.14 remains unexecuted and requires its separate execution instruction and
+binding of tested hashes. Synthetic component success does not verify real-source
+moving results, correction quality, a corrected solver, R5.3/M3 or mission safety.
+Automation remains PAUSED; no reference replay or integration occurs here.

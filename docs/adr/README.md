@@ -64,7 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
-- [0159 — Moving-coordinate assembly contract](0159-moving-coordinate-assembly-contract.md) — R5.12 design only; prescribed kinematic q/w, independent exact assembly/four-geometry force gates and zero-native10s budgets; preparation/execution pending.
+- [0160 — Prepare the moving-coordinate check](0160-prepare-moving-coordinate-check.md) — R5.13 preparation verified:251 focused/5881 full tests, independent synthetic audit and354 protected files; R5.14 unexecuted.
+- [0159 — Moving-coordinate assembly contract](0159-moving-coordinate-assembly-contract.md) — R5.12 design only; prescribed kinematic q/w, independent exact assembly/four-geometry force gates and zero-native10s budgets; preparation completed in ADR0160, execution pending.
 - [0158 — Fixed-position real gravity passes](0158-fixed-position-real-gravity-passes.md) — R5.11:21 rows/14 totals and separate audit pass; both original force gates, zero native calls; fixed-X arithmetic only, no solve.
 - [0157 — Prepare fixed-position gravity check](0157-prepare-fixed-state-gravity-check.md) — R5.10 complete;221 new/5630 full tests, Ruff/strict OpenSpec and input-only preflight pass; no R5.11 real-source force execution.
 - [0156 — Fixed-position real-source gravity contract](0156-fixed-state-real-gravity-contract.md) — design only;21 saved sources, both unchanged force gates, four signed error terms and zero-native10s budget; implementation/execution pending.

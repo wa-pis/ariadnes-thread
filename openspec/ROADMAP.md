@@ -124,11 +124,22 @@ design only: one controlled kinematic probe from retained r0/v0, seven exact
 source times and prescribed q/w; only elapsed zero matches a saved native state.
 Freeze split relative assembly, independent Fraction component bounds and four
 Decimal force geometries with unchanged source-inclusive force gates. Next:
-R5.13 private preparation with tests and tested hashes, then separately authorized
+R5.13 preparation (now verified below), then separately authorized
 R5.14 once-only study plus audit under separate10s and seven/21/168/63/14 work
 caps. No new coordinates, fields or solves evaluated in this design stage.
 Kinematic input/correction quality, moving results, R5.3/M3 and mission safety
 remain unverified; automation PAUSED. Preserve all historical evidence.
+
+
+[ADR0160](../docs/adr/0160-prepare-moving-coordinate-check.md) completes R5.13
+preparation:251 focused/5881 full tests, Ruff/strict OpenSpec and354 protected
+files pass; tested source/test hashes and frozen-checkout receipt retained.
+Independent synthetic motion/reference/audit checks cover component bounds,
+all-domain-before-field guards, force gates and partial/budget/identity paths.
+A metadata-only preflight validates21 retained rows with zero new moving states
+or fields. Next: separately authorized R5.14; its real-source arithmetic result
+and10s execution feasibility remain unmeasured. No integration/replay, mission
+or M3 closure; automation remains PAUSED.
 
 
 ## Completed R4 — define finite-radius interfaces before new propagation
