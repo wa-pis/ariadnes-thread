@@ -1,0 +1,7 @@
+{
+  "mode": "audit",
+  "base_revision": "3776f0523be964a643bebe8f53576efedf0bc9ff",
+  "invocation_sha256": "bb8adbddca82ec0f6a8cb23ffd1c5fc80dce4a14d20a77a862cb30c70f6d4242",
+  "created_utc": "2026-11-08T19:09:46.633422+00:00",
+  "note": "Exclusive once-only attempt marker, not a scientific outcome."
+}

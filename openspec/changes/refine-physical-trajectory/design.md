@@ -6168,3 +6168,28 @@ R5.14 remains unexecuted and requires its separate execution instruction and
 binding of tested hashes. Synthetic component success does not verify real-source
 moving results, correction quality, a corrected solver, R5.3/M3 or mission safety.
 Automation remains PAUSED; no reference replay or integration occurs here.
+
+
+## R5.14 controlled moving-coordinate arithmetic passes (2026-11-08)
+
+[ADR0161](../../../docs/adr/0161-moving-coordinate-arithmetic-passes.md) records
+one study and a separate fresh saved-data audit on clean3776f05, using the exact
+ADR0160 tested bytes. Both pass seven assemblies/21 source rows/168 reference
+fields/63 binary64 fields/14 model totals under separate10s budgets; external
+times0.629994167s/0.573838875s include process creation/imports/flush. All105
+motion-component,63 relative-sum,63 rephasing-product,147 domain and140 required
+force flags pass, with35 precision assessments and70 telescope checks.
+
+Worst overall force ratio0.6287902030942953 (Moon at5.960464477539063e-8s)
+retains native-source error; no tolerance, source, input, cap or formula changes.
+Flattened controls pass35/35; omitted-q controls fail13/35, diagnostic only.
+The result does not prove universal superiority of compensated assembly. Exact
+raw study/audit bytes are retained in gzip archives with original and archive
+SHA256 identities, receipts, ledgers, ratios and full provenance.
+
+All370 earlier protected files and eight tested source/test hashes are unchanged.
+Reuse5881 full tests/Ruff; evidence/links/digests/diff/strict OpenSpec checked.
+The q/w inputs remain manufactured, not integrated/observed spacecraft motion.
+This closes R5.14 only; corrected integration, R5.3 causality, Earth-force
+trajectory sensitivity, strict M3/task3.9 and mission safety remain unverified.
+A new solve requires a separate contract; automation remains PAUSED.

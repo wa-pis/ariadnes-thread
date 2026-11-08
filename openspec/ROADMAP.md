@@ -137,9 +137,22 @@ files pass; tested source/test hashes and frozen-checkout receipt retained.
 Independent synthetic motion/reference/audit checks cover component bounds,
 all-domain-before-field guards, force gates and partial/budget/identity paths.
 A metadata-only preflight validates21 retained rows with zero new moving states
-or fields. Next: separately authorized R5.14; its real-source arithmetic result
-and10s execution feasibility remain unmeasured. No integration/replay, mission
+or fields. The later R5.14 execution result is recorded below; preparation
+itself performed no retained moving study. No integration/replay, mission
 or M3 closure; automation remains PAUSED.
+
+
+[ADR0161](../docs/adr/0161-moving-coordinate-arithmetic-passes.md) completes R5.14:
+one controlled moving study and one separate saved-data audit pass all frozen
+seven/21/168/63/14 work counts and required component/force/domain/precision
+gates in0.629994167s/0.573838875s, below separate10s budgets. All370 earlier
+protected files and eight tested hashes remain unchanged;5881 tests/Ruff reused,
+new evidence/links/digests/diff/strict OpenSpec checked. Overall worst ratio
+0.6287902031 includes the original source floor; flattened controls also pass
+all35 comparisons, while omitted-q fails13/35. No universal improvement claim.
+This is controlled q/w arithmetic on retained real source data, not propagated
+flight motion. A corrected integration needs a separate bounded contract; no new
+solve is scheduled. R5.3/M3/mission safety stay open, automation PAUSED.
 
 
 ## Completed R4 — define finite-radius interfaces before new propagation

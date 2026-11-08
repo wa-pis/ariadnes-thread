@@ -1,0 +1,76 @@
+"""Summarize saved R5.14 evidence only; no fields, helpers or studies are executed."""
+from pathlib import Path
+from hashlib import sha256
+from decimal import Decimal, localcontext
+from fractions import Fraction
+import json
+
+TMP=Path('/private/tmp')
+ROOT=Path('/Users/agrudin/dev/my/ariadna')
+s=json.loads((TMP/'ariadna-0161-moving-study.json').read_text())
+a=json.loads((TMP/'ariadna-0161-moving-audit.json').read_text())
+receipts={mode:json.loads((TMP/f'ariadna-0161-{mode}-receipt.json').read_text()) for mode in ('study','audit')}
+base=json.loads((TMP/'ariadna-0161-baseline.json').read_text())
+caps={'six_state_assemblies':7,'source_rows':21,'reference_fields':168,'binary64_fields':63,'model_totals':14}
+assert s['status']=='passed' and a['audit_status']=='passed' and a['scientific_verified'] is True
+assert s['finalization_gate']==a['finalization_gate']=='passed'
+assert s['adapter_mode']==a['adapter_mode']=='reference'
+assert s['inputs']==s['identity_after']
+assert s['counts']==a['counts']=={k:{'attempted':v,'completed':v} for k,v in caps.items()}
+assert s['ledger']==a['ledger'] and len(s['ledger'])==2*sum(caps.values())
+for mode,report in [('study',s),('audit',a)]:
+    rec=receipts[mode]
+    assert rec['returncode']==0 and rec['external_10s_gate'] is True and 0<=rec['process_elapsed_s']<10
+    assert rec['output_sha256']==sha256((TMP/f'ariadna-0161-moving-{mode}.json').read_bytes()).hexdigest()
+    assert all(report[k]==0 for k in ('native_calls','kernel_loads','gm_acquisitions','spacecraft_propagations','scientific_imports','optimizer_calls'))
+    assert rec['invocation_sha256']==base['invocation_sha256']
+assert a['evidence_sha256']==receipts['study']['output_sha256']
+assert a['checks']['complete_saved_data_checked'] is True
+assert a['checks']['first_required_gate_failure'] is None
+for path,d in base['protected_sha256'].items():
+    assert sha256((ROOT/path).read_bytes()).hexdigest()==d,path
+motion=[]
+for block in s['motions']:
+    assert block['assessment']['passed'] is True
+    for kind,components in block['assessment']['component_gates'].items():
+        for i,g in enumerate(components):
+            assert g['passed'] is True
+            error=Fraction(int(g['signed_error']['numerator']),int(g['signed_error']['denominator']))
+            bound=Fraction(int(g['bound']['numerator']),int(g['bound']['denominator']))
+            ratio=abs(error)/bound if bound else Fraction(0)
+            assert ratio<=1
+            motion.append({'kind':kind,'time_index':block['index'],'elapsed_s':block['motion']['elapsed_s'],'component':i,'signed_error':str(error),'bound':str(bound),'units':g['units'],'ratio':float(ratio)})
+force=[];controls=[];domains=0;relative=0;rephasing=0;precision=0;telescope=0
+sources=[]
+for row in s['rows']:
+    x=row['assessment']
+    assert x['passed'] and x['geometry_error_identity'] and x['saved_assessment_reconciled'] and x['correction_operands_match']
+    assert all(flag is True for flag in x['domain_guards'].values())
+    domains+=len(x['domain_guards'])
+    for key in ('relative_sum_components','rephasing_product_components'):
+        assert all(g['passed'] is True for g in x[key])
+    relative+=len(x['relative_sum_components']);rephasing+=len(x['rephasing_product_components'])
+    sources.append(('source',row['source_row']['body'],row['source_row']['elapsed_s'],x))
+models=[('model',name,group['elapsed_s'],x) for group in s['totals'] for name,x in group['assessment'].items()]
+for scope,name,elapsed,x in sources+models:
+    assert x['passed'] and x['precision']['passed'] and x['precision']['gate_classifications_stable']
+    assert all(g['passed'] is True for g in x['precision']['reference_fields'].values())
+    precision+=1
+    assert all(g['passed'] is True for g in x['telescope'].values());telescope+=len(x['telescope'])
+    for digits in ('80','100'):
+        for kind in ('returned_geometry','overall'):
+            g=x['gates'][digits][kind];assert g['passed'] is True
+            with localcontext() as ctx:
+                ctx.prec=110
+                ratio=Decimal(g['error_norm_m_s2'])/Decimal(g['envelope_m_s2'])
+            force.append({'scope':scope,'name':name,'elapsed_s':elapsed,'precision':int(digits),'kind':kind,'error_norm_m_s2':g['error_norm_m_s2'],'envelope_m_s2':g['envelope_m_s2'],'ratio':str(ratio)})
+    for name_control,g in x['gates']['100']['controls'].items():
+        assert x['gates']['80']['controls'][name_control]['passed']==g['passed']
+        controls.append({'scope':scope,'name':name,'elapsed_s':elapsed,'control':name_control,'passed':g['passed'],'error_norm_m_s2':g['error_norm_m_s2'],'envelope_m_s2':g['envelope_m_s2']})
+worst={kind:max((v for v in force if v['kind']==kind and v['precision']==100),key=lambda v:Decimal(v['ratio'])) for kind in ('returned_geometry','overall')}
+maxima={kind:max((v for v in motion if v['kind']==kind),key=lambda v:v['ratio']) for kind in {v['kind'] for v in motion}}
+control_counts={name:{scope:{'passed':sum(c['passed'] for c in controls if c['control']==name and c['scope']==scope),'failed':sum(not c['passed'] for c in controls if c['control']==name and c['scope']==scope)} for scope in ('source','model')} for name in ('flattened_craft','omitted_q')}
+result={'stage':'R5.14 saved-result analysis only','base_revision':base['base_revision'],'study_status':s['status'],'audit_status':a['audit_status'],'scientific_verified':a['scientific_verified'],'scope':'controlled kinematic coordinate/force arithmetic using retained real source polynomials; no propagation or independent ephemeris truth','process_elapsed_s':{mode:rec['process_elapsed_s'] for mode,rec in receipts.items()},'counts_per_process':s['counts'],'ordered_ledger_entries_per_process':len(s['ledger']),'passed_flags':{'motion_components':len(motion),'relative_sum_components':relative,'rephasing_product_components':rephasing,'required_force_flags_both_precisions':len(force),'source_domains':domains,'precision_assessments':precision,'telescope_both_precisions':telescope},'worst_force_ratio':worst,'worst_motion_ratio_by_kind':maxima,'diagnostic_control_counts_100_digits':control_counts,'force_gate_summary':force,'diagnostic_controls_100_digits':controls,'motion_component_summary':motion,'old_protected_count':len(base['protected_sha256']),'old_protected_bytes_unchanged':True,'retained_study_runs':1,'retained_audit_runs':1,'new_native_calls':0,'spacecraft_propagations':0,'failed_r53_replayed':False,'strict_m3_closed':False,'mission_accuracy_verified':False}
+with (TMP/'ariadna-0161-result-summary.json').open('x') as out:
+    json.dump(result,out,allow_nan=False,indent=2);out.write('\n')
+print(json.dumps({k:result[k] for k in ('process_elapsed_s','passed_flags','worst_force_ratio','worst_motion_ratio_by_kind','diagnostic_control_counts_100_digits','old_protected_count')},allow_nan=False,indent=2))

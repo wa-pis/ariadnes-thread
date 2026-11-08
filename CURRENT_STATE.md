@@ -49,9 +49,9 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0155](docs/adr/0155-real-ephemeris-time-boundary-passes.md):21 real source states/all gates pass;84 returns audited; same-model arithmetic only; source discrepancy11.4um retained.
 [ADR0157](docs/adr/0157-prepare-fixed-state-gravity-check.md):221 new/5630 full tests/Ruff passed; tested code remains unchanged.
 [ADR0158](docs/adr/0158-fixed-position-real-gravity-passes.md):R5.11 study/audit pass21 rows/14 totals,0.4372s/0.3447s; fixed-X arithmetic only.
-[ADR0159](docs/adr/0159-moving-coordinate-assembly-contract.md):R5.12 controlled moving q/w contract frozen; no solver claim.
-[ADR0160](docs/adr/0160-prepare-moving-coordinate-check.md):R5.13 prepared;251 focused/5881 full/Ruff pass,354 protected files unchanged.
-Next:R5.14 once-only retained study/audit pending separate execution instruction; input-only preflight passes, no new real motion/fields; automation PAUSED.
+[ADR0160](docs/adr/0160-prepare-moving-coordinate-check.md):ADR0159 preparation;251 focused/5881 full/Ruff pass; tested bytes unchanged.
+[ADR0161](docs/adr/0161-moving-coordinate-arithmetic-passes.md):R5.14 study/audit pass7/21/168/63/14 in0.630s/0.574s;370 protected files unchanged. Controlled q/w and real-source arithmetic only.
+Next:separate bounded corrected-integration contract before any new solve; R5.3/M3/mission safety open, automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.
