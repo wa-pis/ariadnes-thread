@@ -210,9 +210,14 @@ design only: three fixed saved epochs (0.25/0/250 s), nine future E/G/B state
 queries plus six applicable segment checks in a 15 s capture; separate 10 s
 offline analyzer checks closure and original static Moon gates independently.
 Reuse exact archived references with zero new polynomial evaluation or trajectory
-propagation. Design validates metadata only. Next: R5.20 preparation; R5.21
-requires verified preparation and separate instruction. R5.17 remains failed;
-strict M3/safety remain open and automation PAUSED.
+propagation. Design validates metadata only.
+
+[ADR0167](../docs/adr/0167-prepare-split-centre-probe.md) completes R5.20:
+private capture and separate offline analyzer pass 101 focused and 6283
+full tests, Ruff and strict OpenSpec. The new probe uses artificial states or
+saved metadata only. Next: R5.21 once after separate execution instruction,
+with the same epochs, input, force, limits and frozen helpers. R5.17 remains
+failed; strict M3/safety remain open and automation PAUSED.
 
 
 ## Completed R4 — define finite-radius interfaces before new propagation

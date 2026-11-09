@@ -51,7 +51,7 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0164](docs/adr/0164-corrected-coast-force-gate-fails.md):R5.17 attempt consumed;both300s solves/21 trajectory comparisons pass, but Moon overall force gate fails at normal RHS6/local0.25s by8.8864%; audit partial/scientific_verified=false, final identity unavailable.
 External2.704s/1.643s, finalizations/caps pass;5132 RHS/15417 states/424 trials, no native propagation.6182 tests/Ruff reused on unchanged bytes.
 [ADR0165](docs/adr/0165-reproduce-lunar-source-rounding.md):R5.18 localizes 13.269 µm before SI /16.645 µm after; staged centre sum reproduces42/42 saved position components. No native work/replay.
-[ADR0166](docs/adr/0166-bound-split-centre-ephemeris-probe.md):R5.19 design complete; next R5.20 preparation, then separately authorized R5.21. No live work; R5.17 failed, M3/safety open, automation PAUSED.
+[ADR0167](docs/adr/0167-prepare-split-centre-probe.md): R5.20 ready; 101 focused/6283 full tests, Ruff and strict OpenSpec pass. Synthetic capture/analysis only; R5.21 needs separate instruction. R5.17 failed, M3/safety open, automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.

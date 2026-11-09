@@ -1,0 +1,119 @@
+{
+  "stage": "R5.20 preparation complete; R5.21 not executed",
+  "date": "2026-11-09",
+  "base_revision": "b53c2fe72ba779ece62d0c0f34b9b3e041ea4681",
+  "preparation_complete": true,
+  "inputs_sha256": "8fa40d6a1ec812400a8dc8d052f48700b09f6ba5eadf351f55c3a647519bb136",
+  "tested_source_sha256": {
+    "docs/adr/experiments/0167/ariadna_split_analysis.py": "57500d72f1e5f8d79836456e460dc5c042f5ef4468e397ce51cc1f7d1d9fdb98",
+    "docs/adr/experiments/0167/ariadna_split_capture.py": "04b47a1cd230557f449334431d28b6a74797f2065116815bffb312718131136c",
+    "docs/adr/experiments/0167/ariadna_split_common.py": "a6fb61a26478d7f459e44ddac9e325bd8edb3c85daa630772f5fbfff4289f6f7",
+    "docs/adr/experiments/0167/ariadna_split_inputs.py": "3df1ec2f76500570dfc501bf8fa6decc1dbbd5011ad8f29a8b0cbeb697f30004",
+    "docs/adr/experiments/0167/ariadna_split_run.py": "4b79f10c30a6403a9e3214430e5c08a0fe00af5ef95d128aa44113e6f83c754a",
+    "tests/test_split_ephemeris_analysis.py": "538d1a6fafce0f18f953ad578e4e8f4989152468b43951b12bddf12078ea6041",
+    "tests/test_split_ephemeris_capture.py": "3f2e35e3d450c789338f76d9eb4208eba5aa4ed086151c312cc49711373857bf",
+    "tests/test_split_ephemeris_inputs.py": "d0ff6eaa4bc6f51119ce45ef1c0fe604ccde6cdcd30514c96bc1317a7ae9846c",
+    "tests/test_split_ephemeris_run.py": "8a933c789221a1f8024c76cc072794acb776ea9c3bd76747b2f54b309bccb339"
+  },
+  "verified_archival_sha256": {
+    "docs/adr/experiments/0163-verification.json": "518eea292547b4bfc4a379e3e8a2ce63632d49fcdef2761d504d09a34d485844",
+    "docs/adr/experiments/0164-corrected-study.json.gz": "33a39f7d04161c08f1d3f6f0740fae6f0259997e41f62cfb839ed7db19365572",
+    "docs/adr/experiments/0164-corrected-audit.json.gz": "4891768a5ae12b194f7f3b89dcc4da3da79007b0092f73153b1e35ab63ec0eb1",
+    "docs/adr/experiments/0164-verification.json": "18415477d412813ea53477071359a12ea788509902ac654814dc0d5f5c3f4632",
+    "docs/adr/experiments/0165-saved-source-analysis.json": "b9e5ae123e9177dd1216c33f32a847252020c47eaf0d89200e65c3feec3a2aab",
+    "docs/adr/experiments/0165-verification.json": "b197cd86ddf0fed6f756172f1c47a614943b3b47fea10654d3981948c4a9107c"
+  },
+  "pinned_runtime_files_metadata_only": {
+    "tudatpy": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/__init__.py",
+      "sha256": "77b9158af39852d29744e2942380d7406208b7935a03071de5fed693d907b49d"
+    },
+    "tudatpy_interface": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/interface/spice/__init__.py",
+      "sha256": "5f50776834ea10ede51c633a9fdb589e420974e27d23336e9d08e1d3f67fb6ba"
+    },
+    "tudatpy_native": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/kernel.so",
+      "sha256": "4b36447713fef9a6ec23a73bd5642833381a0645ee573573144ed492f88b1f12"
+    },
+    "spiceypy": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/spiceypy/__init__.py",
+      "sha256": "e4ec5e68c9092757a8b6a00562f600d2ea4da004e244659bcd7519105ebc12ca"
+    },
+    "spiceypy_wrapper": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/spiceypy/spiceypy.py",
+      "sha256": "24b497c48a50e18314a24bd4c2dfd8023310457ed19629ac1123569c2daae7fa"
+    },
+    "spiceypy_loader": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/spiceypy/utils/libspicehelper.py",
+      "sha256": "cb3c61bf445efc7729ab146607008fc2f941849721b51d97ecc8aa77f4f8a250"
+    },
+    "spiceypy_conda": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/spiceypy-8.2.0-py312hf57c059_0.json",
+      "sha256": "c5f76727768f4e5aa937585f394426c02c3d6163394960a363e75d61e2fd0ea8"
+    },
+    "tudatpy_conda": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/tudatpy-1.0.0-py312h2196d89_3.json",
+      "sha256": "26b84d68ee96cc430a708bd90d42d574954abfa79145c6fe12aed517a4390cc9"
+    },
+    "resource_conda": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/tudat-resources-2.4-h947b425_5.json",
+      "sha256": "e4f61d504a68b7e47cc211d59124e8e35adfb73b3c4506dae7a175f29605e14d"
+    },
+    "cspice": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/libcspice.67.0.0.dylib",
+      "sha256": "cf75f55be27385fef9c097c5a1a53a43c225f9f27cf7e19924f78eaaf5f7a738"
+    },
+    "cspice_conda": {
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/cspice-67-hc919400_13.json",
+      "sha256": "fe0409529c69371cd6a904dfed4b7a0ab8442673aa4f5a82623bc4a997a40856"
+    }
+  },
+  "artifact_sha256": {
+    "docs/adr/experiments/0167-focused-pytest.txt": "397f6e5d36aaedcc6e06acd4cfe063e111e30cf77f5c06b1bb1c7c4c5747da4f",
+    "docs/adr/experiments/0167-full-pytest.txt": "c5eaa8c7ea04b10bacad732b432df5d3cc15423c9b5a38726e2df517a08eb509"
+  },
+  "document_sha256": {
+    "CURRENT_STATE.md": "66c3397df8adcefdf6b3b982528703a32191cd38f49b8e1975bd6f9827da033f",
+    "docs/adr/0167-prepare-split-centre-probe.md": "c76e320a3a111579a052516919297ca6a13141470bdf59b1af8074bf90f95215",
+    "docs/adr/README.md": "bdd4c25eecef7d6c8862404105140e9534fafc3aa0aa22c4c660949a1e824633",
+    "openspec/ROADMAP.md": "2d7796f78bd412e46834f41520f91188b6bb812c8e08b1a4fd33fc5536914aa1",
+    "openspec/changes/refine-physical-trajectory/design.md": "fe10094b7e4d9ae806fea33ff9f598772a0729609d7131e4e22883f708b47bc4",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "ca6c2de2c9452682e3daf95b7a7f42978588250d0ca883352e397281952607e1"
+  },
+  "regression": {
+    "command": [
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "focused_passed": 101,
+    "focused_seconds": 2.87,
+    "full_passed": 6283,
+    "pytest_full_seconds": 802.98,
+    "external_full_seconds": 803.7684932500124,
+    "checkout_frozen": true,
+    "frozen_paths": 671,
+    "preexisting_suite_includes_native_component_tests": true
+  },
+  "checks": {
+    "ruff": "All checks passed!",
+    "strict_openspec": "Change 'refine-physical-trajectory' is valid",
+    "git_diff": "clean",
+    "protected_tracked_files": 657,
+    "local_markdown_links": 259
+  },
+  "r521_attempts": {
+    "capture": 0,
+    "analysis": 0
+  },
+  "new_probe_data": "injected artificial states and retained metadata only",
+  "real_capture_budget_verified": false,
+  "real_split_force_or_closure_verified": false,
+  "strict_m3_closed": false,
+  "automation": "PAUSED; unchanged"
+}

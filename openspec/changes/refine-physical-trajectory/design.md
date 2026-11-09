@@ -6299,5 +6299,14 @@ position-closure hypothesis separately from the static Moon-force result.
 Keep separate terms through relative subtraction, then round once. Reuse
 saved d0 fields; three binary64 and 18 Decimal fields at most under unchanged
 Moon gates. No new polynomial evaluation or propagation in either phase.
-R5.20 preparation and separately authorized R5.21 execution remain pending;
-design metadata only, R5.17 remains failed, automation PAUSED.
+R5.19 verified design metadata only; R5.17 remains failed, automation PAUSED.
+
+
+## R5.20 split-centre ephemeris probe preparation (2026-11-09)
+
+[ADR0167](../../../docs/adr/0167-prepare-split-centre-probe.md) binds the tested
+capture and offline analyzer to ADR0166's inputs. The capture flushes native
+returns before validation; the analyzer rechecks the finalized ledger without
+native imports and reports closure and the static force gates separately.
+Synthetic end-to-end and mutation checks pass. R5.21 remains unexecuted and
+requires separate instruction; no trajectory or gate change.
