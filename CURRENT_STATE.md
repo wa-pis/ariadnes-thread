@@ -37,7 +37,6 @@ all endpoint gates pass; first bad callback at0.052600152s, not a time crossing.
 [ADR0151](docs/adr/0151-frozen-stage-error-attribution.md):39 frozen stages/234 fields
 pass in0.067s; clock-only norm15.679 versus reference0.02889, actual15.734.
 Explains first frozen synthetic estimator rejection; historical R5 cause unverified.
-Preserve raw partial study/audit0148, inputs/kernels/gates and all prior evidence.
 [ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes121 nodes/both frames; preserve evidence.
 [ADR0152](docs/adr/0152-compensated-synthetic-time-validation.md):34 focused/5319 full
 pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor retained.
@@ -51,7 +50,8 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0163](docs/adr/0163-prepare-corrected-integration.md):R5.16 complete;301 focused/6182 full/Ruff pass, tested hashes frozen. Artificial-source checks only.
 [ADR0164](docs/adr/0164-corrected-coast-force-gate-fails.md):R5.17 attempt consumed;both300s solves/21 trajectory comparisons pass, but Moon overall force gate fails at normal RHS6/local0.25s by8.8864%; audit partial/scientific_verified=false, final identity unavailable.
 External2.704s/1.643s, finalizations/caps pass;5132 RHS/15417 states/424 trials, no native propagation.6182 tests/Ruff reused on unchanged bytes.
-Next:read-only saved-source discrepancy diagnosis before a new justified contract; no retry/tuning. R5.17 scientific acceptance/R5.3/M3/safety open; automation PAUSED.
+[ADR0165](docs/adr/0165-reproduce-lunar-source-rounding.md):R5.18 localizes 13.269 µm before SI /16.645 µm after; staged centre sum reproduces42/42 saved position components. No native work/replay.
+Next:design a bounded source-only split-centre probe before a new coast; R5.17 scientific acceptance/R5.3/M3/safety open; automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.

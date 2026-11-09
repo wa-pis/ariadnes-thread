@@ -1,0 +1,159 @@
+"""R5.18: saved position arithmetic and four static diagnostic geometries only."""
+from decimal import Decimal, localcontext
+from fractions import Fraction
+import gzip
+from hashlib import sha256
+import json
+import math
+from pathlib import Path
+import sys
+from time import monotonic
+from typing import Any
+
+START = monotonic()
+ROOT = Path('/Users/agrudin/dev/my/ariadna')
+HERE = ROOT/'docs/adr/experiments'
+F = Fraction
+D = Decimal
+
+
+def load(mode: str, expected: str) -> dict[str, Any]:
+    raw = gzip.decompress((HERE/f'0164-corrected-{mode}.json.gz').read_bytes())
+    assert sha256(raw).hexdigest() == expected, mode
+    return json.loads(raw)
+
+
+def frac(wire: dict[str, str]) -> Fraction:
+    return F(int(wire['numerator']), int(wire['denominator']))
+
+
+def norm_um(vector: list[Fraction]) -> float:
+    return math.hypot(*(float(x*1_000_000) for x in vector))
+
+
+def dec(value: Fraction) -> Decimal:
+    return D(value.numerator)/D(value.denominator)
+
+
+def diagnostic_error(geometry: list[Fraction], gm: Fraction, ref: list[str],
+                     precision: int) -> Decimal:
+    with localcontext() as ctx:
+        ctx.prec = precision
+        d = list(map(dec,geometry))
+        rho2 = sum(x*x for x in d)
+        factor = dec(gm)/(rho2*rho2.sqrt())
+        return sum((factor*x-D(y))**2 for x,y in zip(d,ref,strict=True)).sqrt()
+
+
+study_sha = 'ddebc41daa32141a57c3e9d9d1addb216a20864a0d68a32a78102dfb15781b82'
+audit_sha = '3312a43b417a6af0248fa98c3d0b00d74a51d3f6c4603a0e3596bdfe5c6a5288'
+study = load('study',study_sha)
+audit = load('audit',audit_sha)
+assert study['status'] == 'failed' and study['error']['stage'] == 'selected-force-reference'
+assert audit['audit_status'] == 'partial' and audit['evidence_sha256'] == study_sha
+assert audit['scientific_verified'] is False
+observations = study['observations']
+assert [(o['profile'],o['kind'],o['index']) for o in observations] == [
+    ('normal',kind,i) for kind in ('output','rhs') for i in range(7)]
+controls = []
+for o in observations:
+    row = study['rhs'][o['index']] if o['kind'] == 'rhs' else study['node_table'][o['index']]
+    data = o['progress']['bodies']
+    hi, lo = row['hi_tdb_s'], row['lo_s']
+    exact = {b:[frac(x) for x in data[b]['source_assessment']['exact']['position_hi_m']]
+             for b in ('Earth','Moon')}
+    raw = {b:row['bodies'][b]['state_km_km_s'][:3] for b in exact}
+    assert all(row['bodies'][b]['epoch_tdb_s'] == hi for b in exact)
+    assert all(data[b]['source_assessment']['hi_tdb_s'] == hi for b in exact)
+    # Difference of the saved exact vectors is the retained geocentric contribution.
+    assert [(s['body'],s['centre']) for s in study['inputs']['source_rows_template']['Moon']['segments']] == [(301,399),(399,0)]
+    geo = [float((m-e)/1000) for m,e in zip(exact['Moon'],exact['Earth'],strict=True)]
+    nearest_m = [float(m/1000) for m in exact['Moon']]
+    nearest_e = [float(e/1000) for e in exact['Earth']]
+    staged = [float(F(e)+F(g)) for e,g in zip(raw['Earth'],geo,strict=True)]
+    moon_gates = o['progress']['sources']['Moon']['gates']['100']
+    with localcontext() as ctx:
+        ctx.prec = 100
+        ratio = D(moon_gates['overall']['error_norm_m_s2'])/D(moon_gates['overall']['envelope_m_s2'])
+    controls.append({'kind':o['kind'],'ordinal':o['index'],'elapsed_s':row['elapsed_s'],
+        'hi_tdb_s':hi,'lo_s':lo,
+        'earth_nearest_km_components':[x.hex()==y.hex() for x,y in zip(raw['Earth'],nearest_e,strict=True)],
+        'moon_direct_nearest_km_components':[x.hex()==y.hex() for x,y in zip(raw['Moon'],nearest_m,strict=True)],
+        'moon_staged_sum_matches_components':[x.hex()==y.hex() for x,y in zip(raw['Moon'],staged,strict=True)],
+        'moon_overall_saved_gate_passed':moon_gates['overall']['passed'],
+        'moon_overall_saved_gate_ratio':str(ratio)})
+
+# The selected loop leaves the failed seventh RHS bound above.
+assert (o['kind'],o['index'],row['elapsed_s'],lo) == ('rhs',6,0.25,0.)
+assert sum(r['hi_tdb_s'] == hi for r in study['rhs'] + study['node_table']) == 1
+assert len({c['hi_tdb_s'] for c in controls}) == 13
+assert sum(sum(c['earth_nearest_km_components']) for c in controls) == 42
+assert sum(sum(c['moon_direct_nearest_km_components']) for c in controls) == 31
+assert sum(sum(c['moon_staged_sum_matches_components']) for c in controls) == 42
+assert sum(c['moon_overall_saved_gate_passed'] for c in controls) == 13
+assert not controls[-1]['moon_overall_saved_gate_passed']
+retained = data['Moon']['source_assessment']['exact']
+actual_si = row['bodies']['Moon']['state_si'][:3]
+raw_exact_m = [1000*F(x) for x in raw['Moon']]
+before_si = [x-p for x,p in zip(raw_exact_m,exact['Moon'],strict=True)]
+conversion = [F(x)-p for x,p in zip(actual_si,raw_exact_m,strict=True)]
+after_si = [a+b for a,b in zip(before_si,conversion,strict=True)]
+assert after_si == [frac(x) for x in retained['source_position_floor_m']]
+assert [float(p).hex() for p in raw_exact_m] == [x.hex() for x in actual_si]
+assert all(abs(err) <= F(math.ulp(x))/2 for err,x in zip(conversion,actual_si,strict=True))
+ulps = [(x-y)/math.ulp(x) for x,y in zip(raw['Moon'],nearest_m,strict=True)]
+assert ulps == [-1.,1.,0.]
+earth_round = [1000*F(x)-p for x,p in zip(raw['Earth'],exact['Earth'],strict=True)]
+geo_round = [1000*F(g)-(m-e) for g,m,e in zip(geo,exact['Moon'],exact['Earth'],strict=True)]
+sum_round = [1000*(F(m)-F(e)-F(g)) for m,e,g in zip(raw['Moon'],raw['Earth'],geo,strict=True)]
+assert before_si == [a+b+c for a,b,c in zip(earth_round,geo_round,sum_round,strict=True)]
+d0 = [frac(x) for x in data['Moon']['exact_geometries_m']['d0']]
+d1 = [frac(x) for x in data['Moon']['exact_geometries_m']['d1']]
+assert d1 == [x+e for x,e in zip(d0,after_si,strict=True)]
+gm = F(study['inputs']['gm_m3_s2']['Moon'])
+variants = {
+    'saved_barycentric_km_exact_si_scale':before_si,
+    'direct_nearest_barycentric_km_then_rounded_si':[F(1000*x)-p for x,p in zip(nearest_m,exact['Moon'],strict=True)],
+    'direct_nearest_barycentric_si':[F(float(p))-p for p in exact['Moon']],
+    'retain_rounded_earth_and_model_geocentric_terms':[a+b for a,b in zip(earth_round,geo_round,strict=True)],
+}
+source = o['progress']['sources']['Moon']
+with localcontext() as ctx:
+    ctx.prec = 100
+    results = {}
+    for name, delta in variants.items():
+        geometry = [x+e for x,e in zip(d0,delta,strict=True)]
+        error80, error100 = [diagnostic_error(geometry,gm,source['reference'][str(n)]['d0'],n) for n in (80,100)]
+        assert abs(error80-error100) <= error100*D('1e-60')
+        envelope = D(moon_gates['overall']['envelope_m_s2'])
+        assert 0 < error80 < envelope and 0 < error100 < envelope
+        results[name] = {'position_delta_norm_um':norm_um(delta),'error_80_m_s2':str(error80),
+            'error_100_m_s2':str(error100),'ratio_to_original_envelope':str(error100/envelope)}
+    assert D(moon_gates['overall']['error_norm_m_s2']) > envelope
+
+output = {'stage':'R5.18 saved-source attribution; no R5.17 replay',
+    'base_revision':'edec79c49a5c258617aa95a262ca67570272c56a',
+    'retained_uncompressed_sha256':{'study':study_sha,'audit':audit_sha},
+    'sample':{'profile':'normal','kind':'rhs','ordinal':6,'elapsed_s':0.25,
+        'hi_tdb_s':hi,'lo_s':lo,'origin':'SSB','orientation':'J2000','time_scale':'TDB'},
+    'saved_position_differences':{name:{'signed_xyz_um':[float(x*1_000_000) for x in delta],
+        'norm_um':norm_um(delta),'exact_si_fractions':[str(x) for x in delta]}
+        for name,delta in {'before_si':before_si,'si_rounding':conversion,'total':after_si,
+            'model_earth_term_rounding':earth_round,'model_lunar_geocentric_rounding':geo_round,
+            'model_barycentric_addition_rounding':sum_round}.items()},
+    'saved_raw_km_offset_from_direct_nearest_ulps':ulps,'si_conversion_is_correctly_rounded':True,
+    'observations':controls,'distinct_epochs':13,
+    'moon_direct_nearest_km_matches':31,'moon_staged_sum_matches':42,'earth_direct_nearest_km_matches':42,
+    'saved_actual_moon_overall_gate':moon_gates['overall'],
+    'saved_returned_geometry_gate':moon_gates['returned_geometry'],
+    'hypothetical_exact_geometry_comparisons':results,
+    'budget':{'observations':14,'diagnostic_field_evaluations':8,'watchdog_s':5,
+        'new_polynomial_evaluations':0,'new_spice_calls':0,'propagations':0,'reruns_of_study_or_audit':0},
+    'interpretation':'Staged rounding reproduces the sampled raw position; no native intermediate trace, proof of native implementation, uniform bound or scientific acceptance.'}
+output['elapsed_before_write_s'] = monotonic()-START
+assert output['elapsed_before_write_s'] < 5
+with Path(sys.argv[1]).open('x') as stream:
+    json.dump(output,stream,allow_nan=False,indent=2)
+    stream.write('\n')
+print(json.dumps({'elapsed_s':output['elapsed_before_write_s'],'observations':14,'model_matches':42,
+    'variants':{k:float(v['ratio_to_original_envelope']) for k,v in results.items()}},allow_nan=False))

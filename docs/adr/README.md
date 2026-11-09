@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0165 — Reproduce saved lunar position with staged rounding](0165-reproduce-lunar-source-rounding.md): R5.18 source-only diagnosis, 42/42 sampled position components reproduced by staged centre sum; R5.17 remains failed.
 - [0164 — Corrected coast force-gate failure](0164-corrected-coast-force-gate-fails.md): R5.17 attempt consumed; both300s solves/21 trajectory comparisons pass, sampled Moon overall force gate fails by8.8864%; independent audit partial, no retry or M3 closure.
 - [0163 — Prepare corrected integration](0163-prepare-corrected-integration.md): R5.16 complete;301 focused/6182 full tests and Ruff pass, independent artificial-orbit/negative-gate audit, frozen source hashes retained. R5.17 real solve unexecuted.
 - [0162 — Corrected real-input integration contract](0162-corrected-real-integration-contract.md): R5.15 design; two future A-only300s solves, original gates, bounded live queries and sampled independent audit. R5.16 preparation/R5.17 execution pending; no new science.

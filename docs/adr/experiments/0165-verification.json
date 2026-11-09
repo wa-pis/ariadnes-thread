@@ -1,0 +1,88 @@
+{
+  "stage": "R5.18 saved lunar source diagnosis verified; R5.17 remains failed",
+  "date": "2026-11-09",
+  "base_revision": "edec79c49a5c258617aa95a262ca67570272c56a",
+  "artifact_sha256": {
+    "docs/adr/experiments/0165-saved-source-analysis.txt": "7ce15f7df2585fde26edb69ebdc25b74bce6be49d86296fd29a436ade3771926",
+    "docs/adr/experiments/0165-saved-source-analysis.json": "b9e5ae123e9177dd1216c33f32a847252020c47eaf0d89200e65c3feec3a2aab"
+  },
+  "document_sha256": {
+    "CURRENT_STATE.md": "85bbd918980708916131579bffacde4eea50e9d9f2e3bff4aa5bdd2e33aef650",
+    "docs/adr/README.md": "c00598508ef314ffa7982ea5ca30b676508a0f31199dd705250501b96d74bb14",
+    "openspec/ROADMAP.md": "e58cea0227694cb278e4b7deffd140825f7b630a06711f4e3403c59362971470",
+    "openspec/changes/refine-physical-trajectory/design.md": "d0b6fc146516250edd31421027d22afc6c4c6a2d09e556520af44970da6316c5",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "bf2dde1cb72dd6b4cb7e408aef1793a1403f2be3a28c11eb0c91d37254f4a36c",
+    "docs/adr/0165-reproduce-lunar-source-rounding.md": "e66efc38dd7fb66288d1e421bfaaa3e50aa2770934db71163ba72955e5fc39b3"
+  },
+  "previous_verification_sha256": "18415477d412813ea53477071359a12ea788509902ac654814dc0d5f5c3f4632",
+  "previous_tested_source_sha256": {
+    "docs/adr/experiments/0163-corrected-audit.py": "18d8bcae5f544f5176be5c9070e7cfc4fc00accadc634dee45ea952e4c265bc5",
+    "docs/adr/experiments/0163-corrected-inputs.py": "329067092b86c853ae909cac71076b74ede7fa321c67501237e714c381e5ce9c",
+    "docs/adr/experiments/0163-corrected-integrator.py": "fbc8411ca6d8ad3ebde72563d8b4134f9d5e2d2235e5441f945e4aa10873efed",
+    "docs/adr/experiments/0163-corrected-reference.py": "2500e52496289cc75c93dba8825cd222d70f56cc97f48171b8e01328fe2bde65",
+    "docs/adr/experiments/0163-corrected-study.py": "df695319272f270065c6e03928872d604a40e11100b7c860a52f00ef2c8fdefa",
+    "tests/test_corrected_audit.py": "21caa009eb80f910e31fb888a731df476c15f82140758f41e8bfe3d3742c1486",
+    "tests/test_corrected_inputs.py": "047d2784d3a30c6b79e1d8c4faf399e250179ba4844fab8aede9e872a6a0f2b4",
+    "tests/test_corrected_integrator.py": "13e3929337a0cef8e63c93892f40901436dab847a379c8d78bdc6872fa5d4677",
+    "tests/test_corrected_reference.py": "1cd8ea722b39fddfc9190a089d5a41f3e015fd29a207289c0d94072f958f1350",
+    "tests/test_corrected_study.py": "b87f5c86678a643facada7874d288a4a222feb3828fe416a8d3e04cab45387c6"
+  },
+  "frozen_tracked_files_before_update": 655,
+  "protected_unchanged_count": 650,
+  "deliberately_updated_context_files": [
+    "CURRENT_STATE.md",
+    "docs/adr/README.md",
+    "openspec/ROADMAP.md",
+    "openspec/changes/refine-physical-trajectory/design.md",
+    "openspec/changes/refine-physical-trajectory/tasks.md"
+  ],
+  "local_links_checked": 249,
+  "checks": {
+    "diff": {
+      "command": [
+        "/opt/homebrew/bin/git",
+        "diff",
+        "--check"
+      ],
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "strict_openspec": {
+      "command": [
+        "/opt/homebrew/bin/openspec",
+        "validate",
+        "refine-physical-trajectory",
+        "--strict"
+      ],
+      "status": 0,
+      "stdout": "Change 'refine-physical-trajectory' is valid\n",
+      "stderr": ""
+    }
+  },
+  "full_tests_reused": 6182,
+  "ruff_reused": true,
+  "runtime_tests_rerun": false,
+  "run_command": [
+    "/usr/bin/perl",
+    "-e",
+    "alarm 5; exec @ARGV",
+    "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/private/tmp/ariadna-0165-source-analysis.txt",
+    "/private/tmp/ariadna-0165-source-analysis.json"
+  ],
+  "scope": {
+    "observations": 14,
+    "diagnostic_field_evaluations": 8,
+    "watchdog_s": 5,
+    "new_polynomial_evaluations": 0,
+    "new_spice_calls": 0,
+    "propagations": 0,
+    "reruns_of_study_or_audit": 0
+  },
+  "r517_scientific_verified": false,
+  "automation": "PAUSED; unchanged"
+}

@@ -193,6 +193,18 @@ acceptance, R5.3/Earth sensitivity/M3 remain open, automation PAUSED. Next: read
 saved-source discrepancy diagnosis before any separately justified experiment.
 
 
+[ADR0165](../docs/adr/0165-reproduce-lunar-source-rounding.md) completes R5.18
+saved-data diagnosis. The failed sample differs by 13.269 µm before SI scaling
+and 16.645 µm after correctly rounded conversion. A staged Earth/Moon centre sum
+reproduces 42/42 raw position components over 14 saved observations; one direct
+rounding reproduces 31/42. Exact scaling of saved km gives 0.927252 of the original
+force envelope in a static counterfactual, versus the measured failure at 1.088864.
+No new native queries, polynomial evaluation, propagation or replay. This fits
+the sampled arithmetic, not native internal execution or a uniform bound. Next
+eligible design: bounded source-only split-centre probe; no execution authorized
+by this record. R5.17 scientific acceptance/M3 open, automation PAUSED.
+
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

@@ -6265,3 +6265,21 @@ across execution/audit; reuse unchanged301 focused/6182 full tests/Ruff and veri
 saved evidence/links/digests/diff/strict OpenSpec. R5.17 scientific acceptance,
 R5.3, Earth sensitivity and strict M3/safety remain open, automation PAUSED.
 No repeat/tuning; inspect saved source discrepancy before any new justified contract.
+
+
+## R5.18 saved-source rounding attribution (2026-11-09)
+
+[ADR0165](../../../docs/adr/0165-reproduce-lunar-source-rounding.md) uses the
+unchanged ADR0164 study/audit bytes. At the failed normal RHS ordinal 6, exact
+scaling of the saved km Moon position differs by 13.269367 µm from the saved
+exact Type 2 value. Correct rounding of the SI product adds a signed vector
+with norm 3.861443 µm, yielding 16.645034 µm total. The raw x/y differ by −1/+1
+binary64 steps from a single direct rounding in km. Rounding the exact saved
+Moon/Earth difference and adding it to the saved Earth km value reproduces 42/42
+position components at 14 selected observations, versus 31/42 for direct
+rounding. This is an explanatory model, not a trace of native intermediates.
+Four static source substitutions at 80/100 digits retain the original envelope;
+exact SI scaling alone gives 0.927252 in this geometry versus measured 1.088864.
+The negative R5.17 result remains. No new queries, polynomial evaluations,
+propagations or replay, and no changes to implementation or scientific gates.
+Further progress needs a separately bounded source-only split-centre probe.
