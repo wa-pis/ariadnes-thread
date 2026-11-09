@@ -205,6 +205,16 @@ eligible design: bounded source-only split-centre probe; no execution authorized
 by this record. R5.17 scientific acceptance/M3 open, automation PAUSED.
 
 
+[ADR0166](../docs/adr/0166-bound-split-centre-ephemeris-probe.md) completes R5.19
+design only: three fixed saved epochs (0.25/0/250 s), nine future E/G/B state
+queries plus six applicable segment checks in a 15 s capture; separate 10 s
+offline analyzer checks closure and original static Moon gates independently.
+Reuse exact archived references with zero new polynomial evaluation or trajectory
+propagation. Design validates metadata only. Next: R5.20 preparation; R5.21
+requires verified preparation and separate instruction. R5.17 remains failed;
+strict M3/safety remain open and automation PAUSED.
+
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

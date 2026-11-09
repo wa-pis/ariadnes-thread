@@ -6283,3 +6283,21 @@ exact SI scaling alone gives 0.927252 in this geometry versus measured 1.088864.
 The negative R5.17 result remains. No new queries, polynomial evaluations,
 propagations or replay, and no changes to implementation or scientific gates.
 Further progress needs a separately bounded source-only split-centre probe.
+
+
+## R5.19 split-centre ephemeris probe contract (2026-11-09)
+
+[ADR0166](../../../docs/adr/0166-bound-split-centre-ephemeris-probe.md) freezes
+normal RHS 6 and outputs 0/5 in that order (local 0.25/0/250 s, lo=+0), exact
+archived position/velocity references and frozen motion. The future capture
+acquires E=Earth/SSB, G=Moon/Earth and B=Moon/SSB with J2000/NONE at each `hi`.
+Budget: 15 s inclusive, nine states, six selectors, one standard setup and
+30 explicit inventory API calls. Pin both Type 2 selections using the actual
+pool/handles, kernel and loaded library file identity; no new record reads.
+The 10 s zero-native analyzer validates receipts, archive parity and the
+position-closure hypothesis separately from the static Moon-force result.
+Keep separate terms through relative subtraction, then round once. Reuse
+saved d0 fields; three binary64 and 18 Decimal fields at most under unchanged
+Moon gates. No new polynomial evaluation or propagation in either phase.
+R5.20 preparation and separately authorized R5.21 execution remain pending;
+design metadata only, R5.17 remains failed, automation PAUSED.

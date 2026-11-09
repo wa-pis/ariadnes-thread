@@ -1,0 +1,41 @@
+{
+  "stage": "R5.19 design verification",
+  "date": "2026-11-09",
+  "base_commit": "0ee4d2d52472cc549bf43a452457b8fafc982e02",
+  "inputs_sha256": "8fa40d6a1ec812400a8dc8d052f48700b09f6ba5eadf351f55c3a647519bb136",
+  "document_sha256": {
+    "CURRENT_STATE.md": "894e25c0ca4264be92cc8d8111a01d591a33792abc505275f974440a4d612ff7",
+    "docs/adr/0166-bound-split-centre-ephemeris-probe.md": "6d3899dc131aa52335eca87f42c13489932cde6b17735dde6b439623aa795230",
+    "docs/adr/README.md": "c146d6deb74e6b48705fd1aeb63f4c2b26ec87a8b462ade4df5607a6b79366b9",
+    "openspec/ROADMAP.md": "0cf0628e04754240cf430e0bc59e3f1116ac3ec994e245b854cf42d4a66059b4",
+    "openspec/changes/refine-physical-trajectory/design.md": "0b9198e0b7bd531f22392614d52a2313e846986e92caeffd28022cf70b4b7592",
+    "openspec/changes/refine-physical-trajectory/specs/short-coast-sensitivity/spec.md": "3b305175ef8e83f2b0e1e5b80b2d844b5d9af36c4b44b3db0d8a191106f3d844",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "a25ac4d3a2774387dc7a448e37635e80d782e72ebc0499ce937a1d201120f861"
+  },
+  "checks": {
+    "strict_openspec": "Change 'refine-physical-trajectory' is valid",
+    "git_diff_check": "passed",
+    "local_markdown_links": 253,
+    "protected_tracked_files": 653,
+    "archive_hashes_verified": 6,
+    "current_state_lines": 59
+  },
+  "unchanged_code_baseline": {
+    "receipt": "docs/adr/experiments/0163-verification.json",
+    "tested_source_hashes_verified": 10,
+    "full_tests_previously_passed": 6182,
+    "ruff_previously_passed": true,
+    "rerun": false
+  },
+  "design_work": {
+    "native_calls": 0,
+    "kernel_loads": 0,
+    "polynomial_evaluations": 0,
+    "force_evaluations": 0,
+    "propagations": 0
+  },
+  "pending": [
+    "R5.20 preparation",
+    "R5.21 separately instructed execution"
+  ]
+}

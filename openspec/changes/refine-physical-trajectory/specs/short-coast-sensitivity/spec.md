@@ -247,3 +247,33 @@ Design acceptance SHALL NOT count as preparation or execution completion.
 - **AND** exclusive finite raw/partial evidence SHALL retain before/after identities, every returned operand/array before post-call checks, ordered counters/traces, unavailable downstream checks, earliest failure and finalization; no retry, profile/budget/input/gate change or real parity replay SHALL be allowed
 - **AND** full success SHALL require both completed solves, all seven outputs, required gates/counts/identities/budgets and both finalizations plus the separate audit; missing historical0148 final identity SHALL remain explicit, with no retroactive provenance repair
 - **AND** sampled numerical agreement SHALL NOT qualify unsampled source selection, continuous safety, R5.3 causality, Earth-force sensitivity, astronomical truth or strict M3/mission readiness; automation SHALL remain PAUSED
+
+
+### Requirement: Observe both lunar ephemeris legs before considering another coast
+
+R5.19–R5.21 SHALL follow ADR0166's fixed-epoch, source-only probe with a separate
+static Moon-force analysis. This requirement SHALL NOT modify the ADR0162
+contract or reinterpret the failed R5.17 result.
+
+#### Scenario: Freeze a fixed sample and capture two legs plus direct state
+
+- **WHEN** R5.20 preparation is verified and R5.21 is separately authorized
+- **THEN** one fresh capture SHALL use normal RHS 6 at local 0.25 s, output 0 at 0 s and output 5 at 250 s in that order, binding exact saved `hi`/`lo=+0`, initial state, motion, archive and reference bytes
+- **AND** it SHALL issue exactly Earth/SSB, Moon/Earth and Moon/SSB `spkezr` queries per epoch on success, preserving six raw km/km/s components and finite light time, with TDB/J2000/NONE and no rephasing
+- **AND** it SHALL verify the frozen 13-kernel pool and runtime/library/helper/input identities before and after, and after all nine state reads retain two `spksfs` selections per epoch, in the same epoch order for 399 then 301 with `idlen=128`, matching the frozen 399→0 and 301→399 Type 2 descriptors/handle/coverage/record index
+- **AND** explicit attempts SHALL be capped at one setup, 30 inventory API calls, nine state queries and six selectors within the inclusive 15 s capture budget; new Type 2 reads/evaluations, GM queries, propagations and optimiser calls SHALL be zero
+
+#### Scenario: Separate position closure from the static force result
+
+- **WHEN** the fresh zero-native offline analyzer processes the retained capture
+- **THEN** it SHALL verify the ledger, identity, deadlines and receipts, require all 36 Earth/SSB and Moon/SSB raw components to match the archive bitwise, and check each of the nine states against the saved exact reference within 0.001 m and 1e-6 m/s using squared SI norms
+- **AND** it SHALL report all nine bitwise nearest-even position closures and exact signed source/closure/SI attribution; velocity and geocentric nearest-bit diagnostics SHALL NOT substitute for this position gate, and a finite closure miss SHALL NOT suppress static diagnostics whose prerequisites still hold
+- **AND** it SHALL construct the four ADR0166 exact geometries at the saved motion operands without rounding either SI leg or a barycentric sum, verify one final nearest-even separation rounding and strictly exterior lunar geometry before fields, and compute at most three new binary64 and 18 new Decimal Moon fields using the original GM and 80/100-digit reference discipline
+- **AND** returned-geometry and overall Moon errors SHALL each meet `max(1e-15 m/s^2,1e-11*norm(reference))` on a pass, including all source error, with relative 1e-60 precision convergence, stable classifications and ADR0166 telescoping; no force result SHALL be qualified without valid provenance and state parity
+- **AND** full sampled confirmation SHALL require valid finalizations, closure 9/9 and both static gates at all three epochs within the inclusive 10 s offline budget, preserving closure and static outcomes separately, with no native imports or calls and no new polynomial evaluation
+
+#### Scenario: Preserve bounded negative evidence and pending work
+
+- **WHEN** capture or analysis encounters an invalid return, identity, coverage, domain, deadline or numerical gate failure
+- **THEN** the exclusive finite evidence SHALL retain the earliest failure, attempted/returned/completed ledger, raw return prefix and unavailable checks, with no retry, substituted epoch, source or tolerance
+- **AND** passing or negative diagnostics SHALL leave the R5.17 verdict, R5.3, force sensitivity, full-trajectory qualification and strict M3 unchanged; no continuous or mission safety claim or automation resumption is permitted

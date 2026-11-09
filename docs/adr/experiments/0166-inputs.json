@@ -1,0 +1,340 @@
+{
+  "stage": "R5.19 design-only metadata preflight",
+  "archival_sha256": {
+    "docs/adr/experiments/0163-verification.json": "518eea292547b4bfc4a379e3e8a2ce63632d49fcdef2761d504d09a34d485844",
+    "docs/adr/experiments/0164-corrected-study.json.gz": "33a39f7d04161c08f1d3f6f0740fae6f0259997e41f62cfb839ed7db19365572",
+    "docs/adr/experiments/0164-corrected-audit.json.gz": "4891768a5ae12b194f7f3b89dcc4da3da79007b0092f73153b1e35ab63ec0eb1",
+    "docs/adr/experiments/0164-verification.json": "18415477d412813ea53477071359a12ea788509902ac654814dc0d5f5c3f4632",
+    "docs/adr/experiments/0165-saved-source-analysis.json": "b9e5ae123e9177dd1216c33f32a847252020c47eaf0d89200e65c3feec3a2aab",
+    "docs/adr/experiments/0165-verification.json": "b197cd86ddf0fed6f756172f1c47a614943b3b47fea10654d3981948c4a9107c"
+  },
+  "retained_uncompressed_sha256": {
+    "study": "ddebc41daa32141a57c3e9d9d1addb216a20864a0d68a32a78102dfb15781b82",
+    "audit": "3312a43b417a6af0248fa98c3d0b00d74a51d3f6c4603a0e3596bdfe5c6a5288"
+  },
+  "samples_in_probe_order": [
+    {
+      "observation_ordinal": 13,
+      "normal_kind": "rhs",
+      "source_index": 6,
+      "elapsed_s": 0.25,
+      "hi_tdb_s": 978995455.4804223,
+      "hi_hex": "0x1.d2d247fbd7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "raw_hex": {
+        "Earth": [
+          "-0x1.66311b8d144b2p+25",
+          "0x1.e8c80a57ba96cp+26",
+          "0x1.a7d4a35e322f6p+25",
+          "-0x1.cb971db97d111p+4",
+          "-0x1.19504230a9f8dp+3",
+          "-0x1.e7a0256c35d19p+1"
+        ],
+        "Moon": [
+          "-0x1.678be80a4b22cp+25",
+          "0x1.ea163573ec233p+26",
+          "0x1.a8bb3e3f31e9dp+25",
+          "-0x1.d973bfbb777d0p+4",
+          "-0x1.25f527fb7132cp+3",
+          "-0x1.029bb1ee99b45p+2"
+        ]
+      },
+      "frozen_q_m": [
+        -0.04532162758902133,
+        -0.0001658026611058782,
+        -7.519438446003789e-05
+      ],
+      "frozen_drift_m": [
+        -7397.689944405122,
+        -2296.5436112168786,
+        -601.8119956638716
+      ],
+      "retained_moon_overall_gate_passed": false
+    },
+    {
+      "observation_ordinal": 0,
+      "normal_kind": "output",
+      "source_index": 0,
+      "elapsed_s": 0.0,
+      "hi_tdb_s": 978995455.2304223,
+      "hi_hex": "0x1.d2d247f9d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "raw_hex": {
+        "Earth": [
+          "-0x1.663117f5e60f2p+25",
+          "0x1.e8c80ae462b72p+26",
+          "0x1.a7d4a3d81a382p+25",
+          "-0x1.cb971e3b8586dp+4",
+          "-0x1.19503f6815995p+3",
+          "-0x1.e7a020977422dp+1"
+        ],
+        "Moon": [
+          "-0x1.678be45763a27p+25",
+          "0x1.ea163606e6b63p+26",
+          "0x1.a8bb3ec07fc20p+25",
+          "-0x1.d973c0864ac18p+4",
+          "-0x1.25f5241c01d26p+3",
+          "-0x1.029baec4cfc86p+2"
+        ]
+      },
+      "frozen_q_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "frozen_drift_m": [
+        -0.0,
+        -0.0,
+        -0.0
+      ],
+      "retained_moon_overall_gate_passed": true
+    },
+    {
+      "observation_ordinal": 5,
+      "normal_kind": "output",
+      "source_index": 5,
+      "elapsed_s": 250.0,
+      "hi_tdb_s": 978995705.2304223,
+      "hi_hex": "0x1.d2d24fc9d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "raw_hex": {
+        "Earth": [
+          "-0x1.663f1e7ac201fp+25",
+          "0x1.e8c5e569089d2p+26",
+          "0x1.a7d2c79c837a6p+25",
+          "-0x1.cb95224105125p+4",
+          "-0x1.195b1ee5dbd32p+3",
+          "-0x1.e7b2ffa24853fp+1"
+        ],
+        "Moon": [
+          "-0x1.679a57239c4bfp+25",
+          "0x1.ea13f7d55643dp+26",
+          "0x1.a8b9459c5d700p+25",
+          "-0x1.d970a8052584fp+4",
+          "-0x1.260444be29931p+3",
+          "-0x1.02a809d0d321dp+2"
+        ]
+      },
+      "frozen_q_m": [
+        -45135.34827551927,
+        -166.06878381895092,
+        -3425.8675058639215
+      ],
+      "frozen_drift_m": [
+        -7397689.944405123,
+        -2296543.6112168785,
+        -601811.9956638716
+      ],
+      "retained_moon_overall_gate_passed": true
+    }
+  ],
+  "records": [
+    {
+      "body": 301,
+      "centre": 399,
+      "frame": 1,
+      "type": 2,
+      "begin": 1090861,
+      "end": 1858384,
+      "path": "/Users/agrudin/.tudat/resource/spice_kernels/inpop19a_TDB_m100_p100_spice.bsp",
+      "label": "Moon",
+      "address": 1590733,
+      "index": 12192,
+      "trailer": [
+        -3234816000.0,
+        345600.0,
+        41.0,
+        18720.0
+      ],
+      "first_tdb_s": -3234816000.0,
+      "last_tdb_s": 3234816000.0,
+      "descriptor_hex": [
+        "-0x1.819ec00000000p+31",
+        "0x1.819ec00000000p+31",
+        "0x0.0018f0000012dp-1022",
+        "0x0.0000200000001p-1022",
+        "0x1.c5b500010a52dp-1022"
+      ],
+      "word_count": 41,
+      "record_interval_tdb_s": [
+        978739200,
+        979084800
+      ]
+    },
+    {
+      "body": 399,
+      "centre": 0,
+      "frame": 1,
+      "type": 2,
+      "begin": 2022189,
+      "end": 2789712,
+      "path": "/Users/agrudin/.tudat/resource/spice_kernels/inpop19a_TDB_m100_p100_spice.bsp",
+      "label": "Earth",
+      "address": 2522061,
+      "index": 12192,
+      "trailer": [
+        -3234816000.0,
+        345600.0,
+        41.0,
+        18720.0
+      ],
+      "first_tdb_s": -3234816000.0,
+      "last_tdb_s": 3234816000.0,
+      "descriptor_hex": [
+        "-0x1.819ec00000000p+31",
+        "0x1.819ec00000000p+31",
+        "0x0.000000000018fp-1022",
+        "0x0.0000200000001p-1022",
+        "0x1.a9150001edb2dp-1021"
+      ],
+      "word_count": 41,
+      "record_interval_tdb_s": [
+        978739200,
+        979084800
+      ]
+    }
+  ],
+  "locked_selected_kernel_sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+  "original_ordered_pool_manifest": {
+    "kernel_source": "tudatpy-standard",
+    "loaded_kernel_count": 13,
+    "spiceypy_version": "8.2.0",
+    "kernels": [
+      {
+        "name": "pck00010.tpc",
+        "version": "pck00010",
+        "type": "TEXT",
+        "source": null,
+        "size_bytes": 126143,
+        "sha256": "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2"
+      },
+      {
+        "name": "inpop19a_TDB_m100_p100_spice.tpc",
+        "version": "inpop19a_TDB_m100_p100_spice",
+        "type": "TEXT",
+        "source": null,
+        "size_bytes": 18826,
+        "sha256": "55798de268f64f43f5ccf71dae84e1d1603a99301f80251c4d74cb8f26a72eee"
+      },
+      {
+        "name": "NOE-4-2020.tpc",
+        "version": "NOE-4-2020",
+        "type": "TEXT",
+        "source": null,
+        "size_bytes": 369,
+        "sha256": "0edbcf5f8a1265f2937594f55d7fe395526d610e14445c3d77448e0df1adcf21"
+      },
+      {
+        "name": "NOE-5-2021.tpc",
+        "version": "NOE-5-2021",
+        "type": "TEXT",
+        "source": null,
+        "size_bytes": 1150,
+        "sha256": "069cb44cef6809e84a618bbb3b8efde2fe42224ff0636b59808034a9c806cec6"
+      },
+      {
+        "name": "NOE-6-2018-MAIN-v2.tpc",
+        "version": "NOE-6-2018-MAIN-v2",
+        "type": "TEXT",
+        "source": null,
+        "size_bytes": 1201,
+        "sha256": "2f3084319850f92b2fc6adaaf7846b1362c7775b56c550c9b10615fc7fedc3cc"
+      },
+      {
+        "name": "codes_300ast_20100725.bsp",
+        "version": "codes_300ast_20100725",
+        "type": "SPK",
+        "source": null,
+        "size_bytes": 61864960,
+        "sha256": "7bb92faaadac29ec0b62aa96041a37c92ae24b9a5460de03d3fcaa2f63fe51f0"
+      },
+      {
+        "name": "codes_300ast_20100725.tf",
+        "version": "codes_300ast_20100725",
+        "type": "TEXT",
+        "source": null,
+        "size_bytes": 25584,
+        "sha256": "15ee3b1731817774672725ccc226b249eb9ca5aa5d0a6a7805c91e5f57497f40"
+      },
+      {
+        "name": "inpop19a_TDB_m100_p100_spice.bsp",
+        "version": "inpop19a_TDB_m100_p100_spice",
+        "type": "SPK",
+        "source": null,
+        "size_bytes": 22318080,
+        "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6"
+      },
+      {
+        "name": "NOE-4-2020.bsp",
+        "version": "NOE-4-2020",
+        "type": "SPK",
+        "source": null,
+        "size_bytes": 244004864,
+        "sha256": "bd05fc94f3f2c873b26bfc420759bc82df306593c1ed4173716b8472b115ab9b"
+      },
+      {
+        "name": "NOE-5-2021.bsp",
+        "version": "NOE-5-2021",
+        "type": "SPK",
+        "source": null,
+        "size_bytes": 455586816,
+        "sha256": "85063d326f068f4a6e5bd4f56c4c4bae330c0cea210d18d190451f33cb3add24"
+      },
+      {
+        "name": "NOE-6-2018-MAIN-v2.bsp",
+        "version": "NOE-6-2018-MAIN-v2",
+        "type": "SPK",
+        "source": null,
+        "size_bytes": 222214144,
+        "sha256": "ff2188d11c8cd31933e6757e81cd43e66644e218d041c72628ebf291754e7f39"
+      },
+      {
+        "name": "juice_mat_crema_4_0_20220601_20330626_v01.bsp",
+        "version": "juice_mat_crema_4_0_20220601_20330626_v01",
+        "type": "SPK",
+        "source": null,
+        "size_bytes": 2904064,
+        "sha256": "79ea4e0483909305dcf40280e16b859f0c7050420517cb35a60b1b166d8edd76"
+      },
+      {
+        "name": "naif0012.tls",
+        "version": "naif0012",
+        "type": "TEXT",
+        "source": null,
+        "size_bytes": 5257,
+        "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b"
+      }
+    ],
+    "kernel_list_status": "complete"
+  },
+  "frozen_initial": {
+    "epoch_tdb_s": 978995455.2304223,
+    "position_m": [
+      -47124635282.7281,
+      128473304107.83153,
+      55670397503.89886
+    ],
+    "velocity_m_s": [
+      -29590.75977762049,
+      -9186.174444867514,
+      -2407.2479826554863
+    ]
+  },
+  "moon_gm_m3_s2": 4902800121846.8,
+  "moon_radius_m": 1737400.0,
+  "local_cspice_file_pin": {
+    "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/libcspice.67.0.0.dylib",
+    "sha256": "cf75f55be27385fef9c097c5a1a53a43c225f9f27cf7e19924f78eaaf5f7a738",
+    "conda_record": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/cspice-67-hc919400_13.json",
+    "conda_record_sha256": "fe0409529c69371cd6a904dfed4b7a0ab8442673aa4f5a82623bc4a997a40856",
+    "scope": "current installed file checked, no dynamic load or retroactive R5.17 provenance"
+  },
+  "design_work": {
+    "native_calls": 0,
+    "kernel_loads": 0,
+    "polynomial_evaluations": 0,
+    "force_evaluations": 0,
+    "propagations": 0
+  },
+  "elapsed_s": 0.19044720800593495
+}
