@@ -6308,5 +6308,14 @@ R5.19 verified design metadata only; R5.17 remains failed, automation PAUSED.
 capture and offline analyzer to ADR0166's inputs. The capture flushes native
 returns before validation; the analyzer rechecks the finalized ledger without
 native imports and reports closure and the static force gates separately.
-Synthetic end-to-end and mutation checks pass. R5.21 remains unexecuted and
-requires separate instruction; no trajectory or gate change.
+Synthetic end-to-end and mutation checks pass; no trajectory or gate change.
+
+
+## R5.21 real split-centre ephemeris result (2026-11-09)
+
+[ADR0168](../../../docs/adr/0168-real-split-centre-probe-passes.md) records the
+one authorized real capture and separate offline analysis. Both passed within
+their limits. The two position legs reproduce the direct Moon position on
+9/9 components; both static Moon force gates pass at all three frozen states,
+including the former 0.25 s failure. This does not reopen the R5.17 attempt or
+qualify a new integration.

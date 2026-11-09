@@ -215,9 +215,15 @@ propagation. Design validates metadata only.
 [ADR0167](../docs/adr/0167-prepare-split-centre-probe.md) completes R5.20:
 private capture and separate offline analyzer pass 101 focused and 6283
 full tests, Ruff and strict OpenSpec. The new probe uses artificial states or
-saved metadata only. Next: R5.21 once after separate execution instruction,
-with the same epochs, input, force, limits and frozen helpers. R5.17 remains
-failed; strict M3/safety remain open and automation PAUSED.
+saved metadata only.
+
+[ADR0168](../docs/adr/0168-real-split-centre-probe-passes.md) completes R5.21
+with one 1.392 s real capture and one 0.334 s offline analysis.
+Archive reproduction 36/36, same-model parity 9/9, position closure 9/9 and
+both static Moon force gates at 3/3 frozen points pass. At 0.25 s the split
+overall error is 0.506033 of the unchanged limit (saved direct: 1.088864).
+No rerun, new trajectory or production change. R5.17 remains failed; strict
+M3/safety remain open and automation PAUSED.
 
 
 ## Completed R4 — define finite-radius interfaces before new propagation

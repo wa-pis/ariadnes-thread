@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0168 — Real split-centre ephemeris probe passes](0168-real-split-centre-probe-passes.md): R5.21 one bounded run; 9/9 position closure, both static Moon gates pass at 3/3 frozen states; no propagation or R5.17 requalification.
 - [0167 — Prepare the split-centre ephemeris probe](0167-prepare-split-centre-probe.md): R5.20 verified on artificial responses and saved metadata; independent capture/analysis evidence, live R5.21 pending.
 - [0166 — Bound the split-centre ephemeris probe](0166-bound-split-centre-ephemeris-probe.md): R5.19 design, three fixed epochs, nine states/six selectors, separate position closure and static Moon force checks; no live execution.
 - [0165 — Reproduce saved lunar position with staged rounding](0165-reproduce-lunar-source-rounding.md): R5.18 source-only diagnosis, 42/42 sampled position components reproduced by staged centre sum; R5.17 remains failed.
