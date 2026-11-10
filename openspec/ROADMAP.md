@@ -255,8 +255,12 @@ gates and isolate position, rounding and field evaluation contributions.
 [ADR0176](../docs/adr/0176-prepare-paired-lunar-force-check.md) completes
 R5.29 preparation: 51 focused tests pass; guarded regression: 6036 passed,
 407 skipped. The runner and readback were tested on synthetic pairs.
-R5.30 is unrun and needs a separate instruction. No new SPICE, archived
-force or record evaluation, or trajectory propagation.
+[ADR0177](../docs/adr/0177-paired-lunar-force-gates-pass.md) records the
+single R5.30 run: all 11 pairs and 88 original gate checks pass. The
+maximum paired acceleration change is 4.73846e-14 m/s²; the worst
+measured-source overall error uses 45.531% of its unchanged limit.
+No SPICE, polynomial evaluation or propagation. The result applies
+only to the frozen rows; previous verdicts and automation stay unchanged.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

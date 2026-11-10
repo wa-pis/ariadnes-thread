@@ -6458,3 +6458,16 @@ ambiguity, stopped and late evidence, and refusal of a second attempt.
 51 focused tests pass; guarded regression: 6036 passed, 407 skipped.
 The archived inputs were read for identity and mapping only. No SPICE
 or archive force evaluation occurred. R5.30 remains unexecuted.
+
+## R5.30 paired lunar force result (2026-11-10)
+
+[ADR0177](../../../docs/adr/0177-paired-lunar-force-gates-pass.md) records
+the one authorized run on all 11 frozen pairs. All 143 operations
+complete within the original caps; child and parent finalization
+and saved-return readback pass. The proxy replays, and all 88 original
+force checks pass at 80 and 100 digits with zero verdict flips.
+The changed source alters all 11 acceleration vectors; the largest
+change is `4.7384608443e-14 m/s²`. The worst measured-source overall
+error uses 45.531% of the unchanged limit. No SPICE, record evaluation
+or trajectory propagation. R5.24, R5.27 and R5.17 retain their historical
+verdicts; the result applies only to these fixed states.
