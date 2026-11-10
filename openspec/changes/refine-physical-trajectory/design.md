@@ -6359,3 +6359,27 @@ ledger, input identities and both receipts pass readback; the outer wall
 time through process exit was 0.494615125 s of 10 s. No new ephemeris or
 record acquisition, propagation, or optimizer run. The conditional result
 does not verify the provider at the 16 proxy epochs or supersede R5.17.
+
+
+## R5.25 source-only Moon/Earth holdout design (2026-11-10)
+
+[ADR0172](../../../docs/adr/0172-design-geocentric-moon-holdout.md) binds the
+[holdout inventory](../../../docs/adr/experiments/0172-inputs.json) to the
+finalized R5.24 receipts. Take the 16 binary64 hi epochs in first occurrence
+order from the 21 proxy rows. Five epochs map to two rows. Do not query the
+exact hi+lo times or the three already measured epochs.
+
+In a future authorized capture, check the selected Moon 301→Earth 399
+Type 2 segment and read one geometric Moon/Earth state per hi under the
+same pinned provider and 13-kernel pool. Reuse the stored exact geocentric
+reference and rounded position proxy. Keep the 1 mm / 1 µm/s same-model
+parity, 48 position-bit comparisons with the proxy, and 48 archived
+Earth+Moon closure comparisons separate. A bit miss within parity does
+not establish an ephemeris defect and cannot extend the proxy result to
+that operand. Bit identity supports reuse only with the frozen inputs.
+
+R5.26 verifies a private runner on synthetic states and saved metadata.
+R5.27 needs separate authorization: 63 explicit capture calls at most
+(1 setup, 30 inventory, 16 selectors, 16 states) in 15 s, and one 10 s
+native-free analyzer. Retain partial evidence and stop on identity, input
+or budget failure. No new field evaluation, propagation or change to R5.17.

@@ -236,8 +236,12 @@ leg at 16 other epochs; preserve the original rephasing and force limits.
 both Moon gates pass at 28/28 frozen rows (7 measured, 21 proxy), all
 three measured controls match, and finalization passes in 0.495 s outer
 wall time. Zero new SPICE queries or propagation; R5.17 remains failed.
-A separate source-only holdout design for the 16 proxy epochs is eligible
-for consideration; no live holdout is authorized. Automation stays PAUSED.
+[ADR0172](../docs/adr/0172-design-geocentric-moon-holdout.md) completes R5.25 design: one future
+Moon/Earth state per 16 frozen rounded epochs (21 proxy rows), separate
+same-model parity, bitwise proxy comparison and archived direct closure.
+Next: R5.26 preparation on fixtures and metadata. R5.27 requires verified
+preparation and a separate execution instruction. No new force evaluation
+or propagation; automation stays PAUSED.
 
 
 ## Completed R4 — define finite-radius interfaces before new propagation

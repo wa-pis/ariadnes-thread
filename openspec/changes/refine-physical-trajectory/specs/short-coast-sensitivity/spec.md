@@ -303,3 +303,29 @@ on numerical errors and SHALL leave historical experiment outcomes intact.
 - **WHEN** the offline screen runs or encounters a failure
 - **THEN** it SHALL count at most 28 observations, 29 distinct reference epochs, 58 record evaluations, 28 binary64 and 224 Decimal Moon fields under an inclusive 10 s budget, with zero native calls, new record acquisition, trajectory propagation and optimisation
 - **AND** it SHALL preserve finite exclusive evidence, ordered counts, earliest failure and unavailable checks; a finite numerical miss may leave other fixed rows available but SHALL NOT authorize new acquisition, retry, a changed gate or R5.17 requalification
+
+
+### Requirement: Check the geocentric Moon source at the 16 frozen proxy epochs
+
+The ADR0172 holdout SHALL evaluate the Moon position source at the R5.24
+rounded epochs without recomputing forces or propagating the spacecraft.
+
+#### Scenario: Bind the one future capture to the previously unmeasured epochs
+
+- **WHEN** R5.26 preparation is verified and R5.27 execution is separately authorized
+- **THEN** one capture SHALL use only the 16 exact binary64 hi epochs in the fixed first-occurrence order in the holdout inventory, preserving their mapping to all 21 R5.24 proxy rows and excluding the 3 previously measured hi epochs
+- **AND** it SHALL confirm the pinned provider, shared ordered 13-kernel pool and applicable INPOP19a Type 2 Moon 301→Earth 399 segment and record coverage, then capture one raw geometric Moon-relative-to-Earth state (J2000, NONE, km and km/s) at each hi without new Earth/SSB or Moon/SSB queries
+
+#### Scenario: Separate parity, operand equivalence and archived closure
+
+- **WHEN** finalized capture evidence and the frozen references have valid identities
+- **THEN** one offline analysis SHALL compare all 16 raw states to the retained exact SI states using position error norm at most 0.001 m and velocity error norm at most 1e-6 m/s, and report each verdict
+- **AND** it SHALL report all 48 position components' bit comparisons to the archived rounded proxy, including signed zero, and separately report all 48 round-once Earth/SSB-plus-Moon/Earth component comparisons to the archived Moon/SSB position
+- **AND** confirmation SHALL require valid finalization, all 16 state parity checks and all 48 proxy and 48 closure comparisons to pass; a parity pass with a proxy bit miss SHALL remain a distinct result and SHALL NOT establish equivalence or change any historical force verdict
+
+#### Scenario: Preserve the capture and analysis limits on failure
+
+- **WHEN** the holdout executes or encounters a failure
+- **THEN** the capture SHALL attempt at most 1 setup, 30 inventory calls, 16 Moon segment selectors and 16 Moon/Earth state calls under an inclusive 15 s deadline, and the offline analysis SHALL attempt at most 16 epoch checks and complete under an inclusive 10 s deadline with zero native calls
+- **AND** the capture and analysis SHALL retain finite exclusive evidence, ordered counts, earliest failure and unavailable checks, with a finite numerical miss distinguished from invalid input, identity, domain or budget
+- **AND** neither phase SHALL acquire new explicit Type 2 records, evaluate a record polynomial or field in the diagnostic, propagate a trajectory, optimize, retry or authorize R5.17 requalification

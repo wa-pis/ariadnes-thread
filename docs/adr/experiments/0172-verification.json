@@ -1,0 +1,64 @@
+{
+  "automation": "PAUSED",
+  "base_revision": "89c9664e5075674c1f37d395c867bdb7eeae35dc",
+  "checks": {
+    "all_hi_in_bound_record_12192": true,
+    "archived_250_s_one_step_comparison_confirmed": true,
+    "diff_check_passed": true,
+    "duplicate_epoch_operands_match": true,
+    "duplicate_proxy_epochs": 5,
+    "excluded_measured_epochs": 3,
+    "local_links_passed": true,
+    "mapped_low_word_sign_counts": {
+      "negative": 4,
+      "positive": 6,
+      "zero": 11
+    },
+    "mapped_proxy_rows": 21,
+    "moon_to_mars_sha256": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "protected_baseline_files_unchanged": 704,
+    "proxy_rounded_epochs": 16,
+    "retained_r524_journal_events": 1101,
+    "retained_r524_observations": 28,
+    "retained_r524_operations": 367,
+    "retained_r524_receipts_and_journal_passed": true,
+    "strict_openspec_passed": true
+  },
+  "design_work": {
+    "new_force_evaluations": 0,
+    "new_polynomial_evaluations": 0,
+    "new_record_acquisitions": 0,
+    "new_spice_queries": 0,
+    "new_trajectory_propagations": 0
+  },
+  "document_sha256": {
+    "CURRENT_STATE.md": "81a8d2493ef1ef181bb15ad83f45d73cac3e1f85f2c867b2a5597083edf2779d",
+    "docs/adr/0172-design-geocentric-moon-holdout.md": "d8012719d75cac1b2dae3e1274fc8f20d2170ea7d4bf801b9ea39053273ff9af",
+    "docs/adr/README.md": "01a9dd074bf2f2700e64b2e1d65504571612b1695673d3348c073277eee8cdae",
+    "openspec/ROADMAP.md": "3ee310a43cf1fe8e4595d171abdf89763d1f1fb15ac3924ddf1c5c7e98711324",
+    "openspec/changes/refine-physical-trajectory/design.md": "42aafcd53d590918866346644a284bfea02ab1bcaa4ebb5e0f0cf1081bdf5972",
+    "openspec/changes/refine-physical-trajectory/specs/short-coast-sensitivity/spec.md": "e360064e1a14400df0245c55b72876579ca79bb234c783ec47fb52f1623d04e3",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "3a8c1bd0f18119adbe7e61e37d0efc0a71857c284002768b764e703855f86f95"
+  },
+  "holdout_executed": false,
+  "holdout_prepared": false,
+  "inputs_sha256": "79ec97b9985d4dbdcb581b0991f0c976afac9cfc71e97d30868db5785f97d1a8",
+  "retained_evidence_sha256": {
+    "docs/adr/experiments/0166-inputs.json": "8fa40d6a1ec812400a8dc8d052f48700b09f6ba5eadf351f55c3a647519bb136",
+    "docs/adr/experiments/0168-verification.json": "2d38e99351713d618bcc02084d9f637a18d95ba26c8cc1beff328183f8f8b667",
+    "docs/adr/experiments/0169-inputs.json": "9a983ef4af96b4458559869fd4e35fdff4aabcbeb20135f4d2d373e99777eb93",
+    "docs/adr/experiments/0170-verification.json": "b8531c78b724a5440afd0dfd556904657dc65714389217ff595ec41e98367f61",
+    "docs/adr/experiments/0171-verification.json": "b96b2fe0dbc85196c0b5e6fafe45ae83a5a5a223929684897b7f22a346b82d27",
+    "docs/adr/experiments/0171/execution.json": "7d9fdf187cd24373eabc8a0e9715a101cfebb67275e787e129076cc523761277",
+    "docs/adr/experiments/0171/screen.attempt.json": "3f737b59ae6f05f11062f28791a69cc523ba556864e868870fddbe3c1c779062",
+    "docs/adr/experiments/0171/screen.json.gz": "193ac20eaaad12c398dafeb507cbe1d6c874557ae0e31296cf5c1124f8c2fa4c",
+    "docs/adr/experiments/0171/screen.ledger.jsonl.gz": "1792314568f967361dc6a6f2c073bf4b9b9b345444275064d626377ec65b800d",
+    "docs/adr/experiments/0171/screen.parent-receipt.json": "8e9819b6474484aa6e664af7a09b8ffb3c538fa65fd4914d5787be39037fba64",
+    "docs/adr/experiments/0171/screen.receipt.json": "e43e6f0d07f7a2fd0acfcabc984a852cd1891762b74f55bfd3de4e62577b0c1d"
+  },
+  "retained_r524_journal_sha256": "376004d59d1e0b05f8441c880311148ab59e9b07712c2419075d1617f329b19a",
+  "retained_r524_report_sha256": "ed40fe96d1d7236a1680f30840246edc67a65f9f410b4988d4e6f203e32ae13b",
+  "runtime_tests_rerun": false,
+  "stage": "R5.25",
+  "status": "design_metadata_verified"
+}

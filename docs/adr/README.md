@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0172 — Design the geocentric Moon holdout](0172-design-geocentric-moon-holdout.md): R5.25 freezes the 16 proxy epochs and separates provider parity from strict proxy position equivalence; design only.
 - [0171 — Frozen-coast Moon force screen passes](0171-frozen-coast-moon-screen-passes.md): R5.24 passed once offline on 7 measured and 21 proxy rows; all three prior controls reproduced, R5.17 verdict unchanged.
 - [0170 — Prepare the frozen-coast Moon force screen](0170-prepare-frozen-moon-screen.md): R5.23 private runner, synthetic verification and frozen hashes; R5.24 not executed.
 - [0169 — Screen the split Moon source on frozen coast states](0169-screen-split-moon-on-frozen-coast.md): R5.22 conditional offline design on all 28 predeclared observations; distinguish measured and modeled Moon/Earth legs and preserve signed low time.

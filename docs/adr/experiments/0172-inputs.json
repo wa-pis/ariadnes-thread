@@ -1,0 +1,348 @@
+{
+  "archived_moon_record_words_sha256": "74083d642044733bde6bbe39e416c06840ba98b6ece8e961aea76a7b713ee1ea",
+  "base_revision": "89c9664e5075674c1f37d395c867bdb7eeae35dc",
+  "canonical_operand_hash_encoding": "compact UTF-8 JSON, sorted object keys, newline; ADR0167 encode",
+  "coverage_proof": {
+    "duplicate_proxy_hi": 5,
+    "mapped_proxy_observations": 21,
+    "unique_proxy_hi": 16
+  },
+  "covered_proxy_observation_ordinals": [
+    1,
+    2,
+    3,
+    4,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    15,
+    16,
+    17,
+    18,
+    20,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "design_work": {
+    "new_force_evaluations": 0,
+    "new_polynomial_evaluations": 0,
+    "new_record_acquisitions": 0,
+    "new_spice_queries": 0,
+    "new_trajectory_propagations": 0
+  },
+  "epochs_in_query_order": [
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "0897440c0af48dc72878c95e0d6f8f535a7703438285c8ff292ad6515519761b",
+      "exact_hi_geocentric_state_si_sha256": "d0989eecc8313bceac7ea65d450cb95f4594bdb807b46d8546cfad453a42b259",
+      "first_observation_ordinal": 1,
+      "hi_hex": "0x1.d2d24989d7e7ap+29",
+      "observation_ordinals": [
+        1,
+        15
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5ae20a0eb961bp+17",
+        "0x1.4e2631f01c26ap+18",
+        "0x1.cd2a417cdbabap+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "ef15736b0320e0905bed686bde58b674eaf907bbf3ed53dfbbc4fdd01d0d3802",
+      "exact_hi_geocentric_state_si_sha256": "4685f5362ef2b1488f555673a329fcebba0433c0428ee1d631084681e7643de8",
+      "first_observation_ordinal": 2,
+      "hi_hex": "0x1.d2d24b19d7e7ap+29",
+      "observation_ordinals": [
+        2,
+        16
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5af7b246fe1a5p+17",
+        "0x1.4e21410720c4bp+18",
+        "0x1.cd1eb1b9d26f7p+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "a593e285ece475ea2252c9ab6eb506d642449bcda510458045d481e593f096d5",
+      "exact_hi_geocentric_state_si_sha256": "9c40f2a4e85b6c95570ea6f0f5ff9373ba5ade87db03dd75353278fa840d6180",
+      "first_observation_ordinal": 3,
+      "hi_hex": "0x1.d2d24ca9d7e7ap+29",
+      "observation_ordinals": [
+        3,
+        17
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5b0d5a265ba70p+17",
+        "0x1.4e1c4fc90dfe8p+18",
+        "0x1.cd132181facbdp+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "c502fbea9dc53460af586ba61092782cd64c1234ccdfd1271f3d396cd36d12f5",
+      "exact_hi_geocentric_state_si_sha256": "b430a8cc6df8ecd4465d55577498db3cfe87482a3561d477058d10efd0cb5826",
+      "first_observation_ordinal": 4,
+      "hi_hex": "0x1.d2d24e39d7e7ap+29",
+      "observation_ordinals": [
+        4,
+        18
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5b2301accc389p+17",
+        "0x1.4e175e35e4ed2p+18",
+        "0x1.cd0790d5577f8p+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "640653a62d4fdae63202f59c96d9f62f9b9756407c5603438b773e5b77df53c7",
+      "exact_hi_geocentric_state_si_sha256": "a3cceb59012f82eff9dcc4aa9a93357321de10a5f0e553add3a5ff5186461c9e",
+      "first_observation_ordinal": 6,
+      "hi_hex": "0x1.d2d25159d7e7ap+29",
+      "observation_ordinals": [
+        6,
+        20
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5b4e4faecf2e5p+17",
+        "0x1.4e0d7a10544e3p+18",
+        "0x1.ccf06e1db8e87p+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "cd375a0fbf5afe2c1ba7602bd6c2b4aa91a24621173d3908d67a75e6a7bb83e7",
+      "exact_hi_geocentric_state_si_sha256": "154b00d8b07eb1227d8511b3832f9321bb6197f44cf09732b2db9c546156a23e",
+      "first_observation_ordinal": 8,
+      "hi_hex": "0x1.d2d247fa43a14p+29",
+      "observation_ordinals": [
+        8
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc6752d8397p+17",
+        "0x1.4e2b212f795e5p+18",
+        "0x1.cd35cdae28ecep+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "9ce655d14b651f95bc1e04060a648fe5e2a528d30364e529cf63327588117237",
+      "exact_hi_geocentric_state_si_sha256": "a4df6af2f383942c18c1a49e2c27a8aaaedd3977002bff90534725a9515c833c",
+      "first_observation_ordinal": 9,
+      "hi_hex": "0x1.d2d247fa797e1p+29",
+      "observation_ordinals": [
+        9
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc6a3d7aadap+17",
+        "0x1.4e2b208536858p+18",
+        "0x1.cd35cc1fb37f4p+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "531e2ed1510e5b77296bb9cbc1cf4354eea979eda3bdc5376bf7014f30b7957c",
+      "exact_hi_geocentric_state_si_sha256": "8bac38454f2d1c6b25468dafa815f4dff75e05fd890e694e0b1981eb7182a195",
+      "first_observation_ordinal": 10,
+      "hi_hex": "0x1.d2d247faca495p+29",
+      "observation_ordinals": [
+        10
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc6e9d6ec7cp+17",
+        "0x1.4e2b1f85d2242p+18",
+        "0x1.cd35c9ca031bap+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "bb00571d5ec78b76a688787155c48f5158606b8ef08e1538705e0e970a4bc232",
+      "exact_hi_geocentric_state_si_sha256": "fbdbfba23dd14e8a64dc9dc1935ed989ecc0c31f963da473fa5ffaf0e589caea",
+      "first_observation_ordinal": 11,
+      "hi_hex": "0x1.d2d247fc18b93p+29",
+      "observation_ordinals": [
+        11
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc80b95904bp+17",
+        "0x1.4e2b1b64a79ebp+18",
+        "0x1.cd35c01ff2b8bp+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "730cc6c857bf1e44625b0d40439125e9acb53a8d4f16cc7a03a44daa6bdc5821",
+      "exact_hi_geocentric_state_si_sha256": "bd3a622af22e3eb7fc9441b42bccb8b59f44455e8d6d824e8d0c6a8e52e01185",
+      "first_observation_ordinal": 12,
+      "hi_hex": "0x1.d2d247fc82925p+29",
+      "observation_ordinals": [
+        12
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc867499318p+17",
+        "0x1.4e2b1a1610b13p+18",
+        "0x1.cd35bd10ea4ecp+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "160fb49c49beae2af3d09f9b5c2f05e27f801091581b8263ecd29361b030645f",
+      "exact_hi_geocentric_state_si_sha256": "dea89a59ace29c1248390d0441aecf4ae04fe4e1c074524185f092e75587422c",
+      "first_observation_ordinal": 22,
+      "hi_hex": "0x1.d2d247fa0dc47p+29",
+      "observation_ordinals": [
+        22
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc646835c3ap+17",
+        "0x1.4e2b21d9bc359p+18",
+        "0x1.cd35cf3c9e586p+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "fc470eab5a7b1942bf674853f6770af3e581f5a6682a386ad8f0fa11076f3dfe",
+      "exact_hi_geocentric_state_si_sha256": "c9aff9f7b0205f50e137c94c446d41231c0ca981badc37413263f1291b3d952d",
+      "first_observation_ordinal": 23,
+      "hi_hex": "0x1.d2d247fa28b2ep+29",
+      "observation_ordinals": [
+        23
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc65dd876dap+17",
+        "0x1.4e2b21849ab0dp+18",
+        "0x1.cd35ce756367cp+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "0a84b9fb5ed95c4a4675d5e3ba93b050d203426d21234f313c4fed829bc90c02",
+      "exact_hi_geocentric_state_si_sha256": "fa0cc5bedfd096f6d625eda0ca0ce32b3b03e08f38b6cb8886a530441708f61c",
+      "first_observation_ordinal": 24,
+      "hi_hex": "0x1.d2d247fa51187p+29",
+      "observation_ordinals": [
+        24
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc680d809f3p+17",
+        "0x1.4e2b2104e8b4ep+18",
+        "0x1.cd35cd4a8baf4p+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "e2336956dc221285ab1c4e6099786caf52a06b73235db997956be0a52fdb47fe",
+      "exact_hi_geocentric_state_si_sha256": "3fcece5e7a075b5bb2673bb5aa7516a693fb306b53a038b5134800a60dfd0251",
+      "first_observation_ordinal": 25,
+      "hi_hex": "0x1.d2d247faf8506p+29",
+      "observation_ordinals": [
+        25
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc711b75d0ap+17",
+        "0x1.4e2b1ef453846p+18",
+        "0x1.cd35c8758396dp+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "1e8c7f69adedf6292b33e963296f9d8bc79eec801727a4072c6b8956ee12b7d3",
+      "exact_hi_geocentric_state_si_sha256": "fb50daf380e90a361397266cb0f51f820cce1b1c7de02010866d300ce96be352",
+      "first_observation_ordinal": 26,
+      "hi_hex": "0x1.d2d247fb2d3cfp+29",
+      "observation_ordinals": [
+        26
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc73f915f05p+17",
+        "0x1.4e2b1e4d08168p+18",
+        "0x1.cd35c6edff6e0p+16"
+      ]
+    },
+    {
+      "archived_earth_ssb_and_moon_ssb_state_km_km_s_sha256": "f2b8beb4b2c068deeb1646fc4dcf3b76f79e9961cc5d1a2fc252e033118504b0",
+      "exact_hi_geocentric_state_si_sha256": "e91206b50d5ac3dc9c2e0a84528f6ec32b109666cd3ab8476f305eda8e652520",
+      "first_observation_ordinal": 27,
+      "hi_hex": "0x1.d2d247fad7e7ap+29",
+      "observation_ordinals": [
+        27
+      ],
+      "proxy_position_km_hex": [
+        "-0x1.5acc6f5a3584dp+17",
+        "0x1.4e2b1f5ac5ccep+18",
+        "0x1.cd35c965446d5p+16"
+      ]
+    }
+  ],
+  "excluded_measured_hi_hex": [
+    "0x1.d2d247f9d7e7ap+29",
+    "0x1.d2d247fbd7e7ap+29",
+    "0x1.d2d24fc9d7e7ap+29"
+  ],
+  "mapped_low_word_sign_counts": {
+    "negative": 4,
+    "positive": 6,
+    "zero": 11
+  },
+  "moon_segment": {
+    "address": 1590733,
+    "begin": 1090861,
+    "body": 301,
+    "centre": 399,
+    "descriptor_hex": [
+      "-0x1.819ec00000000p+31",
+      "0x1.819ec00000000p+31",
+      "0x0.0018f0000012dp-1022",
+      "0x0.0000200000001p-1022",
+      "0x1.c5b500010a52dp-1022"
+    ],
+    "end": 1858384,
+    "first_tdb_s": -3234816000.0,
+    "frame": 1,
+    "index": 12192,
+    "label": "Moon",
+    "last_tdb_s": 3234816000.0,
+    "path": "/Users/agrudin/.tudat/resource/spice_kernels/inpop19a_TDB_m100_p100_spice.bsp",
+    "record_interval_tdb_s": [
+      978739200,
+      979084800
+    ],
+    "trailer": [
+      -3234816000.0,
+      345600.0,
+      41.0,
+      18720.0
+    ],
+    "type": 2,
+    "word_count": 41
+  },
+  "ordered_kernel_count": 13,
+  "r524_uncompressed_journal_sha256": "376004d59d1e0b05f8441c880311148ab59e9b07712c2419075d1617f329b19a",
+  "r524_uncompressed_report_sha256": "ed40fe96d1d7236a1680f30840246edc67a65f9f410b4988d4e6f203e32ae13b",
+  "retained_evidence_sha256": {
+    "docs/adr/experiments/0166-inputs.json": "8fa40d6a1ec812400a8dc8d052f48700b09f6ba5eadf351f55c3a647519bb136",
+    "docs/adr/experiments/0168-verification.json": "2d38e99351713d618bcc02084d9f637a18d95ba26c8cc1beff328183f8f8b667",
+    "docs/adr/experiments/0169-inputs.json": "9a983ef4af96b4458559869fd4e35fdff4aabcbeb20135f4d2d373e99777eb93",
+    "docs/adr/experiments/0170-verification.json": "b8531c78b724a5440afd0dfd556904657dc65714389217ff595ec41e98367f61",
+    "docs/adr/experiments/0171-verification.json": "b96b2fe0dbc85196c0b5e6fafe45ae83a5a5a223929684897b7f22a346b82d27",
+    "docs/adr/experiments/0171/execution.json": "7d9fdf187cd24373eabc8a0e9715a101cfebb67275e787e129076cc523761277",
+    "docs/adr/experiments/0171/screen.attempt.json": "3f737b59ae6f05f11062f28791a69cc523ba556864e868870fddbe3c1c779062",
+    "docs/adr/experiments/0171/screen.json.gz": "193ac20eaaad12c398dafeb507cbe1d6c874557ae0e31296cf5c1124f8c2fa4c",
+    "docs/adr/experiments/0171/screen.ledger.jsonl.gz": "1792314568f967361dc6a6f2c073bf4b9b9b345444275064d626377ec65b800d",
+    "docs/adr/experiments/0171/screen.parent-receipt.json": "8e9819b6474484aa6e664af7a09b8ffb3c538fa65fd4914d5787be39037fba64",
+    "docs/adr/experiments/0171/screen.receipt.json": "e43e6f0d07f7a2fd0acfcabc984a852cd1891762b74f55bfd3de4e62577b0c1d"
+  },
+  "selected_kernel_sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6",
+  "source": {
+    "aberration_correction": "NONE",
+    "epoch_scale": "TDB seconds from J2000",
+    "observer": "Earth",
+    "observer_id": 399,
+    "orientation": "J2000",
+    "raw_state_units": [
+      "km",
+      "km/s"
+    ],
+    "reference_state_units": [
+      "m",
+      "m/s"
+    ],
+    "target": "Moon",
+    "target_id": 301
+  },
+  "stage": "R5.25"
+}
