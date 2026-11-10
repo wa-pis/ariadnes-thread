@@ -1,0 +1,36 @@
+{
+  "stage": "R5.22 design complete; R5.23/R5.24 pending",
+  "date": "2026-11-10",
+  "base_revision": "e2439b0726aff338b0e1ae6a94d94505d8330e07",
+  "inputs_sha256": "9a983ef4af96b4458559869fd4e35fdff4aabcbeb20135f4d2d373e99777eb93",
+  "document_sha256": {
+    "CURRENT_STATE.md": "deee2198563d6cd8ffcc930bc2494d225ccb42bf8b3c5d9f88e1c20154d7503f",
+    "docs/adr/0169-screen-split-moon-on-frozen-coast.md": "de9700862c37d7af80333828cc98c51eeb0d6c439e2d3912aac4ed7a7ebce5f3",
+    "docs/adr/README.md": "a2c0ab03c73801e9db37b879728c0de48df532c92611009addd8d98485a05d3d",
+    "openspec/ROADMAP.md": "c61abeb46336338aef1c413965d47fb47b243d07f8ec5b8057ef49cf15b82844",
+    "openspec/changes/refine-physical-trajectory/design.md": "a802e94e0bf0821fc8d8502c250340a1b7868a237eea1daf5650460d2770ecf1",
+    "openspec/changes/refine-physical-trajectory/specs/short-coast-sensitivity/spec.md": "de51bdc6e44ff0187bcc17ca4552128e5655964d0d483fd39ad2a1c48c08cf0e",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "d3cdfd840e301f83a0eb719cd6bf7e32822ba13fdefccfac02a4553b4939f034"
+  },
+  "checks": {
+    "strict_openspec": "Change 'refine-physical-trajectory' is valid",
+    "diff": "passed",
+    "local_links": 264,
+    "protected_tracked_files": 681,
+    "source_hashes_checked": 19,
+    "previous_tested_source_hashes_checked": 9,
+    "previous_full_pytest_passed": 6283,
+    "previous_ruff_reused": true,
+    "runtime_tests_rerun": false
+  },
+  "design_work": {
+    "native_calls": 0,
+    "new_record_reads": 0,
+    "polynomial_evaluations": 0,
+    "new_force_evaluations": 0,
+    "propagations": 0
+  },
+  "offline_screen_executed": false,
+  "r517_requalified": false,
+  "automation": "PAUSED; unchanged"
+}

@@ -1,0 +1,350 @@
+{
+  "stage": "R5.22 design metadata preflight",
+  "date": "2026-11-10",
+  "base_revision": "e2439b0726aff338b0e1ae6a94d94505d8330e07",
+  "archive_and_evidence_sha256": {
+    "docs/adr/experiments/0163-verification.json": "518eea292547b4bfc4a379e3e8a2ce63632d49fcdef2761d504d09a34d485844",
+    "docs/adr/experiments/0164-corrected-study.json.gz": "33a39f7d04161c08f1d3f6f0740fae6f0259997e41f62cfb839ed7db19365572",
+    "docs/adr/experiments/0164-corrected-audit.json.gz": "4891768a5ae12b194f7f3b89dcc4da3da79007b0092f73153b1e35ab63ec0eb1",
+    "docs/adr/experiments/0164-verification.json": "18415477d412813ea53477071359a12ea788509902ac654814dc0d5f5c3f4632",
+    "docs/adr/experiments/0165-saved-source-analysis.json": "b9e5ae123e9177dd1216c33f32a847252020c47eaf0d89200e65c3feec3a2aab",
+    "docs/adr/experiments/0165-verification.json": "b197cd86ddf0fed6f756172f1c47a614943b3b47fea10654d3981948c4a9107c",
+    "docs/adr/experiments/0168/analysis.attempt.json": "747ac1e04ee82d0ad13d4c22ea07efd106957c1ec91048becbb74514ff624a89",
+    "docs/adr/experiments/0168/analysis.json": "ea5102a378588825c346fb84ff5a32d42e629106442e201a819f1dbea2b5bca1",
+    "docs/adr/experiments/0168/analysis.ledger.jsonl": "638e51f067ea4118d464a0be8e3fa1be5f336dc200d01d1e47659629bf64524b",
+    "docs/adr/experiments/0168/analysis.parent-receipt.json": "9fcbcc7a1e41126c3b49a444bd2b02fa0040828d0aa6934c93f2300021a1015d",
+    "docs/adr/experiments/0168/analysis.receipt.json": "a1c26b23d6bb31ac9a6f0d35679bca25bc8e583178183568bd9e7250c3fe405d",
+    "docs/adr/experiments/0168/capture.attempt.json": "d65ae413fb6f06de77828d6b0631abe58aab7cb802bef03059d73aaa1c6ef069",
+    "docs/adr/experiments/0168/capture.json": "b251d9d7e80862d09e2a0126a21269d0c4274bfcbdf1a8265ee47e1a88b0a814",
+    "docs/adr/experiments/0168/capture.ledger.jsonl": "97675e2013ea4697054c0ad4802ec8c47353220ebc6376cc15fd96c52eaabb25",
+    "docs/adr/experiments/0168/capture.parent-receipt.json": "8aacd24b1fe1ed03a7458f86a5110f477c99bccfb27bc9198329b437121ff2f4",
+    "docs/adr/experiments/0168/capture.receipt.json": "2b2e2874c24853df32143c2b1c899845648b01089b82f902df3db540f5fc565f",
+    "docs/adr/experiments/0168-verification.json": "2d38e99351713d618bcc02084d9f637a18d95ba26c8cc1beff328183f8f8b667",
+    "docs/adr/experiments/0166-inputs.json": "8fa40d6a1ec812400a8dc8d052f48700b09f6ba5eadf351f55c3a647519bb136",
+    "docs/adr/experiments/0167-verification.json": "9fb838126353408f858b80bae875e898c50bf2fb7cb762c53f86b1f366bb27c7"
+  },
+  "rows": [
+    {
+      "profile": "normal",
+      "kind": "output",
+      "index": 0,
+      "elapsed_s_hex": "0x0.0p+0",
+      "hi_hex": "0x1.d2d247f9d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "measured_0168"
+    },
+    {
+      "profile": "normal",
+      "kind": "output",
+      "index": 1,
+      "elapsed_s_hex": "0x1.9000000000000p+5",
+      "hi_hex": "0x1.d2d24989d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "normal",
+      "kind": "output",
+      "index": 2,
+      "elapsed_s_hex": "0x1.9000000000000p+6",
+      "hi_hex": "0x1.d2d24b19d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "normal",
+      "kind": "output",
+      "index": 3,
+      "elapsed_s_hex": "0x1.2c00000000000p+7",
+      "hi_hex": "0x1.d2d24ca9d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "normal",
+      "kind": "output",
+      "index": 4,
+      "elapsed_s_hex": "0x1.9000000000000p+7",
+      "hi_hex": "0x1.d2d24e39d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "normal",
+      "kind": "output",
+      "index": 5,
+      "elapsed_s_hex": "0x1.f400000000000p+7",
+      "hi_hex": "0x1.d2d24fc9d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "measured_0168"
+    },
+    {
+      "profile": "normal",
+      "kind": "output",
+      "index": 6,
+      "elapsed_s_hex": "0x1.2c00000000000p+8",
+      "hi_hex": "0x1.d2d25159d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "normal",
+      "kind": "rhs",
+      "index": 0,
+      "elapsed_s_hex": "0x0.0p+0",
+      "hi_hex": "0x1.d2d247f9d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "measured_0168"
+    },
+    {
+      "profile": "normal",
+      "kind": "rhs",
+      "index": 1,
+      "elapsed_s_hex": "0x1.aee6838dae63ap-5",
+      "hi_hex": "0x1.d2d247fa43a14p+29",
+      "lo_hex": "0x1.c6d731d000000p-28",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "normal",
+      "kind": "rhs",
+      "index": 2,
+      "elapsed_s_hex": "0x1.432ce2aa42cacp-4",
+      "hi_hex": "0x1.d2d247fa797e1p+29",
+      "lo_hex": "0x1.5521656000000p-27",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "normal",
+      "kind": "rhs",
+      "index": 3,
+      "elapsed_s_hex": "0x1.e4c353ff64302p-4",
+      "hi_hex": "0x1.d2d247faca495p+29",
+      "lo_hex": "-0x1.801379fc00000p-25",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "normal",
+      "kind": "rhs",
+      "index": 4,
+      "elapsed_s_hex": "0x1.2068c499c08d9p-2",
+      "hi_hex": "0x1.d2d247fc18b93p+29",
+      "lo_hex": "-0x1.b31fb93800000p-25",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "normal",
+      "kind": "rhs",
+      "index": 5,
+      "elapsed_s_hex": "0x1.5555555555555p-2",
+      "hi_hex": "0x1.d2d247fc82925p+29",
+      "lo_hex": "-0x1.5555555800000p-25",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "normal",
+      "kind": "rhs",
+      "index": 6,
+      "elapsed_s_hex": "0x1.0000000000000p-2",
+      "hi_hex": "0x1.d2d247fbd7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "measured_0168"
+    },
+    {
+      "profile": "tighter",
+      "kind": "output",
+      "index": 0,
+      "elapsed_s_hex": "0x0.0p+0",
+      "hi_hex": "0x1.d2d247f9d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "measured_0168"
+    },
+    {
+      "profile": "tighter",
+      "kind": "output",
+      "index": 1,
+      "elapsed_s_hex": "0x1.9000000000000p+5",
+      "hi_hex": "0x1.d2d24989d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "tighter",
+      "kind": "output",
+      "index": 2,
+      "elapsed_s_hex": "0x1.9000000000000p+6",
+      "hi_hex": "0x1.d2d24b19d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "tighter",
+      "kind": "output",
+      "index": 3,
+      "elapsed_s_hex": "0x1.2c00000000000p+7",
+      "hi_hex": "0x1.d2d24ca9d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "tighter",
+      "kind": "output",
+      "index": 4,
+      "elapsed_s_hex": "0x1.9000000000000p+7",
+      "hi_hex": "0x1.d2d24e39d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "tighter",
+      "kind": "output",
+      "index": 5,
+      "elapsed_s_hex": "0x1.f400000000000p+7",
+      "hi_hex": "0x1.d2d24fc9d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "measured_0168"
+    },
+    {
+      "profile": "tighter",
+      "kind": "output",
+      "index": 6,
+      "elapsed_s_hex": "0x1.2c00000000000p+8",
+      "hi_hex": "0x1.d2d25159d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "tighter",
+      "kind": "rhs",
+      "index": 0,
+      "elapsed_s_hex": "0x0.0p+0",
+      "hi_hex": "0x1.d2d247f9d7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "measured_0168"
+    },
+    {
+      "profile": "tighter",
+      "kind": "rhs",
+      "index": 1,
+      "elapsed_s_hex": "0x1.aee6838dae63ap-6",
+      "hi_hex": "0x1.d2d247fa0dc47p+29",
+      "lo_hex": "0x1.c6d731d000000p-29",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "tighter",
+      "kind": "rhs",
+      "index": 2,
+      "elapsed_s_hex": "0x1.432ce2aa42cacp-5",
+      "hi_hex": "0x1.d2d247fa28b2ep+29",
+      "lo_hex": "-0x1.d55bd35400000p-25",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "tighter",
+      "kind": "rhs",
+      "index": 3,
+      "elapsed_s_hex": "0x1.e4c353ff64302p-5",
+      "hi_hex": "0x1.d2d247fa51187p+29",
+      "lo_hex": "0x1.3ff6430200000p-25",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "tighter",
+      "kind": "rhs",
+      "index": 4,
+      "elapsed_s_hex": "0x1.2068c499c08d9p-3",
+      "hi_hex": "0x1.d2d247faf8506p+29",
+      "lo_hex": "0x1.2670236400000p-25",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "tighter",
+      "kind": "rhs",
+      "index": 5,
+      "elapsed_s_hex": "0x1.5555555555555p-3",
+      "hi_hex": "0x1.d2d247fb2d3cfp+29",
+      "lo_hex": "0x1.5555555400000p-25",
+      "moon_earth_leg": "unmeasured"
+    },
+    {
+      "profile": "tighter",
+      "kind": "rhs",
+      "index": 6,
+      "elapsed_s_hex": "0x1.0000000000000p-3",
+      "hi_hex": "0x1.d2d247fad7e7ap+29",
+      "lo_hex": "0x0.0p+0",
+      "moon_earth_leg": "unmeasured"
+    }
+  ],
+  "epochs": {
+    "rounded_hi": 19,
+    "exact_t": 19,
+    "union_for_reference": 29,
+    "measured_hi": 3,
+    "unmeasured_hi": 16,
+    "nonzero_low": {
+      "normal": {
+        "positive": 2,
+        "negative": 3
+      },
+      "tighter": {
+        "positive": 4,
+        "negative": 1
+      }
+    }
+  },
+  "records": [
+    {
+      "body": 301,
+      "centre": 399,
+      "index": 12192,
+      "degree": 12,
+      "words_sha256": "74083d642044733bde6bbe39e416c06840ba98b6ece8e961aea76a7b713ee1ea",
+      "interval_tdb_s": [
+        978739200,
+        979084800
+      ]
+    },
+    {
+      "body": 399,
+      "centre": 0,
+      "index": 12192,
+      "degree": 12,
+      "words_sha256": "6ea19924a0d6c0edaa3a95f5aa433b7bc3f13d23ed93216c15df54cd980171d2",
+      "interval_tdb_s": [
+        978739200,
+        979084800
+      ]
+    }
+  ],
+  "previous_preparation": {
+    "preparation_sha256": "9fb838126353408f858b80bae875e898c50bf2fb7cb762c53f86b1f366bb27c7",
+    "input_sha256": "8fa40d6a1ec812400a8dc8d052f48700b09f6ba5eadf351f55c3a647519bb136",
+    "helper_sha256": {
+      "docs/adr/experiments/0167/ariadna_split_analysis.py": "57500d72f1e5f8d79836456e460dc5c042f5ef4468e397ce51cc1f7d1d9fdb98",
+      "docs/adr/experiments/0167/ariadna_split_capture.py": "04b47a1cd230557f449334431d28b6a74797f2065116815bffb312718131136c",
+      "docs/adr/experiments/0167/ariadna_split_common.py": "a6fb61a26478d7f459e44ddac9e325bd8edb3c85daa630772f5fbfff4289f6f7",
+      "docs/adr/experiments/0167/ariadna_split_inputs.py": "3df1ec2f76500570dfc501bf8fa6decc1dbbd5011ad8f29a8b0cbeb697f30004",
+      "docs/adr/experiments/0167/ariadna_split_run.py": "4b79f10c30a6403a9e3214430e5c08a0fe00af5ef95d128aa44113e6f83c754a"
+    },
+    "tested_source_sha256": {
+      "docs/adr/experiments/0167/ariadna_split_analysis.py": "57500d72f1e5f8d79836456e460dc5c042f5ef4468e397ce51cc1f7d1d9fdb98",
+      "docs/adr/experiments/0167/ariadna_split_capture.py": "04b47a1cd230557f449334431d28b6a74797f2065116815bffb312718131136c",
+      "docs/adr/experiments/0167/ariadna_split_common.py": "a6fb61a26478d7f459e44ddac9e325bd8edb3c85daa630772f5fbfff4289f6f7",
+      "docs/adr/experiments/0167/ariadna_split_inputs.py": "3df1ec2f76500570dfc501bf8fa6decc1dbbd5011ad8f29a8b0cbeb697f30004",
+      "docs/adr/experiments/0167/ariadna_split_run.py": "4b79f10c30a6403a9e3214430e5c08a0fe00af5ef95d128aa44113e6f83c754a",
+      "tests/test_split_ephemeris_analysis.py": "538d1a6fafce0f18f953ad578e4e8f4989152468b43951b12bddf12078ea6041",
+      "tests/test_split_ephemeris_capture.py": "3f2e35e3d450c789338f76d9eb4208eba5aa4ed086151c312cc49711373857bf",
+      "tests/test_split_ephemeris_inputs.py": "d0ff6eaa4bc6f51119ce45ef1c0fe604ccde6cdcd30514c96bc1317a7ae9846c",
+      "tests/test_split_ephemeris_run.py": "8a933c789221a1f8024c76cc072794acb776ea9c3bd76747b2f54b309bccb339"
+    }
+  },
+  "design_work": {
+    "native_calls": 0,
+    "new_record_reads": 0,
+    "polynomial_evaluations": 0,
+    "new_force_evaluations": 0,
+    "propagations": 0
+  }
+}

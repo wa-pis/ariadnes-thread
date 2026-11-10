@@ -277,3 +277,29 @@ contract or reinterpret the failed R5.17 result.
 - **WHEN** capture or analysis encounters an invalid return, identity, coverage, domain, deadline or numerical gate failure
 - **THEN** the exclusive finite evidence SHALL retain the earliest failure, attempted/returned/completed ledger, raw return prefix and unavailable checks, with no retry, substituted epoch, source or tolerance
 - **AND** passing or negative diagnostics SHALL leave the R5.17 verdict, R5.3, force sensitivity, full-trajectory qualification and strict M3 unchanged; no continuous or mission safety claim or automation resumption is permitted
+
+
+### Requirement: Screen the split Moon source on the original frozen sample
+
+The conditional ADR0169 screen SHALL preserve ADR0162's sample and limits
+on numerical errors and SHALL leave historical experiment outcomes intact.
+
+#### Scenario: Bind observed and modeled operands to saved motion
+
+- **WHEN** the verified R5.23 preparation is used for R5.24
+- **THEN** one fresh offline process SHALL use exactly the normal and tighter profiles' seven saved outputs and first seven completed RHS observations each, in that order, retaining duplicates, actual motion, 19 rounded hi epochs and all ten signed nonzero low words
+- **AND** it SHALL use finalized R5.21 measured E/G/B at three hi epochs (seven observations) and clearly label the rounded exact-record G proxy at the other 16 hi epochs (21 observations), without reporting proxy parity or closure as an observed SPICE result
+- **AND** it SHALL verify the archived input/record identities, exact hi/lo coepochs, same-model state parity for archived E/B and measured G within 0.001 m and 1e-6 m/s, and record coverage at hi and T
+
+#### Scenario: Preserve rephasing and measure both lunar force errors
+
+- **WHEN** a frozen observation has valid identity, state parity and motion
+- **THEN** it SHALL preserve the original rounded SI direct-velocity rephasing and drift products bitwise, verify the 1e-12 m time increment and signed terms, retain the two source position legs through exact relative subtraction, and round the separation once to nearest-even
+- **AND** it SHALL independently reconstruct d0–d3 and verify exact and binary64 exterior lunar geometry, signed attribution, both force gates with unchanged Moon GM and envelope, 80/100-digit relative 1e-60 convergence, stable classifications, and the three original measured controls
+- **AND** full conditional confirmation SHALL require valid finalization and both Moon gates at all 28 points, with measured and proxy outcomes reported separately; no claim about a continuous arc, changed provider or Earth sensitivity is permitted
+
+#### Scenario: Stop within the saved-data budget and retain negatives
+
+- **WHEN** the offline screen runs or encounters a failure
+- **THEN** it SHALL count at most 28 observations, 29 distinct reference epochs, 58 record evaluations, 28 binary64 and 224 Decimal Moon fields under an inclusive 10 s budget, with zero native calls, new record acquisition, trajectory propagation and optimisation
+- **AND** it SHALL preserve finite exclusive evidence, ordered counts, earliest failure and unavailable checks; a finite numerical miss may leave other fixed rows available but SHALL NOT authorize new acquisition, retry, a changed gate or R5.17 requalification

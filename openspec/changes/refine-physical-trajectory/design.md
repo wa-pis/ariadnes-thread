@@ -6319,3 +6319,16 @@ their limits. The two position legs reproduce the direct Moon position on
 9/9 components; both static Moon force gates pass at all three frozen states,
 including the former 0.25 s failure. This does not reopen the R5.17 attempt or
 qualify a new integration.
+
+
+## R5.22 frozen-coast split Moon screen (2026-11-10)
+
+[ADR0169](../../../docs/adr/0169-screen-split-moon-on-frozen-coast.md) fixes all
+28 original observations across both saved profiles (19 hi, ten nonzero lo).
+At the three observed epochs use the measured R5.21 geocentric leg. At the
+other 16 epochs use a labelled rounded exact-record proxy, never a claim
+about real source behavior. Keep the original signed direct-velocity
+rephasing and force gates. Independently assemble and compare fixed Moon
+geometries with no new acquisition or propagation. A pass on all 28 rows
+supports conditional feasibility only; a live holdout requires its own
+design. R5.23/R5.24 remain pending.

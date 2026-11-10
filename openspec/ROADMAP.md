@@ -226,6 +226,15 @@ No rerun, new trajectory or production change. R5.17 remains failed; strict
 M3/safety remain open and automation PAUSED.
 
 
+[ADR0169](../docs/adr/0169-screen-split-moon-on-frozen-coast.md) completes R5.22:
+a 28-row offline screen on ADR0162's original sample, including ten nonzero low
+words. Use the R5.21 measured legs at three epochs and a labelled rounded-model
+leg at 16 other epochs; preserve the original rephasing and force limits.
+Next: R5.23 preparation, then R5.24 offline only. A pass is conditional and
+can support a separate live-source design, with no propagation or R5.17
+requalification. Automation stays PAUSED.
+
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

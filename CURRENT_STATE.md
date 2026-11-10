@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-11-09. Keep under60 lines; current instructions here/roadmap, detail in ADRs.
+Updated: 2026-11-10. Keep under60 lines; current instructions here/roadmap, detail in ADRs.
 
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
@@ -51,7 +51,7 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0164](docs/adr/0164-corrected-coast-force-gate-fails.md):R5.17 attempt consumed;both300s solves/21 trajectory comparisons pass, but Moon overall force gate fails at normal RHS6/local0.25s by8.8864%; audit partial/scientific_verified=false, final identity unavailable.
 External2.704s/1.643s, finalizations/caps pass;5132 RHS/15417 states/424 trials, no native propagation.6182 tests/Ruff reused on unchanged bytes.
 [ADR0165](docs/adr/0165-reproduce-lunar-source-rounding.md):R5.18 localizes 13.269 µm before SI /16.645 µm after; staged centre sum reproduces42/42 saved position components. No native work/replay.
-[ADR0168](docs/adr/0168-real-split-centre-probe-passes.md): R5.21 passed once; 36/36 archive bits, 9/9 position closure, 3/3 fixed-state Moon force. Capture 1.392s, offline 0.334s; no trajectory rerun. R5.17 failed, M3/safety open, automation PAUSED.
+[ADR0168](docs/adr/0168-real-split-centre-probe-passes.md): R5.21 passed 9/9 position and 3/3 static Moon force. [ADR0169](docs/adr/0169-screen-split-moon-on-frozen-coast.md): 28-row offline design ready; next R5.23 preparation. R5.17 failed, M3/safety open, automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.
