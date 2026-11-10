@@ -358,3 +358,31 @@ R5.24 proxy, with original motion and force tolerances.
 - **THEN** it SHALL count at most 11 observation admissions, 22 binary64 and 110 Decimal Moon field evaluations within an inclusive 10 s budget including finalization, with zero SPICE or other native calls, record acquisitions, polynomial evaluations, other-body forces, propagation and optimization
 - **AND** it SHALL retain exclusive finite evidence, raw pair identities, ordered counts, receipts, earliest failure and unavailable work; continue valid pairs after a finite numerical miss and stop on invalid input, identity, proxy replay, geometry or budget
 - **AND** neither a pass nor a failure SHALL authorize a retry, changed sample or tolerance, R5.17 requalification, a new trajectory, strict M3 closure or a mission safety claim
+
+
+### Requirement: Recheck the A coast with split lunar position assembly
+
+R5.32–R5.34 SHALL assess a separate candidate under ADR0179 using
+ADR0162's inputs, physical model, solver profiles and acceptance gates.
+This SHALL NOT reopen the consumed R5.17 attempt or modify its record.
+
+#### Scenario: Prepare the split force path without live inputs
+
+- **WHEN** R5.33 prepares the private integrator and independent audit
+- **THEN** the measured input route for all 28 frozen R5.24 observations SHALL reproduce the saved exact pre-round separation and the rounded separation and acceleration bits; the 11 differing rows SHALL use the measured R5.30 arm, and the other 17 SHALL use R5.24
+- **AND** synthetic fixtures SHALL verify genuinely integrated q/w on synthetic inputs, exact controller-observation parity, nearest-even assembly, signed rephasing and fail-closed provenance, geometry, counters and finalization; focused/full no-SPICE-guarded pytest, Ruff, strict OpenSpec and frozen tested hashes SHALL pass with no live queries or retained coast solve
+
+#### Scenario: Use the actual geocentric position at every new force evaluation
+
+- **WHEN** verified preparation and separate authorization permit the single R5.34 study
+- **THEN** each actual RHS and each shared output node SHALL acquire four geometric J2000 states at its exact binary64 hi in Sun/SSB, Moon/SSB, Earth/SSB, Moon/Earth order, without a proxy, cross-RHS cache or fallback
+- **AND** the Moon path SHALL scale the two raw position legs exactly by 1000, subtract the separate spacecraft terms and add the signed rephasing from direct Moon/SSB velocity before a single nearest-even rounding of the relative vector; both pre-round and returned Moon geometries and the unchanged Sun/Earth geometries SHALL be strictly exterior before evaluating either included force
+- **AND** the normal profile and all available normal-only gates SHALL pass before tighter is attempted; both profiles SHALL use the original settings, compare at the original seven coepochs with all 21 original trajectory comparisons, and assess seven outputs plus RHS ordinals 0–6 per profile, with at least one nonzero-lo RHS each, no substitution or additional callback
+
+#### Scenario: Bound the study and check the new evidence independently
+
+- **WHEN** the study and separate saved-data audit execute
+- **THEN** the study SHALL retain the inclusive 60 s, two solves, 10,000 RHS and 1,000 trials caps, with at most 30,021 SSB and 10,007 Moon/Earth state attempts (40,028 total; 28 shared node calls), one setup, two 15-call inventories and no new native propagation, GM lookup, record acquisition, selector or optimization
+- **AND** the audit SHALL use an inclusive 10 s and no native or solver work, independently reconstruct every retained RHS and output without candidate imports, and rebuild the 21 trajectory comparisons and sampled checks; both phases SHALL cap sampled work at 28 observations, 112 state checks, 56 source-force rows, 448 Decimal fields, 28 A totals and 168 retained record evaluations
+- **AND** full success SHALL require the original exterior, source-parity, increment, assembly, 80/100-digit precision and force tolerances including both original force gates for Sun, Moon and A total, with additional Moon/Earth parity at 0.001 m and 1e-6 m/s and no source allowance; both processes SHALL retain exclusive finite evidence, final identity and finalized child and parent receipts
+- **AND** missing inputs, a failed gate, limit or incomplete finalization SHALL preserve partial evidence and unavailable work, without retry or widening any gate; even success SHALL leave historical failures, incomplete native provenance, Earth-force sensitivity, continuous safety and strict M3/mission acceptance unchanged

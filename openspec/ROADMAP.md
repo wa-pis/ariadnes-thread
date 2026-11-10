@@ -268,6 +268,13 @@ observations (7 with captured positions in R5.24, 10 bitwise matches
 in R5.27, 11 substitutions confirmed by R5.30). No new calculations.
 R5.17 remains failed and M3 remains open.
 
+[ADR0179](../docs/adr/0179-design-split-moon-integration-recheck.md) completes
+R5.32 design: use actual split Moon positions in the private model A
+integrator, with the original motion, profiles and acceptance gates.
+Next is offline R5.33 preparation, including all 28 saved fixed-state
+controls. One new R5.34 study and separate audit require separate
+authorization after preparation; no retry of R5.17 and no M3 closure.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

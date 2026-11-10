@@ -6487,3 +6487,154 @@ This is a fixed-state evidence synthesis. No new force evaluation,
 SPICE query, record evaluation or propagation. The conditional R5.24
 record, the negative R5.27 bitwise verdict and the failed R5.17 audit
 remain unchanged. No continuous-arc or mission claim follows.
+
+## R5.32 integrate the split Moon position (2026-11-10)
+
+[ADR0179](../../../docs/adr/0179-design-split-moon-integration-recheck.md)
+defines a new A-only experiment. R5.31 qualified the arithmetic at
+28 saved inputs. It did not feed the split force back into the solver,
+so the new solver's trial states, epochs and convergence remain unknown.
+The old R5.17 attempt is consumed and stays failed.
+
+### One change at the force boundary
+
+Prepare a new private version of the ADR0163 integrator, provider
+adapter and saved-data audit; preserve the old code and evidence.
+The replacement seam is the Moon branch of
+[build_row](../../../docs/adr/experiments/0163-corrected-integrator.py),
+called from the RHS and the two profiles' output rows. Keep the local
+correction equations `q'=w, w'=a`, genuine solver q/w, zero initial q/w,
+TwoSum, drift, exports, DOP853 controller and Sun/Earth assembly. Keep
+ADR0162's t0, r0, v0, 300 s interval, seven 50 s output nodes, profiles,
+Sun then Moon field sum, GMs, radii, frozen runtime, ordered 13-kernel
+pool and historical native comparison arrays. Earth remains a guard
+and a centre leg; it contributes no force.
+
+At each actual RHS and once per shared output node acquire the original
+Sun/SSB, Moon/SSB and Earth/SSB, then Moon/Earth at the same binary64
+`hi`, J2000, geometric NONE, TDB from J2000. Require four finite raw
+six-word returns in that order with the correct target, observer, frame,
+correction and epoch. Preserve the signed `lo` and raw km/km/s words.
+Use an actual Moon/Earth return even at repeated hi. No proxy, archived
+table, interpolation, cache across RHS, fallback or retry. Only the
+seven-node table is reused across profiles. No separate live preflight
+or diagnostic callback is required.
+
+Let F mean the exact rational value of a binary64 word and RN mean
+round to binary64 nearest-even. For Moon use the raw position words
+E = Earth/SSB and G = Moon/Earth, in km, and the original
+Moon/SSB velocity in SI, Vhat_B = RN(1000*raw velocity). For each
+component preserve Dhat = RN(v0*s) and c = RN(Vhat_B*lo), with their
+signs, then compute
+
+```text
+d2 = 1000*(F(E)+F(G)) + F(c) - F(r0) - F(Dhat) - F(q)
+d3 = RN(d2)
+rho = hypot(d3)
+a_Moon[j] = mu_Moon*(d3[j]/rho)/(rho*rho)
+```
+
+Use exact Fraction assembly for the three components and the archived
+rounding/zero convention. Do not round E/G to SI separately, form a
+rounded barycentric sum, flatten the spacecraft position or rephase
+with geocentric velocity. Keep direct Moon/SSB for velocity rephasing,
+original source checks and the historical native node guard only. At
+each new RHS/output require both exact d2 and finite binary64 d3 Moon
+geometry strictly exterior to 1,737,400 m, and the original Sun/Earth
+guards, before either field. Keep all 42 native comparison-node guards
+on the original direct-state convention; no historical guard replay.
+
+### A new run with the old acceptance tests
+
+R5.33 prepares and verifies the private path offline. On all 28 archived
+rows, inject the measured Moon/Earth words linked by ADR0178 and require
+exact d2 and bitwise d3/acceleration agreement: the measured/identical
+17 use R5.24 expectations and the other 11 use the measured R5.30 arm.
+This is a fixed-state fixture, with no real solve or new source or
+polynomial evaluation. Add analytic synthetic cancellation, units,
+nearest-even/signed-zero, signed-lo and nonzero q/w cases; exact
+observed-versus-unobserved synthetic t/q/nfev parity; independent checks
+of wrong target/observer/epoch, mixed units, early rounding, wrong
+velocity, invalid geometry, late/missing returns, count and receipt
+failures. Run focused and full no-SPICE-guarded regression, Ruff,
+strict OpenSpec and freeze tested hashes. No native initialization,
+retained trajectory propagation or R5.34 launch in preparation.
+
+R5.34 needs separate authorization after R5.33. Run normal then tighter
+once under ADR0162's profiles. Check the normal profile and its 14
+available sampled observations before allowing tighter; stop on failure.
+Gates needing both profiles are checked when available. At seven
+coepochs require h1/h0.5 and h0.5/new tighter agreement within
+0.01 m and 1e-5 m/s, and new normal/tighter within 0.001 m and
+1e-6 m/s (21 checks). Never interpolate or recompute the saved native
+grids. Their missing historical final identity remains explicit.
+
+Select each new profile's seven outputs and RHS invocation ordinals
+0–6, with at least one nonzero-lo RHS per profile. Retain duplicate
+epochs and their own q/w as separate observations. This is the original
+28-observation rule applied to the new run, not a requirement that its
+states or epochs equal R5.24. List sampled hi and exact T; report overlap
+with the archive without choosing a sample based on novelty or outcomes.
+Never backfill or query a state to complete a sample.
+
+Use only the three hash-pinned Type 2 records (Sun→SSB, Earth→SSB,
+Moon→Earth) to reconstruct exact same-model states and derivatives at
+each sampled hi and T, checking record/segment coverage first. Reuse
+each evaluation within an observation. Keep the original 84 SSB
+state-parity and increment checks, adding 28 Moon/Earth state-parity
+checks against its own exact record (0.001 m and 1e-6 m/s, exact raw-km
+scaling). The 1e-12 m increment gate still uses each original SSB
+velocity; Moon compares the signed c against P_Moon(T)-P_Moon(hi) with
+the original Taylor/velocity/rounding terms. Sum the exact E/G reference
+positions to get P_Moon. Compare rounded source closure separately;
+bit identity of the split sum with Moon/SSB is not a force gate.
+
+For Moon form d0 from exact P_Moon(T) and exact spacecraft motion,
+d1 = d0 + (1000*(F(E)+F(G))-P_Moon(hi)), and d2/d3 as above. Keep
+the independent Fraction assembly and signed telescope, exterior
+guards for all required exact geometries, and 80/100-digit Decimal
+fields at d0–d3. Keep relative 1e-60 convergence, zero agreement and
+stable classifications. Check returned-geometry and overall errors
+for Sun, Moon and A total against max(1e-15 m/s², 1e-11*S) with the
+original reference norms or constituent-norm sums. Do not subtract
+source error, widen a tolerance, or apply the Moon result to Earth.
+
+### Limits, audit and outcome
+
+Use one fresh study under the same inclusive 60 s and one separate
+stdlib-only audit under 10 s, through final flush. Global study limits:
+two A solve attempts, 10,000 RHS attempts, 1,000 trial descriptors,
+`3*(N_RHS+7)` original SSB requests plus `N_RHS+7` Moon/Earth requests
+(at most 30,021 + 10,007 = 40,028 explicit state attempts), including
+28 calls for the shared table. No transitive native-call estimate.
+One pool setup and at most two 15-call inventories; zero native
+spacecraft propagations, GM lookups, new selectors/record acquisitions
+or optimizer calls. The study and audit each cap native comparison-node
+guard checks at 42, binary64 source fields at 20,028 and dynamic A totals
+at 10,014 (computed from saved inputs in the audit). Each phase caps sampled work at 28 observations, 112 state checks,
+56 source-force rows, 448 Decimal fields, 28 A totals and 168
+actual retained record evaluations (three records at up to two
+epochs per observation). Reuse fields/returns; count before work.
+
+The audit makes no native calls or solves. Independently reconstruct
+every saved RHS/output epoch, raw input, split separation, guards,
+fields and derivative; also rebuild all 21 trajectory comparisons
+and sampled source/force gates. Do not import candidate math or
+trust verdict flags. The same pinned pure record oracle may be used.
+Synthetic preparation must exercise the expanded schema and caps.
+Actual deadline feasibility with the extra state requests and exact
+assembly remains unmeasured. Retain raw/partial arrays and operands
+before post-call checks, ordered attempted/returned/completed counts,
+trials, earliest failure, unavailable checks, initial/final input
+and runtime identities and exclusive child and parent receipts. Missing or invalid
+source, gate, identity, deadline or flush fails closed; no retry,
+new solver settings, replacement epoch or expanded budget.
+
+Pass requires both complete profiles, all counts/guards/gates, final
+identities and finalized child and parent receipts for both phases. It
+qualifies only the new numerical A candidate at the specified nodes
+and samples, conditionally on the saved native references. All-RHS
+arithmetic replay does not qualify the source continuously. R5.17 and
+R5.3 retain their failures, and Earth-force sensitivity, continuous
+safety, strict M3 and mission readiness remain open. Automation stays
+paused. This design stage performs no scientific execution.
