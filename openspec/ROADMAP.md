@@ -248,6 +248,12 @@ proxy rows. The source equivalence gate fails. No new force evaluation
 or propagation; R5.24 remains conditional, R5.17 failed, and automation
 stays PAUSED.
 
+[ADR0175](../docs/adr/0175-design-paired-lunar-force-check.md) completes
+R5.28 design: replay the proxy and substitute only the saved Moon/Earth
+position at 11 frozen observations. Compare both original acceleration
+gates and isolate position, rounding and field evaluation contributions.
+R5.29 preparation is next; R5.30 requires verified preparation and a
+separate run instruction. No new SPICE, record evaluation or trajectory.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

@@ -329,3 +329,32 @@ rounded epochs without recomputing forces or propagating the spacecraft.
 - **THEN** the capture SHALL attempt at most 1 setup, 30 inventory calls, 16 Moon segment selectors and 16 Moon/Earth state calls under an inclusive 15 s deadline, and the offline analysis SHALL attempt at most 16 epoch checks and complete under an inclusive 10 s deadline with zero native calls
 - **AND** the capture and analysis SHALL retain finite exclusive evidence, ordered counts, earliest failure and unavailable checks, with a finite numerical miss distinguished from invalid input, identity, domain or budget
 - **AND** neither phase SHALL acquire new explicit Type 2 records, evaluate a record polynomial or field in the diagnostic, propagate a trajectory, optimize, retry or authorize R5.17 requalification
+
+
+### Requirement: Measure the effect of saved Moon/Earth position differences at 11 fixed observations
+
+The ADR0175 paired check SHALL isolate the change in lunar point-mass
+acceleration caused by substituting the saved measured position for the
+R5.24 proxy, with original motion and force tolerances.
+
+#### Scenario: Admit only the affected frozen observations
+
+- **WHEN** R5.29 preparation is verified and R5.30 is separately authorized
+- **THEN** one fresh offline run SHALL bind the finalized R5.24 and R5.27 reports, ledgers and receipts to the fixed inventory and admit only observation ordinals 1, 2, 4, 6, 11, 15, 16, 18, 20, 25 and 27 in that order
+- **AND** it SHALL join by exact hi bits and ordinal across the seven saved acquisition epochs, keeping each row's own hi, lo, exact reference, motion, Earth/SSB position, direct Moon/SSB velocity, signed drift and rephasing unchanged
+- **AND** the only substitution SHALL be the three Moon/Earth position words from the saved raw return; the exact separation difference before rounding SHALL equal 1000 times the exact measured-minus-proxy position in km
+
+#### Scenario: Reproduce the proxy and test both force gates
+
+- **WHEN** a pair has valid identity, coepoch, rephasing and exterior geometry
+- **THEN** the proxy arm SHALL reproduce its archived exact separation, rounded separation and binary64 acceleration bits, reference fields at the original precision tolerance and both original gate classifications before attribution
+- **AND** both arms SHALL independently check returned-geometry and overall acceleration using the unchanged Moon GM, radius, 80/100-digit independent references and inclusive envelope max(1e-15 m/s², 1e-11 times reference norm), with stable classifications and relative 1e-60 reference convergence including component zero agreement
+- **AND** the report SHALL record signed measured-minus-proxy acceleration, norms, rounding and evaluation contributions, per-arm gate margins and any flips, keeping arithmetic closure distinct from the force verdicts
+- **AND** sampled confirmation SHALL require all 11 pairs, valid precision and attribution checks, both measured-arm gates at both precisions, and successful finalization; a finite negative or an unresolved pair SHALL be reported separately
+
+#### Scenario: Bound the offline study and preserve evidence
+
+- **WHEN** the paired study runs or encounters a failure
+- **THEN** it SHALL count at most 11 observation admissions, 22 binary64 and 110 Decimal Moon field evaluations within an inclusive 10 s budget including finalization, with zero SPICE or other native calls, record acquisitions, polynomial evaluations, other-body forces, propagation and optimization
+- **AND** it SHALL retain exclusive finite evidence, raw pair identities, ordered counts, receipts, earliest failure and unavailable work; continue valid pairs after a finite numerical miss and stop on invalid input, identity, proxy replay, geometry or budget
+- **AND** neither a pass nor a failure SHALL authorize a retry, changed sample or tolerance, R5.17 requalification, a new trajectory, strict M3 closure or a mission safety claim

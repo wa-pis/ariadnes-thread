@@ -6419,3 +6419,28 @@ force evaluation or trajectory propagation occurred. R5.24 remains
 conditional; the force impact of substituting the measured states was
 not evaluated. R5.17 remains failed, and the attempt is not repeatable
 under this contract.
+
+
+## R5.28 paired lunar force design (2026-11-10)
+
+[ADR0175](../../../docs/adr/0175-design-paired-lunar-force-check.md) and the
+[frozen inventory](../../../docs/adr/experiments/0175-inputs.json) bind
+the 11 affected R5.24 observations in ordinal order to the seven R5.27
+saved captures. Duplicate hi words retain their own motion and signed
+lo. The only change between arms is the three Moon/Earth position words
+before exact relative subtraction and the original nearest-even rounding.
+Reuse the saved exact ephemeris values; no new record evaluation is needed.
+
+Replay the proxy as a control. Check each arm against its own returned
+geometry and the common exact geometry using the original envelopes at
+80 and 100 digits. Report signed acceleration changes, gate margins and
+flips, separating the unrounded position effect from separation rounding
+and binary64 evaluation. Stable finite negatives and incomplete evidence
+have separate classifications.
+
+R5.29 prepares and tests the private runner and evidence readback without
+evaluating the saved force rows. After separate authorization R5.30 may
+run once under 10 s (15 s watchdog), at most 11 rows, 22 binary64 and
+110 Decimal fields. No SPICE, polynomial evaluation, propagation or
+change to historical verdicts. Only the design and metadata checks
+are complete.

@@ -1,0 +1,45 @@
+{
+  "automation": "PAUSED; unchanged",
+  "base_revision": "b72ebc76998bb4399ffc0816229023ec8fcf6af1",
+  "checks": {
+    "git_diff": "passed",
+    "input_metadata": {
+      "affected_epochs": 7,
+      "both_finalized_archives": true,
+      "capture_identity_and_order": true,
+      "force_evaluations": 0,
+      "native_calls": 0,
+      "numerical_study_run": false,
+      "propagations": 0,
+      "record_evaluations": 0,
+      "row_motion_and_coepochs_bound": true,
+      "rows": 11
+    },
+    "local_markdown_links": 286,
+    "protected_files_unchanged": 732,
+    "retained_files_verified": 41,
+    "runtime_tests_rerun": false,
+    "strict_openspec": "Change 'refine-physical-trajectory' is valid"
+  },
+  "date": "2026-11-10",
+  "documents_sha256": {
+    "CURRENT_STATE.md": "fe73c5347aa0d3a775223e48c30404ab6b6367509f0103c270fdd171d65d18f8",
+    "docs/adr/0175-design-paired-lunar-force-check.md": "b48d9d2733efafc15a4e59bcd8341ce028443ba5797fa6146d925e9fe0ac0603",
+    "docs/adr/README.md": "cb15ea69220190c3693156f066964d47d45e1d117479a7aaeb46625336c44410",
+    "docs/adr/experiments/0175-inputs.json": "785bdb62e43e122d8e4bd70d35586ce481f215118d0254dfebecb85a1974524d",
+    "openspec/ROADMAP.md": "71b5cc12aec847468db1e3273e03a81d4973906dc521cfd87b03cb821564c720",
+    "openspec/changes/refine-physical-trajectory/design.md": "a8c0cac1ec5fa9df69b1cc1fbafeb736fc212207e1366d42420cf72c26056c46",
+    "openspec/changes/refine-physical-trajectory/specs/short-coast-sensitivity/spec.md": "ced69c208d85511e3a81b357f21e0af8f43bd5c95f63758999bf769aedd37e53",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "0823723b5ab99a85ab823b1ebc3c77ee1f749b222f957c9806f600fbb394866f"
+  },
+  "implementation_started": false,
+  "planned_caps": {
+    "binary64_fields": 22,
+    "deadline_s": 10,
+    "decimal_fields": 110,
+    "observations": 11,
+    "watchdog_s": 15
+  },
+  "r530_run": false,
+  "stage": "R5.28 design only"
+}
