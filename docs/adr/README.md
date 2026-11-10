@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0176 — Prepare the paired lunar force check](0176-prepare-paired-lunar-force-check.md): R5.29 synthetic pairs and saved-evidence readback verified; R5.30 not run.
 - [0175 — Design the paired lunar force check](0175-design-paired-lunar-force-check.md): R5.28 binds 11 fixed observations to seven saved captures and preserves both original acceleration gates; design only.
 - [0174 — Record geocentric Moon proxy misses](0174-record-geocentric-moon-proxy-misses.md): R5.27 finalized once; 16/16 same-model states and 48/48 closure components pass, 39/48 proxy bits match; no force or propagation.
 - [0173 — Prepare the geocentric Moon holdout](0173-prepare-geocentric-moon-holdout.md): R5.26 capture and offline comparisons verified on fixtures and saved metadata; R5.27 not executed.

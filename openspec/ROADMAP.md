@@ -252,8 +252,11 @@ stays PAUSED.
 R5.28 design: replay the proxy and substitute only the saved Moon/Earth
 position at 11 frozen observations. Compare both original acceleration
 gates and isolate position, rounding and field evaluation contributions.
-R5.29 preparation is next; R5.30 requires verified preparation and a
-separate run instruction. No new SPICE, record evaluation or trajectory.
+[ADR0176](../docs/adr/0176-prepare-paired-lunar-force-check.md) completes
+R5.29 preparation: 51 focused tests pass; guarded regression: 6036 passed,
+407 skipped. The runner and readback were tested on synthetic pairs.
+R5.30 is unrun and needs a separate instruction. No new SPICE, archived
+force or record evaluation, or trajectory propagation.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

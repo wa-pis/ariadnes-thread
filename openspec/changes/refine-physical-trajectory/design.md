@@ -6444,3 +6444,17 @@ run once under 10 s (15 s watchdog), at most 11 rows, 22 binary64 and
 110 Decimal fields. No SPICE, polynomial evaluation, propagation or
 change to historical verdicts. Only the design and metadata checks
 are complete.
+
+## R5.29 paired lunar force preparation (2026-11-10)
+
+[ADR0176](../../../docs/adr/0176-prepare-paired-lunar-force-check.md) and its
+[manifest](../../../docs/adr/experiments/0176-verification.json) bind the
+tested loader, calculation, one-shot runner and receipt readback to the
+ADR0175 inventory. The readback uses the saved returns for completed
+pairs and verifies the signed comparisons without re-evaluating fields.
+Synthetic checks cover complete pass and negative verdicts, precision
+ambiguity, stopped and late evidence, and refusal of a second attempt.
+
+51 focused tests pass; guarded regression: 6036 passed, 407 skipped.
+The archived inputs were read for identity and mapping only. No SPICE
+or archive force evaluation occurred. R5.30 remains unexecuted.
