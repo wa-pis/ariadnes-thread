@@ -230,9 +230,11 @@ M3/safety remain open and automation PAUSED.
 a 28-row offline screen on ADR0162's original sample, including ten nonzero low
 words. Use the R5.21 measured legs at three epochs and a labelled rounded-model
 leg at 16 other epochs; preserve the original rephasing and force limits.
-Next: R5.23 preparation, then R5.24 offline only. A pass is conditional and
-can support a separate live-source design, with no propagation or R5.17
-requalification. Automation stays PAUSED.
+[ADR0170](../docs/adr/0170-prepare-frozen-moon-screen.md) completes R5.23 preparation:
+40 focused tests pass; guarded regression: 5916 passed, 407 skipped. No new SPICE queries. Next eligible step: one offline R5.24
+screen when requested. A pass is conditional and can support a separate
+live-source design, with no propagation or R5.17 requalification. Automation
+stays PAUSED.
 
 
 ## Completed R4 — define finite-radius interfaces before new propagation

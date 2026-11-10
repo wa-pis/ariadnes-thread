@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0170 — Prepare the frozen-coast Moon force screen](0170-prepare-frozen-moon-screen.md): R5.23 private runner, synthetic verification and frozen hashes; R5.24 not executed.
 - [0169 — Screen the split Moon source on frozen coast states](0169-screen-split-moon-on-frozen-coast.md): R5.22 conditional offline design on all 28 predeclared observations; distinguish measured and modeled Moon/Earth legs and preserve signed low time.
 - [0168 — Real split-centre ephemeris probe passes](0168-real-split-centre-probe-passes.md): R5.21 one bounded run; 9/9 position closure, both static Moon gates pass at 3/3 frozen states; no propagation or R5.17 requalification.
 - [0167 — Prepare the split-centre ephemeris probe](0167-prepare-split-centre-probe.md): R5.20 verified on artificial responses and saved metadata; independent capture/analysis evidence, live R5.21 pending.

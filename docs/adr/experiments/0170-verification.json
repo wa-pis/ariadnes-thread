@@ -1,0 +1,82 @@
+{
+  "archived_arithmetic_executed": false,
+  "base_revision": "497600585673ef27c6ece2a979f526d245d0df2e",
+  "checks": {
+    "focused": {
+      "checkout_frozen": true,
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+        "-I",
+        "-B",
+        "/private/tmp/ariadna-r523-guard/sitecustomize.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "-r",
+        "s",
+        "tests/test_frozen_moon_inputs.py",
+        "tests/test_frozen_moon_math.py",
+        "tests/test_frozen_moon_run.py"
+      ],
+      "elapsed_s": 2.1473508328199387,
+      "passed": 40,
+      "pytest_reported_elapsed_s": 1.9,
+      "skipped": 0
+    },
+    "protected_baseline_files_unchanged": 685,
+    "protected_legacy_sha256": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "regression_guarded": {
+      "checkout_frozen": true,
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+        "-I",
+        "-B",
+        "/private/tmp/ariadna-r523-guard/sitecustomize.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "-r",
+        "s"
+      ],
+      "elapsed_s": 95.07480237493291,
+      "passed": 5916,
+      "pytest_reported_elapsed_s": 94.5,
+      "skipped": 407
+    },
+    "ruff_passed": true,
+    "strict_openspec_passed": true,
+    "unrestricted_full_pytest_run": false
+  },
+  "design_inputs_sha256": "9a983ef4af96b4458559869fd4e35fdff4aabcbeb20135f4d2d373e99777eb93",
+  "evidence_sha256": {
+    "docs/adr/experiments/0170/pytest-focused.txt": "9d709d213998251ae3c7543dbca0ece88cdb14d4d83eaa382abc9be4ff736661",
+    "docs/adr/experiments/0170/pytest-guarded-skips.tsv": "dde50f5264b18a143c0fa5711dfcbbd24159f2cd3742443b571a7f7ea4f4cc46",
+    "docs/adr/experiments/0170/pytest-guarded.txt": "2b4fbf7aa4ba6574d27c28755fe351d906f8241e7292a052c44bf34984239a3d",
+    "docs/adr/experiments/0170/pytest-no-spice-guard.py.txt": "5a0d81d7df22748793d8db29b94b55fa78175fc7f4bc0065bcd2ba9b1bb08f3a"
+  },
+  "mission_safety_verified": false,
+  "new_record_acquisitions": 0,
+  "new_spice_queries": 0,
+  "new_trajectory_propagations": 0,
+  "preparation_complete": true,
+  "previous_preparation_sha256": "9fb838126353408f858b80bae875e898c50bf2fb7cb762c53f86b1f366bb27c7",
+  "r517_requalified": false,
+  "r524_attempts": 0,
+  "reused_source_sha256": {
+    "docs/adr/experiments/0167/ariadna_split_analysis.py": "57500d72f1e5f8d79836456e460dc5c042f5ef4468e397ce51cc1f7d1d9fdb98",
+    "docs/adr/experiments/0167/ariadna_split_capture.py": "04b47a1cd230557f449334431d28b6a74797f2065116815bffb312718131136c",
+    "docs/adr/experiments/0167/ariadna_split_common.py": "a6fb61a26478d7f459e44ddac9e325bd8edb3c85daa630772f5fbfff4289f6f7",
+    "docs/adr/experiments/0167/ariadna_split_inputs.py": "3df1ec2f76500570dfc501bf8fa6decc1dbbd5011ad8f29a8b0cbeb697f30004",
+    "docs/adr/experiments/0167/ariadna_split_run.py": "4b79f10c30a6403a9e3214430e5c08a0fe00af5ef95d128aa44113e6f83c754a"
+  },
+  "stage": "R5.23",
+  "strict_m3_closed": false,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0170/ariadna_frozen_moon_inputs.py": "733b7f0b1039cfd4d026183f1562730f9534882bb8e83c90cc2b676e083328f2",
+    "docs/adr/experiments/0170/ariadna_frozen_moon_math.py": "df9332ce0b27c6ff7cc21797871216ce1d100b38218b2de0edd456fb136b9d82",
+    "docs/adr/experiments/0170/ariadna_frozen_moon_run.py": "36a232bf04fabb267b760c6061cc0d42f376289ada00312494197b19ba8fc439",
+    "tests/test_frozen_moon_inputs.py": "e801ffcf8d47debdea8a2ef21781b82144a31809974fecb12c1e762b6f2ad573",
+    "tests/test_frozen_moon_math.py": "abbd0abeebee7fb7b34295e3e707733a018be290265ce53849b84fc1f5f715f0",
+    "tests/test_frozen_moon_run.py": "0b7aeb7e6b99ff9206e67265dce176572d3847626e921f83e6f82e035a4811c5"
+  }
+}

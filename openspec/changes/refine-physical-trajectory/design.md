@@ -6331,4 +6331,17 @@ about real source behavior. Keep the original signed direct-velocity
 rephasing and force gates. Independently assemble and compare fixed Moon
 geometries with no new acquisition or propagation. A pass on all 28 rows
 supports conditional feasibility only; a live holdout requires its own
-design. R5.23/R5.24 remain pending.
+design.
+
+
+## R5.23 frozen-coast screen preparation (2026-11-10)
+
+[ADR0170](../../../docs/adr/0170-prepare-frozen-moon-screen.md) and its
+[manifest](../../../docs/adr/experiments/0170-verification.json) bind the
+tested stdlib runner to the archived input inventory. Synthetic tests cover
+exact Type 2 values and derivatives, signed rephasing, independent lunar
+force fixtures, measured controls and conditional proxies, and the partial
+ledger and deadline gates. Archive checks read metadata and saved operands
+only. 40 focused tests pass; guarded regression: 5916 passed, 407 skipped. The test guard blocks
+TudatPy, SpiceyPy and direct CSPICE loads; no unrestricted regression is
+claimed. R5.24 is pending, and neither R5.17 nor M3 is requalified.
