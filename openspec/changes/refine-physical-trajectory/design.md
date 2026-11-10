@@ -6383,3 +6383,20 @@ R5.27 needs separate authorization: 63 explicit capture calls at most
 (1 setup, 30 inventory, 16 selectors, 16 states) in 15 s, and one 10 s
 native-free analyzer. Retain partial evidence and stop on identity, input
 or budget failure. No new field evaluation, propagation or change to R5.17.
+
+
+## R5.26 geocentric holdout preparation (2026-11-10)
+
+[ADR0173](../../../docs/adr/0173-prepare-geocentric-moon-holdout.md) and its
+[manifest](../../../docs/adr/experiments/0173-verification.json) bind the
+tested private runner, capture and independent offline analyzer to the
+ADR0172 inventory and finalized R5.24 evidence. The injected capture
+covers all 63 ordered operations; separate offline checks exercise all
+16 epochs, 48 proxy position bits and 48 archived closure comparisons.
+A numerical miss retains later valid rows; malformed input, identity
+or deadline failure retains the available prefix. Qualification requires
+the completed capture ledger and both finalized receipts.
+
+69 focused tests pass; guarded regression: 5985 passed, 407 skipped. TudatPy, SpiceyPy and direct CSPICE loading were blocked.
+R5.27 was not run. No new ephemeris or record acquisition, field
+evaluation, trajectory propagation or historical requalification.

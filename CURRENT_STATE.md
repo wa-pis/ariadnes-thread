@@ -51,7 +51,7 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0164](docs/adr/0164-corrected-coast-force-gate-fails.md):R5.17 attempt consumed;both300s solves/21 trajectory comparisons pass, but Moon overall force gate fails at normal RHS6/local0.25s by8.8864%; audit partial/scientific_verified=false, final identity unavailable.
 External2.704s/1.643s, finalizations/caps pass;5132 RHS/15417 states/424 trials, no native propagation.6182 tests/Ruff reused on unchanged bytes.
 [ADR0165](docs/adr/0165-reproduce-lunar-source-rounding.md):R5.18 localizes 13.269 µm before SI /16.645 µm after; staged centre sum reproduces42/42 saved position components. No native work/replay.
-[ADR0171](docs/adr/0171-frozen-coast-moon-screen-passes.md): R5.24 passed 28/28 fixed rows. [ADR0172](docs/adr/0172-design-geocentric-moon-holdout.md): 16-epoch geocentric holdout designed; R5.26 preparation pending, no live work. R5.17 failed, strict M3/safety open, automation PAUSED.
+[ADR0173](docs/adr/0173-prepare-geocentric-moon-holdout.md): R5.26 prepared; 69 focused passed, guarded regression 5985 passed/407 skipped. R5.27 not run, zero new SPICE. R5.24 conditional; R5.17 failed, strict M3/safety open, automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.
