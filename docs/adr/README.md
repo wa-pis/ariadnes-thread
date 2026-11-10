@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0174 — Record geocentric Moon proxy misses](0174-record-geocentric-moon-proxy-misses.md): R5.27 finalized once; 16/16 same-model states and 48/48 closure components pass, 39/48 proxy bits match; no force or propagation.
 - [0173 — Prepare the geocentric Moon holdout](0173-prepare-geocentric-moon-holdout.md): R5.26 capture and offline comparisons verified on fixtures and saved metadata; R5.27 not executed.
 - [0172 — Design the geocentric Moon holdout](0172-design-geocentric-moon-holdout.md): R5.25 freezes the 16 proxy epochs and separates provider parity from strict proxy position equivalence; design only.
 - [0171 — Frozen-coast Moon force screen passes](0171-frozen-coast-moon-screen-passes.md): R5.24 passed once offline on 7 measured and 21 proxy rows; all three prior controls reproduced, R5.17 verdict unchanged.

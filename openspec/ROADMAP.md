@@ -240,9 +240,13 @@ wall time. Zero new SPICE queries or propagation; R5.17 remains failed.
 Moon/Earth state per 16 frozen rounded epochs (21 proxy rows), separate
 same-model parity, bitwise proxy comparison and archived direct closure.
 [ADR0173](../docs/adr/0173-prepare-geocentric-moon-holdout.md) completes R5.26 preparation: 69 focused tests pass; guarded regression: 5985 passed, 407 skipped.
-The frozen runner was tested with an injected provider only. R5.27 needs
-a separate execution instruction. No new SPICE, field evaluation or
-propagation; automation stays PAUSED.
+[ADR0174](../docs/adr/0174-record-geocentric-moon-proxy-misses.md) records the
+single R5.27 attempt. Both phases finalized: 16/16 same-model states
+and 48/48 archived closure components pass, but only 39/48 proxy bits
+match. The nine one-step differences affect seven epochs and 11 of 21
+proxy rows. The source equivalence gate fails. No new force evaluation
+or propagation; R5.24 remains conditional, R5.17 failed, and automation
+stays PAUSED.
 
 
 ## Completed R4 — define finite-radius interfaces before new propagation

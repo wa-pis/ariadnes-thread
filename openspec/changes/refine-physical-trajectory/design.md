@@ -6400,3 +6400,22 @@ the completed capture ledger and both finalized receipts.
 69 focused tests pass; guarded regression: 5985 passed, 407 skipped. TudatPy, SpiceyPy and direct CSPICE loading were blocked.
 R5.27 was not run. No new ephemeris or record acquisition, field
 evaluation, trajectory propagation or historical requalification.
+
+## R5.27 geocentric holdout result (2026-11-10)
+
+[ADR0174](../../../docs/adr/0174-record-geocentric-moon-proxy-misses.md)
+records the one authorized run on the frozen 16 hi words. The capture
+and offline analysis finalize in 1.907 s and 0.655 s. All 16 same-model
+position and velocity parity checks and all 48 archived closure checks
+pass. The strict proxy comparison fails: 39/48 components match, and
+nine components differ by one adjacent binary64 step (maximum
+`2.9103830457e-8 m`). Seven epochs map those differences to 11 of the
+21 proxy observations. No checks are unavailable.
+
+The [verification manifest](../../../docs/adr/experiments/0174-verification.json)
+binds the exact raw states, results, journals and receipts. The offline
+comparison used no native calls. No new explicit record acquisition,
+force evaluation or trajectory propagation occurred. R5.24 remains
+conditional; the force impact of substituting the measured states was
+not evaluated. R5.17 remains failed, and the attempt is not repeatable
+under this contract.
