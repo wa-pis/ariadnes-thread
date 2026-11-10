@@ -231,10 +231,13 @@ a 28-row offline screen on ADR0162's original sample, including ten nonzero low
 words. Use the R5.21 measured legs at three epochs and a labelled rounded-model
 leg at 16 other epochs; preserve the original rephasing and force limits.
 [ADR0170](../docs/adr/0170-prepare-frozen-moon-screen.md) completes R5.23 preparation:
-40 focused tests pass; guarded regression: 5916 passed, 407 skipped. No new SPICE queries. Next eligible step: one offline R5.24
-screen when requested. A pass is conditional and can support a separate
-live-source design, with no propagation or R5.17 requalification. Automation
-stays PAUSED.
+40 focused tests pass; guarded regression: 5916 passed, 407 skipped.
+[ADR0171](../docs/adr/0171-frozen-coast-moon-screen-passes.md) completes the one R5.24 offline screen:
+both Moon gates pass at 28/28 frozen rows (7 measured, 21 proxy), all
+three measured controls match, and finalization passes in 0.495 s outer
+wall time. Zero new SPICE queries or propagation; R5.17 remains failed.
+A separate source-only holdout design for the 16 proxy epochs is eligible
+for consideration; no live holdout is authorized. Automation stays PAUSED.
 
 
 ## Completed R4 — define finite-radius interfaces before new propagation

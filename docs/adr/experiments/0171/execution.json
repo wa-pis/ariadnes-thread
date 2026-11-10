@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0170/ariadna_frozen_moon_run.py",
+    "b8531c78b724a5440afd0dfd556904657dc65714389217ff595ec41e98367f61"
+  ],
+  "cwd": "/Users/agrudin/dev/my/ariadna",
+  "external_elapsed_s": 0.4946151250042021,
+  "returncode": 0,
+  "start_utc": "2026-11-10T07:50:10.309787+00:00",
+  "stderr": "",
+  "stdout": ""
+}

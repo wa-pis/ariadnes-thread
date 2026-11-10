@@ -6344,4 +6344,18 @@ force fixtures, measured controls and conditional proxies, and the partial
 ledger and deadline gates. Archive checks read metadata and saved operands
 only. 40 focused tests pass; guarded regression: 5916 passed, 407 skipped. The test guard blocks
 TudatPy, SpiceyPy and direct CSPICE loads; no unrestricted regression is
-claimed. R5.24 is pending, and neither R5.17 nor M3 is requalified.
+claimed. Preparation did not run R5.24 or requalify R5.17 or M3.
+
+
+## R5.24 one offline frozen-coast screen (2026-11-10)
+
+[ADR0171](../../../docs/adr/0171-frozen-coast-moon-screen-passes.md) records the completed once-only
+screen on the unchanged sample and thresholds. Both Moon gates pass at 80
+and 100 digits at all 28 rows: 7 with previously measured legs and 21 with
+the rounded model proxy. The three measured controls match ADR0168.
+The worst overall error uses 50.6033% of its limit (normal RHS 6, 0.25 s);
+the archived direct error at that row used 108.886%. The complete 367-op
+ledger, input identities and both receipts pass readback; the outer wall
+time through process exit was 0.494615125 s of 10 s. No new ephemeris or
+record acquisition, propagation, or optimizer run. The conditional result
+does not verify the provider at the 16 proxy epochs or supersede R5.17.
