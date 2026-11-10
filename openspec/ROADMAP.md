@@ -262,6 +262,12 @@ measured-source overall error uses 45.531% of its unchanged limit.
 No SPICE, polynomial evaluation or propagation. The result applies
 only to the frozen rows; previous verdicts and automation stay unchanged.
 
+[ADR0178](../docs/adr/0178-consolidate-lunar-force-coverage.md) completes
+R5.31: both original Moon gates are supported at all 28 frozen
+observations (7 with captured positions in R5.24, 10 bitwise matches
+in R5.27, 11 substitutions confirmed by R5.30). No new calculations.
+R5.17 remains failed and M3 remains open.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

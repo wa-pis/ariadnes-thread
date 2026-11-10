@@ -6471,3 +6471,19 @@ change is `4.7384608443e-14 m/s²`. The worst measured-source overall
 error uses 45.531% of the unchanged limit. No SPICE, record evaluation
 or trajectory propagation. R5.24, R5.27 and R5.17 retain their historical
 verdicts; the result applies only to these fixed states.
+
+## R5.31 combined frozen Moon coverage (2026-11-10)
+
+[ADR0178](../../../docs/adr/0178-consolidate-lunar-force-coverage.md)
+reconciles the saved results by R5.24 observation ordinal. Seven rows
+were evaluated with captured Moon/Earth positions. Ten proxy rows
+inherit their saved gate verdicts because all three captured position
+words match the proxy. The other eleven rows have confirmed measured
+substitutions in R5.30. The disjoint routes cover all 28 rows at 19
+rounded epochs; both original lunar acceleration gates are supported
+at 80 and 100 digits with the saved Moon/Earth positions.
+
+This is a fixed-state evidence synthesis. No new force evaluation,
+SPICE query, record evaluation or propagation. The conditional R5.24
+record, the negative R5.27 bitwise verdict and the failed R5.17 audit
+remain unchanged. No continuous-arc or mission claim follows.

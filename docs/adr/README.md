@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0178 — Consolidate frozen lunar force coverage](0178-consolidate-lunar-force-coverage.md): R5.31 reconciles all 28 frozen R5.24 observations through 7 captured, 10 bitwise-identical and 11 paired results. Both original gates are supported; no new evaluations.
 - [0177 — Paired lunar force gates pass](0177-paired-lunar-force-gates-pass.md): R5.30 confirms both original gates for all 11 saved pairs; acceleration changes at every row, with no gate flips or propagation.
 - [0176 — Prepare the paired lunar force check](0176-prepare-paired-lunar-force-check.md): R5.29 synthetic pairs and saved-evidence readback verified; R5.30 not run.
 - [0175 — Design the paired lunar force check](0175-design-paired-lunar-force-check.md): R5.28 binds 11 fixed observations to seven saved captures and preserves both original acceleration gates; design only.
