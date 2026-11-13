@@ -275,6 +275,12 @@ Next is offline R5.33 preparation, including all 28 saved fixed-state
 controls. One new R5.34 study and separate audit require separate
 authorization after preparation; no retry of R5.17 and no M3 closure.
 
+[ADR0180](../docs/adr/0180-prepare-split-moon-integration.md) completes
+R5.33: 28/28 archived measured-route Moon results replay exactly;
+both synthetic profiles and their independent audit pass. Guarded
+regression: 6126 passed, 407 skipped. R5.34 is pending separate
+authorization; no SPICE or real coast was run.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

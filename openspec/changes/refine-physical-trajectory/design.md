@@ -6638,3 +6638,14 @@ arithmetic replay does not qualify the source continuously. R5.17 and
 R5.3 retain their failures, and Earth-force sensitivity, continuous
 safety, strict M3 and mission readiness remain open. Automation stays
 paused. This design stage performs no scientific execution.
+
+## R5.33 split Moon preparation (2026-11-14)
+
+[ADR0180](../../../docs/adr/0180-prepare-split-moon-integration.md)
+records exact replay of the pre-round separation and bitwise rounded
+separation and lunar acceleration on 28/28 measured-route controls.
+Both injected profiles and the independent saved-data audit pass with
+synthetic records; the observer preserves t/q/nfev exactly. All 90
+focused tests and 6126 full guarded tests pass (407 live-access
+skips). Tested helpers and frozen inputs are pinned. No SPICE queries,
+real coast or R5.34 execution; real convergence and deadlines are open.
