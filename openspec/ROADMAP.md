@@ -380,6 +380,14 @@ All four common grids bracket 18,374 km at +13,250–13,300 s; the
 two RK4 brackets overlap at +13,266–13,266.5 s after restart. This
 sampled model B result leaves lunar escape and mission handoff open.
 
+[ADR0199](../docs/adr/0199-design-retained-lunar-to-mars-interface-check.md)
+completes R5.52: authenticate the terminal R5.51 state and check
+retained Mars-bound references for an independent receiving state
+at the same epoch. R1/R2's saved nodes miss the interval; previous
+full-model reports retain only boundaries/endpoints here. Next is
+R5.53 offline preparation, then R5.54 once on request. No new states
+or mission closure are part of this audit.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

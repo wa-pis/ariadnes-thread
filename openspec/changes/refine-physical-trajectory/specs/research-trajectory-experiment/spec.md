@@ -640,3 +640,31 @@ command/reference/budget contract and SHALL NOT be authorized by an endpoint aud
 - **AND** a100-digit Decimal repeat SHALL establish oracle agreement<=1e-12m/1e-15m/s; raw inputs, signed residuals, norms, labels/constants/digests/counters and failures SHALL be retained in exclusive new evidence
 - **AND** the shared10s read/check/arithmetic/serialization/flush budget SHALL permit zero scientific imports, native reads, propagation, optimization or new observed states; unexpected failure SHALL stop without changed gates/data or retry
 - **AND** an arithmetic/assembly pass SHALL NOT claim achieved interior states, independent dynamical validation, full-mission target closure, reserve, safety or strict M3 completion
+
+
+### Requirement: Check retained lunar-to-Mars interface readiness
+
+The R5.52–R5.54 saved-data check SHALL authenticate one outgoing
+R5.51 model B state and assess the retained receiving-side inventory
+for `d0001-t0035`. It SHALL preserve the existing finite-burn
+interface and target contract from R4.
+
+#### Scenario: Authenticate the fixed outgoing archive packet
+
+- **WHEN** the offline worksheet reads the frozen R5.51 archive
+- **THEN** it SHALL verify both bound phase manifests/receipts and the lengths, raw/compressed hashes and counts of the five pinned members, and bind the terminal tighter RK4 state at 979014965.9635216 TDB s bit for bit across raw index 32,000, common sample 320 and both audited direction records
+- **AND** it SHALL verify SSB/J2000, SI, TDB seconds since J2000, model B inventory, the common and mesh Moon operands against their respective archived sources, and 1351.7475727997967 kg as unchanged archived cutoff/coast metadata
+- **AND** independent exact signs and Decimal80 radius and radial speed SHALL match both audited endpoint operands within 1e-6 m and 1e-9 m/s, respectively, before `source-state-authenticated` is reported
+
+#### Scenario: Keep missing receiving evidence separate from source verification
+
+- **WHEN** the pinned R1/R2 ideal nodes and retained full-model boundary and endpoint records are inspected
+- **THEN** the worksheet SHALL check exact epoch words in the 121 audited ideal nodes and the pinned timed boundaries/endpoints, retain neighboring ideal epochs and record per-source eligibility based on exact epoch, event, frame/units, model, independent provenance and mass
+- **AND** the frozen archive SHALL report `ideal-reference-coepoch-unavailable` and `physical-join-not-established` with null continuity residuals; shared initial ancestry, identical candidate ID, a mesh digest, interpolation, copied state, re-epoching or an arrival target SHALL NOT supply an incoming state
+- **AND** a later compatible physical comparison requires a separately defined same-event, same-epoch independent receiving state and mass, retaining R4 join and target gates with no physical-closure claim from this worksheet
+
+#### Scenario: Bound the offline check and fail on invalid evidence
+
+- **WHEN** a prepared, separately requested worksheet runs once
+- **THEN** a monotonic parent deadline SHALL limit the complete process through receipt finalization to 15 s, five members of up to 16 MiB raw each, 80 MiB raw and 25 MiB compressed payload total, 218,972 archived lines, 1 MiB archive metadata, 2 MiB compact input JSON and 128 KiB output
+- **AND** it SHALL make zero scientific imports, native/SPICE or kernel calls, force evaluations, propagations or new trajectory states, and SHALL preserve first safe evidence without retry; missing, inconsistent, corrupt or late evidence SHALL yield `invalid-evidence` without certification

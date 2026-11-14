@@ -7333,3 +7333,22 @@ Both native meshes bracket the outward crossing and overlap over
 +13,266–13,266.5 s (979012231.9635216 to 979012232.4635216 TDB s).
 The separate marker verdict is `marker-bracketed`. No event
 interpolation, escape, mission handoff or strict M3 qualification.
+
+## R5.52 design the retained lunar-to-Mars interface check (2026-11-15)
+
+[ADR0199](../../../docs/adr/0199-design-retained-lunar-to-mars-interface-check.md) fixes the tighter
+RK4 terminal common sample from R5.51, +16,000 s, as a candidate
+outgoing state. Authenticate its epoch and six words across the raw
+and sampled states and both audited directions, body operands and
+constant cutoff mass. The endpoint is independent of the range marker
+and does not change the R4 mission interface.
+
+The saved R1/R2 sample epochs leave a gap across the whole R5.51
+interval. The pinned full-model studies retain endpoints and
+boundaries, not an independent receiving state there. Record source
+identity, ideal epoch availability and physical continuity as
+separate statuses, with no residual for a missing comparison and
+no new state. R5.53 prepares the bounded worksheet on artificial
+data; R5.54 requires a separately requested single offline run
+(15 s, five authenticated members, zero native work), not a
+transfer or optimizer run.

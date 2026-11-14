@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0199 — Design a saved-data check of the lunar-to-Mars interface](0199-design-retained-lunar-to-mars-interface-check.md): R5.52 fixes the terminal R5.51 packet and receiving-side eligibility inventory; offline worksheet pending.
 - [0198 — Bracket the 18,374 km lunar range marker](0198-far-lunar-range-marker-bracketed.md): R5.51 real model B and independent offline audit pass once; both RK4 brackets overlap at +13,266–13,266.5 s.
 - [0197 — Prepare and capacity-check the far lunar range study](0197-prepare-far-lunar-range-check.md): R5.50 completes artificial full-work-cap study and independent audit, with durable lossless readback. R5.51 unexecuted.
 - [0196 — Design the 18,374 km lunar range check](0196-design-far-lunar-range-check.md): R5.49 fixes the R5.48 terminal restart, 16,000 s physical horizon, independent audit, 480/300 s budgets and artificial capacity gate. No launch.

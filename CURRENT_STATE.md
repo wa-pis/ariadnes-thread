@@ -4,7 +4,7 @@ Updated: 2026-11-15. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused; R5.51 passed and both once-only phases are consumed.
+Automation `ariadna-m3` remains paused. [ADR0199](docs/adr/0199-design-retained-lunar-to-mars-interface-check.md) fixes R5.52; next R5.53 offline preparation, then R5.54 on request.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline
