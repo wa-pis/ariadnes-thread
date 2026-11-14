@@ -336,6 +336,13 @@ profiles differ by 0.0716 mm and 2.40e-8 m/s. No model A run or
 new B-minus-A estimate. This only checks sampled numerical agreement
 on the parking coast. Post-burn departure and strict M3 remain open.
 
+[ADR0188](../docs/adr/0188-design-post-cutoff-lunar-coast.md) defines
+R5.41: use the exact simulated nominal cutoff from 0079/0098 for a
+600 s model B restart. Separate same-start numerical agreement from
+sampled outward direction. Frozen inputs and coverage metadata
+checked; preparation R5.42 and separately authorized R5.43 remain
+open. No burn replay, escape or full-force mission claim.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

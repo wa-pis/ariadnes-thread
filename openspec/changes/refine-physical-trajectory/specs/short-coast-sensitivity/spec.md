@@ -442,3 +442,36 @@ post-burn lunar departure or a new A/B sensitivity measurement.
 - **THEN** the study SHALL enforce inclusive 60 s, two native arcs, two adaptive solves, 10,000 RHS, 1,000 trials, 40,052 explicit adaptive state attempts and 5,412 native guard reads through finalization, excluding unobserved native internal requests
 - **AND** the separate audit SHALL enforce an inclusive 10 s limit and zero native calls, scientific imports or solves while reconstructing all retained adaptive RHS and output arithmetic, sampled checks, native guards and telemetry, 67 trajectory comparisons and counters from saved evidence
 - **AND** only complete required gates, matching current identities and all four phase receipts SHALL allow a pass; a missing input, failed gate, exhausted cap or incomplete finalization SHALL retain partial evidence without retry, changing controls or upgrading any M3 or mission qualification
+
+### Requirement: Check the fixed post-cutoff lunar coast
+
+R5.41–R5.43 SHALL separately test same-model numerical agreement and
+sampled outward motion during 600 s of unpowered model B motion
+from the archived nominal departure cutoff. The diagnostic SHALL NOT
+substitute a parking or target state, qualify the burn or alter
+the configured production M3 interface.
+
+#### Scenario: Bind the archived boundary and prepare offline
+
+- **WHEN** R5.42 prepares the private study and audit
+- **THEN** they SHALL bind the exact 0079 nominal cutoff (state slot 1, mass 1351.7475727997967 kg, epoch 978998315.9635216 TDB s since J2000) to the matching 0098 completed baseline departure-cutoff, departure burn and R1 scenario/candidate; they SHALL independently check stored mass-law arithmetic at the represented burn interval within the existing mass gate and reject a label, identity, frame, epoch or mass mismatch
+- **AND** the verification SHALL cover outward, zero and inward samples, invalid/altered input and evidence, arithmetic and partial/finalization/cap failures, with focused and full no-SPICE-guarded pytest, Ruff, strict OpenSpec and frozen hashes; no real query, propagation or retained force or polynomial evaluation SHALL occur
+
+#### Scenario: Compare the same unpowered model from the same cutoff
+
+- **WHEN** verified preparation and separate authorization permit the single R5.43 study
+- **THEN** from that exact epoch and six-state the study SHALL run RK4 at 1 and 0.5 s and independently implemented DOP853 normal and tighter with the R5.40 profiles, source and force contract, geometric SI/SSB/J2000/TDB/NONE and constant cutoff mass as metadata, stopping at cutoff plus 600 s with zero thrust or mass flow and no burn or model A propagation
+- **AND** all 39 comparisons at the 13 exact coepochs SHALL use the original 0.01 m / 1e-5 m/s native and tighter cross-engine gates and 0.001 m / 1e-6 m/s DOP853 gate; all 52 adaptive observations, 26 native telemetry rows and both retained guard histories SHALL pass the unchanged R5.40 criteria, without using parking-coast samples or obtaining additional states for direction
+
+#### Scenario: Distinguish numerical agreement from outward direction
+
+- **WHEN** all numerical evidence and the independent audit are complete and pass
+- **THEN** evidence SHALL report the Moon-relative radius in m, signed radial speed in m/s and osculating specific energy in m²/s² for all 52 profile nodes, using the common saved Moon/SSB states; the audit SHALL reproduce the values within 1e-6 m, 1e-9 m/s and 1e-6 m²/s² and each net range change within 1e-6 m, and derive radial and net range signs independently from exact raw operands
+- **AND** `outbound-at-samples` SHALL require strictly positive radial signs at every node and strictly positive end-minus-start range in all four profiles; an audited zero or negative sign SHALL be retained as `outbound-not-established` even when the numerical comparison passes; missing or failed required evidence SHALL give `unavailable`
+- **AND** neither agreement nor positive direction or osculating energy SHALL qualify continuous outward motion, escape, burn accuracy, safety, transfer closure or strict M3
+
+#### Scenario: Audit one bounded attempt and preserve partial evidence
+
+- **WHEN** R5.43 runs the authorized study and offline audit
+- **THEN** the study SHALL enforce the unchanged R5.40 propagation, RHS, trial, source operation and 60 s finalization ceilings; the audit SHALL enforce a 10 s finalization limit with zero native calls, scientific imports and solves and independently reconstruct the handoff, checks, guards, diagnostics and ledgers from saved operands
+- **AND** only matching frozen identities and four bound phase receipts with all required gates SHALL allow numerical acceptance; a missing or failed input, guard, limit or receipt SHALL retain partial or unavailable evidence without changing the cutoff, horizon, model or gates and without retry

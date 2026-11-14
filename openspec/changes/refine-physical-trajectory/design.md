@@ -7024,3 +7024,123 @@ matched, all four receipts passed, and the study/audit took 7.7121 s
 and 2.9908 s against 60 s and 10 s budgets. No A propagation or new
 B-minus-A comparison. No historical requalification or full M3
 acceptance; the result applies to the sampled unpowered coast.
+
+## R5.41 design the post-cutoff lunar coast (2026-11-14)
+
+[ADR0188](../../../docs/adr/0188-design-post-cutoff-lunar-coast.md)
+checks an unpowered model B restart from the actual simulated nominal
+departure-cutoff of candidate `d0001-t0035`, not its ignition state.
+Use 0079 `science.nominal.boundaries[1]` and its paired boundary mass,
+verified exactly against the completed 0098 baseline (run 0), including
+the departure burn record and original scenario/candidate. The
+[manifest](../../../docs/adr/experiments/0188-design-inputs.json) pins
+the selected records, exact SI and binary64 state, epoch and mass,
+input hashes and the retained R5.40 method. The cutoff is
+978998315.9635216 TDB s since J2000; the unrounded mass is
+1351.7475727997967 kg, above 500 kg dry. Require the departure burn end
+epoch and final mass to match the boundary exactly. Check stored burn
+mass independently using the represented cutoff-minus-ignition time,
+1000 N, 450 s and standard gravity 9.80665 m/s² within the unchanged
+public mass-law gate. This checks saved arithmetic, not burn accuracy.
+The historical nominal/tighter cutoffs are different; start all four
+new profiles from the same nominal record. Do not splice a D13–D17
+state, change the original hypothesis or rerun the burn.
+
+### Numerical experiment
+
+Switch to B only in this private restart: direct Sun, Moon and Earth
+point masses, pinned 13 ordered kernels, same GMs, guards, geometric
+NONE ephemerides and SI/SSB/J2000/TDB as R5.40. This conditional model
+transplant is not the production M3 interface. Retain an explicit,
+unchanged mass label at handoff and output, no thrust or mass flow,
+and the six-state translational ODE. No endpoint or radius target is
+imposed. Require exact raw initial epoch and all six components from
+every returned profile. Use exact comparison epochs `t_cut+50*j`,
+`j=0..12`, ending at 978998915.9635216 TDB s. Reuse only the method,
+not trajectory states, force samples or pass flags from the parking
+coast. No interpolated or substituted native output.
+
+Preserve RK4 1/0.5 s and the R5.40 normal/tighter DOP853 profiles
+and independent compensated-time and split-Moon force construction.
+Check native h1/h0.5 and native h0.5/tighter DOP853 within
+0.01 m / 1e-5 m/s, and DOP853 normal/tighter within
+0.001 m / 1e-6 m/s, at every common node. Retain signed differences
+before norms. No comparison to the parking prefix: 39 new
+trajectory comparisons. Keep the 52 adaptive source/force
+observations with the same callback selection relative to cutoff
+(13 outputs, initial ordinals 0–6, first completed RHS by ordinal in
+each of the six 50 s intervals after 300 s, per profile). Keep
+all previous gates on geometry, motion assembly, two Decimal
+precisions, source/total fields, and all native retained state
+guards and 26 native telemetry rows. Require the same Type 2
+source coverage for hi and exact epochs; the saved record
+intervals cover the proposed span by metadata. A missing gate
+or unsupported return is a failure, never a reason to reuse a
+different retained epoch or query an extra sample.
+
+### Outward motion at the declared nodes
+
+At each node use the saved geometric Moon/SSB SI state from the
+common output table (one shared Moon state, no added queries);
+do not replace the force path's split Moon geometry. For each solver
+compute `q = r_sc - r_Moon`, `u = v_sc - v_Moon`,
+`rho = norm(q)`, `v_r = dot(q,u)/rho` and
+`epsilon = dot(u,u)/2 - mu_Moon/rho` in SI. Save raw operands,
+signed radial speed and energy, radius and end-minus-start radius
+for all four profiles. Require finite exterior data and positive
+radius. For the direction classification the offline auditor
+derives exact signs from rational binary64 operands of
+`dot(q,u)` and `dot(q_end,q_end) - dot(q_start,q_start)`.
+It independently reconstructs all 52 numeric rows in Decimal
+(80 and 100 digits, independently rounded to binary64) and compares
+study radius, speed and energy within 1e-6 m, 1e-9 m/s and
+1e-6 m²/s², respectively, and each net range change within 1e-6 m.
+Each precision must pass. These are saved arithmetic agreement gates,
+not physical uncertainty estimates. The study's separately computed
+radial and net range sign labels must agree with the exact audit
+signs; zero does not count as outward.
+
+Report the numerical and direction verdicts separately. With all
+numerical gates and a complete audit, `outbound-at-samples`
+requires 52 strictly positive radial signs and four strictly
+positive net range signs; a nonpositive sign yields
+`outbound-not-established` with the profile, epoch and value.
+For missing or failed evidence, direction is `unavailable`.
+Do not use `epsilon` as a gate or assert that the spacecraft
+escapes the Moon from a two-body diagnostic in a time-dependent
+multibody field. There is no claim about intervals between nodes.
+
+### Preparation, budget and audit
+
+R5.42 prepares private study/audit paths on synthetic and metadata
+fixtures only. Verify exact source and event selection, stale or
+shifted epochs, constant mass and duplicate records, native/RHS
+checks, positive, zero and negative radial/net-range signs, negative
+results distinct from numerical failures, corrupted diagnostics,
+identity drift, partial evidence, finalization and caps. Freeze the
+tested files after focused and no-SPICE guarded full pytest, Ruff
+and strict OpenSpec. Do not import scientific packages to evaluate
+a retained real force or polynomial at this stage or run R5.43.
+
+R5.43 needs separate execution authorization. One study shares 60 s
+and one independent saved-data audit shares 10 s, each inclusive of
+startup, serialization and flush, with exclusive attempts and parent
+watchdogs. Keep all R5.40 ceilings for shared work: two native arcs,
+two adaptive solves, 10,000 RHS, 1,000 trials, 40,052 explicit
+adaptive state attempts plus 5,412 native guard reads (45,464 total,
+excluding unobserved native internal requests), one kernel setup,
+30 inventory calls and no GM acquisition. There are at most 39
+profile comparisons, 52 directed-geometry rows, 52 adaptive force
+observations and 26 native telemetry rows. The inherited arithmetic
+and force caps remain in the manifest. Audit independently from
+saved operands and pinned metadata: exact event/initial conditions,
+mass bookkeeping, native guards, force telemetry, every adaptive
+RHS/output, source/force checks, signed residuals, direction rows
+and classifications, work ledgers, before/after identity and all
+four receipts. It imports neither the study nor scientific packages,
+and launches no native work or solves. Failed required checks,
+budget, identity or finalization retain the first error, partial or
+unavailable evidence and no retry. A validated inward result is a
+scientific observation, not grounds to alter the fixed interval.
+Do not claim continuous clearance, escape, burn or mission
+qualification or re-open prior studies.

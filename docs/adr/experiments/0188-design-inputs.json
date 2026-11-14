@@ -1,0 +1,305 @@
+{
+  "stage": "R5.41",
+  "contract": "ADR0188",
+  "base_revision": "4ec5be3b38255eac2e7cbc8de100a1d85a6a4770",
+  "candidate": "d0001-t0035",
+  "boundary_paths": {
+    "original": [
+      "0079",
+      "science.nominal.boundaries[1]",
+      "science.nominal.boundary_masses_kg[1]",
+      "science.nominal.burns[0]"
+    ],
+    "exact_replay": [
+      "0098",
+      "science.runs[0].run.boundaries[1]",
+      "science.runs[0].run.boundary_masses_kg[1]",
+      "science.runs[0].run.burns[0]"
+    ]
+  },
+  "boundary_state": {
+    "epoch_tdb_s": 978998315.9635216,
+    "epoch_utc": "2031-01-09T11:57:26.779364Z",
+    "label": "departure-cutoff",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "position_m": [
+      -47213314768.25511,
+      128445697332.99492,
+      55659931786.80674
+    ],
+    "velocity_m_s": [
+      -30983.20615387048,
+      -9979.895885655382,
+      -5281.94830530045
+    ]
+  },
+  "boundary_mass_kg": 1351.7475727997967,
+  "cutoff_binary64_hex": {
+    "epoch_tdb_s": "0x1.d2d2a15fb54adp+29",
+    "position_m": [
+      "-0x1.5fc4405a0829ep+35",
+      "0x1.de7f5cd34feb3p+36",
+      "0x1.9eb2e51159d0dp+35"
+    ],
+    "velocity_m_s": [
+      "-0x1.e41cd31a000eap+14",
+      "-0x1.37df2ac619369p+13",
+      "-0x1.4a1f2c422dc0ep+12"
+    ],
+    "mass_kg": "0x1.51efd83b95a06p+10"
+  },
+  "boundary_original_force_model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+  "history_boundary_profile_differences": {
+    "label": "departure-cutoff",
+    "mass_difference_kg": 4.547473508864641e-13,
+    "position_difference_m": 0.012750900510964487,
+    "velocity_difference_m_s": 8.625915789265355e-06
+  },
+  "historical_baseline_target_closed": false,
+  "stored_burn": {
+    "burn_id": "departure",
+    "direction_frame": "Moon-relative TNW",
+    "direction_tnw": [
+      0.48553275586227435,
+      0.3331966150774525,
+      0.8082313769495175
+    ],
+    "end_epoch_tdb_s": 978998315.9635216,
+    "final_mass_kg": 1351.7475727997967,
+    "ideal_equivalent_delta_v_m_s": 1728.7850762046169,
+    "initial_mass_kg": 2000.0,
+    "isp_s": 450.0,
+    "propellant_mass_kg": 648.2524272002033,
+    "start_epoch_tdb_s": 978995455.2304223,
+    "thrust_n": 1000.0
+  },
+  "mass_arithmetic": {
+    "g0_m_s2": "9.80665",
+    "dry_mass_kg": 500.0,
+    "requested_duration_s": 2860.733099392546,
+    "represented_duration_s": "2860.73309934139251708984375",
+    "predicted_mass_kg": "1351.7475727997741856371059434159473418547618197855536804107416905875094961072334",
+    "predicted_minus_stored_mass_kg": "-2.24858239751888768001557038319302144463195892583094124905038927666E-11",
+    "limit_kg": "1E-8"
+  },
+  "coast": {
+    "model_id": "r5-ssb-sun-moon-earth-point-v1",
+    "sources": [
+      "Sun",
+      "Moon",
+      "Earth"
+    ],
+    "geometry": "SI, SSB, J2000, TDB seconds since J2000, NONE",
+    "duration_s": 600,
+    "offsets_s": [
+      0,
+      50,
+      100,
+      150,
+      200,
+      250,
+      300,
+      350,
+      400,
+      450,
+      500,
+      550,
+      600
+    ],
+    "coepochs_tdb_s": [
+      978998315.9635216,
+      978998365.9635216,
+      978998415.9635216,
+      978998465.9635216,
+      978998515.9635216,
+      978998565.9635216,
+      978998615.9635216,
+      978998665.9635216,
+      978998715.9635216,
+      978998765.9635216,
+      978998815.9635216,
+      978998865.9635216,
+      978998915.9635216
+    ],
+    "thrust_n": 0,
+    "mass_flow_kg_s": 0,
+    "constant_mass_metadata_kg": 1351.7475727997967,
+    "gm_m3_s2": {
+      "Sun": 1.327124400420322e+20,
+      "Moon": 4902800121846.8,
+      "Earth": 398600435468295.9
+    },
+    "radii_m": {
+      "Sun": 696000000.0,
+      "Moon": 1737400.0,
+      "Earth": 6378136.6
+    },
+    "native_steps_s": [
+      1,
+      0.5
+    ],
+    "dop853_settings": [
+      {
+        "rtol": 1e-12,
+        "atol": [
+          1e-07,
+          1e-07,
+          1e-07,
+          1e-10,
+          1e-10,
+          1e-10
+        ],
+        "max_step": 5.0,
+        "first_step": 1.0
+      },
+      {
+        "rtol": 1e-13,
+        "atol": [
+          1e-08,
+          1e-08,
+          1e-08,
+          1e-11,
+          1e-11,
+          1e-11
+        ],
+        "max_step": 2.5,
+        "first_step": 0.5
+      }
+    ],
+    "comparisons": {
+      "native_step_and_tighter_cross_engine": {
+        "position_m": 0.01,
+        "velocity_m_s": 1e-05
+      },
+      "dop853_step": {
+        "position_m": 0.001,
+        "velocity_m_s": 1e-06
+      }
+    },
+    "direction_arithmetic_limits": {
+      "radius_m": 1e-06,
+      "radial_speed_m_s": 1e-09,
+      "specific_energy_m2_s2": 1e-06,
+      "net_range_change_m": 1e-06
+    }
+  },
+  "retained_record_metadata": [
+    {
+      "body_id": 10,
+      "centre_id": 0,
+      "frame_id": 1,
+      "type": 2,
+      "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+      "record_index": 3048,
+      "record_address": 1965065,
+      "record_interval_tdb_s": [
+        978739200,
+        980121600
+      ],
+      "segment_interval_tdb_s": [
+        -3234816000,
+        3234816000
+      ]
+    },
+    {
+      "body_id": 301,
+      "centre_id": 399,
+      "frame_id": 1,
+      "type": 2,
+      "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+      "record_index": 12192,
+      "record_address": 1590733,
+      "record_interval_tdb_s": [
+        978739200,
+        979084800
+      ],
+      "segment_interval_tdb_s": [
+        -3234816000,
+        3234816000
+      ]
+    },
+    {
+      "body_id": 399,
+      "centre_id": 0,
+      "frame_id": 1,
+      "type": 2,
+      "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+      "record_index": 12192,
+      "record_address": 2522061,
+      "record_interval_tdb_s": [
+        978739200,
+        979084800
+      ],
+      "segment_interval_tdb_s": [
+        -3234816000,
+        3234816000
+      ]
+    }
+  ],
+  "caps": {
+    "study_s": 60,
+    "audit_s": 10,
+    "native_arcs": 2,
+    "dop853_solves": 2,
+    "rhs": 10000,
+    "trials": 1000,
+    "kernel_pool_setups": 1,
+    "kernel_inventory_calls": 30,
+    "dop853_state_attempts": 40052,
+    "native_guard_reads": 5412,
+    "explicit_state_attempts": 45464,
+    "dop853_binary64_fields": 30078,
+    "dop853_binary64_totals": 10026,
+    "native_telemetry_rows": 26,
+    "native_decimal_fields": 156,
+    "sample_observations": 52,
+    "post_300_s_rhs_observations": 12,
+    "parity_checks": 208,
+    "sampled_force_rows": 156,
+    "decimal_fields": 1248,
+    "record_evaluations": 312,
+    "sampled_totals": 52,
+    "sampled_force_gate_outcomes": 832,
+    "within_study_comparisons": 39,
+    "prefix_comparisons": 0,
+    "all_comparisons": 39,
+    "direction_rows": 52,
+    "net_range_signs": 4,
+    "direction_decimal_digits": [
+      80,
+      100
+    ]
+  },
+  "immutable_input_sha256": {
+    "docs/adr/experiments/0079-research-reference.json": "17f03d9557be6e439af5f1c388e1eb092f55236b3c2afc3de65006d5f639c235",
+    "docs/adr/experiments/0098-central-correction-study.json": "b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057",
+    "docs/adr/experiments/0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0",
+    "docs/adr/experiments/0185-design-inputs.json": "a106d2ceac3521dcdfe40b1adb61e86de1c00c96a807299b826b47bbb3c04ec8",
+    "docs/adr/experiments/0186-verification.json": "3f0c4cd0cc41671f247420f8c632999f00cad2ecfd2c5e788e25c2ea6fed0e9b",
+    "docs/adr/experiments/0187/manifest.json": "1aea406b095afbc14eac874cb583c2ea3b26e645e4a27038f585f8fa97839311",
+    "docs/adr/experiments/0187/study.json.gz": "6bb82897f20749898bca6e522480a8daf449999a9162690648ef2656abde8a32",
+    "docs/adr/experiments/0187/study.attempt.json": "d1ffe2b0f5c646b5d8fa6ca175126bb9f9eb6ba26aff9f1f99d11b87f879543e",
+    "docs/adr/experiments/0187/study.receipt.json": "f8a9fd0ee42a47df9db17cc72ad2f31cea4e0ee2cd8b2302b9936b04c24a1ca9",
+    "docs/adr/experiments/0187/study.parent-attempt.json": "06c2195e4a483399f3d2b04e9ec445fcc4aaf5068a074eed2fde145812a8421e",
+    "docs/adr/experiments/0187/study.parent-receipt.json": "27c0dd6d5917792dcefd958844c0b32daa5a2d09a4234231813d0a90e8c0cf9c",
+    "docs/adr/experiments/0187/audit.json.gz": "7688ec9b1d854bf6ab8972d9e3dce194ce26698c95d1a9f97a0fd6950eeb3095",
+    "docs/adr/experiments/0187/audit.attempt.json": "ab3e39f9e7c687411f857aaade3078e6297da9169b52af3b9b01833a2f9c7d46",
+    "docs/adr/experiments/0187/audit.receipt.json": "cf6b85b7216c525ed707034eb5ab7b7d96f0bd93c9617a4a0968c531d145598b",
+    "docs/adr/experiments/0187/audit.parent-attempt.json": "8dce2b35316644e834f397a23ae602b5b61d0f332e5ab0bcea7ca89032520773",
+    "docs/adr/experiments/0187/audit.parent-receipt.json": "b40193270d386bea21c68709cf261eef8a6b13314595d1c0ee0d7616002e5952"
+  },
+  "kernel_coverage_live_verified": false,
+  "post_cutoff_numerical_result": "pending",
+  "outward_direction_result": "pending",
+  "strict_m3_closed": false,
+  "automation": "PAUSED",
+  "design_work": {
+    "spice_queries": 0,
+    "kernel_loads": 0,
+    "force_evaluations": 0,
+    "record_evaluations": 0,
+    "propagations": 0,
+    "runtime_tests": 0
+  }
+}
