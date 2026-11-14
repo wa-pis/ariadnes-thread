@@ -1,0 +1,438 @@
+{
+  "stage": "R5.42",
+  "contract": "ADR0188",
+  "base_revision": "d21ba516a66dc27a93d781772e64e56b576ce3bb",
+  "date": "2026-11-14",
+  "preparation_complete": true,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0186-long-b-audit.py": "ae44501220b4cff1366de5182ec3b1985bd3dbcdeeabf328e46c142291cdd04a",
+    "docs/adr/experiments/0186-long-b-inputs.py": "4f3a0ce31f98a0d0db3d76e89c8e7ca165ea8ec5f76fba8c174be01aa14cd7ea",
+    "docs/adr/experiments/0186-long-b-integrator.py": "e0bb9a459b0aa81f281225e00b5db0766f81d3a8e2dff61547756b7c68a77dc6",
+    "docs/adr/experiments/0186-long-b-launch.py": "0e8fe2adfa80a95a24642623946112fe34af15c24fb771352ec95c88fef9d0c5",
+    "docs/adr/experiments/0186-long-b-native-replay.py": "6306c4626d555429e091341190de0d092f8f6f1d419e305d188fa0ed6eef3833",
+    "docs/adr/experiments/0186-long-b-native.py": "c9f2908927bcd1bf68678f5ca6db2c43fcf83ee3c399b549d79f2a0fd9cd359d",
+    "docs/adr/experiments/0186-long-b-reference.py": "4fb366b232c1515e4d6f96d2bc14b77249ed09bed909bbe3d79ac9a29b59e7c5",
+    "docs/adr/experiments/0186-long-b-study.py": "85f54a68afdd9745801088478700cd6e5420f9d060831affffef44b4ffb8669c",
+    "tests/test_long_b_adaptive.py": "669763f14f40321d8cdf45081236f1b08064efc33aa1c6ca407ab75a02968c28",
+    "tests/test_long_b_audit.py": "d7271856e42f5b4de5cc4970974fbcdb1b2b68881797154c03ad42e9f9edeeaa",
+    "tests/test_long_b_native.py": "cd677b4fc8c5066eac33ce23107bbb3483362e6deeb2f77ca98769e66adf8b3f",
+    "tests/test_long_b_study.py": "6577193b2f68a83c18bad6aa194ca0b93f59c4bfb7202a5670d0bd5a9bed3544",
+    "docs/adr/experiments/0189/pytest-offline-guard.py.txt": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693",
+    "docs/adr/experiments/0189-post-cutoff-audit.py": "5647ea22bf8817352f4a9b59344c8b73bf38380d52d6d4c0341c9649a2fa67b0",
+    "docs/adr/experiments/0189-post-cutoff-direction-audit.py": "b5fcb0b70356001de0b3f79ee8c9a5abe40b8a52651313ee7f7b0d3dc384bff2",
+    "docs/adr/experiments/0189-post-cutoff-direction.py": "b9a44d9a29a152c7b830e8a2b46d9b428520477e323d7f7e5e215166b68329b8",
+    "docs/adr/experiments/0189-post-cutoff-inputs.py": "2e91821f24a7a0d1170b576c8d22771ca984e65c524245031c61db92694b3a05",
+    "docs/adr/experiments/0189-post-cutoff-launch.py": "5ab1bec11c821093f920953ed215ed93ce72d1956cf8fdfd5c821885fc37d958",
+    "docs/adr/experiments/0189-post-cutoff-prepare.py": "81b49f2d980587a8379f5617cf56798acc0d11c3e8cdaa2bbf2eace719654983",
+    "docs/adr/experiments/0189-post-cutoff-study.py": "1353917f6e556283ef284efc95948714c8b0b567fc2e3bc21b3c7c22f006cf8a",
+    "tests/test_post_cutoff.py": "2f3b9949bc392b445c21ba733a4162ba7dfcac0a55b56db5c9ea5261af414137",
+    "tests/test_post_cutoff_direction.py": "7286b6606c8475ac29dc36266b25cbd281b9f2b5ab2ed14d22a449ab27025f2c",
+    "tests/test_post_cutoff_inputs.py": "13df21f77d341b633429b1e31a05cc4368ab0ecee811c801cf616e2a6e81bac1"
+  },
+  "design_input_sha256": {
+    "docs/adr/experiments/0079-research-reference.json": "17f03d9557be6e439af5f1c388e1eb092f55236b3c2afc3de65006d5f639c235",
+    "docs/adr/experiments/0098-central-correction-study.json": "b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057",
+    "docs/adr/experiments/0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0",
+    "docs/adr/experiments/0185-design-inputs.json": "a106d2ceac3521dcdfe40b1adb61e86de1c00c96a807299b826b47bbb3c04ec8",
+    "docs/adr/experiments/0186-verification.json": "3f0c4cd0cc41671f247420f8c632999f00cad2ecfd2c5e788e25c2ea6fed0e9b",
+    "docs/adr/experiments/0187/manifest.json": "1aea406b095afbc14eac874cb583c2ea3b26e645e4a27038f585f8fa97839311",
+    "docs/adr/experiments/0187/study.json.gz": "6bb82897f20749898bca6e522480a8daf449999a9162690648ef2656abde8a32",
+    "docs/adr/experiments/0187/study.attempt.json": "d1ffe2b0f5c646b5d8fa6ca175126bb9f9eb6ba26aff9f1f99d11b87f879543e",
+    "docs/adr/experiments/0187/study.receipt.json": "f8a9fd0ee42a47df9db17cc72ad2f31cea4e0ee2cd8b2302b9936b04c24a1ca9",
+    "docs/adr/experiments/0187/study.parent-attempt.json": "06c2195e4a483399f3d2b04e9ec445fcc4aaf5068a074eed2fde145812a8421e",
+    "docs/adr/experiments/0187/study.parent-receipt.json": "27c0dd6d5917792dcefd958844c0b32daa5a2d09a4234231813d0a90e8c0cf9c",
+    "docs/adr/experiments/0187/audit.json.gz": "7688ec9b1d854bf6ab8972d9e3dce194ce26698c95d1a9f97a0fd6950eeb3095",
+    "docs/adr/experiments/0187/audit.attempt.json": "ab3e39f9e7c687411f857aaade3078e6297da9169b52af3b9b01833a2f9c7d46",
+    "docs/adr/experiments/0187/audit.receipt.json": "cf6b85b7216c525ed707034eb5ab7b7d96f0bd93c9617a4a0968c531d145598b",
+    "docs/adr/experiments/0187/audit.parent-attempt.json": "8dce2b35316644e834f397a23ae602b5b61d0f332e5ab0bcea7ca89032520773",
+    "docs/adr/experiments/0187/audit.parent-receipt.json": "b40193270d386bea21c68709cf261eef8a6b13314595d1c0ee0d7616002e5952",
+    "docs/adr/experiments/0133-gravity-screen.json": "74238edd641e1b5fda42a209672c68e5bc201b20d3cffba24169e6f9b3b6a580",
+    "docs/adr/experiments/0136-retained-boundary-audit.json": "81d78ecf6e4e80b55e9d909f929a879b2e392667387ec2569632aa99a6b41063",
+    "docs/adr/experiments/0155-real-source.json": "278b094cff6dd417ac15c04d3b4e4da137acede17de7147babd72fe9e3812102",
+    "docs/adr/experiments/0182-design-inputs.json": "5f0ac97e3aae532417d5e2583864837881ad8feb9f24caa41ec045405bc45df3",
+    "docs/adr/experiments/0183-verification.json": "a0a954314bca16c1b837a7e33a06549612c437bc0aea6c8b299c495066c18272",
+    "docs/adr/experiments/0184/audit.attempt.json": "7c61c0a363b08af8e4200a769b02919bc7328da08428d61ad4d313098de52a73",
+    "docs/adr/experiments/0184/audit.json.gz": "225234824881817395c9f413b7e93a19ab40ad49b83202e1268893b956c0c8a2",
+    "docs/adr/experiments/0184/audit.parent-attempt.json": "1bb531b0bc6b24a150d219040363faf8bf16e7bfdc708a5ef6af940d6f3c1327",
+    "docs/adr/experiments/0184/audit.parent-receipt.json": "67316d6d4e974737f4ce8f2a9694b396d153a0bbe95c5218fae62ec8d7c9dcc1",
+    "docs/adr/experiments/0184/audit.receipt.json": "15e6255f7688aa65138b1b2f473281432b935b34dad365a0c6158666bfc1d5a2",
+    "docs/adr/experiments/0184/manifest.json": "1b66255cb7f5e3d2d0f03d5daf319f933bd5cd559f067a2ac4cd33dacf6383da",
+    "docs/adr/experiments/0184/study.attempt.json": "6f99b60f1dbf1e0a4e024a5bc5c334b47ff04ce80ca1f7be32f77a695bab760e",
+    "docs/adr/experiments/0184/study.json.gz": "0525af9c80f097c1950f79ed17fbb1ae8f6e97ffffbe3ac3efd7cb41b917517b",
+    "docs/adr/experiments/0184/study.parent-attempt.json": "bcef430fd6256ec19021c8a06f056314c2a86d78b9e34995025449d0ba82fb60",
+    "docs/adr/experiments/0184/study.parent-receipt.json": "1f86de4bf13ca6333463baa472b0794405358d7e9b9aafe30edbbe88132ca82f",
+    "docs/adr/experiments/0184/study.receipt.json": "62eb9397d2c36f2c0ae5fe702d4fcc9247e832f488f2c5386f160cb96c88504f",
+    "docs/adr/experiments/0140-short-coast-native.py": "8bc888d6e1c638251d8379d6d4c896393b5cd76fb71e85c65c7faf9aab9294e2",
+    "docs/adr/experiments/0180-split-integrator.py": "e728b272fa66c2e4ea801ec3996d0def71e2f6a423b6698019a46882201861d5",
+    "docs/adr/experiments/0180-split-reference.py": "8116ae56bcb1f6b9f0ae51c0fd28251bbf45eabb02420c03e0e832390a4bef91",
+    "docs/adr/experiments/0163-corrected-integrator.py": "fbc8411ca6d8ad3ebde72563d8b4134f9d5e2d2235e5441f945e4aa10873efed",
+    "docs/adr/experiments/0183-earth-audit.py": "6cace255c1eb11e7c2c33aa05d9195325aeabadb3586d512ee272e2095c36b50",
+    "docs/adr/experiments/0183-earth-inputs.py": "80f67ee9c9f9d2d1aa85eb383153367f76860bb8d25b9dfb8c911597242086bb",
+    "docs/adr/experiments/0183-earth-integrator.py": "f54b7b2f96034448f835e8d2f0d630278ac8c61a6d1e55b28c26e7e0c0162068",
+    "docs/adr/experiments/0183-earth-launch.py": "b4d4cfb4791d9a59da8e446584a3ea907e4daa3e872a69499435bc1ca37fdbc1",
+    "docs/adr/experiments/0183-earth-native-replay.py": "3ddff9eb6b4ee320aae9cd8dddc89f5f9dbe82bbcea3758dad1d17f3e396eba6",
+    "docs/adr/experiments/0183-earth-native.py": "6730fe7aa4d9b3407a6c16e3a4232277860db261f65130a12166de1721fa7060",
+    "docs/adr/experiments/0183-earth-reference.py": "2b6805db7cc7692777c22fc9145405228da13b3177ba6cd8fa2e040977fa03e4",
+    "docs/adr/experiments/0183-earth-study.py": "7af24f216fbc7280c5552a34a6c883ca7c0fc2b29fdaafdeaba6e271d1901c3d",
+    "environment.yml": "c2948772bfbe09677354f803d9ba79e4c78eb44c5916c98b8d58126832c0e4b7",
+    "docs/adr/experiments/0188-design-inputs.json": "dca18b7a555c89e27ae0a3ac4251d93f33b28a354f195334ba0e4748136a797e"
+  },
+  "guard": {
+    "path": "docs/adr/experiments/0189/pytest-offline-guard.py.txt",
+    "sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+  },
+  "synthetic": {
+    "outward_study": {
+      "status": "passed",
+      "direction": "unavailable",
+      "report_sha256": "0262b4b5e6a0915eeda227b849c88ed9b6f9dc2de4b5071036e0e262a3af0879",
+      "receipt_sha256": "f06d9d6f703eeaa40b79c31c981b209c82393eaa46fc07ff29accb77161b13ce",
+      "elapsed_s": 2.1907332078553736,
+      "completed_work": {
+        "identities": 2,
+        "native_guard_reads": 5412,
+        "native_arcs": 2,
+        "native_telemetry": 26,
+        "native_reference_fields": 156,
+        "states": 17748,
+        "solves": 2,
+        "rhs": 4424,
+        "binary64_fields": 13350,
+        "dynamic_totals": 4450,
+        "trials": 362,
+        "record_evaluations": 222,
+        "body_checks": 156,
+        "moon_earth_checks": 52,
+        "source_rows": 156,
+        "reference_fields": 1248,
+        "model_totals": 52
+      },
+      "classification_from_direction_rows": "outbound-at-samples",
+      "direction_rows": 52,
+      "net_ranges": [
+        {
+          "profile": "native_normal",
+          "net_range_change_m": 60000.0,
+          "net_range_sign": 1
+        },
+        {
+          "profile": "native_tighter",
+          "net_range_change_m": 60000.0,
+          "net_range_sign": 1
+        },
+        {
+          "profile": "dop853_normal",
+          "net_range_change_m": 59999.99965378153,
+          "net_range_sign": 1
+        },
+        {
+          "profile": "dop853_tighter",
+          "net_range_change_m": 59999.99965378153,
+          "net_range_sign": 1
+        }
+      ]
+    },
+    "outward_audit": {
+      "status": "passed",
+      "direction": "outbound-at-samples",
+      "report_sha256": "75275ca4482127663abf95585aa18e1ca8a4ac1eee8ef74798da15659608ff0e",
+      "receipt_sha256": "cc1686aa6dee108c5f0b0efcc9106cd23c4af94e6902c638bceac45a56a81a55",
+      "elapsed_s": 1.5504419999197125,
+      "completed_work": {
+        "native_telemetry": 26,
+        "native_reference_fields": 156,
+        "rhs": 4424,
+        "binary64_fields": 13350,
+        "dynamic_totals": 4450,
+        "trials": 362,
+        "record_evaluations": 222,
+        "body_checks": 156,
+        "moon_earth_checks": 52,
+        "source_rows": 156,
+        "reference_fields": 1248,
+        "model_totals": 52
+      },
+      "classification_from_direction_rows": "outbound-at-samples",
+      "direction_rows": 52,
+      "net_ranges": [
+        {
+          "profile": "native_normal",
+          "net_range_sign": 1,
+          "net_range_change_m": 60000.0
+        },
+        {
+          "profile": "native_tighter",
+          "net_range_sign": 1,
+          "net_range_change_m": 60000.0
+        },
+        {
+          "profile": "dop853_normal",
+          "net_range_sign": 1,
+          "net_range_change_m": 59999.99965378153
+        },
+        {
+          "profile": "dop853_tighter",
+          "net_range_sign": 1,
+          "net_range_change_m": 59999.99965378153
+        }
+      ],
+      "audit_counts": {
+        "native_telemetry": 26,
+        "observations": 52,
+        "comparisons": 39,
+        "direction_rows": 52,
+        "net_range_signs": 4
+      },
+      "no_science_work": {
+        "scientific_imports": 0,
+        "native_calls": 0,
+        "spacecraft_propagations": 0,
+        "kernel_loads": 0
+      }
+    },
+    "inward_study": {
+      "status": "passed",
+      "direction": "unavailable",
+      "report_sha256": "96533909dfca91a1c1b8d231ffacdcd3e81adf482912be48cd2981f7168e4249",
+      "receipt_sha256": "b056c74207fa3ef2daa7ab27013f690f880a3af1ab109d42aff9b948550dcd81",
+      "elapsed_s": 1.5637492500245571,
+      "completed_work": {
+        "identities": 2,
+        "native_guard_reads": 5412,
+        "native_arcs": 2,
+        "native_telemetry": 26,
+        "native_reference_fields": 156,
+        "states": 17748,
+        "solves": 2,
+        "rhs": 4424,
+        "binary64_fields": 13350,
+        "dynamic_totals": 4450,
+        "trials": 362,
+        "record_evaluations": 222,
+        "body_checks": 156,
+        "moon_earth_checks": 52,
+        "source_rows": 156,
+        "reference_fields": 1248,
+        "model_totals": 52
+      },
+      "classification_from_direction_rows": "outbound-not-established",
+      "direction_rows": 52,
+      "net_ranges": [
+        {
+          "profile": "native_normal",
+          "net_range_change_m": -60000.0,
+          "net_range_sign": -1
+        },
+        {
+          "profile": "native_tighter",
+          "net_range_change_m": -60000.0,
+          "net_range_sign": -1
+        },
+        {
+          "profile": "dop853_normal",
+          "net_range_change_m": -60000.00037508074,
+          "net_range_sign": -1
+        },
+        {
+          "profile": "dop853_tighter",
+          "net_range_change_m": -60000.00037508074,
+          "net_range_sign": -1
+        }
+      ]
+    },
+    "inward_audit": {
+      "status": "passed",
+      "direction": "outbound-not-established",
+      "report_sha256": "515a92fda938103c77610c534f44cfb2c6797bd118afa107bb45b3ba9706396f",
+      "receipt_sha256": "73a0697a1bebd7e9325eae5e0c2ab37ebcd57a44685d49e46ef28e9da6e5dfbe",
+      "elapsed_s": 1.5762785826809704,
+      "completed_work": {
+        "native_telemetry": 26,
+        "native_reference_fields": 156,
+        "rhs": 4424,
+        "binary64_fields": 13350,
+        "dynamic_totals": 4450,
+        "trials": 362,
+        "record_evaluations": 222,
+        "body_checks": 156,
+        "moon_earth_checks": 52,
+        "source_rows": 156,
+        "reference_fields": 1248,
+        "model_totals": 52
+      },
+      "classification_from_direction_rows": "outbound-not-established",
+      "direction_rows": 52,
+      "net_ranges": [
+        {
+          "profile": "native_normal",
+          "net_range_sign": -1,
+          "net_range_change_m": -60000.0
+        },
+        {
+          "profile": "native_tighter",
+          "net_range_sign": -1,
+          "net_range_change_m": -60000.0
+        },
+        {
+          "profile": "dop853_normal",
+          "net_range_sign": -1,
+          "net_range_change_m": -60000.00037508074
+        },
+        {
+          "profile": "dop853_tighter",
+          "net_range_sign": -1,
+          "net_range_change_m": -60000.00037508074
+        }
+      ],
+      "audit_counts": {
+        "native_telemetry": 26,
+        "observations": 52,
+        "comparisons": 39,
+        "direction_rows": 52,
+        "net_range_signs": 4
+      },
+      "no_science_work": {
+        "scientific_imports": 0,
+        "native_calls": 0,
+        "spacecraft_propagations": 0,
+        "kernel_loads": 0
+      }
+    },
+    "fresh_stdlib_audit": {
+      "status": "passed",
+      "direction": "outbound-at-samples",
+      "report_sha256": "87a63d2e2e84435400839b309841246b0379f5faf044ea0c53cd1abf0c33299b",
+      "receipt_sha256": "7928bab0b700f6cfc71f3a5e399dd9663af5066320b2a3503d84f0a6409f1f5d",
+      "elapsed_s": 1.4955712091177702,
+      "completed_work": {
+        "native_telemetry": 26,
+        "native_reference_fields": 156,
+        "rhs": 4424,
+        "binary64_fields": 13350,
+        "dynamic_totals": 4450,
+        "trials": 362,
+        "record_evaluations": 222,
+        "body_checks": 156,
+        "moon_earth_checks": 52,
+        "source_rows": 156,
+        "reference_fields": 1248,
+        "model_totals": 52
+      },
+      "classification_from_direction_rows": "outbound-at-samples",
+      "direction_rows": 52,
+      "net_ranges": [
+        {
+          "profile": "native_normal",
+          "net_range_sign": 1,
+          "net_range_change_m": 60000.0
+        },
+        {
+          "profile": "native_tighter",
+          "net_range_sign": 1,
+          "net_range_change_m": 60000.0
+        },
+        {
+          "profile": "dop853_normal",
+          "net_range_sign": 1,
+          "net_range_change_m": 59999.99965378153
+        },
+        {
+          "profile": "dop853_tighter",
+          "net_range_sign": 1,
+          "net_range_change_m": 59999.99965378153
+        }
+      ],
+      "audit_counts": {
+        "native_telemetry": 26,
+        "observations": 52,
+        "comparisons": 39,
+        "direction_rows": 52,
+        "net_range_signs": 4
+      },
+      "no_science_work": {
+        "scientific_imports": 0,
+        "native_calls": 0,
+        "spacecraft_propagations": 0,
+        "kernel_loads": 0
+      }
+    },
+    "native_telemetry_failure": {
+      "status": "failed",
+      "direction": "unavailable",
+      "report_sha256": "036e16147734b57962d78e30bb23626139390ea72b58432011843cd3d0eb622d",
+      "receipt_sha256": "013ca9f520c702715d3ce4f15e100fe1ceaee68dee58e58ed2878cb6fcfbb5ec",
+      "elapsed_s": 0.07662870874628425,
+      "completed_work": {
+        "identities": 1,
+        "native_guard_reads": 1806,
+        "native_arcs": 1,
+        "native_telemetry": 0,
+        "native_reference_fields": 3
+      },
+      "error": {
+        "stage": "native-normal",
+        "type": "TelemetryFailure",
+        "message": "native total telemetry envelope at 80 digits"
+      }
+    },
+    "audited_native_telemetry_failure": {
+      "status": "partial",
+      "direction": "unavailable",
+      "report_sha256": "dc044396549b35e7a708678780b32f21447f8cc4a066e84a3ce4fa8cb515977a",
+      "receipt_sha256": "0475b35b82f146d2fb3eb84e7bb511f44e61bbdc7dda8d554804385a05060755",
+      "elapsed_s": 0.01920829201117158,
+      "completed_work": {
+        "native_telemetry": 0,
+        "native_reference_fields": 3
+      },
+      "audit_counts": {
+        "native_telemetry": 0,
+        "observations": 0,
+        "comparisons": 0,
+        "direction_rows": 0,
+        "net_range_signs": 0
+      },
+      "no_science_work": {
+        "scientific_imports": 0,
+        "native_calls": 0,
+        "spacecraft_propagations": 0,
+        "kernel_loads": 0
+      }
+    }
+  },
+  "focused": {
+    "passed": 52,
+    "skipped": 0,
+    "log_sha256": "4f34b87fd17550f998144c94f3bca3e35044d25ac44f96695eb35f59d0160b63"
+  },
+  "guarded_regression": {
+    "passed": 6141,
+    "skipped": 494,
+    "elapsed": "127.87s (0:02:07)",
+    "log_sha256": "98ec85945e1a676a23749301cefb1902b62b65663f529e6c94d3dfce6a575b65",
+    "skip_log_sha256": "200a2d159d591f934b1db9037b066fa61017072f6c41d8d548661e57d085356b",
+    "skip_reasons": {
+      "Skipped: R5.42 excludes retained real force and record evaluation": 92,
+      "Skipped: R5.42 excludes native SPICE access: tudatpy": 341,
+      "Skipped: R5.42 excludes Streamlit live ephemerides": 17,
+      "Skipped: R5.42 excludes native SPICE access: spiceypy": 44
+    }
+  },
+  "checks": {
+    "ruff": "passed",
+    "strict_openspec": "passed",
+    "checkout_frozen_during_tests": true
+  },
+  "reference_work": {
+    "spice_queries": 0,
+    "kernel_loads": 0,
+    "force_or_record_evaluations": 0,
+    "model_a_propagations": 0,
+    "real_propagations": 0,
+    "r543_executed": false
+  },
+  "post_cutoff_numerical_verified": false,
+  "real_outward_direction_verified": false,
+  "strict_m3_closed": false,
+  "automation": "PAUSED"
+}

@@ -7144,3 +7144,21 @@ unavailable evidence and no retry. A validated inward result is a
 scientific observation, not grounds to alter the fixed interval.
 Do not claim continuous clearance, escape, burn or mission
 qualification or re-open prior studies.
+
+## R5.42 prepare the post-cutoff study and audit (2026-11-14)
+
+[ADR0189](../../../docs/adr/0189-prepare-post-cutoff-lunar-coast.md)
+records the private state binder, study and independent saved-data
+audit. Both adaptive profiles reach 600 s on artificial sources and
+the synthetic native histories exercise all 5,412 guard reads. An
+outward case and an inward case each pass 39 trajectory comparisons,
+52 adaptive observations, 26 native telemetry rows, 52 direction
+rows and four net signs. Their direction verdicts differ even though
+their numerical checks pass. The stdlib-only subprocess independently
+replays saved synthetic evidence, rejects corruption, and checks
+precise signs at boundary cases. Telemetry failure, receipts, caps and
+late finalization have focused tests.
+
+All 52 focused tests pass; guarded regression: 6,141 passed, 494 skipped. Ruff,
+strict OpenSpec and immutable input/source checks pass. No new
+SPICE access, real force or record evaluations, or R5.43 invocation.

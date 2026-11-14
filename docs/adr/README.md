@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0189 — Prepare the post-cutoff model B study and audit](0189-prepare-post-cutoff-lunar-coast.md): R5.42 artificial outward and inward cases pass the independent audit with distinct direction outcomes. 52 focused tests and guarded regression pass. R5.43 remains unexecuted.
 - [0188 — Independently check the coast after lunar engine cutoff](0188-design-post-cutoff-lunar-coast.md): R5.41 fixes the 0079/0098 nominal cutoff, 600 s B-only coast, 39 numerical comparisons and separate 52-node outward check. Metadata verified; preparation and live verification pending.
 - [0187 — The 600 s model B coast passes numerical checks](0187-longer-model-b-coast-passes.md): R5.40 real B-only study and independent audit pass 67 comparisons, 52 observations and 26 native telemetry rows. Endpoint difference 0.0716 mm and 2.40e-8 m/s; unpowered coast only.
 - [0186 — Prepare the independent 600 s model B check](0186-prepare-longer-model-b-coast.md): R5.39 synthetic study and independent offline audit pass 67 comparisons, 52 observations, 26 native telemetry rows; 24 focused and 6,089 guarded regression tests pass.

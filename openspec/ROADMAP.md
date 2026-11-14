@@ -340,8 +340,12 @@ on the parking coast. Post-burn departure and strict M3 remain open.
 R5.41: use the exact simulated nominal cutoff from 0079/0098 for a
 600 s model B restart. Separate same-start numerical agreement from
 sampled outward direction. Frozen inputs and coverage metadata
-checked; preparation R5.42 and separately authorized R5.43 remain
-open. No burn replay, escape or full-force mission claim.
+checked. No burn replay, escape or full-force mission claim.
+[ADR0189](../docs/adr/0189-prepare-post-cutoff-lunar-coast.md) completes
+R5.42: both artificial cases pass the same-start integration and audit
+gates; outward and inward direction remain distinct. 52 focused tests
+and 6,141 guarded regression tests pass (494 skipped).
+R5.43 remains unexecuted and requires separate authorization.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 
