@@ -1,0 +1,74 @@
+{
+  "stage": "R5.47",
+  "contract": "ADR0193",
+  "preparation_complete": true,
+  "date": "2026-11-14",
+  "base_revision": "72e5b989742f387531d2e1da853a14ed481945aa",
+  "design_sha256": "c8a9f67541b25c68b6bc0f3768b622d64b5229bcefaa0087f3f95cdef84da6ea",
+  "tested_source_sha256": {
+    "docs/adr/experiments/0194-extension-audit.py": "73d27292aa0a1e5443c58e07ea89a87587d61cc85069d3b047b764283596bcfd",
+    "docs/adr/experiments/0194-extension-inputs.py": "83c2d3761cb4ec64ca96a6a6c8cd618a36765989de436c3858f5593a9073bb6b",
+    "docs/adr/experiments/0194-extension-launch.py": "1c4667185bd66ea5150cd7dceecd4757c63cc7441160b0f683edff53a350114e",
+    "docs/adr/experiments/0194-extension-study.py": "1c3aecfee2d58eece35b108b954b89f36f11e69687da6ed56fcf7fc8641da677",
+    "tests/test_lunar_extension.py": "69edc9d788ac74c6037fbd2c27dd3b2566089b3ffcc6f415372eb0531bf46374",
+    "tests/test_extension_launch.py": "b9a0b83d8f588447b2f8c2871dbea0660b7b27c31ab2f023008c5bdf216309db",
+    "docs/adr/experiments/0189/pytest-offline-guard.py.txt": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+  },
+  "fixtures": {
+    "positive": {
+      "numerical_status": "passed",
+      "marker_status": "marker-bracketed",
+      "coepoch_bracket_after_restart_s": [
+        30,
+        35
+      ],
+      "native_overlap_after_restart_s": [
+        31,
+        31.5
+      ],
+      "comparisons": 33,
+      "adaptive_observations": 36,
+      "native_telemetry": 22,
+      "common_direction_rows": 44,
+      "mesh_direction_rows": 152,
+      "native_guard_reads": 462
+    },
+    "negative": {
+      "numerical_status": "passed",
+      "marker_status": "marker-not-established",
+      "cases": [
+        "outward marker not reached by inward fixture",
+        "exact equality at a retained sample"
+      ]
+    },
+    "independent_stdlib_only": true
+  },
+  "focused": {
+    "passed": 21,
+    "log_sha256": "a35dd656810f235ab614e72d3ec418be64a52bfdcae6272623afd6c2c46eb187"
+  },
+  "guarded_regression": {
+    "passed": 6186,
+    "skipped": 494,
+    "log_sha256": "cd3b6960b0eb049866fc14ec26dc6c09d651bbd95dcf7801995d3f39f9e1bf40",
+    "skip_log_sha256": "200a2d159d591f934b1db9037b066fa61017072f6c41d8d548661e57d085356b"
+  },
+  "checks": {
+    "ruff": "passed",
+    "strict_openspec": "passed",
+    "checkout_frozen": true
+  },
+  "real_work": {
+    "spice_calls": 0,
+    "kernel_loads": 0,
+    "force_or_record_evaluations": 0,
+    "spacecraft_propagations": 0,
+    "r548_attempts": 0
+  },
+  "verification_limits": {
+    "real_marker_status": "unavailable",
+    "mission_accuracy_verified": false,
+    "continuous_safety_verified": false,
+    "strict_m3_closed": false
+  }
+}

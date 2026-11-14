@@ -7242,3 +7242,19 @@ study and 10 s audit are separately capped. R5.47 prepares
 on artificial data only; R5.48 still requires separate live
 authorization. No event interpolation, escaped-body claim,
 force switch or actual mission boundary change.
+
+## R5.47 prepare the prospective lunar range extension (2026-11-14)
+
+[ADR0194](../../../docs/adr/0194-prepare-lunar-range-extension.md) records the fixed restart binding, private
+study, independent stdlib audit and watchdog/receipt entry points.
+Artificial cases verify all 33 comparisons, 36 adaptive
+observations, 22 native telemetry rows, 44 coepoch and 152 mesh
+directions. The positive fixture brackets the marker; inward
+and exact-equality fixtures retain a negative marker verdict
+with valid numerical checks. Cap and malformed evidence paths
+remain unavailable.
+
+21 focused and guarded regression (6,186 passed, 494 skipped) pass.
+Ruff, strict OpenSpec and frozen hashes pass. No real source
+force or record evaluation, query or propagation occurred.
+R5.48 still requires separate live authorization.

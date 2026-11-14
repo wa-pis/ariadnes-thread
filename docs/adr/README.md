@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0194 — Prepare the short lunar range extension](0194-prepare-lunar-range-extension.md): R5.47 verifies the fixed-grid study and independent audit on artificial outward, inward and exact-equality cases. R5.48 awaits authorization.
 - [0193 — Design a 50 s lunar range extension](0193-design-lunar-range-extension.md): R5.46 fixes a prospective 3,474.8 km marker, same-start model B restart and separate audit. No new propagation; R5.47 preparation is next.
 - [0192 — Bracket the retained 3,000 km lunar range event](0192-retained-lunar-range-event-bracketed.md): R5.45 independently verifies the retained 3,000 km marker. The native mesh brackets overlap at 209–209.5 s; all four common-node brackets span 200–250 s.
 - [0191 — Verify a lunar range event from saved states](0191-design-retained-lunar-range-event.md): R5.44 defines a retrospective 3,000 km marker, independent sign arithmetic and saved-state brackets. Worksheet and result pending.

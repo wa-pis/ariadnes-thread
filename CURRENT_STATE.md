@@ -4,7 +4,7 @@ Updated: 2026-11-14. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` was re-enabled 2026-11-14 for a two-hour window (5 min cadence).
+Automation `ariadna-m3` is paused at the R5.48 live authorization gate.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline
@@ -51,7 +51,7 @@ External2.704s/1.643s, finalizations/caps pass;5132 RHS/15417 states/424 trials,
 [ADR0165](docs/adr/0165-reproduce-lunar-source-rounding.md):R5.18 localizes 13.269 µm before SI /16.645 µm after; staged centre sum reproduces42/42 saved position components. No native work/replay.
 [ADR0181](docs/adr/0181-split-moon-coast-recheck-passes.md): R5.34 passes at `27dfc6d`: both real 300 s A profiles, 21 comparisons and 28 observations pass independent audit. Worst lunar overall error: 50.60% of limit. R5.17 remains failed.
 [ADR0187](docs/adr/0187-longer-model-b-coast-passes.md): R5.40 passes once on real ephemerides at `fbf0b60` (600 s B only; 67 comparisons, 52 observations, 26 native telemetry rows verified offline). Endpoint RK4/DOP853 difference: 0.0716 mm and 2.40e-8 m/s. Parking coast only. [ADR0188](docs/adr/0188-design-post-cutoff-lunar-coast.md) fixes the actual simulated cutoff for a separate B-only test. [ADR0189](docs/adr/0189-prepare-post-cutoff-lunar-coast.md): R5.42 synthetic study/audit pass both direction cases (52 focused; 6141 guarded pass, 494 skips).
-[ADR0190](docs/adr/0190-post-cutoff-coast-outbound-at-samples.md): R5.43 real B study and offline audit pass (9.053 s and 5.725 s). Exact simulated cutoff, 600 s, 39 comparisons; +652.827 km lunar range and all 52 radial signs positive. [ADR0191](docs/adr/0191-design-retained-lunar-range-event.md) fixed the retrospective marker. [ADR0192](docs/adr/0192-retained-lunar-range-event-bracketed.md): R5.45 brackets 3,000 km at +209–209.5 s on the RK4 meshes; both engines bracket it within +200–250 s. [ADR0193](docs/adr/0193-design-lunar-range-extension.md) fixes a 50 s extension toward 3,474.8 km. Next: R5.47 synthetic preparation, then separate live authorization.
+[ADR0190](docs/adr/0190-post-cutoff-coast-outbound-at-samples.md): R5.43 real B study and offline audit pass (9.053 s and 5.725 s). Exact simulated cutoff, 600 s, 39 comparisons; +652.827 km lunar range and all 52 radial signs positive. [ADR0191](docs/adr/0191-design-retained-lunar-range-event.md) fixed the retrospective marker. [ADR0192](docs/adr/0192-retained-lunar-range-event-bracketed.md): R5.45 brackets 3,000 km at +209–209.5 s on the RK4 meshes; both engines bracket it within +200–250 s. [ADR0193](docs/adr/0193-design-lunar-range-extension.md) fixes a 50 s extension toward 3,474.8 km. [ADR0194](docs/adr/0194-prepare-lunar-range-extension.md): synthetic preparation passes (21 focused; 6,186 passed, 494 skipped). Next: separately authorize one R5.48 live study and offline audit.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.
