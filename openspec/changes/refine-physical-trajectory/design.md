@@ -7258,3 +7258,20 @@ remain unavailable.
 Ruff, strict OpenSpec and frozen hashes pass. No real source
 force or record evaluation, query or propagation occurred.
 R5.48 still requires separate live authorization.
+
+## R5.48 real ephemeris lunar range result (2026-11-14)
+
+[ADR0195](../../../docs/adr/0195-prospective-lunar-range-marker-bracketed.md) records the once-only
+real B study from the exact saved R5.43 tighter RK4 endpoint and an
+independent saved-data audit. The 50 s study and audit finalized in
+5.71041 s and 1.59324 s within their 60 s and 10 s budgets, with verified
+bound receipts and the original sources, state, forces and gates.
+Two native arcs and two adaptive solves used 2,506 explicit state
+reads, including 462 native guard reads; the audit used zero.
+All 33 comparisons, 36 adaptive observations, 22 telemetry rows and
+196 direction rows passed. Both numerical and marker outcomes are
+available: `passed` and `marker-bracketed`. The four common brackets
+are +30–35 s from restart and the two RK4 meshes give +30–31 s and
++30.5–31 s, with +30.5–31 s overlap. This verifies the sampled bracket
+under model B. No crossing time was interpolated and no escape,
+mission handoff, continuous safety or strict M3 claim follows.

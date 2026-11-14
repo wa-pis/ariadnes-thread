@@ -366,7 +366,7 @@ mesh brackets overlap at 209–209.5 s. The once-only 10 s offline
 audit passes. Farther-range evidence and actual burn interfaces
 remain unverified.
 
-[ADR0193](../docs/adr/0193-design-lunar-range-extension.md) completes R5.46. Extend model B by a fixed 50 s from the archived tighter RK4 endpoint, with independent engines and a prospective 3,474.8 km diagnostic marker. [ADR0194](../docs/adr/0194-prepare-lunar-range-extension.md) completes R5.47: 21 focused and guarded 6,186 passed, 494 skipped; synthetic study and offline audit pass. R5.48 remains unexecuted and requires separate live authorization.
+[ADR0193](../docs/adr/0193-design-lunar-range-extension.md) completes R5.46. Extend model B by a fixed 50 s from the archived tighter RK4 endpoint, with independent engines and a prospective 3,474.8 km diagnostic marker. [ADR0194](../docs/adr/0194-prepare-lunar-range-extension.md) completes R5.47: 21 focused and guarded 6,186 passed, 494 skipped; synthetic study and offline audit pass. [ADR0195](../docs/adr/0195-prospective-lunar-range-marker-bracketed.md) completes R5.48: all 33 comparisons and the independent audit pass once on real ephemerides. The four common brackets are +30–35 s; the two RK4 meshes overlap at +30.5–31 s after restart. This is a sampled model B marker, not a departure handoff or strict M3 verification.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

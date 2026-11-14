@@ -1,0 +1,281 @@
+{
+  "stage": "R5.48",
+  "contract": "ADR0193",
+  "measured_revision": "b5ee65d1d1bba162790d52ec79fd9cb922438c9b",
+  "preparation_sha256": "8036e759a191124c0107fe2774c9647d9b799945e5972dc5b98933f6ce967a75",
+  "design_sha256": "c8a9f67541b25c68b6bc0f3768b622d64b5229bcefaa0087f3f95cdef84da6ea",
+  "candidate": "d0001-t0035",
+  "study_status": "passed",
+  "audit_status": "passed",
+  "numerical_status": "passed",
+  "marker_status": "marker-bracketed",
+  "restart": {
+    "epoch_tdb_s": 978998915.9635216,
+    "epoch_binary64_hex": "0x1.d2d2b41fb54adp+29",
+    "state_si": [
+      -47231822604.449776,
+      128439755768.88434,
+      55656732716.610825,
+      -30724.05836380021,
+      -9834.208732510158,
+      -5360.86202012339
+    ],
+    "state_binary64_hex": [
+      "-0x1.5fe78d618e649p+35",
+      "0x1.de79b23f8e264p+36",
+      "0x1.9eaccb05938bep+35",
+      "-0x1.e0103bc3b854bp+14",
+      "-0x1.3351ab7bf345fp+13",
+      "-0x1.4f0dcad59ce74p+12"
+    ],
+    "mass_kg": 1351.7475727997967,
+    "mass_binary64_hex": "0x1.51efd83b95a06p+10",
+    "moon_state_si": [
+      -47228860259.74755,
+      128441468992.35202,
+      55656395484.36316,
+      -29580.26039239458,
+      -9211.723379017854,
+      -4051.1833692103537
+    ],
+    "radius_m": 3438654.733159515,
+    "radial_speed_m_s": 1167.0594500326567,
+    "archived_state_minus_restart_signed_si": {
+      "native_normal": [
+        7.62939453125e-05,
+        7.62939453125e-05,
+        9.918212890625e-05,
+        -1.1204974725842476e-09,
+        3.145032678730786e-09,
+        -2.737579052336514e-09
+      ],
+      "native_tighter": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dop853_normal": [
+        5.340576171875e-05,
+        0.000213623046875,
+        -7.62939453125e-06,
+        1.5108525985851884e-08,
+        1.8662831280380487e-09,
+        -8.185452315956354e-11
+      ],
+      "dop853_tighter": [
+        5.340576171875e-05,
+        0.000213623046875,
+        -7.62939453125e-06,
+        1.4348188415169716e-08,
+        2.042725100181997e-09,
+        -1.064108801074326e-10
+      ]
+    }
+  },
+  "stop_tdb_s": 978998965.9635216,
+  "model": "r5-ssb-sun-moon-earth-point-v1",
+  "coepoch_offsets_s": [
+    0,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50
+  ],
+  "phase_results": {
+    "study": {
+      "elapsed_s": 5.71040966687724,
+      "child_elapsed_s": 5.468693709000945,
+      "budget_s": 60,
+      "returncode": 0,
+      "finalization_gate": "passed"
+    },
+    "audit": {
+      "elapsed_s": 1.5932364170439541,
+      "child_elapsed_s": 1.502724792342633,
+      "budget_s": 10,
+      "returncode": 0,
+      "finalization_gate": "passed"
+    }
+  },
+  "counts": {
+    "native_arcs": 2,
+    "solves": 2,
+    "initializations": 1,
+    "metadata": 30,
+    "states": 2044,
+    "native_guard_reads": 462,
+    "rhs": 500,
+    "trials": 36,
+    "explicit_state_attempts": 2506,
+    "comparisons": 33,
+    "adaptive_observations": 36,
+    "native_telemetry": 22,
+    "common_direction_rows": 44,
+    "mesh_direction_rows": 152,
+    "audit_native_calls": 0,
+    "audit_kernel_loads": 0,
+    "audit_scientific_imports": 0,
+    "audit_spacecraft_propagations": 0
+  },
+  "marker": {
+    "radius_m": 3474800,
+    "grid_brackets_from_restart_s": {
+      "rk4_normal": [
+        30.0,
+        35.0
+      ],
+      "rk4_tighter": [
+        30.0,
+        35.0
+      ],
+      "dop853_normal": [
+        30.0,
+        35.0
+      ],
+      "dop853_tighter": [
+        30.0,
+        35.0
+      ],
+      "mesh_normal": [
+        30.0,
+        31.0
+      ],
+      "mesh_tighter": [
+        30.5,
+        31.0
+      ]
+    },
+    "common_bracket_tdb_s": [
+      978998945.9635216,
+      978998950.9635216
+    ],
+    "native_overlap_tdb_s": [
+      978998946.4635216,
+      978998946.9635216
+    ],
+    "common_bracket_from_restart_s": [
+      30,
+      35
+    ],
+    "native_overlap_from_restart_s": [
+      30.5,
+      31
+    ],
+    "first_radius_m": 3438654.733159515,
+    "final_coepoch_radius_range_m": [
+      3497227.5707487883,
+      3497227.570772641
+    ],
+    "all_196_radial_signs_positive": true,
+    "radial_speed_range_m_s": [
+      1167.0594500326567,
+      1175.7234939526472
+    ]
+  },
+  "comparison_summary": {
+    "native_step": {
+      "max_position_norm_m": 3.814697265625e-05,
+      "max_velocity_norm_m_s": 9.035178728329523e-11,
+      "endpoint": {
+        "vector": [
+          0.0,
+          3.0517578125e-05,
+          2.288818359375e-05,
+          -1.0913936421275139e-11,
+          -3.456079866737127e-11,
+          -8.276401786133647e-11
+        ],
+        "position_norm_m": 3.814697265625e-05,
+        "velocity_norm_m_s": 9.035178728329523e-11
+      }
+    },
+    "native_tighter": {
+      "max_position_norm_m": 6.151014517439689e-05,
+      "max_velocity_norm_m_s": 2.0644528059798847e-10,
+      "endpoint": {
+        "vector": [
+          7.62939453125e-06,
+          -6.103515625e-05,
+          0.0,
+          -1.709850039333105e-10,
+          9.276845958083868e-11,
+          6.912159733474255e-11
+        ],
+        "position_norm_m": 6.151014517439689e-05,
+        "velocity_norm_m_s": 2.0644528059798847e-10
+      }
+    },
+    "oracle_step": {
+      "max_position_norm_m": 0.0,
+      "max_velocity_norm_m_s": 1.224309596469513e-10,
+      "endpoint": {
+        "vector": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1.8189894035458565e-12,
+          4.9112713895738125e-11
+        ],
+        "position_norm_m": 0.0,
+        "velocity_norm_m_s": 4.9146387340829446e-11
+      }
+    }
+  },
+  "verified_scope": "same-model sampled numerical agreement and diagnostic range bracket",
+  "files": {
+    "study.json.gz": {
+      "bytes": 3020615,
+      "sha256": "6390d71d4f82c8b65816a8b5c0a1a28399f345d04c89c1d8c0252135d7e8057e",
+      "original_bytes": 15037972,
+      "original_sha256": "c0325f50e89f4ce94a83840ed2c024e84e860e43bbca198a77838146c461a193"
+    },
+    "study.parent-attempt.json": {
+      "bytes": 181,
+      "sha256": "9ce60ba7798032dd204f2e25db00d658beb03146aa44b4ea3ab5f80ca65ca22c"
+    },
+    "study.attempt.json": {
+      "bytes": 211,
+      "sha256": "57f5022954f0b8d40cc4003afb3882e7df6544f667aa7ee70479ebbfb9a9fceb"
+    },
+    "study.receipt.json": {
+      "bytes": 315,
+      "sha256": "14eb666eb2daf198561e8d6704dfb9df815f19c02ab2e2bc459d3de94d4c2910"
+    },
+    "study.parent-receipt.json": {
+      "bytes": 669,
+      "sha256": "788dacb116cdbbb4ce80562370465a5ca2b515d818213a5280524e096d7613e9"
+    },
+    "audit.json.gz": {
+      "bytes": 36300,
+      "sha256": "1eedfbdb857622024ccf1a9129fe3173843a42e827340c68e7176327b4d57a6e",
+      "original_bytes": 123871,
+      "original_sha256": "45a53e04bfdc118443893d0bce1f75dd13292cf19ce3c001cf8c8e0b3a62b6ec"
+    },
+    "audit.parent-attempt.json": {
+      "bytes": 181,
+      "sha256": "a868d231162fe6c85cdc0a27b8f2fcfb767014b3bc7b0d015ecae32f8e1d17c6"
+    },
+    "audit.attempt.json": {
+      "bytes": 211,
+      "sha256": "1bdb653047128e5e2b3f4319ab53a49691d48f9fe57d4839d4189aeef2853ec9"
+    },
+    "audit.receipt.json": {
+      "bytes": 315,
+      "sha256": "19e0e50b7157212bc1d6eefc4ef8331fea8d0506d0dd8f6543280d70683ecf13"
+    },
+    "audit.parent-receipt.json": {
+      "bytes": 671,
+      "sha256": "bec62dd2ecf7fdcd4aa76eb51f94a506849627f0c8e07e92e238c7e3b83d1ecf"
+    }
+  }
+}
