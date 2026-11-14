@@ -51,7 +51,7 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 External2.704s/1.643s, finalizations/caps pass;5132 RHS/15417 states/424 trials, no native propagation.6182 tests/Ruff reused on unchanged bytes.
 [ADR0165](docs/adr/0165-reproduce-lunar-source-rounding.md):R5.18 localizes 13.269 µm before SI /16.645 µm after; staged centre sum reproduces42/42 saved position components. No native work/replay.
 [ADR0181](docs/adr/0181-split-moon-coast-recheck-passes.md): R5.34 passes at `27dfc6d`: both real 300 s A profiles, 21 comparisons and 28 observations pass independent audit. Worst lunar overall error: 50.60% of limit. R5.17 remains failed.
-[ADR0184](docs/adr/0184-earth-gravity-sensitivity-passes.md): R5.37 passes 300 s. [ADR0186](docs/adr/0186-prepare-longer-model-b-coast.md): R5.39 synthetic 600 s study and audit pass (24 focused, 6089 guarded regression pass; 494 skips). Next: separately authorized R5.40. Automation PAUSED.
+[ADR0187](docs/adr/0187-longer-model-b-coast-passes.md): R5.40 passes once on real ephemerides at `fbf0b60` (600 s B only; 67 comparisons, 52 observations, 26 native telemetry rows verified offline). Endpoint RK4/DOP853 difference: 0.0716 mm and 2.40e-8 m/s. This is an unpowered parking coast; no A replay, post-burn or M3 closure. Next experiment needs a separate contract. Automation PAUSED.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.

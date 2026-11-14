@@ -64,8 +64,9 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
-- [0186 — Prepare the independent 600 s model B check](0186-prepare-longer-model-b-coast.md): R5.39 synthetic study and independent offline audit pass 67 comparisons, 52 observations, 26 native telemetry rows; 24 focused and 6,089 guarded regression tests pass. R5.40 remains pending.
-- [0185 — Independently check a 600 s model B coast](0185-design-longer-model-b-coast.md): R5.38 design complete; 13 same-model nodes, 300 s archive control and independent offline audit. Preparation and real execution pending.
+- [0187 — The 600 s model B coast passes numerical checks](0187-longer-model-b-coast-passes.md): R5.40 real B-only study and independent audit pass 67 comparisons, 52 observations and 26 native telemetry rows. Endpoint difference 0.0716 mm and 2.40e-8 m/s; unpowered coast only.
+- [0186 — Prepare the independent 600 s model B check](0186-prepare-longer-model-b-coast.md): R5.39 synthetic study and independent offline audit pass 67 comparisons, 52 observations, 26 native telemetry rows; 24 focused and 6,089 guarded regression tests pass.
+- [0185 — Independently check a 600 s model B coast](0185-design-longer-model-b-coast.md): R5.38 design complete; 13 same-model nodes, 300 s archive control and independent offline audit.
 - [0184 — Earth-gravity sensitivity passes on the short coast](0184-earth-gravity-sensitivity-passes.md): R5.37 passes once with two B engines and a separate offline audit. Endpoint effect: 110.394 m and 0.733203 m/s, conditional on retained A.
 - [0183 — Prepare the Earth-gravity comparison](0183-prepare-earth-gravity-comparison.md): R5.36 passes the synthetic B study and independent audit; R5.37 remains unexecuted.
 - [0182 — Design the 300 s Earth-gravity comparison](0182-design-earth-gravity-sensitivity.md): R5.35 freezes a B-only follow-up with saved A and the original numerical gates. Offline preparation and separately authorized execution remain pending.

@@ -324,8 +324,17 @@ This is an unpowered parking coast; post-burn departure remains open.
 R5.39. Two real DOP853 solves on artificial sources and two synthetic
 native profiles pass, with 67 trajectory comparisons, 52 observations
 and 26 native telemetry checks reproduced offline. 24 focused and 6,089
-guarded regression tests passed (494 skipped). R5.40 requires separate
-execution authorization. No new SPICE queries or real propagation.
+guarded regression tests passed (494 skipped). No new SPICE queries or
+real propagation in preparation.
+
+[ADR0187](../docs/adr/0187-longer-model-b-coast-passes.md) completes
+R5.40: one real-ephemeris 600 s B-only study and one offline audit
+passed. Both profiles per engine reached all 13 nodes. All 67
+comparisons (28 saved B prefix), 52 source/force observations and
+26 native telemetry rows passed. The 600 s RK4/DOP853 tighter
+profiles differ by 0.0716 mm and 2.40e-8 m/s. No model A run or
+new B-minus-A estimate. This only checks sampled numerical agreement
+on the parking coast. Post-burn departure and strict M3 remain open.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

@@ -7003,3 +7003,24 @@ membership, counters and evidence cannot pass.
 Ruff, strict OpenSpec and source/input digests pass. No real
 SPICE access, archived force/polynomial evaluation or R5.40
 execution; real accuracy, convergence and timing remain open.
+
+## R5.40 real ephemeris model B result (2026-11-14)
+
+[ADR0187](../../../docs/adr/0187-longer-model-b-coast-passes.md) records
+the once-only study and independent offline audit on the fixed
+parking state. Both RK4 and both DOP853 profiles reached 600 s. All
+67 comparisons passed (39 across 13 nodes and 28 against the archived
+300 s B prefix). On the extension, the tighter RK4 and DOP853
+profiles differ by at most 7.23788e-5 m and 2.39952e-8 m/s, inside
+the unchanged 0.01 m and 1e-5 m/s gates. At 600 s their difference is
+7.15701e-5 m and 2.39952e-8 m/s.
+
+The audit reconstructed all 52 force/source observations and 26
+native telemetry rows using only saved data; all 832 sampled force
+gates passed. The adaptive integrations recorded 5,852 RHS evaluations,
+481 trials and 23,460 explicit state requests. The native guards made
+5,412 source-state reads, including preflight calls. The before/after identities
+matched, all four receipts passed, and the study/audit took 7.7121 s
+and 2.9908 s against 60 s and 10 s budgets. No A propagation or new
+B-minus-A comparison. No historical requalification or full M3
+acceptance; the result applies to the sampled unpowered coast.
