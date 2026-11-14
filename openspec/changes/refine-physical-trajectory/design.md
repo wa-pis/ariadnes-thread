@@ -6666,3 +6666,158 @@ motion. This qualifies numerical agreement at the specified nodes
 and samples, conditional on the saved reference. Neither historical
 failure is requalified; Earth-force sensitivity, continuous safety
 and strict M3 remain open. No replay and no change to automation.
+
+## R5.35 design the Earth-gravity comparison (2026-11-14)
+
+[ADR0182](../../../docs/adr/0182-design-earth-gravity-sensitivity.md)
+specifies a separate B-only follow-up under the restricted R5 physics.
+Reuse A without reintegration: A RK4 h1/h0.5 comes from the completed
+native A profiles of failed R5.3, A DOP853 normal/tighter from the
+finalized R5.34 report. Bind both archives and the R5.34 audit/receipt
+chain to the input manifest. Recheck exact starts, models, constants,
+epochs, nodes, configuration and recorded gates. Do not substitute
+R5.17's DOP853 results or present the historical native A final
+identity as recovered.
+
+### Controlled models and execution order
+
+The frozen R1/0098 candidate d0001-t0035 starts at TDB
+978995455.2304223 s since J2000 with the unchanged six-state. Both
+models coast for 300 s from the same state with zero initial
+corrections where applicable, no thrust and no terminal retargeting.
+Compare only the seven exact coepochs t0 + 50*j s (j = 0..6).
+Use SI, inertial SSB/J2000, moving geometric (NONE) ephemerides,
+the same ordered 13 kernels and ADR0137's GMs and exclusion radii.
+A includes direct Sun/Moon point masses. B adds only
+`mu_E*(r_E-r)/norm(r_E-r)^3` with mu_E = 398600435468295.9 m³/s².
+No differential-origin term, change to the bodies' tracks, additional
+forces or changed mass treatment.
+
+Use ADR0140's private native B construction and RK4 propagation;
+enforce the new two-arc cap at the simulator boundary. B's native
+order is h1 then h0.5, with exact 301/601 state and per-source force
+rows. Keep a separate observer for the existing native guard reads
+so every preflight and saved-state body return is retained, without
+additional node reads. Capture raw histories before any post-return
+checks. Verify selected force inventory, native GM assignment
+(relative 1e-15), origin, configured geometric ephemerides, exact
+initial state and grids, and exclusion guards for all saved states.
+Check native step agreement before DOP853 begins.
+
+Run B DOP853 normal then tighter using the unchanged ADR0137
+correction-coordinate profiles and ADR0179 split Moon assembly.
+Normal must pass available local gates before tighter begins. RHS
+and seven shared output nodes keep the four live state routes/order
+Sun/SSB, Moon/SSB, Earth/SSB, Moon/Earth at compensated binary64 hi.
+Keep all Sun/Moon math unchanged. Reuse the already guarded Earth
+geometry: the original rounded Earth SI state, signed velocity
+rephasing for the low epoch word and the compensated relative sum.
+Use the same binary64 point-mass field evaluator for Earth and sum
+Sun, Moon, Earth componentwise. Audit the signed term and the total.
+Do not reuse A's adaptive callbacks as B inputs or refit solver settings.
+
+### Numerical agreement and effect
+
+For B's seven nodes, keep RK4 h1 vs. h0.5 and RK4 h0.5 vs.
+DOP853 tighter at 0.01 m / 1e-5 m/s, and DOP853 normal vs. tighter
+at 0.001 m / 1e-6 m/s. Only after those gates pass, use each
+engine's tighter B and the corresponding archived tighter A at the
+same node. Save signed `delta_N = B_RK4 - A_RK4` and
+`delta_D = B_DOP853 - A_DOP853`, and `delta_D - delta_N`, each with
+separate Euclidean position and velocity norms. Subtract the exact
+saved Cartesian binary64 operands, round the first differences as
+in ADR0143, then subtract those rounded differences and apply the
+existing binary64 norm gate. In particular, the difference of two
+norms is not the comparison. Require zero initial model differences
+and a discrepancy no greater than 0.02 m and 2e-5 m/s at each
+node. Independently replay the staged subtractions, check component
+rounding, norms (four ULP arithmetic cross-check) and exact Boolean
+gate decisions; the cross-check never expands a tolerance.
+
+Report both estimates and their disagreement at all nodes, with the
+300 s endpoint as the principal result. For position and velocity
+separately, label the effect above the comparison scale only if
+both effect norms exceed the corresponding 0.02 m or 2e-5 m/s scale.
+A small or zero result is valid; the label is descriptive and is
+not an integration error bound or claim of statistical significance.
+The effect includes feedback through the changing Sun/Moon geometry.
+An Earth field evaluated on the saved A path alone is not this result.
+
+### Sampled forces and independent audit
+
+For each B DOP853 profile select seven outputs and RHS ordinals
+0–6 (at least one nonzero-lo RHS); keep duplicate epochs as distinct
+observations and preserve ADR0179's parity, assembly, increment and
+exterior checks. The same three hash-bound Type 2 records cover the
+arc; verify metadata and evaluated epoch coverage. Reuse evaluations
+at hi and exact T within each observation. For Earth use the already
+required Earth/SSB source checks and extend the Sun-style d0–d3
+geometry telescope to Earth's force, using the frozen Earth GM.
+Recompute Sun, Moon and Earth fields and total B at 80/100 Decimal
+digits. Apply unchanged relative 1e-60 precision/stable
+classification and both returned-geometry and overall gates
+`max(1e-15 m/s²,1e-11*S)` (S is the relevant field norm, or the
+constituent norm sum for B). Cover all 28 observations and four
+state-route checks at each; no backfill or allowed discrepancy
+deduction.
+
+Separately at each of the 14 native B output rows require equality
+with the respective raw state and dependent-variable histories,
+and use the three captured native guard body states at that epoch
+to rebuild the fields and their sum independently at 80/100 digits
+under ADR0143. Check the native telemetry envelope above for each
+source and total and the existing native total/source consistency
+at 1e-12 m/s². Replay guards on all retained native state/return
+pairs. This checks actual native telemetry on captured operands,
+not DOP853's split geometry as a replacement or unsaved RK stages.
+
+### Limits, provenance and sequencing
+
+R5.36 prepares and checks the private runner and stdlib-only audit
+offline. Freeze tested hashes; use synthetic trajectories, native
+stubs and archived metadata only. Verify same-input Sun/Moon parity
+with A, independent Earth field/sign and inertial-origin checks,
+zero-Earth-term equality on a synthetic fixture, observer
+noninterference, opposing vectors with equal norms, exact/over-gate
+cases, preserved inputs, missing guard rows, bad identity, partial
+and exclusive evidence, and caps/deadlines. Run focused and full
+no-SPICE-guarded pytest, Ruff, strict OpenSpec. No reference state
+queries, retained force evaluation or real arc in preparation.
+
+R5.37 takes separate authorization after preparation. Exactly one
+fresh B study has an inclusive 60 s ceiling through finalization,
+followed, when there is a saved report, by one independent 10 s
+saved-data audit. Study ceilings: two B native arcs, two B DOP853
+solves, 10,000 DOP853 RHS and 1,000 trials; 4*(N_RHS+7) <= 40,028
+explicit DOP853 state requests (28 shared output calls); separate
+native guard reads <= 2,712 = 3*(1+301+1+601), including both
+initial preflight guards. Their sum is at most 42,740 explicit state
+requests attempted; underlying native simulator reads are not
+counted by these ceilings. One pool setup, at most two 15-call
+inventories; no A solves, new GM lookups, new record acquisitions or
+optimization. Verify reuse of guard returns, never requery for audit.
+Both phases bound B DOP853 arithmetic at 30,042 binary64 field
+evaluations and 10,014 totals; 28 sampled observations, 112 parity
+checks, 84 source-force rows, 672 Decimal field evaluations,
+28 sampled B totals and 168 record evaluations. The 14 separate
+native telemetry rows allow 84 additional Decimal field evaluations
+(14*3*2), reusing their sums. Preserve the extra native counts
+separately from the DOP853 budget.
+
+Prepare on the pinned Conda environment. In a real study require clean
+synchronized dev, exactly bound tested inputs, original ordered
+kernel identities, and equal before/after current runtime identities.
+Cross-bind A and B on physics, environment, kernels and common runtime
+components without requiring later revision/source lists to equal the
+historical lists. The audit independently rebuilds the native histories'
+shape, telemetry checks and per-state guard results, all saved B DOP853
+RHS/output arithmetic, sampled checks and all 28 comparison rows
+(21 for B and seven for the signed effects). It uses only saved data
+and vetted stdlib replay, with no candidate force/solver imports,
+native queries or solves. Retain exclusive attempt markers and child
+and parent receipts for both phases, ordered counters, operands and
+first failure. An integrity, scientific or timing failure leaves
+later checks unavailable and preserves partial evidence; no retry
+or budget/tolerance/input change. A pass is conditional on the archived
+A reference, and does not verify unsampled source fidelity, continuous
+safety, the full transfer, R5.3/R5.17, or strict M3. Automation stays paused.

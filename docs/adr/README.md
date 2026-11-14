@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0182 — Design the 300 s Earth-gravity comparison](0182-design-earth-gravity-sensitivity.md): R5.35 freezes a B-only follow-up with saved A and the original numerical gates. Offline preparation and separately authorized execution remain pending.
 - [0181 — Split Moon coast recheck passes](0181-split-moon-coast-recheck-passes.md): R5.34 passes two real 300 s model A solves, 21 trajectory comparisons and all 28 sampled observations; separate offline audit passes. Earth-force sensitivity and M3 remain open.
 - [0180 — Prepare the split Moon integration recheck](0180-prepare-split-moon-integration.md): R5.33 matches 28 archived Moon force results, verifies a synthetic study and independent audit, and leaves real R5.34 execution pending.
 - [0179 — Design the split Moon integration recheck](0179-design-split-moon-integration-recheck.md): R5.32 freezes the private split-position force path, offline preparation and a separately authorized A-only recheck. No execution.

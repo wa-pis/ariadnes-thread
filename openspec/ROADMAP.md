@@ -290,6 +290,14 @@ qualifies numerical agreement only at the given nodes and samples.
 R5.17 and R5.3 retain their failures; Earth-force sensitivity and
 strict M3 remain open. No replay; automation stays paused.
 
+[ADR0182](../docs/adr/0182-design-earth-gravity-sensitivity.md) completes
+R5.35 design: keep both saved model A engines, run only model B with
+Earth as the sole added acceleration, and independently compare signed
+B-minus-A vectors at the same seven epochs under the original gates.
+R5.36 offline preparation is next. R5.37 needs separate authorization.
+No SPICE, new forces or propagation in the design; no Earth sensitivity
+result yet. The native A reference remains conditional.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

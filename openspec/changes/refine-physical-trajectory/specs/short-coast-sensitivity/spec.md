@@ -386,3 +386,31 @@ This SHALL NOT reopen the consumed R5.17 attempt or modify its record.
 - **AND** the audit SHALL use an inclusive 10 s and no native or solver work, independently reconstruct every retained RHS and output without candidate imports, and rebuild the 21 trajectory comparisons and sampled checks; both phases SHALL cap sampled work at 28 observations, 112 state checks, 56 source-force rows, 448 Decimal fields, 28 A totals and 168 retained record evaluations
 - **AND** full success SHALL require the original exterior, source-parity, increment, assembly, 80/100-digit precision and force tolerances including both original force gates for Sun, Moon and A total, with additional Moon/Earth parity at 0.001 m and 1e-6 m/s and no source allowance; both processes SHALL retain exclusive finite evidence, final identity and finalized child and parent receipts
 - **AND** missing inputs, a failed gate, limit or incomplete finalization SHALL preserve partial evidence and unavailable work, without retry or widening any gate; even success SHALL leave historical failures, incomplete native provenance, Earth-force sensitivity, continuous safety and strict M3/mission acceptance unchanged
+
+
+### Requirement: Compare Earth gravity against the retained A coast
+
+R5.35–R5.37 SHALL define, prepare and separately run the B-only
+follow-up in ADR0182. The original R5.3 requirements and results
+SHALL remain unchanged.
+
+#### Scenario: Isolate the Earth acceleration on the same arc
+
+- **WHEN** verified R5.36 preparation and separate authorization permit R5.37
+- **THEN** the study SHALL bind the saved A native h1/h0.5 and R5.34 normal/tighter profiles, their available identities and R5.34 receipts, and SHALL reuse the frozen initial six-state, 300 s span, seven exact epochs, SI/SSB/J2000/NONE, body tracks, GMs and guards
+- **AND** it SHALL run B only, using native 1 s/0.5 s RK4 and the original normal/tighter DOP853 profiles, with only direct Earth gravity added to Sun/Moon and the R5.34 split Moon retained in DOP853; it SHALL neither propagate A nor infer B by applying a field to A's saved path
+- **AND** both B DOP853 profiles SHALL pass four-source parity, increment, assembly and exterior checks at the defined 28 observations and both unchanged force gates for Sun, Moon, Earth and their total at 80/100 Decimal digits; the independent audit SHALL also check retained native grids and guards, and actual native telemetry against 80/100-digit fields at all 14 native B output rows
+
+#### Scenario: Gate signed model differences after numerical convergence
+
+- **WHEN** B trajectories reach all seven coepochs and pass current and archived identity and source gates
+- **THEN** B native profile and tighter cross-engine agreements SHALL satisfy 0.01 m / 1e-5 m/s and B DOP853 profile agreement SHALL satisfy 0.001 m / 1e-6 m/s at every node
+- **AND** the study and audit SHALL independently verify both signed B-minus-A vectors and their staged vector discrepancy at each node with zero initial difference and a discrepancy no greater than 0.02 m / 2e-5 m/s
+- **AND** evidence SHALL report both estimates, their discrepancy, the 300 s endpoint and comparison scale without treating small or zero effect as failure or those scales as rigorous uncertainty bounds
+
+#### Scenario: Preserve bounded execution and conditional scope
+
+- **WHEN** the new study and separate saved-data audit execute
+- **THEN** the study SHALL have at most two native B arcs, two B DOP853 solves, 10,000 RHS, 1,000 trials, 40,028 explicit DOP853 state attempts and separate 2,712 native guard-read attempts within 60 s including finalization; native internal state reads SHALL be outside those counters
+- **AND** the separate audit SHALL complete within 10 s including finalization, with no native or solver work, independently recomputing all recorded B DOP853 RHS/output arithmetic, native retained-state guards and node telemetry, the sampled force/source and signed effect checks, and verifying immutable inputs and child/parent receipts
+- **AND** a missing prerequisite, failed gate, limit or missing receipt SHALL retain partial evidence and unavailable work without replay or threshold change; even a pass SHALL remain conditional on the archived native A histories with missing historical final identity, and SHALL NOT qualify continuous accuracy, safety, the full transfer or strict M3

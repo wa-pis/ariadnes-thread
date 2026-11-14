@@ -25,8 +25,7 @@ Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 [ADR0148](docs/adr/0148-short-coast-oracle-rhs-limit.md): one attempt at clean24154be;
 A native h1/h0.5 arcs complete, first A oracle hits10000 RHS/30021 body reads.
 Separate offline audit:partial/study_verified=false,0.07836870802566409s, zero native.
-No independent A agreement or Earth-force sensitivity result; final identity not reached.
-304 prior protected files preserved; production/environment/legacy unchanged, no replay.
+R5.3 final identity unavailable; 304 protected files preserved; no replay.
 [ADR0149](docs/adr/0149-oracle-time-precision-diagnosis.md): user-requested read-only diagnosis;
 119ns epoch grid/mixed time precision confirmed,7 scalar probes pass in0.03053s,
 zero scientific imports/body queries/integrations; actual rejection cause unproven.
@@ -51,7 +50,8 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 [ADR0164](docs/adr/0164-corrected-coast-force-gate-fails.md):R5.17 attempt consumed;both300s solves/21 trajectory comparisons pass, but Moon overall force gate fails at normal RHS6/local0.25s by8.8864%; audit partial/scientific_verified=false, final identity unavailable.
 External2.704s/1.643s, finalizations/caps pass;5132 RHS/15417 states/424 trials, no native propagation.6182 tests/Ruff reused on unchanged bytes.
 [ADR0165](docs/adr/0165-reproduce-lunar-source-rounding.md):R5.18 localizes 13.269 µm before SI /16.645 µm after; staged centre sum reproduces42/42 saved position components. No native work/replay.
-[ADR0181](docs/adr/0181-split-moon-coast-recheck-passes.md): R5.34 passes at `27dfc6d`: both real 300 s model A solves, 21 trajectory comparisons and all 28 sampled observations pass independent offline audit (3.528/1.402 s). Worst Moon overall error is 50.60% of limit. Scope: specified nodes/samples only; Earth-force sensitivity and M3 open, R5.17 remains failed, automation PAUSED.
+[ADR0181](docs/adr/0181-split-moon-coast-recheck-passes.md): R5.34 passes at `27dfc6d`: both real 300 s A profiles, 21 comparisons and 28 observations pass independent audit. Worst lunar overall error: 50.60% of limit. R5.17 remains failed.
+[ADR0182](docs/adr/0182-design-earth-gravity-sensitivity.md): R5.35 design complete. Reuse saved A; compare B with Earth added at the same seven nodes in two engines. Next: offline R5.36 preparation; R5.37 needs separate authorization. No SPICE or propagation; Earth sensitivity and M3 unverified.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.
