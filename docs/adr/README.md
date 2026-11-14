@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0201 — Authenticate the lunar exit and record the receiving-data gap](0201-authenticate-lunar-exit-record-receiving-gap.md): R5.54 passes once offline; verified outgoing state, no compatible receiving record or physical join.
 - [0200 — Prepare the retained lunar-to-Mars interface audit](0200-prepare-retained-lunar-to-mars-audit.md): R5.53 passes on a full-volume artificial archive; R5.54 unexecuted.
 - [0199 — Design a saved-data check of the lunar-to-Mars interface](0199-design-retained-lunar-to-mars-interface-check.md): R5.52 fixes the terminal R5.51 packet and receiving-side eligibility inventory; offline worksheet pending.
 - [0198 — Bracket the 18,374 km lunar range marker](0198-far-lunar-range-marker-bracketed.md): R5.51 real model B and independent offline audit pass once; both RK4 brackets overlap at +13,266–13,266.5 s.

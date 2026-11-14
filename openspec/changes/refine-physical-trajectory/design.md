@@ -7367,3 +7367,16 @@ Audit and finalization took 0.297 of 15 s with zero SPICE or
 trajectory work. All 30 focused checks, the guarded regression
 (6,247 passed, 494 skipped), Ruff and strict OpenSpec passed.
 R5.54 requires separate authorization and remains unexecuted.
+
+## R5.54 retained lunar-to-Mars interface result (2026-11-15)
+
+[ADR0201](../../../docs/adr/0201-authenticate-lunar-exit-record-receiving-gap.md) records
+one successful saved-data audit (0.382/15 s) at `c6c5226`.
+Five pinned R5.51 members, their receipts and 218,972 lines passed.
+The bitwise outgoing state, epoch and cutoff mass are authenticated.
+There were no exact coepochs in 121 ideal nodes and no eligible
+receiving states in 29 records from five full-model/boundary reports.
+The statuses are `source-state-authenticated`,
+`ideal-reference-coepoch-unavailable` and `physical-join-not-established`,
+with all four continuity residuals null. No SPICE, new state,
+interpolation, propagation, retry or physical closure.

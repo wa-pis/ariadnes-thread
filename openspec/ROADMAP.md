@@ -387,8 +387,11 @@ at the same epoch. R1/R2's saved nodes miss the interval; previous
 full-model reports retain only boundaries/endpoints here.
 [R5.53 preparation](../docs/adr/0200-prepare-retained-lunar-to-mars-audit.md) is
 verified on five artificial shards (218,972 lines, 80 MiB raw) in
-0.297/15 s. R5.54 remains one offline run on request. No new
-states or mission closure are part of this audit.
+0.297/15 s. [ADR0201](../docs/adr/0201-authenticate-lunar-exit-record-receiving-gap.md) completes
+R5.54: one offline audit in 0.382 s verifies the outgoing model B
+state. None of the 121 ideal nodes or 29 records in five receiving
+reports provide a compatible coepoch. All continuity residuals
+are null; physical continuity and Mars arrival remain open.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

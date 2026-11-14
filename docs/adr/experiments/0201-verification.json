@@ -1,0 +1,637 @@
+{
+  "stage": "R5.54",
+  "contract": "ADR0199",
+  "measured_revision": "c6c5226a0a1f63ea97976e693e9686a792c09887",
+  "design_sha256": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+  "preparation_sha256": "59fe18a15d454ee4cca956667ea7af883026c291ad3df3b385f98aa1d370e296",
+  "authorization_sha256": "dd9147edc6142fb8f85d98157967427b39d1cd7d44fdd50dcfac31dbc723fd04",
+  "once_only_location": "/Users/agrudin/dev/my/ariadna-evidence/R5.54",
+  "launcher_returncode": 0,
+  "launcher_wall_including_interpreter_start_s": 0.3824418750591576,
+  "result": {
+    "status": "passed",
+    "source_status": "source-state-authenticated",
+    "ideal_status": "ideal-reference-coepoch-unavailable",
+    "physical_status": "physical-join-not-established",
+    "continuity_residuals": {
+      "epoch_s": null,
+      "position_m": null,
+      "velocity_m_s": null,
+      "mass_kg": null
+    },
+    "receiving_records_total": 29
+  },
+  "retained_file_checks": {
+    "attempt.json": {
+      "bytes": 399,
+      "sha256": "0d00ef42f148c23711214d6286255e4b578eb3ce3c21ce24ea7c6afe524b8863"
+    },
+    "report.json": {
+      "bytes": 10492,
+      "sha256": "dbbd2f748f937df5232dd36ab542c642191d695804305b213130601176350d5c"
+    },
+    "receipt.json": {
+      "bytes": 609,
+      "sha256": "5d58e0f211670cea5def935e3d755244c5bd717b3d63222a0b120796537b20a1"
+    }
+  },
+  "original_records": {
+    "attempt.json": {
+      "stage": "R5.54",
+      "mode": "retained",
+      "inputs": {
+        "pins_sha256": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+        "revision": "c6c5226a0a1f63ea97976e693e9686a792c09887",
+        "preparation_sha256": "59fe18a15d454ee4cca956667ea7af883026c291ad3df3b385f98aa1d370e296",
+        "authorization_sha256": "dd9147edc6142fb8f85d98157967427b39d1cd7d44fdd50dcfac31dbc723fd04"
+      },
+      "started_s": 2886185.062793,
+      "wall_s": 15
+    },
+    "report.json": {
+      "source_status": "source-state-authenticated",
+      "ideal_status": "ideal-reference-coepoch-unavailable",
+      "physical_status": "physical-join-not-established",
+      "continuity_residuals": {
+        "epoch_s": null,
+        "position_m": null,
+        "velocity_m_s": null,
+        "mass_kg": null
+      },
+      "outgoing": {
+        "model": "B",
+        "profile": "RK4 tighter",
+        "selection": "final retained common node, not the radial event",
+        "epoch_tdb_s": 979014965.9635216,
+        "epoch_binary64_hex": "0x1.d2d4a9afb54adp+29",
+        "mass_kg": 1351.7475727997967,
+        "mass_binary64_hex": "0x1.51efd83b95a06p+10",
+        "mass_kind": "constant coast metadata",
+        "origin": "SSB",
+        "orientation": "J2000",
+        "time_scale": "TDB seconds since J2000",
+        "units": [
+          "m",
+          "m/s",
+          "kg"
+        ],
+        "candidate_id": "d0001-t0035",
+        "force_model_id": "r5-ssb-sun-moon-earth-point-v1",
+        "state_si": [
+          -47714528694.890396,
+          128286620622.64905,
+          55574232007.936966,
+          -29898.160615295743,
+          -9516.999468873997,
+          -5022.190128930336
+        ],
+        "state_binary64_hex": [
+          "-0x1.63803db6dc7e2p+35",
+          "0x1.dde7a7bcea628p+36",
+          "0x1.9e0f6f78fdfbap+35",
+          "-0x1.d328a4785609dp+14",
+          "-0x1.2967fee989798p+13",
+          "-0x1.39e30ac4a21d1p+12"
+        ],
+        "cutoff_tdb_s": 978998315.9635216,
+        "direction": {
+          "mesh": {
+            "radius_m": 21097219.38598573,
+            "radial_speed_m_s": 983.5621623293375,
+            "range_sign": 1,
+            "radial_sign": 1
+          },
+          "common": {
+            "radius_m": 21097219.38598573,
+            "radial_speed_m_s": 983.5621623293375,
+            "range_sign": 1,
+            "radial_sign": 1
+          }
+        }
+      },
+      "receiving": {
+        "ideal": {
+          "model": "sun-centered-zero-revolution-patched-conic-v1",
+          "node_count": 121,
+          "exact_coepochs": 0,
+          "terminal_coepoch_count": 0,
+          "bounding_indices": [
+            0,
+            1
+          ],
+          "bounding_epochs_tdb_s": [
+            978995455.2304223,
+            979205237.0486041
+          ],
+          "r551_extent_tdb_s": [
+            978998965.9635216,
+            979014965.9635216
+          ],
+          "eligible": false,
+          "reasons": [
+            "no-exact-coepoch",
+            "force-model-mismatch",
+            "coast-mass-unavailable"
+          ]
+        },
+        "physical": {
+          "0079-research-reference.json": {
+            "force_model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+            "origin": "SSB",
+            "orientation": "J2000",
+            "time_scale": "TDB seconds since J2000",
+            "units": [
+              "m",
+              "m/s",
+              "kg"
+            ],
+            "eligible": false,
+            "records": [
+              {
+                "record_event": "departure-ignition",
+                "epoch_tdb_s": 978995455.2304223,
+                "mass_kg": 2000.0,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "departure-cutoff",
+                "epoch_tdb_s": 978998315.9635216,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "shared-cutoff-ancestry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              },
+              {
+                "record_event": "arrival-ignition",
+                "epoch_tdb_s": 1004167226.7496859,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              },
+              {
+                "record_event": "arrival-cutoff",
+                "epoch_tdb_s": 1004169273.4122404,
+                "mass_kg": 887.9664640618066,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "arrival-cutoff-target",
+                "epoch_tdb_s": 1004169273.4122404,
+                "mass_kg": null,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-unavailable"
+                ]
+              },
+              {
+                "record_event": "departure-ignition",
+                "epoch_tdb_s": 978995455.2304223,
+                "mass_kg": 2000.0,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "departure-cutoff",
+                "epoch_tdb_s": 978998315.9635216,
+                "mass_kg": 1351.7475727997962,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "shared-cutoff-ancestry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "arrival-ignition",
+                "epoch_tdb_s": 1004167226.7496859,
+                "mass_kg": 1351.7475727997962,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "arrival-cutoff",
+                "epoch_tdb_s": 1004169273.4122404,
+                "mass_kg": 887.966464061725,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "arrival-cutoff-target",
+                "epoch_tdb_s": 1004169273.4122404,
+                "mass_kg": null,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-unavailable"
+                ]
+              }
+            ]
+          },
+          "0098-central-correction-study.json": {
+            "force_model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+            "origin": "SSB",
+            "orientation": "J2000",
+            "time_scale": "TDB seconds since J2000",
+            "units": [
+              "m",
+              "m/s",
+              "kg"
+            ],
+            "eligible": false,
+            "records": [
+              {
+                "record_event": "departure-ignition",
+                "epoch_tdb_s": 978995455.2304223,
+                "mass_kg": 2000.0,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "departure-cutoff",
+                "epoch_tdb_s": 978998315.9635216,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "shared-cutoff-ancestry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              },
+              {
+                "record_event": "arrival-ignition",
+                "epoch_tdb_s": 1004167226.7496859,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              },
+              {
+                "record_event": "arrival-cutoff",
+                "epoch_tdb_s": 1004169273.4122404,
+                "mass_kg": 887.9664640618066,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "arrival-cutoff-target",
+                "epoch_tdb_s": 1004169273.4122404,
+                "mass_kg": null,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-unavailable"
+                ]
+              },
+              {
+                "record_event": "departure-ignition",
+                "epoch_tdb_s": 978995455.2304223,
+                "mass_kg": 2000.0,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "departure-cutoff",
+                "epoch_tdb_s": 978997715.9635216,
+                "mass_kg": 1487.709734530183,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "arrival-ignition",
+                "epoch_tdb_s": 1004167290.9192743,
+                "mass_kg": 1487.709734530183,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "arrival-cutoff",
+                "epoch_tdb_s": 1004169273.4122404,
+                "mass_kg": 1038.4696857297827,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-mismatch"
+                ]
+              },
+              {
+                "record_event": "arrival-cutoff-target",
+                "epoch_tdb_s": 1004169273.4122404,
+                "mass_kg": null,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-unavailable"
+                ]
+              }
+            ]
+          },
+          "0082-identical-start-coast.json": {
+            "force_model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+            "origin": "SSB",
+            "orientation": "J2000",
+            "time_scale": "TDB seconds since J2000",
+            "units": [
+              "m",
+              "m/s",
+              "kg"
+            ],
+            "eligible": false,
+            "records": [
+              {
+                "record_event": "departure-cutoff",
+                "epoch_tdb_s": 978998315.9635216,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "shared-cutoff-ancestry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              },
+              {
+                "record_event": "arrival-ignition",
+                "epoch_tdb_s": 1004167226.7496859,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              },
+              {
+                "record_event": "arrival-ignition",
+                "epoch_tdb_s": 1004167226.7496859,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              }
+            ]
+          },
+          "0083-coast-step-study.json": {
+            "force_model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+            "origin": "SSB",
+            "orientation": "J2000",
+            "time_scale": "TDB seconds since J2000",
+            "units": [
+              "m",
+              "m/s",
+              "kg"
+            ],
+            "eligible": false,
+            "records": [
+              {
+                "record_event": "departure-cutoff",
+                "epoch_tdb_s": 978998315.9635216,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "shared-cutoff-ancestry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              },
+              {
+                "record_event": "arrival-ignition",
+                "epoch_tdb_s": 1004167226.7496859,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              },
+              {
+                "record_event": "arrival-ignition",
+                "epoch_tdb_s": 1004167226.7496859,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              },
+              {
+                "record_event": "arrival-ignition",
+                "epoch_tdb_s": 1004167226.7496859,
+                "mass_kg": 1351.7475727997967,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent"
+                ]
+              }
+            ]
+          },
+          "0136-retained-boundary-audit.json": {
+            "force_model_id": null,
+            "origin": "SSB",
+            "orientation": "J2000",
+            "time_scale": "TDB seconds since J2000",
+            "units": [
+              "m",
+              "m/s",
+              "kg"
+            ],
+            "eligible": false,
+            "records": [
+              {
+                "record_event": "configured-departure-ignition",
+                "epoch_tdb_s": 978995455.2304223,
+                "mass_kg": null,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-unavailable"
+                ]
+              },
+              {
+                "record_event": "arrival-cutoff-target",
+                "epoch_tdb_s": 1004169273.4122404,
+                "mass_kg": null,
+                "exact_coepoch": false,
+                "eligible": false,
+                "reasons": [
+                  "no-exact-coepoch",
+                  "not-coast-entry",
+                  "force-model-mismatch",
+                  "not-independent",
+                  "coast-mass-unavailable"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "status": "passed",
+      "synthetic": false,
+      "selected_members": 5,
+      "archive": {
+        "raw": 83885015,
+        "gzip": 25613216,
+        "rows": 218972
+      },
+      "native_or_scientific_calls": 0,
+      "new_states": 0,
+      "propagation_calls": 0,
+      "stage": "R5.54",
+      "pins_sha256": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+      "revision": "c6c5226a0a1f63ea97976e693e9686a792c09887",
+      "preparation_sha256": "59fe18a15d454ee4cca956667ea7af883026c291ad3df3b385f98aa1d370e296",
+      "authorization_sha256": "dd9147edc6142fb8f85d98157967427b39d1cd7d44fdd50dcfac31dbc723fd04",
+      "attempt_sha256": "0d00ef42f148c23711214d6286255e4b578eb3ce3c21ce24ea7c6afe524b8863"
+    },
+    "receipt.json": {
+      "stage": "R5.54",
+      "status": "passed",
+      "pins_sha256": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+      "revision": "c6c5226a0a1f63ea97976e693e9686a792c09887",
+      "preparation_sha256": "59fe18a15d454ee4cca956667ea7af883026c291ad3df3b385f98aa1d370e296",
+      "authorization_sha256": "dd9147edc6142fb8f85d98157967427b39d1cd7d44fdd50dcfac31dbc723fd04",
+      "attempt_sha256": "0d00ef42f148c23711214d6286255e4b578eb3ce3c21ce24ea7c6afe524b8863",
+      "report_sha256": "dbbd2f748f937df5232dd36ab542c642191d695804305b213130601176350d5c",
+      "returncode": 0,
+      "error": null,
+      "elapsed_s": 0.34452833281829953,
+      "child_peak_rss_bytes": 106627072
+    }
+  }
+}

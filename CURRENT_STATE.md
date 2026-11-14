@@ -4,7 +4,7 @@ Updated: 2026-11-15. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. [ADR0200](docs/adr/0200-prepare-retained-lunar-to-mars-audit.md): R5.53 verified full artificial workload in 0.297/15 s; 6,247 guarded passed, 494 skipped. Next: R5.54 once on request.
+Automation `ariadna-m3` remains paused. [ADR0201](docs/adr/0201-authenticate-lunar-exit-record-receiving-gap.md): R5.54 passed once; the outgoing state is authenticated, with no compatible archived receiving state. Physical join remains open.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline
