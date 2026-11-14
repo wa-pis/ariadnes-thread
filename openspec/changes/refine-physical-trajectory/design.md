@@ -6834,3 +6834,22 @@ checks: 26 passing; guarded full regression: 6152 passing
 and 407 skipped. Ruff, strict OpenSpec and frozen hashes pass.
 No real source queries, retained force or record evaluations, or
 R5.37 execution. B convergence and timing on real inputs remain open.
+
+## R5.37 Earth-gravity comparison result (2026-11-14)
+
+[ADR0184](../../../docs/adr/0184-earth-gravity-sensitivity-passes.md) records one
+real B-only study and one independent audit at `72cb059`. Two native
+RK4 and two DOP853 profiles completed under the unchanged controls.
+The audit passed 21 trajectory comparisons, seven signed effects,
+28 DOP853 source/force observations and 14 native B telemetry rows.
+Both phases finalized within budget (6.6092 s and 1.8058 s), with
+all four receipts checked. Model A was reused without propagation.
+
+At 300 s the B-minus-A norms are 110.393700168 m / 0.733202925841 m/s
+in native RK4, and 110.393770903 m / 0.733202901761 m/s in DOP853.
+Across all nodes the maximum signed-effect discrepancies are
+0.000173307 m / 2.69618e-8 m/s, below 0.02 m / 2e-5 m/s. Both effect
+norms exceed their comparison scales at every noninitial node.
+This local estimate remains conditional on saved native A with
+missing final identity. No conclusion about the full transfer,
+historical requalification, continuous safety or strict M3.

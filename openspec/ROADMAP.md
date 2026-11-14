@@ -305,6 +305,16 @@ regression: 6152 passed, 407 skipped. No SPICE or real
 trajectory work. R5.37 awaits separate authorization; the real effect
 and deadlines are unverified.
 
+[ADR0184](../docs/adr/0184-earth-gravity-sensitivity-passes.md) completes
+R5.37. One live B-only study and one independent offline audit pass
+both profiles per engine, 21 trajectory and seven signed-effect
+comparisons, 28 DOP853 observations and 14 native telemetry checks.
+At 300 s, adding Earth changes position by 110.394 m and velocity
+by 0.733203 m/s. Largest inter-engine signed discrepancy over seven
+nodes: 0.000173307 m and 2.69618e-8 m/s. Conditional on archived A;
+no A propagation, replay, historical requalification or M3 closure.
+Automation stays paused.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

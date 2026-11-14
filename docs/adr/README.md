@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0184 — Earth-gravity sensitivity passes on the short coast](0184-earth-gravity-sensitivity-passes.md): R5.37 passes once with two B engines and a separate offline audit. Endpoint effect: 110.394 m and 0.733203 m/s, conditional on retained A.
 - [0183 — Prepare the Earth-gravity comparison](0183-prepare-earth-gravity-comparison.md): R5.36 passes the synthetic B study and independent audit; R5.37 remains unexecuted.
 - [0182 — Design the 300 s Earth-gravity comparison](0182-design-earth-gravity-sensitivity.md): R5.35 freezes a B-only follow-up with saved A and the original numerical gates. Offline preparation and separately authorized execution remain pending.
 - [0181 — Split Moon coast recheck passes](0181-split-moon-coast-recheck-passes.md): R5.34 passes two real 300 s model A solves, 21 trajectory comparisons and all 28 sampled observations; separate offline audit passes. Earth-force sensitivity and M3 remain open.
