@@ -360,8 +360,11 @@ R5.44. The saved coast does not bracket the 18,374 km diagnostic
 surface from ADR0105. First verify a retrospective 3,000 km range
 marker offline: independent arithmetic, four identical coepoch
 brackets and two overlapping native brackets, with zero new SPICE
-calls or integration. R5.45 is pending; an actual burn interface or
-farther-radius result remains unverified.
+calls or integration. [ADR0192](../docs/adr/0192-retained-lunar-range-event-bracketed.md) completes R5.45:
+all four profiles have the same 200–250 s coepoch bracket; the native
+mesh brackets overlap at 209–209.5 s. The once-only 10 s offline
+audit passes. Farther-range evidence and actual burn interfaces
+remain unverified.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

@@ -1,0 +1,93 @@
+{
+  "contract": "ADR0191",
+  "stage": "R5.45",
+  "base_revision": "9423a8e6fa559a98d6271955512c7da882ed2caa",
+  "event_evidence": "retrospective-model-brackets-only",
+  "candidate": "d0001-t0035",
+  "cutoff_tdb_s": 978998315.9635216,
+  "marker_radius_m": 3000000,
+  "comparison_model": "B (Sun, Moon and Earth point masses)",
+  "attempts": 1,
+  "phase": {
+    "budget_s": 10,
+    "elapsed_s": 0.3372917091473937,
+    "finalization_gate": "passed"
+  },
+  "files_sha256": {
+    "attempt.json": "ceae2cb8e0c512b9a7cd45e548952c7d95fc44f39a0bd185a9b5549028ddadf9",
+    "evidence.json": "38de99dd579259d11fd35c1e6dd16fbb819772ea9fe0be2a9d3dcf2bdb132171",
+    "receipt.json": "28abc85c322e15253688420b21124b0cc3a8304c1c2e23fbd2adf6f8ac38b5f6"
+  },
+  "verified_bounds_after_cutoff_s": {
+    "by_grid": {
+      "native_normal": [
+        200.0,
+        250.0
+      ],
+      "native_tighter": [
+        200.0,
+        250.0
+      ],
+      "dop853_normal": [
+        200.0,
+        250.0
+      ],
+      "dop853_tighter": [
+        200.0,
+        250.0
+      ],
+      "mesh_native_normal": [
+        209.0,
+        210.0
+      ],
+      "mesh_native_tighter": [
+        209.0,
+        209.5
+      ]
+    },
+    "common": [
+      200.0,
+      250.0
+    ],
+    "native_overlap": [
+      209.0,
+      209.5
+    ]
+  },
+  "rows": {
+    "coepochs": 52,
+    "native": 1802
+  },
+  "source_sha256": {
+    "docs/adr/experiments/0192-range-inputs.py": "9c48b2f887d75f31a7de256b20b70a0add4f3a877822c36188385535254ade83",
+    "docs/adr/experiments/0192-range-brackets.py": "e4dffbe43021048fa9f2ab2c6fd9aa5c3e859437ecae53c2a0908680748a5f61",
+    "docs/adr/experiments/0192-range-run.py": "02029a6d680984070f972a63ff7b33a7640e92695d45ccc7fca6dc3a1adb0f45",
+    "tests/test_range_inputs.py": "449396d77c5d9015e2c6e91310dd0d6d494a5c721c1182b9aa0359c59af1a0f4",
+    "tests/test_retained_range_run.py": "789f18d2529387161dcec1fed43dcd78056bfaf314a223085e6526842025bf00",
+    "tests/test_retained_range_brackets.py": "23907b91f42cf483b133c84ce519561c6d5a885cde27f962e6e7c644f49f9aa8"
+  },
+  "inputs_sha256": {
+    "manifest_sha256": "6a4a04491af0f94805b7f21dc99aa1ee967fc434fc0cef091a60f8c14d9e7a61",
+    "design_sha256": "dca18b7a555c89e27ae0a3ac4251d93f33b28a354f195334ba0e4748136a797e",
+    "study_sha256": "e5485a6c815b3c34b82dd4bf867d4ea6d5c8e2122bf2cbd24c772d0a162fca7a",
+    "audit_sha256": "09a51f1abf7db2ce338bdc7c732b3100cbf29767d26bb402499ba769f875f463",
+    "study_gzip_sha256": "11f246abbbe23baa24bce4c2e1dffa09279a5f913f0e18a715c35a110b05e972",
+    "audit_gzip_sha256": "e51b56725be0f9f7cfd2ec65ebf20ac0ccb8b75c77cfe81f75cbbf773880526e"
+  },
+  "verification": {
+    "focused_passed": 24,
+    "guarded_regression_passed": 6165,
+    "guarded_regression_skipped": 494,
+    "ruff": "passed",
+    "strict_openspec": "passed",
+    "guard_sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693",
+    "focused_log_sha256": "4f9d860411684c7c7f2c922d0a122f5bd517976eeb0fb14f6fb663ddf466701e",
+    "full_log_sha256": "d1ee74806fc767d85d12d03d3a07e09f8b33847923c3184007f9da5902402042",
+    "skips_sha256": "200a2d159d591f934b1db9037b066fa61017072f6c41d8d548661e57d085356b"
+  },
+  "native_calls": 0,
+  "trajectory_propagations": 0,
+  "scientific_imports": 0,
+  "continuous_safety_verified": false,
+  "strict_m3_closed": false
+}

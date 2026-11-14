@@ -1,0 +1,10 @@
+{
+  "contract": "ADR0191",
+  "stage": "R5.45",
+  "started_s": 2850076.147162791,
+  "attempt_sha256": "ceae2cb8e0c512b9a7cd45e548952c7d95fc44f39a0bd185a9b5549028ddadf9",
+  "evidence_sha256": "38de99dd579259d11fd35c1e6dd16fbb819772ea9fe0be2a9d3dcf2bdb132171",
+  "elapsed_s": 0.3372917091473937,
+  "finalization_gate": "passed",
+  "status": "passed"
+}

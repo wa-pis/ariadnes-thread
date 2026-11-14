@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0192 — Bracket the retained 3,000 km lunar range event](0192-retained-lunar-range-event-bracketed.md): R5.45 independently verifies the retained 3,000 km marker. The native mesh brackets overlap at 209–209.5 s; all four common-node brackets span 200–250 s.
 - [0191 — Verify a lunar range event from saved states](0191-design-retained-lunar-range-event.md): R5.44 defines a retrospective 3,000 km marker, independent sign arithmetic and saved-state brackets. Worksheet and result pending.
 - [0190 — The post-cutoff coast passes checks and is outbound at samples](0190-post-cutoff-coast-outbound-at-samples.md): R5.43 confirms sampled numerical agreement and outward motion for 600 s of B from the simulated cutoff. All 39 comparisons and 52 radial signs pass offline. No escape or safety claim.
 - [0189 — Prepare the post-cutoff model B study and audit](0189-prepare-post-cutoff-lunar-coast.md): R5.42 artificial outward and inward cases pass the independent audit with distinct direction outcomes. 52 focused tests and guarded regression pass. R5.43 remains unexecuted.

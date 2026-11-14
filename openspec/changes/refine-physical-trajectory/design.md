@@ -7205,3 +7205,19 @@ synthetically prepared 10 s offline worksheet run, no new native
 work, with at most 52 coepoch and 1,802 native rows on retained data.
 A farther-radius comparison needs its own fixed horizon, force and
 event-error checks, work budget and live authorization.
+
+## R5.45 retained lunar range result (2026-11-14)
+
+[ADR0192](../../../docs/adr/0192-retained-lunar-range-event-bracketed.md)
+records the ADR0191 worksheet and one run on the pinned R5.43
+saved data. Both sign paths agree on all 52 coepoch and 1,802
+native rows. The four coepoch brackets for the 3,000,000 m
+marker are 200–250 s after cutoff. RK4 brackets are 209–210 s
+and 209–209.5 s, overlapping at 209–209.5 s. There is no
+interpolated event time or crossing claim at 18,374,000 m.
+
+The run finalized in 0.337292 s against a 10 s budget,
+with no native work, new ephemerides or trajectory computation.
+24 focused checks and guarded regression (6,165 passed, 494 skipped)
+pass. The evidence does not close a mission handoff, prove
+continuous clearance or establish escape.
