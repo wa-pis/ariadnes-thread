@@ -1,0 +1,392 @@
+{
+  "stage": "R5.49",
+  "contract": "ADR0196",
+  "base_revision": "8be85d134ec82320d417c844a33e9430fa43a08b",
+  "candidate": "d0001-t0035",
+  "source_manifest_sha256": {
+    "0190/manifest.json": "6a4a04491af0f94805b7f21dc99aa1ee967fc434fc0cef091a60f8c14d9e7a61",
+    "0195/manifest.json": "b1aa2117d9a61613c47d01a0222b8cae32d20a216b4af493c783f85f291ce1ca",
+    "0193-design-inputs.json": "c8a9f67541b25c68b6bc0f3768b622d64b5229bcefaa0087f3f95cdef84da6ea",
+    "0194-verification.json": "8036e759a191124c0107fe2774c9647d9b799945e5972dc5b98933f6ce967a75"
+  },
+  "restart": {
+    "selector": "R5.48 tighter RK4 terminal native raw state, common sample and audited tighter mesh",
+    "epoch_tdb_s": 978998965.9635216,
+    "epoch_binary64_hex": "0x1.d2d2b5afb54adp+29",
+    "state_si": [
+      -47233358361.70916,
+      128439264304.66698,
+      55656464622.97184,
+      -30706.32487399895,
+      -9824.415537055927,
+      -5362.804209079511
+    ],
+    "state_binary64_hex": [
+      "-0x1.5fea7b4336b17p+35",
+      "0x1.de793a430aabfp+36",
+      "0x1.9eac481ddf195p+35",
+      "-0x1.dfc94cabc5034p+14",
+      "-0x1.33035305178bep+13",
+      "-0x1.4f2cde0a56fa5p+12"
+    ],
+    "moon_ssb_state_si": [
+      -47230339268.960304,
+      128441008396.96031,
+      55656192921.430176,
+      -29580.108114914572,
+      -9212.09228840556,
+      -4051.333949417713
+    ],
+    "moon_ssb_binary64_hex": [
+      "-0x1.5fe4b9189ebadp+35",
+      "0x1.de7ae410cf5d7p+36",
+      "0x1.9eabc3732dc40p+35",
+      "-0x1.ce306eb5ad193p+14",
+      "-0x1.1fe0bd01b41d7p+13",
+      "-0x1.fa6aafb6b0731p+11"
+    ],
+    "mass_kg": 1351.7475727997967,
+    "mass_binary64_hex": "0x1.51efd83b95a06p+10",
+    "coepoch_end_state_minus_restart_si": {
+      "rk4_normal": [
+        0.0,
+        -3.0517578125e-05,
+        -2.288818359375e-05,
+        1.0913936421275139e-11,
+        3.456079866737127e-11,
+        8.276401786133647e-11
+      ],
+      "rk4_tighter": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dop853_normal": [
+        7.62939453125e-06,
+        -6.103515625e-05,
+        0.0,
+        -1.709850039333105e-10,
+        9.458744898438454e-11,
+        2.000888343900442e-11
+      ],
+      "dop853_tighter": [
+        7.62939453125e-06,
+        -6.103515625e-05,
+        0.0,
+        -1.709850039333105e-10,
+        9.276845958083868e-11,
+        6.912159733474255e-11
+      ]
+    }
+  },
+  "fixed_model": {
+    "id": "r5-ssb-sun-moon-earth-point-v1",
+    "geometry": "SI, SSB, J2000, TDB seconds since J2000, NONE",
+    "kernel_manifest": {
+      "kernel_source": "tudatpy-standard",
+      "loaded_kernel_count": 13,
+      "spiceypy_version": "8.2.0",
+      "kernels": [
+        {
+          "name": "pck00010.tpc",
+          "version": "pck00010",
+          "type": "TEXT",
+          "source": null,
+          "size_bytes": 126143,
+          "sha256": "59468328349aa730d18bf1f8d7e86efe6e40b75dfb921908f99321b3a7a701d2"
+        },
+        {
+          "name": "inpop19a_TDB_m100_p100_spice.tpc",
+          "version": "inpop19a_TDB_m100_p100_spice",
+          "type": "TEXT",
+          "source": null,
+          "size_bytes": 18826,
+          "sha256": "55798de268f64f43f5ccf71dae84e1d1603a99301f80251c4d74cb8f26a72eee"
+        },
+        {
+          "name": "NOE-4-2020.tpc",
+          "version": "NOE-4-2020",
+          "type": "TEXT",
+          "source": null,
+          "size_bytes": 369,
+          "sha256": "0edbcf5f8a1265f2937594f55d7fe395526d610e14445c3d77448e0df1adcf21"
+        },
+        {
+          "name": "NOE-5-2021.tpc",
+          "version": "NOE-5-2021",
+          "type": "TEXT",
+          "source": null,
+          "size_bytes": 1150,
+          "sha256": "069cb44cef6809e84a618bbb3b8efde2fe42224ff0636b59808034a9c806cec6"
+        },
+        {
+          "name": "NOE-6-2018-MAIN-v2.tpc",
+          "version": "NOE-6-2018-MAIN-v2",
+          "type": "TEXT",
+          "source": null,
+          "size_bytes": 1201,
+          "sha256": "2f3084319850f92b2fc6adaaf7846b1362c7775b56c550c9b10615fc7fedc3cc"
+        },
+        {
+          "name": "codes_300ast_20100725.bsp",
+          "version": "codes_300ast_20100725",
+          "type": "SPK",
+          "source": null,
+          "size_bytes": 61864960,
+          "sha256": "7bb92faaadac29ec0b62aa96041a37c92ae24b9a5460de03d3fcaa2f63fe51f0"
+        },
+        {
+          "name": "codes_300ast_20100725.tf",
+          "version": "codes_300ast_20100725",
+          "type": "TEXT",
+          "source": null,
+          "size_bytes": 25584,
+          "sha256": "15ee3b1731817774672725ccc226b249eb9ca5aa5d0a6a7805c91e5f57497f40"
+        },
+        {
+          "name": "inpop19a_TDB_m100_p100_spice.bsp",
+          "version": "inpop19a_TDB_m100_p100_spice",
+          "type": "SPK",
+          "source": null,
+          "size_bytes": 22318080,
+          "sha256": "01f095b148ef1e5aad6f95213c188ca5b0d8a58901d19a95b0c11082b1d3a0c6"
+        },
+        {
+          "name": "NOE-4-2020.bsp",
+          "version": "NOE-4-2020",
+          "type": "SPK",
+          "source": null,
+          "size_bytes": 244004864,
+          "sha256": "bd05fc94f3f2c873b26bfc420759bc82df306593c1ed4173716b8472b115ab9b"
+        },
+        {
+          "name": "NOE-5-2021.bsp",
+          "version": "NOE-5-2021",
+          "type": "SPK",
+          "source": null,
+          "size_bytes": 455586816,
+          "sha256": "85063d326f068f4a6e5bd4f56c4c4bae330c0cea210d18d190451f33cb3add24"
+        },
+        {
+          "name": "NOE-6-2018-MAIN-v2.bsp",
+          "version": "NOE-6-2018-MAIN-v2",
+          "type": "SPK",
+          "source": null,
+          "size_bytes": 222214144,
+          "sha256": "ff2188d11c8cd31933e6757e81cd43e66644e218d041c72628ebf291754e7f39"
+        },
+        {
+          "name": "juice_mat_crema_4_0_20220601_20330626_v01.bsp",
+          "version": "juice_mat_crema_4_0_20220601_20330626_v01",
+          "type": "SPK",
+          "source": null,
+          "size_bytes": 2904064,
+          "sha256": "79ea4e0483909305dcf40280e16b859f0c7050420517cb35a60b1b166d8edd76"
+        },
+        {
+          "name": "naif0012.tls",
+          "version": "naif0012",
+          "type": "TEXT",
+          "source": null,
+          "size_bytes": 5257,
+          "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b"
+        }
+      ],
+      "kernel_list_status": "complete"
+    },
+    "gm_m3_s2": {
+      "Sun": 1.327124400420322e+20,
+      "Moon": 4902800121846.8,
+      "Earth": 398600435468295.9
+    },
+    "exclusion_radii_m": {
+      "Sun": 696000000.0,
+      "Moon": 1737400.0,
+      "Earth": 6378136.6
+    },
+    "thrust_n": 0,
+    "mass_flow_kg_s": 0,
+    "record_interiors_metadata_only": [
+      {
+        "body_id": 10,
+        "centre_id": 0,
+        "frame_id": 1,
+        "type": 2,
+        "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+        "record_index": 3048,
+        "record_address": 1965065,
+        "record_interval_tdb_s": [
+          978739200,
+          980121600
+        ],
+        "segment_interval_tdb_s": [
+          -3234816000,
+          3234816000
+        ]
+      },
+      {
+        "body_id": 301,
+        "centre_id": 399,
+        "frame_id": 1,
+        "type": 2,
+        "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+        "record_index": 12192,
+        "record_address": 1590733,
+        "record_interval_tdb_s": [
+          978739200,
+          979084800
+        ],
+        "segment_interval_tdb_s": [
+          -3234816000,
+          3234816000
+        ]
+      },
+      {
+        "body_id": 399,
+        "centre_id": 0,
+        "frame_id": 1,
+        "type": 2,
+        "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+        "record_index": 12192,
+        "record_address": 2522061,
+        "record_interval_tdb_s": [
+          978739200,
+          979084800
+        ],
+        "segment_interval_tdb_s": [
+          -3234816000,
+          3234816000
+        ]
+      }
+    ]
+  },
+  "plan": {
+    "marker_radius_m": 18374000,
+    "horizon_s": 16000,
+    "stop_tdb_s": 979014965.9635216,
+    "stop_binary64_hex": "0x1.d2d4a9afb54adp+29",
+    "common_stride_s": 50,
+    "native_steps_s": [
+      1,
+      0.5
+    ],
+    "dop853_settings": [
+      {
+        "rtol": 1e-12,
+        "atol": [
+          1e-07,
+          1e-07,
+          1e-07,
+          1e-10,
+          1e-10,
+          1e-10
+        ],
+        "max_step": 5.0,
+        "first_step": 1.0
+      },
+      {
+        "rtol": 1e-13,
+        "atol": [
+          1e-08,
+          1e-08,
+          1e-08,
+          1e-11,
+          1e-11,
+          1e-11
+        ],
+        "max_step": 2.5,
+        "first_step": 0.5
+      }
+    ],
+    "coepoch_gates": {
+      "native_step_and_tighter_cross_engine": {
+        "position_m": 0.01,
+        "velocity_m_s": 1e-05
+      },
+      "dop853_step": {
+        "position_m": 0.001,
+        "velocity_m_s": 1e-06
+      }
+    },
+    "direction_arithmetic_gates": {
+      "radius_m": 1e-06,
+      "radial_speed_m_s": 1e-09
+    },
+    "planning_only": {
+      "restart_range_m": 3497227.5707487883,
+      "restart_radial_speed_m_s": 1175.7234939432599,
+      "remaining_range_m": 14876772.429251213,
+      "constant_radial_speed_s": 12653.291786622376,
+      "osculating_moon_only_tof_s": 13261.948230513924,
+      "window_margin_relative_to_moon_only": 0.20645924127393234
+    }
+  },
+  "complete_counts": {
+    "common_epochs": 321,
+    "comparisons": 963,
+    "common_direction_rows": 1284,
+    "native_mesh_rows": 48002,
+    "native_guard_reads": 144012,
+    "native_telemetry_rows": 642,
+    "adaptive_observations": 1284
+  },
+  "work_caps": {
+    "native_arcs": 2,
+    "adaptive_solves": 2,
+    "pool_setups": 1,
+    "kernel_inventory_calls": 30,
+    "gm_acquisitions": 0,
+    "adaptive_rhs_attempts": 160000,
+    "adaptive_trial_attempts": 13000,
+    "adaptive_explicit_state_attempts": 641284,
+    "total_explicit_state_attempts": 785296,
+    "record_evaluations": 7704,
+    "adaptive_binary64_fields": 481926,
+    "adaptive_dynamic_totals": 160642,
+    "native_decimal_fields": 3852,
+    "sampled_reference_fields": 30816
+  },
+  "execution_caps": {
+    "study_elapsed_s": 480,
+    "audit_elapsed_s": 300,
+    "full_cap_synthetic_study_target_s": 360,
+    "full_cap_synthetic_audit_target_s": 225,
+    "shard_uncompressed_bytes": 16777216,
+    "combined_uncompressed_bytes": 2147483648,
+    "combined_compressed_bytes": 536870912,
+    "initial_free_bytes_at_each_volume": 4294967296,
+    "synthetic_peak_rss_bytes_per_process": 2147483648,
+    "combined_manifest_and_receipt_bytes": 1048576
+  },
+  "effort_model": {
+    "r543": {
+      "simulation_s": 600,
+      "study_elapsed_s": 9.052535499911755,
+      "audit_elapsed_s": 5.724832541774958,
+      "study_raw_bytes": 39412442,
+      "study_gzip_bytes": 7734462,
+      "rhs": 4496,
+      "trials": 368
+    },
+    "r548": {
+      "simulation_s": 50,
+      "study_elapsed_s": 5.71040966687724,
+      "audit_elapsed_s": 1.5932364170439541,
+      "study_raw_bytes": 15037972,
+      "study_gzip_bytes": 3020615,
+      "rhs": 500,
+      "trials": 36
+    },
+    "minimum_accepted_steps": 9602,
+    "minimum_rhs_excluding_dense_and_rejections": 115226
+  },
+  "design_work": {
+    "ephemeris_queries": 0,
+    "kernel_accesses": 0,
+    "force_or_spk_polynomial_evaluations": 0,
+    "propagations": 0
+  }
+}

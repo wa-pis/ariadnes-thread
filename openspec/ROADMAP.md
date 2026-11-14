@@ -368,6 +368,13 @@ remain unverified.
 
 [ADR0193](../docs/adr/0193-design-lunar-range-extension.md) completes R5.46. Extend model B by a fixed 50 s from the archived tighter RK4 endpoint, with independent engines and a prospective 3,474.8 km diagnostic marker. [ADR0194](../docs/adr/0194-prepare-lunar-range-extension.md) completes R5.47: 21 focused and guarded 6,186 passed, 494 skipped; synthetic study and offline audit pass. [ADR0195](../docs/adr/0195-prospective-lunar-range-marker-bracketed.md) completes R5.48: all 33 comparisons and the independent audit pass once on real ephemerides. The four common brackets are +30–35 s; the two RK4 meshes overlap at +30.5–31 s after restart. This is a sampled model B marker, not a departure handoff or strict M3 verification.
 
+[ADR0196](../docs/adr/0196-design-far-lunar-range-check.md) completes R5.49.
+Project one 16,000 s B-only continuation from the exact R5.48 terminal
+tighter RK4 state to check the 18,374 km marker. The study/audit wall
+limits are 480/300 s. R5.50 must first qualify the hard caps, independent
+audit and durable lossless storage on artificial data. R5.51 requires
+separate live authorization. No new result or mission handoff claimed.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

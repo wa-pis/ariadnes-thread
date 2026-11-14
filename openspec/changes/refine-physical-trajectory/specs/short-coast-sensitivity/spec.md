@@ -517,3 +517,33 @@ diagnostic marker without replaying the archived coast.
 - **WHEN** the private extension is prepared or executed under ADR0193
 - **THEN** preparation SHALL verify artificial success, negative and failure paths with focused and guarded full pytest, Ruff, strict OpenSpec and input hashes, with zero live work; later execution SHALL permit one 60 s study with two native arcs, two adaptive solves and at most 40,506 explicit state attempts, and one 10 s independent stdlib audit with zero native/scientific work, both with inclusive finalization, verified counters and bound receipts
 - **AND** evidence SHALL NOT qualify first or unique physical crossing, a force switch, mission handoff, escape, continuous safety or strict M3
+
+### Requirement: Check the 18374 km lunar range marker
+
+R5.49–R5.51 SHALL independently evaluate the 18,374,000 m lunar-centred
+marker on a fixed unpowered model B interval without replaying the
+archived departure or changing mission interfaces.
+
+#### Scenario: Bind a fixed long continuation to the audited terminal state
+
+- **WHEN** R5.50 preparation or a separately authorized R5.51 study binds its inputs
+- **THEN** it SHALL verify the R5.48 terminal tighter RK4 epoch and six-state bit for bit against raw history, native sample and audited rows, bind the terminal Moon/SSB words and 1351.7475727997967 kg mass metadata, and preserve the force inventory, source order, frame, time scale, units and original gates
+- **AND** execution SHALL verify the common Moon restart words before propagation and advance two RK4 profiles at 1/0.5 s and the unchanged normal/tighter DOP853 profiles from 978998965.9635216 to 979014965.9635216 TDB s, with zero thrust or mass flow and 321 common nodes at 50 s spacing, independent of the marker verdict
+
+#### Scenario: Reconstruct the gates and six sign grids from saved operands
+
+- **WHEN** a complete long-continuation study is audited
+- **THEN** the stdlib-only audit SHALL verify 963 state comparisons at the original native/tighter cross-engine 0.01 m and 1e-5 m/s gates and adaptive 0.001 m and 1e-6 m/s gates, both native guard histories, 642 native telemetry rows, adaptive RHS/output and trial evidence, and 1,284 adaptive force/source observations (outputs, first seven callbacks per profile, and the first completed callback in each 50 s window starting at +300 s through the stop)
+- **AND** it SHALL reconstruct exact signs and Decimal metrics at all 1,284 common and 48,002 native mesh rows, with 1e-6 m and 1e-9 m/s arithmetic gates; assign `marker-bracketed` only for one strict outward pair with positive endpoint radial signs per grid, no inward pair or equality, four identical common brackets and positive-width native overlap with both native brackets contained in the common bracket
+- **AND** it SHALL keep numerical and marker verdicts separate: complete negative or conflicting evidence gives `marker-not-established` with reason; missing, failed or late evidence gives `unavailable`; no interpolation, changed sampling, extra marker reads, escape, handoff or strict M3 claim
+
+#### Scenario: Qualify the study, audit and evidence budgets offline
+
+- **WHEN** R5.50 qualifies the launcher and archive entirely on artificial inputs
+- **THEN** full-work-cap synthetic producer/finalization and independent audit SHALL finish in at most 360 s and 225 s respectively, each with peak RSS at most 2 GiB, bounded lossless shards and verified durable retention/readback; exercise cap/timeout and corrupt/partial evidence failures and verify guarded focused/full pytest, Ruff, source pins and strict OpenSpec before separate live authorization
+
+#### Scenario: Enforce caps and preserve evidence in the authorized check
+
+- **WHEN** one authorized R5.51 study and audit are attempted
+- **THEN** parent watchdogs SHALL bound the study to 480 s and audit to 300 s including finalization; hard work maxima SHALL be two native arcs, two adaptive solves, 160,000 RHS attempts, 13,000 trial attempts, one pool setup, 30 inventory calls, 785,296 explicit state attempts including exactly 144,012 native guard reads on completion, and zero GM acquisitions; the audit SHALL make zero native/SPICE calls, scientific imports or propagations
+- **AND** the complete or first partial evidence SHALL remain lossless with verified shard lengths, hashes, counts and bound receipts (16 MiB raw per shard, 2 GiB raw and 512 MiB compressed combined, plus 1 MiB manifests/receipts); exhausted caps or failed checks SHALL stop without retry or an acceptance verdict

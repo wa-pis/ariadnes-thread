@@ -7275,3 +7275,28 @@ are +30–35 s from restart and the two RK4 meshes give +30–31 s and
 +30.5–31 s, with +30.5–31 s overlap. This verifies the sampled bracket
 under model B. No crossing time was interpolated and no escape,
 mission handoff, continuous safety or strict M3 claim follows.
+
+## R5.49 design the far lunar range check (2026-11-15)
+
+[ADR0196](../../../docs/adr/0196-design-far-lunar-range-check.md) and its
+[design inputs](../../../docs/adr/experiments/0196-design-inputs.json)
+bind the exact terminal R5.48 tighter RK4 state, Moon/SSB operand, mass,
+force and source identity. The 18,374,000 m marker reuses only the
+ADR0105 radius. Fix 16,000 s from 978998965.9635216 TDB s; saved-state
+kinematics and an osculating lunar estimate motivate the window, and
+retained record intervals contain it by metadata. All four profiles
+share the restart, sampled every 50 s with the full 1/0.5 s native
+meshes retained. Keep R5.48 gates and use the R5.43 later force sampling
+rule for each 50 s window after +300 s.
+
+One study and one independent saved-data audit may consume at most
+480 s and 300 s including finalization. The 160,000 RHS, 13,000 trials,
+785,296 explicit state attempts and two arcs/two solves are independent
+work caps. The long horizon must be prepared with lossless bounded
+shards, complete arithmetic replay and synthetic capacity proof
+(360 s study, 225 s audit, ≤2 GiB peak RSS per process); the older
+300/600/50 s helpers and evidence remain immutable. Separate live
+authorization follows only after preparation and durable retention
+checks. Failure or a negative marker verdict does not authorize a
+rerun or horizon change. No run, new SPICE request or record evaluation
+was performed for this design.
