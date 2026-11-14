@@ -475,3 +475,21 @@ the configured production M3 interface.
 - **WHEN** R5.43 runs the authorized study and offline audit
 - **THEN** the study SHALL enforce the unchanged R5.40 propagation, RHS, trial, source operation and 60 s finalization ceilings; the audit SHALL enforce a 10 s finalization limit with zero native calls, scientific imports and solves and independently reconstruct the handoff, checks, guards, diagnostics and ledgers from saved operands
 - **AND** only matching frozen identities and four bound phase receipts with all required gates SHALL allow numerical acceptance; a missing or failed input, guard, limit or receipt SHALL retain partial or unavailable evidence without changing the cutoff, horizon, model or gates and without retry
+
+### Requirement: Check a retained lunar range event
+
+R5.44–R5.45 SHALL verify whether the retained model B histories
+bracket the explicitly retrospective lunar-centred 3,000,000 m
+diagnostic marker using the saved R5.43 states only.
+
+#### Scenario: Check both numerical engines from retained operands
+
+- **WHEN** the offline worksheet is verified on artificial boundary and failure cases and reads the pinned R5.43 study and audit
+- **THEN** it SHALL bind the exact archived cutoff, frame, time scale, units, force model, mass, grids, hashes and passed numerical evidence; process exactly 52 coepoch and 1,802 retained native rows, excluding two preflight Moon records; independently compute signs from exact dyadic and 80-digit Decimal operands with exact sign agreement and range and radial-speed agreement within 1e-6 m and 1e-9 m/s
+- **AND** one strict below-to-above pair with positive endpoint radial signs SHALL be present per grid; the four coepoch brackets SHALL coincide, the 1 s and 0.5 s brackets SHALL overlap and each SHALL be contained in the common 50 s bracket; preserve individual brackets and report exact zero, inward or multiple pairs, missing inputs and disagreement as distinct evidence
+
+#### Scenario: Preserve the boundary between diagnostics and mission verification
+
+- **WHEN** the worksheet runs once under its 10 s inclusive offline cap
+- **THEN** it SHALL make no new SPICE calls, scientific imports, kernel loads, record evaluations or integrations and SHALL retain actual counts, signed endpoints, source hashes, budget and complete or partial evidence without replacing the marker, relaxing gates or retrying
+- **AND** a pass SHALL describe a retrospective sampled bracket for each saved continuous model trajectory, with no interpolated crossing time or first-crossing, escape, continuous safety, force-switch, mission handoff or M3 qualification claim

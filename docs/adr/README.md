@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0191 — Verify a lunar range event from saved states](0191-design-retained-lunar-range-event.md): R5.44 defines a retrospective 3,000 km marker, independent sign arithmetic and saved-state brackets. Worksheet and result pending.
 - [0190 — The post-cutoff coast passes checks and is outbound at samples](0190-post-cutoff-coast-outbound-at-samples.md): R5.43 confirms sampled numerical agreement and outward motion for 600 s of B from the simulated cutoff. All 39 comparisons and 52 radial signs pass offline. No escape or safety claim.
 - [0189 — Prepare the post-cutoff model B study and audit](0189-prepare-post-cutoff-lunar-coast.md): R5.42 artificial outward and inward cases pass the independent audit with distinct direction outcomes. 52 focused tests and guarded regression pass. R5.43 remains unexecuted.
 - [0188 — Independently check the coast after lunar engine cutoff](0188-design-post-cutoff-lunar-coast.md): R5.41 fixes the 0079/0098 nominal cutoff, 600 s B-only coast, 39 numerical comparisons and separate 52-node outward check. Metadata verified; preparation and live verification pending.

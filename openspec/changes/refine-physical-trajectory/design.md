@@ -7183,3 +7183,25 @@ added to the lunar-centred range in each profile. This is discrete
 same-model evidence. It leaves continuous departure, finite-radius
 handoff, lunar escape, full mission accuracy and safety open. No
 model A integration or burn replay occurred.
+
+## R5.44 design the retained lunar range event (2026-11-14)
+
+[ADR0191](../../../docs/adr/0191-design-retained-lunar-range-event.md)
+keeps the actual burn interfaces from ADR0135 and the model and
+exact initial state from R5.43. ADR0105's 18,374,000 m diagnostic
+surface lies beyond the saved common-node range. Instead, first
+exercise evidence for a range crossing at an explicitly retrospective
+3,000,000 m marker using only the already audited coast. It is a
+diagnostic event with no change of origin, forces or mission endpoints.
+
+Independently compare exact squared-radius and radial dot-product
+signs and check reported geometry in binary64 and Decimal from
+the two engines' saved states. Four coepoch brackets must coincide;
+the two native mesh brackets must overlap within the common 50 s
+bracket. Equality, inward pairs, multiple candidates and evidence
+failure remain distinguishable. Preserve brackets and their operands;
+no interpolation or physical first-crossing claim. Allow one
+synthetically prepared 10 s offline worksheet run, no new native
+work, with at most 52 coepoch and 1,802 native rows on retained data.
+A farther-radius comparison needs its own fixed horizon, force and
+event-error checks, work budget and live authorization.

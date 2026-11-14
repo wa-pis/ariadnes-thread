@@ -354,6 +354,15 @@ about 652.827 km farther from the lunar centre after 600 s. The
 sampled numerical and outward checks pass; the departure handoff,
 lunar escape, continuous clearance and strict M3 remain open.
 
+
+[ADR0191](../docs/adr/0191-design-retained-lunar-range-event.md) completes
+R5.44. The saved coast does not bracket the 18,374 km diagnostic
+surface from ADR0105. First verify a retrospective 3,000 km range
+marker offline: independent arithmetic, four identical coepoch
+brackets and two overlapping native brackets, with zero new SPICE
+calls or integration. R5.45 is pending; an actual burn interface or
+farther-radius result remains unverified.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:
