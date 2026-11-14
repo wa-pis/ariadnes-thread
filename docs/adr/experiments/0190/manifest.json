@@ -1,0 +1,436 @@
+{
+  "contract": "ADR0188",
+  "result_record": "ADR0190",
+  "stage": "R5.43",
+  "measured_revision": "ba06f72fb1bbcb38434daf413a1291e6053a3d11",
+  "preparation_sha256": "202b14ba22532d8a3129c185b4fd88788e9030b0d7c981a03ee5b57d4a5a83b8",
+  "numerical_status": "passed",
+  "outward_status": "outbound-at-samples",
+  "scientific_verified": false,
+  "mission_accuracy_verified": false,
+  "continuous_safety_verified": false,
+  "scope": {
+    "candidate": "d0001-t0035",
+    "model": "B",
+    "initial_state": {
+      "position_m": [
+        -47213314768.25511,
+        128445697332.99492,
+        55659931786.80674
+      ],
+      "velocity_m_s": [
+        -30983.20615387048,
+        -9979.895885655382,
+        -5281.94830530045
+      ],
+      "epoch_tdb_s": 978998315.9635216
+    },
+    "cutoff": {
+      "epoch_tdb_s": 978998315.9635216,
+      "epoch_utc": "2031-01-09T11:57:26.779364Z",
+      "label": "departure-cutoff",
+      "orientation": "J2000",
+      "origin": "SSB",
+      "position_m": [
+        -47213314768.25511,
+        128445697332.99492,
+        55659931786.80674
+      ],
+      "velocity_m_s": [
+        -30983.20615387048,
+        -9979.895885655382,
+        -5281.94830530045
+      ]
+    },
+    "mass_kg": 1351.7475727997967,
+    "coast": {
+      "model_id": "r5-ssb-sun-moon-earth-point-v1",
+      "sources": [
+        "Sun",
+        "Moon",
+        "Earth"
+      ],
+      "geometry": "SI, SSB, J2000, TDB seconds since J2000, NONE",
+      "duration_s": 600,
+      "offsets_s": [
+        0,
+        50,
+        100,
+        150,
+        200,
+        250,
+        300,
+        350,
+        400,
+        450,
+        500,
+        550,
+        600
+      ],
+      "coepochs_tdb_s": [
+        978998315.9635216,
+        978998365.9635216,
+        978998415.9635216,
+        978998465.9635216,
+        978998515.9635216,
+        978998565.9635216,
+        978998615.9635216,
+        978998665.9635216,
+        978998715.9635216,
+        978998765.9635216,
+        978998815.9635216,
+        978998865.9635216,
+        978998915.9635216
+      ],
+      "thrust_n": 0,
+      "mass_flow_kg_s": 0,
+      "constant_mass_metadata_kg": 1351.7475727997967,
+      "gm_m3_s2": {
+        "Sun": 1.327124400420322e+20,
+        "Moon": 4902800121846.8,
+        "Earth": 398600435468295.9
+      },
+      "radii_m": {
+        "Sun": 696000000.0,
+        "Moon": 1737400.0,
+        "Earth": 6378136.6
+      },
+      "native_steps_s": [
+        1,
+        0.5
+      ],
+      "dop853_settings": [
+        {
+          "rtol": 1e-12,
+          "atol": [
+            1e-07,
+            1e-07,
+            1e-07,
+            1e-10,
+            1e-10,
+            1e-10
+          ],
+          "max_step": 5.0,
+          "first_step": 1.0
+        },
+        {
+          "rtol": 1e-13,
+          "atol": [
+            1e-08,
+            1e-08,
+            1e-08,
+            1e-11,
+            1e-11,
+            1e-11
+          ],
+          "max_step": 2.5,
+          "first_step": 0.5
+        }
+      ],
+      "comparisons": {
+        "native_step_and_tighter_cross_engine": {
+          "position_m": 0.01,
+          "velocity_m_s": 1e-05
+        },
+        "dop853_step": {
+          "position_m": 0.001,
+          "velocity_m_s": 1e-06
+        }
+      },
+      "direction_arithmetic_limits": {
+        "radius_m": 1e-06,
+        "radial_speed_m_s": 1e-09,
+        "specific_energy_m2_s2": 1e-06,
+        "net_range_change_m": 1e-06
+      }
+    },
+    "design_input_sha256": {
+      "docs/adr/experiments/0079-research-reference.json": "17f03d9557be6e439af5f1c388e1eb092f55236b3c2afc3de65006d5f639c235",
+      "docs/adr/experiments/0098-central-correction-study.json": "b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057",
+      "docs/adr/experiments/0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0",
+      "docs/adr/experiments/0185-design-inputs.json": "a106d2ceac3521dcdfe40b1adb61e86de1c00c96a807299b826b47bbb3c04ec8",
+      "docs/adr/experiments/0186-verification.json": "3f0c4cd0cc41671f247420f8c632999f00cad2ecfd2c5e788e25c2ea6fed0e9b",
+      "docs/adr/experiments/0187/manifest.json": "1aea406b095afbc14eac874cb583c2ea3b26e645e4a27038f585f8fa97839311",
+      "docs/adr/experiments/0187/study.json.gz": "6bb82897f20749898bca6e522480a8daf449999a9162690648ef2656abde8a32",
+      "docs/adr/experiments/0187/study.attempt.json": "d1ffe2b0f5c646b5d8fa6ca175126bb9f9eb6ba26aff9f1f99d11b87f879543e",
+      "docs/adr/experiments/0187/study.receipt.json": "f8a9fd0ee42a47df9db17cc72ad2f31cea4e0ee2cd8b2302b9936b04c24a1ca9",
+      "docs/adr/experiments/0187/study.parent-attempt.json": "06c2195e4a483399f3d2b04e9ec445fcc4aaf5068a074eed2fde145812a8421e",
+      "docs/adr/experiments/0187/study.parent-receipt.json": "27c0dd6d5917792dcefd958844c0b32daa5a2d09a4234231813d0a90e8c0cf9c",
+      "docs/adr/experiments/0187/audit.json.gz": "7688ec9b1d854bf6ab8972d9e3dce194ce26698c95d1a9f97a0fd6950eeb3095",
+      "docs/adr/experiments/0187/audit.attempt.json": "ab3e39f9e7c687411f857aaade3078e6297da9169b52af3b9b01833a2f9c7d46",
+      "docs/adr/experiments/0187/audit.receipt.json": "cf6b85b7216c525ed707034eb5ab7b7d96f0bd93c9617a4a0968c531d145598b",
+      "docs/adr/experiments/0187/audit.parent-attempt.json": "8dce2b35316644e834f397a23ae602b5b61d0f332e5ab0bcea7ca89032520773",
+      "docs/adr/experiments/0187/audit.parent-receipt.json": "b40193270d386bea21c68709cf261eef8a6b13314595d1c0ee0d7616002e5952",
+      "docs/adr/experiments/0188-design-inputs.json": "dca18b7a555c89e27ae0a3ac4251d93f33b28a354f195334ba0e4748136a797e"
+    }
+  },
+  "phases": {
+    "study": {
+      "attempts": 1,
+      "budget_s": 60,
+      "parent_elapsed_s": 9.052535499911755,
+      "child_elapsed_s": 8.509625458158553,
+      "finalization_gate": "passed",
+      "checkout_frozen": true
+    },
+    "audit": {
+      "attempts": 1,
+      "budget_s": 10,
+      "parent_elapsed_s": 5.724832541774958,
+      "child_elapsed_s": 5.271767625119537,
+      "finalization_gate": "passed",
+      "checkout_frozen": true
+    }
+  },
+  "verified_counts": {
+    "comparisons": 39,
+    "observations": 52,
+    "native_telemetry": 26,
+    "direction_rows": 52,
+    "net_range_signs": 4
+  },
+  "study_work": {
+    "identities": {
+      "attempted": 2,
+      "returned": 2,
+      "completed": 2
+    },
+    "initializations": {
+      "attempted": 1,
+      "returned": 1,
+      "completed": 1
+    },
+    "metadata": {
+      "attempted": 30,
+      "returned": 30,
+      "completed": 30
+    },
+    "native_guard_reads": {
+      "attempted": 5412,
+      "returned": 5412,
+      "completed": 5412
+    },
+    "native_arcs": {
+      "attempted": 2,
+      "returned": 2,
+      "completed": 2
+    },
+    "native_telemetry": {
+      "attempted": 26,
+      "returned": 0,
+      "completed": 26
+    },
+    "native_reference_fields": {
+      "attempted": 156,
+      "returned": 0,
+      "completed": 156
+    },
+    "states": {
+      "attempted": 18036,
+      "returned": 18036,
+      "completed": 18036
+    },
+    "solves": {
+      "attempted": 2,
+      "returned": 2,
+      "completed": 2
+    },
+    "rhs": {
+      "attempted": 4496,
+      "returned": 0,
+      "completed": 4496
+    },
+    "binary64_fields": {
+      "attempted": 13566,
+      "returned": 0,
+      "completed": 13566
+    },
+    "dynamic_totals": {
+      "attempted": 4522,
+      "returned": 0,
+      "completed": 4522
+    },
+    "trials": {
+      "attempted": 368,
+      "returned": 0,
+      "completed": 368
+    },
+    "record_evaluations": {
+      "attempted": 222,
+      "returned": 0,
+      "completed": 222
+    },
+    "body_checks": {
+      "attempted": 156,
+      "returned": 0,
+      "completed": 156
+    },
+    "moon_earth_checks": {
+      "attempted": 52,
+      "returned": 0,
+      "completed": 52
+    },
+    "source_rows": {
+      "attempted": 156,
+      "returned": 0,
+      "completed": 156
+    },
+    "reference_fields": {
+      "attempted": 1248,
+      "returned": 0,
+      "completed": 1248
+    },
+    "model_totals": {
+      "attempted": 52,
+      "returned": 0,
+      "completed": 52
+    }
+  },
+  "audit_work": {
+    "native_calls": 0,
+    "scientific_imports": 0,
+    "kernel_loads": 0,
+    "spacecraft_propagations": 0
+  },
+  "comparison_summary": {
+    "native_step": {
+      "prefix": {
+        "position_norm_m": 8.929977348876668e-05,
+        "velocity_norm_m_s": 2.4508378021523425e-09
+      },
+      "extension": {
+        "position_norm_m": 0.0001465558831199535,
+        "velocity_norm_m_s": 4.317532189126552e-09
+      },
+      "endpoint": {
+        "vector": [
+          -7.62939453125e-05,
+          -7.62939453125e-05,
+          -9.918212890625e-05,
+          1.1204974725842476e-09,
+          -3.145032678730786e-09,
+          2.737579052336514e-09
+        ],
+        "position_norm_m": 0.0001465558831199535,
+        "velocity_norm_m_s": 4.317532189126552e-09
+      }
+    },
+    "native_tighter": {
+      "prefix": {
+        "position_norm_m": 0.0001248985713481514,
+        "velocity_norm_m_s": 7.511045351431458e-09
+      },
+      "extension": {
+        "position_norm_m": 0.000220329728365992,
+        "velocity_norm_m_s": 1.4493259119588293e-08
+      },
+      "endpoint": {
+        "vector": [
+          5.340576171875e-05,
+          0.000213623046875,
+          -7.62939453125e-06,
+          1.4348188415169716e-08,
+          2.042725100181997e-09,
+          -1.064108801074326e-10
+        ],
+        "position_norm_m": 0.000220329728365992,
+        "velocity_norm_m_s": 1.4493259119588293e-08
+      }
+    },
+    "oracle_step": {
+      "prefix": {
+        "position_norm_m": 0.0,
+        "velocity_norm_m_s": 5.259994023634786e-10
+      },
+      "extension": {
+        "position_norm_m": 0.0,
+        "velocity_norm_m_s": 7.809276570793595e-10
+      },
+      "endpoint": {
+        "vector": [
+          0.0,
+          0.0,
+          0.0,
+          -7.60337570682168e-10,
+          1.7644197214394808e-10,
+          -2.4556356947869062e-11
+        ],
+        "position_norm_m": 0.0,
+        "velocity_norm_m_s": 7.809276570793595e-10
+      }
+    }
+  },
+  "direction_summary": {
+    "min_radial_speed_m_s": 978.4949101693692,
+    "max_radial_speed_m_s": 1167.0594500326567,
+    "initial_radius_m": 2785827.7506486317,
+    "net_ranges": [
+      {
+        "profile": "native_normal",
+        "net_range_sign": 1,
+        "net_range_change_m": 652826.982416873
+      },
+      {
+        "profile": "native_tighter",
+        "net_range_sign": 1,
+        "net_range_change_m": 652826.9825108836
+      },
+      {
+        "profile": "dop853_normal",
+        "net_range_sign": 1,
+        "net_range_change_m": 652826.9823576949
+      },
+      {
+        "profile": "dop853_tighter",
+        "net_range_sign": 1,
+        "net_range_change_m": 652826.9823576949
+      }
+    ]
+  },
+  "files": {
+    "study.json.gz": {
+      "bytes": 7734462,
+      "sha256": "11f246abbbe23baa24bce4c2e1dffa09279a5f913f0e18a715c35a110b05e972",
+      "original_bytes": 39412442,
+      "original_sha256": "e5485a6c815b3c34b82dd4bf867d4ea6d5c8e2122bf2cbd24c772d0a162fca7a"
+    },
+    "study.attempt.json": {
+      "bytes": 84,
+      "sha256": "81a9aeb27e0008c6df37ecdca6343a4d96b0807ecf44a2c010344b00ddc0d6b1"
+    },
+    "study.receipt.json": {
+      "bytes": 202,
+      "sha256": "f7e0e87f2314daa5ea167ecd2156aab79e3e71e01ac8ff9bbc5b58d74ddf6ea3"
+    },
+    "study.parent-attempt.json": {
+      "bytes": 198,
+      "sha256": "6869ad01eaac91e3d4023fdb53a755706005d6ccb55d3c8be7928e35ec8c7f91"
+    },
+    "study.parent-receipt.json": {
+      "bytes": 727,
+      "sha256": "b819ac4aefdc76403b0c036f80ee45d1e7468b9311d88a49ffbda03fbaac12df"
+    },
+    "audit.json.gz": {
+      "bytes": 16983,
+      "sha256": "e51b56725be0f9f7cfd2ec65ebf20ac0ccb8b75c77cfe81f75cbbf773880526e",
+      "original_bytes": 2434658,
+      "original_sha256": "09a51f1abf7db2ce338bdc7c732b3100cbf29767d26bb402499ba769f875f463"
+    },
+    "audit.attempt.json": {
+      "bytes": 84,
+      "sha256": "0f283afcac59c9756243b0bc4ac66488462a32d10ebb057f71bdbe7372cae559"
+    },
+    "audit.receipt.json": {
+      "bytes": 193,
+      "sha256": "46a1fa464638c961c0864d0bebcebc78d546f4bcc347cde12ddb263034a4170d"
+    },
+    "audit.parent-attempt.json": {
+      "bytes": 198,
+      "sha256": "1e69d4f23effc91cba4cfa20107fca1dcf4d7fcbb596524cecc142028cbb3541"
+    },
+    "audit.parent-receipt.json": {
+      "bytes": 727,
+      "sha256": "c6a9e12b0c926d81fe9e27bcc2734e1fa435b68beaeb339d7704576664db97a4"
+    }
+  }
+}

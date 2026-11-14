@@ -345,7 +345,14 @@ checked. No burn replay, escape or full-force mission claim.
 R5.42: both artificial cases pass the same-start integration and audit
 gates; outward and inward direction remain distinct. 52 focused tests
 and 6,141 guarded regression tests pass (494 skipped).
-R5.43 remains unexecuted and requires separate authorization.
+
+[ADR0190](../docs/adr/0190-post-cutoff-coast-outbound-at-samples.md) completes
+R5.43. From the exact simulated cutoff, all 39 comparisons, 52 force
+observations and 26 native telemetry rows pass. The independent audit
+finds 52 positive radial signs and four positive net range signs:
+about 652.827 km farther from the lunar centre after 600 s. The
+sampled numerical and outward checks pass; the departure handoff,
+lunar escape, continuous clearance and strict M3 remain open.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

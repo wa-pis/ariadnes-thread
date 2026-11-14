@@ -7162,3 +7162,24 @@ late finalization have focused tests.
 All 52 focused tests pass; guarded regression: 6,141 passed, 494 skipped. Ruff,
 strict OpenSpec and immutable input/source checks pass. No new
 SPICE access, real force or record evaluations, or R5.43 invocation.
+
+## R5.43 real ephemeris post-cutoff result (2026-11-14)
+
+[ADR0190](../../../docs/adr/0190-post-cutoff-coast-outbound-at-samples.md)
+records the once-only study (9.05254 s) and independent offline audit
+(5.72483 s) at clean `ba06f72`. Model B starts from the exact
+ADR0079/ADR0098 cutoff (TDB s 978998315.9635216, 1351.7475727997967 kg)
+and coasts for 600 s under Sun, Moon and Earth point-mass gravity.
+Both RK4 and both DOP853 profiles reach all 13 coepochs. All 39
+trajectory comparisons, 52 adaptive observations and 26 native
+telemetry rows pass. At +600 s the tighter cross-integrator
+difference is 0.22033 mm and 1.44933e-8 m/s. The independent audit
+requires zero native calls, kernel loads, scientific imports or
+propagations; both receipt chains and finalization gates pass.
+
+The separate outward verdict is `outbound-at-samples`: 52 positive
+radial signs and four positive net range signs, with about 652.827 km
+added to the lunar-centred range in each profile. This is discrete
+same-model evidence. It leaves continuous departure, finite-radius
+handoff, lunar escape, full mission accuracy and safety open. No
+model A integration or burn replay occurred.
