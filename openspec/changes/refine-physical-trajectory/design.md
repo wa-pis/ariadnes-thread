@@ -7221,3 +7221,24 @@ with no native work, new ephemerides or trajectory computation.
 24 focused checks and guarded regression (6,165 passed, 494 skipped)
 pass. The evidence does not close a mission handoff, prove
 continuous clearance or establish escape.
+
+## R5.46 design the prospective lunar range extension (2026-11-14)
+
+[ADR0193](../../../docs/adr/0193-design-lunar-range-extension.md)
+fixes a 50 s unpowered model B restart from the audited R5.43
+tighter RK4 endpoint, with its exact shared six-state and mass.
+Use the fixed 3,474,800 m marker (twice the pinned lunar shape
+radius), 11 coepochs, and the unchanged two RK4 and two DOP853
+profiles, GMs, kernel pool, force and profile gates. No prior
+coast or engine replay. Stored endpoint deltas explicitly
+distinguish a same-start restart from four exact old joins.
+
+An independent offline audit must reproduce 33 state comparisons,
+36 adaptive force/source observations, 22 native telemetry rows,
+44 common and 152 mesh direction rows, guards and receipts.
+Separate numerical agreement, marker-bracketed,
+marker-not-established and unavailable evidence. The 60 s
+study and 10 s audit are separately capped. R5.47 prepares
+on artificial data only; R5.48 still requires separate live
+authorization. No event interpolation, escaped-body claim,
+force switch or actual mission boundary change.

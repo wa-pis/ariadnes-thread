@@ -493,3 +493,27 @@ diagnostic marker using the saved R5.43 states only.
 - **WHEN** the worksheet runs once under its 10 s inclusive offline cap
 - **THEN** it SHALL make no new SPICE calls, scientific imports, kernel loads, record evaluations or integrations and SHALL retain actual counts, signed endpoints, source hashes, budget and complete or partial evidence without replacing the marker, relaxing gates or retrying
 - **AND** a pass SHALL describe a retrospective sampled bracket for each saved continuous model trajectory, with no interpolated crossing time or first-crossing, escape, continuous safety, force-switch, mission handoff or M3 qualification claim
+
+### Requirement: Check a prospective lunar range marker
+
+R5.46–R5.48 SHALL independently check a fixed 50 s unpowered
+B-only extension toward a prospective 3,474,800 m lunar-centred
+diagnostic marker without replaying the archived coast.
+
+#### Scenario: Restart both numerical engines from one archived state
+
+- **WHEN** verified artificial preparation and separate authorization permit R5.48
+- **THEN** RK4 h1/h0.5 and both unchanged DOP853 profiles SHALL start from the exact archived R5.43 tighter RK4 six-state at 978998915.9635216 TDB s with 1351.7475727997967 kg of fixed mass metadata and run through 978998965.9635216 TDB s with no thrust or mass flow; preserve the pinned Sun/Moon/Earth point-mass model, metadata and states and record all old-endpoint deltas without substituting them as starts
+- **AND** the eleven 5 s coepochs SHALL pass all 33 unchanged numerical comparisons; all 36 adaptive force/source observations, 22 native telemetry rows and both guard histories SHALL satisfy the prior force and source gates
+
+#### Scenario: Audit the marker and keep negative findings
+
+- **WHEN** an independent saved-data audit reconstructs the numerical evidence
+- **THEN** all 44 coepoch and 152 native mesh directions SHALL use the arithmetic gates of 1e-6 m and 1e-9 m/s with independently derived exact signs; `marker-bracketed` SHALL require one strict outward pair per grid, identical four coepoch brackets and positive-width overlap of both native brackets within the common bracket
+- **AND** complete audited counterevidence SHALL be `marker-not-established` with its reason; missing or failed required evidence SHALL be `unavailable`; neither case SHALL trigger retry, interpolation, longer propagation or altered data or gates
+
+#### Scenario: Bound offline preparation and one authorized attempt
+
+- **WHEN** the private extension is prepared or executed under ADR0193
+- **THEN** preparation SHALL verify artificial success, negative and failure paths with focused and guarded full pytest, Ruff, strict OpenSpec and input hashes, with zero live work; later execution SHALL permit one 60 s study with two native arcs, two adaptive solves and at most 40,506 explicit state attempts, and one 10 s independent stdlib audit with zero native/scientific work, both with inclusive finalization, verified counters and bound receipts
+- **AND** evidence SHALL NOT qualify first or unique physical crossing, a force switch, mission handoff, escape, continuous safety or strict M3

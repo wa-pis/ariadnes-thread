@@ -366,6 +366,8 @@ mesh brackets overlap at 209–209.5 s. The once-only 10 s offline
 audit passes. Farther-range evidence and actual burn interfaces
 remain unverified.
 
+[ADR0193](../docs/adr/0193-design-lunar-range-extension.md) completes R5.46. Extend model B by a fixed 50 s from the archived tighter RK4 endpoint, with independent engines and a prospective 3,474.8 km diagnostic marker. Prepare on artificial data in R5.47; R5.48 requires separate live authorization.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

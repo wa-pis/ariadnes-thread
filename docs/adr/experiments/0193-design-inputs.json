@@ -1,0 +1,308 @@
+{
+  "stage": "R5.46",
+  "contract": "ADR0193",
+  "base_revision": "c1a67e1d33717af97e1194459ec501c46c07f8dd",
+  "candidate": "d0001-t0035",
+  "source_sha256": {
+    "0188-design-inputs.json": "dca18b7a555c89e27ae0a3ac4251d93f33b28a354f195334ba0e4748136a797e",
+    "0190/manifest.json": "6a4a04491af0f94805b7f21dc99aa1ee967fc434fc0cef091a60f8c14d9e7a61",
+    "0192/manifest.json": "b10cf640b5af8ca1d246b1c4df1964ad2f64662469361f2acc4ac1903b363bd6",
+    "0192/evidence.json": "38de99dd579259d11fd35c1e6dd16fbb819772ea9fe0be2a9d3dcf2bdb132171"
+  },
+  "source_report_files": {
+    "study.json.gz": {
+      "bytes": 7734462,
+      "sha256": "11f246abbbe23baa24bce4c2e1dffa09279a5f913f0e18a715c35a110b05e972",
+      "original_bytes": 39412442,
+      "original_sha256": "e5485a6c815b3c34b82dd4bf867d4ea6d5c8e2122bf2cbd24c772d0a162fca7a"
+    },
+    "study.attempt.json": {
+      "bytes": 84,
+      "sha256": "81a9aeb27e0008c6df37ecdca6343a4d96b0807ecf44a2c010344b00ddc0d6b1"
+    },
+    "study.receipt.json": {
+      "bytes": 202,
+      "sha256": "f7e0e87f2314daa5ea167ecd2156aab79e3e71e01ac8ff9bbc5b58d74ddf6ea3"
+    },
+    "study.parent-attempt.json": {
+      "bytes": 198,
+      "sha256": "6869ad01eaac91e3d4023fdb53a755706005d6ccb55d3c8be7928e35ec8c7f91"
+    },
+    "study.parent-receipt.json": {
+      "bytes": 727,
+      "sha256": "b819ac4aefdc76403b0c036f80ee45d1e7468b9311d88a49ffbda03fbaac12df"
+    },
+    "audit.json.gz": {
+      "bytes": 16983,
+      "sha256": "e51b56725be0f9f7cfd2ec65ebf20ac0ccb8b75c77cfe81f75cbbf773880526e",
+      "original_bytes": 2434658,
+      "original_sha256": "09a51f1abf7db2ce338bdc7c732b3100cbf29767d26bb402499ba769f875f463"
+    },
+    "audit.attempt.json": {
+      "bytes": 84,
+      "sha256": "0f283afcac59c9756243b0bc4ac66488462a32d10ebb057f71bdbe7372cae559"
+    },
+    "audit.receipt.json": {
+      "bytes": 193,
+      "sha256": "46a1fa464638c961c0864d0bebcebc78d546f4bcc347cde12ddb263034a4170d"
+    },
+    "audit.parent-attempt.json": {
+      "bytes": 198,
+      "sha256": "1e69d4f23effc91cba4cfa20107fca1dcf4d7fcbb596524cecc142028cbb3541"
+    },
+    "audit.parent-receipt.json": {
+      "bytes": 727,
+      "sha256": "c6a9e12b0c926d81fe9e27bcc2734e1fa435b68beaeb339d7704576664db97a4"
+    }
+  },
+  "restart": {
+    "epoch_tdb_s": 978998915.9635216,
+    "epoch_binary64_hex": "0x1.d2d2b41fb54adp+29",
+    "state_si": [
+      -47231822604.449776,
+      128439755768.88434,
+      55656732716.610825,
+      -30724.05836380021,
+      -9834.208732510158,
+      -5360.86202012339
+    ],
+    "state_binary64_hex": [
+      "-0x1.5fe78d618e649p+35",
+      "0x1.de79b23f8e264p+36",
+      "0x1.9eaccb05938bep+35",
+      "-0x1.e0103bc3b854bp+14",
+      "-0x1.3351ab7bf345fp+13",
+      "-0x1.4f0dcad59ce74p+12"
+    ],
+    "mass_kg": 1351.7475727997967,
+    "mass_binary64_hex": "0x1.51efd83b95a06p+10",
+    "moon_state_si": [
+      -47228860259.74755,
+      128441468992.35202,
+      55656395484.36316,
+      -29580.26039239458,
+      -9211.723379017854,
+      -4051.1833692103537
+    ],
+    "radius_m": 3438654.733159515,
+    "radial_speed_m_s": 1167.0594500326567,
+    "archived_state_minus_restart_signed_si": {
+      "native_normal": [
+        7.62939453125e-05,
+        7.62939453125e-05,
+        9.918212890625e-05,
+        -1.1204974725842476e-09,
+        3.145032678730786e-09,
+        -2.737579052336514e-09
+      ],
+      "native_tighter": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dop853_normal": [
+        5.340576171875e-05,
+        0.000213623046875,
+        -7.62939453125e-06,
+        1.5108525985851884e-08,
+        1.8662831280380487e-09,
+        -8.185452315956354e-11
+      ],
+      "dop853_tighter": [
+        5.340576171875e-05,
+        0.000213623046875,
+        -7.62939453125e-06,
+        1.4348188415169716e-08,
+        2.042725100181997e-09,
+        -1.064108801074326e-10
+      ]
+    }
+  },
+  "coast": {
+    "model_id": "r5-ssb-sun-moon-earth-point-v1",
+    "geometry": "SI, SSB, J2000, TDB seconds since J2000, NONE",
+    "sources": [
+      "Sun",
+      "Moon",
+      "Earth"
+    ],
+    "gm_m3_s2": {
+      "Sun": 1.327124400420322e+20,
+      "Moon": 4902800121846.8,
+      "Earth": 398600435468295.9
+    },
+    "radii_m": {
+      "Sun": 696000000.0,
+      "Moon": 1737400.0,
+      "Earth": 6378136.6
+    },
+    "thrust_n": 0,
+    "mass_flow_kg_s": 0,
+    "marker_radius_m": 3474800,
+    "horizon_s": 50,
+    "stop_tdb_s": 978998965.9635216,
+    "stop_binary64_hex": "0x1.d2d2b5afb54adp+29",
+    "coepoch_offsets_s": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50
+    ],
+    "coepochs_tdb_s": [
+      978998915.9635216,
+      978998920.9635216,
+      978998925.9635216,
+      978998930.9635216,
+      978998935.9635216,
+      978998940.9635216,
+      978998945.9635216,
+      978998950.9635216,
+      978998955.9635216,
+      978998960.9635216,
+      978998965.9635216
+    ],
+    "native_steps_s": [
+      1,
+      0.5
+    ],
+    "dop853_settings": [
+      {
+        "rtol": 1e-12,
+        "atol": [
+          1e-07,
+          1e-07,
+          1e-07,
+          1e-10,
+          1e-10,
+          1e-10
+        ],
+        "max_step": 5.0,
+        "first_step": 1.0
+      },
+      {
+        "rtol": 1e-13,
+        "atol": [
+          1e-08,
+          1e-08,
+          1e-08,
+          1e-11,
+          1e-11,
+          1e-11
+        ],
+        "max_step": 2.5,
+        "first_step": 0.5
+      }
+    ],
+    "gates": {
+      "native_step_and_tighter_cross_engine": {
+        "position_m": 0.01,
+        "velocity_m_s": 1e-05
+      },
+      "dop853_step": {
+        "position_m": 0.001,
+        "velocity_m_s": 1e-06
+      }
+    },
+    "direction_metric_gates": {
+      "radius_m": 1e-06,
+      "radial_speed_m_s": 1e-09
+    }
+  },
+  "record_metadata": [
+    {
+      "body_id": 10,
+      "centre_id": 0,
+      "frame_id": 1,
+      "type": 2,
+      "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+      "record_index": 3048,
+      "record_address": 1965065,
+      "record_interval_tdb_s": [
+        978739200,
+        980121600
+      ],
+      "segment_interval_tdb_s": [
+        -3234816000,
+        3234816000
+      ]
+    },
+    {
+      "body_id": 301,
+      "centre_id": 399,
+      "frame_id": 1,
+      "type": 2,
+      "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+      "record_index": 12192,
+      "record_address": 1590733,
+      "record_interval_tdb_s": [
+        978739200,
+        979084800
+      ],
+      "segment_interval_tdb_s": [
+        -3234816000,
+        3234816000
+      ]
+    },
+    {
+      "body_id": 399,
+      "centre_id": 0,
+      "frame_id": 1,
+      "type": 2,
+      "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+      "record_index": 12192,
+      "record_address": 2522061,
+      "record_interval_tdb_s": [
+        978739200,
+        979084800
+      ],
+      "segment_interval_tdb_s": [
+        -3234816000,
+        3234816000
+      ]
+    }
+  ],
+  "caps": {
+    "study_s": 60,
+    "audit_s": 10,
+    "native_arcs": 2,
+    "dop853_solves": 2,
+    "rhs": 10000,
+    "trials": 1000,
+    "kernel_pool_setups": 1,
+    "kernel_inventory_calls": 30,
+    "gm_acquisitions": 0,
+    "native_guard_reads": 462,
+    "adaptive_state_attempts": 40044,
+    "explicit_state_attempts": 40506,
+    "comparison_rows": 33,
+    "common_direction_rows": 44,
+    "mesh_direction_rows": 152,
+    "adaptive_observations": 36,
+    "native_telemetry_rows": 22,
+    "native_decimal_fields": 132,
+    "body_checks": 108,
+    "moon_earth_checks": 36,
+    "source_rows": 108,
+    "reference_fields": 864,
+    "sampled_totals": 36,
+    "record_evaluations": 216,
+    "adaptive_binary64_fields": 30066,
+    "adaptive_binary64_totals": 10022
+  },
+  "design_work": {
+    "native_state_queries": 0,
+    "force_evaluations": 0,
+    "record_evaluations": 0,
+    "propagations": 0
+  }
+}
