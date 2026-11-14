@@ -298,6 +298,13 @@ R5.36 offline preparation is next. R5.37 needs separate authorization.
 No SPICE, new forces or propagation in the design; no Earth sensitivity
 result yet. The native A reference remains conditional.
 
+[ADR0183](../docs/adr/0183-prepare-earth-gravity-comparison.md) completes
+R5.36: synthetic B study and independent audit pass the specified
+sample, trajectory, telemetry and signed-effect checks. Guarded full
+regression: 6152 passed, 407 skipped. No SPICE or real
+trajectory work. R5.37 awaits separate authorization; the real effect
+and deadlines are unverified.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

@@ -51,7 +51,7 @@ pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor reta
 External2.704s/1.643s, finalizations/caps pass;5132 RHS/15417 states/424 trials, no native propagation.6182 tests/Ruff reused on unchanged bytes.
 [ADR0165](docs/adr/0165-reproduce-lunar-source-rounding.md):R5.18 localizes 13.269 µm before SI /16.645 µm after; staged centre sum reproduces42/42 saved position components. No native work/replay.
 [ADR0181](docs/adr/0181-split-moon-coast-recheck-passes.md): R5.34 passes at `27dfc6d`: both real 300 s A profiles, 21 comparisons and 28 observations pass independent audit. Worst lunar overall error: 50.60% of limit. R5.17 remains failed.
-[ADR0182](docs/adr/0182-design-earth-gravity-sensitivity.md): R5.35 design complete. Reuse saved A; compare B with Earth added at the same seven nodes in two engines. Next: offline R5.36 preparation; R5.37 needs separate authorization. No SPICE or propagation; Earth sensitivity and M3 unverified.
+[ADR0183](docs/adr/0183-prepare-earth-gravity-comparison.md): R5.36 preparation passes: 26 focused and 6152/407 guarded pass/skip. Synthetic B study/audit only; no SPICE or real solve. R5.37 is the next separate, once-only real check and needs authorization. Earth sensitivity and M3 remain open.
 ## Boundaries and references
 - Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
 - R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.

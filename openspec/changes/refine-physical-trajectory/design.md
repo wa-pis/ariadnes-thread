@@ -6821,3 +6821,16 @@ later checks unavailable and preserves partial evidence; no retry
 or budget/tolerance/input change. A pass is conditional on the archived
 A reference, and does not verify unsampled source fidelity, continuous
 safety, the full transfer, R5.3/R5.17, or strict M3. Automation stays paused.
+
+## R5.36 prepare the Earth-gravity comparison (2026-11-14)
+
+[ADR0183](../../../docs/adr/0183-prepare-earth-gravity-comparison.md) records the
+private B study, native guard observer, sampled reference and
+independent saved-data audit. A metadata/receipt binding uses the
+unchanged archives. The synthetic study and independent audit passed
+two profiles per engine, 14 telemetry rows, 28 observations, 21
+trajectory comparisons and seven signed-effect rows. Focused
+checks: 26 passing; guarded full regression: 6152 passing
+and 407 skipped. Ruff, strict OpenSpec and frozen hashes pass.
+No real source queries, retained force or record evaluations, or
+R5.37 execution. B convergence and timing on real inputs remain open.
