@@ -6649,3 +6649,20 @@ synthetic records; the observer preserves t/q/nfev exactly. All 90
 focused tests and 6126 full guarded tests pass (407 live-access
 skips). Tested helpers and frozen inputs are pinned. No SPICE queries,
 real coast or R5.34 execution; real convergence and deadlines are open.
+
+## R5.34 split Moon real recheck (2026-11-14)
+
+[ADR0181](../../../docs/adr/0181-split-moon-coast-recheck-passes.md)
+records one live two-profile model A study at `27dfc6d` and one
+independent saved-data audit. Both 300 s profiles, 21 trajectory
+comparisons, 28 observations, 112 state parity checks and 336
+acceleration gate outcomes pass under ADR0179's unchanged limits.
+The study used 11,628 explicit state requests and 2,900 RHS records.
+Both child and parent receipts pass for each phase (3.5283 s study;
+1.4023 s audit). The worst sampled Moon overall error is
+7.34879e-12 m/s² against a 1.45223e-11 m/s² bound. All observed high
+epoch words overlap R5.24; the solves supplied their own state and
+motion. This qualifies numerical agreement at the specified nodes
+and samples, conditional on the saved reference. Neither historical
+failure is requalified; Earth-force sensitivity, continuous safety
+and strict M3 remain open. No replay and no change to automation.

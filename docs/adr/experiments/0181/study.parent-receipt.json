@@ -1,0 +1,16 @@
+{
+  "returncode": 0,
+  "stderr": "",
+  "contract": "ADR0179",
+  "phase": "study",
+  "revision": "27dfc6d9182a1a467aa8367349ed215c556745b1",
+  "started_s": 2839917.729819458,
+  "parent_attempt_sha256": "98790f7c7c2d0e15d8f587af48b6a6a1a2daf4269e7317af6bb59b422d03110e",
+  "attempt_sha256": "c6bd43fa6594fd2b9f17a85a62815bca1f5506f947d13671545f5292989399c2",
+  "evidence_sha256": "4d5e866d41b4ce27454d006839ec26d7edef2cba937f0f1e0e0416178b60fc97",
+  "child_receipt_sha256": "b80b23513693fdec5d9b8a195a14e1d81f4ebd0ed6fedb493c4288df1277283d",
+  "preparation_sha256": "9c65718d1be654ed3f9cc2edb2f7a50c9c0d92ceee2192ab6492d1801bdf8df0",
+  "checkout_frozen": true,
+  "elapsed_s": 3.528255541808903,
+  "finalization_gate": "passed"
+}

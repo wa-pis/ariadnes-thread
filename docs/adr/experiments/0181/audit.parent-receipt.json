@@ -1,0 +1,16 @@
+{
+  "returncode": 0,
+  "stderr": "",
+  "contract": "ADR0179",
+  "phase": "audit",
+  "revision": "27dfc6d9182a1a467aa8367349ed215c556745b1",
+  "started_s": 2839930.535606291,
+  "parent_attempt_sha256": "53148a21026df6eca9603bb7400ae71fbcd7bb9f78ed3af9499a078a647efc20",
+  "attempt_sha256": "0c1f60f2e9b562beb6da897ef62a054c7aab3c627e0c6e445098a6e6207f69e4",
+  "evidence_sha256": "90d9a60611c0a69667dc203563175916e8726099f7b0d2ea1490b80925ea90a3",
+  "child_receipt_sha256": "e50dd82277ea1a8a19773d4c601295bacd4999f0fe282976b06982c354472707",
+  "preparation_sha256": "9c65718d1be654ed3f9cc2edb2f7a50c9c0d92ceee2192ab6492d1801bdf8df0",
+  "checkout_frozen": true,
+  "elapsed_s": 1.4022887088358402,
+  "finalization_gate": "passed"
+}

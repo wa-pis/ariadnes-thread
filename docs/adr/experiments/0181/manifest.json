@@ -1,0 +1,328 @@
+{
+  "contract": "ADR0179",
+  "result_record": "ADR0181",
+  "measured_revision": "27dfc6d9182a1a467aa8367349ed215c556745b1",
+  "preparation_sha256": "9c65718d1be654ed3f9cc2edb2f7a50c9c0d92ceee2192ab6492d1801bdf8df0",
+  "verdict": "passed_conditional_numerical_A",
+  "phases": {
+    "study": {
+      "cap_s": 60,
+      "child_elapsed_s": 3.319726957939565,
+      "parent_elapsed_s": 3.528255541808903,
+      "finalization_gate": "passed"
+    },
+    "audit": {
+      "cap_s": 10,
+      "child_elapsed_s": 1.3446914167143404,
+      "parent_elapsed_s": 1.4022887088358402,
+      "finalization_gate": "passed"
+    }
+  },
+  "study_counts": {
+    "identities": {
+      "attempted": 2,
+      "returned": 2,
+      "completed": 2
+    },
+    "initializations": {
+      "attempted": 1,
+      "returned": 1,
+      "completed": 1
+    },
+    "metadata": {
+      "attempted": 30,
+      "returned": 30,
+      "completed": 30
+    },
+    "states": {
+      "attempted": 11628,
+      "returned": 11628,
+      "completed": 11628
+    },
+    "native_guards": {
+      "attempted": 42,
+      "returned": 0,
+      "completed": 42
+    },
+    "solves": {
+      "attempted": 2,
+      "returned": 2,
+      "completed": 2
+    },
+    "rhs": {
+      "attempted": 2900,
+      "returned": 0,
+      "completed": 2900
+    },
+    "binary64_fields": {
+      "attempted": 5828,
+      "returned": 0,
+      "completed": 5828
+    },
+    "dynamic_totals": {
+      "attempted": 2914,
+      "returned": 0,
+      "completed": 2914
+    },
+    "trials": {
+      "attempted": 238,
+      "returned": 0,
+      "completed": 238
+    },
+    "record_evaluations": {
+      "attempted": 114,
+      "returned": 0,
+      "completed": 114
+    },
+    "body_checks": {
+      "attempted": 84,
+      "returned": 0,
+      "completed": 84
+    },
+    "moon_earth_checks": {
+      "attempted": 28,
+      "returned": 0,
+      "completed": 28
+    },
+    "source_rows": {
+      "attempted": 56,
+      "returned": 0,
+      "completed": 56
+    },
+    "reference_fields": {
+      "attempted": 448,
+      "returned": 0,
+      "completed": 448
+    },
+    "model_totals": {
+      "attempted": 28,
+      "returned": 0,
+      "completed": 28
+    }
+  },
+  "audit_counts": {
+    "rhs": {
+      "attempted": 2900,
+      "completed": 2900
+    },
+    "trials": {
+      "attempted": 238,
+      "completed": 238
+    },
+    "binary64_fields": {
+      "attempted": 5828,
+      "completed": 5828
+    },
+    "dynamic_totals": {
+      "attempted": 2914,
+      "completed": 2914
+    },
+    "body_checks": {
+      "attempted": 84,
+      "completed": 84
+    },
+    "moon_earth_checks": {
+      "attempted": 28,
+      "completed": 28
+    },
+    "record_evaluations": {
+      "attempted": 114,
+      "completed": 114
+    },
+    "source_rows": {
+      "attempted": 56,
+      "completed": 56
+    },
+    "reference_fields": {
+      "attempted": 448,
+      "completed": 448
+    },
+    "model_totals": {
+      "attempted": 28,
+      "completed": 28
+    },
+    "native_guards": {
+      "attempted": 42,
+      "completed": 42
+    }
+  },
+  "audit_checks": {
+    "passed": true,
+    "complete_profiles": 2,
+    "observations": 28,
+    "comparisons": 21,
+    "historical_final_identity_repaired": false,
+    "continuous_safety_verified": false
+  },
+  "trajectory_maxima": {
+    "native_step": {
+      "max_position_error_m": "0.0001930101110942614338378230923115672933178439416092051285923770051753292504052269422207182683336975278",
+      "max_velocity_error_m_s": "3.438942231775421815489670992663112227447608383132338107625982300573226185877178610231633507956986890E-8",
+      "position_limit_m": 0.01,
+      "velocity_limit_m_s": 1e-05
+    },
+    "native_tighter": {
+      "max_position_error_m": "0.0001632761730883231857166466042319069827660176661526936345395839874816596025671391883262142753545534926",
+      "max_velocity_error_m_s": "2.772798580876344443491487566927847655071399122839737663774287634147704999144090094920024688419413389E-8",
+      "position_limit_m": 0.01,
+      "velocity_limit_m_s": 1e-05
+    },
+    "oracle_step": {
+      "max_position_error_m": "0",
+      "max_velocity_error_m_s": "1.540946072825790038871961827458539703674842524781513399689629279546847408171954745518291256937037263E-9",
+      "position_limit_m": 0.001,
+      "velocity_limit_m_s": 1e-06
+    }
+  },
+  "force_worst_fraction_by_gate": {
+    "Sun": {
+      "returned_geometry": {
+        "error_norm_m_s2": "2.3610913268034957182332527029352729720386762545165925968093164216104517149092120E-18",
+        "envelope_m_s2": "6.0997657966964569205070005510040418900192873081876550078421441406639490982003782E-14",
+        "passed": true,
+        "fraction_of_limit": "0.00003870790134405206039716577746",
+        "profile": "tighter",
+        "kind": "rhs",
+        "index": 1,
+        "decimal_digits": 80
+      },
+      "overall": {
+        "error_norm_m_s2": "2.4682655537036789336123441586264754658568489582149032313946288806795563527051956E-18",
+        "envelope_m_s2": "6.0997657966964570329049468297944613150558518953792192423668738260469556918067677E-14",
+        "passed": true,
+        "fraction_of_limit": "0.00004046492334247414979166992691",
+        "profile": "tighter",
+        "kind": "rhs",
+        "index": 1,
+        "decimal_digits": 80
+      }
+    },
+    "Moon": {
+      "returned_geometry": {
+        "error_norm_m_s2": "3.6868909313536078673897832710392504695865057398216630402224507283064417905828944E-16",
+        "envelope_m_s2": "1.4522791930938013629696727665538894179156364583746908496979312955650568568934270E-11",
+        "passed": true,
+        "fraction_of_limit": "0.00002538692937891230264051647168",
+        "profile": "normal",
+        "kind": "output",
+        "index": 5,
+        "decimal_digits": 80
+      },
+      "overall": {
+        "error_norm_m_s2": "7.3487895215222091409849179131250943280103619417953129327203016712038891489732263E-12",
+        "envelope_m_s2": "1.4522345478109679806031190706854643103048122404130474974968449553467988016842778E-11",
+        "passed": true,
+        "fraction_of_limit": "0.5060332390934672896697087701",
+        "profile": "normal",
+        "kind": "rhs",
+        "index": 6,
+        "decimal_digits": 80
+      }
+    },
+    "A": {
+      "returned_geometry": {
+        "error_norm_m_s2": "4.4451582409139594906060211122520197299912748846842407130310864709990369977955958E-16",
+        "envelope_m_s2": "1.4583363808261962724359237721651709711762307438908594883054202123602083009841985E-11",
+        "passed": true,
+        "fraction_of_limit": "0.00003048102138407620926147146178",
+        "profile": "normal",
+        "kind": "output",
+        "index": 1,
+        "decimal_digits": 80
+      },
+      "overall": {
+        "error_norm_m_s2": "7.3487697575391477705377859606752253656392901904814525502861660170181931781433688E-12",
+        "envelope_m_s2": "1.4583343135980231924536225032442795153143050576588020249403898596728335638408986E-11",
+        "passed": true,
+        "fraction_of_limit": "0.5039153017944258845320369145",
+        "profile": "normal",
+        "kind": "rhs",
+        "index": 6,
+        "decimal_digits": 80
+      }
+    }
+  },
+  "sample_hi_seen_in_r524": 28,
+  "rounded_split_closure_samples": 28,
+  "solver_nfev": {
+    "normal": 787,
+    "tighter": 2107
+  },
+  "rhs_by_profile": {
+    "normal": 790,
+    "tighter": 2110
+  },
+  "trials_by_profile": {
+    "normal": {
+      "accepted": 64,
+      "rejected": 0
+    },
+    "tighter": {
+      "accepted": 166,
+      "rejected": 8
+    }
+  },
+  "tested_code_check": "ADR0180 (90 focused, 6126 passed and 407 live-access skipped, Ruff); reused unchanged",
+  "files": {
+    "study.json.gz": {
+      "original_bytes": 24853864,
+      "retained_bytes": 4764536,
+      "original_sha256": "4d5e866d41b4ce27454d006839ec26d7edef2cba937f0f1e0e0416178b60fc97",
+      "retained_sha256": "5d1ec9f2deedcb8485761c4f9702e86ad7e1cf8328dd0adf627a27ea69c6f4cc"
+    },
+    "study.attempt.json": {
+      "original_bytes": 84,
+      "retained_bytes": 84,
+      "original_sha256": "c6bd43fa6594fd2b9f17a85a62815bca1f5506f947d13671545f5292989399c2",
+      "retained_sha256": "c6bd43fa6594fd2b9f17a85a62815bca1f5506f947d13671545f5292989399c2"
+    },
+    "study.receipt.json": {
+      "original_bytes": 202,
+      "retained_bytes": 202,
+      "original_sha256": "b80b23513693fdec5d9b8a195a14e1d81f4ebd0ed6fedb493c4288df1277283d",
+      "retained_sha256": "b80b23513693fdec5d9b8a195a14e1d81f4ebd0ed6fedb493c4288df1277283d"
+    },
+    "study.parent-attempt.json": {
+      "original_bytes": 198,
+      "retained_bytes": 198,
+      "original_sha256": "98790f7c7c2d0e15d8f587af48b6a6a1a2daf4269e7317af6bb59b422d03110e",
+      "retained_sha256": "98790f7c7c2d0e15d8f587af48b6a6a1a2daf4269e7317af6bb59b422d03110e"
+    },
+    "study.parent-receipt.json": {
+      "original_bytes": 727,
+      "retained_bytes": 727,
+      "original_sha256": "08dd96e73472dca8de709374de566c1c4cbbbbd6bdc15a2ffd131567ace0f21a",
+      "retained_sha256": "08dd96e73472dca8de709374de566c1c4cbbbbd6bdc15a2ffd131567ace0f21a"
+    },
+    "audit.json.gz": {
+      "original_bytes": 1203487,
+      "retained_bytes": 6650,
+      "original_sha256": "90d9a60611c0a69667dc203563175916e8726099f7b0d2ea1490b80925ea90a3",
+      "retained_sha256": "871499eeab86342349e226ef471af1f3086ca3e4c7e6849711094d7db8994645"
+    },
+    "audit.attempt.json": {
+      "original_bytes": 84,
+      "retained_bytes": 84,
+      "original_sha256": "0c1f60f2e9b562beb6da897ef62a054c7aab3c627e0c6e445098a6e6207f69e4",
+      "retained_sha256": "0c1f60f2e9b562beb6da897ef62a054c7aab3c627e0c6e445098a6e6207f69e4"
+    },
+    "audit.receipt.json": {
+      "original_bytes": 194,
+      "retained_bytes": 194,
+      "original_sha256": "e50dd82277ea1a8a19773d4c601295bacd4999f0fe282976b06982c354472707",
+      "retained_sha256": "e50dd82277ea1a8a19773d4c601295bacd4999f0fe282976b06982c354472707"
+    },
+    "audit.parent-attempt.json": {
+      "original_bytes": 198,
+      "retained_bytes": 198,
+      "original_sha256": "53148a21026df6eca9603bb7400ae71fbcd7bb9f78ed3af9499a078a647efc20",
+      "retained_sha256": "53148a21026df6eca9603bb7400ae71fbcd7bb9f78ed3af9499a078a647efc20"
+    },
+    "audit.parent-receipt.json": {
+      "original_bytes": 728,
+      "retained_bytes": 728,
+      "original_sha256": "c7d9fabc271e7ab7a5861d05ac42325d8369b01d04bae2d66f726996893a939f",
+      "retained_sha256": "c7d9fabc271e7ab7a5861d05ac42325d8369b01d04bae2d66f726996893a939f"
+    }
+  }
+}

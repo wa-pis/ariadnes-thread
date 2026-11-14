@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0181 — Split Moon coast recheck passes](0181-split-moon-coast-recheck-passes.md): R5.34 passes two real 300 s model A solves, 21 trajectory comparisons and all 28 sampled observations; separate offline audit passes. Earth-force sensitivity and M3 remain open.
 - [0180 — Prepare the split Moon integration recheck](0180-prepare-split-moon-integration.md): R5.33 matches 28 archived Moon force results, verifies a synthetic study and independent audit, and leaves real R5.34 execution pending.
 - [0179 — Design the split Moon integration recheck](0179-design-split-moon-integration-recheck.md): R5.32 freezes the private split-position force path, offline preparation and a separately authorized A-only recheck. No execution.
 - [0178 — Consolidate frozen lunar force coverage](0178-consolidate-lunar-force-coverage.md): R5.31 reconciles all 28 frozen R5.24 observations through 7 captured, 10 bitwise-identical and 11 paired results. Both original gates are supported; no new evaluations.

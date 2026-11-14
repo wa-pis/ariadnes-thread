@@ -281,6 +281,15 @@ both synthetic profiles and their independent audit pass. Guarded
 regression: 6126 passed, 407 skipped. R5.34 is pending separate
 authorization; no SPICE or real coast was run.
 
+[ADR0181](../docs/adr/0181-split-moon-coast-recheck-passes.md) completes
+R5.34. One real model A study and one offline audit passed both 300 s
+profiles, all 21 trajectory comparisons and all 28 observations
+(112 source and 336 acceleration gate outcomes). The worst sampled
+Moon overall error reached 50.60% of its unchanged limit. This
+qualifies numerical agreement only at the given nodes and samples.
+R5.17 and R5.3 retain their failures; Earth-force sensitivity and
+strict M3 remain open. No replay; automation stays paused.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:
