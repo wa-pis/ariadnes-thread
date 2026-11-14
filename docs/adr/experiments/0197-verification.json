@@ -1,0 +1,203 @@
+{
+  "stage": "R5.50",
+  "contract": "ADR0196",
+  "base_revision": "ae10a3d17763bacc35fa481abd40ae54b193156e",
+  "preparation_complete": true,
+  "synthetic_capacity_verified": true,
+  "live_attempts": 0,
+  "real_ephemeris_calls": 0,
+  "real_native_propagations": 0,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0197-far-archive.py": "0c316312ade239de4c08bcd4bc3404f3881dd8725269e93c961576376bdfd468",
+    "docs/adr/experiments/0197-far-audit.py": "88dd831dd460510f81120290ffb86be755e87019d517f7ab1e61d0932974720c",
+    "docs/adr/experiments/0197-far-fixtures.py": "5e162179b1722bf0652a99fc24dc0cf431d52451e6048062633a3e1d41ede268",
+    "docs/adr/experiments/0197-far-inputs.py": "19d3b61a49c968bb80c0a1ed70fb7040ac7b19fa09458f66613059b8380a8b71",
+    "docs/adr/experiments/0197-far-launch.py": "5b62d153838e94d64e5f61f003b699538e2dc5b6c6840dadf201278c51fa520a",
+    "docs/adr/experiments/0197-far-study.py": "fb34032cb9326da6027b66fca758183f57b86f58af2ba3074d9c669cbb7e20a0",
+    "tests/test_far_lunar_range.py": "ff7c2b525281c403a9d452c32e7bb69ed749aa9ae767261112c9c5156b873971",
+    "tests/test_far_range_archive.py": "1333e57a207edc1fbc008c28ff8f8720f43b8553beed7e5c12357138a6d5c925"
+  },
+  "guard": {
+    "path": "docs/adr/experiments/0189/pytest-offline-guard.py.txt",
+    "sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+  },
+  "tests": {
+    "focused_passed": 31,
+    "guarded_full_passed": 6217,
+    "guarded_full_skipped": 494,
+    "ruff": "passed",
+    "openspec_strict": "passed"
+  },
+  "design_sha256": "302872faf1d5819dbc438cb7efa4cbcdcb2da37fc3a1249fa26bfd2fa346fb22",
+  "retention_root": "/Users/agrudin/dev/my/ariadna-evidence",
+  "capacity_directory": "R5.50-verified",
+  "combined_archive_bytes": {
+    "raw": 814839524,
+    "gzip": 225105514
+  },
+  "phases": {
+    "study": {
+      "manifest_sha256": "c983fc83f237613090e7c99235b9f17cf2ff775ccce915bf06d758ad54ddbfd5",
+      "parent_receipt_sha256": "f1003cc9e782e84227989f2f2b598f993ef98a2064c82e01cd061d92dffe70a9",
+      "raw": 781510363,
+      "gzip": 215150655,
+      "rows": 368879,
+      "kinds": {
+        "node": 321,
+        "native_start": 2,
+        "native_guard": 144012,
+        "native_return": 2,
+        "native_raw": 48002,
+        "native_sample": 642,
+        "native_end": 2,
+        "profile_start": 2,
+        "rhs": 157928,
+        "trial": 13000,
+        "profile_return": 2,
+        "output": 642,
+        "observation": 1284,
+        "profile_end": 2,
+        "comparison": 963,
+        "capacity_rhs": 2072,
+        "study_summary": 1
+      },
+      "parts_count": 47
+    },
+    "audit": {
+      "manifest_sha256": "9cd76c38c24de2713ff12b9d2fa6a96c7b9835a38be2ed643269be6ab9f0e7a4",
+      "parent_receipt_sha256": "722ec8311944d34f8d6a33d42df4ebc9409fe90c7e8ffaf993e9db6136f80443",
+      "raw": 33329161,
+      "gzip": 9954859,
+      "rows": 50249,
+      "kinds": {
+        "direction": 49286,
+        "comparison": 963
+      },
+      "parts_count": 2
+    }
+  },
+  "receipts": {
+    "study": {
+      "elapsed_s": 36.95639029238373,
+      "child_peak_rss_bytes": 283934720,
+      "parent_peak_rss_bytes": 92274688,
+      "gate": "passed",
+      "checkout_frozen": true
+    },
+    "audit": {
+      "elapsed_s": 39.2530266251415,
+      "child_peak_rss_bytes": 278659072,
+      "parent_peak_rss_bytes": 85032960,
+      "gate": "passed",
+      "checkout_frozen": true
+    }
+  },
+  "work_counts": {
+    "states": {
+      "attempted": 641284,
+      "returned": 641284,
+      "completed": 641284
+    },
+    "native_guard_reads": {
+      "attempted": 144012,
+      "returned": 144012,
+      "completed": 144012
+    },
+    "native_arcs": {
+      "attempted": 2,
+      "returned": 2,
+      "completed": 2
+    },
+    "native_telemetry": {
+      "attempted": 642,
+      "returned": 0,
+      "completed": 642
+    },
+    "native_reference_fields": {
+      "attempted": 3852,
+      "returned": 0,
+      "completed": 3852
+    },
+    "solves": {
+      "attempted": 2,
+      "returned": 2,
+      "completed": 2
+    },
+    "rhs": {
+      "attempted": 160000,
+      "returned": 0,
+      "completed": 160000
+    },
+    "binary64_fields": {
+      "attempted": 481926,
+      "returned": 0,
+      "completed": 481926
+    },
+    "dynamic_totals": {
+      "attempted": 160642,
+      "returned": 0,
+      "completed": 160642
+    },
+    "trials": {
+      "attempted": 13000,
+      "returned": 0,
+      "completed": 13000
+    },
+    "record_evaluations": {
+      "attempted": 5703,
+      "returned": 0,
+      "completed": 5703
+    },
+    "body_checks": {
+      "attempted": 3852,
+      "returned": 0,
+      "completed": 3852
+    },
+    "moon_earth_checks": {
+      "attempted": 1284,
+      "returned": 0,
+      "completed": 1284
+    },
+    "source_rows": {
+      "attempted": 3852,
+      "returned": 0,
+      "completed": 3852
+    },
+    "reference_fields": {
+      "attempted": 30816,
+      "returned": 0,
+      "completed": 30816
+    },
+    "model_totals": {
+      "attempted": 1284,
+      "returned": 0,
+      "completed": 1284
+    }
+  },
+  "checks": {
+    "comparisons": 963,
+    "native_telemetry": 642,
+    "adaptive_observations": 1284,
+    "common_direction_rows": 1284,
+    "mesh_direction_rows": 48002,
+    "rhs": 160000,
+    "trials": 13000,
+    "capacity_rhs": 2072,
+    "audit_status": "passed",
+    "numerical_status": "passed",
+    "marker_status": "marker-bracketed",
+    "native_calls": 0,
+    "kernel_loads": 0,
+    "spacecraft_propagations": 0,
+    "scientific_imports": 0,
+    "scientific_verified": false
+  },
+  "synthetic_common_bracket_tdb_s": [
+    979011115.9635216,
+    979011165.9635216
+  ],
+  "synthetic_native_overlap_tdb_s": [
+    979011158.9635216,
+    979011159.4635216
+  ]
+}

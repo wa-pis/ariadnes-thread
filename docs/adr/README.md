@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0197 — Prepare and capacity-check the far lunar range study](0197-prepare-far-lunar-range-check.md): R5.50 completes artificial full-work-cap study and independent audit, with durable lossless readback. R5.51 unexecuted.
 - [0196 — Design the 18,374 km lunar range check](0196-design-far-lunar-range-check.md): R5.49 fixes the R5.48 terminal restart, 16,000 s physical horizon, independent audit, 480/300 s budgets and artificial capacity gate. No launch.
 - [0195 — Bracket the prospective 3,474.8 km lunar range marker](0195-prospective-lunar-range-marker-bracketed.md): R5.48 passes on real ephemerides and independent offline audit. The native mesh overlap is +30.5–31 s after restart.
 - [0194 — Prepare the short lunar range extension](0194-prepare-lunar-range-extension.md): R5.47 verifies the fixed-grid study and independent audit on artificial outward, inward and exact-equality cases. R5.48 result is in ADR0195.

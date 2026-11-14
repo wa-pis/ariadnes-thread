@@ -371,9 +371,11 @@ remain unverified.
 [ADR0196](../docs/adr/0196-design-far-lunar-range-check.md) completes R5.49.
 Project one 16,000 s B-only continuation from the exact R5.48 terminal
 tighter RK4 state to check the 18,374 km marker. The study/audit wall
-limits are 480/300 s. R5.50 must first qualify the hard caps, independent
-audit and durable lossless storage on artificial data. R5.51 requires
-separate live authorization. No new result or mission handoff claimed.
+limits are 480/300 s. [ADR0197](../docs/adr/0197-prepare-far-lunar-range-check.md) completes
+R5.50: the full-cap artificial study and audit passed in 36.956 s and
+39.253 s, with lossless local readback and guarded regression.
+R5.51 requires separate live authorization. No physical marker result
+or mission handoff is claimed.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

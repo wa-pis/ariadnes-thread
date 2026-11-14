@@ -7300,3 +7300,20 @@ authorization follows only after preparation and durable retention
 checks. Failure or a negative marker verdict does not authorize a
 rerun or horizon change. No run, new SPICE request or record evaluation
 was performed for this design.
+
+## R5.50 prepare and capacity-check the far lunar range study (2026-11-15)
+
+[ADR0197](../../../docs/adr/0197-prepare-far-lunar-range-check.md) records private
+streaming study and independent replay preparation, exact R5.48 input
+binding, strict work/storage accounting and separate authorization.
+The full-cap artificial run and audit finalized in 36.956 s and
+39.253 s; each stayed under its synthetic time and memory threshold.
+Both passed 963 state comparisons, 1,284 adaptive observations, 642
+native telemetry checks and 49,286 direction rows. The capacity
+path exercises 160,000 RHS and 13,000 trials, including separately
+tagged arithmetic operands outside the two completed artificial
+solver traces. Live audit rejects these capacity-only records.
+Lossless readback verified both phases and receipt bindings in the
+designated local retention directory. 31 focused tests and guarded
+regression (6,217 passed, 494 skipped) passed, as did Ruff and
+strict OpenSpec. No real SPICE query or R5.51 launch; no physical verdict.
