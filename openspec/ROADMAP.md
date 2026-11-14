@@ -384,9 +384,11 @@ sampled model B result leaves lunar escape and mission handoff open.
 completes R5.52: authenticate the terminal R5.51 state and check
 retained Mars-bound references for an independent receiving state
 at the same epoch. R1/R2's saved nodes miss the interval; previous
-full-model reports retain only boundaries/endpoints here. Next is
-R5.53 offline preparation, then R5.54 once on request. No new states
-or mission closure are part of this audit.
+full-model reports retain only boundaries/endpoints here.
+[R5.53 preparation](../docs/adr/0200-prepare-retained-lunar-to-mars-audit.md) is
+verified on five artificial shards (218,972 lines, 80 MiB raw) in
+0.297/15 s. R5.54 remains one offline run on request. No new
+states or mission closure are part of this audit.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

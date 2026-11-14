@@ -7352,3 +7352,18 @@ no new state. R5.53 prepares the bounded worksheet on artificial
 data; R5.54 requires a separately requested single offline run
 (15 s, five authenticated members, zero native work), not a
 transfer or optimizer run.
+
+## R5.53 prepare the retained lunar-to-Mars interface audit (2026-11-15)
+
+[ADR0200](../../../docs/adr/0200-prepare-retained-lunar-to-mars-audit.md) records the
+pinned stdlib worksheet and isolated, receipt-bound launcher.
+All physical and ideal receiving entries are checked separately
+from outgoing identity. Missing compatible data leave continuity
+residuals null; damaged or late evidence cannot certify a source.
+
+The full-volume fixture has five 16 MiB raw members and 218,972
+lines, including 121 saved ideal epochs in the compact inputs.
+Audit and finalization took 0.297 of 15 s with zero SPICE or
+trajectory work. All 30 focused checks, the guarded regression
+(6,247 passed, 494 skipped), Ruff and strict OpenSpec passed.
+R5.54 requires separate authorization and remains unexecuted.

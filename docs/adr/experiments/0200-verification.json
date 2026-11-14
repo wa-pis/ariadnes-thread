@@ -1,0 +1,74 @@
+{
+  "stage": "R5.53",
+  "contract": "ADR0199",
+  "base_revision": "bc447146c689f81f778ed3f1e2fc7c6bd5148863",
+  "design_sha256": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+  "preparation_complete": true,
+  "full_synthetic_verified": true,
+  "r554_attempts": 0,
+  "spice_queries": 0,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0200-interface-audit.py": "b4198de7f3e79a7dc375155dea6aa4140bd390bec51d4fc4b7d21f13f6ad1e8e",
+    "docs/adr/experiments/0200-interface-inventory.py": "210ec361a87c3ab620889d5301ab6649cf5b9bea04d99ad53523354fe9ec5e10",
+    "docs/adr/experiments/0200-interface-fixtures.py": "b5eefdef30fe4b348c3887154770977603c181bfda98fa77bd4b79bb79cd3b10",
+    "tests/test_retained_lunar_interface.py": "f2aefb2d8534da81d8c635219a7dcf83a509d873e0ef2c5b3f4b4d19a30801c0"
+  },
+  "guard": {
+    "path": "docs/adr/experiments/0189/pytest-offline-guard.py.txt",
+    "sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+  },
+  "tests": {
+    "focused_passed": 30,
+    "guarded_full_passed": 6247,
+    "guarded_full_skipped": 494,
+    "guarded_elapsed_s": 131.43,
+    "focused_log_sha256": "f38d7cc8808936083068919e16367270336befe78504d20d7a29053a3639b3a2",
+    "full_log_sha256": "c51be098b15d72c34609362994a86d9644f74aff2f8c31aacb5fc92cb20668d6"
+  },
+  "synthetic_capacity": {
+    "path": "/Users/agrudin/dev/my/ariadna-evidence/R5.53-verified",
+    "elapsed_through_finalization_s": 0.2972182920202613,
+    "receipt": {
+      "stage": "R5.53",
+      "status": "passed",
+      "pins_sha256": "cca4b7e68ba19afe71d2b5cb7920d0055c7d0288f0fad840802bf6cfb2b9eb94",
+      "attempt_sha256": "3e208aa1492496311153b859955b5a7445bcb9e4d7ec0fc5ec06f68baff602e5",
+      "report_sha256": "70d2f231078c0ef0cb4f32e33fbad3ce7cda8789e5e88b9b5ccd008f122ab649",
+      "returncode": 0,
+      "error": null,
+      "elapsed_s": 0.29667208390310407,
+      "child_peak_rss_bytes": 113229824
+    },
+    "synthetic": true,
+    "input_pin_sha256": "cca4b7e68ba19afe71d2b5cb7920d0055c7d0288f0fad840802bf6cfb2b9eb94",
+    "output_sha256": {
+      "attempt.json": "3e208aa1492496311153b859955b5a7445bcb9e4d7ec0fc5ec06f68baff602e5",
+      "receipt.json": "dc7e197c13ae657479cf950588ed19ec07f9920ff563894a2a536fef248e618e",
+      "report.json": "70d2f231078c0ef0cb4f32e33fbad3ce7cda8789e5e88b9b5ccd008f122ab649"
+    },
+    "selected_archive": {
+      "raw": 83886080,
+      "gzip": 26110834,
+      "rows": 218972
+    },
+    "selected_members": 5,
+    "result": {
+      "stage": "R5.53",
+      "status": "passed",
+      "source_status": "source-state-authenticated",
+      "ideal_status": "ideal-reference-coepoch-unavailable",
+      "physical_status": "physical-join-not-established",
+      "continuity_residuals": {
+        "epoch_s": null,
+        "position_m": null,
+        "velocity_m_s": null,
+        "mass_kg": null
+      },
+      "native_or_scientific_calls": 0,
+      "new_states": 0,
+      "propagation_calls": 0
+    },
+    "output_bytes": 10130,
+    "synthetic_ideal_nodes": 121
+  }
+}
