@@ -1,0 +1,225 @@
+{
+  "stage": "R5.38 static design only",
+  "contract": "ADR0185",
+  "base_revision": "a5bc09ef57777adfc307ce5779b73f0c4c4d693b",
+  "source_r537_measured_revision": "72cb05977741d6783eeeb01557e4c4f64aed1bce",
+  "candidate": "d0001-t0035",
+  "initial_state": {
+    "epoch_tdb_s": 978995455.2304223,
+    "epoch_utc": "2031-01-09T11:09:46.046266Z",
+    "label": "departure-ignition",
+    "orientation": "J2000",
+    "origin": "SSB",
+    "position_m": [
+      -47124635282.7281,
+      128473304107.83153,
+      55670397503.89886
+    ],
+    "velocity_m_s": [
+      -29590.75977762049,
+      -9186.174444867514,
+      -2407.2479826554863
+    ]
+  },
+  "epoch_tdb_s": 978995455.2304223,
+  "epoch_binary64_hex": "0x1.d2d247f9d7e7ap+29",
+  "end_tdb_s": 978996055.2304223,
+  "offsets_s": [
+    0,
+    50,
+    100,
+    150,
+    200,
+    250,
+    300,
+    350,
+    400,
+    450,
+    500,
+    550,
+    600
+  ],
+  "coepochs_tdb_s": [
+    978995455.2304223,
+    978995505.2304223,
+    978995555.2304223,
+    978995605.2304223,
+    978995655.2304223,
+    978995705.2304223,
+    978995755.2304223,
+    978995805.2304223,
+    978995855.2304223,
+    978995905.2304223,
+    978995955.2304223,
+    978996005.2304223,
+    978996055.2304223
+  ],
+  "native_steps_s": [
+    1,
+    0.5
+  ],
+  "dop853_settings": [
+    {
+      "rtol": 1e-12,
+      "atol": [
+        1e-07,
+        1e-07,
+        1e-07,
+        1e-10,
+        1e-10,
+        1e-10
+      ],
+      "max_step": 5.0,
+      "first_step": 1.0
+    },
+    {
+      "rtol": 1e-13,
+      "atol": [
+        1e-08,
+        1e-08,
+        1e-08,
+        1e-11,
+        1e-11,
+        1e-11
+      ],
+      "max_step": 2.5,
+      "first_step": 0.5
+    }
+  ],
+  "geometry": "SI, SSB, J2000, TDB seconds since J2000, NONE",
+  "gm_m3_s2": {
+    "Sun": 1.327124400420322e+20,
+    "Moon": 4902800121846.8,
+    "Earth": 398600435468295.9
+  },
+  "radii_m": {
+    "Sun": 696000000.0,
+    "Moon": 1737400.0,
+    "Earth": 6378136.6
+  },
+  "retained_record_metadata": [
+    {
+      "body_id": 10,
+      "centre_id": 0,
+      "frame_id": 1,
+      "type": 2,
+      "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+      "record_index": 3048,
+      "record_address": 1965065,
+      "record_interval_tdb_s": [
+        978739200,
+        980121600
+      ],
+      "segment_interval_tdb_s": [
+        -3234816000,
+        3234816000
+      ]
+    },
+    {
+      "body_id": 301,
+      "centre_id": 399,
+      "frame_id": 1,
+      "type": 2,
+      "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+      "record_index": 12192,
+      "record_address": 1590733,
+      "record_interval_tdb_s": [
+        978739200,
+        979084800
+      ],
+      "segment_interval_tdb_s": [
+        -3234816000,
+        3234816000
+      ]
+    },
+    {
+      "body_id": 399,
+      "centre_id": 0,
+      "frame_id": 1,
+      "type": 2,
+      "segment_file": "inpop19a_TDB_m100_p100_spice.bsp",
+      "record_index": 12192,
+      "record_address": 2522061,
+      "record_interval_tdb_s": [
+        978739200,
+        979084800
+      ],
+      "segment_interval_tdb_s": [
+        -3234816000,
+        3234816000
+      ]
+    }
+  ],
+  "caps": {
+    "study_s": 60,
+    "audit_s": 10,
+    "native_arcs": 2,
+    "dop853_solves": 2,
+    "rhs": 10000,
+    "trials": 1000,
+    "kernel_pool_setups": 1,
+    "kernel_inventory_calls": 30,
+    "dop853_state_attempts": 40052,
+    "native_guard_reads": 5412,
+    "explicit_state_attempts": 45464,
+    "dop853_binary64_fields": 30078,
+    "dop853_binary64_totals": 10026,
+    "native_telemetry_rows": 26,
+    "native_decimal_fields": 156,
+    "sample_observations": 52,
+    "post_300_s_rhs_observations": 12,
+    "parity_checks": 208,
+    "sampled_force_rows": 156,
+    "decimal_fields": 1248,
+    "record_evaluations": 312,
+    "sampled_totals": 52,
+    "sampled_force_gate_outcomes": 832,
+    "within_study_comparisons": 39,
+    "prefix_comparisons": 28,
+    "all_comparisons": 67
+  },
+  "immutable_input_sha256": {
+    "docs/adr/experiments/0098-central-correction-study.json": "b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057",
+    "docs/adr/experiments/0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0",
+    "docs/adr/experiments/0133-gravity-screen.json": "74238edd641e1b5fda42a209672c68e5bc201b20d3cffba24169e6f9b3b6a580",
+    "docs/adr/experiments/0136-retained-boundary-audit.json": "81d78ecf6e4e80b55e9d909f929a879b2e392667387ec2569632aa99a6b41063",
+    "docs/adr/experiments/0155-real-source.json": "278b094cff6dd417ac15c04d3b4e4da137acede17de7147babd72fe9e3812102",
+    "docs/adr/experiments/0182-design-inputs.json": "5f0ac97e3aae532417d5e2583864837881ad8feb9f24caa41ec045405bc45df3",
+    "docs/adr/experiments/0183-verification.json": "a0a954314bca16c1b837a7e33a06549612c437bc0aea6c8b299c495066c18272",
+    "docs/adr/experiments/0184/audit.attempt.json": "7c61c0a363b08af8e4200a769b02919bc7328da08428d61ad4d313098de52a73",
+    "docs/adr/experiments/0184/audit.json.gz": "225234824881817395c9f413b7e93a19ab40ad49b83202e1268893b956c0c8a2",
+    "docs/adr/experiments/0184/audit.parent-attempt.json": "1bb531b0bc6b24a150d219040363faf8bf16e7bfdc708a5ef6af940d6f3c1327",
+    "docs/adr/experiments/0184/audit.parent-receipt.json": "67316d6d4e974737f4ce8f2a9694b396d153a0bbe95c5218fae62ec8d7c9dcc1",
+    "docs/adr/experiments/0184/audit.receipt.json": "15e6255f7688aa65138b1b2f473281432b935b34dad365a0c6158666bfc1d5a2",
+    "docs/adr/experiments/0184/manifest.json": "1b66255cb7f5e3d2d0f03d5daf319f933bd5cd559f067a2ac4cd33dacf6383da",
+    "docs/adr/experiments/0184/study.attempt.json": "6f99b60f1dbf1e0a4e024a5bc5c334b47ff04ce80ca1f7be32f77a695bab760e",
+    "docs/adr/experiments/0184/study.json.gz": "0525af9c80f097c1950f79ed17fbb1ae8f6e97ffffbe3ac3efd7cb41b917517b",
+    "docs/adr/experiments/0184/study.parent-attempt.json": "bcef430fd6256ec19021c8a06f056314c2a86d78b9e34995025449d0ba82fb60",
+    "docs/adr/experiments/0184/study.parent-receipt.json": "1f86de4bf13ca6333463baa472b0794405358d7e9b9aafe30edbbe88132ca82f",
+    "docs/adr/experiments/0184/study.receipt.json": "62eb9397d2c36f2c0ae5fe702d4fcc9247e832f488f2c5386f160cb96c88504f",
+    "docs/adr/experiments/0140-short-coast-native.py": "8bc888d6e1c638251d8379d6d4c896393b5cd76fb71e85c65c7faf9aab9294e2",
+    "docs/adr/experiments/0180-split-integrator.py": "e728b272fa66c2e4ea801ec3996d0def71e2f6a423b6698019a46882201861d5",
+    "docs/adr/experiments/0180-split-reference.py": "8116ae56bcb1f6b9f0ae51c0fd28251bbf45eabb02420c03e0e832390a4bef91",
+    "docs/adr/experiments/0163-corrected-integrator.py": "fbc8411ca6d8ad3ebde72563d8b4134f9d5e2d2235e5441f945e4aa10873efed",
+    "docs/adr/experiments/0183-earth-audit.py": "6cace255c1eb11e7c2c33aa05d9195325aeabadb3586d512ee272e2095c36b50",
+    "docs/adr/experiments/0183-earth-inputs.py": "80f67ee9c9f9d2d1aa85eb383153367f76860bb8d25b9dfb8c911597242086bb",
+    "docs/adr/experiments/0183-earth-integrator.py": "f54b7b2f96034448f835e8d2f0d630278ac8c61a6d1e55b28c26e7e0c0162068",
+    "docs/adr/experiments/0183-earth-launch.py": "b4d4cfb4791d9a59da8e446584a3ea907e4daa3e872a69499435bc1ca37fdbc1",
+    "docs/adr/experiments/0183-earth-native-replay.py": "3ddff9eb6b4ee320aae9cd8dddc89f5f9dbe82bbcea3758dad1d17f3e396eba6",
+    "docs/adr/experiments/0183-earth-native.py": "6730fe7aa4d9b3407a6c16e3a4232277860db261f65130a12166de1721fa7060",
+    "docs/adr/experiments/0183-earth-reference.py": "2b6805db7cc7692777c22fc9145405228da13b3177ba6cd8fa2e040977fa03e4",
+    "docs/adr/experiments/0183-earth-study.py": "7af24f216fbc7280c5552a34a6c883ca7c0fc2b29fdaafdeaba6e271d1901c3d",
+    "environment.yml": "c2948772bfbe09677354f803d9ba79e4c78eb44c5916c98b8d58126832c0e4b7"
+  },
+  "design_work": {
+    "spice_queries": 0,
+    "native_calls": 0,
+    "kernel_loads": 0,
+    "force_evaluations": 0,
+    "record_evaluations": 0,
+    "propagations": 0,
+    "runtime_tests_rerun": false
+  },
+  "future_verification_pending": true,
+  "automation": "PAUSED"
+}

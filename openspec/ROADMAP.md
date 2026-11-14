@@ -315,6 +315,13 @@ nodes: 0.000173307 m and 2.69618e-8 m/s. Conditional on archived A;
 no A propagation, replay, historical requalification or M3 closure.
 Automation stays paused.
 
+[ADR0185](../docs/adr/0185-design-longer-model-b-coast.md) defines R5.38:
+extend only model B from the same planned ignition state to 600 s.
+Check thirteen coepochs, the saved 300 s B prefix, and force samples
+on both halves using separate integrators and an offline audit.
+This is an unpowered parking coast; post-burn departure remains open.
+Next: R5.39 offline prep; R5.40 requires separate execution authorization.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

@@ -414,3 +414,31 @@ SHALL remain unchanged.
 - **THEN** the study SHALL have at most two native B arcs, two B DOP853 solves, 10,000 RHS, 1,000 trials, 40,028 explicit DOP853 state attempts and separate 2,712 native guard-read attempts within 60 s including finalization; native internal state reads SHALL be outside those counters
 - **AND** the separate audit SHALL complete within 10 s including finalization, with no native or solver work, independently recomputing all recorded B DOP853 RHS/output arithmetic, native retained-state guards and node telemetry, the sampled force/source and signed effect checks, and verifying immutable inputs and child/parent receipts
 - **AND** a missing prerequisite, failed gate, limit or missing receipt SHALL retain partial evidence and unavailable work without replay or threshold change; even a pass SHALL remain conditional on the archived native A histories with missing historical final identity, and SHALL NOT qualify continuous accuracy, safety, the full transfer or strict M3
+
+### Requirement: Independently check the longer model B coast
+
+R5.38–R5.40 SHALL extend only the restricted model B numerical
+check under ADR0185. R5.37 and all earlier results SHALL remain
+unchanged. A 600 s parking coast SHALL NOT be represented as
+post-burn lunar departure or a new A/B sensitivity measurement.
+
+#### Scenario: Prepare the longer private check offline
+
+- **WHEN** R5.39 prepares the study and audit
+- **THEN** the implementation SHALL bind the R5.37 B study and audit receipt chains and raw 0098 ignition state, preserve the original kernel order, model, GMs, guards and profile settings, and verify synthetic success, sample selection and missing coverage, profile and prefix tolerances, corrupted inputs/evidence, exclusive output, caps and timeouts
+- **AND** verification SHALL include focused and full no-SPICE-guarded pytest, Ruff, strict OpenSpec and frozen input/source hashes, with zero live queries, record or force evaluations on retained inputs, or real runs
+
+#### Scenario: Verify B states on the original and extended segments
+
+- **WHEN** verified preparation and separate execution authorization permit the single R5.40 study
+- **THEN** two RK4 profiles at 1 and 0.5 s and two independently implemented DOP853 profiles SHALL run B only from the exact original state and t0 to t0+600 s using the R5.37 force contract, without chaining from 300 s or any A solve
+- **AND** all 39 prescribed profile comparisons at the 13 exact coepochs SHALL satisfy the original 0.01 m / 1e-5 m/s native and cross-engine gates and 0.001 m / 1e-6 m/s DOP853 gate, and all 28 same-profile B prefix comparisons SHALL satisfy the respective native or DOP853 limits
+- **AND** both adaptive profiles SHALL pass the unchanged source, assembly, exterior, precision and force gates at 52 total observations: 13 outputs, seven initial RHS ordinals, and the first completed RHS by ordinal in each of the six subsequent 50 s intervals after 300 s, per profile
+- **AND** native B SHALL retain 601 and 1,201 state/force rows and SHALL pass 26 native node telemetry comparisons and all retained guards; no required check SHALL be backfilled from another epoch or trajectory
+
+#### Scenario: Independently audit the evidence and stop within the budget
+
+- **WHEN** the study and independent saved-data audit execute
+- **THEN** the study SHALL enforce inclusive 60 s, two native arcs, two adaptive solves, 10,000 RHS, 1,000 trials, 40,052 explicit adaptive state attempts and 5,412 native guard reads through finalization, excluding unobserved native internal requests
+- **AND** the separate audit SHALL enforce an inclusive 10 s limit and zero native calls, scientific imports or solves while reconstructing all retained adaptive RHS and output arithmetic, sampled checks, native guards and telemetry, 67 trajectory comparisons and counters from saved evidence
+- **AND** only complete required gates, matching current identities and all four phase receipts SHALL allow a pass; a missing input, failed gate, exhausted cap or incomplete finalization SHALL retain partial evidence without retry, changing controls or upgrading any M3 or mission qualification

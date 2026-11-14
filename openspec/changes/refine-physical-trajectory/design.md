@@ -6853,3 +6853,136 @@ norms exceed their comparison scales at every noninitial node.
 This local estimate remains conditional on saved native A with
 missing final identity. No conclusion about the full transfer,
 historical requalification, continuous safety or strict M3.
+
+## R5.38 design the 600 s model B check (2026-11-14)
+
+[ADR0185](../../../docs/adr/0185-design-longer-model-b-coast.md)
+defines a B-only check after R5.37. Keep the R1/0098 d0001-t0035
+unrounded SSB six-state at planned ignition, t0=978995455.2304223
+TDB s since J2000. Start every solve from that same state, with zero
+corrections for DOP853. End at t0+600 s=978996055.2304223 TDB s
+and compare exact coepochs t0+50*j s, j=0..12. There is no change
+to phase, candidate, initial or terminal targeting, no restart at
+300 s, no A solve and no B-minus-A continuation. The endpoint is
+a common check epoch, not a target. This is an unpowered parking
+coast near the Moon, not an escape segment after a maneuver.
+
+### Same physical model, independent integrations
+
+Bind the R5.37 B archive, its receipts, original inputs and current
+prepared files by hash. Use the same 13 ordered kernels, GMs,
+strict Sun/Moon/Earth radius guards and SI/SSB/J2000/NONE.
+B is only the three direct point-mass terms in Sun, Moon, Earth
+order: `mu_i*(r_i-r)/norm(r_i-r)^3`, without an indirect term.
+Bodies follow prescribed moving ephemerides. Omitted forces and
+maneuvers stay omitted.
+
+Use two native Tudat RK4 arcs, 1 s then 0.5 s, with 601/1201
+raw state and force rows and exact native sample epochs. Keep
+the original inventory, GM assignment parity (relative 1e-15),
+initial and grid checks. Preserve three guard returns per
+preflight and retained state and guard before field evaluation
+where exposed; internal native RK stages are not separately
+observed. Keep the separate DOP853 correction-variable equations
+and current B force/assembly contract. Use normal then tighter:
+`rtol` 1e-12/1e-13, per-axis position/velocity `atol`
+(1e-7 m, 1e-10 m/s)/(1e-8 m, 1e-11 m/s), maximum step 5/2.5 s
+and first step 1/0.5 s. Shared output body states are queried
+once per coepoch; every RHS uses its own live Sun/SSB, Moon/SSB,
+Earth/SSB and Moon/Earth returns at compensated binary64 hi,
+in that order. Keep the signed low-word rephasing and split
+Moon assembly from R5.37. No source fallback, cross-RHS cache
+or substitution of retained track points in the solve.
+
+Check, at all thirteen coepochs, native h1 vs. h0.5 and native
+h0.5 vs. DOP853 tighter within 0.01 m / 1e-5 m/s, and DOP853
+normal vs. tighter within 0.001 m / 1e-6 m/s, in separate Euclidean
+norms of signed position and velocity differences. Compare each
+of the four profiles at the first seven coepochs to its own stored
+B counterpart (native limits for native, DOP853 limits for DOP853).
+Require exact initial state and epoch in every profile; do not
+require bitwise trajectory equality at the shortened run's former
+endpoint or compare adaptive callbacks by ordinal across solves.
+In all, require 39 within-study and 28 archived-prefix comparisons.
+Report prefix and extension maxima and signed endpoint residuals
+separately. No native interpolation or comparison beyond the
+archive's range.
+
+### Sample and audit the extension
+
+In each DOP853 profile check all thirteen outputs, initial RHS
+ordinals 0–6 (including at least one nonzero low epoch word), and
+one RHS in each of the six intervals (300,350], (350,400],
+(400,450], (450,500], (500,550], (550,600] s, by elapsed
+solver seconds. Select the lowest attempted ordinal among
+completed RHS evaluations in each interval, including those
+from rejected trials; record trial membership and distinct
+observations even at duplicate times. Do not ask the RHS for a
+new sample; missing coverage fails. This gives 52 observations,
+12 of which are RHS observations after 300 s. The compensated
+high and exact epochs must both be covered by the frozen
+Type 2 descriptor/record pairs for Sun/SSB, Earth/SSB and
+Moon/Earth. Retained coefficient words are for independent checks
+only. Preserve the four source parity checks and their original
+limits, motion assembly, increment and Taylor checks, original
+precision (80/100 digits, relative 1e-60 and stable classifications)
+and both returned-geometry and overall force gates for every source
+and B total: max(1e-15 m/s², 1e-11 times its scale), with constituent
+norm sum as the scale for total B. No allowance for source mismatch.
+
+At all 26 native nodes compare actual raw force telemetry with
+the independent 80/100-digit fields from the retained guard
+operands at the same node; apply R5.37's source/total envelopes
+and 1e-12 m/s² total/source consistency. Apply native exterior
+guards to every saved state/return pair and DOP853 guards at
+every RHS/output. These observations do not establish continuous
+clearance or accuracy at unsampled native integration stages.
+
+### Staging, limits and failure semantics
+
+R5.39 prepares private duration, offsets, sampling and audit paths
+using pinned Conda and synthetic or metadata fixtures only. Do not
+edit historical helpers with 300 s/fixed-count invariants or
+production code. Verify unchanged force inventory and controls,
+analytic motion, exact endpoint and prefix gates, adaptive
+interval selection on nonmonotone/rejected/duplicate callbacks,
+missing coverage/no substitution, state/force/counter corruption,
+caps, deadlines, identities and exclusive evidence. Require focused
+and full no-SPICE-guarded pytest, Ruff, strict OpenSpec and frozen
+source/input digests, without a real solve or retained force or
+polynomial evaluation.
+
+With separate authorization, R5.40 allows one live study within
+60 s followed, if a report exists, by one offline audit within 10 s.
+Use absolute monotonic phase deadlines through finalization and
+parent watchdogs; count attempts before work. Keep at most two
+native arcs, two adaptive solves, 10,000 DOP853 RHS, 1,000 trials,
+one kernel-pool setup and two 15-call inventories. At most 40,052
+explicit DOP853 state attempts (4*(10,000+13)) plus 5,412 native
+guard reads (3*(1+601+1+1201)), or 45,464 combined, excluding
+unobserved native simulator reads. No new GM lookups, record
+acquisitions or optimization. Arithmetical ceilings per phase:
+30,078 DOP853 binary64 fields and 10,026 totals; 52 sampled
+observations, 208 parity checks, 156 sampled force rows, 312
+record evaluations, 1,248 Decimal fields and 52 B totals, plus
+26 native telemetry rows and 156 native Decimal fields. The
+52 observations yield 832 gate outcomes (four fields or total,
+two gates, two precisions). Limits are ceilings, not predictions.
+
+Check available per-profile gates before moving on. The independent
+audit uses saved bytes and vetted stdlib-only reference arithmetic
+to rederive sample selection, raw-operand guards and forces,
+every retained adaptive RHS/output, all native telemetry, the
+67 trajectory comparisons, counters and identities; it does not
+trust pass flags or import the scientific/solver or study code.
+Require clean synced dev, pinned sources/kernel identities before
+and after, matching supported common provenance to the B archive,
+and independent bound child and parent receipts for each phase.
+Save finite partial evidence and earliest failure with unavailable
+work; stop on a missing required entry, scientific disagreement,
+identity drift, cap or late/incomplete finalization. No retry,
+input or tolerance change, shorter replacement or qualification
+of the historical failures. Automation remains paused; a pass
+only establishes sampled same-model numerical agreement on this
+coast. It cannot certify ephemeris truth, active lunar departure,
+mission safety, the full transfer or strict M3.
