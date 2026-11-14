@@ -6986,3 +6986,20 @@ of the historical failures. Automation remains paused; a pass
 only establishes sampled same-model numerical agreement on this
 coast. It cannot certify ephemeris truth, active lunar departure,
 mission safety, the full transfer or strict M3.
+
+## R5.39 prepare the longer B study and audit (2026-11-14)
+
+[ADR0186](../../../docs/adr/0186-prepare-longer-model-b-coast.md)
+records the private 600 s paths and immutable prior B binding.
+With synthetic source states and native fixtures, both DOP853
+profiles complete; the independent audit reproduces all 67
+comparisons, 52 observations and 26 native telemetry rows.
+The study retains 4,424 RHS, 362 trials, 17,748 adaptive state
+attempts and 5,412 native guard reads on that fixture.
+The audit independently distinguishes terminal step callbacks
+from later dense-output callbacks. Corrupted operands, sample
+membership, counters and evidence cannot pass.
+24 focused and 6,089 guarded regression tests pass (494 skips);
+Ruff, strict OpenSpec and source/input digests pass. No real
+SPICE access, archived force/polynomial evaluation or R5.40
+execution; real accuracy, convergence and timing remain open.

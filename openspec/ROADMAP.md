@@ -320,7 +320,12 @@ extend only model B from the same planned ignition state to 600 s.
 Check thirteen coepochs, the saved 300 s B prefix, and force samples
 on both halves using separate integrators and an offline audit.
 This is an unpowered parking coast; post-burn departure remains open.
-Next: R5.39 offline prep; R5.40 requires separate execution authorization.
+[ADR0186](../docs/adr/0186-prepare-longer-model-b-coast.md) completes
+R5.39. Two real DOP853 solves on artificial sources and two synthetic
+native profiles pass, with 67 trajectory comparisons, 52 observations
+and 26 native telemetry checks reproduced offline. 24 focused and 6,089
+guarded regression tests passed (494 skipped). R5.40 requires separate
+execution authorization. No new SPICE queries or real propagation.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 
