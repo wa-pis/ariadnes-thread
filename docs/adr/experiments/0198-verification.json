@@ -1,0 +1,738 @@
+{
+  "stage": "R5.51",
+  "contract": "ADR0196",
+  "measured_revision": "6dde4be6bd4ba0caaaa1925075862a7bdb0c61d8",
+  "preparation_sha256": "fb92ee356e4002a151792a00b4bf623531a001de721401cca9ee36b11772e724",
+  "design_sha256": "302872faf1d5819dbc438cb7efa4cbcdcb2da37fc3a1249fa26bfd2fa346fb22",
+  "once_only_location": "/Users/agrudin/dev/my/ariadna-evidence/R5.51",
+  "model": "B",
+  "duration_s": 16000,
+  "restart_tdb_s": 978998965.9635216,
+  "stop_tdb_s": 979014965.9635216,
+  "mass_kg": 1351.7475727997967,
+  "marker_m": 18374000,
+  "phases": {
+    "study": {
+      "receipt_sha256": {
+        "parent_attempt": "26024ee49ba3d335c32111736a29577d74dc60658b337312a4eb8ebbb5975d66",
+        "attempt": "916d11049ac431c55d7175c1b3b296c699179a7ba7aca12e1b10c50b2cc874aa",
+        "receipt": "6610078e08b2cdcdc7b1999cd12aa64657da1396e20dd6675be4e1e168d9c22b",
+        "parent_receipt": "15b2f8175b9c9c2b95726cc6e4b07342d8a98c9ca5b9a63c060bdcca46e9e0c2"
+      },
+      "receipts": {
+        "parent_attempt": {
+          "identity": {
+            "contract": "ADR0196",
+            "phase": "study",
+            "mode": "live",
+            "revision": "6dde4be6bd4ba0caaaa1925075862a7bdb0c61d8",
+            "pin_sha256": "fb92ee356e4002a151792a00b4bf623531a001de721401cca9ee36b11772e724"
+          },
+          "started_s": 2882590.643105583
+        },
+        "attempt": {
+          "identity": {
+            "contract": "ADR0196",
+            "phase": "study",
+            "mode": "live",
+            "revision": "6dde4be6bd4ba0caaaa1925075862a7bdb0c61d8",
+            "pin_sha256": "fb92ee356e4002a151792a00b4bf623531a001de721401cca9ee36b11772e724"
+          },
+          "started_s": 2882590.643105583,
+          "parent_attempt_sha256": "26024ee49ba3d335c32111736a29577d74dc60658b337312a4eb8ebbb5975d66"
+        },
+        "receipt": {
+          "identity": {
+            "contract": "ADR0196",
+            "phase": "study",
+            "mode": "live",
+            "revision": "6dde4be6bd4ba0caaaa1925075862a7bdb0c61d8",
+            "pin_sha256": "fb92ee356e4002a151792a00b4bf623531a001de721401cca9ee36b11772e724"
+          },
+          "started_s": 2882590.643105583,
+          "parent_attempt_sha256": "26024ee49ba3d335c32111736a29577d74dc60658b337312a4eb8ebbb5975d66",
+          "status": "passed",
+          "gate": "passed",
+          "attempt_sha256": "916d11049ac431c55d7175c1b3b296c699179a7ba7aca12e1b10c50b2cc874aa",
+          "manifest_sha256": "48ce4fa77e1f46453c2aadddf6e0823fa1952071fe1279f40b47b3cbc266373e",
+          "elapsed_s": 31.743251792155206,
+          "peak_rss_bytes": 534659072
+        },
+        "parent_receipt": {
+          "identity": {
+            "contract": "ADR0196",
+            "phase": "study",
+            "mode": "live",
+            "revision": "6dde4be6bd4ba0caaaa1925075862a7bdb0c61d8",
+            "pin_sha256": "fb92ee356e4002a151792a00b4bf623531a001de721401cca9ee36b11772e724"
+          },
+          "started_s": 2882590.643105583,
+          "elapsed_s": 31.934245083015412,
+          "checkout_frozen": true,
+          "returncode": 0,
+          "status": "passed",
+          "gate": "passed",
+          "parent_attempt_sha256": "26024ee49ba3d335c32111736a29577d74dc60658b337312a4eb8ebbb5975d66",
+          "attempt_sha256": "916d11049ac431c55d7175c1b3b296c699179a7ba7aca12e1b10c50b2cc874aa",
+          "child_receipt_sha256": "6610078e08b2cdcdc7b1999cd12aa64657da1396e20dd6675be4e1e168d9c22b",
+          "manifest_sha256": "48ce4fa77e1f46453c2aadddf6e0823fa1952071fe1279f40b47b3cbc266373e",
+          "parent_peak_rss_bytes": 84525056,
+          "child_peak_rss_bytes": 534659072,
+          "error": null
+        }
+      },
+      "finalized": {
+        "manifest_sha256": "48ce4fa77e1f46453c2aadddf6e0823fa1952071fe1279f40b47b3cbc266373e",
+        "parent_receipt_sha256": "15b2f8175b9c9c2b95726cc6e4b07342d8a98c9ca5b9a63c060bdcca46e9e0c2"
+      },
+      "finalization_error": null,
+      "shard_archive": {
+        "status": "passed",
+        "readback_verified": true,
+        "prefix_only": false,
+        "manifest_sha256": "48ce4fa77e1f46453c2aadddf6e0823fa1952071fe1279f40b47b3cbc266373e",
+        "shard_count": 37,
+        "raw_bytes": 620124437,
+        "gzip_bytes": 172637511,
+        "rows": 322718,
+        "record_counts": {
+          "native_metadata": 31,
+          "identity": 2,
+          "node": 321,
+          "native_start": 2,
+          "native_guard": 144012,
+          "native_return": 2,
+          "native_raw": 48002,
+          "native_sample": 642,
+          "native_end": 2,
+          "profile_start": 2,
+          "rhs": 117200,
+          "trial": 9606,
+          "profile_return": 2,
+          "output": 642,
+          "observation": 1284,
+          "profile_end": 2,
+          "comparison": 963,
+          "study_summary": 1
+        },
+        "summary": {
+          "comparison_summary": {
+            "native_step": {
+              "max_position_norm_m": 0.0016202542130351932,
+              "max_velocity_norm_m_s": 2.961551522374392e-08,
+              "endpoint": {
+                "vector": [
+                  -0.000732421875,
+                  0.00067138671875,
+                  0.00127410888671875,
+                  2.0481820683926344e-08,
+                  -1.6512785805389285e-08,
+                  1.359785528620705e-08
+                ],
+                "position_norm_m": 0.0016157213201255034,
+                "velocity_norm_m_s": 2.961551522374392e-08
+              }
+            },
+            "native_tighter": {
+              "max_position_norm_m": 0.0013777131830418328,
+              "max_velocity_norm_m_s": 3.064602004779002e-08,
+              "endpoint": {
+                "vector": [
+                  0.00083160400390625,
+                  -0.0003509521484375,
+                  -0.00092315673828125,
+                  -1.7666025087237358e-08,
+                  2.4780092644505203e-08,
+                  -3.610693966038525e-09
+                ],
+                "position_norm_m": 0.0012911045632480274,
+                "velocity_norm_m_s": 3.064602004779002e-08
+              }
+            },
+            "oracle_step": {
+              "max_position_norm_m": 1.7059844799040144e-05,
+              "max_velocity_norm_m_s": 2.2520969437238142e-10,
+              "endpoint": {
+                "vector": [
+                  0.0,
+                  0.0,
+                  -7.62939453125e-06,
+                  -4.001776687800884e-11,
+                  -1.3642420526593924e-10,
+                  -1.4097167877480388e-10
+                ],
+                "position_norm_m": 7.62939453125e-06,
+                "velocity_norm_m_s": 2.0021488372479275e-10
+              }
+            }
+          },
+          "counts": {
+            "identities": {
+              "attempted": 1,
+              "returned": 1,
+              "completed": 1
+            },
+            "initializations": {
+              "attempted": 1,
+              "returned": 1,
+              "completed": 1
+            },
+            "metadata": {
+              "attempted": 15,
+              "returned": 15,
+              "completed": 15
+            },
+            "states": {
+              "attempted": 470084,
+              "returned": 470084,
+              "completed": 470084
+            },
+            "native_guard_reads": {
+              "attempted": 144012,
+              "returned": 144012,
+              "completed": 144012
+            },
+            "native_arcs": {
+              "attempted": 2,
+              "returned": 2,
+              "completed": 2
+            },
+            "native_telemetry": {
+              "attempted": 642,
+              "returned": 0,
+              "completed": 642
+            },
+            "native_reference_fields": {
+              "attempted": 3852,
+              "returned": 0,
+              "completed": 3852
+            },
+            "solves": {
+              "attempted": 2,
+              "returned": 2,
+              "completed": 2
+            },
+            "rhs": {
+              "attempted": 117200,
+              "returned": 0,
+              "completed": 117200
+            },
+            "binary64_fields": {
+              "attempted": 353526,
+              "returned": 0,
+              "completed": 353526
+            },
+            "dynamic_totals": {
+              "attempted": 117842,
+              "returned": 0,
+              "completed": 117842
+            },
+            "trials": {
+              "attempted": 9606,
+              "returned": 0,
+              "completed": 9606
+            },
+            "record_evaluations": {
+              "attempted": 5766,
+              "returned": 0,
+              "completed": 5766
+            },
+            "body_checks": {
+              "attempted": 3852,
+              "returned": 0,
+              "completed": 3852
+            },
+            "moon_earth_checks": {
+              "attempted": 1284,
+              "returned": 0,
+              "completed": 1284
+            },
+            "source_rows": {
+              "attempted": 3852,
+              "returned": 0,
+              "completed": 3852
+            },
+            "reference_fields": {
+              "attempted": 30816,
+              "returned": 0,
+              "completed": 30816
+            },
+            "model_totals": {
+              "attempted": 1284,
+              "returned": 0,
+              "completed": 1284
+            }
+          },
+          "work_counts": {
+            "identities": {
+              "attempted": 2,
+              "returned": 2,
+              "completed": 2
+            },
+            "initializations": {
+              "attempted": 1,
+              "returned": 1,
+              "completed": 1
+            },
+            "metadata": {
+              "attempted": 30,
+              "returned": 30,
+              "completed": 30
+            },
+            "states": {
+              "attempted": 470084,
+              "returned": 470084,
+              "completed": 470084
+            },
+            "native_guard_reads": {
+              "attempted": 144012,
+              "returned": 144012,
+              "completed": 144012
+            },
+            "native_arcs": {
+              "attempted": 2,
+              "returned": 2,
+              "completed": 2
+            },
+            "native_telemetry": {
+              "attempted": 642,
+              "returned": 0,
+              "completed": 642
+            },
+            "native_reference_fields": {
+              "attempted": 3852,
+              "returned": 0,
+              "completed": 3852
+            },
+            "solves": {
+              "attempted": 2,
+              "returned": 2,
+              "completed": 2
+            },
+            "rhs": {
+              "attempted": 117200,
+              "returned": 0,
+              "completed": 117200
+            },
+            "binary64_fields": {
+              "attempted": 353526,
+              "returned": 0,
+              "completed": 353526
+            },
+            "dynamic_totals": {
+              "attempted": 117842,
+              "returned": 0,
+              "completed": 117842
+            },
+            "trials": {
+              "attempted": 9606,
+              "returned": 0,
+              "completed": 9606
+            },
+            "record_evaluations": {
+              "attempted": 5766,
+              "returned": 0,
+              "completed": 5766
+            },
+            "body_checks": {
+              "attempted": 3852,
+              "returned": 0,
+              "completed": 3852
+            },
+            "moon_earth_checks": {
+              "attempted": 1284,
+              "returned": 0,
+              "completed": 1284
+            },
+            "source_rows": {
+              "attempted": 3852,
+              "returned": 0,
+              "completed": 3852
+            },
+            "reference_fields": {
+              "attempted": 30816,
+              "returned": 0,
+              "completed": 30816
+            },
+            "model_totals": {
+              "attempted": 1284,
+              "returned": 0,
+              "completed": 1284
+            }
+          },
+          "mode": "live",
+          "capacity_only": false,
+          "study_binding": {}
+        }
+      },
+      "identity_sha256": {
+        "before": "a237eaed8cde76b2f5c0a7d907aea1bb2dd5b09e66f13a47911140371fd6c3bd",
+        "after": "a237eaed8cde76b2f5c0a7d907aea1bb2dd5b09e66f13a47911140371fd6c3bd"
+      },
+      "rejected_trials_by_profile": {},
+      "last_saved_state_comparison": {
+        "name": "oracle_step",
+        "index": 320,
+        "epoch_tdb_s": 979014965.9635216,
+        "assessment": {
+          "position_error_m": "0.00000762939453125",
+          "velocity_error_m_s": "2.002148837247927333819105502341231989465769781956026096809443004539592117743927137582859155956686778E-10",
+          "position_limit_m": 0.001,
+          "velocity_limit_m_s": 1e-06,
+          "position_passed": true,
+          "velocity_passed": true,
+          "passed": true
+        },
+        "difference": {
+          "vector": [
+            0.0,
+            0.0,
+            -7.62939453125e-06,
+            -4.001776687800884e-11,
+            -1.3642420526593924e-10,
+            -1.4097167877480388e-10
+          ],
+          "position_norm_m": 7.62939453125e-06,
+          "velocity_norm_m_s": 2.0021488372479275e-10
+        }
+      }
+    },
+    "audit": {
+      "receipt_sha256": {
+        "parent_attempt": "202df237c3408f9979cbeb0038140c909166b57ee03e3320bcfe9062fa90dec2",
+        "attempt": "8eea0c21aa431543227c70409b7b5825384037120f20dd678c99a90db2f088a9",
+        "receipt": "da9d830b26270f3d66776d5e926b17af2631bd461208231862d200488f06a5a0",
+        "parent_receipt": "f1aafc2f3e6b50e03f855dbcfd3b0f0330eb89ff4257e6565f9395fb24828123"
+      },
+      "receipts": {
+        "parent_attempt": {
+          "identity": {
+            "contract": "ADR0196",
+            "phase": "audit",
+            "mode": "live",
+            "revision": "6dde4be6bd4ba0caaaa1925075862a7bdb0c61d8",
+            "pin_sha256": "fb92ee356e4002a151792a00b4bf623531a001de721401cca9ee36b11772e724"
+          },
+          "started_s": 2882622.655607791
+        },
+        "attempt": {
+          "identity": {
+            "contract": "ADR0196",
+            "phase": "audit",
+            "mode": "live",
+            "revision": "6dde4be6bd4ba0caaaa1925075862a7bdb0c61d8",
+            "pin_sha256": "fb92ee356e4002a151792a00b4bf623531a001de721401cca9ee36b11772e724"
+          },
+          "started_s": 2882622.655607791,
+          "parent_attempt_sha256": "202df237c3408f9979cbeb0038140c909166b57ee03e3320bcfe9062fa90dec2"
+        },
+        "receipt": {
+          "identity": {
+            "contract": "ADR0196",
+            "phase": "audit",
+            "mode": "live",
+            "revision": "6dde4be6bd4ba0caaaa1925075862a7bdb0c61d8",
+            "pin_sha256": "fb92ee356e4002a151792a00b4bf623531a001de721401cca9ee36b11772e724"
+          },
+          "started_s": 2882622.655607791,
+          "parent_attempt_sha256": "202df237c3408f9979cbeb0038140c909166b57ee03e3320bcfe9062fa90dec2",
+          "status": "passed",
+          "gate": "passed",
+          "attempt_sha256": "8eea0c21aa431543227c70409b7b5825384037120f20dd678c99a90db2f088a9",
+          "manifest_sha256": "c9f91de265489aa8c348e72601bc9df0dc7409fd18861ae148e47ae8b7b76a44",
+          "elapsed_s": 27.93687591701746,
+          "peak_rss_bytes": 330711040
+        },
+        "parent_receipt": {
+          "identity": {
+            "contract": "ADR0196",
+            "phase": "audit",
+            "mode": "live",
+            "revision": "6dde4be6bd4ba0caaaa1925075862a7bdb0c61d8",
+            "pin_sha256": "fb92ee356e4002a151792a00b4bf623531a001de721401cca9ee36b11772e724"
+          },
+          "started_s": 2882622.655607791,
+          "elapsed_s": 28.06944345869124,
+          "checkout_frozen": true,
+          "returncode": 0,
+          "status": "passed",
+          "gate": "passed",
+          "parent_attempt_sha256": "202df237c3408f9979cbeb0038140c909166b57ee03e3320bcfe9062fa90dec2",
+          "attempt_sha256": "8eea0c21aa431543227c70409b7b5825384037120f20dd678c99a90db2f088a9",
+          "child_receipt_sha256": "da9d830b26270f3d66776d5e926b17af2631bd461208231862d200488f06a5a0",
+          "manifest_sha256": "c9f91de265489aa8c348e72601bc9df0dc7409fd18861ae148e47ae8b7b76a44",
+          "parent_peak_rss_bytes": 74792960,
+          "child_peak_rss_bytes": 330711040,
+          "error": null
+        }
+      },
+      "finalized": {
+        "manifest_sha256": "c9f91de265489aa8c348e72601bc9df0dc7409fd18861ae148e47ae8b7b76a44",
+        "parent_receipt_sha256": "f1aafc2f3e6b50e03f855dbcfd3b0f0330eb89ff4257e6565f9395fb24828123"
+      },
+      "finalization_error": null,
+      "shard_archive": {
+        "status": "passed",
+        "readback_verified": true,
+        "prefix_only": false,
+        "manifest_sha256": "c9f91de265489aa8c348e72601bc9df0dc7409fd18861ae148e47ae8b7b76a44",
+        "shard_count": 3,
+        "raw_bytes": 33624733,
+        "gzip_bytes": 10825034,
+        "rows": 50249,
+        "record_counts": {
+          "direction": 49286,
+          "comparison": 963
+        },
+        "summary": {
+          "audit_status": "passed",
+          "numerical_status": "passed",
+          "marker_status": "marker-bracketed",
+          "scientific_verified": false,
+          "continuous_safety_verified": false,
+          "native_calls": 0,
+          "kernel_loads": 0,
+          "spacecraft_propagations": 0,
+          "scientific_imports": 0,
+          "marker_reason": null,
+          "common_bracket_tdb_s": [
+            979012215.9635216,
+            979012265.9635216
+          ],
+          "native_overlap_tdb_s": [
+            979012231.9635216,
+            979012232.4635216
+          ],
+          "direction_grids": {
+            "rk4_normal": {
+              "rows": 321,
+              "edge_counts": {
+                "outward": 1
+              },
+              "reasons": [],
+              "first_outward_tdb_s": [
+                979012215.9635216,
+                979012265.9635216
+              ]
+            },
+            "mesh_normal": {
+              "rows": 16001,
+              "edge_counts": {
+                "outward": 1
+              },
+              "reasons": [],
+              "first_outward_tdb_s": [
+                979012231.9635216,
+                979012232.9635216
+              ]
+            },
+            "rk4_tighter": {
+              "rows": 321,
+              "edge_counts": {
+                "outward": 1
+              },
+              "reasons": [],
+              "first_outward_tdb_s": [
+                979012215.9635216,
+                979012265.9635216
+              ]
+            },
+            "mesh_tighter": {
+              "rows": 32001,
+              "edge_counts": {
+                "outward": 1
+              },
+              "reasons": [],
+              "first_outward_tdb_s": [
+                979012231.9635216,
+                979012232.4635216
+              ]
+            },
+            "dop853_normal": {
+              "rows": 321,
+              "edge_counts": {
+                "outward": 1
+              },
+              "reasons": [],
+              "first_outward_tdb_s": [
+                979012215.9635216,
+                979012265.9635216
+              ]
+            },
+            "dop853_tighter": {
+              "rows": 321,
+              "edge_counts": {
+                "outward": 1
+              },
+              "reasons": [],
+              "first_outward_tdb_s": [
+                979012215.9635216,
+                979012265.9635216
+              ]
+            }
+          },
+          "comparison_summary": {
+            "native_step": {
+              "max_position_norm_m": 0.0016202542130351932,
+              "max_velocity_norm_m_s": 2.961551522374392e-08,
+              "endpoint": {
+                "vector": [
+                  -0.000732421875,
+                  0.00067138671875,
+                  0.00127410888671875,
+                  2.0481820683926344e-08,
+                  -1.6512785805389285e-08,
+                  1.359785528620705e-08
+                ],
+                "position_norm_m": 0.0016157213201255034,
+                "velocity_norm_m_s": 2.961551522374392e-08
+              }
+            },
+            "native_tighter": {
+              "max_position_norm_m": 0.0013777131830418328,
+              "max_velocity_norm_m_s": 3.064602004779002e-08,
+              "endpoint": {
+                "vector": [
+                  0.00083160400390625,
+                  -0.0003509521484375,
+                  -0.00092315673828125,
+                  -1.7666025087237358e-08,
+                  2.4780092644505203e-08,
+                  -3.610693966038525e-09
+                ],
+                "position_norm_m": 0.0012911045632480274,
+                "velocity_norm_m_s": 3.064602004779002e-08
+              }
+            },
+            "oracle_step": {
+              "max_position_norm_m": 1.7059844799040144e-05,
+              "max_velocity_norm_m_s": 2.2520969437238142e-10,
+              "endpoint": {
+                "vector": [
+                  0.0,
+                  0.0,
+                  -7.62939453125e-06,
+                  -4.001776687800884e-11,
+                  -1.3642420526593924e-10,
+                  -1.4097167877480388e-10
+                ],
+                "position_norm_m": 7.62939453125e-06,
+                "velocity_norm_m_s": 2.0021488372479275e-10
+              }
+            }
+          },
+          "recomputed_counts": {
+            "native_telemetry": {
+              "attempted": 642,
+              "completed": 642
+            },
+            "native_reference_fields": {
+              "attempted": 3852,
+              "completed": 3852
+            },
+            "rhs": {
+              "attempted": 117200,
+              "completed": 117200
+            },
+            "binary64_fields": {
+              "attempted": 353526,
+              "completed": 353526
+            },
+            "dynamic_totals": {
+              "attempted": 117842,
+              "completed": 117842
+            },
+            "trials": {
+              "attempted": 9606,
+              "completed": 9606
+            },
+            "record_evaluations": {
+              "attempted": 5766,
+              "completed": 5766
+            },
+            "body_checks": {
+              "attempted": 3852,
+              "completed": 3852
+            },
+            "moon_earth_checks": {
+              "attempted": 1284,
+              "completed": 1284
+            },
+            "source_rows": {
+              "attempted": 3852,
+              "completed": 3852
+            },
+            "reference_fields": {
+              "attempted": 30816,
+              "completed": 30816
+            },
+            "model_totals": {
+              "attempted": 1284,
+              "completed": 1284
+            }
+          },
+          "comparisons": 963,
+          "native_telemetry": 642,
+          "adaptive_observations": 1284,
+          "common_direction_rows": 1284,
+          "mesh_direction_rows": 48002,
+          "rhs": 117200,
+          "trials": 9606,
+          "capacity_rhs": 0,
+          "mode": "live",
+          "capacity_only": false,
+          "study_binding": {
+            "manifest_sha256": "48ce4fa77e1f46453c2aadddf6e0823fa1952071fe1279f40b47b3cbc266373e",
+            "parent_receipt_sha256": "15b2f8175b9c9c2b95726cc6e4b07342d8a98c9ca5b9a63c060bdcca46e9e0c2"
+          }
+        }
+      }
+    }
+  },
+  "combined_verified_archive": {
+    "raw": 653749170,
+    "gzip": 183462545,
+    "rows": 372967,
+    "shards": 40,
+    "metadata_bytes": 20353
+  },
+  "numerical_status": "passed",
+  "marker_status": "marker-bracketed",
+  "relative_brackets": {
+    "common_bracket_from_restart_s": [
+      13250.0,
+      13300.0
+    ],
+    "native_overlap_from_restart_s": [
+      13266.0,
+      13266.5
+    ],
+    "individual_brackets_from_restart_s": {
+      "rk4_normal": [
+        13250.0,
+        13300.0
+      ],
+      "mesh_normal": [
+        13266.0,
+        13267.0
+      ],
+      "rk4_tighter": [
+        13250.0,
+        13300.0
+      ],
+      "mesh_tighter": [
+        13266.0,
+        13266.5
+      ],
+      "dop853_normal": [
+        13250.0,
+        13300.0
+      ],
+      "dop853_tighter": [
+        13250.0,
+        13300.0
+      ]
+    }
+  },
+  "full_independent_audit_passed": true
+}

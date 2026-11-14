@@ -374,8 +374,11 @@ tighter RK4 state to check the 18,374 km marker. The study/audit wall
 limits are 480/300 s. [ADR0197](../docs/adr/0197-prepare-far-lunar-range-check.md) completes
 R5.50: the full-cap artificial study and audit passed in 36.956 s and
 39.253 s, with lossless local readback and guarded regression.
-R5.51 requires separate live authorization. No physical marker result
-or mission handoff is claimed.
+[ADR0198](../docs/adr/0198-far-lunar-range-marker-bracketed.md) completes R5.51: one real study
+and one independent offline audit passed in 31.934 s and 28.069 s.
+All four common grids bracket 18,374 km at +13,250–13,300 s; the
+two RK4 brackets overlap at +13,266–13,266.5 s after restart. This
+sampled model B result leaves lunar escape and mission handoff open.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

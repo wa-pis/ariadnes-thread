@@ -7317,3 +7317,19 @@ Lossless readback verified both phases and receipt bindings in the
 designated local retention directory. 31 focused tests and guarded
 regression (6,217 passed, 494 skipped) passed, as did Ruff and
 strict OpenSpec. No real SPICE query or R5.51 launch; no physical verdict.
+
+## R5.51 real ephemeris far lunar range result (2026-11-15)
+
+[ADR0198](../../../docs/adr/0198-far-lunar-range-marker-bracketed.md) records one 16,000 s model B
+study (31.934/480 s) and independent saved-data audit (28.069/300 s)
+at `6dde4be`. Numerical status passed: all 963 state comparisons,
+1,284 adaptive observations, 642 native telemetry rows, both native
+guard histories and 49,286 direction rows verified. The audit used no
+scientific imports or native work. All original gates, caps, receipt
+bindings and durable readback passed.
+
+All four common grids agree on +13,250–13,300 s from restart.
+Both native meshes bracket the outward crossing and overlap over
++13,266–13,266.5 s (979012231.9635216 to 979012232.4635216 TDB s).
+The separate marker verdict is `marker-bracketed`. No event
+interpolation, escape, mission handoff or strict M3 qualification.
