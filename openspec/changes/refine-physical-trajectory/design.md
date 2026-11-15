@@ -7418,3 +7418,17 @@ finishes with bound readback in 0.141 s of the 15 s limit.
 Ideal mass and physical residuals remain null. The guarded
 regression, Ruff and strict validation pass. R5.57 and the physical
 check have not been attempted.
+
+## R5.57 verify the ideal coepoch on retained data (2026-11-15)
+
+[ADR0204](../../../docs/adr/0204-record-the-ideal-mars-checkpoint.md) records the
+single offline evaluation at 979014965.9635216 TDB s. The backward
+and forward ideal paths agree to 0.131 mm and 2.23e-11 m/s in both
+frames, passing the unchanged 1 m / 1e-6 m/s gates. Both roots
+and the invariants pass. The signed ideal-minus-B vectors are
+preserved; their norms are 51,523.590 km and 2.788927 km/s without a
+physical acceptance threshold. Ideal mass and all four physical
+residuals remain null. The one-shard run and receipt finalization
+took 0.257 s of 15 s, with no SPICE, force callbacks or
+numerical integration. Independent saved-value readback passed
+without replaying either path. Physical readiness remains R5.58.

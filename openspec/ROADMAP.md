@@ -407,6 +407,13 @@ archive and deadline limits, exclusive readback and guarded regression
 (0.141 s of 15 s for 42,862 lines and 16 MiB raw).
 R5.57 remains unexecuted. No physical continuity result is available.
 
+[ADR0204](../docs/adr/0204-record-the-ideal-mars-checkpoint.md) completes R5.57:
+one exact-epoch ideal diagnostic on frozen data passes in 0.257 s
+of 15 s. Its two analytic paths agree to 0.131 mm and 2.23e-11 m/s
+in both frames. The model difference from the R5.51 packet is
+51,523.590 km and 2.788927 km/s; it is not a physical join residual.
+No SPICE or numerical integration was used. R5.58 remains open.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

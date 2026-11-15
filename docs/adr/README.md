@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0204 — Record the ideal Mars checkpoint and model difference](0204-record-the-ideal-mars-checkpoint.md): R5.57 passes once offline; exact-epoch ideal agreement and signed model differences recorded, physical join open.
 - [0203 — Prepare the offline Mars checkpoint worksheet](0203-prepare-coepoch-mars-worksheet.md): R5.56 passes on the full artificial shard; R5.57 unexecuted.
 - [0202 — Design an independent Mars receiving state at lunar exit](0202-design-coepoch-mars-receiving-state.md): R5.55 specifies an offline ideal diagnostic and the prerequisites for a physical checkpoint comparison.
 - [0201 — Authenticate the lunar exit and record the receiving-data gap](0201-authenticate-lunar-exit-record-receiving-gap.md): R5.54 passes once offline; verified outgoing state, no compatible receiving record or physical join.

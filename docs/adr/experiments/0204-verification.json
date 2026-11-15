@@ -1,0 +1,347 @@
+{
+  "stage": "R5.57",
+  "contract": "ADR0202",
+  "measured_revision": "2386f6e38f70530579f671e4d4687798a3793917",
+  "once_only_location": "/Users/agrudin/dev/my/ariadna-evidence/R5.57",
+  "attempts_consumed": 1,
+  "preflight": {
+    "base_revision": "2386f6e38f70530579f671e4d4687798a3793917",
+    "preparation_sha256": "255f972239b2163a3608f497639bdcebc219b11cd7cf4d2e4da4b73d8400ef3b",
+    "design_sha256": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+    "runner_sha256": "5cc768a5c86ee9b256084ce54fabe5e008010f34df0b7cde76cbc067074e62f1",
+    "compact_input_bytes": 1903681,
+    "tested_source_sha256": {
+      "docs/adr/experiments/0203-coepoch-arithmetic.py": "caf3e95110c52a284e3cd965af77133b84e95581f3c566b6b67e4d07bfad9833",
+      "docs/adr/experiments/0203-coepoch-fixtures.py": "44db618345dcbd39abb3ae69c19f618732ea5527b2730cc639fcf9156209aab1",
+      "docs/adr/experiments/0203-coepoch-worksheet.py": "5cc768a5c86ee9b256084ce54fabe5e008010f34df0b7cde76cbc067074e62f1",
+      "tests/test_coepoch_mars_arithmetic.py": "bf126a1705dd839bd39638bf136bb10934cf9024f5700660d500f302995c1c91",
+      "tests/test_coepoch_mars_worksheet.py": "530c79b3cedf6ba733150801f080ae57f5fac1e6749f7c05c1001bf3e6abf680"
+    },
+    "reused_source_sha256": {
+      "0128-reference-coast.py": "027d0b4e45f9ebd941249e427963e365fd7205f9594a96365a587eb0e8cd7e81",
+      "0128-audit-reference-coast.py": "138d6c98b9f914dbcc7b26355e0e8c2019bece997f1d18b089a90b3cce095ad9",
+      "0197-far-archive.py": "0c316312ade239de4c08bcd4bc3404f3881dd8725269e93c961576376bdfd468",
+      "0200-interface-audit.py": "b4198de7f3e79a7dc375155dea6aa4140bd390bec51d4fc4b7d21f13f6ad1e8e",
+      "0200-interface-fixtures.py": "b5eefdef30fe4b348c3887154770977603c181bfda98fa77bd4b79bb79cd3b10"
+    },
+    "source_sha256": {
+      "0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0",
+      "0129-reference-coast.json": "e2c5d077285fe0218d1c93f3000f319048006eb55477d680f83041f6c70ce9d7",
+      "0129-reference-coast-audit.json": "41a8d4434db26752e3cae96e965480710f36eabbff885ed957b2766e957456c7",
+      "0199-design-inputs.json": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+      "0198-verification.json": "133623435622766b109ae11891f95ba4764868ebc550dbdd543f26f361336e79",
+      "0201-verification.json": "b4a760bd2b598d682b04969fb3b6e3f60cce5f738b3d6d655bb0a22207a25cd6",
+      "0098-central-correction-study.json": "b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057"
+    },
+    "archive_selected_payload": {
+      "first": 0,
+      "rows": 42862,
+      "raw": 16777139,
+      "gzip": 5176745,
+      "raw_sha256": "6018ad1e9c7024bc2a1a6d92a785ee3bc2b620b74d9b9a95ed79237ec874ff89",
+      "gzip_sha256": "d6b6cee3fef777e419077a5682e20abb90a9ed2e3e625cf77ed5524ba7a4672a"
+    },
+    "epoch_tdb_s": 979014965.9635216,
+    "r554_report_sha256": "dbbd2f748f937df5232dd36ab542c642191d695804305b213130601176350d5c",
+    "worksheet_or_analytic_path_started": false
+  },
+  "supervisor": {
+    "command": [
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+      "-I",
+      "-S",
+      "-B",
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0203-coepoch-worksheet.py",
+      "retained",
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0199-design-inputs.json",
+      "/Users/agrudin/dev/my/ariadna-evidence/R5.57"
+    ],
+    "authorization_sha256": "228800eb7f6f2623ef55ae785f841a5b0e54736ef1f627ddae80808c665c431c",
+    "returncode": 0,
+    "elapsed_through_finalization_s": 0.25685416581109166,
+    "supervisor_error": null,
+    "stderr": "",
+    "late": false
+  },
+  "readback": {
+    "result_readback_verified": true,
+    "readback_replayed_analytic_paths": false,
+    "original_file_checks": {
+      "attempt.json": {
+        "bytes": 404,
+        "sha256": "7d7029dfffcf2c560d7c094fc3fdf32df8585d28b3fbcab822d3e294f98aee82"
+      },
+      "report.json": {
+        "bytes": 5422,
+        "sha256": "84dd7f64415f180a48fa803b18bbdf5bd2df1d0bf270a4e4db184688611be6f2"
+      },
+      "receipt.json": {
+        "bytes": 610,
+        "sha256": "12783090d9aef45255a8bf3eda9cda041153e10950b3b18d23b6c0480907340a"
+      }
+    },
+    "original_records": {
+      "attempt.json": {
+        "stage": "R5.57",
+        "mode": "retained",
+        "inputs": {
+          "revision": "2386f6e38f70530579f671e4d4687798a3793917",
+          "design_sha256": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+          "preparation_sha256": "255f972239b2163a3608f497639bdcebc219b11cd7cf4d2e4da4b73d8400ef3b",
+          "authorization_sha256": "228800eb7f6f2623ef55ae785f841a5b0e54736ef1f627ddae80808c665c431c"
+        },
+        "started_s": 2939463.018829666,
+        "wall_s": 15
+      },
+      "report.json": {
+        "ideal_status": "ideal-reference-coepoch-computed",
+        "physical_status": "physical-join-not-established",
+        "ideal_mass_kg": null,
+        "continuity_residuals": {
+          "epoch_s": null,
+          "position_m": null,
+          "velocity_m_s": null,
+          "mass_kg": null
+        },
+        "epoch_tdb_s": 979014965.9635216,
+        "epoch_binary64_hex": "0x1.d2d4a9afb54adp+29",
+        "orientation": "J2000",
+        "relative_origin": "Sun",
+        "ssb_origin": "SSB",
+        "units": {
+          "time": "TDB seconds since J2000",
+          "position_units": "m",
+          "velocity_units": "m/s"
+        },
+        "solar_gm_m3_s2": 1.327124400420322e+20,
+        "ideal_force_model_id": "sun-centered-zero-revolution-patched-conic-v1",
+        "checkpoint_sun_ssb_si": [
+          -152926472.5494628,
+          173074079.48661622,
+          85724306.24935545,
+          -8.568597689444818,
+          1.7829060670902008,
+          0.9482599379358424
+        ],
+        "analytic_evaluations": 2,
+        "root_updates": 98,
+        "forward": {
+          "seed_epoch_tdb_s": 978995455.2304223,
+          "seed_relative_si": [
+            -46973713381.716545,
+            128300264842.91374,
+            55584691711.31233,
+            -30396.195992157944,
+            -11162.480839077607,
+            -2855.5383479014704
+          ],
+          "elapsed_s": 19510.733099341393,
+          "relative_si": [
+            -47566394112.6165,
+            128081467242.25793,
+            55528540644.746704,
+            -30358.048686086557,
+            -11265.93182531587,
+            -2900.3729531896697
+          ],
+          "ssb_si": [
+            -47719320585.16596,
+            128254541321.74455,
+            55614264950.99606,
+            -30366.617283776002,
+            -11264.14891924878,
+            -2899.424693251734
+          ],
+          "semimajor_axis_m": 178672353858.12955,
+          "eccentricity": 0.17763402730689387,
+          "relative_invariant_errors": {
+            "energy": 9.62957399881166e-16,
+            "angular_momentum": 3.691254928507927e-16
+          },
+          "root": {
+            "mean_anomaly_rad": -0.1531752462278104,
+            "eccentric_anomaly_rad": -0.18603028280471673,
+            "bracket_width_rad": 1.1157741397482823e-14,
+            "residual_rad": 1.4432899320127035e-15,
+            "updates": 49
+          }
+        },
+        "backward": {
+          "seed_epoch_tdb_s": 1004169273.4122404,
+          "seed_relative_si": [
+            166995084823.56296,
+            -109521950906.63445,
+            -54737316416.215805,
+            12124.348037012505,
+            18541.269788637455,
+            6946.5765995981665
+          ],
+          "elapsed_s": 25154307.448718786,
+          "relative_si": [
+            -47566394112.61649,
+            128081467242.25781,
+            55528540644.74675,
+            -30358.04868608657,
+            -11265.931825315887,
+            -2900.372953189674
+          ],
+          "ssb_si": [
+            -47719320585.165955,
+            128254541321.74443,
+            55614264950.99611,
+            -30366.617283776017,
+            -11264.148919248797,
+            -2899.424693251738
+          ],
+          "semimajor_axis_m": 178672353858.12952,
+          "eccentricity": 0.17763402730689423,
+          "relative_invariant_errors": {
+            "energy": 4.814786999405829e-16,
+            "angular_momentum": 1.565088959512573e-16
+          },
+          "root": {
+            "mean_anomaly_rad": 0.1531752462278133,
+            "eccentric_anomaly_rad": 0.18603028280471673,
+            "bracket_width_rad": 1.1157741397482823e-14,
+            "residual_rad": 1.5543122344752192e-15,
+            "updates": 49
+          }
+        },
+        "agreement": {
+          "sun_relative": {
+            "position_si": [
+              7.62939453125e-06,
+              -0.0001220703125,
+              4.57763671875e-05
+            ],
+            "velocity_si": [
+              -1.4551915228366852e-11,
+              -1.6370904631912708e-11,
+              -4.092726157978177e-12
+            ],
+            "position_norm_m": 0.0001305941983690162,
+            "velocity_norm_m_s": 2.2282620193436742e-11
+          },
+          "ssb": {
+            "position_si": [
+              7.62939453125e-06,
+              -0.0001220703125,
+              4.57763671875e-05
+            ],
+            "velocity_si": [
+              -1.4551915228366852e-11,
+              -1.6370904631912708e-11,
+              -4.092726157978177e-12
+            ],
+            "position_norm_m": 0.0001305941983690162,
+            "velocity_norm_m_s": 2.2282620193436742e-11
+          }
+        },
+        "model_difference": {
+          "sign": "backward ideal minus outgoing model B",
+          "outgoing_force_model_id": "r5-ssb-sun-moon-earth-point-v1",
+          "position_si": [
+            -4791890.275558472,
+            -32079300.90461731,
+            40032943.05914307
+          ],
+          "velocity_si": [
+            -468.45666848027395,
+            -1747.1494503748,
+            2122.765435678598
+          ],
+          "position_norm_m": 51523589.63541422,
+          "velocity_norm_m_s": 2788.9273829019553
+        },
+        "native_or_scientific_calls": 0,
+        "kernel_accesses": 0,
+        "force_evaluations": 0,
+        "propagation_calls": 0,
+        "fit_attempts": 0,
+        "status": "passed",
+        "synthetic": false,
+        "archive": {
+          "raw": 16777139,
+          "gzip": 5176745,
+          "rows": 42862
+        },
+        "compact_input_bytes": 1903681,
+        "archive_bindings": {
+          "study_manifest_sha256": "48ce4fa77e1f46453c2aadddf6e0823fa1952071fe1279f40b47b3cbc266373e",
+          "study_parent_receipt_sha256": "15b2f8175b9c9c2b95726cc6e4b07342d8a98c9ca5b9a63c060bdcca46e9e0c2",
+          "member_raw_sha256": "6018ad1e9c7024bc2a1a6d92a785ee3bc2b620b74d9b9a95ed79237ec874ff89",
+          "member_gzip_sha256": "d6b6cee3fef777e419077a5682e20abb90a9ed2e3e625cf77ed5524ba7a4672a",
+          "selectors": [
+            {
+              "row_in_member": 16,
+              "kind": "identity",
+              "keys": {
+                "when": "before"
+              }
+            },
+            {
+              "row_in_member": 337,
+              "kind": "node",
+              "keys": {
+                "index": 320
+              }
+            }
+          ],
+          "ordered_kernel_inventory_matches_r2": true,
+          "metadata_bytes": 20353,
+          "r554_report_sha256": "dbbd2f748f937df5232dd36ab542c642191d695804305b213130601176350d5c"
+        },
+        "source_sha256": {
+          "0119-m2-reference.json": "3606bb0a2af29a693a4c5192d88dcffd96a20a81b2d84771e916fbcdda7af8c0",
+          "0129-reference-coast.json": "e2c5d077285fe0218d1c93f3000f319048006eb55477d680f83041f6c70ce9d7",
+          "0129-reference-coast-audit.json": "41a8d4434db26752e3cae96e965480710f36eabbff885ed957b2766e957456c7",
+          "0199-design-inputs.json": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+          "0198-verification.json": "133623435622766b109ae11891f95ba4764868ebc550dbdd543f26f361336e79",
+          "0201-verification.json": "b4a760bd2b598d682b04969fb3b6e3f60cce5f738b3d6d655bb0a22207a25cd6",
+          "0098-central-correction-study.json": "b5b13613698aa9054477cb820af06f1ec32fe7909c7159f65566e562bd2f5057"
+        },
+        "outgoing_model_b_ssb_si": [
+          -47714528694.890396,
+          128286620622.64905,
+          55574232007.936966,
+          -29898.160615295743,
+          -9516.999468873997,
+          -5022.190128930336
+        ],
+        "stage": "R5.57",
+        "revision": "2386f6e38f70530579f671e4d4687798a3793917",
+        "design_sha256": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+        "preparation_sha256": "255f972239b2163a3608f497639bdcebc219b11cd7cf4d2e4da4b73d8400ef3b",
+        "authorization_sha256": "228800eb7f6f2623ef55ae785f841a5b0e54736ef1f627ddae80808c665c431c",
+        "attempt_sha256": "7d7029dfffcf2c560d7c094fc3fdf32df8585d28b3fbcab822d3e294f98aee82"
+      },
+      "receipt.json": {
+        "stage": "R5.57",
+        "revision": "2386f6e38f70530579f671e4d4687798a3793917",
+        "design_sha256": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+        "preparation_sha256": "255f972239b2163a3608f497639bdcebc219b11cd7cf4d2e4da4b73d8400ef3b",
+        "authorization_sha256": "228800eb7f6f2623ef55ae785f841a5b0e54736ef1f627ddae80808c665c431c",
+        "attempt_sha256": "7d7029dfffcf2c560d7c094fc3fdf32df8585d28b3fbcab822d3e294f98aee82",
+        "status": "passed",
+        "returncode": 0,
+        "error": null,
+        "report_sha256": "84dd7f64415f180a48fa803b18bbdf5bd2df1d0bf270a4e4db184688611be6f2",
+        "elapsed_s": 0.21730458410456777,
+        "child_peak_rss_bytes": 73809920
+      }
+    },
+    "independent_saved_arithmetic": {
+      "six_component_sun_translations": 2,
+      "signed_vectors_and_norms": 3,
+      "root_and_invariant_gates_checked": true
+    },
+    "verified_output_bytes": 6436
+  },
+  "verification_scope": "one ideal checkpoint and signed model comparison; no physical continuity",
+  "checks": {
+    "strict_openspec": "passed",
+    "changed_local_links_and_diff": "passed",
+    "tested_and_source_digests": "passed",
+    "runtime_regression_reused_from": "ADR0203"
+  }
+}
