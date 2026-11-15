@@ -7507,3 +7507,18 @@ strict OpenSpec.
 No retained inputs were used. A retained-source adapter must be
 qualified separately before one authorized R5.59c generation, and
 ADR0205 still governs any live admission.
+
+## R5.59b.1 qualify the retained archive adapter (2026-11-16)
+
+[ADR0209](../../../docs/adr/0209-qualify-retained-command-archive-adapter.md)
+qualifies the six-file read/selector boundary with fabricated archive
+shapes. The adapter checks source and inter-file digests, exact
+event words, the complete R1/R4 provenance, exact binary64 SSB
+subtraction and the independent R4 audit bounds. It preserves the
+signed excess vectors and extracts the historical exclusion words
+in explicit TNW order. It makes no geometry or selection call.
+
+The six-file artificial input of 524,288 bytes normalized in 0.0015 s;
+39 focused and 6,416 guarded regression checks passed (494 skipped).
+R5.59c remains unexecuted and requires the separately requested
+composition under the shared deadline and readback envelope.

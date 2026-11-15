@@ -1,0 +1,262 @@
+{
+  "stage": "R5.59b.1",
+  "scope": "fabricated archive selector qualification",
+  "contract": "ADR0207",
+  "measured_base_revision": "f9f9f3fa0d1866c6c3d9e99dd489f2533a2c0e73",
+  "max_input_bytes": 524288,
+  "fixtures": {
+    "0119-m2-reference.json": {
+      "bytes": 3379,
+      "sha256": "2e14af0e9ffdca5d1b71faeca9f85060513542d320ae6c12548c4d7e0f3bc2c8"
+    },
+    "0098-central-correction-study.json": {
+      "bytes": 3329,
+      "sha256": "bcb30f54a5c648fc2123652fa9fb169ce84deedfb7ce7bd50edb6d9e04a04ba1"
+    },
+    "0136-retained-boundary-audit.json": {
+      "bytes": 4341,
+      "sha256": "4fba5a9d9f5f56b872a14067e0f3ccbbd1a03f282df3c8407ebbb69666cb0639"
+    },
+    "0079-research-reference.json": {
+      "bytes": 1404,
+      "sha256": "76b64de45738fc6b89632dc26f558cf81f42ec070ccd50b58797d085a6202978"
+    },
+    "0101-central-damping-study.json": {
+      "bytes": 509776,
+      "sha256": "4b1c657e3cb516bd002df4c56c87ad65c23362e954e8f25d0e5de652115f56a8"
+    },
+    "0205-design-fixed-command-physical-join.md": {
+      "bytes": 2059,
+      "sha256": "bd81749061370f568619c10f4e6b73f61dd26944544de0e473ef2a0d4bbc334b"
+    }
+  },
+  "measurement": {
+    "elapsed_normalization_s": 0.0014729583635926247,
+    "opened_fabricated_files": 6,
+    "deadline_checks": 9,
+    "normalized_compact_bytes": 4561,
+    "normalized_sha256": "6c759335ec9ea777394740f26a7306a8a7fe9d003aa8afd0978b2bf3492c3f01"
+  },
+  "normalized_artificial_packet": {
+    "schema": "ariadna-r559c-normalized-input-v1",
+    "status": "archive-inputs-validated",
+    "scope": "artificial",
+    "candidate_id": "artificial-moon-mars",
+    "source_pins": {
+      "0119-m2-reference.json": "2e14af0e9ffdca5d1b71faeca9f85060513542d320ae6c12548c4d7e0f3bc2c8",
+      "0098-central-correction-study.json": "bcb30f54a5c648fc2123652fa9fb169ce84deedfb7ce7bd50edb6d9e04a04ba1",
+      "0136-retained-boundary-audit.json": "4fba5a9d9f5f56b872a14067e0f3ccbbd1a03f282df3c8407ebbb69666cb0639",
+      "0079-research-reference.json": "76b64de45738fc6b89632dc26f558cf81f42ec070ccd50b58797d085a6202978",
+      "0101-central-damping-study.json": "4b1c657e3cb516bd002df4c56c87ad65c23362e954e8f25d0e5de652115f56a8",
+      "0205-design-fixed-command-physical-join.md": "bd81749061370f568619c10f4e6b73f61dd26944544de0e473ef2a0d4bbc334b"
+    },
+    "source_bytes": 524288,
+    "epochs_tdb_s": [
+      1073741952.0,
+      1073766952.0,
+      1073791952.0
+    ],
+    "epoch_words": [
+      "0x1.0000020000000p+30",
+      "0x1.000188a000000p+30",
+      "0x1.00030f4000000p+30"
+    ],
+    "model_id": "ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2",
+    "origin": "SSB",
+    "orientation": "J2000",
+    "time_scale": "TDB seconds since J2000",
+    "units": "SI",
+    "spacecraft": {
+      "initial_mass_kg": 2000.0,
+      "dry_mass_kg": 500.0,
+      "max_thrust_n": 1000.0,
+      "isp_s": 450.0,
+      "srp_area_m2": 20.0,
+      "reflectivity_coefficient": 1.3
+    },
+    "endpoints": [
+      {
+        "body": "Moon",
+        "epoch_word": "0x1.0000020000000p+30",
+        "epoch_tdb_s": 1073741952.0,
+        "epoch_utc": "2034-01-09T01:00:00.000000Z",
+        "label": "departure-ignition",
+        "body_ssb_si": [
+          137438953472.0,
+          -68719476736.0,
+          34359738368.0,
+          12000.0,
+          -28000.0,
+          4000.0
+        ],
+        "endpoint_ssb_si": [
+          137440405525.9617,
+          -68720468488.31558,
+          34358416031.579224,
+          13121.499799645724,
+          -27408.87240437902,
+          4788.170127494641
+        ],
+        "relative_si": [
+          "1452053.961700439453125",
+          "-991752.315582275390625",
+          "-1322336.4207763671875",
+          "1121.499799645724124275147914886474609375",
+          "591.1275956209792639128863811492919921875",
+          "788.170127494640837539918720722198486328125"
+        ],
+        "orbit_relative_si": [
+          "1452053.9616953018121421337127685546875",
+          "-991752.31558243022300302982330322265625",
+          "-1322336.42077657394111156463623046875",
+          "1121.49979964572366952779702842235565185546875",
+          "591.1275956209802870944258756935596466064453125",
+          "788.17012749464038279256783425807952880859375"
+        ],
+        "v_infinity_m_s": [
+          -555.8193099797488,
+          189.3868150920566,
+          252.5157534560755
+        ],
+        "gm_m3_s2": 4902800121846.8,
+        "shape_radius_m": 1737400.0,
+        "guard_m": 1737400.0,
+        "orbit": {
+          "apoapsis_altitude_m": 462737.94405040285,
+          "argument_of_periapsis_rad": 0.0,
+          "central_body": "Moon",
+          "eccentricity": 0.0,
+          "inclination_rad": 0.9272952180016124,
+          "periapsis_altitude_m": 462737.94405040285,
+          "raan_rad": 9.074089505628664e-17,
+          "true_anomaly_rad": 5.433185307179587
+        }
+      },
+      {
+        "body": "Mars",
+        "epoch_word": "0x1.00030f4000000p+30",
+        "epoch_tdb_s": 1073791952.0,
+        "epoch_utc": "2034-01-09T14:53:20.000000Z",
+        "label": "arrival-cutoff",
+        "body_ssb_si": [
+          -137438953472.0,
+          137438953472.0,
+          -68719476736.0,
+          -25000.0,
+          -10000.0,
+          1000.0
+        ],
+        "endpoint_ssb_si": [
+          -137437766963.61195,
+          137442551949.43753,
+          -68718972619.43663,
+          -21989.330854599306,
+          -10823.27007236547,
+          -209.3738998915992
+        ],
+        "relative_si": [
+          "1186508.3880462646484375",
+          "3598477.437530517578125",
+          "504116.5633697509765625",
+          "3010.6691454006941057741641998291015625",
+          "-823.2700723654706962406635284423828125",
+          "-1209.37389989159919423400424420833587646484375"
+        ],
+        "orbit_relative_si": [
+          "1186508.3880451763980090618133544921875",
+          "3598477.4375355602242052555084228515625",
+          "504116.5633688312955200672149658203125",
+          "3010.6691454006950152688659727573394775390625",
+          "-823.27007236547024149331264197826385498046875",
+          "-1209.37389989159919423400424420833587646484375"
+        ],
+        "v_infinity_m_s": [
+          1023.3210082569735,
+          547.8780965910554,
+          -204.1374786045607
+        ],
+        "gm_m3_s2": 42828375815756.1,
+        "shape_radius_m": 3389500.0,
+        "guard_m": 3396190.0,
+        "orbit": {
+          "apoapsis_altitude_m": 432930.5792017798,
+          "argument_of_periapsis_rad": 0.0,
+          "central_body": "Mars",
+          "eccentricity": 0.0,
+          "inclination_rad": 2.7468015338900313,
+          "periapsis_altitude_m": 432930.5792017798,
+          "raan_rad": 4.068887871591405,
+          "true_anomaly_rad": 2.7915926535897935
+        }
+      }
+    ],
+    "rejected_command_words": [
+      [
+        "0x1.3333333333333p-3",
+        "-0x1.eb851eb851eb8p-6",
+        "0x1.2e80000000000p+10",
+        "-0x1.0000000000000p-2",
+        "0x1.eb851eb851eb8p-4",
+        "0x1.5180000000000p+10"
+      ],
+      [
+        "0x1.70a3d70a3d70ap-3",
+        "-0x1.47ae147ae147bp-5",
+        "0x1.4280000000000p+10",
+        "-0x1.6666666666666p-2",
+        "0x1.47ae147ae147bp-3",
+        "0x1.5b80000000000p+10"
+      ],
+      [
+        "0x1.51eb851eb851fp-3",
+        "-0x1.1eb851eb851ecp-5",
+        "0x1.3880000000000p+10",
+        "-0x1.3333333333333p-2",
+        "0x1.1eb851eb851ecp-3",
+        "0x1.5680000000000p+10"
+      ],
+      [
+        "0x1.428f5c28f5c29p-3",
+        "-0x1.0a3d70a3d70a4p-5",
+        "0x1.3380000000000p+10",
+        "-0x1.199999999999ap-2",
+        "0x1.0a3d70a3d70a4p-3",
+        "0x1.5400000000000p+10"
+      ]
+    ],
+    "command_words": null,
+    "live_authorized": false
+  },
+  "r559c_attempts": 0,
+  "r560_attempts": 0,
+  "spice_queries": 0,
+  "kernel_opens": 0,
+  "integration_calls": 0,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0209-archive-adapter.py": "b9f581321d825fd258067111e3513df0b89e84976a2a734db4345129a5eec25c",
+    "docs/adr/experiments/0209-archive-fixtures.py": "32edc2ed1f2f21977ac6a7443fe86b823dff55e074ac2f6f5f0c854ed992a2ba",
+    "docs/adr/experiments/0208-seed-fixtures.py": "cb8c2722807c9049960e4120b99d56fd447b80216659a992fd0ad2250140d549",
+    "tests/test_fixed_command_archive_adapter.py": "085e64748b9897ac8d4d6feb45010dec1f595dbae8a55b7cc1740ef7a1d5c5a5"
+  },
+  "design_adr_sha256": "b16690b46953f6c819f2f543a34a7aabd2862414363977d45915a5708321f7c1",
+  "checks": {
+    "python": "Conda space-nav 3.12.14",
+    "focused": {
+      "passed": 39,
+      "elapsed_s": 0.23,
+      "log_sha256": "6d8462dfa8b3122512d44be07cde4d465eed94a2d5915370fdd97395a6a44160"
+    },
+    "regression": {
+      "passed": 6416,
+      "skipped": 494,
+      "elapsed_s": 146.93,
+      "log_sha256": "685a95f32b9eab19127df561d75dfd7d61cddabb024f81d6c5f55cf187ab372a",
+      "skip_log_sha256": "200a2d159d591f934b1db9037b066fa61017072f6c41d8d548661e57d085356b",
+      "guard": "docs/adr/experiments/0189/pytest-offline-guard.py.txt",
+      "guard_sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+    },
+    "ruff": "pass",
+    "strict_openspec": "pass",
+    "checkout_frozen": true
+  }
+}

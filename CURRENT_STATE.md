@@ -4,7 +4,7 @@ Updated: 2026-11-16. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. [ADR0206](docs/adr/0206-prepare-fixed-command-readiness.md): R5.59 synthetic admission passes. [ADR0208](docs/adr/0208-qualify-fixed-command-seed.md): R5.59b arithmetic and limits pass on artificial data. The retained adapter and one separately authorized R5.59c run remain; no pair or R5.60 readiness yet.
+Automation `ariadna-m3` remains paused. [ADR0206](docs/adr/0206-prepare-fixed-command-readiness.md): R5.59 synthetic admission passes. [ADR0208](docs/adr/0208-qualify-fixed-command-seed.md): R5.59b arithmetic and limits pass on artificial data. [ADR0209](docs/adr/0209-qualify-retained-command-archive-adapter.md) qualifies the adapter on artificial files. R5.59c is unexecuted and requires a separate request; no pair or R5.60 readiness yet.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline

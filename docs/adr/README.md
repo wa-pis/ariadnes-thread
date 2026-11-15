@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0209 — Qualify the retained command archive adapter on artificial files](0209-qualify-retained-command-archive-adapter.md): six pinned archive shapes and cross-file provenance tested; no retained command attempt.
 - [0208 — Qualify the fixed-command worksheet on artificial inputs](0208-qualify-fixed-command-seed.md): R5.59b verifies signed synthetic conics, mass ledgers and bounded evidence; real inputs unexecuted.
 - [0207 — Derive one fixed command seed from the R4 endpoints](0207-design-fixed-command-seed.md): R5.59a design only; closed-form local asymptotes and one conditional command proposal.
 - [0206 — Prepare the synthetic fixed-command readiness check](0206-prepare-fixed-command-readiness.md): R5.59 verifies artificial admission and limits; R5.60 remains unexecuted.

@@ -729,6 +729,12 @@ R5.59a SHALL define at most one immutable analytic two-burn proposal
 for `d0001-t0035` under ADR0207, without changing ADR0205's physical
 readiness, thresholds or authorization.
 
+#### Scenario: Qualify the six-source archive adapter
+
+- **WHEN** the adapter is verified against fabricated forms of the six ADR0207 sources before R5.59c
+- **THEN** it SHALL verify each file's fixed name and external hash, aggregate input of at most 512 KiB, cross-file lineage, exact candidate and epoch words, and replay the retained SSB subtraction and R4 bounds without propagation
+- **AND** it SHALL retain the original signed excess vectors and historical exclusion words in departure-then-arrival order, reject invalid metadata and deadline violations, and return null commands with no live authorization; artificial pins SHALL NOT be accepted as retained pins
+
 #### Scenario: Construct local branches at the fixed endpoints
 
 - **WHEN** an offline command generation is separately requested after synthetic qualification

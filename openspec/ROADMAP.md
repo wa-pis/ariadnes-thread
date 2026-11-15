@@ -443,6 +443,12 @@ and refuse geometry, mass, ranking and evidence failures. Before
 one separately requested R5.59c run, qualify the retained adapter
 with fabricated archive shapes. No retained command exists.
 
+[ADR0209](../docs/adr/0209-qualify-retained-command-archive-adapter.md)
+qualifies the six-file archive adapter on fabricated files. Fixed
+epoch/selector bindings, original R4 state checks, rejection
+history and input caps pass. The adapter does not generate
+commands. R5.59c remains separately requested and unexecuted.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:
