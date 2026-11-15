@@ -436,6 +436,13 @@ finite-burn seed. R5.59b prepares and tests the worksheet; R5.59c is
 one separately requested offline generation and readback. A proposal
 cannot qualify the live model or authorize R5.60.
 
+[ADR0208](../docs/adr/0208-qualify-fixed-command-seed.md) qualifies
+the R5.59b arithmetic and bounded readback on artificial inputs only.
+The two inverse paths recover the manufactured signs and velocities
+and refuse geometry, mass, ranking and evidence failures. Before
+one separately requested R5.59c run, qualify the retained adapter
+with fabricated archive shapes. No retained command exists.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

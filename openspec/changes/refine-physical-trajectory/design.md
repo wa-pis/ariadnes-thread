@@ -7490,3 +7490,20 @@ generate one frozen proposal or a retained refusal, offline within
 proposal is not a full-force result; R5.60 still needs the complete
 ADR0205 admission and separate authorization. Design only; no pair
 has been calculated or admitted.
+
+## R5.59b qualify the fixed-command worksheet (2026-11-16)
+
+[ADR0208](../../../docs/adr/0208-qualify-fixed-command-seed.md) qualifies
+the binary64 speed-root worksheet against a separate 96-digit
+angular-momentum reconstruction and manufactured conic truth. The
+synthetic checks cover signs, TNW, both exact mass ledgers, all four
+pair slots, no-selection outcomes, hashed sources, exclusive saved
+evidence and a shared watchdog through readback.
+
+The 524,288-byte fixture completed in 0.059/15 s with 8,338
+output bytes and successful saved readback. 29 focused and 6,377
+guarded regression checks passed (494 skipped), alongside Ruff and
+strict OpenSpec.
+No retained inputs were used. A retained-source adapter must be
+qualified separately before one authorized R5.59c generation, and
+ADR0205 still governs any live admission.

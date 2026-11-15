@@ -1,0 +1,390 @@
+{
+  "stage": "R5.59b",
+  "contract": "ADR0207",
+  "measured_base_revision": "88cae06519970f331a26407d6aaf804eee473d26",
+  "fixture": {
+    "bytes": 524288,
+    "sha256": "7a3c34b22855460e592897cfda281d1a3142bb343dc2476bfdeefa4998a5c689"
+  },
+  "limits": {
+    "wall_s": 15,
+    "input_bytes": 524288,
+    "output_bytes": 131072
+  },
+  "measurement": {
+    "returncode": 0,
+    "elapsed_through_finalization_s": 0.058654332999140024,
+    "output_bytes": 8338,
+    "external_readback": "passed",
+    "artifacts": {
+      "attempt.json": {
+        "sha256": "341c8188505941fafeed2cfe7bfce5cb8698434846051690a8b0c46b0d50b2e9",
+        "bytes": 514
+      },
+      "completion.json": {
+        "sha256": "3700b505ff6bda6392c008cccf573160da6fac70d8bc5b7ec4010e092639ec40",
+        "bytes": 183
+      },
+      "receipt.json": {
+        "sha256": "7857184c2453fb4e852e24166d6074b0952065d60482970bb6e3a9c69cdbbb1b",
+        "bytes": 734
+      },
+      "report.json": {
+        "sha256": "b2a3d7edc3e3e2971aa3d84e8a712b3802ac5d26cc8e47f9bba4998a26ffea8c",
+        "bytes": 6907
+      }
+    }
+  },
+  "original_records": {
+    "attempt.json": {
+      "core_sha256": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+      "fixture_sha256": "7a3c34b22855460e592897cfda281d1a3142bb343dc2476bfdeefa4998a5c689",
+      "io_sha256": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+      "mode": "synthetic",
+      "oracle_sha256": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+      "run_id": "402f89342a784813af670b4c1f81e26f",
+      "runner_sha256": "e3d5bd935e1a7bb7e63c3c4df63f7a5e28b3d5630a8539177bae7a140da8c45c",
+      "stage": "R5.59b",
+      "wall_ns": 15000000000
+    },
+    "completion.json": {
+      "elapsed_through_readback_ns": 30980791,
+      "exit_code": 0,
+      "receipt_sha256": "7857184c2453fb4e852e24166d6074b0952065d60482970bb6e3a9c69cdbbb1b",
+      "run_id": "402f89342a784813af670b4c1f81e26f"
+    },
+    "receipt.json": {
+      "attempt_sha256": "341c8188505941fafeed2cfe7bfce5cb8698434846051690a8b0c46b0d50b2e9",
+      "core_sha256": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+      "elapsed_before_receipt_ns": 30640250,
+      "fixture_sha256": "7a3c34b22855460e592897cfda281d1a3142bb343dc2476bfdeefa4998a5c689",
+      "io_sha256": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+      "mode": "synthetic",
+      "oracle_sha256": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+      "report_sha256": "b2a3d7edc3e3e2971aa3d84e8a712b3802ac5d26cc8e47f9bba4998a26ffea8c",
+      "run_id": "402f89342a784813af670b4c1f81e26f",
+      "runner_sha256": "e3d5bd935e1a7bb7e63c3c4df63f7a5e28b3d5630a8539177bae7a140da8c45c",
+      "stage": "R5.59b",
+      "status": "synthetic-command-proposal"
+    },
+    "report.json": {
+      "actual_fixture_sha256": "7a3c34b22855460e592897cfda281d1a3142bb343dc2476bfdeefa4998a5c689",
+      "attempt_sha256": "341c8188505941fafeed2cfe7bfce5cb8698434846051690a8b0c46b0d50b2e9",
+      "branch_decisions": {
+        "Mars": {
+          "negative": {
+            "angles_rad": [
+              -2.886317929187084,
+              2.4635848916432224e-13
+            ],
+            "discrepancies": {
+              "asymptote_m_s": 2.1719839849700746e-12,
+              "impulse_m_s": 9.094947017729282e-13,
+              "radius_m": 9.313225746154785e-10,
+              "tnw_m_s": 2.0894259165845193e-12,
+              "velocity_m_s": 1.0419570787589327e-12
+            },
+            "hyperbolic_velocity_m_s": [
+              -2645.1145545840463,
+              3681.553054368226,
+              1802.0931151244472
+            ],
+            "impulse_m_s": [
+              5655.78369998474,
+              -4504.823126733697,
+              -3011.4670150160464
+            ],
+            "independent_speed_m_s": "7832.64031133164529419825347041797544380321288708167102070353267315035809742698554498192110875577",
+            "minimum_radius_m": 2537692.9989098753,
+            "radial": "inward",
+            "reason": "guard",
+            "reconstructed_excess_m_s": [
+              1023.3210082569753,
+              547.8780965910565,
+              -204.13747860456104
+            ]
+          },
+          "positive": {
+            "angles_rad": [
+              -2.771716501963739,
+              -1.1323719739664286e-12
+            ],
+            "discrepancies": {
+              "asymptote_m_s": 7.195802084636491e-13,
+              "impulse_m_s": 6.431098710768743e-13,
+              "radius_m": 0.0,
+              "tnw_m_s": 5.811740862375477e-13,
+              "velocity_m_s": 6.431098710768743e-13
+            },
+            "hyperbolic_velocity_m_s": [
+              4034.271840518365,
+              -2024.1559654843463,
+              -1850.7962715474655
+            ],
+            "impulse_m_s": [
+              -1023.6026951176709,
+              1200.8858931188756,
+              641.4223716558663
+            ],
+            "independent_speed_m_s": "1703.32382846149219742229954113543557185665824761250734206751381396898960916197227624880826964662",
+            "minimum_radius_m": 3822430.579197492,
+            "radial": "outward",
+            "reason": null,
+            "reconstructed_excess_m_s": [
+              1023.3210082569742,
+              547.8780965910553,
+              -204.1374786045609
+            ]
+          }
+        },
+        "Moon": {
+          "negative": {
+            "angles_rad": [
+              1.1064741846633686,
+              -1.5827353336036484e-15
+            ],
+            "discrepancies": {
+              "asymptote_m_s": 9.348971277289891e-13,
+              "impulse_m_s": 3.639754730461873e-13,
+              "radius_m": 2.3283064365386963e-10,
+              "tnw_m_s": 3.406856757840079e-13,
+              "velocity_m_s": 3.410605131648481e-13
+            },
+            "hyperbolic_velocity_m_s": [
+              845.6072023029056,
+              1222.3410383714868,
+              1629.7880511619821
+            ],
+            "impulse_m_s": [
+              -275.8925973428185,
+              631.2134427505075,
+              841.6179236673413
+            ],
+            "independent_speed_m_s": "1087.59728990819117715583351827806355728255639105614736795712984289740233970340759392205777089801",
+            "minimum_radius_m": 1800000.0000037602,
+            "radial": "inward",
+            "reason": null,
+            "reconstructed_excess_m_s": [
+              -555.8193099797489,
+              189.386815092056,
+              252.51575345607478
+            ]
+          },
+          "positive": {
+            "angles_rad": [
+              3.0681987651397633,
+              4.897896995859049e-16
+            ],
+            "discrepancies": {
+              "asymptote_m_s": 1.2534586102901781e-12,
+              "impulse_m_s": 2.2737367544323206e-13,
+              "radius_m": 4.656612873077393e-10,
+              "tnw_m_s": 6.397140164315248e-14,
+              "velocity_m_s": 2.7847474288855413e-13
+            },
+            "hyperbolic_velocity_m_s": [
+              -1823.2825955391975,
+              -744.8266753732893,
+              -993.1022338310523
+            ],
+            "impulse_m_s": [
+              -2944.7823951849214,
+              -1335.9542709942684,
+              -1781.272361325693
+            ],
+            "independent_speed_m_s": "3691.80828245477557195124422051760979333188079341919561166909533387737888359342502188774679567375",
+            "minimum_radius_m": 2169532.356140097,
+            "radial": "inward",
+            "reason": null,
+            "reconstructed_excess_m_s": [
+              -555.8193099797501,
+              189.38681509205668,
+              252.5157534560755
+            ]
+          }
+        }
+      },
+      "candidate": "artificial-moon-mars",
+      "command_words": [
+        "0x1.1b41e464ff57cp+0",
+        "-0x1.c8314129a3a8fp-50",
+        "0x1.e1f850b4cbed4p+10",
+        "-0x1.62c79b38dbe03p+1",
+        "-0x1.3ebc000000001p-40",
+        "0x1.141c25758a38bp+11"
+      ],
+      "core_sha256": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+      "fixture_bytes": 524288,
+      "fixture_sha256": "7a3c34b22855460e592897cfda281d1a3142bb343dc2476bfdeefa4998a5c689",
+      "force_evaluations": 0,
+      "integrations": 0,
+      "io_sha256": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+      "kernel_accesses": 0,
+      "live_authorized": false,
+      "mode": "synthetic",
+      "model": "artificial-two-body",
+      "oracle_sha256": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+      "orientation": "J2000",
+      "pairs": [
+        {
+          "command_words": [
+            "0x1.88babcb4f3913p+1",
+            "0x1.1a5833b015e64p-51",
+            "0x1.38aa6539d99e5p+12",
+            "-0x1.62c79b38dbe03p+1",
+            "-0x1.3ebc000000001p-40",
+            "0x1.32129df9554cep+10"
+          ],
+          "ideal_end_masses_kg": [
+            866.3815509830906,
+            588.9528238857299
+          ],
+          "independent_mass_discrepancies": {
+            "duration_s": 2.2737367544323206e-13,
+            "mass_kg": 0.0
+          },
+          "ledgers": {
+            "epoch_words": [
+              "0x1.0000020000000p+30",
+              "0x1.0000502a994e7p+30",
+              "0x1.000188a000000p+30",
+              "0x1.0002fc1ed6207p+30",
+              "0x1.00030f4000000p+30"
+            ],
+            "mass_kg_exact": {
+              "commanded": [
+                "34320909160324346595408307630135/39614081257132168796771975168",
+                "34320909160324346595408307630135/39614081257132168796771975168",
+                "46661650044053505353093217932795/79228162514264337593543950336"
+              ],
+              "effective": [
+                "130923878330921350050265357/151115727451828646838272",
+                "130923878330921350050265357/151115727451828646838272",
+                "2781251075696537464958621/4722366482869645213696"
+              ]
+            }
+          },
+          "oracle_total_delta_v_m_s": "5395.13211091626776937354376165304536518853904103170295373660914784636849275539729813655506532037",
+          "reason": null,
+          "roots": [
+            "positive",
+            "positive"
+          ],
+          "total_delta_v_m_s": 5395.132110916268
+        },
+        {
+          "command_words": [
+            "0x1.1b41e464ff57cp+0",
+            "-0x1.c8314129a3a8fp-50",
+            "0x1.e1f850b4cbed4p+10",
+            "-0x1.62c79b38dbe03p+1",
+            "-0x1.3ebc000000001p-40",
+            "0x1.141c25758a38bp+11"
+          ],
+          "ideal_end_masses_kg": [
+            1563.1354628593258,
+            1062.5953933602345
+          ],
+          "independent_mass_discrepancies": {
+            "duration_s": 2.2737367544323206e-13,
+            "mass_kg": 2.2737367544323206e-13
+          },
+          "ledgers": {
+            "epoch_words": [
+              "0x1.0000020000000p+30",
+              "0x1.0000201f850b5p+30",
+              "0x1.000188a000000p+30",
+              "0x1.0002ecbc7b515p+30",
+              "0x1.00030f4000000p+30"
+            ],
+            "mass_kg_exact": {
+              "commanded": [
+                "61922175241614240065105177142823/39614081257132168796771975168",
+                "61922175241614240065105177142823/39614081257132168796771975168",
+                "84187480512053322170949343154663/79228162514264337593543950336"
+              ],
+              "effective": [
+                "236214352574077215135314215/151115727451828646838272",
+                "236214352574077215135314215/151115727451828646838272",
+                "5017964870424535863552479/4722366482869645213696"
+              ]
+            }
+          },
+          "oracle_total_delta_v_m_s": "2790.92111836968337457813305941349912913921463866865471002464365686639194886537987017086604054463",
+          "reason": null,
+          "roots": [
+            "negative",
+            "positive"
+          ],
+          "total_delta_v_m_s": 2790.9211183696834
+        }
+      ],
+      "physical_launch_authorized": false,
+      "physical_residuals": {
+        "epoch_s": null,
+        "mass_kg": null,
+        "position_m": null,
+        "velocity_m_s": null
+      },
+      "physical_status": "physical-join-not-established",
+      "r559c_attempts": 0,
+      "r560_attempts": 0,
+      "retained_archive_reads": 0,
+      "run_id": "402f89342a784813af670b4c1f81e26f",
+      "runner_sha256": "e3d5bd935e1a7bb7e63c3c4df63f7a5e28b3d5630a8539177bae7a140da8c45c",
+      "selected_roots": [
+        "negative",
+        "positive"
+      ],
+      "source_pins": {
+        "audit": "25a832c55e6dfa34f553561a0eb9df5b05f2e5080a15667fab2a0dbc8fac33b0",
+        "baseline": "c03d7c1c670fe49c4832e136a74239dbe9c1d9e4d0083b9270b693ea0a4d4f91",
+        "contract": "b92c9c055c00f63e3d3b960c46914b8e85a8c2bfc506250225b29ddec64a2fa0",
+        "fractions": "c03d7c1c670fe49c4832e136a74239dbe9c1d9e4d0083b9270b693ea0a4d4f91",
+        "r1": "e1036f19ec28ab145be9a66e2c37b280d11b5e3dc7cffb18daf5335301e24903",
+        "r4": "a522c78f10276581d1f0038eb40b8ce22721611bcb03fa6bbf7f1e65f8231adb"
+      },
+      "spice_queries": 0,
+      "stage": "R5.59b",
+      "status": "synthetic-command-proposal",
+      "synthetic": true,
+      "time_scale": "TDB seconds since J2000",
+      "units": "SI"
+    }
+  },
+  "tested_source_sha256": {
+    "docs/adr/experiments/0206-readiness-runner.py": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "docs/adr/experiments/0208-seed-worksheet.py": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+    "docs/adr/experiments/0208-seed-oracle.py": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+    "docs/adr/experiments/0208-seed-runner.py": "e3d5bd935e1a7bb7e63c3c4df63f7a5e28b3d5630a8539177bae7a140da8c45c",
+    "docs/adr/experiments/0208-seed-fixtures.py": "cb8c2722807c9049960e4120b99d56fd447b80216659a992fd0ad2250140d549",
+    "tests/test_fixed_command_seed.py": "4252d4ab8806424048c2b0c371dae769000dfa78077a785281bcc9e8dea5b8d4"
+  },
+  "design_adr_sha256": "b16690b46953f6c819f2f543a34a7aabd2862414363977d45915a5708321f7c1",
+  "checks": {
+    "python": "Conda space-nav 3.12.14",
+    "focused": {
+      "passed": 29,
+      "elapsed_s": 1.26,
+      "log_sha256": "7697923b6276bc4afe1a4342927ecf967b588a7fe5891f480651b82a7876a31e"
+    },
+    "regression": {
+      "passed": 6377,
+      "skipped": 494,
+      "elapsed_s": 125.57,
+      "log_sha256": "c5082a29ed96a7730d2b5fda1a3ce41d4a6dcea0dca415b37fdad6f7a1e03b9c",
+      "skip_log_sha256": "200a2d159d591f934b1db9037b066fa61017072f6c41d8d548661e57d085356b",
+      "guard": "docs/adr/experiments/0189/pytest-offline-guard.py.txt",
+      "guard_sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+    },
+    "ruff": "pass",
+    "strict_openspec": "pass",
+    "checkout_frozen": true
+  },
+  "max_artificial_discrepancies": {
+    "velocity_m_s": 2.1719839849700746e-12,
+    "radius_m": 9.313225746154785e-10,
+    "duration_s": 2.2737367544323206e-13,
+    "mass_kg": 2.2737367544323206e-13
+  }
+}
