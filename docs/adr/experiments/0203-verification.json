@@ -1,0 +1,334 @@
+{
+  "stage": "R5.56",
+  "contract": "ADR0202",
+  "measured_base_revision": "2bf7217cbf5cd2abc2664e3c55cb5fc9ed8cd07c",
+  "tested_tree": "base plus five pinned untracked preparation files; frozen during regression",
+  "design_sha256": "5afd7e263adf7c7aa03ee902a4e7adb85360c4cadd172244a8c8b26d6d8998df",
+  "contract_adr_sha256": "642cf23fb07dad1a0d3f245f37ef9ffb48a8d239ec4ca6e479b4b84aeb8d8b16",
+  "tested_source_sha256": {
+    "docs/adr/experiments/0203-coepoch-arithmetic.py": "caf3e95110c52a284e3cd965af77133b84e95581f3c566b6b67e4d07bfad9833",
+    "docs/adr/experiments/0203-coepoch-fixtures.py": "44db618345dcbd39abb3ae69c19f618732ea5527b2730cc639fcf9156209aab1",
+    "docs/adr/experiments/0203-coepoch-worksheet.py": "5cc768a5c86ee9b256084ce54fabe5e008010f34df0b7cde76cbc067074e62f1",
+    "tests/test_coepoch_mars_arithmetic.py": "bf126a1705dd839bd39638bf136bb10934cf9024f5700660d500f302995c1c91",
+    "tests/test_coepoch_mars_worksheet.py": "530c79b3cedf6ba733150801f080ae57f5fac1e6749f7c05c1001bf3e6abf680"
+  },
+  "reused_source_sha256": {
+    "0128-reference-coast.py": "027d0b4e45f9ebd941249e427963e365fd7205f9594a96365a587eb0e8cd7e81",
+    "0128-audit-reference-coast.py": "138d6c98b9f914dbcc7b26355e0e8c2019bece997f1d18b089a90b3cce095ad9",
+    "0197-far-archive.py": "0c316312ade239de4c08bcd4bc3404f3881dd8725269e93c961576376bdfd468",
+    "0200-interface-audit.py": "b4198de7f3e79a7dc375155dea6aa4140bd390bec51d4fc4b7d21f13f6ad1e8e",
+    "0200-interface-fixtures.py": "b5eefdef30fe4b348c3887154770977603c181bfda98fa77bd4b79bb79cd3b10"
+  },
+  "preparation_complete": true,
+  "full_synthetic_verified": true,
+  "r557_attempted": false,
+  "caps": {
+    "wall_s": 15,
+    "shards": 1,
+    "raw_bytes": 16777216,
+    "gzip_payload_bytes": 5242880,
+    "rows": 42862,
+    "compact_input_bytes": 2097152,
+    "archive_metadata_bytes": 1048576,
+    "output_bytes": 131072,
+    "analytic_evaluations": 2,
+    "root_updates_per_solve": 64,
+    "native_work": 0
+  },
+  "full_synthetic_evidence": {
+    "directory": "/Users/agrudin/dev/my/ariadna-evidence/R5.56-verified",
+    "measurement": {
+      "returncode": 0,
+      "elapsed_through_finalization_s": 0.14111562492325902,
+      "receipt_elapsed_before_finalization_s": 0.08860774990171194,
+      "child_peak_rss_bytes": 64307200,
+      "output_bytes": 5489,
+      "independent_analytic_errors": {
+        "forward": {
+          "position_m": 0.0005810373768511893,
+          "velocity_m_s": 1.396955439924661e-10
+        },
+        "backward": {
+          "position_m": 0.0007472134122738827,
+          "velocity_m_s": 1.7904807125491506e-10
+        }
+      },
+      "artifacts": {
+        "pins.json": {
+          "bytes": 617,
+          "sha256": "7ca9f6dc601cc9ef7045a768a94cdbd8276e87803a9b0d861a7d1d73ccac92a7"
+        },
+        "result/attempt.json": {
+          "bytes": 171,
+          "sha256": "3773b8ab2359d2c6cc02df2101541e96a6c38060ac740a3ee600e9cbe30cda25"
+        },
+        "result/report.json": {
+          "bytes": 4942,
+          "sha256": "c55096e40dc9258f2a27b0f01c068f8a750f901acc8f810d50f3527e37e5dd72"
+        },
+        "result/receipt.json": {
+          "bytes": 376,
+          "sha256": "b8832205f19257c28c49fdcdaa9f6a7b2243669915d540ef5df3c06414cfb143"
+        }
+      }
+    },
+    "original_records": {
+      "attempt.json": {
+        "stage": "R5.56",
+        "mode": "synthetic",
+        "inputs": {
+          "pins_sha256": "7ca9f6dc601cc9ef7045a768a94cdbd8276e87803a9b0d861a7d1d73ccac92a7"
+        },
+        "started_s": 2914908.861605208,
+        "wall_s": 15
+      },
+      "report.json": {
+        "ideal_status": "ideal-reference-coepoch-computed",
+        "physical_status": "physical-join-not-established",
+        "ideal_mass_kg": null,
+        "continuity_residuals": {
+          "epoch_s": null,
+          "position_m": null,
+          "velocity_m_s": null,
+          "mass_kg": null
+        },
+        "epoch_tdb_s": 900019450.0,
+        "epoch_binary64_hex": "0x1.ad29a7d000000p+29",
+        "orientation": "J2000",
+        "relative_origin": "Sun",
+        "ssb_origin": "SSB",
+        "units": {
+          "time": "TDB seconds since J2000",
+          "position_units": "m",
+          "velocity_units": "m/s"
+        },
+        "solar_gm_m3_s2": 1.327124400420322e+20,
+        "ideal_force_model_id": "sun-centered-zero-revolution-patched-conic-v1",
+        "checkpoint_sun_ssb_si": [
+          400068075.0,
+          -200141012.5,
+          100087525.0,
+          3.5,
+          -7.25,
+          4.5
+        ],
+        "analytic_evaluations": 2,
+        "root_updates": 98,
+        "forward": {
+          "seed_epoch_tdb_s": 900000000.0,
+          "seed_relative_si": [
+            -389211065.1780777,
+            83248345920.62135,
+            88486866796.52032,
+            -31531.61605601412,
+            14216.882176034906,
+            -10060.618523707399
+          ],
+          "elapsed_s": 19450.0,
+          "relative_si": [
+            -1002492691.454422,
+            83523698127.53796,
+            88289950516.2104,
+            -31530.61513149628,
+            14096.927715391854,
+            -10187.769208779064
+          ],
+          "ssb_si": [
+            -602424616.454422,
+            83323557115.03796,
+            88390038041.2104,
+            -31527.11513149628,
+            14089.677715391854,
+            -10183.269208779064
+          ],
+          "semimajor_axis_m": 149597870699.99988,
+          "eccentricity": 0.19999999999999954,
+          "relative_invariant_errors": {
+            "energy": 2.6875334186920943e-16,
+            "angular_momentum": 5.639904318303686e-16
+          },
+          "root": {
+            "mean_anomaly_rad": 0.2852929017563365,
+            "eccentric_anomaly_rad": 0.35476734289978323,
+            "bracket_width_rad": 1.1157741397482823e-14,
+            "residual_rad": 3.1086244689504383e-15,
+            "updates": 49
+          }
+        },
+        "backward": {
+          "seed_epoch_tdb_s": 925173818.0,
+          "seed_relative_si": [
+            118191019927.31699,
+            -67740021570.509026,
+            22296792933.310616,
+            944.2307233400479,
+            21621.433718204273,
+            23818.247211423266
+          ],
+          "elapsed_s": 25154368.0,
+          "relative_si": [
+            -1002492691.4545441,
+            83523698127.53806,
+            88289950516.21031,
+            -31530.61513149629,
+            14096.927715391823,
+            -10187.76920877909
+          ],
+          "ssb_si": [
+            -602424616.4545441,
+            83323557115.03806,
+            88390038041.21031,
+            -31527.11513149629,
+            14089.677715391823,
+            -10183.26920877909
+          ],
+          "semimajor_axis_m": 149597870699.99997,
+          "eccentricity": 0.19999999999999993,
+          "relative_invariant_errors": {
+            "energy": 0.0,
+            "angular_momentum": 1.1452910442620368e-16
+          },
+          "root": {
+            "mean_anomaly_rad": -0.2852929017563337,
+            "eccentric_anomaly_rad": -0.35476734289978323,
+            "bracket_width_rad": 1.1157741397482823e-14,
+            "residual_rad": 5.717648576819556e-15,
+            "updates": 49
+          }
+        },
+        "agreement": {
+          "sun_relative": {
+            "position_si": [
+              -0.0001220703125,
+              9.1552734375e-05,
+              -9.1552734375e-05
+            ],
+            "velocity_si": [
+              -1.0913936421275139e-11,
+              -3.092281986027956e-11,
+              -2.546585164964199e-11
+            ],
+            "position_norm_m": 0.00017794652999405825,
+            "velocity_norm_m_s": 4.15192051532843e-11
+          },
+          "ssb": {
+            "position_si": [
+              -0.0001220703125,
+              9.1552734375e-05,
+              -9.1552734375e-05
+            ],
+            "velocity_si": [
+              -1.0913936421275139e-11,
+              -3.092281986027956e-11,
+              -2.546585164964199e-11
+            ],
+            "position_norm_m": 0.00017794652999405825,
+            "velocity_norm_m_s": 4.15192051532843e-11
+          }
+        },
+        "model_difference": {
+          "sign": "backward ideal minus outgoing model B",
+          "outgoing_force_model_id": "r5-ssb-sun-moon-earth-point-v1",
+          "position_si": [
+            7124.99934387207,
+            -4224.999725341797,
+            874.9997711181641
+          ],
+          "velocity_si": [
+            27.499999999996362,
+            -16.250000000120053,
+            0.7499999998672138
+          ],
+          "position_norm_m": 8329.577596059271,
+          "velocity_norm_m_s": 31.951134565199755
+        },
+        "native_or_scientific_calls": 0,
+        "kernel_accesses": 0,
+        "force_evaluations": 0,
+        "propagation_calls": 0,
+        "fit_attempts": 0,
+        "status": "passed",
+        "synthetic": true,
+        "archive": {
+          "raw": 16777216,
+          "gzip": 5207814,
+          "rows": 42862
+        },
+        "compact_input_bytes": 1982095,
+        "archive_bindings": {
+          "study_manifest_sha256": "1ce392d111701f40757dd920fbacdd039d9ae0ee97a4b94458ba6112dfe8946d",
+          "study_parent_receipt_sha256": "c5aa5e4ae11b47b5cf8b0dcebd7dbed217c515fee8bbb6cd31c2b5ff1bf3d420",
+          "member_raw_sha256": "93619ae39f3cccbcd69b65a220e71336708d0032738b37ca307638092be26cef",
+          "member_gzip_sha256": "6aab39ba003433a701071f8e9c0842ae997a128057e7417d0cd16d59b1c041f5",
+          "selectors": [
+            {
+              "row_in_member": 16,
+              "kind": "identity",
+              "keys": {
+                "when": "before"
+              }
+            },
+            {
+              "row_in_member": 337,
+              "kind": "node",
+              "keys": {
+                "index": 320
+              }
+            }
+          ],
+          "ordered_kernel_inventory_matches_r2": true,
+          "metadata_bytes": 4791,
+          "r554_report_sha256": "65ebc11cba0f27cb44495f67bf527270c75fcb0e992e822ffdcdaab582b30a04"
+        },
+        "source_sha256": {
+          "0119-m2-reference.json": "0bbabaf43611423349f5a85aa6e7b0069a9b5717f8e00c93d3ef1a840f3ff0d0",
+          "0129-reference-coast.json": "7c7e582c3fa28e1a12cc76891ef9bf1e4e17b054ca2ffc9399cf4f479dfa4ca5",
+          "0129-reference-coast-audit.json": "e64aba6b7c8ee11ccebed8161370eac1992a4387616caf3def9d2771416158e0",
+          "0198-verification.json": "b481f9d78817eb7c138e2b78c30e38f1ce9ef149b68145042f0337fc6694bcdd",
+          "0199-design-inputs.json": "02fd632ba78c495e8a9a97dd88429f57a15d1fc931d8c3539671dd9462327298",
+          "0201-verification.json": "f53afd3f29974fee301b64a58a755b4a027138ec758c5f4db432f79dcb811f3f"
+        },
+        "outgoing_model_b_ssb_si": [
+          -602431741.4538879,
+          83323561340.03778,
+          88390037166.21054,
+          -31554.615131496288,
+          14105.927715391943,
+          -10184.019208778956
+        ],
+        "stage": "R5.56",
+        "pins_sha256": "7ca9f6dc601cc9ef7045a768a94cdbd8276e87803a9b0d861a7d1d73ccac92a7",
+        "attempt_sha256": "3773b8ab2359d2c6cc02df2101541e96a6c38060ac740a3ee600e9cbe30cda25"
+      },
+      "receipt.json": {
+        "stage": "R5.56",
+        "pins_sha256": "7ca9f6dc601cc9ef7045a768a94cdbd8276e87803a9b0d861a7d1d73ccac92a7",
+        "attempt_sha256": "3773b8ab2359d2c6cc02df2101541e96a6c38060ac740a3ee600e9cbe30cda25",
+        "status": "passed",
+        "returncode": 0,
+        "error": null,
+        "report_sha256": "c55096e40dc9258f2a27b0f01c068f8a750f901acc8f810d50f3527e37e5dd72",
+        "elapsed_s": 0.08860774990171194,
+        "child_peak_rss_bytes": 64307200
+      }
+    }
+  },
+  "checks": {
+    "guard_sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693",
+    "focused_pytest": {
+      "passed": 37,
+      "skipped": 0,
+      "elapsed_s": 0.67,
+      "log_sha256": "e521f18d236936c1598894acb033a794ec2c1166ff27852dfa8cf683a297ffcd"
+    },
+    "full_pytest": {
+      "passed": 6284,
+      "skipped": 494,
+      "elapsed_s": 122.0,
+      "log_sha256": "6792f7769613aad147dc4d6e19fc40c9fad0f3cb0283a6e13536e76345c51b39"
+    },
+    "ruff": "passed",
+    "strict_openspec": "passed",
+    "frozen_checkout_and_source_digests": "passed"
+  }
+}

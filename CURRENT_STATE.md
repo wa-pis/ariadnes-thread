@@ -4,7 +4,7 @@ Updated: 2026-11-15. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. R5.54 authenticated the outgoing packet without finding a compatible receiver. [ADR0202](docs/adr/0202-design-coepoch-mars-receiving-state.md) splits R5.55 into an offline ideal diagnostic (next: R5.56 synthetic preparation) and a physical comparison pending compatible dynamics, commands and an independent error budget.
+Automation `ariadna-m3` remains paused. [ADR0203](docs/adr/0203-prepare-coepoch-mars-worksheet.md): R5.56 passed full-volume synthetic offline preparation (0.141/15 s; 37 focused, 6,284 guarded passed, 494 skipped). Next: separately requested R5.57; physical join prerequisites remain open.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline

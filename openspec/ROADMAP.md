@@ -401,6 +401,12 @@ an independent reverse receiver from the fixed Mars target and a
 compatible production-model outgoing state, with frozen commands,
 mass and numerical limits. R4 interfaces and target gates are unchanged.
 
+[ADR0203](../docs/adr/0203-prepare-coepoch-mars-worksheet.md) completes R5.56:
+the one-shard artificial worksheet passes its two analytic checks,
+archive and deadline limits, exclusive readback and guarded regression
+(0.141 s of 15 s for 42,862 lines and 16 MiB raw).
+R5.57 remains unexecuted. No physical continuity result is available.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

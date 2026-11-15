@@ -7405,3 +7405,16 @@ actual R4 burn interfaces and a separate unreset forward target check.
 Commands, coverage, independent solver and measured resource limits
 remain physical readiness prerequisites; no run was made or authorized
 by this design.
+
+## R5.56 prepare the offline coepoch worksheet (2026-11-15)
+
+[ADR0203](../../../docs/adr/0203-prepare-coepoch-mars-worksheet.md) completes the private
+worksheet against synthetic inputs. It binds the two ideal seeds and
+the archived outgoing certificate, verifies both archive phases and
+reads only the selected study shard. Two analytic paths agree
+within the original R2 gates. The artificial full-volume run reads
+42,862 lines, 16 MiB raw and 5,207,814 gzip payload bytes and
+finishes with bound readback in 0.141 s of the 15 s limit.
+Ideal mass and physical residuals remain null. The guarded
+regression, Ruff and strict validation pass. R5.57 and the physical
+check have not been attempted.
