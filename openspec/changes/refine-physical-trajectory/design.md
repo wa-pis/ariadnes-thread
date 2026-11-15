@@ -7432,3 +7432,23 @@ residuals remain null. The one-shard run and receipt finalization
 took 0.257 s of 15 s, with no SPICE, force callbacks or
 numerical integration. Independent saved-value readback passed
 without replaying either path. Physical readiness remains R5.58.
+
+## R5.58 design the fixed-command physical checkpoint test (2026-11-15)
+
+[ADR0205](../../../docs/adr/0205-design-fixed-command-physical-join.md) freezes the R4 endpoints,
+R5.51 checkpoint and admissibility rules for one command pair. Both
+arc constructions use the unchanged production forces and a common
+declared mass ledger with separate effective-time checks. The Mars
+receiver integrates backward across two segments and is sealed before
+forward propagation. The lunar arm reaches the same epoch and
+continues under its own state to the fixed target. The checkpoint is
+not an ignition or cutoff.
+
+Keep 1e-6 s / 0.001 m / 1e-6 m/s / 1e-9 kg join tolerances
+and the separate 1000 m / 0.01 m/s target tolerances. A numerical
+verdict needs independently justified propagated error bounds; solver
+agreement alone does not provide them. Qualify one attempt with at most
+12 segments under a 300 s deadline plus a separate native-free audit.
+There is no eligible command pair or qualified full-force reverse
+error/timing evidence. R5.59 prepares the fail-closed readiness gate
+without SPICE or integration; live execution remains unavailable.

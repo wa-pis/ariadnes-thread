@@ -4,7 +4,7 @@ Updated: 2026-11-15. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. [ADR0204](docs/adr/0204-record-the-ideal-mars-checkpoint.md): R5.57 passed once offline (0.257/15 s, 0.131 mm ideal agreement). Signed model differences retained; all physical residuals null. R5.58 physical readiness remains open.
+Automation `ariadna-m3` remains paused. R5.57 passed once offline with no physical match. [ADR0205](docs/adr/0205-design-fixed-command-physical-join.md): R5.58 design complete; eligible commands, full-force reverse accuracy and bounded work still unqualified. Next: R5.59 synthetic readiness.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline

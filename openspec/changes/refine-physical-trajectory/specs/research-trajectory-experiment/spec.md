@@ -692,3 +692,33 @@ terminal sample at 979014965.9635216 TDB s since J2000
 - **AND** the receiving state SHALL come from the Mars target without using or fitting to outgoing checkpoint operands, and the outgoing operand SHALL be generated separately under the same production model; archived model B SHALL NOT serve as the physical outgoing operand or redefine either R4 burn interface
 - **AND** a compatible pair SHALL match the exact epoch and report signed time, six-state and mass residuals under the unchanged 1e-6 s / 0.001 m / 1e-6 m/s / 1e-9 kg join gates; a separate unreset forward check SHALL retain the 1000 m / 0.01 m/s R4 target gates
 - **AND** missing compatible evidence SHALL leave physical residuals null; uncertainty too large to resolve a gate SHALL remain inconclusive; this design SHALL authorize no physical execution, default command or optimizer trial
+
+### Requirement: Test one fixed command pair at the physical checkpoint
+
+R5.58 SHALL define a readiness-gated full-production-model checkpoint
+comparison at the exact R5.51 terminal epoch for `d0001-t0035`;
+the archived model B and R5.57 ideal states SHALL NOT be admitted
+as physical operands. The test SHALL preserve R4's orbit states,
+burn interface semantics and target gates.
+
+#### Scenario: Reject an unfrozen command or incomplete readiness
+
+- **WHEN** physical readiness is assessed
+- **THEN** it SHALL require one independently justified six-value canonical TNW command packet bound by digest to the fixed R4 boundaries and production model, finite positive durations with exact event ordering t0 < t1 < t* < t2 < tf, and the sequential 2,000 kg initial / 500 kg dry mass ledger with 1,000 N thrust and 450 s Isp
+- **AND** it SHALL check the declared and effective burn-span floor before mass rounding, preserve the native event representation, and reject stale failed commands, substituted input, incomplete force coverage, unsupported reverse-time semantics, unqualified numerical bounds or unenforceable resource caps; refusal SHALL authorize no physical execution
+- **AND** the R5.59 artificial readiness qualification SHALL include no SPICE, kernel access, force evaluation or integration and SHALL verify acceptance and rejection with 15 s through finalization, 2 MiB compact inputs and 128 KiB output per fixture
+
+#### Scenario: Compare independently anchored states and separate numerical uncertainty
+
+- **WHEN** a qualified and separately authorized fixed-command attempt executes
+- **THEN** the primary RKDP87 and separately implemented qualified DOP853 paths SHALL each bind the same full model and generate and freeze a reverse receiver from the fixed Mars orbit and ledger mass through t2 to t* before outgoing propagation, preserving the physical-time TNW and mass-rate signs
+- **AND** both forward paths SHALL start at the fixed lunar orbit and initial mass, stop at t1, t*, t2 and tf, and continue without resetting the state, model, commands or mass at t*; exact burn interfaces and unreset Mars-relative arrival SHALL be checked separately
+- **AND** the incoming-minus-outgoing signed residuals and nonnegative error allowances SHALL be retained, with exact epoch identity and unchanged join ceilings of 1e-6 s, 0.001 m, 1e-6 m/s and 1e-9 kg, and separate target ceilings of 1000 m and 0.01 m/s; each outward-rounded residual interval SHALL pass only with upper edge at or below its ceiling, fail if its lower edge is above it, or stay inconclusive otherwise
+- **AND** a missing compatible pair SHALL leave physical residuals null; the two solver paths SHALL support the same verdict or remain inconclusive; missing or unqualified error bounds, solver agreement alone or unresolved safety SHALL NOT certify a match
+
+#### Scenario: Bound the attempt, including failures and final output
+
+- **WHEN** the study limits are qualified and enforced
+- **THEN** one fixed pair, two solver paths, at most 12 attempted propagation segments, 1,000,000 attempted RHS calls, 32,000,000 attempted provider state/rotation requests and 64 MiB of evidence SHALL share one 300 s parent deadline including finalization, with 15 s reserved for finalization, explicit before-call accounting and no search, retry or deadline reset
+- **AND** before live authorization, instrumentation or conservative charged upper bounds SHALL cover both solvers and all checks; missing accounting or lack of comparable timing and numerical evidence SHALL keep execution unavailable
+- **AND** a separate audit SHALL verify first complete or partial evidence within 30 s, at most 64 MiB input and 128 KiB output, with zero SPICE and propagation; a failed gate, deadline, unresolved safety or unaudited result SHALL NOT qualify physical continuity, strict M3 or mission safety

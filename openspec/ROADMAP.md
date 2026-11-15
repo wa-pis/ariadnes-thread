@@ -412,7 +412,16 @@ one exact-epoch ideal diagnostic on frozen data passes in 0.257 s
 of 15 s. Its two analytic paths agree to 0.131 mm and 2.23e-11 m/s
 in both frames. The model difference from the R5.51 packet is
 51,523.590 km and 2.788927 km/s; it is not a physical join residual.
-No SPICE or numerical integration was used. R5.58 remains open.
+No SPICE or numerical integration was used in R5.57.
+
+[ADR0205](../docs/adr/0205-design-fixed-command-physical-join.md) completes the R5.58 design:
+compare two independently anchored states at the exact R5.51 epoch
+under one frozen command pair and the full production dynamics.
+Unchanged R4 limits require endpoint error bounds and a separate
+unreset arrival check. The historical commands are ineligible and
+reverse accuracy, timing and counter qualification are open. R5.59
+is synthetic readiness preparation; R5.60 cannot run until readiness
+and separate authorization.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 
