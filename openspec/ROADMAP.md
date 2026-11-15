@@ -423,6 +423,12 @@ reverse accuracy, timing and counter qualification are open. R5.59
 is synthetic readiness preparation; R5.60 cannot run until readiness
 and separate authorization.
 
+[ADR0206](../docs/adr/0206-prepare-fixed-command-readiness.md) completes
+R5.59 on artificial metadata. Command/event binding, the two dry-mass
+ledgers, interval verdicts and fake work budgets pass; the full-size
+input, watchdog and evidence readback were checked. There is no
+physical readiness verdict and R5.60 remains unexecuted.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

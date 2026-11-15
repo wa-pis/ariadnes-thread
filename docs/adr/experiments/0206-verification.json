@@ -1,0 +1,300 @@
+{
+  "stage": "R5.59",
+  "contract": "ADR0205",
+  "measured_base_revision": "ef0ecadd622bff5a526ada388c46df7d1fc83219",
+  "verification_only": "artificial metadata, certificate identities and fake counters",
+  "fixture": {
+    "bytes": 2097152,
+    "sha256": "8f21df7789cfebc159ba89b93d6260c0f1423f002d7261abb5b4cf478fc2752a"
+  },
+  "runner_limits": {
+    "wall_s": 15,
+    "input_bytes": 2097152,
+    "total_output_bytes": 131072
+  },
+  "measurement": {
+    "returncode": 0,
+    "elapsed_through_finalization_s": 0.06280866591259837,
+    "output_bytes": 4396,
+    "artifacts": {
+      "attempt.json": {
+        "sha256": "ac1eec2f69ea482c911b8dfdc28e8598b58c5789ac8109646de0149a4e834b90",
+        "bytes": 381
+      },
+      "completion.json": {
+        "sha256": "c5edd3b1d19244ce2aba8f7171f690303ec2ff4959b2421c99ec855e8e1eb9ad",
+        "bytes": 182
+      },
+      "receipt.json": {
+        "sha256": "a8b9a05aee557fe058141cc29cd4c770b309d11455d1334802a9d2adec14082d",
+        "bytes": 560
+      },
+      "report.json": {
+        "sha256": "3fd9e57c8456918e7a900922c453a40a40e49dbe20f12b38f84e8805cea166f1",
+        "bytes": 3273
+      }
+    },
+    "physical_run_authorized": false,
+    "r560_attempted": false
+  },
+  "original_records": {
+    "attempt.json": {
+      "core_sha256": "8043f72a4639850f7c68dc14d31404a10352d7d238faefecacb417a75ae5e952",
+      "fixture_sha256": "8f21df7789cfebc159ba89b93d6260c0f1423f002d7261abb5b4cf478fc2752a",
+      "mode": "synthetic",
+      "run_id": "8070ac98a0a94f9c819886e9cb1ea51b",
+      "runner_sha256": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+      "stage": "R5.59",
+      "started_ns": 2940942881689875,
+      "wall_ns": 15000000000
+    },
+    "completion.json": {
+      "elapsed_through_receipt_ns": 28933416,
+      "exit_code": 0,
+      "receipt_sha256": "a8b9a05aee557fe058141cc29cd4c770b309d11455d1334802a9d2adec14082d",
+      "run_id": "8070ac98a0a94f9c819886e9cb1ea51b"
+    },
+    "receipt.json": {
+      "attempt_sha256": "ac1eec2f69ea482c911b8dfdc28e8598b58c5789ac8109646de0149a4e834b90",
+      "core_sha256": "8043f72a4639850f7c68dc14d31404a10352d7d238faefecacb417a75ae5e952",
+      "elapsed_before_receipt_ns": 28770250,
+      "fixture_sha256": "8f21df7789cfebc159ba89b93d6260c0f1423f002d7261abb5b4cf478fc2752a",
+      "mode": "synthetic",
+      "report_sha256": "3fd9e57c8456918e7a900922c453a40a40e49dbe20f12b38f84e8805cea166f1",
+      "run_id": "8070ac98a0a94f9c819886e9cb1ea51b",
+      "runner_sha256": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+      "stage": "R5.59",
+      "status": "synthetic-ready"
+    },
+    "report.json": {
+      "actual_fixture_sha256": "8f21df7789cfebc159ba89b93d6260c0f1423f002d7261abb5b4cf478fc2752a",
+      "attempt_sha256": "ac1eec2f69ea482c911b8dfdc28e8598b58c5789ac8109646de0149a4e834b90",
+      "binding_sha256": "53e111adb8e2356f492d3bf1c8378fca9d5577b09f4c9f100838814c8fa7228a",
+      "core_sha256": "8043f72a4639850f7c68dc14d31404a10352d7d238faefecacb417a75ae5e952",
+      "fixture_bytes": 2097152,
+      "fixture_sha256": "8f21df7789cfebc159ba89b93d6260c0f1423f002d7261abb5b4cf478fc2752a",
+      "force_evaluations": 0,
+      "integrations": 0,
+      "kernel_accesses": 0,
+      "live_authorized": false,
+      "mode": "synthetic",
+      "physical_launch_authorized": false,
+      "physical_residuals": {
+        "epoch_s": null,
+        "mass_kg": null,
+        "position_m": null,
+        "velocity_m_s": null
+      },
+      "physical_status": "physical-join-not-established",
+      "r560_attempts": 0,
+      "run_id": "8070ac98a0a94f9c819886e9cb1ea51b",
+      "runner_sha256": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+      "spice_queries": 0,
+      "stage": "R5.59",
+      "status": "synthetic-ready",
+      "synthetic": true,
+      "synthetic_budget": {
+        "attempt_totals": {
+          "evidence_bytes": 67108864,
+          "provider": 32000000,
+          "rhs": 1000000,
+          "segments": 12
+        },
+        "by_solver": {
+          "DOP853": {
+            "evidence_bytes": 67108864,
+            "provider": 16000000,
+            "rhs": 600000,
+            "segments": 6
+          },
+          "RKDP87": {
+            "evidence_bytes": 0,
+            "provider": 16000000,
+            "rhs": 400000,
+            "segments": 6
+          }
+        },
+        "completed_segments": {
+          "DOP853": 6,
+          "RKDP87": 6
+        }
+      },
+      "synthetic_mass": {
+        "commanded_coast_coast_final_kg_exact": [
+          "3074854965257724325/2251799813685248",
+          "3074854965257724325/2251799813685248",
+          "2258429444050426225/2251799813685248"
+        ],
+        "effective_coast_coast_final_kg_exact": [
+          "3074854965257724325/2251799813685248",
+          "3074854965257724325/2251799813685248",
+          "2258429444050426225/2251799813685248"
+        ],
+        "effective_minus_commanded_kg_exact": [
+          "0",
+          "0"
+        ],
+        "native_event_words": [
+          "0x1.d2d247f9d7e7ap+29",
+          "0x1.d2d29f79d7e7ap+29",
+          "0x1.d2d4a9afb54adp+29",
+          "0x1.ded30fcb4c44bp+29",
+          "0x1.ded341cb4c44bp+29"
+        ]
+      },
+      "synthetic_verdicts": {
+        "join": {
+          "quantities": {
+            "epoch_s": "pass",
+            "mass_kg": "pass",
+            "position_m": "pass",
+            "velocity_m_s": "pass"
+          },
+          "solvers": {
+            "DOP853": {
+              "epoch_s": {
+                "interval": [
+                  "0",
+                  "0"
+                ],
+                "observed": 0.0,
+                "status": "pass"
+              },
+              "mass_kg": {
+                "interval": [
+                  "0",
+                  "3.999999999999999757987877127759243720690E-11"
+                ],
+                "observed": 1e-11,
+                "status": "pass"
+              },
+              "position_m": {
+                "interval": [
+                  "0",
+                  "0.0004000000000000000191686944095437183932518"
+                ],
+                "observed": 0.0001,
+                "status": "pass"
+              },
+              "velocity_m_s": {
+                "interval": [
+                  "0",
+                  "4.000000000000000083690243320513890701307E-8"
+                ],
+                "observed": 1e-08,
+                "status": "pass"
+              }
+            },
+            "RKDP87": {
+              "epoch_s": {
+                "interval": [
+                  "0",
+                  "0"
+                ],
+                "observed": 0.0,
+                "status": "pass"
+              },
+              "mass_kg": {
+                "interval": [
+                  "0",
+                  "3.999999999999999757987877127759243720690E-11"
+                ],
+                "observed": 1e-11,
+                "status": "pass"
+              },
+              "position_m": {
+                "interval": [
+                  "0",
+                  "0.0004000000000000000191686944095437183932518"
+                ],
+                "observed": 0.0001,
+                "status": "pass"
+              },
+              "velocity_m_s": {
+                "interval": [
+                  "0",
+                  "4.000000000000000083690243320513890701307E-8"
+                ],
+                "observed": 1e-08,
+                "status": "pass"
+              }
+            }
+          },
+          "status": "pass"
+        },
+        "target": {
+          "quantities": {
+            "position_m": "pass",
+            "velocity_m_s": "pass"
+          },
+          "solvers": {
+            "DOP853": {
+              "position_m": {
+                "interval": [
+                  "0",
+                  "300"
+                ],
+                "observed": 100.0,
+                "status": "pass"
+              },
+              "velocity_m_s": {
+                "interval": [
+                  "0",
+                  "0.003000000000000000062450045135165055398830"
+                ],
+                "observed": 0.001,
+                "status": "pass"
+              }
+            },
+            "RKDP87": {
+              "position_m": {
+                "interval": [
+                  "0",
+                  "300"
+                ],
+                "observed": 100.0,
+                "status": "pass"
+              },
+              "velocity_m_s": {
+                "interval": [
+                  "0",
+                  "0.003000000000000000062450045135165055398830"
+                ],
+                "observed": 0.001,
+                "status": "pass"
+              }
+            }
+          },
+          "status": "pass"
+        }
+      }
+    }
+  },
+  "tested_source_sha256": {
+    "docs/adr/experiments/0206-readiness.py": "8043f72a4639850f7c68dc14d31404a10352d7d238faefecacb417a75ae5e952",
+    "docs/adr/experiments/0206-readiness-runner.py": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "tests/test_fixed_command_readiness.py": "172ea752e8427099b43c39870a212263eac76e6cf7204a2cadf56c0bf8728826"
+  },
+  "contract_sha256": "4ced4dab487bfe5a06ef70e9dd56341d78a35e8aa1ec759b0cd40a1ac2126b6d",
+  "checks": {
+    "python": "Conda space-nav 3.12.14",
+    "focused": {
+      "passed": 64,
+      "elapsed_s": 2.38,
+      "log_sha256": "6f9678ece2e3318a68537022f56a0498577a4be6c8b52a78aa217809c4328e89"
+    },
+    "guarded_regression": {
+      "passed": 6348,
+      "skipped": 494,
+      "elapsed_s": 131.64,
+      "guard": "docs/adr/experiments/0189/pytest-offline-guard.py.txt",
+      "guard_sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693",
+      "log_sha256": "ba44fe76cfe81dab3dd38b3ba475ed5502e238df51def0b51671754ad46de251",
+      "skips_sha256": "200a2d159d591f934b1db9037b066fa61017072f6c41d8d548661e57d085356b",
+      "retained_or_native_exclusions": true
+    },
+    "ruff": "pass",
+    "strict_openspec": "pass",
+    "checkout_frozen": true
+  }
+}

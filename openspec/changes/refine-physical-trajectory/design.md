@@ -7452,3 +7452,20 @@ agreement alone does not provide them. Qualify one attempt with at most
 There is no eligible command pair or qualified full-force reverse
 error/timing evidence. R5.59 prepares the fail-closed readiness gate
 without SPICE or integration; live execution remains unavailable.
+
+## R5.59 qualify the synthetic readiness check (2026-11-15)
+
+[ADR0206](../../../docs/adr/0206-prepare-fixed-command-readiness.md)
+records the artificial admission qualifier. A separately supplied digest
+pins the fixture; the command, native clock and mass ledgers, resource
+coverage, solver metadata and fake budgets must match that packet.
+Model and exact epoch drift, dry-floor violations before rounding,
+missing certificates, ambiguous numerical verdicts and attempted
+work above quota are tested without evaluating forces or trajectories.
+
+The full 2,097,152-byte artificial input completed in 0.063/15 s
+with 4,396 output bytes; 64 focused and 6,348 guarded tests passed
+(494 skipped), together with Ruff and strict OpenSpec.
+The watchdog and evidence readback reject stalls, late finalization,
+oversize and tampered results. Physical residuals and authorization
+remain unavailable. R5.60 was not attempted.
