@@ -393,6 +393,14 @@ state. None of the 121 ideal nodes or 29 records in five receiving
 reports provide a compatible coepoch. All continuity residuals
 are null; physical continuity and Mars arrival remain open.
 
+[ADR0202](../docs/adr/0202-design-coepoch-mars-receiving-state.md) completes R5.55:
+the exact checkpoint Sun state supports a bounded offline ideal
+comparison after synthetic preparation (R5.56) and a separate
+execution request (R5.57). Physical readiness (R5.58) instead requires
+an independent reverse receiver from the fixed Mars target and a
+compatible production-model outgoing state, with frozen commands,
+mass and numerical limits. R4 interfaces and target gates are unchanged.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

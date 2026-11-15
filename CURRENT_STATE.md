@@ -4,7 +4,7 @@ Updated: 2026-11-15. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. [ADR0201](docs/adr/0201-authenticate-lunar-exit-record-receiving-gap.md): R5.54 passed once; the outgoing state is authenticated, with no compatible archived receiving state. Physical join remains open.
+Automation `ariadna-m3` remains paused. R5.54 authenticated the outgoing packet without finding a compatible receiver. [ADR0202](docs/adr/0202-design-coepoch-mars-receiving-state.md) splits R5.55 into an offline ideal diagnostic (next: R5.56 synthetic preparation) and a physical comparison pending compatible dynamics, commands and an independent error budget.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline

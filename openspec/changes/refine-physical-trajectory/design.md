@@ -7380,3 +7380,28 @@ The statuses are `source-state-authenticated`,
 `ideal-reference-coepoch-unavailable` and `physical-join-not-established`,
 with all four continuity residuals null. No SPICE, new state,
 interpolation, propagation, retry or physical closure.
+
+## R5.55 design the coepoch Mars receiving state (2026-11-15)
+
+[ADR0202](../../../docs/adr/0202-design-coepoch-mars-receiving-state.md) separates the
+next executable ideal diagnostic from a future physical check.
+The checkpoint is exactly the R5.54 authenticated R5.51 terminal epoch,
+979014965.9635216 TDB s. Study node 320 retains a Sun state on that
+epoch. Use it to translate an ideal Kepler state computed backward
+from R1's final pre-impulse spacecraft state and cross-checked forward
+from R2's independent departure seed. The ideal-to-B deltas describe
+different models. The ideal state has no mass and cannot populate R4
+join residuals. Qualify one-shard offline preparation before one
+separately requested 15 s run.
+
+For a physical receiver, start at the unchanged R4 Mars orbit target
+with a frozen command-derived mass. Run the arrival burn backward to
+ignition and the coast backward to the checkpoint, using the original
+physical-time equations in the full production model. Compare there
+only against a separately produced outgoing trajectory in the same
+model, with no adjustment to the received packet and a numerical
+error budget that resolves the unchanged R4 tolerances. Keep the
+actual R4 burn interfaces and a separate unreset forward target check.
+Commands, coverage, independent solver and measured resource limits
+remain physical readiness prerequisites; no run was made or authorized
+by this design.

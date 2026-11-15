@@ -668,3 +668,27 @@ interface and target contract from R4.
 - **WHEN** a prepared, separately requested worksheet runs once
 - **THEN** a monotonic parent deadline SHALL limit the complete process through receipt finalization to 15 s, five members of up to 16 MiB raw each, 80 MiB raw and 25 MiB compressed payload total, 218,972 archived lines, 1 MiB archive metadata, 2 MiB compact input JSON and 128 KiB output
 - **AND** it SHALL make zero scientific imports, native/SPICE or kernel calls, force evaluations, propagations or new trajectory states, and SHALL preserve first safe evidence without retry; missing, inconsistent, corrupt or late evidence SHALL yield `invalid-evidence` without certification
+
+### Requirement: Design an independent Mars receiving state
+
+R5.55 SHALL distinguish an analytically generated ideal coepoch
+reference from an independently propagated same-model physical
+receiver. The fixed checkpoint SHALL be the authenticated R5.51
+terminal sample at 979014965.9635216 TDB s since J2000
+(`0x1.d2d4a9afb54adp+29`) for `d0001-t0035`.
+
+#### Scenario: Generate and check one ideal coepoch reference
+
+- **WHEN** a synthetically qualified R5.56 worksheet receives a separate authorization for one R5.57 run
+- **THEN** it SHALL bind ADR0202's exact source hashes, R5.54 outgoing packet, and the receipt-bound geometric Sun six-state at study shard 0 row 337 (node 320) at the exact checkpoint with matching archived ordered kernel identity, without an ephemeris call
+- **AND** it SHALL reconstruct the Sun-only state backward from R1 run 1 node 120 with its pre-impulse spacecraft velocity and separately forward from the R2 departure seed, preserving R2's domain, invariants, root limits and 1 m / 1e-6 m/s Euclidean agreement in both Sun-relative and SI/SSB/J2000 states
+- **AND** it SHALL record the root/translation evidence and signed ideal-minus-B position and velocity differences separately from physical continuity; ideal mass and physical residuals SHALL remain null, and the physical status SHALL remain `physical-join-not-established`
+- **AND** one isolated process SHALL allow two analytic evaluations at the one epoch, at most 64 root updates each, 42,862 lines, one 16 MiB raw / 5 MiB gzip member, 2 MiB compact inputs, 1 MiB archive metadata and 128 KiB output under 15 s through receipt finalization; failure SHALL retain first safe evidence without retry, and SPICE, kernels, force evaluations, numerical propagation and fitting SHALL have zero budget
+
+#### Scenario: Keep the physical study unavailable until independently testable
+
+- **WHEN** a physical receiver and checkpoint comparison are proposed
+- **THEN** readiness SHALL bind the fixed R4 ignition and Mars orbit cutoff target, one independently specified admissible command pair and command-derived mass ledger, full production force/resource identity and coverage, two reverse segments split at exact arrival ignition, independent validation and finite qualified wall/RHS/query/output limits
+- **AND** the receiving state SHALL come from the Mars target without using or fitting to outgoing checkpoint operands, and the outgoing operand SHALL be generated separately under the same production model; archived model B SHALL NOT serve as the physical outgoing operand or redefine either R4 burn interface
+- **AND** a compatible pair SHALL match the exact epoch and report signed time, six-state and mass residuals under the unchanged 1e-6 s / 0.001 m / 1e-6 m/s / 1e-9 kg join gates; a separate unreset forward check SHALL retain the 1000 m / 0.01 m/s R4 target gates
+- **AND** missing compatible evidence SHALL leave physical residuals null; uncertainty too large to resolve a gate SHALL remain inconclusive; this design SHALL authorize no physical execution, default command or optimizer trial

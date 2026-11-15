@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0202 — Design an independent Mars receiving state at lunar exit](0202-design-coepoch-mars-receiving-state.md): R5.55 specifies an offline ideal diagnostic and the prerequisites for a physical checkpoint comparison.
 - [0201 — Authenticate the lunar exit and record the receiving-data gap](0201-authenticate-lunar-exit-record-receiving-gap.md): R5.54 passes once offline; verified outgoing state, no compatible receiving record or physical join.
 - [0200 — Prepare the retained lunar-to-Mars interface audit](0200-prepare-retained-lunar-to-mars-audit.md): R5.53 passes on a full-volume artificial archive; R5.54 unexecuted.
 - [0199 — Design a saved-data check of the lunar-to-Mars interface](0199-design-retained-lunar-to-mars-interface-check.md): R5.52 fixes the terminal R5.51 packet and receiving-side eligibility inventory; offline worksheet pending.
