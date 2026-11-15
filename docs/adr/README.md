@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0207 — Derive one fixed command seed from the R4 endpoints](0207-design-fixed-command-seed.md): R5.59a design only; closed-form local asymptotes and one conditional command proposal.
 - [0206 — Prepare the synthetic fixed-command readiness check](0206-prepare-fixed-command-readiness.md): R5.59 verifies artificial admission and limits; R5.60 remains unexecuted.
 - [0205 — Design the fixed-command physical checkpoint test](0205-design-fixed-command-physical-join.md): R5.58 design complete; one-pair readiness and full-force numerical qualification remain open.
 - [0204 — Record the ideal Mars checkpoint and model difference](0204-record-the-ideal-mars-checkpoint.md): R5.57 passes once offline; exact-epoch ideal agreement and signed model differences recorded, physical join open.

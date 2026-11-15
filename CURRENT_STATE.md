@@ -1,10 +1,10 @@
 # Current State
 
-Updated: 2026-11-15. Keep under 60 lines; see the roadmap and ADRs for details.
+Updated: 2026-11-16. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. [ADR0206](docs/adr/0206-prepare-fixed-command-readiness.md): R5.59 synthetic admission passes. R5.60 unavailable: eligible commands, full-force reverse accuracy and enforceable live caps remain unqualified.
+Automation `ariadna-m3` remains paused. [ADR0206](docs/adr/0206-prepare-fixed-command-readiness.md): R5.59 synthetic admission passes. [ADR0207](docs/adr/0207-design-fixed-command-seed.md) specifies the offline command hypothesis. Next R5.59b: synthetic worksheet; no pair or R5.60 readiness yet.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline

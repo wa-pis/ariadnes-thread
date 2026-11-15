@@ -7469,3 +7469,24 @@ with 4,396 output bytes; 64 focused and 6,348 guarded tests passed
 The watchdog and evidence readback reject stalls, late finalization,
 oversize and tampered results. Physical residuals and authorization
 remain unavailable. R5.60 was not attempted.
+
+## R5.59a design the fixed command seed (2026-11-16)
+
+[ADR0207](../../../docs/adr/0207-design-fixed-command-seed.md) defines
+a different seed hypothesis from the failed scalar/projection method.
+Use the archived R1 excess vectors as two-body asymptotes and R4's
+fixed local parking and target states. Up to two closed-form signed
+velocity branches per body allow a radial impulse without moving the
+orbit phase. Reverse the physical arrival excess to construct the
+incoming Mars leg. Screen the applicable hyperbolic half-leg and
+project each full velocity difference into pre-impulse TNW; use the
+sequential ideal rocket equation to estimate durations and apply
+both exact dry-floor checks. Two arithmetic paths check the branch
+invariants and select at most one unique minimum-impulse proposal.
+
+R5.59b qualifies the method on synthetic inputs. R5.59c may then
+generate one frozen proposal or a retained refusal, offline within
+15 s, with no optimizer, SPICE or numerical trajectory. The immutable
+proposal is not a full-force result; R5.60 still needs the complete
+ADR0205 admission and separate authorization. Design only; no pair
+has been calculated or admitted.

@@ -722,3 +722,29 @@ burn interface semantics and target gates.
 - **THEN** one fixed pair, two solver paths, at most 12 attempted propagation segments, 1,000,000 attempted RHS calls, 32,000,000 attempted provider state/rotation requests and 64 MiB of evidence SHALL share one 300 s parent deadline including finalization, with 15 s reserved for finalization, explicit before-call accounting and no search, retry or deadline reset
 - **AND** before live authorization, instrumentation or conservative charged upper bounds SHALL cover both solvers and all checks; missing accounting or lack of comparable timing and numerical evidence SHALL keep execution unavailable
 - **AND** a separate audit SHALL verify first complete or partial evidence within 30 s, at most 64 MiB input and 128 KiB output, with zero SPICE and propagation; a failed gate, deadline, unresolved safety or unaudited result SHALL NOT qualify physical continuity, strict M3 or mission safety
+
+### Requirement: Derive and freeze one fixed command seed
+
+R5.59a SHALL define at most one immutable analytic two-burn proposal
+for `d0001-t0035` under ADR0207, without changing ADR0205's physical
+readiness, thresholds or authorization.
+
+#### Scenario: Construct local branches at the fixed endpoints
+
+- **WHEN** an offline command generation is separately requested after synthetic qualification
+- **THEN** it SHALL verify the six ADR0207 input hashes, exact R1/R4 scenario and candidate equality, body-relative R4 endpoint reconstruction and epoch words; it SHALL use only the two signed R1 excess vectors as asymptote descriptors and SHALL NOT use R5.51 spacecraft states, R5.57 states/differences or failed trial residuals as operands
+- **AND** it SHALL enumerate at most two analytic roots at each fixed endpoint, test the physical future outgoing Moon leg and reverse-time Mars leg, reconstruct the signed asymptotes, and require each leg's minimum conic radius to exceed the declared conservative surface by more than 0.001 m; degenerate or unresolved geometry SHALL NOT supply controls
+- **AND** the worksheet SHALL project pre-impulse TNW from the lunar parking and Mars incoming states, convert full vector impulse norms to sequential ideal burn durations and require canonical words, exact event ordering and the 500 kg commanded and worksheet-effective dry floor before rounding; a failed input SHALL NOT trigger clipping, phase changes or retries
+
+#### Scenario: Independently verify and freeze at most one proposal
+
+- **WHEN** the two arithmetic paths compare the bounded branch sets
+- **THEN** binary64 and independent at-least-80-digit arithmetic SHALL verify the signed excess and impulse vectors at 1e-6 m/s, minimum leg radius at 0.001 m, durations at 1e-6 s and mass at 1e-8 kg; the worksheet SHALL exercise known geometry and rejection cases on synthetic data before using retained inputs
+- **AND** each path SHALL examine at most four pairs and exclude previously failed commands; if both paths agree on a unique lowest total vector impulse with a greater-than-4e-6 m/s gap to every alternative, it SHALL seal one proposal containing exact command words, source and boundary hashes, mass ledgers and all branch decisions; zero eligible pairs, ambiguous ranking or failed independent verification SHALL leave commands null
+- **AND** one shared 15 s deadline through durable finalization and saved-evidence readback SHALL cap the single generation, with at most 512 KiB input and 128 KiB new output, exclusive artifacts and zero kernel access, SPICE, force evaluation, propagation, fitting, new transfer search or retries
+
+#### Scenario: Keep the analytic proposal separate from physical admission
+
+- **WHEN** the proposal passes its offline checks
+- **THEN** it SHALL remain an impulsive surrogate seed without a physical join, Mars closure, safety, reserve or live authorization claim; any live admission SHALL reference its unchanged hash and separately bind the full model and covered resources, qualified reverse/reference solvers and event representation, error bounds, enforceable budgets and explicit separate authorization under ADR0205
+- **AND** R5.60 SHALL NOT use the synthetic readiness schema for live evidence, regenerate or adjust the sealed commands, or feed any R5.60 result back into seed selection

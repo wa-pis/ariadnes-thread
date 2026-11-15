@@ -429,6 +429,13 @@ ledgers, interval verdicts and fake work budgets pass; the full-size
 input, watchdog and evidence readback were checked. There is no
 physical readiness verdict and R5.60 remains unexecuted.
 
+[ADR0207](../docs/adr/0207-design-fixed-command-seed.md) completes
+R5.59a: invert the two archived excess vectors at the fixed R4
+positions, check up to four impulse pairs, and freeze at most one
+finite-burn seed. R5.59b prepares and tests the worksheet; R5.59c is
+one separately requested offline generation and readback. A proposal
+cannot qualify the live model or authorize R5.60.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:
