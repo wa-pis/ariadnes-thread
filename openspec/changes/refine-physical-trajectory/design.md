@@ -7536,3 +7536,18 @@ exact commanded/effective ledgers without rerunning the two-conic
 geometry or reopening any archive. Artificial profiles cannot launch
 or authenticate retained evidence. The authorized retained attempt
 has not yet been run.
+
+## R5.59c record the retained command refusal (2026-11-16)
+
+[ADR0211](../../../docs/adr/0211-record-fixed-command-seed-refusal.md)
+records the sole retained execution of the qualified invocation at
+`4dd53e6`. All six pins and four branch decisions were verified.
+The negative roots violate their local radius guards. The only
+remaining pair has 11.661 km/s total ideal impulse, above the
+6.118 km/s ideal dry-mass budget, and fails the commanded 500 kg
+floor. Both arithmetic paths and the saved readback agree.
+The completed result is `command-seed-unavailable`, with null
+commands and the full bound evidence preserved. The attempt is
+consumed; R5.60 cannot run without an eligible frozen pair and
+separate readiness/authorization. No conclusion about existence
+of a full-model trajectory follows from this local surrogate.

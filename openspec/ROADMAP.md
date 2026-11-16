@@ -450,8 +450,11 @@ history and input caps pass. The adapter does not generate
 commands. [ADR0210](../docs/adr/0210-qualify-retained-command-invocation.md) qualifies the
 complete invocation on fabricated copies: fixed source selection,
 both arithmetic paths, shared watchdog, and independent saved
-readback. The authorized retained attempt is pending; physical
-readiness is unchanged.
+readback. [ADR0211](../docs/adr/0211-record-fixed-command-seed-refusal.md) records
+the sole retained attempt: two guard rejections and one pair that
+needs 11.661 km/s and fails the 500 kg commanded dry-mass floor.
+Readback passed with null commands. R5.59c is consumed; R5.60
+has no eligible pair, and physical readiness is unchanged.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

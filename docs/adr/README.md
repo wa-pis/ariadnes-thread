@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0211 — Record the fixed-command seed refusal](0211-record-fixed-command-seed-refusal.md): sole R5.59c retained run, two guard rejections and a dry-floor refusal; no commands or physical attempt.
 - [0210 — Qualify the retained command invocation](0210-qualify-retained-command-invocation.md): guarded composition, independent saved-evidence readback and artificial tests; retained attempt pending.
 - [0209 — Qualify the retained command archive adapter on artificial files](0209-qualify-retained-command-archive-adapter.md): six pinned archive shapes and cross-file provenance tested; no retained command attempt.
 - [0208 — Qualify the fixed-command worksheet on artificial inputs](0208-qualify-fixed-command-seed.md): R5.59b verifies signed synthetic conics, mass ledgers and bounded evidence; real inputs unexecuted.

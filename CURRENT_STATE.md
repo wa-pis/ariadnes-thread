@@ -4,7 +4,7 @@ Updated: 2026-11-16. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. [ADR0206](docs/adr/0206-prepare-fixed-command-readiness.md): R5.59 synthetic admission passes. [ADR0208](docs/adr/0208-qualify-fixed-command-seed.md): R5.59b arithmetic and limits pass on artificial data. [ADR0209](docs/adr/0209-qualify-retained-command-archive-adapter.md) qualifies the adapter on artificial files. [ADR0210](docs/adr/0210-qualify-retained-command-invocation.md) qualifies the complete R5.59c invocation on artificial files; the authorized retained attempt is pending. No retained pair or R5.60 readiness yet.
+Automation `ariadna-m3` remains paused. [ADR0210](docs/adr/0210-qualify-retained-command-invocation.md) qualifies the R5.59c runner on artificial data. [ADR0211](docs/adr/0211-record-fixed-command-seed-refusal.md): the sole retained R5.59c run verified a refusal. Two local branches fail the radius guard; the only remaining pair costs 11.661 km/s and fails the 500 kg commanded dry floor. No command pair; R5.60 remains unavailable. A different physical approach requires a new design.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline
