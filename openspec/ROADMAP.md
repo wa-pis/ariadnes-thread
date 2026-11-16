@@ -460,9 +460,12 @@ has no eligible pair, and physical readiness is unchanged.
 2.884 km/s to lunar departure and 8.777 km/s to Mars capture.
 It defines a separate screen of 360 points on the same Mars
 ellipse while fixing the lunar state, reference excess vectors,
-epochs and spacecraft. The design is complete; artificial
-qualification and a separately authorized retained screen are
-pending. A new capture phase changes the target six-state and
+epochs and spacecraft. [ADR0213](../docs/adr/0213-qualify-mars-capture-phase-screen.md)
+qualifies the artificial runner: each of two fabricated archives
+covers all 360 phases and 720 roots, with the expected zero-phase
+fuel refusal. One grid selects 95 degrees and the other is empty.
+R5.59f still needs separately authorized retained binding and
+execution. A new capture phase changes the target six-state and
 cannot enter the original ADR0205/R5.60 contract.
 
 ## Completed R4 — define finite-radius interfaces before new propagation

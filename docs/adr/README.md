@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0213 — Qualify the Mars capture-phase screen](0213-qualify-mars-capture-phase-screen.md): both manufactured 360-phase grids passed readback, with one 95-degree proposal and one verified grid refusal.
 - [0212 — Design a Mars capture-phase command seed](0212-design-mars-capture-phase-seed.md): decompose the archived impulse and define a bounded one-variable screen; no new phase or command evaluated.
 - [0211 — Record the fixed-command seed refusal](0211-record-fixed-command-seed-refusal.md): sole R5.59c retained run, two guard rejections and a dry-floor refusal; no commands or physical attempt.
 - [0210 — Qualify the retained command invocation](0210-qualify-retained-command-invocation.md): guarded composition, independent saved-evidence readback and artificial tests; retained attempt pending.

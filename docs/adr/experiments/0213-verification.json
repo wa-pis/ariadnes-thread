@@ -1,0 +1,189 @@
+{
+  "caps": {
+    "input_bytes": 131072,
+    "output_bytes": 4194304,
+    "shared_deadline_s": 30
+  },
+  "cases": {
+    "empty_grid": {
+      "artifacts": {
+        "attempt.json": {
+          "bytes": 1355,
+          "sha256": "8194b6ed7016f22f60de71228a8fdfb9add1c02f140261ef6a85996575eba6f8"
+        },
+        "completion.json": {
+          "bytes": 184,
+          "sha256": "840c829c3797f84f3187baea94c62d85e1063a58b6f63174d2fa29873d4b2765"
+        },
+        "receipt.json": {
+          "bytes": 1574,
+          "sha256": "c4430a81962f56c62587f349118d4ccd8126ab3fa338930cd028ecb4d88ff4ec"
+        },
+        "report.json": {
+          "bytes": 1032156,
+          "sha256": "6ed33ce39830056bfc3b04b557a20848f41f8daf2c3818e00deb9d3592e3681e"
+        }
+      },
+      "input_bytes": 13401,
+      "input_pins": {
+        "attempt.json": "5c32e60b1bfa2458437828f5c1e3db4b2476a8039e48f593b21d642c93364002",
+        "completion.json": "ca932c0db64ece8f0841a6e74ae9cebf0c9acc610000a14c4bce4f8126a2e311",
+        "receipt.json": "9cbf1b99bf074a9698a9d9e8daf2b8f9b00e567c90a0b66f4e0059b84297edaa",
+        "report.json": "abd2f57926fbb675d495b63eb0163d7d64e2c9f4b2b2cba5d6f1241725e2bed6"
+      },
+      "max_state_discrepancies": {
+        "relative_position_m": 7.221994301456385e-09,
+        "relative_velocity_m_s": 3.1542890053736336e-12,
+        "ssb_position_m": 2.1049178683155428e-05,
+        "ssb_velocity_m_s": 4.180830555771209e-12
+      },
+      "output_bytes": 1035269,
+      "status": "no-eligible-pair-on-grid",
+      "through_readback_s": 0.35644025,
+      "work": {
+        "mars_roots": 720,
+        "pairs": 316,
+        "phase_positions": 360
+      },
+      "zero_phase_cost_m_s": 11958.393807378368
+    },
+    "proposal": {
+      "artifacts": {
+        "attempt.json": {
+          "bytes": 1355,
+          "sha256": "a7afcc2c905a4f3d840834930c77fb3ba1d0da20660e187d0edf982449d05806"
+        },
+        "completion.json": {
+          "bytes": 184,
+          "sha256": "1dfbd11eeaeccd521bb13bded254867bdc22eaa71f4a889990697cde58e0ed12"
+        },
+        "receipt.json": {
+          "bytes": 1575,
+          "sha256": "8e5b1b65eea81d9469510c22879d90b4be207392d03218f9b0ac010d651c6933"
+        },
+        "report.json": {
+          "bytes": 1196061,
+          "sha256": "b4e6ff12a1627e4103a7079c263f12840639fdd4df748528c297cc48a0a3bda8"
+        }
+      },
+      "eligible_pair_count": 165,
+      "input_bytes": 131072,
+      "input_pins": {
+        "attempt.json": "af60209d4ac457d3344984a991460ebce161c2ac07359de0e4cf8d84dcbad1b5",
+        "completion.json": "0a9947cd4eac26ce0eb58bf7eeb16f2277716562b9212744c4a74169fd3108c8",
+        "receipt.json": "ba82999d91763fc76bc9fe9c1a656b20ce37e129cdb39c8a57f885834103563c",
+        "report.json": "98fea409999112508c272882f56468aa2c732ecc2b7f524e1d812febee7f9470"
+      },
+      "max_state_discrepancies": {
+        "relative_position_m": 7.221994301456385e-09,
+        "relative_velocity_m_s": 3.1542890053736336e-12,
+        "ssb_position_m": 2.1049178683155428e-05,
+        "ssb_velocity_m_s": 4.180830555771209e-12
+      },
+      "output_bytes": 1199175,
+      "runner_up_gap_m_s": 0.6264147910515021,
+      "selected": {
+        "angle_word": "0x1.a876cd8f2a161p+0",
+        "command_words": [
+          "-0x1.0e7e7669100e0p+0",
+          "0x1.fecdb83cb9442p-51",
+          "0x1.c156f554c48d1p+11",
+          "-0x1.6c5b705d12416p+1",
+          "-0x1.fbac40b922b2fp-3",
+          "0x1.abbab1e6ebbbbp+10"
+        ],
+        "ideal_end_masses_kg": [
+          1185.424075013273,
+          797.7240940415236
+        ],
+        "index": 95,
+        "ledgers": {
+          "epoch_words": [
+            "0x1.0000020000000p+30",
+            "0x1.00003a2adeaaap+30",
+            "0x1.000188a000000p+30",
+            "0x1.0002f48454e19p+30",
+            "0x1.00030f4000000p+30"
+          ],
+          "mass_kg_exact": {
+            "commanded": [
+              "93918971263473064708698901681883/79228162514264337593543950336",
+              "93918971263473064708698901681883/79228162514264337593543950336",
+              "126404428328532204055339948898143/158456325028528675187087900672"
+            ],
+            "effective": [
+              "89568110715374988624375815/75557863725914323419136",
+              "89568110715374988624375815/75557863725914323419136",
+              "120548656772497580970391579/151115727451828646838272"
+            ]
+          }
+        },
+        "relative_si": [
+          -4663307.881712974,
+          2852711.755551237,
+          2267613.8994588,
+          -2547.159262466439,
+          -1519.6025055236905,
+          469.15246110789013
+        ],
+        "roots": [
+          "positive",
+          "positive"
+        ],
+        "ssb_si": [
+          -137443616779.8817,
+          137441806183.75555,
+          -68717209122.10054,
+          -27547.15926246644,
+          -11519.60250552369,
+          1469.15246110789
+        ],
+        "total_delta_v_m_s": 4056.156464388593
+      },
+      "status": "artificial-phase-proposal",
+      "through_readback_s": 0.37175475,
+      "work": {
+        "mars_roots": 720,
+        "pairs": 437,
+        "phase_positions": 360
+      },
+      "zero_phase_cost_m_s": 6296.905303055482
+    }
+  },
+  "checks": {
+    "focused": 20,
+    "focused_s": 2.18,
+    "full_guarded": 6451,
+    "guarded_s": 125.37,
+    "ruff": "passed",
+    "skipped": 494,
+    "strict_openspec": "passed",
+    "unchanged_sources_and_status": true
+  },
+  "force_evaluations": 0,
+  "integrations": 0,
+  "kernel_accesses": 0,
+  "measured_base": "6b5e1f03e7698796404579716b8d8a9a3d17179e",
+  "offline_guard_sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693",
+  "physical_status": "physical-join-not-established",
+  "r559f_attempts": 0,
+  "r560_attempts": 0,
+  "schema": "ariadna-r559e-artificial-verification-v1",
+  "spice_queries": 0,
+  "tested_source_sha256": {
+    "docs/adr/experiments/0206-readiness-runner.py": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "docs/adr/experiments/0208-seed-fixtures.py": "cb8c2722807c9049960e4120b99d56fd447b80216659a992fd0ad2250140d549",
+    "docs/adr/experiments/0208-seed-oracle.py": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+    "docs/adr/experiments/0208-seed-worksheet.py": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+    "docs/adr/experiments/0209-archive-adapter.py": "b9f581321d825fd258067111e3513df0b89e84976a2a734db4345129a5eec25c",
+    "docs/adr/experiments/0209-archive-fixtures.py": "32edc2ed1f2f21977ac6a7443fe86b823dff55e074ac2f6f5f0c854ed992a2ba",
+    "docs/adr/experiments/0210-retained-readback.py": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+    "docs/adr/experiments/0210-retained-runner.py": "77043cd3e4323d0af272d173d35cc0bbf18fa8275791e004c57963d39cee19df",
+    "docs/adr/experiments/0213-phase-fixtures.py": "90abee8b995b06c7248e9056830637632f0385f837c62184372be9b97c75293a",
+    "docs/adr/experiments/0213-phase-orbit.py": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+    "docs/adr/experiments/0213-phase-runner.py": "b4f3251a6691469db891a28fd40763ff737a2a9994b08cc3c23ff1015e397011",
+    "docs/adr/experiments/0213-phase-screen.py": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b",
+    "moon_to_mars.py": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "tests/test_capture_phase_screen.py": "a46095e427ff6d48c454a766002bda83e6377f2b0e9034e8d643ccf6d81e8eeb"
+  }
+}

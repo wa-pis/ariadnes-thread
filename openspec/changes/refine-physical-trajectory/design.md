@@ -7570,3 +7570,17 @@ required regression of the previous refusal. A result may offer one
 new phase-tagged analytic pair or a grid-only refusal; neither
 authorizes physical integration or changes the original R5.60 target.
 No phase screen, SPICE access or integration was performed in design.
+
+## R5.59e qualify the artificial capture-phase screen (2026-11-17)
+
+[ADR0213](../../../docs/adr/0213-qualify-mars-capture-phase-screen.md) qualifies
+the offline artificial runner. Independent perifocal and 96-digit
+radial/transverse states and the pinned conic arithmetic cover all
+360 phases and both signs per case. Readback rechecks every phase,
+state discrepancy, pair decision, mass ledger and selection without
+reopening source archives or solving conics. Both fixtures reproduce
+the zero-phase dry-floor refusal. The known case selects 95 degrees
+(4,056.156 m/s, 797.724 kg ideal final mass); the higher-excess
+case has no eligible pair on the full grid. No retained binding or
+execution is provided by the synthetic entry; R5.59f and R5.60 remain
+unexecuted and separately gated.

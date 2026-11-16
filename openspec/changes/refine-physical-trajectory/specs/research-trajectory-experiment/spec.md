@@ -771,6 +771,12 @@ The R5.59d–f research profile SHALL vary only the Mars capture true anomaly as
 - **THEN** the report SHA-256 and receipt chain SHALL bind the retained vectors, whose separately computed norms SHALL sum to the archived pair cost within 1e-9 m/s
 - **AND** the diagnosis SHALL distinguish the vector impulse, the collinear speed gap and the ideal dry-mass budget; no new commands or boundary states SHALL be generated during design
 
+#### Scenario: Verify the full artificial workload before retained admission
+
+- **WHEN** the R5.59e runner is qualified with independently pinned artificial archives
+- **THEN** it SHALL audit all 360 states and 720 signed root decisions on both a known off-zero-proposal case and a fully empty grid, including reproduction of the zero-phase dry-floor refusal, state/command agreement, exact mass ledgers and selected phase
+- **AND** it SHALL accept an aggregate artificial 128 KiB archive, refuse a one-byte excess, bound writes to 4 MiB, reject inconsistent or late evidence, and leave authorization false with zero retained or physical attempts; independently readable output SHALL be bound by exclusive hash-linked receipts
+
 #### Scenario: Qualify and run the isolated phase screen
 
 - **WHEN** independently checked artificial qualification passes and a retained phase screen is separately authorized

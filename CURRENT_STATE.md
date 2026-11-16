@@ -4,7 +4,7 @@ Updated: 2026-11-17. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. [ADR0211](docs/adr/0211-record-fixed-command-seed-refusal.md): one retained R5.59c refusal, no command pair. [ADR0212](docs/adr/0212-design-mars-capture-phase-seed.md): 2.884 km/s Moon, 8.777 km/s Mars; design a one-variable capture-phase screen on the unchanged Mars ellipse. R5.59e synthetic preparation is next; a retained screen needs separate authorization and a new physical boundary contract before any admission. Original R5.60 remains unavailable.
+Automation `ariadna-m3` remains paused. [ADR0211](docs/adr/0211-record-fixed-command-seed-refusal.md): fixed-target R5.59c refusal. [ADR0213](docs/adr/0213-qualify-mars-capture-phase-screen.md): R5.59e verified 360 phases / 720 signed roots on each of two fabricated archives; artificial proposal at 95 degrees and separate grid refusal. No retained phase result. R5.59f requires a separately authorized retained binding and run; original R5.60 remains unavailable.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline
