@@ -447,7 +447,11 @@ with fabricated archive shapes. No retained command exists.
 qualifies the six-file archive adapter on fabricated files. Fixed
 epoch/selector bindings, original R4 state checks, rejection
 history and input caps pass. The adapter does not generate
-commands. R5.59c remains separately requested and unexecuted.
+commands. [ADR0210](../docs/adr/0210-qualify-retained-command-invocation.md) qualifies the
+complete invocation on fabricated copies: fixed source selection,
+both arithmetic paths, shared watchdog, and independent saved
+readback. The authorized retained attempt is pending; physical
+readiness is unchanged.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

@@ -7522,3 +7522,17 @@ The six-file artificial input of 524,288 bytes normalized in 0.0015 s;
 39 focused and 6,416 guarded regression checks passed (494 skipped).
 R5.59c remains unexecuted and requires the separately requested
 composition under the shared deadline and readback envelope.
+
+## R5.59c qualify the bounded invocation (2026-11-16)
+
+[ADR0210](../../../docs/adr/0210-qualify-retained-command-invocation.md)
+composes the pinned adapter and arithmetic into one private,
+isolated invocation. The worker reserves one fixed retained evidence
+directory before reading the six archives. One parent deadline covers
+startup, generation, exclusive durable writes, independent readback
+and the completion witness. The readback checks canonical saved
+bytes, hash chain, branch and pair inventory, status, selection and
+exact commanded/effective ledgers without rerunning the two-conic
+geometry or reopening any archive. Artificial profiles cannot launch
+or authenticate retained evidence. The authorized retained attempt
+has not yet been run.

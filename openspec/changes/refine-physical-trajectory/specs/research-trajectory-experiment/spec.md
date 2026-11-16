@@ -735,6 +735,12 @@ readiness, thresholds or authorization.
 - **THEN** it SHALL verify each file's fixed name and external hash, aggregate input of at most 512 KiB, cross-file lineage, exact candidate and epoch words, and replay the retained SSB subtraction and R4 bounds without propagation
 - **AND** it SHALL retain the original signed excess vectors and historical exclusion words in departure-then-arrival order, reject invalid metadata and deadline violations, and return null commands with no live authorization; artificial pins SHALL NOT be accepted as retained pins
 
+#### Scenario: Qualify the end-to-end offline command invocation
+
+- **WHEN** the complete invocation runs on fabricated archives before the retained attempt
+- **THEN** it SHALL exercise both a known proposal and a scientific refusal, admit exactly 512 KiB and refuse 512 KiB plus one byte, and exclude access to sources outside the six explicit pins
+- **AND** saved-evidence readback SHALL verify the branch and pair inventory, ranking and both exact mass ledgers without reopening the input archives or solving the conics again; mode mismatch, tampering, incomplete output, an existing destination or a late completion SHALL NOT yield a retained proposal
+
 #### Scenario: Construct local branches at the fixed endpoints
 
 - **WHEN** an offline command generation is separately requested after synthetic qualification
