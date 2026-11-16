@@ -760,3 +760,27 @@ readiness, thresholds or authorization.
 - **WHEN** the proposal passes its offline checks
 - **THEN** it SHALL remain an impulsive surrogate seed without a physical join, Mars closure, safety, reserve or live authorization claim; any live admission SHALL reference its unchanged hash and separately bind the full model and covered resources, qualified reverse/reference solvers and event representation, error bounds, enforceable budgets and explicit separate authorization under ADR0205
 - **AND** R5.60 SHALL NOT use the synthetic readiness schema for live evidence, regenerate or adjust the sealed commands, or feed any R5.60 result back into seed selection
+
+### Requirement: Screen a separate Mars capture-phase seed on the fixed reference ellipse
+
+The R5.59d–f research profile SHALL vary only the Mars capture true anomaly as a proposed target boundary change; ADR0205 and the consumed fixed-target R5.59c evidence SHALL retain their scopes.
+
+#### Scenario: Attribute the fixed-target cost from saved evidence
+
+- **WHEN** the R5.59c refusal is analyzed before changing the target phase
+- **THEN** the report SHA-256 and receipt chain SHALL bind the retained vectors, whose separately computed norms SHALL sum to the archived pair cost within 1e-9 m/s
+- **AND** the diagnosis SHALL distinguish the vector impulse, the collinear speed gap and the ideal dry-mass budget; no new commands or boundary states SHALL be generated during design
+
+#### Scenario: Qualify and run the isolated phase screen
+
+- **WHEN** independently checked artificial qualification passes and a retained phase screen is separately authorized
+- **THEN** both paths SHALL preserve the pinned lunar endpoint/branch, R1 excess vectors, event epochs, Mars orbital shape and orientation, spacecraft, body translation and constants, and SHALL evaluate exactly the 360 uniform true anomalies including zero with at most two signed Mars roots each
+- **AND** phase zero SHALL reproduce the archived Mars state and original refusal within the ADR0212 gates; all grid decisions SHALL agree in binary64 and independent at-least-80-digit arithmetic, with the unchanged signed-asymptote, radius, timing, dry-floor, command and ranking gates
+- **AND** the run SHALL share one 30 s deadline through exclusive durable output and readback, at most 128 KiB of archive input and 4 MiB new evidence, and SHALL perform zero SPICE access, force evaluation, integration, retries or new interplanetary transfer search
+
+#### Scenario: Report a separate proposal or a bounded refusal
+
+- **WHEN** all decisions are verified and one eligible grid pair is uniquely ranked
+- **THEN** the immutable proposal SHALL bind the exact phase word, SI Mars-relative and SSB/J2000 six-states at the original arrival-cutoff epoch, six command words, source identity, branch decisions and both exact mass ledgers
+- **AND** a fully checked grid without an eligible pair SHALL report `no-eligible-pair-on-grid` with null commands; ties, incomplete output or disagreement SHALL report an inconclusive or invalid result without commands
+- **AND** the proposal SHALL NOT be admitted to the original R5.60; adopting a new Mars boundary and authorizing a later physical test SHALL require a separate reviewed contract with the existing physical readiness gates

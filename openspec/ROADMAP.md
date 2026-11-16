@@ -456,6 +456,15 @@ needs 11.661 km/s and fails the 500 kg commanded dry-mass floor.
 Readback passed with null commands. R5.59c is consumed; R5.60
 has no eligible pair, and physical readiness is unchanged.
 
+[ADR0212](../docs/adr/0212-design-mars-capture-phase-seed.md) attributes
+2.884 km/s to lunar departure and 8.777 km/s to Mars capture.
+It defines a separate screen of 360 points on the same Mars
+ellipse while fixing the lunar state, reference excess vectors,
+epochs and spacecraft. The design is complete; artificial
+qualification and a separately authorized retained screen are
+pending. A new capture phase changes the target six-state and
+cannot enter the original ADR0205/R5.60 contract.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

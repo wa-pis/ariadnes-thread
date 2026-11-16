@@ -1,10 +1,10 @@
 # Current State
 
-Updated: 2026-11-16. Keep under 60 lines; see the roadmap and ADRs for details.
+Updated: 2026-11-17. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. [ADR0210](docs/adr/0210-qualify-retained-command-invocation.md) qualifies the R5.59c runner on artificial data. [ADR0211](docs/adr/0211-record-fixed-command-seed-refusal.md): the sole retained R5.59c run verified a refusal. Two local branches fail the radius guard; the only remaining pair costs 11.661 km/s and fails the 500 kg commanded dry floor. No command pair; R5.60 remains unavailable. A different physical approach requires a new design.
+Automation `ariadna-m3` remains paused. [ADR0211](docs/adr/0211-record-fixed-command-seed-refusal.md): one retained R5.59c refusal, no command pair. [ADR0212](docs/adr/0212-design-mars-capture-phase-seed.md): 2.884 km/s Moon, 8.777 km/s Mars; design a one-variable capture-phase screen on the unchanged Mars ellipse. R5.59e synthetic preparation is next; a retained screen needs separate authorization and a new physical boundary contract before any admission. Original R5.60 remains unavailable.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline

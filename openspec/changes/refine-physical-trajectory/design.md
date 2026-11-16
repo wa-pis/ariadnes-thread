@@ -7551,3 +7551,22 @@ commands and the full bound evidence preserved. The attempt is
 consumed; R5.60 cannot run without an eligible frozen pair and
 separate readiness/authorization. No conclusion about existence
 of a full-model trajectory follows from this local surrogate.
+
+## R5.59d design the Mars capture-phase screen (2026-11-17)
+
+[ADR0212](../../../docs/adr/0212-design-mars-capture-phase-seed.md) attributes
+the 11.661 km/s refusal to two saved vector differences. Mars alone
+costs 8.777 km/s; the arrival and target velocity directions differ
+by 114.16 degrees. The fixed lunar impulse leaves 3.234 km/s of ideal
+capture budget. Preserve the fixed-target refusal.
+
+The separate phase research profile varies only the Mars true anomaly
+at the same cutoff epoch, reconstructing both position and velocity on
+the same oriented ellipse. A bounded uniform 360-point grid compares
+both signed conics at each point with independent orbital state and
+invariant checks, and applies the original physical-time approach,
+radius, event, mass, exclusion and ranking gates. Phase zero is a
+required regression of the previous refusal. A result may offer one
+new phase-tagged analytic pair or a grid-only refusal; neither
+authorizes physical integration or changes the original R5.60 target.
+No phase screen, SPICE access or integration was performed in design.
