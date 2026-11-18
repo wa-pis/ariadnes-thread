@@ -464,8 +464,9 @@ epochs and spacecraft. [ADR0213](../docs/adr/0213-qualify-mars-capture-phase-scr
 qualifies the artificial runner: each of two fabricated archives
 covers all 360 phases and 720 roots, with the expected zero-phase
 fuel refusal. One grid selects 95 degrees and the other is empty.
-R5.59f still needs separately authorized retained binding and
-execution. A new capture phase changes the target six-state and
+[ADR0214](../docs/adr/0214-qualify-retained-phase-binding.md) qualifies the fixed
+ADR0211 binding and independent saved audit on artificial archives.
+The authorized single retained R5.59f execution is pending. A new capture phase changes the target six-state and
 cannot enter the original ADR0205/R5.60 contract.
 
 ## Completed R4 — define finite-radius interfaces before new propagation

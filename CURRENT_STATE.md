@@ -1,10 +1,10 @@
 # Current State
 
-Updated: 2026-11-17. Keep under 60 lines; see the roadmap and ADRs for details.
+Updated: 2026-11-18. Keep under 60 lines; see the roadmap and ADRs for details.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` remains paused. [ADR0211](docs/adr/0211-record-fixed-command-seed-refusal.md): fixed-target R5.59c refusal. [ADR0213](docs/adr/0213-qualify-mars-capture-phase-screen.md): R5.59e verified 360 phases / 720 signed roots on each of two fabricated archives; artificial proposal at 95 degrees and separate grid refusal. No retained phase result. R5.59f requires a separately authorized retained binding and run; original R5.60 remains unavailable.
+Automation `ariadna-m3` remains paused. [ADR0211](docs/adr/0211-record-fixed-command-seed-refusal.md): fixed-target R5.59c refusal. [ADR0213](docs/adr/0213-qualify-mars-capture-phase-screen.md): R5.59e verified 360 phases / 720 signed roots on each of two fabricated archives; artificial proposal at 95 degrees and separate grid refusal. [ADR0214](docs/adr/0214-qualify-retained-phase-binding.md): exact ADR0211 archive binding and separate audit qualified on artificial data. One retained R5.59f attempt is authorized and pending; original R5.60 remains unavailable.
 Pause immediately when user input/action is needed; no automatic D17/D18 replay.
 
 ## Verified baseline

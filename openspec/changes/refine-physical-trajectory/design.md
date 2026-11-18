@@ -7584,3 +7584,15 @@ the zero-phase dry-floor refusal. The known case selects 95 degrees
 case has no eligible pair on the full grid. No retained binding or
 execution is provided by the synthetic entry; R5.59f and R5.60 remain
 unexecuted and separately gated.
+
+## R5.59f qualify the retained binding (2026-11-18)
+
+[ADR0214](../../../docs/adr/0214-qualify-retained-phase-binding.md)
+pins the four original ADR0211 records and a digest of the exact
+scientific operands after receipt verification. This adds an isolated
+retained entry point and separate saved audit; ADR0213's orbital and
+conic arithmetic stays unchanged. The physical target, thresholds and
+authorization remain fixed. Artificial evidence exercises both full-grid
+dispositions, archive integrity, deadline and exclusive output without
+spending the authorized retained attempt. The retained destination is
+fixed and existing output blocks another invocation.

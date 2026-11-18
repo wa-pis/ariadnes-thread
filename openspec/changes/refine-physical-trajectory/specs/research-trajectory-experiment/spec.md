@@ -784,6 +784,12 @@ The R5.59d–f research profile SHALL vary only the Mars capture true anomaly as
 - **AND** phase zero SHALL reproduce the archived Mars state and original refusal within the ADR0212 gates; all grid decisions SHALL agree in binary64 and independent at-least-80-digit arithmetic, with the unchanged signed-asymptote, radius, timing, dry-floor, command and ranking gates
 - **AND** the run SHALL share one 30 s deadline through exclusive durable output and readback, at most 128 KiB of archive input and 4 MiB new evidence, and SHALL perform zero SPICE access, force evaluation, integration, retries or new interplanetary transfer search
 
+#### Scenario: Bind the retained phase screen to ADR0211 evidence
+
+- **WHEN** the authorized retained screen is dispatched after artificial checks
+- **THEN** it SHALL require the exact four ADR0211 file hashes, verify their receipt chain and the frozen scientific operand digest, and write only to its dedicated exclusive evidence directory; fabricated pins or an existing destination SHALL fail before grid evaluation
+- **AND** an independent audit SHALL verify the persisted inventory, arithmetic comparisons, root and pair decisions, ranking, time and byte bounds against the completion witness without opening the ADR0211 archive or solving the conics again; partial or late output SHALL NOT qualify as completed evidence
+
 #### Scenario: Report a separate proposal or a bounded refusal
 
 - **WHEN** all decisions are verified and one eligible grid pair is uniquely ranked

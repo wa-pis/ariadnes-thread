@@ -1,0 +1,43 @@
+{
+  "environment": "space-nav Conda",
+  "focused": {
+    "elapsed_s": 2.36,
+    "passed": 13
+  },
+  "guarded_full": {
+    "elapsed_s": 143.91,
+    "passed": 6464,
+    "skipped": 494
+  },
+  "integrations": 0,
+  "kernel_accesses": 0,
+  "measured_base": "7416b192d5bf766edb8b5cbeb0f57125591eab43",
+  "qualification": "artificial-only",
+  "r559f_retained_attempts": 0,
+  "r560_attempts": 0,
+  "retained_archive_sha256": {
+    "docs/adr/experiments/0211-r559c/attempt.json": "8df6fdaa9e1ecdb75d1e9def89d14da51dde6b34817065836d9b9bfda26570f5",
+    "docs/adr/experiments/0211-r559c/completion.json": "bb0e6bf9eddcd77aebf698f2c8a55d339e2e84d91d6ce6df4166b3f2519d82b5",
+    "docs/adr/experiments/0211-r559c/receipt.json": "627396cd7ba4e4934fda33c8c62fa611c0b7918fed74c035f568e4a222ab4189",
+    "docs/adr/experiments/0211-r559c/report.json": "421fb33a5ba76750e5524cd9734e2729f4e222b8a7838bd44fc8edfd86e29781"
+  },
+  "ruff": "pass",
+  "scientific_operands_sha256": "6b845f74881f658d2eeea28bfdde43c9190a283da5bb166644bb845c4f847c5b",
+  "spice_queries": 0,
+  "stage": "R5.59f preparation",
+  "strict_openspec": "pass",
+  "tested_source_sha256": {
+    "docs/adr/experiments/0206-readiness-runner.py": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "docs/adr/experiments/0208-seed-oracle.py": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+    "docs/adr/experiments/0208-seed-worksheet.py": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+    "docs/adr/experiments/0210-retained-readback.py": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+    "docs/adr/experiments/0210-retained-runner.py": "77043cd3e4323d0af272d173d35cc0bbf18fa8275791e004c57963d39cee19df",
+    "docs/adr/experiments/0213-phase-orbit.py": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+    "docs/adr/experiments/0213-phase-runner.py": "b4f3251a6691469db891a28fd40763ff737a2a9994b08cc3c23ff1015e397011",
+    "docs/adr/experiments/0213-phase-screen.py": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b",
+    "docs/adr/experiments/0214-phase-audit.py": "bea0d6c06c8417882eb9f67183bb6d66b93935b0384c5f333b75f8e94f3321ad",
+    "docs/adr/experiments/0214-phase-binding.py": "e5f9e671aa4716e1a6b953569cfa86e5b06b90322b8faec480ec032b5bc1c9ab",
+    "moon_to_mars.py": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "tests/test_retained_phase_binding.py": "add6094f6211812d609ae3bc17a0347e39b78ee289d5f6ff75491714bd84e8d0"
+  }
+}
