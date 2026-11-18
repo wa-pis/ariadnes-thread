@@ -833,3 +833,10 @@ The R5.59g–i profile SHALL conduct a separately authorized, bounded local stud
 - **WHEN** the interval procedure is tested before retained execution
 - **THEN** artificial evidence SHALL exercise a narrow passing point between failing nodes, a certified two-sign refusal, uncertain root or guard transitions, a mass-bound equality that cannot exclude the branch, a coverage hole, tampering and the full workload and caps
 - **AND** focused tests, guarded full pytest, Ruff and strict OpenSpec SHALL pass before the retained study can receive separate authorization
+
+
+#### Scenario: Qualify the retained archive binding
+
+- **WHEN** the ADR0218 invocation is prepared before any retained execution
+- **THEN** it SHALL reject changed hashes, invalid receipt or audit lineage, mixed artificial and retained profiles and mismatched anchor states or signed pair decisions before reporting a verified disposition
+- **AND** qualification SHALL use fabricated equivalents of the three ADR0215 files and the ADR0217 audit, exercise the shared time and byte caps and independent saved readback, and leave the retained attempt unspent and the original R5.59f completion witness absent

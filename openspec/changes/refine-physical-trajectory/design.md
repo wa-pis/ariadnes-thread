@@ -7670,3 +7670,15 @@ and 129 direct phases; deliberately unresolved cells return
 inconclusive. The cited comparisons, cap tests and artifact digests
 verify the implementation on fabricated inputs only. No retained
 binding or evaluation, SPICE, integration, R5.59i or R5.60 was run.
+
+
+## R5.59i qualify the retained inter-node binding (2026-11-18)
+
+[ADR0220](../../../docs/adr/0220-qualify-retained-inter-node-binding.md)
+pins the three ADR0215 records and ADR0217 audit and supplies the
+three saved anchors to the unchanged ADR0219 numerical study. The
+new comparator checks the original phase words, state and branch
+tolerances and exact dry-floor decisions. The isolated invocation
+and saved independent audit are exercised on fabricated archive
+files; the retained destination is reserved and the attempt remains
+unspent. No replay of the original grid or physical run is required.
