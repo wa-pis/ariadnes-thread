@@ -803,3 +803,33 @@ The R5.59d–f research profile SHALL vary only the Mars capture true anomaly as
 - **THEN** the immutable proposal SHALL bind the exact phase word, SI Mars-relative and SSB/J2000 six-states at the original arrival-cutoff epoch, six command words, source identity, branch decisions and both exact mass ledgers
 - **AND** a fully checked grid without an eligible pair SHALL report `no-eligible-pair-on-grid` with null commands; ties, incomplete output or disagreement SHALL report an inconclusive or invalid result without commands
 - **AND** the proposal SHALL NOT be admitted to the original R5.60; adopting a new Mars boundary and authorizing a later physical test SHALL require a separate reviewed contract with the existing physical readiness gates
+
+
+### Requirement: Check the continuous neighborhood of the best saved Mars phase
+
+The R5.59g–i profile SHALL conduct a separately authorized, bounded local study of the fixed ADR0217 model without reopening or completing the original R5.59f invocation or changing the physical target.
+
+#### Scenario: Authenticate and bound the local study
+
+- **WHEN** the retained local study is separately authorized after artificial qualification
+- **THEN** it SHALL pin the exact ADR0217 audit and three ADR0215 evidence files, verify their receipt and operand identities, and vary only Mars true anomaly in the two closed cells [150°, 151°] and [151°, 152°] at the original cutoff epoch
+- **AND** it SHALL check the three saved anchors against the original state, root and pair gates, cover both signed Mars roots, cap the bisection depth at 5, and charge at most 126 cells, 252 signed branch-cell bounds and 129 point evaluations per arithmetic path or verifier, with at most two Mars roots and two pairs per point
+- **AND** it SHALL cap the producer, exclusive durable evidence and independent readback at 30 s, allow at most 4 MiB of pinned source per reader and 4 MiB of new evidence, preserve the first attempt and forbid retries, scope expansion, SPICE, force evaluation, trajectory integration or R5.60
+
+#### Scenario: Verify a local existence witness
+
+- **WHEN** the study claims an eligible off-grid phase
+- **THEN** a binary64 and independent at-least-80-digit point check SHALL show both costs at or below the unrounded ideal budget and pass all unchanged ADR0212 state, signed-root, impulse, guard, duration, mass, exact event-order, two-ledger and exclusion gates
+- **AND** a witness SHALL establish existence only; it SHALL NOT select an executable command pair or establish a unique optimum, physical continuity or R5.60 admission
+
+#### Scenario: Verify a continuous exclusion
+
+- **WHEN** the study claims no eligible pair on [150°, 152°]
+- **THEN** an independent verifier SHALL prove gap-free closed interval coverage for both signs and check every exclusion using outward enclosures of an existing geometry gate or a commanded-mass lower bound that includes the independent duration comparison, binary64 rounding and the exact frozen dry-floor ledger
+- **AND** unresolved roots or bounds, equality at the mass exclusion boundary, failed authentication, disagreement, missing coverage, incomplete evidence or exhausted budget SHALL give an inconclusive or invalid result; a finer set of samples alone SHALL NOT support a continuous refusal
+
+#### Scenario: Qualify the interval method on artificial data
+
+- **WHEN** the interval procedure is tested before retained execution
+- **THEN** artificial evidence SHALL exercise a narrow passing point between failing nodes, a certified two-sign refusal, uncertain root or guard transitions, a mass-bound equality that cannot exclude the branch, a coverage hole, tampering and the full workload and caps
+- **AND** focused tests, guarded full pytest, Ruff and strict OpenSpec SHALL pass before the retained study can receive separate authorization

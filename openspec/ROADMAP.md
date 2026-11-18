@@ -482,6 +482,12 @@ attempt did not complete and remains consumed.
 A new capture phase changes the target six-state and cannot enter
 the original ADR0205/R5.60 contract.
 
+[ADR0218](../docs/adr/0218-design-inter-node-mars-phase-check.md) designs a separate
+continuous check on [150°, 152°] for the 40.085 m/s gap. A verified
+off-grid witness establishes existence; a local refusal requires
+independently checked interval coverage for both signs. Artificial
+qualification and separate retained authorization are pending.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

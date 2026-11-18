@@ -7636,3 +7636,21 @@ budget). No commands were admitted. This is a grid-only refusal in
 the separate saved-data audit. The consumed original invocation still
 has no completion witness; no phase scan, conic solve, SPICE, integration
 or R5.60 was run.
+
+
+## R5.59g design the inter-node Mars phase check (2026-11-18)
+
+[ADR0218](../../../docs/adr/0218-design-inter-node-mars-phase-check.md)
+asks whether an off-grid capture can recover the 40.085 m/s gap on
+[150°, 152°] with the same lunar branch, Mars ellipse, epochs,
+spacecraft and gates. Pin the three ADR0215 files and the ADR0217
+audit. Check the three saved anchors and both signed Mars roots.
+Use bounded bisection, with an independently checked feasible point
+for existence, or gap-free coverage and outward exclusion bounds
+for a local refusal. For mass, use a conservative lower bound on
+commanded durations from the independent comparison and its rounding,
+then apply the exact ledger. More samples alone cannot exclude the
+continuous interval. Stop inconclusive at the caps or at uncertain
+arithmetic; do not widen the window. Qualify on artificial data
+before one separately authorized retained study. No phase, interval,
+SPICE or integration was evaluated in design; R5.60 stays unavailable.
