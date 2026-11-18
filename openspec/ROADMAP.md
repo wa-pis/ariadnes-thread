@@ -505,9 +505,14 @@ R5.59k on the fixed artificial matrix: 24 byte-identical traced/control
 records, 56 sampled containment records, 48 bounds/12 points/1,232 events.
 27 focused and 6,522 guarded full tests pass, with 494 explicit exclusions.
 This does not attribute the widening source on retained inputs.
-Automation is PAUSED pending the user's choice: first design a bounded
-retained observational trace (recommended), or change the proof on artificial
-fixtures. Neither new path is authorized; no automatic retry.
+The user selected retained observational design.
+[ADR0224](../docs/adr/0224-design-retained-cell-observations.md) fixes three saved
+leaves and their midpoint singletons: 24 traces plus 24 controls, six historical
+default-cell parity checks, no new direct points and explicitly counted mass arithmetic.
+Design only; no retained numerical evaluation. Automation resumes for R5.59m
+artificial-only preparation under 30 s/48 bounds/8,192 events/4 MiB limits.
+It must pause before the separately instructed R5.59n retained diagnostic;
+no changed formula, consumed-study replay or R5.60 follows automatically.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

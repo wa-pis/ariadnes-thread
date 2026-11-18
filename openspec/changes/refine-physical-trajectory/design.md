@@ -7737,3 +7737,43 @@ are diagnostic checks, not a continuous mathematical or physical certificate.
 Automation is paused at the user-decision boundary: a separately bounded
 retained-observation design is recommended before choosing a new formula;
 neither retained execution nor a changed scientific method follows automatically.
+
+
+## R5.59l design retained-cell observations (2026-11-19)
+
+The user selected observing saved retained cells before changing the proof.
+[ADR0224](../../../docs/adr/0224-design-retained-cell-observations.md) and its
+[pinned contract](../../../docs/adr/experiments/0224-retained-trace-contract.json)
+freeze the numerical question, nine input files (2,280,855 bytes), reference,
+three depth-5 leaves at saved rows 62/94/125 and their existing midpoint singletons.
+Six domains × two signs × two paths give 24 traces plus 24 untraced controls:
+48 signed bound calls, with no new direct point/orbit or point-root construction.
+The six default finite-cell results also match the original saved records;
+independent and singleton enclosures have no historical counterpart.
+
+Prepare a distinct retained entry: both qualified ADR0223 entries deliberately
+reject retained operands. Preserve them and all historical mathematical sources,
+never relabel a reference artificial, and do not call the historical full scan,
+anchor replay or scientific audit. Use only the three saved midpoint point records
+for matching 16-quantity containment under the original parity gates. Count new
+Decimal96 mass arithmetic explicitly: at most 12 cached oracle-mass calls across
+the producer and its internal readback, six for the separate saved-only verifier.
+That verifier reconstructs no intervals, traces, points, or signed conics.
+
+Retain ordered finite observations, conditional stages, exact result parity,
+source/point/old-bound digests and independent saved readback. Compare exact
+rational scalar/component widths and matching singleton differences with units;
+do not treat unlike quantities or these samples as causal error contributions,
+a continuous certificate, physical accuracy or a command proposal.
+
+Keep 30 s per producer/auditor through finalization, at most 48 bounds/8,192 events,
+4 MiB authenticated source inventory per process and 4 MiB combined evidence,
+reserving 64 KiB for the separate audit. Existing same-sized artificial timing is
+only envelope evidence. R5.59m must test full-volume fabricated archives and all
+caps/failure paths before qualification. Historical sources and retained results
+remain immutable; partial/exhausted work is preserved without a retry.
+
+R5.59l is design only. Standing automatic progression permits R5.59m artificial
+preparation; automation resumes for that reversible step. It must pause before
+R5.59n until the user separately instructs the one retained diagnostic. No new
+formula, retained evaluation in preparation, SPICE, propagation or R5.60 is authorized.

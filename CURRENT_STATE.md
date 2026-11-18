@@ -1,16 +1,17 @@
 # Current State
 
-Updated: 2026-11-18. Keep under 60 lines; durable evidence is in ADRs.
+Updated: 2026-11-19. Keep under 60 lines; durable evidence is in ADRs.
 
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the extensible open-platform vision.
-Automation `ariadna-m3` is PAUSED after completing the authorized artificial-only R5.59k.
-User decision required: design a bounded observational trace of retained cells (recommended),
-or develop a different enclosure formula on artificial fixtures. Neither is authorized here.
-Do not replay a consumed study/audit or start retained numerical work while awaiting the choice.
+User selected retained-cell observational design; [ADR0224](docs/adr/0224-design-retained-cell-observations.md)
+freezes rows 62/94/125 and their midpoint singletons (24 traces + 24 controls planned).
+Automation `ariadna-m3` resumes every 5 minutes for R5.59m artificial-only preparation.
+No retained numerical work now; pause before R5.59n for a separate execution instruction.
+Keep original formulas/gates and all consumed evidence; zero SPICE/new trajectory/points.
 
-## Latest verified stage
+## Latest verified implementation
 [ADR0223](docs/adr/0223-qualify-artificial-bound-observations.md): R5.59k qualified
 on fixed witness/refusal fixtures; historical arithmetic unchanged.
 24 traces equal untraced records byte-for-byte; both signs/paths on three cells.

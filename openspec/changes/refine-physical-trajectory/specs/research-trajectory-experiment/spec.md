@@ -848,3 +848,30 @@ The R5.59g–i profile SHALL conduct a separately authorized, bounded local stud
 - **THEN** the diagnosis SHALL authenticate its report, receipt, completion and independent audit, compare recorded exclusion bounds with the unchanged strict thresholds, and distinguish descriptive midpoint samples from a continuous proof
 - **AND** it SHALL identify missing intermediate evidence instead of attributing an unrecorded numerical cause; it SHALL NOT recompute retained intervals, conics, phases or an already completed scientific audit
 - **AND** a subsequent artificial observational trace SHALL preserve the pinned formulas and gates, reject retained operands and changed outputs, record ordered finite stage endpoints and resource use, and pass traced/untraced parity and failure tests before qualification; no trace SHALL authorize a new retained invocation or change the original inconclusive result
+
+
+### Requirement: Observe fixed retained phase cells without rescanning
+
+The R5.59l–n profile SHALL observe the unchanged analytical method on a fixed subset of saved cells under ADR0224, without reopening the consumed R5.59i study or claiming a new feasibility proof.
+
+#### Scenario: Freeze the retained observation domain
+
+- **WHEN** a retained observational diagnostic is designed
+- **THEN** it SHALL pin ADR0224's nine input artifacts and frozen reference, select saved unresolved depth-5 rows 62, 94 and 125 by index and exact cell/point identities, and fix the three cells plus their saved-midpoint singleton controls before numerical work
+- **AND** the fixed matrix SHALL comprise both signs and both existing arithmetic paths, with exactly 24 traces and 24 untraced controls, zero new direct points or point-root constructors outside those bound calls, and no adaptive subdivision or cell replacement
+- **AND** all traced results SHALL equal their own controls byte-for-byte, and the six default finite-cell results SHALL additionally equal the authenticated saved bounds; independent and singleton results SHALL NOT be described as historically retained enclosures
+
+#### Scenario: Check retained observations and sampled quantities
+
+- **WHEN** the separately authorized diagnostic and its saved-only verifier run after artificial qualification
+- **THEN** a separately qualified retained entry SHALL reject relabeled, mixed or changed operands, preserve historical artificial-entry rejection behavior, pin the unchanged arithmetic sources and record finite canonical stages, exact links and legitimate non-reached stages
+- **AND** the three saved midpoint points SHALL provide the matching independent-oracle quantities and designated binary64 duration conversions for all 24 trace records under the unchanged 1 mm / 1 µm/s parity gates; no new point, orbit or point-root construction SHALL supply missing data
+- **AND** independent mass arithmetic SHALL be counted and cached: at most 12 oracle-mass calls in the producer including internal readback, and at most six in the separate auditor; the auditor SHALL perform zero new bounds, traces or conic solves and SHALL NOT rerun the old scientific audit
+- **AND** exact component/scalar widths and singleton differences SHALL carry units; unlike dimensions SHALL NOT be ranked as causal contributions, and the result SHALL NOT imply a tighter proof, continuous refusal, physical error bound, command admission or mission feasibility
+
+#### Scenario: Qualify and bound the new diagnostic before retained execution
+
+- **WHEN** the retained-observation adapter is prepared or its execution is considered
+- **THEN** R5.59m SHALL qualify the complete new matrix and full-volume fabricated archives, identity and historical-parity rejection, canonical zero/singleton containment, early/non-reached stages, mutations, exclusive completion cleanup, scope separation and every exhausted limit using focused and guarded full pytest, Ruff and strict OpenSpec; preparation SHALL NOT evaluate retained operands
+- **AND** the producer and separate auditor SHALL each have 30 s through durable finalization, with at most 48 producer bounds, 8,192 total stage entries, 4 MiB authenticated source inventory per process and 4 MiB combined new evidence including a reserved 64 KiB audit allowance
+- **AND** R5.59n SHALL require a separate explicit execution instruction after qualification, preserve the first complete or partial result without retry, and fail invalid or inconclusive on disagreement, missing evidence or exhausted caps; no new formula, broader/deeper tree, SPICE, force evaluation, integration or R5.60 SHALL follow automatically

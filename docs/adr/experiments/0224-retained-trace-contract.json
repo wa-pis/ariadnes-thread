@@ -1,0 +1,218 @@
+{
+  "base_commit": "9dd3512d752931d3dda5ca3009c5f43b65bd0c94",
+  "caps": {
+    "audit_bound_calls": 0,
+    "audit_oracle_mass_calls": 6,
+    "audit_reserve_bytes": 65536,
+    "audit_wall_ns": 30000000000,
+    "combined_evidence_bytes": 4194304,
+    "force_evaluations": 0,
+    "integrations": 0,
+    "native_calls": 0,
+    "new_direct_points": 0,
+    "point_root_constructions_outside_bounds": 0,
+    "producer_bound_calls": 48,
+    "producer_oracle_mass_calls": 12,
+    "producer_wall_ns": 30000000000,
+    "r560_attempts": 0,
+    "source_inventory_bytes_per_process": 4194304,
+    "spice_queries": 0,
+    "total_stage_entries": 8192
+  },
+  "date": "2026-11-19",
+  "decision": "accepted-design-and-artificial-preparation-only",
+  "design_verification": {
+    "inspection_elapsed_ns": 24924625,
+    "numerical_functions_called": false,
+    "reused_test_evidence": "ADR0223:27 focused,6522 guarded full,494 excluded",
+    "saved_hashes_rows_and_reference_checked": true,
+    "tests_rerun": false
+  },
+  "historical_method_identity": {
+    "anchors": "7fadcb3fc9de4a43aa1ce80efd30d2e6499f76ee4918519cf8783d50bca2057e",
+    "archive": "43c4c3b7fe1f82324a4833ea74a22aaed9922e8c0f9ea67fa0aa76161062dcf8",
+    "bounds": "b1a2673aa5516533320febed3efddeb27edece1f3f60b775323520e71324f83e",
+    "core": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+    "interval": "3243ec83031b8bc873dfae47076e0bbb086640893e396b1e56c2dbcf5d865329",
+    "invocation": "220bdf927ee240f6dae402a57f6004827ef3bae74742dff791c813d97d71f7df",
+    "io": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "oracle": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+    "orbit": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+    "points": "a9eca487527068c8114ff00353846e39fcf6eb7212009c5046b4df0cc23af223",
+    "reader": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+    "screen": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b",
+    "study": "9ba27b0419a24e16209b646c8f0adb4c4ad55e938fadc5816c4944a72a01fc60"
+  },
+  "historical_source_identity": {
+    "attempt.json": "ac1d02f445ebed82ac5b4f728193ea8533890188ed2422117523db50d087bf0a",
+    "audit.json": "bdc9eb8225a4af912327d0c8cd62231bf4f625991f6d4233ea58a5e9481172d5",
+    "receipt.json": "395d20ab4771b9a9e4743e038e5c50338d12b8d890018befc3879bf3de21a18b",
+    "report.json": "323c2c71e17168a46e9dd5280015a3fecb0865016b9b6954dcb051de4def1800"
+  },
+  "input_artifact_bytes": 2280855,
+  "input_artifacts": [
+    {
+      "bytes": 1508,
+      "path": "docs/adr/experiments/0215-r559f/attempt.json",
+      "sha256": "ac1d02f445ebed82ac5b4f728193ea8533890188ed2422117523db50d087bf0a"
+    },
+    {
+      "bytes": 1059325,
+      "path": "docs/adr/experiments/0215-r559f/report.json",
+      "sha256": "323c2c71e17168a46e9dd5280015a3fecb0865016b9b6954dcb051de4def1800"
+    },
+    {
+      "bytes": 1727,
+      "path": "docs/adr/experiments/0215-r559f/receipt.json",
+      "sha256": "395d20ab4771b9a9e4743e038e5c50338d12b8d890018befc3879bf3de21a18b"
+    },
+    {
+      "bytes": 3398,
+      "path": "docs/adr/experiments/0217-saved-grid-audit.json",
+      "sha256": "bdc9eb8225a4af912327d0c8cd62231bf4f625991f6d4233ea58a5e9481172d5"
+    },
+    {
+      "bytes": 1775,
+      "path": "docs/adr/experiments/0221-r559i/attempt.json",
+      "sha256": "67099e223d433ab049e2c4c793cbedadd75668df4195975a1f711467aa81c21a"
+    },
+    {
+      "bytes": 594496,
+      "path": "docs/adr/experiments/0221-r559i/report.json",
+      "sha256": "38bb473e53afce2eeaa5c779b01457b0fc8e9d7fb9a701f51920276e42b621de"
+    },
+    {
+      "bytes": 1943,
+      "path": "docs/adr/experiments/0221-r559i/receipt.json",
+      "sha256": "85347ff9cb75d8ac62505c6e05b51249aed5bee10a7d52a9a7ea782631cdf8ed"
+    },
+    {
+      "bytes": 321,
+      "path": "docs/adr/experiments/0221-r559i/completion.json",
+      "sha256": "44a9bce0f042fe5e07b2237bc08e14a7eb9390449b6cc9c83f780f5b9b0735b6"
+    },
+    {
+      "bytes": 616362,
+      "path": "docs/adr/experiments/0221-independent-audit.json",
+      "sha256": "0f874ca92231b8b1c43069a158bb7f698ef2758954f2a8ba278511f9391fdc82"
+    }
+  ],
+  "matrix": {
+    "cells": 3,
+    "historical_parity": "default finite cells only",
+    "historical_parity_records": 6,
+    "new_points": 0,
+    "order": "row order; cell then singleton; positive then negative; default then independent",
+    "paths": [
+      false,
+      true
+    ],
+    "planned_bound_calls": 48,
+    "quantities_per_sample": 16,
+    "sampled_containment_records": 24,
+    "saved_midpoint_points": 3,
+    "signs": [
+      "positive",
+      "negative"
+    ],
+    "singletons": 3,
+    "traces": 24,
+    "untraced_controls": 24
+  },
+  "output": {
+    "exclusive": true,
+    "producer_directory": "docs/adr/experiments/0224-retained-trace-result",
+    "producer_files": [
+      "attempt.json",
+      "report.json",
+      "receipt.json",
+      "completion.json"
+    ],
+    "separate_audit": "docs/adr/experiments/0224-retained-trace-audit.json"
+  },
+  "question": "Observe corresponding stage widths on three fixed retained leaves and their saved-midpoint singletons without changing the method",
+  "reference_sha256": "6b845f74881f658d2eeea28bfdde43c9190a283da5bb166644bb845c4f847c5b",
+  "requirements": [
+    "All three finite-cell default-path result pairs match the saved canonical records",
+    "All24 traced results match their own untraced canonical control bytes",
+    "Matching independent saved point quantities and designated duration conversions are contained",
+    "Account for new Decimal96 mass arithmetic separately from point/bound calls",
+    "No new direct point/phase/orbit construction or old audit replay",
+    "Separate retained adapter; never relabel operands artificial or relax original guards",
+    "Exact stage/component widths with units; singleton comparison is descriptive only",
+    "No causal, all-phase exclusion, physical continuity or feasibility claim from these observations",
+    "R5.59m must qualify the full-volume artificial profile before an explicit R5.59n instruction"
+  ],
+  "schema": "ariadna-r559l-retained-trace-design-v1",
+  "scientific_method_sha256": {
+    "0206-readiness-runner.py": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "0208-seed-oracle.py": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+    "0208-seed-worksheet.py": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+    "0210-retained-readback.py": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+    "0213-phase-orbit.py": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+    "0213-phase-screen.py": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b",
+    "0219-interval.py": "3243ec83031b8bc873dfae47076e0bbb086640893e396b1e56c2dbcf5d865329",
+    "0219-phase-bounds.py": "b1a2673aa5516533320febed3efddeb27edece1f3f60b775323520e71324f83e",
+    "0219-phase-points.py": "a9eca487527068c8114ff00353846e39fcf6eb7212009c5046b4df0cc23af223",
+    "0219-phase-study.py": "9ba27b0419a24e16209b646c8f0adb4c4ad55e938fadc5816c4944a72a01fc60",
+    "0220-phase-anchors.py": "7fadcb3fc9de4a43aa1ce80efd30d2e6499f76ee4918519cf8783d50bca2057e",
+    "0220-phase-archive.py": "43c4c3b7fe1f82324a4833ea74a22aaed9922e8c0f9ea67fa0aa76161062dcf8",
+    "0220-phase-invocation.py": "220bdf927ee240f6dae402a57f6004827ef3bae74742dff791c813d97d71f7df",
+    "0223-bound-trace.py": "e50876ce72c8e80a74d7d615b4f67f6d69ab9a259a10663b041ee56d78730091",
+    "0223-trace-oracle.py": "bb9024663cb1b6642d0417ff73236ba47fa1eb9f48b3981db89d6aaf0c547973"
+  },
+  "scope": {
+    "artificial_preparation_authorized": true,
+    "new_enclosure_formula": false,
+    "old_audit_replay_authorized": false,
+    "r559i_replay_authorized": false,
+    "r560_authorized": false,
+    "retained_execution_authorized": false,
+    "retained_trace_executed": false
+  },
+  "selected_rows": [
+    {
+      "action": "unresolved",
+      "depth": 5,
+      "hi_deg": "4801/32",
+      "lo_deg": "150",
+      "midpoint_deg": "9601/64",
+      "point_sha256": "0b0496cd04fdc22c2e73d8f05b0d8d0d9e9ca685c78614a0ba5c8d129c9d11d6",
+      "row_index": 62,
+      "row_sha256": "fd126310c81c290430d7fda923ea86c1da7a0f5924c402a4e63157e4d38a84a9",
+      "saved_default_bounds_sha256": {
+        "negative": "159dd7b8bbaa09e84f40403cc1880a47465bde7f4c33eaaaa97816b908ad5c71",
+        "positive": "f8743645bf9120588a5f8b913b0ecb776ba6c484d8c2608c2b7d8b27662c95ba"
+      }
+    },
+    {
+      "action": "unresolved",
+      "depth": 5,
+      "hi_deg": "4833/32",
+      "lo_deg": "151",
+      "midpoint_deg": "9665/64",
+      "point_sha256": "104f208f88d8403cd14aa97f2af0defc4cfee87ca452ff321ae075ea72d0ba9d",
+      "row_index": 94,
+      "row_sha256": "7d7b92432413333cb80cb86cce2dfa2b2436419a110a2e90e1c9278ad7baba9c",
+      "saved_default_bounds_sha256": {
+        "negative": "3cbee4b9bc18addcbd1e096679e8b661300d4bcfa4c8a2638594f40dffb92ba1",
+        "positive": "b366ba4776294d961f01fe224c08fd3943eae2a251d0eb64578bb1b2fd8e6a8f"
+      }
+    },
+    {
+      "action": "unresolved",
+      "depth": 5,
+      "hi_deg": "152",
+      "lo_deg": "4863/32",
+      "midpoint_deg": "9727/64",
+      "point_sha256": "ac7fa698e5e5eac79b390e97c6ee0439cccea18a41765412604e47e882365c4c",
+      "row_index": 125,
+      "row_sha256": "bfcf7ff3c5f85b6c6fc386f65ef3ac5f2684c6fbace0f5c3a081220bf19bbc89",
+      "saved_default_bounds_sha256": {
+        "negative": "337927b9740a5a7fa44a919f6b00377ba6074b5f80910854301f62f4be4b0e7f",
+        "positive": "63a2754c05dbe2fa3cef5e5052d093582272faca66a5e0c35e0f282cca781fbe"
+      }
+    }
+  ],
+  "stage": "R5.59l"
+}
