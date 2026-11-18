@@ -1,0 +1,98 @@
+{
+  "adapter_uses": 1,
+  "archive_reopens": 0,
+  "branch_decisions": {
+    "negative": {
+      "guard": 312,
+      "passes": 48
+    },
+    "positive": {
+      "passes": 360
+    }
+  },
+  "candidate_id": "d0001-t0035",
+  "commands": null,
+  "elapsed_ns": 89871125,
+  "evidence_bytes": 1062560,
+  "force_evaluations": 0,
+  "ideal_dry_mass_budget_m_s": 6117.706618414368,
+  "integrations": 0,
+  "kernel_accesses": 0,
+  "least_independent_pair": {
+    "index": 151,
+    "oracle_total_delta_v_m_s": "6157.79127225512646565122953902548910124028682150757304010910492529394180206203661748731998020656",
+    "reason": "commanded-dry-floor",
+    "roots": [
+      "positive",
+      "positive"
+    ],
+    "total_delta_v_m_s": 6157.791272255126
+  },
+  "least_pair_over_ideal_budget_m_s": 40.08465384075862,
+  "least_recorded_pair": {
+    "index": 151,
+    "oracle_total_delta_v_m_s": "6157.79127225512646565122953902548910124028682150757304010910492529394180206203661748731998020656",
+    "reason": "commanded-dry-floor",
+    "roots": [
+      "positive",
+      "positive"
+    ],
+    "total_delta_v_m_s": 6157.791272255126
+  },
+  "live_authorized": false,
+  "max_state_discrepancies": {
+    "relative_position_m": 7.589493438753221e-09,
+    "relative_velocity_m_s": 2.773864915147637e-12,
+    "ssb_position_m": 1.6627107816677026e-05,
+    "ssb_velocity_m_s": 3.776078206958899e-12
+  },
+  "new_conic_solves": 0,
+  "new_phase_scans": 0,
+  "new_r559f_attempts": 0,
+  "original_elapsed_before_receipt_ns": 318469083,
+  "original_invocation_completed": false,
+  "original_new_completion_witness": false,
+  "pair_decisions": {
+    "commanded-dry-floor": 408
+  },
+  "physical_launch_authorized": false,
+  "physical_status": "physical-join-not-established",
+  "r560_attempts": 0,
+  "reason": "no-eligible-pair",
+  "saved_grid_verified": true,
+  "schema": "ariadna-r559f-saved-grid-audit-v1",
+  "source_bytes": 13363,
+  "source_pins": {
+    "attempt.json": "ac1d02f445ebed82ac5b4f728193ea8533890188ed2422117523db50d087bf0a",
+    "receipt.json": "395d20ab4771b9a9e4743e038e5c50338d12b8d890018befc3879bf3de21a18b",
+    "report.json": "323c2c71e17168a46e9dd5280015a3fecb0865016b9b6954dcb051de4def1800"
+  },
+  "source_sha256": {
+    "audit": "bea0d6c06c8417882eb9f67183bb6d66b93935b0384c5f333b75f8e94f3321ad",
+    "binding": "e5f9e671aa4716e1a6b953569cfa86e5b06b90322b8faec480ec032b5bc1c9ab",
+    "core": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+    "envelope": "b4f3251a6691469db891a28fd40763ff737a2a9994b08cc3c23ff1015e397011",
+    "io": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "oracle": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+    "orbit": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+    "previous": "77043cd3e4323d0af272d173d35cc0bbf18fa8275791e004c57963d39cee19df",
+    "reader": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+    "screen": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b"
+  },
+  "spice_queries": 0,
+  "state_checks": 360,
+  "status": "no-eligible-pair-on-grid",
+  "wall_ns": 30000000000,
+  "work": {
+    "mars_roots": 720,
+    "pairs": 408,
+    "phase_positions": 360
+  },
+  "zero_encoding": {
+    "audit_view": "0",
+    "original": "0E-569",
+    "phase_index": 0,
+    "velocity_component_index": 0
+  },
+  "zero_phase_delta_v_m_s": 11661.307589419179
+}

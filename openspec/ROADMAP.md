@@ -473,7 +473,12 @@ encoding failed readback, so no scientific grid refusal or proposal
 was verified by the original attempt. It is consumed and must not be replayed.
 [ADR0216](../docs/adr/0216-design-saved-mars-phase-audit.md) qualifies
 a separate read-only audit that accepts only the recorded exact zero
-through an in-memory view. Retained saved-data verification is pending.
+through an in-memory view. [ADR0217](../docs/adr/0217-verify-the-saved-mars-phase-grid.md)
+verifies the saved 360 phases, 720 root slots and 408 pair decisions.
+Every built pair failed the 500 kg commanded floor. At 151 degrees
+the least-cost pair needed 6,157.791 m/s, 40.085 m/s above the ideal
+budget. The saved grid refusal is verified separately; the original
+attempt did not complete and remains consumed.
 A new capture phase changes the target six-state and cannot enter
 the original ADR0205/R5.60 contract.
 

@@ -7622,3 +7622,17 @@ receipt, fixed operands, ordered state and root inventories, pair
 decisions, zero-phase regression and analytic disposition. Its new
 result is separate from the original incomplete execution, which must
 never gain a completion witness.
+
+
+## R5.59f verify the saved grid (2026-11-18)
+
+[ADR0217](../../../docs/adr/0217-verify-the-saved-mars-phase-grid.md)
+verifies the 360 saved phase states, 720 signed root slots and 408
+pair decisions with one in-memory zero representation change and all
+original numerical gates. The archived phase-zero refusal was reproduced.
+Every built pair fails the 500 kg commanded floor; the least-cost pair
+is at 151 degrees (6,157.791 m/s; 40.085 m/s above the ideal
+budget). No commands were admitted. This is a grid-only refusal in
+the separate saved-data audit. The consumed original invocation still
+has no completion witness; no phase scan, conic solve, SPICE, integration
+or R5.60 was run.

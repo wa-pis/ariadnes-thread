@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0217 — Verify the saved Mars phase grid](0217-verify-the-saved-mars-phase-grid.md): all 360 states, 720 roots and 408 pairs independently read back; verified grid-only dry-floor refusal, original invocation still incomplete.
 - [0216 — Qualify the saved Mars phase audit](0216-design-saved-mars-phase-audit.md): qualify a read-only exact-zero adapter without changing historical data or numerical gates.
 - [0215 — Record the retained Mars phase readback failure](0215-record-retained-phase-readback-failure.md): single R5.59f attempt saved the full grid, but readback rejected the phase-zero decimal encoding; scientific disposition remains unverified.
 - [0214 — Qualify the retained Mars phase binding](0214-qualify-retained-phase-binding.md): fixed ADR0211 identity, isolated invocation and separate saved audit qualified on artificial evidence; retained attempt pending.
