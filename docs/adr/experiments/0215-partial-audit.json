@@ -1,0 +1,76 @@
+{
+  "archive_open_attempts": [
+    "attempt.json",
+    "report.json",
+    "receipt.json",
+    "completion.json"
+  ],
+  "archive_read_bytes": 13363,
+  "archive_reopens_in_audit": 0,
+  "attempt_report_receipt_chain_verified": true,
+  "audit_elapsed_ns": 23090375,
+  "completion_present": false,
+  "counters_and_authority": {
+    "force_evaluations": 0,
+    "integrations": 0,
+    "kernel_accesses": 0,
+    "live_authorized": false,
+    "physical_launch_authorized": false,
+    "physical_status": "physical-join-not-established",
+    "r559f_attempts": 1,
+    "r560_attempts": 0,
+    "spice_queries": 0
+  },
+  "evidence": {
+    "attempt.json": {
+      "bytes": 1508,
+      "sha256": "ac1d02f445ebed82ac5b4f728193ea8533890188ed2422117523db50d087bf0a"
+    },
+    "receipt.json": {
+      "bytes": 1727,
+      "sha256": "395d20ab4771b9a9e4743e038e5c50338d12b8d890018befc3879bf3de21a18b"
+    },
+    "report.json": {
+      "bytes": 1059325,
+      "sha256": "323c2c71e17168a46e9dd5280015a3fecb0865016b9b6954dcb051de4def1800"
+    }
+  },
+  "first_readback_fault": {
+    "adjusted": -569,
+    "check": "<genexpr>",
+    "component_index": 3,
+    "error": "R5.59c readback: unbounded decimal field",
+    "field": "independent_relative_si",
+    "index": 0,
+    "value": "0E-569",
+    "zero": true
+  },
+  "frozen_operands_verified_from_report": true,
+  "observed_process_exit_code": 3,
+  "observed_run_ns_before_receipt": 318469083,
+  "saved_least_pair_unverified": {
+    "index": 151,
+    "reason": "commanded-dry-floor",
+    "total_delta_v_m_s": 6157.791272255126
+  },
+  "saved_pair_reasons_unverified": {
+    "commanded-dry-floor": 408
+  },
+  "saved_record_bytes": 1062560,
+  "saved_status_unverified": "no-eligible-pair-on-grid",
+  "saved_work_inventory_verified": {
+    "mars_roots": 720,
+    "pairs": 408,
+    "phase_positions": 360
+  },
+  "scientific_result_verified": false,
+  "state_decimal_bound_rejections_in_report": [
+    {
+      "component_index": 3,
+      "index": 0,
+      "value": "0E-569"
+    }
+  ],
+  "status": "partial-evidence",
+  "wall_ns": 30000000000
+}

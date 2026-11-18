@@ -466,8 +466,13 @@ covers all 360 phases and 720 roots, with the expected zero-phase
 fuel refusal. One grid selects 95 degrees and the other is empty.
 [ADR0214](../docs/adr/0214-qualify-retained-phase-binding.md) qualifies the fixed
 ADR0211 binding and independent saved audit on artificial archives.
-The authorized single retained R5.59f execution is pending. A new capture phase changes the target six-state and
-cannot enter the original ADR0205/R5.60 contract.
+[ADR0215](../docs/adr/0215-record-retained-phase-readback-failure.md)
+records the sole retained R5.59f attempt. The partial audit binds all
+360 saved phase rows and 720 root slots, but the phase-zero decimal
+encoding failed readback, so no scientific grid refusal or proposal
+was verified. The attempt is consumed and must not be replayed.
+A new capture phase changes the target six-state and cannot enter
+the original ADR0205/R5.60 contract.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

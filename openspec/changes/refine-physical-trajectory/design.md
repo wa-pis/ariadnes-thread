@@ -7596,3 +7596,17 @@ authorization remain fixed. Artificial evidence exercises both full-grid
 dispositions, archive integrity, deadline and exclusive output without
 spending the authorized retained attempt. The retained destination is
 fixed and existing output blocks another invocation.
+
+
+## R5.59f record the retained phase readback failure (2026-11-18)
+
+[ADR0215](../../../docs/adr/0215-record-retained-phase-readback-failure.md)
+records the only authorized execution. A separate partial audit checked
+the attempt/report/receipt hashes, frozen operands and inventory of
+360 phase rows, 720 root slots and 408 pairs. The shared reader refused
+the exact zero encoded as `0E-569` in the phase-zero independent
+velocity, before completing the scientific audit. The saved status
+`no-eligible-pair-on-grid` remains unverified; there is no completion
+witness, proposal or authority for R5.60. Preserve the first evidence
+and do not repeat the grid. No SPICE, force calculation or integration
+was performed.
