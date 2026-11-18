@@ -840,3 +840,11 @@ The R5.59g–i profile SHALL conduct a separately authorized, bounded local stud
 - **WHEN** the ADR0218 invocation is prepared before any retained execution
 - **THEN** it SHALL reject changed hashes, invalid receipt or audit lineage, mixed artificial and retained profiles and mismatched anchor states or signed pair decisions before reporting a verified disposition
 - **AND** qualification SHALL use fabricated equivalents of the three ADR0215 files and the ADR0217 audit, exercise the shared time and byte caps and independent saved readback, and leave the retained attempt unspent and the original R5.59f completion witness absent
+
+
+#### Scenario: Diagnose unresolved enclosures without replay
+
+- **WHEN** a separately authorized local study is preserved as inconclusive and saved-only diagnosis is performed
+- **THEN** the diagnosis SHALL authenticate its report, receipt, completion and independent audit, compare recorded exclusion bounds with the unchanged strict thresholds, and distinguish descriptive midpoint samples from a continuous proof
+- **AND** it SHALL identify missing intermediate evidence instead of attributing an unrecorded numerical cause; it SHALL NOT recompute retained intervals, conics, phases or an already completed scientific audit
+- **AND** a subsequent artificial observational trace SHALL preserve the pinned formulas and gates, reject retained operands and changed outputs, record ordered finite stage endpoints and resource use, and pass traced/untraced parity and failure tests before qualification; no trace SHALL authorize a new retained invocation or change the original inconclusive result

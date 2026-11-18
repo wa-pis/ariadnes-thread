@@ -7698,3 +7698,30 @@ has not been proved. Time and byte limits pass. R5.59i is consumed;
 the scientific question and physical readiness remain open. Any
 new experiment needs a separately reviewed contract; no retry is
 authorized by this record.
+
+
+## R5.59j saved-bound diagnosis and R5.59k artificial tracing (2026-11-18)
+
+[ADR0222](../../../docs/adr/0222-diagnose-saved-positive-bound-widths.md)
+records saved-only inspection: all 64 terminal positive mass lower
+bounds remain below 1,500 kg and all clearance upper bounds exceed
+the guard-exclusion threshold. Arrival-norm enclosure widths of
+94.115–98.406 m/s are already present before the mass map. No
+intermediate widths were saved, so dominant dependency attribution
+is unproved. The actual ledger, feasibility and continuous local
+refusal cannot be inferred from these lower/upper bounds.
+
+R5.59k is an observational artificial-only tracer of the unchanged
+method, not a replacement proof. Use the two existing fabricated
+cases, both paths/signs, the [151°,152°] parent, its 1/32° child and
+the child's singleton midpoint. Compare each traced/untraced final
+record exactly, pin the original sources and record stage endpoints
+through geometry, norm and mass/duration conversion. Enforce 30 s,
+64 signed bound calls, 32 point calls including fixture anchors,
+8,192 trace entries, 4 MiB input and 4 MiB output; qualify parity,
+matching oracle-point and comparison-duration containment (with
+unchanged binary64/oracle parity gates), equality/transition/early-failure, mutation, scope and
+budget checks with focused/guarded full pytest, Ruff and strict
+validation. Do not open retained science inputs or relabel them as
+artificial. Retained tracing, deeper subdivision or a new proof
+formula needs a separate reviewed decision; no retry follows here.
