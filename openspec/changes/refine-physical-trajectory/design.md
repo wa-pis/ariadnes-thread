@@ -7725,3 +7725,15 @@ budget checks with focused/guarded full pytest, Ruff and strict
 validation. Do not open retained science inputs or relabel them as
 artificial. Retained tracing, deeper subdivision or a new proof
 formula needs a separate reviewed decision; no retry follows here.
+
+
+[ADR0223](../../../docs/adr/0223-qualify-artificial-bound-observations.md)
+qualifies the unchanged-function profile tracer on that fixed artificial
+matrix. The 24 traced/control results are byte-identical; 56 independent
+point-containment records pass. Work is 48 bounds, 12 points and 1,232 events,
+with 2,092,809 durable bytes and a 1.163318416 s external producer invocation.
+No retained operand was evaluated. Sampled containment and event integrity
+are diagnostic checks, not a continuous mathematical or physical certificate.
+Automation is paused at the user-decision boundary: a separately bounded
+retained-observation design is recommended before choosing a new formula;
+neither retained execution nor a changed scientific method follows automatically.

@@ -1,59 +1,45 @@
 # Current State
 
-Updated: 2026-11-18. Keep under 60 lines; see the roadmap and ADRs for details.
+Updated: 2026-11-18. Keep under 60 lines; durable evidence is in ADRs.
+
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
-Keep Python/TudatPy/SPICE/Streamlit and the long-term open-platform vision.
-Automation `ariadna-m3` resumed on 2026-11-18 every 5 minutes until user input is required; the expired two-hour schedule is replaced. Start with saved-only positive-root bound diagnosis; no replay, SPICE, integration or new scientific attempt. [ADR0211](docs/adr/0211-record-fixed-command-seed-refusal.md): fixed-target R5.59c refusal. [ADR0213](docs/adr/0213-qualify-mars-capture-phase-screen.md): R5.59e verified 360 phases / 720 signed roots on each of two fabricated archives; artificial proposal at 95 degrees and separate grid refusal. [ADR0214](docs/adr/0214-qualify-retained-phase-binding.md): exact ADR0211 archive binding and separate audit qualified on artificial data. [ADR0215](docs/adr/0215-record-retained-phase-readback-failure.md): single R5.59f attempt consumed. Saved 360 phases and 720 roots; partial readback verified identities and inventory but stopped at phase-zero decimal zero. [ADR0216](docs/adr/0216-design-saved-mars-phase-audit.md): saved-only zero adapter qualified on artificial evidence; the original attempt remains incomplete. [ADR0217](docs/adr/0217-verify-the-saved-mars-phase-grid.md): independent audit verifies the saved grid (360/720/408); every built pair failed the 500 kg floor, best by 40.085 m/s. [ADR0218](docs/adr/0218-design-inter-node-mars-phase-check.md): bounded [150°, 152°] design. [ADR0219](docs/adr/0219-qualify-inter-node-mars-phase-check.md): R5.59h synthetic witness at 151.5° and separate full-interval refusal verified. [ADR0220](docs/adr/0220-qualify-retained-inter-node-binding.md): fixed archive binding qualified artificially. [ADR0221](docs/adr/0221-record-retained-inter-node-result.md): sole retained R5.59i and separate audit both inconclusive (126 cells/252 bounds/129 phases; 64 unresolved leaves, zero verified exclusions). Time/byte caps pass; no witness. Attempt consumed. [ADR0222](docs/adr/0222-diagnose-saved-positive-bound-widths.md): saved positive mass bounds 1,499.102–1,499.262 kg and norm widths 94.115–98.406 m/s do not exclude; internal widening source unproved. Next: R5.59k observational tracing of unchanged functions on existing artificial fixtures only, under explicit caps. The 40.085 m/s question remains open. No replay or R5.60.
-Pause immediately when user input/action is needed; no automatic D17/D18 replay.
+Keep Python/TudatPy/SPICE/Streamlit and the extensible open-platform vision.
+Automation `ariadna-m3` is PAUSED after completing the authorized artificial-only R5.59k.
+User decision required: design a bounded observational trace of retained cells (recommended),
+or develop a different enclosure formula on artificial fixtures. Neither is authorized here.
+Do not replay a consumed study/audit or start retained numerical work while awaiting the choice.
 
-## Verified baseline
-- R1.1 passed at base `5c7012c`; runner/fixture untracked, exact hashes in ADR0119;
-  [ADR 0119](docs/adr/0119-positive-ideal-m2-reference.md): exactly two identical
-  1980-attempt searches/two 121-state samplings in shared 1.993807459 s.
-  Selected d0001-t0035: 291.363636 days, ideal delta-v 3583.210826 m/s,
-  final mass 887.966464 kg >=500 kg dry +50 kg reserve; spare 337.966464 kg.
-  Decimal mass/reserve, endpoint/provenance/repeatability/offline checks pass.
-- Only ideal M2 feasibility: Sun-point-mass coast/body-centre endpoints/scalar
-  instantaneous maneuvers; finite-burn/mission feasibility unverified.
-- M1/M2 and visual explorer are archived. UI uses M2 with R1 research export.
-- D17.3 remains unclosed: 44.386790 km /185.850963 m/s; retained
-  [ADR 0116](docs/adr/0116-quadratic-steering-stagnates-at-bounds.md).
-- Strict M3/task 3.9 and full-force/finite-burn/end-to-end safety gates remain open.
-## Historical — R5.3 once-only attempt failed
-[ADR0148](docs/adr/0148-short-coast-oracle-rhs-limit.md): one attempt at clean24154be;
-A native h1/h0.5 arcs complete, first A oracle hits10000 RHS/30021 body reads.
-Separate offline audit:partial/study_verified=false,0.07836870802566409s, zero native.
-R5.3 final identity unavailable; 304 protected files preserved; no replay.
-[ADR0149](docs/adr/0149-oracle-time-precision-diagnosis.md): user-requested read-only diagnosis;
-119ns epoch grid/mixed time precision confirmed,7 scalar probes pass in0.03053s,
-zero scientific imports/body queries/integrations; actual rejection cause unproven.
-[ADR0150](docs/adr/0150-synthetic-step-trace-and-binary-localization.md):
-Synthetic tracing/search complete:37/73/2413 RHS,64 rounded-time rejections,
-all endpoint gates pass; first bad callback at0.052600152s, not a time crossing.
-5285 full tests/Ruff reused; strict OpenSpec and saved-data checks pass.
-[ADR0151](docs/adr/0151-frozen-stage-error-attribution.md):39 frozen stages/234 fields
-pass in0.067s; clock-only norm15.679 versus reference0.02889, actual15.734.
-Explains first frozen synthetic estimator rejection; historical R5 cause unverified.
-[ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 ideal coast passes121 nodes/both frames; preserve evidence.
-[ADR0152](docs/adr/0152-compensated-synthetic-time-validation.md):34 focused/5319 full
-pass; candidate61 RHS/5 accepted/0 rejected, all gates pass, provider floor retained.
-[ADR0154](docs/adr/0154-resume-real-ephemeris-verification.md): readiness/90 focused/5409 full pass, exact restored sources/gates unchanged.
-[ADR0155](docs/adr/0155-real-ephemeris-time-boundary-passes.md):21 real source states/all gates pass;84 returns audited; same-model arithmetic only; source discrepancy11.4um retained.
-[ADR0157](docs/adr/0157-prepare-fixed-state-gravity-check.md):221 new/5630 full tests/Ruff passed; tested code remains unchanged.
-[ADR0158](docs/adr/0158-fixed-position-real-gravity-passes.md):R5.11 study/audit pass21 rows/14 totals,0.4372s/0.3447s; fixed-X arithmetic only.
-[ADR0160](docs/adr/0160-prepare-moving-coordinate-check.md):ADR0159 preparation;251 focused/5881 full/Ruff pass; tested bytes unchanged.
-[ADR0161](docs/adr/0161-moving-coordinate-arithmetic-passes.md):R5.14 study/audit pass7/21/168/63/14 in0.630s/0.574s;370 protected files unchanged. Controlled q/w and real-source arithmetic only.
-[ADR0162](docs/adr/0162-corrected-real-integration-contract.md):R5.15 design complete; two future A-only300s solves, original gates/inputs, bounded sampled audit.
-[ADR0163](docs/adr/0163-prepare-corrected-integration.md):R5.16 complete;301 focused/6182 full/Ruff pass, tested hashes frozen. Artificial-source checks only.
-[ADR0164](docs/adr/0164-corrected-coast-force-gate-fails.md):R5.17 attempt consumed;both300s solves/21 trajectory comparisons pass, but Moon overall force gate fails at normal RHS6/local0.25s by8.8864%; audit partial/scientific_verified=false, final identity unavailable.
-External2.704s/1.643s, finalizations/caps pass;5132 RHS/15417 states/424 trials, no native propagation.6182 tests/Ruff reused on unchanged bytes.
-[ADR0165](docs/adr/0165-reproduce-lunar-source-rounding.md):R5.18 localizes 13.269 µm before SI /16.645 µm after; staged centre sum reproduces42/42 saved position components. No native work/replay.
-[ADR0181](docs/adr/0181-split-moon-coast-recheck-passes.md): R5.34 passes at `27dfc6d`: both real 300 s A profiles, 21 comparisons and 28 observations pass independent audit. Worst lunar overall error: 50.60% of limit. R5.17 remains failed.
-[ADR0187](docs/adr/0187-longer-model-b-coast-passes.md): R5.40 passes once on real ephemerides at `fbf0b60` (600 s B only; 67 comparisons, 52 observations, 26 native telemetry rows verified offline). Endpoint RK4/DOP853 difference: 0.0716 mm and 2.40e-8 m/s. Parking coast only. [ADR0188](docs/adr/0188-design-post-cutoff-lunar-coast.md) fixes the actual simulated cutoff for a separate B-only test. [ADR0189](docs/adr/0189-prepare-post-cutoff-lunar-coast.md): R5.42 synthetic study/audit pass both direction cases (52 focused; 6141 guarded pass, 494 skips).
-[ADR0190](docs/adr/0190-post-cutoff-coast-outbound-at-samples.md): R5.43 real B study and offline audit pass (9.053 s and 5.725 s). Exact simulated cutoff, 600 s, 39 comparisons; +652.827 km lunar range and all 52 radial signs positive. [ADR0191](docs/adr/0191-design-retained-lunar-range-event.md) fixed the retrospective marker. [ADR0192](docs/adr/0192-retained-lunar-range-event-bracketed.md): R5.45 brackets 3,000 km at +209–209.5 s on the RK4 meshes; both engines bracket it within +200–250 s. [ADR0193](docs/adr/0193-design-lunar-range-extension.md) fixes a 50 s extension toward 3,474.8 km. [ADR0194](docs/adr/0194-prepare-lunar-range-extension.md): synthetic preparation passes (21 focused; 6,186 passed, 494 skipped). [ADR0195](docs/adr/0195-prospective-lunar-range-marker-bracketed.md): R5.48 real B study and offline audit pass. The 3,474.8 km marker is bracketed by the two RK4 meshes at +30.5–31 s after restart. [ADR0196](docs/adr/0196-design-far-lunar-range-check.md): R5.49 fixes a 16,000 s model B check at 18,374 km, 480 s study and 300 s audit. [ADR0197](docs/adr/0197-prepare-far-lunar-range-check.md): full-cap synthetic study 36.956 s, audit 39.253 s; 6,217 guarded passed, 494 skipped. [ADR0198](docs/adr/0198-far-lunar-range-marker-bracketed.md): R5.51 passes once on real ephemerides; study 31.934 s, audit 28.069 s. 18,374 km bracket overlap +13,266–13,266.5 s from restart. Numerical model B only; no mission handoff.
-## Boundaries and references
-- Preserve all historical JSON, scientific gates and immutable `moon_to_mars.py`.
-- R1 cannot archive M3. M4/M5/M6, ML and object screening remain deferred.
-- [Roadmap](openspec/ROADMAP.md), [active tasks](openspec/changes/refine-physical-trajectory/tasks.md), [requirements](openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md).
-- [Rules](AGENTS.md), [ADR index](docs/adr/README.md), [M2 audit](docs/demo-audit.md).
+## Latest verified stage
+[ADR0223](docs/adr/0223-qualify-artificial-bound-observations.md): R5.59k qualified
+on fixed witness/refusal fixtures; historical arithmetic unchanged.
+24 traces equal untraced records byte-for-byte; both signs/paths on three cells.
+48 bound calls / 12 points / 1,232 events; 56 sampled containment records pass.
+Producer 1.163318416 s; separate saved-only readback 0.116146833 s; 2,092,809 bytes.
+27 focused / 6,522 guarded full passes, 494 explicit exclusions; Ruff/strict OpenSpec pass.
+Base d7d60fa plus exact new source hashes in ADR0223's verification manifest.
+No SPICE, retained replay, force/integration, formula change or R5.60.
+Artificial tracing does not establish the widening cause on retained inputs.
+
+## Unresolved retained question
+[ADR0221](docs/adr/0221-record-retained-inter-node-result.md): sole R5.59i attempt
+and audit agree on inconclusive: 126 cells / 252 bounds / 129 phases;
+64 unresolved depth-5 cells; no witness or two-sign continuous exclusion. Consumed.
+[ADR0222](docs/adr/0222-diagnose-saved-positive-bound-widths.md): positive lower mass
+bounds 1,499.102–1,499.262 kg do not exceed 1,500 kg; arrival norm widths
+94.115–98.406 m/s precede the mass map, but internal widening attribution is unproved.
+[ADR0217](docs/adr/0217-verify-the-saved-mars-phase-grid.md): all 360 saved grid
+points fail the floor; best gap 40.085 m/s. Between-node feasibility remains open.
+R5.59c/f/i consumed; original incomplete/negative evidence remains immutable.
+R5.60 is unavailable until an eligible frozen command pair and readiness are accepted.
+
+## Scientific baseline and limits
+[ADR0119](docs/adr/0119-positive-ideal-m2-reference.md): ideal candidate d0001-t0035,
+291.363636 days, delta-v 3583.210826 m/s, final mass 887.966464 kg;
+Sun-point-mass/body-centre/instantaneous-maneuver model only.
+[ADR0129](docs/adr/0129-reference-coast-verification-passes.md): R2 verifies all 121
+ideal coast nodes. This does not qualify finite burns or full-model continuity.
+M1/M2 and visual explorer are archived; UI uses M2 with R1 research export.
+D17.3, strict M3/task 3.9, physical continuity and end-to-end mission safety remain open.
+Do not start D17/D18, new search/optimizer, M4–M6, ML, UI qualification or external publication.
+Use the pinned Conda environment; preserve historical evidence and `moon_to_mars.py`.

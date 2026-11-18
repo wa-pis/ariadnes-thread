@@ -500,10 +500,14 @@ is consumed, the inter-node question remains open and R5.60 remains
 unavailable. [ADR0222](../docs/adr/0222-diagnose-saved-positive-bound-widths.md)
 checks the saved scalar bounds: positive mass lower bounds stay
 below 1,500 kg; the internal widening source was not recorded.
-Next is bounded observational tracing on existing artificial
-fixtures with unchanged functions and exact traced/untraced parity.
-A changed proof or retained invocation needs a separately reviewed
-decision; no automatic retry.
+[ADR0223](../docs/adr/0223-qualify-artificial-bound-observations.md) qualifies
+R5.59k on the fixed artificial matrix: 24 byte-identical traced/control
+records, 56 sampled containment records, 48 bounds/12 points/1,232 events.
+27 focused and 6,522 guarded full tests pass, with 494 explicit exclusions.
+This does not attribute the widening source on retained inputs.
+Automation is PAUSED pending the user's choice: first design a bounded
+retained observational trace (recommended), or change the proof on artificial
+fixtures. Neither new path is authorized; no automatic retry.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 
