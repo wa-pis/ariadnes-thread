@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0219 — Qualify the inter-node Mars phase check](0219-qualify-inter-node-mars-phase-check.md): artificial off-grid witness at 151.5°, separate two-sign interval refusal, and full work-cap qualification.
 - [0218 — Design the inter-node Mars phase check](0218-design-inter-node-mars-phase-check.md): bounded [150°, 152°] study with a checked point witness or interval exclusion; design only.
 - [0217 — Verify the saved Mars phase grid](0217-verify-the-saved-mars-phase-grid.md): all 360 states, 720 roots and 408 pairs independently read back; verified grid-only dry-floor refusal, original invocation still incomplete.
 - [0216 — Qualify the saved Mars phase audit](0216-design-saved-mars-phase-audit.md): qualify a read-only exact-zero adapter without changing historical data or numerical gates.

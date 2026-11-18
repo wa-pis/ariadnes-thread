@@ -485,8 +485,12 @@ the original ADR0205/R5.60 contract.
 [ADR0218](../docs/adr/0218-design-inter-node-mars-phase-check.md) designs a separate
 continuous check on [150°, 152°] for the 40.085 m/s gap. A verified
 off-grid witness establishes existence; a local refusal requires
-independently checked interval coverage for both signs. Artificial
-qualification and separate retained authorization are pending.
+independently checked interval coverage for both signs.
+[ADR0219](../docs/adr/0219-qualify-inter-node-mars-phase-check.md) qualifies both outcomes on
+fabricated inputs: a 151.5-degree witness and a separate continuous
+refusal certified on four closed cells. The 40.085 m/s retained
+question remains unresolved between nodes. R5.59i requires a
+separate retained binding and authorization.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

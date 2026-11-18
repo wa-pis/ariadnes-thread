@@ -7654,3 +7654,19 @@ continuous interval. Stop inconclusive at the caps or at uncertain
 arithmetic; do not widen the window. Qualify on artificial data
 before one separately authorized retained study. No phase, interval,
 SPICE or integration was evaluated in design; R5.60 stays unavailable.
+
+
+## R5.59h qualify the inter-node Mars phase check (2026-11-18)
+
+[ADR0219](../../../docs/adr/0219-qualify-inter-node-mars-phase-check.md)
+qualifies the artificial-only runner, bounded search and independent
+saved certificate. An artificial pair at 151.5 degrees passes both
+exact 500 kg ledgers where the three integer-degree anchors fail.
+A separate artificial refusal has four closed half-degree leaves:
+both signed roots fail the exact commanded mass bound in each, covering
+the entire [150°, 152°] interval. At the full artificial work cap
+the runner and replay each process 126 cells, 252 signed enclosures
+and 129 direct phases; deliberately unresolved cells return
+inconclusive. The cited comparisons, cap tests and artifact digests
+verify the implementation on fabricated inputs only. No retained
+binding or evaluation, SPICE, integration, R5.59i or R5.60 was run.

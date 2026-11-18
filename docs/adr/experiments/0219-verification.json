@@ -1,0 +1,196 @@
+{
+  "cases": {
+    "full_workload_in_memory": {
+      "elapsed_ns": 2273907625,
+      "producer_work": {
+        "bounds": 252,
+        "cells": 126,
+        "point_pairs": 258,
+        "point_roots": 258,
+        "points": 129
+      },
+      "result": "inconclusive",
+      "unresolved": 64,
+      "verifier_work": {
+        "bounds": 252,
+        "cells": 126,
+        "point_pairs": 258,
+        "point_roots": 258,
+        "points": 129
+      }
+    },
+    "refusal": {
+      "elapsed_through_readback_ns": 164947542,
+      "excluded_cells": [
+        {
+          "hi_deg": "301/2",
+          "lo_deg": "150",
+          "reasons": {
+            "negative": "mass",
+            "positive": "mass"
+          }
+        },
+        {
+          "hi_deg": "151",
+          "lo_deg": "301/2",
+          "reasons": {
+            "negative": "mass",
+            "positive": "mass"
+          }
+        },
+        {
+          "hi_deg": "303/2",
+          "lo_deg": "151",
+          "reasons": {
+            "negative": "mass",
+            "positive": "mass"
+          }
+        },
+        {
+          "hi_deg": "152",
+          "lo_deg": "303/2",
+          "reasons": {
+            "negative": "mass",
+            "positive": "mass"
+          }
+        }
+      ],
+      "independent_readback": {
+        "status": "no-eligible-pair-on-local-interval",
+        "unresolved": 0,
+        "verified_leaves": 4,
+        "work": {
+          "bounds": 12,
+          "cells": 6,
+          "point_pairs": 10,
+          "point_roots": 10,
+          "points": 5
+        }
+      },
+      "input_bytes": 4194304,
+      "input_sha256": "e02ee1b86489f9af0dde2d19ef0ce0af41c553cd8fa02aba4195541cc997c3e3",
+      "output_bytes": 17559,
+      "output_sha256": {
+        "attempt.json": "1036fdbfa5d3579ca7218b5f8257a35abdaacda8a6998b952e9f25b3fed0c19b",
+        "completion.json": "dd8308e2bedbeca6236396b5db08467d1ead7eea42ce7f2a03eba65509ffceea",
+        "receipt.json": "d8857ea04620d874666776040c8180d490691a9d80f47e51e0f9e68e59e792e0",
+        "report.json": "9861fdb0d44c3548d688a8a031307bed251f1d4a067f00b02511a67d7df3ec5e"
+      },
+      "process_exit_code": 2,
+      "status": "no-eligible-pair-on-local-interval",
+      "work": {
+        "bounds": 12,
+        "cells": 6,
+        "point_pairs": 10,
+        "point_roots": 10,
+        "points": 5
+      }
+    },
+    "witness": {
+      "elapsed_through_readback_ns": 77731000,
+      "excluded_cells": [],
+      "independent_readback": {
+        "status": "eligible-off-grid-witness",
+        "unresolved": 0,
+        "verified_leaves": 0,
+        "work": {
+          "bounds": 4,
+          "cells": 2,
+          "point_pairs": 10,
+          "point_roots": 10,
+          "points": 5
+        }
+      },
+      "input_bytes": 12319,
+      "input_sha256": "8cd50e760fe772227e2ebe53614df569b86ea1382cfe3923e93e24cffa3c4627",
+      "output_bytes": 14224,
+      "output_sha256": {
+        "attempt.json": "6b06c249d7e82d1561e127b1699663648b73362c80ec3e421742e9503aaa3406",
+        "completion.json": "e39ef200330cd0fcae50b139ce8afad126c4551c765a2cdbb0279042cd224d18",
+        "receipt.json": "926e96d6600657c106b2b6d46c3ecfa2777585d1f647a14c25189fa1a6637f99",
+        "report.json": "8b58d63317d577303da59fe7c880fe193de51229bb0fbe0ede408f68f4c767b8"
+      },
+      "process_exit_code": 0,
+      "status": "eligible-off-grid-witness",
+      "witness": {
+        "budget_m_s": 6117.706618414368,
+        "commanded_final_mass_kg": 500.00113301929815,
+        "delta_v_m_s": 6117.6966184143685,
+        "effective_final_mass_kg": 500.0011329942425,
+        "mass_kg_exact": {
+          "commanded": [
+            "46959485631743124990433199773099/39614081257132168796771975168",
+            "46959485631743124990433199773099/39614081257132168796771975168",
+            "39614171024169253964317917034919/79228162514264337593543950336"
+          ],
+          "effective": [
+            "89568110715374988624375815/75557863725914323419136",
+            "89568110715374988624375815/75557863725914323419136",
+            "75558034939163474659477249/151115727451828646838272"
+          ]
+        },
+        "phase_deg": "303/2",
+        "positive_cost_minus_budget_at_anchors_m_s": [
+          1.3300800914294086,
+          0.13851972045813454,
+          0.1381111759110354
+        ],
+        "roots": [
+          "positive",
+          "positive"
+        ]
+      },
+      "work": {
+        "bounds": 4,
+        "cells": 2,
+        "point_pairs": 10,
+        "point_roots": 10,
+        "points": 5
+      }
+    }
+  },
+  "commands": null,
+  "environment": "space-nav Conda",
+  "focused": {
+    "elapsed_s": 3.32,
+    "passed": 11
+  },
+  "force_evaluations": 0,
+  "guarded_full": {
+    "elapsed_s": 131.26,
+    "passed": 6486,
+    "skipped": 494
+  },
+  "integrations": 0,
+  "kernel_accesses": 0,
+  "live_authorized": false,
+  "measured_base": "7ef17a92692ac2eeeff8920d5637ffe24b3b0243",
+  "physical_launch_authorized": false,
+  "r559i_attempts": 0,
+  "r560_attempts": 0,
+  "ruff": "pass",
+  "scope": "artificial",
+  "source_method_sha256": {
+    "bounds": "b1a2673aa5516533320febed3efddeb27edece1f3f60b775323520e71324f83e",
+    "core": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+    "interval": "3243ec83031b8bc873dfae47076e0bbb086640893e396b1e56c2dbcf5d865329",
+    "io": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "oracle": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+    "orbit": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+    "points": "a9eca487527068c8114ff00353846e39fcf6eb7212009c5046b4df0cc23af223",
+    "reader": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+    "screen": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b",
+    "study": "9ba27b0419a24e16209b646c8f0adb4c4ad55e938fadc5816c4944a72a01fc60"
+  },
+  "spice_queries": 0,
+  "stage": "R5.59h",
+  "strict_openspec": "pass",
+  "tested_source_sha256": {
+    "docs/adr/experiments/0219-interval.py": "3243ec83031b8bc873dfae47076e0bbb086640893e396b1e56c2dbcf5d865329",
+    "docs/adr/experiments/0219-phase-bounds.py": "b1a2673aa5516533320febed3efddeb27edece1f3f60b775323520e71324f83e",
+    "docs/adr/experiments/0219-phase-points.py": "a9eca487527068c8114ff00353846e39fcf6eb7212009c5046b4df0cc23af223",
+    "docs/adr/experiments/0219-phase-study.py": "9ba27b0419a24e16209b646c8f0adb4c4ad55e938fadc5816c4944a72a01fc60",
+    "moon_to_mars.py": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "tests/test_inter_node_mars_phase.py": "b2af210c72482028ce90f6f490a8ccbcb2933bfaac596391dbb6c0372e889840"
+  }
+}
