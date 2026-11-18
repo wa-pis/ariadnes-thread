@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0216 — Qualify the saved Mars phase audit](0216-design-saved-mars-phase-audit.md): qualify a read-only exact-zero adapter without changing historical data or numerical gates.
 - [0215 — Record the retained Mars phase readback failure](0215-record-retained-phase-readback-failure.md): single R5.59f attempt saved the full grid, but readback rejected the phase-zero decimal encoding; scientific disposition remains unverified.
 - [0214 — Qualify the retained Mars phase binding](0214-qualify-retained-phase-binding.md): fixed ADR0211 identity, isolated invocation and separate saved audit qualified on artificial evidence; retained attempt pending.
 - [0213 — Qualify the Mars capture-phase screen](0213-qualify-mars-capture-phase-screen.md): both manufactured 360-phase grids passed readback, with one 95-degree proposal and one verified grid refusal.

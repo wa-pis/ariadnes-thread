@@ -1,0 +1,26 @@
+{
+  "focused": {
+    "elapsed_s": 0.72,
+    "passed": 11
+  },
+  "guarded_full": {
+    "elapsed_s": 134.2,
+    "passed": 6475,
+    "skipped": 494
+  },
+  "integrations": 0,
+  "measured_base": "1790bd171651a0abdacaf31d15c5774a77142af2",
+  "mode": "artificial only",
+  "new_r559f_attempts": 0,
+  "r560_attempts": 0,
+  "real_saved_audits": 0,
+  "ruff": "pass",
+  "source_sha256": {
+    "docs/adr/experiments/0216-saved-phase-readback.py": "d21d4acd56812bf619427f62784b4ed1960a641127ea5db9dc241a05b65e31f0",
+    "moon_to_mars.py": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "tests/test_saved_phase_readback.py": "0e65664d2f469638c9fbdcc26c43a4bf0ae2e5cd0814c1b5f63d48c9762aeea3"
+  },
+  "spice_queries": 0,
+  "stage": "saved R5.59f readback qualification",
+  "strict_openspec": "pass"
+}

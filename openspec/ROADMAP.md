@@ -470,7 +470,10 @@ ADR0211 binding and independent saved audit on artificial archives.
 records the sole retained R5.59f attempt. The partial audit binds all
 360 saved phase rows and 720 root slots, but the phase-zero decimal
 encoding failed readback, so no scientific grid refusal or proposal
-was verified. The attempt is consumed and must not be replayed.
+was verified by the original attempt. It is consumed and must not be replayed.
+[ADR0216](../docs/adr/0216-design-saved-mars-phase-audit.md) qualifies
+a separate read-only audit that accepts only the recorded exact zero
+through an in-memory view. Retained saved-data verification is pending.
 A new capture phase changes the target six-state and cannot enter
 the original ADR0205/R5.60 contract.
 

@@ -790,6 +790,13 @@ The R5.59d–f research profile SHALL vary only the Mars capture true anomaly as
 - **THEN** it SHALL require the exact four ADR0211 file hashes, verify their receipt chain and the frozen scientific operand digest, and write only to its dedicated exclusive evidence directory; fabricated pins or an existing destination SHALL fail before grid evaluation
 - **AND** an independent audit SHALL verify the persisted inventory, arithmetic comparisons, root and pair decisions, ranking, time and byte bounds against the completion witness without opening the ADR0211 archive or solving the conics again; partial or late output SHALL NOT qualify as completed evidence
 
+#### Scenario: Verify the saved grid after the exact-zero readback failure
+
+- **WHEN** a separate audit of the three pinned ADR0215 records is authorized
+- **THEN** it SHALL verify the original hashes, receipt and frozen operands and apply the original checks for all 360 saved states, 720 root slots, pair decisions, zero-phase replay and analytic disposition
+- **AND** only the recorded exact zero `0E-569` in the phase-zero independent velocity X component may be presented as canonical zero in memory; the original files, decimal parser for all other inputs, numerical gates and physical contract SHALL remain unchanged
+- **AND** the read-only audit SHALL finish within 30 s, with at most 4 MiB saved evidence input, no ADR0211 reopen, SPICE access, force evaluation, new phase scan, conic solve, propagation or R5.60; no result SHALL create the missing execution completion witness or authorize a physical test
+
 #### Scenario: Report a separate proposal or a bounded refusal
 
 - **WHEN** all decisions are verified and one eligible grid pair is uniquely ranked

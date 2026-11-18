@@ -7610,3 +7610,15 @@ velocity, before completing the scientific audit. The saved status
 witness, proposal or authority for R5.60. Preserve the first evidence
 and do not repeat the grid. No SPICE, force calculation or integration
 was performed.
+
+## R5.59f qualify the saved exact-zero audit (2026-11-18)
+
+[ADR0216](../../../docs/adr/0216-design-saved-mars-phase-audit.md)
+qualifies a read-only audit of the three pinned ADR0215 files. A local
+state view canonicalizes only the recorded exact zero in the first
+velocity component at phase zero. All remaining parsing and original
+scientific gates are untouched. The isolated auditor verifies the
+receipt, fixed operands, ordered state and root inventories, pair
+decisions, zero-phase regression and analytic disposition. Its new
+result is separate from the original incomplete execution, which must
+never gain a completion witness.
