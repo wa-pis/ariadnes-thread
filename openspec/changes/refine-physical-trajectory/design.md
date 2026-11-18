@@ -7682,3 +7682,19 @@ tolerances and exact dry-floor decisions. The isolated invocation
 and saved independent audit are exercised on fabricated archive
 files; the retained destination is reserved and the attempt remains
 unspent. No replay of the original grid or physical run is required.
+
+
+## R5.59i record the retained inconclusive result (2026-11-18)
+
+[ADR0221](../../../docs/adr/0221-record-retained-inter-node-result.md)
+records the sole retained invocation and separate independent saved
+audit at `1b47bd8`. Both report inconclusive after the full approved
+126-cell/252-bound/129-phase budget. All 64 depth-5 terminal cells
+remain unresolved for the two-sign decision. Their inventory covers
+[150°, 152°]; zero verified exclusion leaves is not a coverage hole.
+The producer's terminal positive-root bounds lack an exclusion in
+every cell. No sampled point is eligible, but a continuous refusal
+has not been proved. Time and byte limits pass. R5.59i is consumed;
+the scientific question and physical readiness remain open. Any
+new experiment needs a separately reviewed contract; no retry is
+authorized by this record.

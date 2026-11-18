@@ -491,8 +491,14 @@ fabricated inputs: a 151.5-degree witness and a separate continuous
 refusal certified on four closed cells. The 40.085 m/s retained
 question remains unresolved between nodes. [ADR0220](../docs/adr/0220-qualify-retained-inter-node-binding.md)
 qualifies the exact archive binding and three-anchor replay on
-fabricated evidence. The one retained R5.59i invocation awaits
-separate authorization.
+fabricated evidence. [ADR0221](../docs/adr/0221-record-retained-inter-node-result.md)
+records the sole retained R5.59i invocation and separate audit:
+both are inconclusive at the full approved work/depth limits.
+All 64 terminal cells remain unresolved for two-sign exclusion;
+no eligible witness was found. Time and byte caps pass. The attempt
+is consumed, the inter-node question remains open and R5.60 remains
+unavailable. Diagnose the saved positive-root enclosures before
+proposing any separately reviewed follow-up; no automatic retry.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

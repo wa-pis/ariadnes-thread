@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0221 — Record the inconclusive retained inter-node check](0221-record-retained-inter-node-result.md): sole retained run and independent audit agree on inconclusive at depth/work limits; 64 unresolved cells, no witness or two-sign exclusion, attempt consumed.
 - [0220 — Qualify the retained inter-node binding](0220-qualify-retained-inter-node-binding.md): exact four-file archive and original three-anchor parity qualified on fabricated evidence; retained run pending authorization.
 - [0219 — Qualify the inter-node Mars phase check](0219-qualify-inter-node-mars-phase-check.md): artificial off-grid witness at 151.5°, separate two-sign interval refusal, and full work-cap qualification.
 - [0218 — Design the inter-node Mars phase check](0218-design-inter-node-mars-phase-check.md): bounded [150°, 152°] study with a checked point witness or interval exclusion; design only.
