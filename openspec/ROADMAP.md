@@ -509,9 +509,13 @@ The user selected retained observational design.
 [ADR0224](../docs/adr/0224-design-retained-cell-observations.md) fixes three saved
 leaves and their midpoint singletons: 24 traces plus 24 controls, six historical
 default-cell parity checks, no new direct points and explicitly counted mass arithmetic.
-Design only; no retained numerical evaluation. Automation resumes for R5.59m
-artificial-only preparation under 30 s/48 bounds/8,192 events/4 MiB limits.
-It must pause before the separately instructed R5.59n retained diagnostic;
+[ADR0225](../docs/adr/0225-qualify-retained-cell-observation-adapter.md) qualifies
+R5.59m on full-volume artificial archives: 24 exact traced/control results,
+six fabricated historical matches and 24×16 sampled checks; 48 bounds, zero new
+direct points, 1,216 events and 12 producer/six audit oracle-mass calls.
+38 focused/6,560 guarded full passes, 494 exclusions; Ruff and strict OpenSpec pass.
+The 30 s/48 bounds/8,192 events/4 MiB limits pass; no retained numerical evaluation.
+Automation is PAUSED pending a separate explicit instruction for R5.59n;
 no changed formula, consumed-study replay or R5.60 follows automatically.
 
 ## Completed R4 — define finite-radius interfaces before new propagation

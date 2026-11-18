@@ -6,21 +6,21 @@ Updated: 2026-11-19. Keep under 60 lines; durable evidence is in ADRs.
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the extensible open-platform vision.
 User selected retained-cell observational design; [ADR0224](docs/adr/0224-design-retained-cell-observations.md)
-freezes rows 62/94/125 and their midpoint singletons (24 traces + 24 controls planned).
-Automation `ariadna-m3` resumes every 5 minutes for R5.59m artificial-only preparation.
-No retained numerical work now; pause before R5.59n for a separate execution instruction.
-Keep original formulas/gates and all consumed evidence; zero SPICE/new trajectory/points.
+freezes rows 62/94/125 and their midpoint singletons (24 traces + 24 controls).
+Automation `ariadna-m3` is PAUSED after qualified R5.59m artificial preparation.
+Next: separate explicit instruction for at-most-once R5.59n under unchanged ADR0224.
+No retained numerical work, SPICE, new trajectory/points or formula change is authorized now.
 
 ## Latest verified implementation
-[ADR0223](docs/adr/0223-qualify-artificial-bound-observations.md): R5.59k qualified
-on fixed witness/refusal fixtures; historical arithmetic unchanged.
-24 traces equal untraced records byte-for-byte; both signs/paths on three cells.
-48 bound calls / 12 points / 1,232 events; 56 sampled containment records pass.
-Producer 1.163318416 s; separate saved-only readback 0.116146833 s; 2,092,809 bytes.
-27 focused / 6,522 guarded full passes, 494 explicit exclusions; Ruff/strict OpenSpec pass.
-Base d7d60fa plus exact new source hashes in ADR0223's verification manifest.
-No SPICE, retained replay, force/integration, formula change or R5.60.
-Artificial tracing does not establish the widening cause on retained inputs.
+[ADR0225](docs/adr/0225-qualify-retained-cell-observation-adapter.md): R5.59m adapter,
+scope-specific observer and separate saved-only verifier qualified on fabricated archives.
+24 traces equal controls; six fabricated historical bound matches; 24×16 sampled checks.
+48 bounds / 0 new direct points / 1,216 events; 12 producer + 6 audit oracle-mass calls.
+Full-volume source 2,444,501 bytes; combined evidence 3,640,925 bytes.
+External producer 1.189270209 s; separate audit 0.239020125 s; no retained launch.
+38 focused / 6,560 guarded full passes, 494 explicit exclusions; Ruff/strict OpenSpec pass.
+Base a7fbb59 plus exact tested new source hashes in ADR0225's verification manifest.
+Historical arithmetic, contract and evidence unchanged; retained widening attribution unproved.
 
 ## Unresolved retained question
 [ADR0221](docs/adr/0221-record-retained-inter-node-result.md): sole R5.59i attempt

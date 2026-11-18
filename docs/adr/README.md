@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0225 — Qualify the retained-cell observation adapter on artificial archives](0225-qualify-retained-cell-observation-adapter.md): complete artificial archive/matrix/cap qualification; retained R5.59n unexecuted and automation paused for its separate instruction.
 - [0224 — Design bounded observations of retained phase cells](0224-design-retained-cell-observations.md): fixed three-cell/singleton contract and artificial preparation; no retained numerical launch, changed proof or new feasibility result.
 - [0223 — Qualify artificial interval-bound observations](0223-qualify-artificial-bound-observations.md): unchanged-function traces, exact control parity and sampled oracle containment qualified on fixed artificial inputs; retained attribution unresolved.
 - [0222 — Diagnose the saved positive bound widths](0222-diagnose-saved-positive-bound-widths.md): saved scalar diagnosis and bounded artificial tracing plan; no retained replay or proven internal attribution.

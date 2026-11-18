@@ -7777,3 +7777,36 @@ R5.59l is design only. Standing automatic progression permits R5.59m artificial
 preparation; automation resumes for that reversible step. It must pause before
 R5.59n until the user separately instructs the one retained diagnostic. No new
 formula, retained evaluation in preparation, SPICE, propagation or R5.60 is authorized.
+
+
+## R5.59m artificial qualification of the retained adapter (2026-11-19)
+
+[ADR0225](../../../docs/adr/0225-qualify-retained-cell-observation-adapter.md)
+implements the unchanged ADR0224 contract with separate scope-bound entries,
+authenticated nine-file archives, saved-point caches and a saved-only verifier.
+Original artificial entries and mathematical sources remain immutable. Artificial
+profiles accept only the two exact qualified references; no retained arithmetic occurred.
+
+Both witness/refusal profiles exercise the full matrix and at least the retained
+source byte volume. The measured artificial witness yields 24 exact traced/control
+matches, six fabricated saved-default matches and 24 containment records with
+16 applicable quantities each. It emits 1,216 events from exactly 48 bound calls,
+zero new direct points, 12 producer and six separate-audit oracle-mass calls.
+Fresh readback mass caches are evaluated before serialization. The separate auditor
+constructs no new bounds, traces or conics. Descriptive like-unit widths and singleton
+differences remain separate from causal attribution; generic context-dependent
+primitive fields are raw observations, excluded from dimensional comparisons.
+
+The isolated external producer takes 1.189270209 s; audit 0.239020125 s.
+Source artifacts are 2,444,501 bytes; authenticated inventory 2,667,616 bytes;
+combined evidence 3,640,925 bytes. Shared clocks, final writes, exclusive artifacts,
+late cleanup with invocation ownership and every cap pass artificial tests.
+38 focused/6,560 guarded full tests pass with 494 explicit exclusions; Ruff,
+strict OpenSpec and historical/legacy hashes pass. Exact sources and artificial
+artifacts are recorded in the linked verification manifest. Unselected archive rows
+and old audits are format fixtures, not replays of historical scientific studies.
+
+R5.59m is complete only as artificial preparation. Automation is PAUSED before
+R5.59n pending the separate explicit execution instruction required by ADR0224.
+No retained widening cause, continuous refusal, feasible commands, physical
+trajectory or mission safety is established; no SPICE, integration or R5.60 follows.

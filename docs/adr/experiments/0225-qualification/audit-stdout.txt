@@ -1,0 +1,2 @@
+{"proof": {"event_count": 1216, "historical_parity": 6, "new_bounds": 0, "new_points": 0, "oracle_mass_calls": 6, "rows": 24, "sampled_containments": 24, "status": "observations-verified-attribution-unresolved", "summary_sha256": "3acaaeae3e931a74a74a3c16d67066821327e162a1303bdca1d28de808190e06"}, "status": "observations-verified-attribution-unresolved", "work": {"bounds": 0, "events": 0, "oracle_mass": 6, "points": 0}}
+{"dispatcher_elapsed_ns": 225387416, "exit_code": 0}
