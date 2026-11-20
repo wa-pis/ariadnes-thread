@@ -1,0 +1,93 @@
+"""Invoke the already qualified retained dispatcher once; never retry."""
+
+from hashlib import sha256
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+from time import monotonic_ns
+
+PACK = Path(__file__).resolve().parent
+REPO = Path('/Users/agrudin/dev/my/ariadna')
+ART = REPO / 'docs/adr/experiments'
+RUNNER = ART / '0225-retained-trace.py'
+OUTPUT = ART / '0224-retained-trace-result'
+AUDIT = ART / '0224-retained-trace-audit.json'
+BASE = '30b143c046be24b96e4358f826d1ae4cd86b9bd3'
+
+
+def wire(row: object) -> str:
+    return json.dumps(row, indent=2, sort_keys=True, allow_nan=False) + '\n'
+
+
+def git(*args: str) -> str:
+    return subprocess.check_output(['git', *args], cwd=REPO, text=True).strip()
+
+
+def pin(path: Path) -> str:
+    return sha256(path.read_bytes()).hexdigest()
+
+
+def invoke(label: str, args: list[str]) -> dict:
+    started = monotonic_ns()
+    result = subprocess.run(
+        [sys.executable, '-I', '-S', '-B', str(RUNNER), *args],
+        cwd=REPO, stdin=subprocess.DEVNULL, capture_output=True, text=True,
+        timeout=35, env=os.environ | {'PYTHONDONTWRITEBYTECODE': '1'},
+    )
+    elapsed = monotonic_ns() - started
+    (PACK / (label + '.stdout')).write_text(result.stdout)
+    (PACK / (label + '.stderr')).write_text(result.stderr)
+    row = dict(returncode=result.returncode, external_elapsed_ns=elapsed,
+               command=[sys.executable, '-I', '-S', '-B', str(RUNNER), *args],
+               stdout_sha256=pin(PACK / (label + '.stdout')),
+               stderr_sha256=pin(PACK / (label + '.stderr')))
+    (PACK / (label + '.json')).write_text(wire(row))
+    return row
+
+
+assert sys.version_info[:3] == (3, 12, 14), sys.version
+assert git('branch', '--show-current') == 'dev'
+assert git('rev-parse', 'HEAD') == git('rev-parse', 'origin/dev') == BASE
+assert git('status', '--porcelain') == ''
+assert not os.path.lexists(OUTPUT) and not os.path.lexists(AUDIT)
+qualification = json.loads((ART / '0225-verification.json').read_bytes())
+for name, expected in qualification['tested_source_sha256'].items():
+    assert pin(REPO / name) == expected, name
+contract_path = ART / '0224-retained-trace-contract.json'
+assert pin(contract_path) == qualification['contract_sha256']
+contract = json.loads(contract_path.read_bytes())
+source_bytes = 0
+for item in contract['input_artifacts']:
+    path = REPO / item['path']
+    assert path.stat().st_size == item['bytes'] and pin(path) == item['sha256'], path
+    source_bytes += item['bytes']
+assert source_bytes == 2_280_855
+with (PACK / 'dispatch.json').open('x') as stream:
+    stream.write(wire(dict(base=BASE, user_authorization_date='2026-11-20',
+                           contract_sha256=pin(contract_path),
+                           source_artifact_bytes=source_bytes,
+                           python=sys.version, runner_sha256=pin(RUNNER))))
+
+measurement = dict(base=BASE, source_artifact_bytes=source_bytes,
+                   producer=invoke('producer', ['retained']))
+(PACK / 'measurement.json').write_text(wire(measurement))
+producer = measurement['producer']
+if producer['returncode'] == 0 and producer['external_elapsed_ns'] < 30_000_000_000:
+    completion = OUTPUT / 'completion.json'
+    assert completion.is_file()
+    measurement['audit'] = invoke('audit', ['audit', pin(completion)])
+    (PACK / 'measurement.json').write_text(wire(measurement))
+measurement['evidence_files'] = {
+    str(path.relative_to(REPO)): dict(bytes=path.stat().st_size, sha256=pin(path))
+    for path in [*(sorted(OUTPUT.iterdir()) if OUTPUT.is_dir() else []), AUDIT]
+    if path.is_file()
+}
+measurement['combined_evidence_bytes'] = sum(row['bytes'] for row in measurement['evidence_files'].values())
+measurement['tested_sources_unchanged'] = all(
+    pin(REPO / name) == expected
+    for name, expected in qualification['tested_source_sha256'].items()
+)
+(PACK / 'measurement.json').write_text(wire(measurement))
+print(wire(measurement))

@@ -1,0 +1,216 @@
+{
+  "authorization": "User explicitly enabled one R5.59n dispatch and separate saved-only audit on 2026-11-20.",
+  "automation": {
+    "id": "ariadna-m3",
+    "status": "PAUSED"
+  },
+  "contract_sha256": "118795d87f4084528a1d4096c4f1d61c0936f0afbc927ae6c040f6ec26600dea",
+  "date": "2026-11-20",
+  "decision_status": "accepted-preservation-of-first-failed-dispatch",
+  "dispatcher": {
+    "dispatcher_elapsed_ns": 168107791,
+    "exit_code": 3
+  },
+  "encoding_inspection": [
+    {
+      "accepted_by_current_loader": true,
+      "bytes": 1508,
+      "formats": [
+        "compact_sorted"
+      ],
+      "path": "docs/adr/experiments/0215-r559f/attempt.json",
+      "pin_matches": true,
+      "sha256": "ac1d02f445ebed82ac5b4f728193ea8533890188ed2422117523db50d087bf0a"
+    },
+    {
+      "accepted_by_current_loader": true,
+      "bytes": 1059325,
+      "formats": [
+        "compact_sorted"
+      ],
+      "path": "docs/adr/experiments/0215-r559f/report.json",
+      "pin_matches": true,
+      "sha256": "323c2c71e17168a46e9dd5280015a3fecb0865016b9b6954dcb051de4def1800"
+    },
+    {
+      "accepted_by_current_loader": true,
+      "bytes": 1727,
+      "formats": [
+        "compact_sorted"
+      ],
+      "path": "docs/adr/experiments/0215-r559f/receipt.json",
+      "pin_matches": true,
+      "sha256": "395d20ab4771b9a9e4743e038e5c50338d12b8d890018befc3879bf3de21a18b"
+    },
+    {
+      "accepted_by_current_loader": true,
+      "bytes": 3398,
+      "formats": [
+        "indented_sorted"
+      ],
+      "path": "docs/adr/experiments/0217-saved-grid-audit.json",
+      "pin_matches": true,
+      "sha256": "bdc9eb8225a4af912327d0c8cd62231bf4f625991f6d4233ea58a5e9481172d5"
+    },
+    {
+      "accepted_by_current_loader": true,
+      "bytes": 1775,
+      "formats": [
+        "compact_sorted"
+      ],
+      "path": "docs/adr/experiments/0221-r559i/attempt.json",
+      "pin_matches": true,
+      "sha256": "67099e223d433ab049e2c4c793cbedadd75668df4195975a1f711467aa81c21a"
+    },
+    {
+      "accepted_by_current_loader": true,
+      "bytes": 594496,
+      "formats": [
+        "compact_sorted"
+      ],
+      "path": "docs/adr/experiments/0221-r559i/report.json",
+      "pin_matches": true,
+      "sha256": "38bb473e53afce2eeaa5c779b01457b0fc8e9d7fb9a701f51920276e42b621de"
+    },
+    {
+      "accepted_by_current_loader": true,
+      "bytes": 1943,
+      "formats": [
+        "compact_sorted"
+      ],
+      "path": "docs/adr/experiments/0221-r559i/receipt.json",
+      "pin_matches": true,
+      "sha256": "85347ff9cb75d8ac62505c6e05b51249aed5bee10a7d52a9a7ea782631cdf8ed"
+    },
+    {
+      "accepted_by_current_loader": true,
+      "bytes": 321,
+      "formats": [
+        "compact_sorted"
+      ],
+      "path": "docs/adr/experiments/0221-r559i/completion.json",
+      "pin_matches": true,
+      "sha256": "44a9bce0f042fe5e07b2237bc08e14a7eb9390449b6cc9c83f780f5b9b0735b6"
+    },
+    {
+      "accepted_by_current_loader": false,
+      "bytes": 616362,
+      "formats": [
+        "default_spaced_sorted"
+      ],
+      "path": "docs/adr/experiments/0221-independent-audit.json",
+      "pin_matches": true,
+      "sha256": "0f874ca92231b8b1c43069a158bb7f698ef2758954f2a8ba278511f9391fdc82"
+    }
+  ],
+  "evidence_sha256": {
+    "docs/adr/experiments/0226-failed-retained-dispatch/dispatch.json": {
+      "bytes": 381,
+      "sha256": "80aced8c947ce8200f49571d93c217430ca78f7c5de978501fb2fcb4b47ceab0"
+    },
+    "docs/adr/experiments/0226-failed-retained-dispatch/invocation-driver.txt": {
+      "bytes": 3937,
+      "sha256": "5728fe07beeaf419cdc351746e03bbeab2fce00bfff32ac88ae0316207bbc314"
+    },
+    "docs/adr/experiments/0226-failed-retained-dispatch/measurement.json": {
+      "bytes": 675,
+      "sha256": "9e24fd0900b575438eeadab0cdcec1efbfb3e76af830eb8c249e86c5d884960d"
+    },
+    "docs/adr/experiments/0226-failed-retained-dispatch/producer-stderr.txt": {
+      "bytes": 37,
+      "sha256": "3df14c131bb9b0bc06659da5b27d2d635e33032be67cf50590a8f4d2da2ffdc9"
+    },
+    "docs/adr/experiments/0226-failed-retained-dispatch/producer-stdout.txt": {
+      "bytes": 53,
+      "sha256": "12c19417cedccfe0b531fc8aabb7cc22c3f7c7c69f9acad10c38d7f81907996d"
+    },
+    "docs/adr/experiments/0226-failed-retained-dispatch/producer.json": {
+      "bytes": 449,
+      "sha256": "718977229d58893775ba96d534218caa4e29f9922b6cb2e8cc4fd97462ec8b8f"
+    },
+    "docs/adr/experiments/0226-failed-retained-dispatch/source-encoding-inspection.json": {
+      "bytes": 2555,
+      "sha256": "13ead1fffa0a5bb429fb786fe36b011b532186d3d7870ca2eef5757fe9b0ffdf"
+    }
+  },
+  "failure_location": {
+    "condition": "raw in (_wire(row), sorted_indent2_json_with_newline)",
+    "function": "_inputs",
+    "line": 327,
+    "role": "study_audit",
+    "source": "docs/adr/experiments/0225-retained-trace.py"
+  },
+  "implementation_and_verification": "R5.59m source unchanged; retained observation and audit criteria unmet.",
+  "independent_review": "Read-only JSON/hash/serialization and failure-order review agrees: valid pinned default-spaced historical audit rejected before scientific arithmetic.",
+  "input_hashes_unchanged": true,
+  "limitations": [
+    "No retained trace, containment result or numerical widening attribution.",
+    "Input raw hashes passed; later semantic checks were not reached.",
+    "No physical feasibility, all-phase refusal, command pair or M3 completion claim.",
+    "Absent fixed output is not evidence that the authorized dispatch was unused."
+  ],
+  "measured_base_commit": "30b143c046be24b96e4358f826d1ae4cd86b9bd3",
+  "missing_admitted_encoding": "json.dumps(row,sort_keys=True,allow_nan=False) + newline; default separators with spaces",
+  "next_decision": "Design a new versioned role-specific historical-encoding adapter and artificial qualification; no fix or new retained dispatch authorized by this failed attempt.",
+  "not_reached": [
+    "post-loop lineage and selected-row semantic checks",
+    "attempt creation",
+    "saved-point mass preparation",
+    "signed bound/control matrix",
+    "sampled containment and width summary",
+    "producer completion",
+    "separate auditor"
+  ],
+  "original_input_bytes": 2280855,
+  "producer": {
+    "command": [
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+      "-I",
+      "-S",
+      "-B",
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0225-retained-trace.py",
+      "retained"
+    ],
+    "external_elapsed_ns": 181515250,
+    "returncode": 3,
+    "stderr_sha256": "3df14c131bb9b0bc06659da5b27d2d635e33032be67cf50590a8f4d2da2ffdc9",
+    "stdout_sha256": "12c19417cedccfe0b531fc8aabb7cc22c3f7c7c69f9acad10c38d7f81907996d"
+  },
+  "producer_completion_created": false,
+  "producer_output_directory_created": false,
+  "reached_work": {
+    "bounds": 0,
+    "integrations": 0,
+    "new_points": 0,
+    "old_audit_replays": 0,
+    "oracle_mass": 0,
+    "r560_attempts": 0,
+    "spice_queries": 0,
+    "traces": 0
+  },
+  "retained_dispatch_consumed": true,
+  "retained_dispatches": 1,
+  "retries": 0,
+  "reused_checks": {
+    "adr": "0225",
+    "focused_passed": 38,
+    "guarded_full_passed": 6560,
+    "guarded_full_skipped": 494,
+    "ruff": "passed",
+    "tests_rerun": false
+  },
+  "runtime_or_tests_modified": false,
+  "separate_audit_invoked": false,
+  "stage": "R5.59n",
+  "status": "input-encoding-admission-failed-before-output",
+  "stderr": "R5.59m: study_audit canonical record\n",
+  "tested_sources_sha256": {
+    "docs/adr/experiments/0225-bound-trace.py": "d382d1181c8069d7d5d1b51b8261c75f726be522b95ed08252363c5a1a45c42d",
+    "docs/adr/experiments/0225-retained-trace.py": "a93e11bc8a6472291b7c360136486e6a05697f0f393575d9809095d94ac5cf7f",
+    "docs/adr/experiments/0225-trace-checks.py": "30f3fbafa1898884c4d4234bdc66369f81dab64271dcd9ec9c4c2e1841ba829a",
+    "moon_to_mars.py": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "tests/test_retained_bound_trace.py": "6f1deca7be71e6a021318d286f2ed8397264b87af705c6fe54b5f76b080cd2b2"
+  },
+  "timezone": "Europe/Samara",
+  "work_count_evidence": "Source control flow at the named failure before _inputs returns, dest.mkdir, prepare_points and bound loop; no successful saved work-counter record exists."
+}

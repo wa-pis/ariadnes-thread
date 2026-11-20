@@ -515,8 +515,14 @@ six fabricated historical matches and 24×16 sampled checks; 48 bounds, zero new
 direct points, 1,216 events and 12 producer/six audit oracle-mass calls.
 38 focused/6,560 guarded full passes, 494 exclusions; Ruff and strict OpenSpec pass.
 The 30 s/48 bounds/8,192 events/4 MiB limits pass; no retained numerical evaluation.
-Automation is PAUSED pending a separate explicit instruction for R5.59n;
-no changed formula, consumed-study replay or R5.60 follows automatically.
+The user enabled R5.59n on 2026-11-20.
+[ADR0226](../docs/adr/0226-record-retained-trace-input-rejection.md) records its sole
+dispatch: code3 at historical `study_audit` JSON encoding admission, before output
+creation or scientific arithmetic. All raw input pins match; default-spaced sorted
+JSON was not accepted by the adapter. No separate audit or retained trace occurred.
+The dispatch is consumed; R5.59n verification remains incomplete. Automation is PAUSED
+for a separately designed/qualified compatibility repair; no retry, changed formula,
+consumed-study replay or R5.60 follows automatically.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

@@ -7810,3 +7810,27 @@ R5.59m is complete only as artificial preparation. Automation is PAUSED before
 R5.59n pending the separate explicit execution instruction required by ADR0224.
 No retained widening cause, continuous refusal, feasible commands, physical
 trajectory or mission safety is established; no SPICE, integration or R5.60 follows.
+
+
+## R5.59n first dispatch rejected on historical JSON encoding (2026-11-20)
+
+[ADR0226](../../../docs/adr/0226-record-retained-trace-input-rejection.md) preserves
+the single explicitly enabled R5.59n dispatcher invocation on clean 30b143c.
+It returned3 with `R5.59m: study_audit canonical record` in0.181515250 s external
+time (dispatcher0.168107791 s). All nine raw source hashes match the immutable
+contract. Seven inputs are compact sorted JSON, one is indented, and the last
+historical audit uses default-spaced sorted JSON plus a newline. The adapter
+only admits the first two forms, so it rejects the correctly pinned ninth file.
+
+The exact failure precedes post-loop lineage/selected-row checks, output creation,
+mass preparation, bounds and traces. No producer artifact or separate audit was
+created. Zero reached scientific calls follows from unchanged control flow,
+not from a nonexistent successful work-counter report. No SPICE/integration ran.
+
+Preserve dispatch logs, metadata, exact source/input identities and the original
+bytes. The first invocation is consumed despite absent fixed outputs. R5.59n's
+trace/containment/width/audit criteria remain unmet; do not mark its task complete.
+Automation is PAUSED. A new versioned role-specific encoding adapter and artificial
+qualification are recommended for a separate user decision, with raw pins and
+finite/numeric/schema gates unchanged. No repair, retry, formula change or R5.60
+is authorized here; retained widening attribution remains unresolved.

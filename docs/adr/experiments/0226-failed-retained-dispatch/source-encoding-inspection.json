@@ -1,0 +1,92 @@
+[
+  {
+    "accepted_by_current_loader": true,
+    "bytes": 1508,
+    "formats": [
+      "compact_sorted"
+    ],
+    "path": "docs/adr/experiments/0215-r559f/attempt.json",
+    "pin_matches": true,
+    "sha256": "ac1d02f445ebed82ac5b4f728193ea8533890188ed2422117523db50d087bf0a"
+  },
+  {
+    "accepted_by_current_loader": true,
+    "bytes": 1059325,
+    "formats": [
+      "compact_sorted"
+    ],
+    "path": "docs/adr/experiments/0215-r559f/report.json",
+    "pin_matches": true,
+    "sha256": "323c2c71e17168a46e9dd5280015a3fecb0865016b9b6954dcb051de4def1800"
+  },
+  {
+    "accepted_by_current_loader": true,
+    "bytes": 1727,
+    "formats": [
+      "compact_sorted"
+    ],
+    "path": "docs/adr/experiments/0215-r559f/receipt.json",
+    "pin_matches": true,
+    "sha256": "395d20ab4771b9a9e4743e038e5c50338d12b8d890018befc3879bf3de21a18b"
+  },
+  {
+    "accepted_by_current_loader": true,
+    "bytes": 3398,
+    "formats": [
+      "indented_sorted"
+    ],
+    "path": "docs/adr/experiments/0217-saved-grid-audit.json",
+    "pin_matches": true,
+    "sha256": "bdc9eb8225a4af912327d0c8cd62231bf4f625991f6d4233ea58a5e9481172d5"
+  },
+  {
+    "accepted_by_current_loader": true,
+    "bytes": 1775,
+    "formats": [
+      "compact_sorted"
+    ],
+    "path": "docs/adr/experiments/0221-r559i/attempt.json",
+    "pin_matches": true,
+    "sha256": "67099e223d433ab049e2c4c793cbedadd75668df4195975a1f711467aa81c21a"
+  },
+  {
+    "accepted_by_current_loader": true,
+    "bytes": 594496,
+    "formats": [
+      "compact_sorted"
+    ],
+    "path": "docs/adr/experiments/0221-r559i/report.json",
+    "pin_matches": true,
+    "sha256": "38bb473e53afce2eeaa5c779b01457b0fc8e9d7fb9a701f51920276e42b621de"
+  },
+  {
+    "accepted_by_current_loader": true,
+    "bytes": 1943,
+    "formats": [
+      "compact_sorted"
+    ],
+    "path": "docs/adr/experiments/0221-r559i/receipt.json",
+    "pin_matches": true,
+    "sha256": "85347ff9cb75d8ac62505c6e05b51249aed5bee10a7d52a9a7ea782631cdf8ed"
+  },
+  {
+    "accepted_by_current_loader": true,
+    "bytes": 321,
+    "formats": [
+      "compact_sorted"
+    ],
+    "path": "docs/adr/experiments/0221-r559i/completion.json",
+    "pin_matches": true,
+    "sha256": "44a9bce0f042fe5e07b2237bc08e14a7eb9390449b6cc9c83f780f5b9b0735b6"
+  },
+  {
+    "accepted_by_current_loader": false,
+    "bytes": 616362,
+    "formats": [
+      "default_spaced_sorted"
+    ],
+    "path": "docs/adr/experiments/0221-independent-audit.json",
+    "pin_matches": true,
+    "sha256": "0f874ca92231b8b1c43069a158bb7f698ef2758954f2a8ba278511f9391fdc82"
+  }
+]

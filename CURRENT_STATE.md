@@ -1,26 +1,30 @@
 # Current State
 
-Updated: 2026-11-19. Keep under 60 lines; durable evidence is in ADRs.
+Updated: 2026-11-20. Keep under 60 lines; durable evidence is in ADRs.
 
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the extensible open-platform vision.
-User selected retained-cell observational design; [ADR0224](docs/adr/0224-design-retained-cell-observations.md)
-freezes rows 62/94/125 and their midpoint singletons (24 traces + 24 controls).
-Automation `ariadna-m3` is PAUSED after qualified R5.59m artificial preparation.
-Next: separate explicit instruction for at-most-once R5.59n under unchanged ADR0224.
-No retained numerical work, SPICE, new trajectory/points or formula change is authorized now.
+[ADR0224](docs/adr/0224-design-retained-cell-observations.md) fixes three saved cells
+and midpoint singletons; user enabled one R5.59n dispatch on 2026-11-20.
+Automation `ariadna-m3` is now PAUSED after that dispatch failed input admission.
+Next decision: a versioned historical-JSON encoding repair and artificial qualification.
+No retry, formula change, SPICE, new trajectory/points or R5.60 is authorized.
 
-## Latest verified implementation
-[ADR0225](docs/adr/0225-qualify-retained-cell-observation-adapter.md): R5.59m adapter,
-scope-specific observer and separate saved-only verifier qualified on fabricated archives.
-24 traces equal controls; six fabricated historical bound matches; 24×16 sampled checks.
-48 bounds / 0 new direct points / 1,216 events; 12 producer + 6 audit oracle-mass calls.
-Full-volume source 2,444,501 bytes; combined evidence 3,640,925 bytes.
-External producer 1.189270209 s; separate audit 0.239020125 s; no retained launch.
-38 focused / 6,560 guarded full passes, 494 explicit exclusions; Ruff/strict OpenSpec pass.
-Base a7fbb59 plus exact tested new source hashes in ADR0225's verification manifest.
-Historical arithmetic, contract and evidence unchanged; retained widening attribution unproved.
+## Latest retained attempt
+[ADR0226](docs/adr/0226-record-retained-trace-input-rejection.md): one R5.59n dispatch
+on clean 30b143c returned3: `R5.59m: study_audit canonical record`.
+External time0.181515250 s; dispatcher0.168107791 s. Attempt consumed despite absent outputs.
+All nine raw input pins match; the last audit uses default-spaced sorted JSON,
+while the adapter accepts compact or indented JSON only. Historical bytes unchanged.
+Failure precedes lineage/row checks, output creation, mass, bounds and traces.
+No separate auditor was invoked; no retained widening observation was obtained.
+
+## Qualified preparation baseline
+[ADR0225](docs/adr/0225-qualify-retained-cell-observation-adapter.md): artificial-only
+adapter qualification passes: 38 focused/6,560 guarded full, 494 exclusions; Ruff/strict pass.
+Exact tested source hashes remain unchanged; no full-suite or numerical replay for this record.
+24 artificial traced/control matches and 24×16 sampled checks do not prove retained admission.
 
 ## Unresolved retained question
 [ADR0221](docs/adr/0221-record-retained-inter-node-result.md): sole R5.59i attempt

@@ -1,0 +1,8 @@
+{
+  "base": "30b143c046be24b96e4358f826d1ae4cd86b9bd3",
+  "contract_sha256": "118795d87f4084528a1d4096c4f1d61c0936f0afbc927ae6c040f6ec26600dea",
+  "python": "3.12.14 (main, Sep  3 2026, 03:46:19) [Clang 21.1.8 ]",
+  "runner_sha256": "a93e11bc8a6472291b7c360136486e6a05697f0f393575d9809095d94ac5cf7f",
+  "source_artifact_bytes": 2280855,
+  "user_authorization_date": "2026-11-20"
+}
