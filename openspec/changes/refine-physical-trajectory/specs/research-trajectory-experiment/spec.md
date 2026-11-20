@@ -875,3 +875,22 @@ The R5.59l–n profile SHALL observe the unchanged analytical method on a fixed 
 - **THEN** R5.59m SHALL qualify the complete new matrix and full-volume fabricated archives, identity and historical-parity rejection, canonical zero/singleton containment, early/non-reached stages, mutations, exclusive completion cleanup, scope separation and every exhausted limit using focused and guarded full pytest, Ruff and strict OpenSpec; preparation SHALL NOT evaluate retained operands
 - **AND** the producer and separate auditor SHALL each have 30 s through durable finalization, with at most 48 producer bounds, 8,192 total stage entries, 4 MiB authenticated source inventory per process and 4 MiB combined new evidence including a reserved 64 KiB audit allowance
 - **AND** R5.59n SHALL require a separate explicit execution instruction after qualification, preserve the first complete or partial result without retry, and fail invalid or inconclusive on disagreement, missing evidence or exhausted caps; no new formula, broader/deeper tree, SPICE, force evaluation, integration or R5.60 SHALL follow automatically
+
+
+### Requirement: Admit hash-pinned historical JSON encodings without rewriting evidence
+
+The archive adapter SHALL preserve immutable input bytes and scientific gates while admitting the exact historical JSON serialization documented by ADR0226. Compatibility repair SHALL NOT retry the consumed retained dispatch.
+
+#### Scenario: Authenticate the original bytes before decoding
+
+- **WHEN** the versioned compatibility adapter loads any of the nine archival roles
+- **THEN** it SHALL enforce the original raw SHA256, source-byte cap, role and lineage/row identities before any bound or mass evaluation
+- **AND** it SHALL retain compact sorted and two-space-indented sorted JSON with one final newline, admitting sorted single-line default-spaced JSON with one final newline additionally for `study_audit` only; unapproved whitespace, duplicate keys at any depth, malformed JSON, non-object roots and nonfinite numeric values SHALL be rejected
+- **AND** a semantically equivalent reserialization with a changed raw digest SHALL fail the original source pin rather than being normalized on disk or silently repinned
+
+#### Scenario: Qualify the repaired adapter without a new retained experiment
+
+- **WHEN** this compatibility repair is qualified
+- **THEN** artificial archives SHALL exercise all nine observed encoding profiles with valid rechained identities, the full fixed 24-trace/24-control matrix and separate saved-only audit, while the historical adapter SHALL continue rejecting the default-spaced fixture
+- **AND** new evidence SHALL remain compact canonical JSON, historical adapter/math/contract/evidence bytes SHALL remain unchanged, and every inherited scope, time, source/evidence-byte and work limit SHALL remain in force
+- **AND** a read-only preflight on the fixed historical files MAY verify hashes, parsing and post-loop metadata/row identities only, with zero bounds, traces, point/conic constructors, oracle mass, SPICE, integration or old scientific audit; a new retained numerical dispatch SHALL require a separate explicit instruction

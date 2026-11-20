@@ -1,0 +1,64 @@
+"""Read only hashes, JSON encoding and archival metadata; forbid scientific calls."""
+
+from hashlib import sha256
+import json
+from pathlib import Path
+from runpy import run_path
+import sys
+from time import monotonic_ns
+
+PACK = Path(__file__).resolve().parent
+REPO = Path('/Users/agrudin/dev/my/ariadna')
+ART = REPO / 'docs/adr/experiments'
+SCRIPT = ART / '0227-retained-trace.py'
+allowed = {'<module>', 'need', '_read', '_wire', '_contract', 'retained_profile',
+           '_profile', '_inputs', '_record', 'unique', 'reject_constant', '__init__',
+           '__post_init__', 'check', 'Budget', '<lambda>', '<genexpr>', '<dictcomp>',
+           '<listcomp>', '<setcomp>'}
+calls: dict[str, int] = {}
+
+
+def observe(frame: object, event: str, arg: object) -> None:
+    if event == 'call':
+        code = frame.f_code
+        file = Path(code.co_filename)
+        if file.parent == ART:
+            assert file == SCRIPT and code.co_name in allowed, (file, code.co_name)
+            calls[code.co_name] = calls.get(code.co_name, 0) + 1
+
+
+assert sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode
+assert not (ART / '0224-retained-trace-result').exists()
+assert not (ART / '0224-retained-trace-audit.json').exists()
+started = monotonic_ns()
+sys.setprofile(observe)
+try:
+    module = run_path(str(SCRIPT))
+    budget = module['Budget']()
+    profile = module['_profile'](module['retained_profile'](), ART / '0224-retained-trace-result', budget)
+    data, inventory = module['_inputs'](profile, budget)
+    budget.check()
+finally:
+    sys.setprofile(None)
+elapsed = monotonic_ns() - started
+assert elapsed < 30_000_000_000
+assert budget.used == dict(bounds=0, points=0, events=0, oracle_mass=0)
+assert not any(name.split('.')[0] in {'tudatpy', 'spiceypy'} for name in sys.modules)
+assert not (ART / '0224-retained-trace-result').exists()
+assert not (ART / '0224-retained-trace-audit.json').exists()
+contract = json.loads((ART / '0224-retained-trace-contract.json').read_bytes())
+report = dict(
+    scope='read-only-pinned-archive-metadata', status='passed', elapsed_ns=elapsed,
+    runner_sha256=sha256(SCRIPT.read_bytes()).hexdigest(),
+    source_inventory_bytes=inventory['source_bytes'],
+    source_pins=inventory['source_pins'], raw_source_artifact_bytes=contract['input_artifact_bytes'],
+    selected_row_indices=[row['row_index'] for row in profile['selected_rows']],
+    selected_points_loaded=len(data['selected']),
+    reference_sha256=sha256(module['_wire'](data['reference'])).hexdigest(),
+    work=budget.used, observed_adapter_calls=calls,
+    scientific_helpers_called=False, retained_dispatches=0, old_audit_replays=0,
+    spice_queries=0, integrations=0, outputs_created=False,
+    lineage_and_selected_row_metadata_verified=True,
+)
+(PACK / 'preflight.json').write_text(json.dumps(report, sort_keys=True, indent=2, allow_nan=False) + '\n')
+print(json.dumps(report, sort_keys=True))

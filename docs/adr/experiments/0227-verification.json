@@ -1,0 +1,192 @@
+{
+  "accepted_encodings": {
+    "all_roles": [
+      "sorted-compact-with-newline",
+      "sorted-indent2-with-newline"
+    ],
+    "study_audit_addition": "sorted-default-spaced-with-newline"
+  },
+  "artificial_profiles": {
+    "cases": [
+      "witness",
+      "refusal"
+    ],
+    "encoding_profile": [
+      "compact",
+      "compact",
+      "compact",
+      "indent2",
+      "compact",
+      "compact",
+      "compact",
+      "compact",
+      "default-spaced"
+    ],
+    "full_matrix_per_case": {
+      "audit_bounds": 0,
+      "audit_oracle_mass": 6,
+      "bounds": 48,
+      "controls": 24,
+      "new_points": 0,
+      "producer_oracle_mass": 12,
+      "traces": 24
+    },
+    "input_bytes_unchanged_by_loading": true,
+    "new_evidence_compact": true,
+    "original_adapter_rejection_verified": true,
+    "unselected_rows_and_old_audits": "fabricated format fixtures, no historical science replay"
+  },
+  "automation": {
+    "id": "ariadna-m3",
+    "status": "PAUSED"
+  },
+  "checks": {
+    "checkout_unchanged_during_full_suite": true,
+    "focused_elapsed_s": 3.59,
+    "focused_passed": 18,
+    "guarded_full_elapsed_s": 159.76,
+    "guarded_full_passed": 6578,
+    "guarded_full_skipped": 494,
+    "ruff": "passed"
+  },
+  "consumed_dispatch_preserved": "ADR0226/R5.59n remains consumed, with unmet retained trace/audit criteria.",
+  "date": "2026-11-20",
+  "evidence_sha256": {
+    "docs/adr/experiments/0227-qualification/focused-tests.txt": {
+      "bytes": 99,
+      "sha256": "c04aabe237b0ae571d2fadff3d1147e10f9bbf97dde3bee5af5093fb3235668d"
+    },
+    "docs/adr/experiments/0227-qualification/full-tests.txt": {
+      "bytes": 7966,
+      "sha256": "4f4f73aeb57c863ed6845488ce6a97a5f035deb744232e14d15157a82fb4ba2b"
+    },
+    "docs/adr/experiments/0227-qualification/metadata-preflight-driver.txt": {
+      "bytes": 2908,
+      "sha256": "5fc76e810c40cc63273092b0ea1e1fa3115a95fd471fa9b1a64047b6af0e79ae"
+    },
+    "docs/adr/experiments/0227-qualification/metadata-preflight.json": {
+      "bytes": 1893,
+      "sha256": "11f5427471c860c38a223d8e1db7e871ea517d98c8c8c3f93dd26da20828e701"
+    },
+    "docs/adr/experiments/0227-qualification/offline-guard.txt": {
+      "bytes": 4427,
+      "sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+    },
+    "docs/adr/experiments/0227-qualification/skipped-tests.txt": {
+      "bytes": 77492,
+      "sha256": "200a2d159d591f934b1db9037b066fa61017072f6c41d8d548661e57d085356b"
+    }
+  },
+  "historical_qualified_sources_sha256": {
+    "docs/adr/experiments/0225-bound-trace.py": "d382d1181c8069d7d5d1b51b8261c75f726be522b95ed08252363c5a1a45c42d",
+    "docs/adr/experiments/0225-retained-trace.py": "a93e11bc8a6472291b7c360136486e6a05697f0f393575d9809095d94ac5cf7f",
+    "docs/adr/experiments/0225-trace-checks.py": "30f3fbafa1898884c4d4234bdc66369f81dab64271dcd9ec9c4c2e1841ba829a",
+    "moon_to_mars.py": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "tests/test_retained_bound_trace.py": "6f1deca7be71e6a021318d286f2ed8397264b87af705c6fe54b5f76b080cd2b2"
+  },
+  "implementation": "complete-compatibility-repair-only",
+  "inherited_contract_sha256": "118795d87f4084528a1d4096c4f1d61c0936f0afbc927ae6c040f6ec26600dea",
+  "integrations": 0,
+  "limitations": [
+    "No retained bound/trace/mass evaluation, retained numerical dispatcher or retained saved-only auditor invocation.",
+    "Metadata admission and artificial matrices do not establish real internal width behavior or physical accuracy.",
+    "494 native/live-UI/prohibited retained tests explicitly excluded, not native qualification.",
+    "New retained numerical execution still requires a separate explicit instruction."
+  ],
+  "logs_sha256": {
+    "after": "41f87cd452adf0d6e2776eac2071ef5921e353e4d6d24dcb4bed35673f5337e1",
+    "before": "41f87cd452adf0d6e2776eac2071ef5921e353e4d6d24dcb4bed35673f5337e1",
+    "focused": "c04aabe237b0ae571d2fadff3d1147e10f9bbf97dde3bee5af5093fb3235668d",
+    "full": "4f4f73aeb57c863ed6845488ce6a97a5f035deb744232e14d15157a82fb4ba2b",
+    "ruff": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "measured_base_commit": "b613ee4c17203ae3b0029fc877895c266bdb7353",
+  "metadata_preflight": {
+    "elapsed_ns": 4065886292,
+    "integrations": 0,
+    "lineage_and_selected_row_metadata_verified": true,
+    "observed_adapter_calls": {
+      "<genexpr>": 132,
+      "<lambda>": 2,
+      "<module>": 1,
+      "Budget": 1,
+      "__post_init__": 1,
+      "_contract": 7,
+      "_inputs": 1,
+      "_profile": 1,
+      "_read": 34,
+      "_record": 9,
+      "_wire": 26,
+      "check": 14,
+      "need": 37716,
+      "retained_profile": 2,
+      "unique": 6670
+    },
+    "old_audit_replays": 0,
+    "outputs_created": false,
+    "raw_source_artifact_bytes": 2280855,
+    "reference_sha256": "6b845f74881f658d2eeea28bfdde43c9190a283da5bb166644bb845c4f847c5b",
+    "retained_dispatches": 0,
+    "runner_sha256": "395d711620fb0e6e4ea092001adb52a769052af8d527300902653df4b6a4d6d7",
+    "scientific_helpers_called": false,
+    "scope": "read-only-pinned-archive-metadata",
+    "selected_points_loaded": 3,
+    "selected_row_indices": [
+      62,
+      94,
+      125
+    ],
+    "source_inventory_bytes": 2504838,
+    "source_pins": {
+      "grid_attempt": "ac1d02f445ebed82ac5b4f728193ea8533890188ed2422117523db50d087bf0a",
+      "grid_audit": "bdc9eb8225a4af912327d0c8cd62231bf4f625991f6d4233ea58a5e9481172d5",
+      "grid_receipt": "395d20ab4771b9a9e4743e038e5c50338d12b8d890018befc3879bf3de21a18b",
+      "grid_report": "323c2c71e17168a46e9dd5280015a3fecb0865016b9b6954dcb051de4def1800",
+      "study_attempt": "67099e223d433ab049e2c4c793cbedadd75668df4195975a1f711467aa81c21a",
+      "study_audit": "0f874ca92231b8b1c43069a158bb7f698ef2758954f2a8ba278511f9391fdc82",
+      "study_completion": "44a9bce0f042fe5e07b2237bc08e14a7eb9390449b6cc9c83f780f5b9b0735b6",
+      "study_receipt": "85347ff9cb75d8ac62505c6e05b51249aed5bee10a7d52a9a7ea782631cdf8ed",
+      "study_report": "38bb473e53afce2eeaa5c779b01457b0fc8e9d7fb9a701f51920276e42b621de"
+    },
+    "spice_queries": 0,
+    "status": "passed",
+    "work": {
+      "bounds": 0,
+      "events": 0,
+      "oracle_mass": 0,
+      "points": 0
+    }
+  },
+  "new_retained_numerical_dispatches": 0,
+  "retained_audits": 0,
+  "review": "Independent read-only review confirms decoder-only delta, role-limited spacing, recursive duplicate/nonfinite refusal, unchanged math/control/caps and metadata-only preflight scope.",
+  "scope": "artificial-numerical-qualification-and-read-only-historical-metadata",
+  "source_delta": {
+    "changed_functions": [
+      "_inputs"
+    ],
+    "inputs_identical_after_restoring_only_decoder_statements": true,
+    "mathematical_modules_and_resource_constants_unchanged": true,
+    "new_functions": [
+      "_record"
+    ],
+    "other_top_level_ast_identical": true,
+    "raw_sha_gate_precedes_decoder": true
+  },
+  "spice_queries": 0,
+  "stage": "R5.59o",
+  "test_commands": {
+    "focused": "conda run --no-capture-output -n space-nav python -B GUARD.py -q -p no:cacheprovider tests/test_retained_json_compat.py",
+    "full": "conda run --no-capture-output -n space-nav python -B GUARD.py -q -p no:cacheprovider",
+    "openspec": "OPENSPEC_TELEMETRY=0 openspec validate refine-physical-trajectory --strict",
+    "preflight": "conda run --no-capture-output -n space-nav python -I -S -B METADATA_PREFLIGHT_DRIVER.py",
+    "ruff": "conda run --no-capture-output -n space-nav ruff check --no-cache src tests docs/adr/experiments/0227-retained-trace.py"
+  },
+  "tested_source_sha256": {
+    "docs/adr/experiments/0225-retained-trace.py": "a93e11bc8a6472291b7c360136486e6a05697f0f393575d9809095d94ac5cf7f",
+    "docs/adr/experiments/0227-retained-trace.py": "395d711620fb0e6e4ea092001adb52a769052af8d527300902653df4b6a4d6d7",
+    "moon_to_mars.py": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+    "tests/test_retained_json_compat.py": "9c3a3d7eb259e1ea9051686c22879d042e73f8cc25ad81756f0d5c08aec64acb"
+  },
+  "timezone": "Europe/Samara"
+}

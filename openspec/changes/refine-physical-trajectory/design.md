@@ -7834,3 +7834,35 @@ Automation is PAUSED. A new versioned role-specific encoding adapter and artific
 qualification are recommended for a separate user decision, with raw pins and
 finite/numeric/schema gates unchanged. No repair, retry, formula change or R5.60
 is authorized here; retained widening attribution remains unresolved.
+
+
+## R5.59o historical JSON compatibility repair (2026-11-20)
+
+The user authorized the repair proposed after ADR0226, without a retained retry.
+[ADR0227](../../../docs/adr/0227-admit-pinned-historical-json-encoding.md) defines
+a versioned adapter retaining the unchanged ADR0225 orchestration and mathematics.
+Only input decoding changes: raw SHA authentication remains first; compact and
+indent2 sorted JSON stay accepted, and the exact sorted default-spaced form with
+one final newline is accepted additionally for `study_audit` only. Reject duplicate
+keys at all depths, nonfinite/overflow values, malformed JSON, non-object roots and
+unapproved encodings. Do not rewrite or repin historical bytes. New evidence remains
+compact and the existing scope/identity/parity/budget gates stay unchanged.
+
+Qualify fabricated archives matching seven compact, one indented grid-audit and
+one default-spaced study-audit role, with rechained raw identities. Verify old
+adapter refusal, new full-matrix/control/audit success and invalid input rejection.
+A metadata-only preflight of the nine real files may check raw pins, decoding and
+lineage/selected-row identities; it calls no bound, trace, mass, point or conic
+constructor and is not another R5.59n attempt. Preserve the consumed first failure.
+No numerical retained execution, SPICE, integration or R5.60 is authorized by this repair.
+
+
+R5.59o verification is complete in ADR0227. Both full-volume artificial encoding
+profiles pass the matrix and separate audit. The metadata-only historical preflight
+now passes all nine raw pins, receipts/reference and selected-row identities with
+zero bounds/points/events/mass; neither retained output exists. The guarded suite
+passes18 focused/6,578 full with494 exclusions; Ruff/strict validation pass.
+AST/source checks isolate the delta to the new decoder and its `_inputs` call;
+original mathematical functions/caps/contract/evidence remain unchanged.
+This qualifies JSON compatibility only. Automation remains PAUSED, the ADR0226
+dispatch remains consumed, and a new retained numerical execution needs an explicit instruction.

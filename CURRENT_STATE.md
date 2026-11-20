@@ -6,10 +6,11 @@ Updated: 2026-11-20. Keep under 60 lines; durable evidence is in ADRs.
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the extensible open-platform vision.
 [ADR0224](docs/adr/0224-design-retained-cell-observations.md) fixes three saved cells
-and midpoint singletons; user enabled one R5.59n dispatch on 2026-11-20.
-Automation `ariadna-m3` is now PAUSED after that dispatch failed input admission.
-Next decision: a versioned historical-JSON encoding repair and artificial qualification.
-No retry, formula change, SPICE, new trajectory/points or R5.60 is authorized.
+and midpoint singletons. Automation `ariadna-m3` remains PAUSED after the consumed R5.59n.
+User authorized compatibility repair only; [ADR0227](docs/adr/0227-admit-pinned-historical-json-encoding.md)
+qualifies its versioned adapter and read-only historical metadata preflight.
+Next: separate explicit instruction before any new retained numerical dispatch/audit.
+No formula change, SPICE, new trajectory/points or R5.60 is authorized.
 
 ## Latest retained attempt
 [ADR0226](docs/adr/0226-record-retained-trace-input-rejection.md): one R5.59n dispatch
@@ -20,11 +21,13 @@ while the adapter accepts compact or indented JSON only. Historical bytes unchan
 Failure precedes lineage/row checks, output creation, mass, bounds and traces.
 No separate auditor was invoked; no retained widening observation was obtained.
 
-## Qualified preparation baseline
-[ADR0225](docs/adr/0225-qualify-retained-cell-observation-adapter.md): artificial-only
-adapter qualification passes: 38 focused/6,560 guarded full, 494 exclusions; Ruff/strict pass.
-Exact tested source hashes remain unchanged; no full-suite or numerical replay for this record.
-24 artificial traced/control matches and 24×16 sampled checks do not prove retained admission.
+## Latest verified repair
+[ADR0227](docs/adr/0227-admit-pinned-historical-json-encoding.md): default-spaced JSON
+accepted only for study_audit; raw hashes, strict decoding, math/caps and old bytes preserved.
+Both artificial matrices pass; all nine real input metadata/row identities now pass read-only.
+Metadata counters: 0 bounds/points/events/mass; no new retained numerical run or audit.
+18 focused/6,578 guarded full passes, 494 exclusions; Ruff/strict OpenSpec pass.
+Base b613ee4 plus exact tested new source hashes in ADR0227's verification manifest.
 
 ## Unresolved retained question
 [ADR0221](docs/adr/0221-record-retained-inter-node-result.md): sole R5.59i attempt

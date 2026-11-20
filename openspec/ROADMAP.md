@@ -521,8 +521,13 @@ dispatch: code3 at historical `study_audit` JSON encoding admission, before outp
 creation or scientific arithmetic. All raw input pins match; default-spaced sorted
 JSON was not accepted by the adapter. No separate audit or retained trace occurred.
 The dispatch is consumed; R5.59n verification remains incomplete. Automation is PAUSED
-for a separately designed/qualified compatibility repair; no retry, changed formula,
-consumed-study replay or R5.60 follows automatically.
+after the consumed first attempt. The user authorized its compatibility repair.
+[ADR0227](../docs/adr/0227-admit-pinned-historical-json-encoding.md) qualifies a new
+decoder version: exact default-spaced study-audit JSON with unchanged raw pins/math/caps.
+Both artificial matrices and all nine real files' read-only metadata checks pass;
+18 focused/6,578 guarded full passes, 494 exclusions, Ruff/strict OpenSpec pass.
+No retained numerical retry or audit occurred. Automation remains PAUSED pending
+a separate execution instruction; no changed formula, consumed-study replay or R5.60 follows.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 
