@@ -528,6 +528,14 @@ Both artificial matrices and all nine real files' read-only metadata checks pass
 18 focused/6,578 guarded full passes, 494 exclusions, Ruff/strict OpenSpec pass.
 No retained numerical retry or audit occurred. Automation remains PAUSED pending
 a separate execution instruction; no changed formula, consumed-study replay or R5.60 follows.
+The user then explicitly authorized the corrected diagnostic as distinct R5.59p.
+[ADR0228](../docs/adr/0228-record-corrected-retained-observations.md) records its single
+producer and separate saved-only audit:24 exact trace/control pairs, six actual old
+matches,24×16 sampled checks and all unchanged caps pass. Work48bounds/1248events;
+external1.129278666 s/0.326211875 s; produced evidence3,675,364bytes.
+Positive finite cells remain unresolved while their selected midpoints are mass-excluded.
+This establishes observations, not dominant widening attribution or continuous refusal.
+Old failure and new raw labels are preserved; automation remains PAUSED, no retry or R5.60.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

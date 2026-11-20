@@ -852,7 +852,7 @@ The R5.59g–i profile SHALL conduct a separately authorized, bounded local stud
 
 ### Requirement: Observe fixed retained phase cells without rescanning
 
-The R5.59l–n profile SHALL observe the unchanged analytical method on a fixed subset of saved cells under ADR0224, without reopening the consumed R5.59i study or claiming a new feasibility proof.
+The R5.59l–p profile SHALL observe the unchanged analytical method on a fixed subset of saved cells under ADR0224, without reopening the consumed R5.59i study or claiming a new feasibility proof.
 
 #### Scenario: Freeze the retained observation domain
 
@@ -894,3 +894,11 @@ The archive adapter SHALL preserve immutable input bytes and scientific gates wh
 - **THEN** artificial archives SHALL exercise all nine observed encoding profiles with valid rechained identities, the full fixed 24-trace/24-control matrix and separate saved-only audit, while the historical adapter SHALL continue rejecting the default-spaced fixture
 - **AND** new evidence SHALL remain compact canonical JSON, historical adapter/math/contract/evidence bytes SHALL remain unchanged, and every inherited scope, time, source/evidence-byte and work limit SHALL remain in force
 - **AND** a read-only preflight on the fixed historical files MAY verify hashes, parsing and post-loop metadata/row identities only, with zero bounds, traces, point/conic constructors, oracle mass, SPICE, integration or old scientific audit; a new retained numerical dispatch SHALL require a separate explicit instruction
+
+
+#### Scenario: Execute the corrected version under a distinct instruction
+
+- **WHEN** the user separately instructs one retained diagnostic after R5.59o qualification
+- **THEN** R5.59p SHALL record that distinct authorization and measured adapter/base identity before its single corrected-version dispatch, preserve the consumed ADR0226 failure, and keep inherited artifact labels/paths without rewriting their provenance
+- **AND** the first completed or partial output SHALL be preserved without retry; at most one separate saved-only audit SHALL verify a completed result under the unchanged ADR0224 matrix, numerical gates and all time/work/source/evidence caps
+- **AND** successful observations SHALL remain descriptive with attribution unresolved unless independently established; no formula change, new direct point, old scientific replay, SPICE, integration or R5.60 SHALL be implied

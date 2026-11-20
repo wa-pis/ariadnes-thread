@@ -1,0 +1,23 @@
+{
+  "base": "918d13c3cf6be6acfc5336556c1a6d823f35e9d9",
+  "contract_sha256": "118795d87f4084528a1d4096c4f1d61c0936f0afbc927ae6c040f6ec26600dea",
+  "decision": "One corrected 0227 retained producer and one separate saved-only audit, explicitly authorized by the user; preserve consumed ADR0226 failure.",
+  "inherited_artifact_stage": "R5.59n",
+  "limits": {
+    "audit_invocations": 1,
+    "bounds": 48,
+    "combined_evidence_bytes": 4194304,
+    "events": 8192,
+    "integrations": 0,
+    "new_direct_points": 0,
+    "producer_invocations": 1,
+    "source_inventory_bytes": 4194304,
+    "spice_queries": 0,
+    "wall_s_per_process": 30
+  },
+  "python": "3.12.14 (main, Sep  3 2026, 03:46:19) [Clang 21.1.8 ]",
+  "runner_sha256": "395d711620fb0e6e4ea092001adb52a769052af8d527300902653df4b6a4d6d7",
+  "source_artifact_bytes": 2280855,
+  "stage": "R5.59p",
+  "user_authorization_date": "2026-11-20"
+}

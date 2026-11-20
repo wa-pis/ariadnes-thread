@@ -7866,3 +7866,28 @@ AST/source checks isolate the delta to the new decoder and its `_inputs` call;
 original mathematical functions/caps/contract/evidence remain unchanged.
 This qualifies JSON compatibility only. Automation remains PAUSED, the ADR0226
 dispatch remains consumed, and a new retained numerical execution needs an explicit instruction.
+
+
+## R5.59p corrected-version retained observations (2026-11-20)
+
+The user separately authorized one qualified ADR0227 producer and one saved-only
+audit on the unchanged ADR0224 archives. [ADR0228](../../../docs/adr/0228-record-corrected-retained-observations.md)
+records this distinct authorization before dispatch on clean918d13c. Preserve the
+consumed ADR0226 failure and inherited `R5.59n`/`0224-*` raw artifact labels.
+No mathematical, input, reference, tolerance or resource-limit change occurred.
+
+Both invocations return0:24 exact traced/control pairs, six archived default-cell
+matches and24×16 sampled checks pass;48bounds/1248events, producer12mass calls,
+separate auditor six mass calls and zero bounds/traces/conics/points. External
+producer1.129278666 s/auditor0.326211875 s and3,675,364 combined produced bytes pass
+the unchanged caps; authenticated inventory2,504,838bytes. No SPICE/integration,
+new direct point or old scientific replay occurred. Historical sources are immutable.
+
+Default positive finite-cell speed widths94.114771–98.405627 m/s contrast with
+singleton widths1.748e-89–1.868e-89 m/s. All positive whole cells remain unresolved;
+all selected singletons and negative whole cells stop at mass exclusion. Legitimate
+non-reached clearance is preserved. This observes finite-domain enclosure width,
+not its dominant cause, continuous infeasibility, physical error or command admission.
+Runtime sources are unchanged; reuse ADR0227 qualification rather than replay tests.
+Automation remains PAUSED. Both this corrected invocation and its audit are consumed;
+no retry, formula change or R5.60 follows automatically.

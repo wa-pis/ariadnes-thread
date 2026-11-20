@@ -1,0 +1,59 @@
+{
+  "audit": {
+    "command": [
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+      "-I",
+      "-S",
+      "-B",
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0227-retained-trace.py",
+      "audit",
+      "a155ed0b13f07f6b5f2b9979554963a8842f1cbf1946922e7cb103e1be6b6196"
+    ],
+    "external_elapsed_ns": 326211875,
+    "returncode": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "9c22b9c2f1be2b2679f1c930fc3616c3d6d92e46b02d6e911bdf65d9e770e62b"
+  },
+  "base": "918d13c3cf6be6acfc5336556c1a6d823f35e9d9",
+  "combined_evidence_bytes": 3675364,
+  "evidence_files": {
+    "docs/adr/experiments/0224-retained-trace-audit.json": {
+      "bytes": 500,
+      "sha256": "6b5c4f0567a42dd6337297db04003874af08a27e962018139569b07b69eeb8ec"
+    },
+    "docs/adr/experiments/0224-retained-trace-result/attempt.json": {
+      "bytes": 4075,
+      "sha256": "ede3377f60ade4fbc005c64cb9cd18f083b0e32699d4c7fb3573800728980f59"
+    },
+    "docs/adr/experiments/0224-retained-trace-result/completion.json": {
+      "bytes": 439,
+      "sha256": "a155ed0b13f07f6b5f2b9979554963a8842f1cbf1946922e7cb103e1be6b6196"
+    },
+    "docs/adr/experiments/0224-retained-trace-result/receipt.json": {
+      "bytes": 4243,
+      "sha256": "351887540567e0397c619c0a327b5841685f82d14567f26cc9a7ab61913705a8"
+    },
+    "docs/adr/experiments/0224-retained-trace-result/report.json": {
+      "bytes": 3666107,
+      "sha256": "13485689f72f45b2ee1482c01cd5eb69e8ddc93204e3b8b62841a2a04e1486d4"
+    }
+  },
+  "inherited_artifact_stage": "R5.59n",
+  "producer": {
+    "command": [
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+      "-I",
+      "-S",
+      "-B",
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0227-retained-trace.py",
+      "retained"
+    ],
+    "external_elapsed_ns": 1129278666,
+    "returncode": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "e284bb557d79aeb65b9369eada3aa217aaba31a6d326d49d7f191396fdf4f9c3"
+  },
+  "source_artifact_bytes": 2280855,
+  "stage": "R5.59p",
+  "tested_sources_unchanged": true
+}

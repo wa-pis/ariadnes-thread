@@ -1,0 +1,190 @@
+{
+  "applicable_quantities_per_record": 16,
+  "artifact_sha256": {
+    "docs/adr/experiments/0224-retained-trace-audit.json": {
+      "bytes": 500,
+      "sha256": "6b5c4f0567a42dd6337297db04003874af08a27e962018139569b07b69eeb8ec"
+    },
+    "docs/adr/experiments/0224-retained-trace-result/attempt.json": {
+      "bytes": 4075,
+      "sha256": "ede3377f60ade4fbc005c64cb9cd18f083b0e32699d4c7fb3573800728980f59"
+    },
+    "docs/adr/experiments/0224-retained-trace-result/completion.json": {
+      "bytes": 439,
+      "sha256": "a155ed0b13f07f6b5f2b9979554963a8842f1cbf1946922e7cb103e1be6b6196"
+    },
+    "docs/adr/experiments/0224-retained-trace-result/receipt.json": {
+      "bytes": 4243,
+      "sha256": "351887540567e0397c619c0a327b5841685f82d14567f26cc9a7ab61913705a8"
+    },
+    "docs/adr/experiments/0224-retained-trace-result/report.json": {
+      "bytes": 3666107,
+      "sha256": "13485689f72f45b2ee1482c01cd5eb69e8ddc93204e3b8b62841a2a04e1486d4"
+    }
+  },
+  "authenticated_source_inventory_bytes": 2504838,
+  "authorization": "Explicit user instruction: one corrected 0227 retained dispatch and one separate saved-only audit; no SPICE or integration.",
+  "automation": {
+    "id": "ariadna-m3",
+    "status": "PAUSED"
+  },
+  "bounds": 48,
+  "checkout_before_dispatch": "clean dev, synchronized with origin/dev",
+  "combined_produced_evidence_bytes": 3675364,
+  "completion_elapsed_ns": 990601625,
+  "consumed_prior_attempt": "ADR0226 remains unchanged and consumed; no old study or audit replay.",
+  "containment_and_parity": "24 records \u00d716 exact applicable containment checks; separate geometry/root parity uses unchanged1 mm/1 \u00b5m/s gates.",
+  "contract_sha256": "118795d87f4084528a1d4096c4f1d61c0936f0afbc927ae6c040f6ec26600dea",
+  "controls": 24,
+  "date": "2026-11-20",
+  "default_positive_saved_observations": [
+    {
+      "arrival_speed_width_m_s": "4920281332059775122200820290701655924886751515637276464781197209271836176894828172202254548687/50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "cell_consumed_mass_lower_kg": "63765846893182332616644319962451445526957/42535295865117307932921825928971026432",
+      "cell_disposition": "unresolved",
+      "cell_hi_deg": "4801/32",
+      "cell_lo_deg": "150",
+      "midpoint_deg": "9601/64",
+      "row_index": 62,
+      "singleton_arrival_speed_width_m_s": "467/25000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "singleton_consumed_mass_lower_kg": "64000795741192334881071925504368878530989/42535295865117307932921825928971026432",
+      "singleton_disposition": "mass-excluded"
+    },
+    {
+      "arrival_speed_width_m_s": "9623138079258343942412663143385854118656713357126695094480629217852665603459129340892619139397/100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "cell_consumed_mass_lower_kg": "63765391577266859989024120740303629955501/42535295865117307932921825928971026432",
+      "cell_disposition": "unresolved",
+      "cell_hi_deg": "4833/32",
+      "cell_lo_deg": "151",
+      "midpoint_deg": "9665/64",
+      "row_index": 94,
+      "singleton_arrival_speed_width_m_s": "7/390625000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "singleton_consumed_mass_lower_kg": "63995215525964257433778435297221528236461/42535295865117307932921825928971026432",
+      "singleton_disposition": "mass-excluded"
+    },
+    {
+      "arrival_speed_width_m_s": "9411477102650480267973282961786503291203982761324203878617972898782410993420702329428572557273/100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "cell_consumed_mass_lower_kg": "63771569722389172626058039181083510026669/42535295865117307932921825928971026432",
+      "cell_disposition": "unresolved",
+      "cell_hi_deg": "152",
+      "cell_lo_deg": "4863/32",
+      "midpoint_deg": "9727/64",
+      "row_index": 125,
+      "singleton_arrival_speed_width_m_s": "437/25000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "singleton_consumed_mass_lower_kg": "63996331067494563570719330718310923743661/42535295865117307932921825928971026432",
+      "singleton_disposition": "mass-excluded"
+    }
+  ],
+  "dispatch_evidence_sha256": {
+    "docs/adr/experiments/0228-retained-dispatch/audit.json": {
+      "bytes": 518,
+      "sha256": "2145ddace88c998a08b7e73ed7411f4178b32f8bc484289d95a6627306910a13"
+    },
+    "docs/adr/experiments/0228-retained-dispatch/audit.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0228-retained-dispatch/audit.stdout": {
+      "bytes": 477,
+      "sha256": "9c22b9c2f1be2b2679f1c930fc3616c3d6d92e46b02d6e911bdf65d9e770e62b"
+    },
+    "docs/adr/experiments/0228-retained-dispatch/dispatch.json": {
+      "bytes": 900,
+      "sha256": "f0fe3b3d360bdf708f63ff76f630adcc3e34b2c9a7c82d2c2b9d56b2511ba44e"
+    },
+    "docs/adr/experiments/0228-retained-dispatch/invocation-driver.txt": {
+      "bytes": 4499,
+      "sha256": "2501084169ff166aef9c08a9fb4530ac1b0adf021d6c16142e56299920a8c9bc"
+    },
+    "docs/adr/experiments/0228-retained-dispatch/measurement.json": {
+      "bytes": 2202,
+      "sha256": "9694218442e2ba440163f182a2b6fb60ceb637fc732a17c25e56236181705489"
+    },
+    "docs/adr/experiments/0228-retained-dispatch/producer.json": {
+      "bytes": 450,
+      "sha256": "90230cd86c7e2963ebf24a98823264153cebf6c1833cddeab44b14f65cc64e1d"
+    },
+    "docs/adr/experiments/0228-retained-dispatch/producer.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0228-retained-dispatch/producer.stdout": {
+      "bytes": 483,
+      "sha256": "e284bb557d79aeb65b9369eada3aa217aaba31a6d326d49d7f191396fdf4f9c3"
+    },
+    "docs/adr/experiments/0228-retained-dispatch/read-only-review.txt": {
+      "bytes": 1154,
+      "sha256": "a971202e9e270a305f97459d7ffc671bcf532b161eebca734043510fd874f316"
+    }
+  },
+  "dispatcher_elapsed_ns": {
+    "audit": 308045375,
+    "producer": 1115021458
+  },
+  "external_elapsed_ns": {
+    "audit": 326211875,
+    "producer": 1129278666
+  },
+  "force_evaluations": 0,
+  "historical_default_matches": 6,
+  "historical_raw_inputs_unchanged": true,
+  "inherited_artifact_stage": "R5.59n",
+  "integrations": 0,
+  "interpretation": "Descriptive fixed-cell/singleton observations only. No dominant-cause attribution, continuous refusal, physical error bound, eligible command pair or mission admission.",
+  "kernel_accesses": 0,
+  "legacy_sha256": "4f0bb03da0eef3a7b91f63bb2b1e5906554379b2f767797fa2f32a5289b7fedf",
+  "mathematical_sources_and_contract_unchanged": true,
+  "measured_base_commit": "918d13c3cf6be6acfc5336556c1a6d823f35e9d9",
+  "new_direct_points": 0,
+  "old_audit_replays": 0,
+  "point_root_constructions": 0,
+  "point_root_zero_scope": "No direct point-root constructors outside the48 interval bound calls; those bounds reconstruct signed interval geometry/roots.",
+  "producer_invocations": 1,
+  "producer_work": {
+    "bounds": 48,
+    "events": 1248,
+    "oracle_mass": 12,
+    "points": 0
+  },
+  "proof": {
+    "event_count": 1248,
+    "historical_parity": 6,
+    "new_bounds": 0,
+    "new_points": 0,
+    "oracle_mass_calls": 6,
+    "rows": 24,
+    "sampled_containments": 24,
+    "status": "observations-verified-attribution-unresolved",
+    "summary_sha256": "cb3bad2f543b54bbcbdd4dbf427f434f2436074eaf2b233a761d2da5f311d628"
+  },
+  "qualified_adapter": "ADR0227",
+  "r559i_attempts": 0,
+  "r560_attempts": 0,
+  "receipt_elapsed_ns": 984238125,
+  "reference_sha256": "6b845f74881f658d2eeea28bfdde43c9190a283da5bb166644bb845c4f847c5b",
+  "runner_sha256": "395d711620fb0e6e4ea092001adb52a769052af8d527300902653df4b6a4d6d7",
+  "sampled_containment_records": 24,
+  "separate_audit_invocations": 1,
+  "separate_audit_prewrite_elapsed_ns": 251420500,
+  "separate_audit_work": {
+    "bounds": 0,
+    "events": 0,
+    "oracle_mass": 6,
+    "points": 0
+  },
+  "source_artifact_bytes": 2280855,
+  "spice_queries": 0,
+  "stage": "R5.59p",
+  "stage_events": 1248,
+  "status": "observations-verified-attribution-unresolved",
+  "timezone": "Europe/Samara",
+  "traces": 24,
+  "verification": {
+    "links_json_hashes_diff": "passed:456 local Markdown links,10 new strict JSON files, all raw/source/legacy/contract pins and documentation-only diff",
+    "openspec": "passed: openspec validate refine-physical-trajectory --strict",
+    "read_only_independent_review": "passed; reviewed saved hash chain, summary digest, trace/control/historical matches, counters/dispositions and final docs; clarified root-count scope and exact containment versus parity tolerances",
+    "ruff": "not rerun: no Python/runtime source change",
+    "runtime_tests": "not rerun: source unchanged; reuse ADR0227 18 focused / 6578 guarded full passes and 494 explicit exclusions",
+    "separate_saved_only_audit": "passed; zero new bounds/traces/conics/points, six cached mass calls"
+  }
+}

@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0228 — Verify corrected retained observations](0228-record-corrected-retained-observations.md): one corrected0227 producer and separate saved-only audit pass24 trace/control pairs, six archived matches and24×16 sampled checks; retained width cause remains unresolved.
 - [0227 — Admit the pinned historical audit JSON encoding](0227-admit-pinned-historical-json-encoding.md): versioned role-specific decoder qualified on artificial matrices; all nine real metadata identities pass without scientific work, no retained retry.
 - [0226 — Preserve the retained trace dispatch rejected on historical JSON encoding](0226-record-retained-trace-input-rejection.md): one consumed R5.59n dispatch fails before scientific work because the pinned audit uses default-spaced JSON; no retained result or retry, automation paused.
 - [0225 — Qualify the retained-cell observation adapter on artificial archives](0225-qualify-retained-cell-observation-adapter.md): complete artificial archive/matrix/cap qualification; retained R5.59n unexecuted and automation paused for its separate instruction.

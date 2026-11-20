@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0227-retained-trace.py",
+    "retained"
+  ],
+  "external_elapsed_ns": 1129278666,
+  "returncode": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "e284bb557d79aeb65b9369eada3aa217aaba31a6d326d49d7f191396fdf4f9c3"
+}
