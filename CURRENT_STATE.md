@@ -7,8 +7,11 @@ Near-term product: one understandable independently checked research trajectory/
 Keep Python/TudatPy/SPICE/Streamlit and the extensible open-platform vision.
 Automation `ariadna-m3` remains PAUSED. The one explicitly authorized corrected0227
 retained diagnostic and its separate saved-only audit are complete and consumed.
-Next: choose a scoped method step using the saved stage observations; no automatic retry,
-formula change, SPICE/integration, new points/trajectory or R5.60 is authorized.
+[ADR0229](docs/adr/0229-design-saved-lineage-diagnosis.md) fixes R5.59q saved-lineage
+design: exact aliases/checkpoints and36 candidate norm-pair slots, no analysis run.
+Next: separate instruction for R5.59r artificial-only reader/verifier implementation;
+R5.59s execution needs later qualification and explicit instruction. No formula change,
+new scientific calculations, SPICE/integration, new points/trajectory or R5.60 authorized.
 
 ## Latest retained result
 [ADR0228](docs/adr/0228-record-corrected-retained-observations.md): distinct R5.59p

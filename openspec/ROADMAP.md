@@ -536,6 +536,14 @@ external1.129278666 s/0.326211875 s; produced evidence3,675,364bytes.
 Positive finite cells remain unresolved while their selected midpoints are mass-excluded.
 This establishes observations, not dominant widening attribution or continuous refusal.
 Old failure and new raw labels are preserved; automation remains PAUSED, no retry or R5.60.
+[ADR0229](../docs/adr/0229-design-saved-lineage-diagnosis.md) now designs R5.59q–s:
+source-linked saved aliases/checkpoints and36 controlled default/independent norm
+pairs, conditional on exactly matching inputs/context. This can expose a local method
+response, not allocate final width or separate phase variation/dependency/rounding.
+R5.59q is design only; R5.59r artificial implementation and R5.59s saved readback each
+need separate instructions. Fixed pins, independent verification and bounded30 s/
+4 MiB input/1 MiB output are specified; no calculation or scientific replay occurred.
+Automation remains PAUSED; no changed enclosure, new physical run or R5.60 follows.
 
 ## Completed R4 — define finite-radius interfaces before new propagation
 

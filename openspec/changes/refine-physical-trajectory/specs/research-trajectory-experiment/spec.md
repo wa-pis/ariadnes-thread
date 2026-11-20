@@ -902,3 +902,37 @@ The archive adapter SHALL preserve immutable input bytes and scientific gates wh
 - **THEN** R5.59p SHALL record that distinct authorization and measured adapter/base identity before its single corrected-version dispatch, preserve the consumed ADR0226 failure, and keep inherited artifact labels/paths without rewriting their provenance
 - **AND** the first completed or partial output SHALL be preserved without retry; at most one separate saved-only audit SHALL verify a completed result under the unchanged ADR0224 matrix, numerical gates and all time/work/source/evidence caps
 - **AND** successful observations SHALL remain descriptive with attribution unresolved unless independently established; no formula change, new direct point, old scientific replay, SPICE, integration or R5.60 SHALL be implied
+
+
+### Requirement: Diagnose widening through saved lineage and controlled local comparisons
+
+The R5.59q–s profile SHALL distinguish saved dataflow, conditional local implementation effects and unresolved causal attribution using only ADR0229's pinned archive/source inventory. The design SHALL NOT authorize a new calculation or scientific replay.
+
+#### Scenario: Authenticate and reconstruct saved lineage
+
+- **WHEN** the saved-lineage reader is qualified and separately instructed to inspect the retained archive
+- **THEN** it SHALL authenticate all13 contract files, prior completion/audit chain, the fixed24 rows and1248 saved events, and source/method identities before analysing endpoints; all older results and inherited labels SHALL remain immutable
+- **AND** it SHALL match stages by semantic parent path and same-stage direct-child ordinal, verify the frozen source-alias links exactly, and record JSON/source references with explicit units rather than treat equal numbers or call IDs as proof of common origin
+- **AND** the18 checkpoint fields per trace SHALL support only descriptive exact widths and same-observable cell/singleton comparisons; undefined zero-denominator ratios and legitimate non-reached clearance SHALL remain explicit, while missing required reached fields SHALL invalidate the readback
+
+#### Scenario: Isolate a conditional local norm response
+
+- **WHEN** the reader compares the default and independent records in one of the36 frozen candidate norm-pair slots
+- **THEN** it SHALL require the same row/domain/sign/semantic role, identical endpoints for all three saved operands, and the pinned interval implementation with unchanged Decimal96 contexts and sole local square-versus-dot/clamp branch difference, explicitly labeling context equality as a conditional source/provenance assumption rather than a saved runtime observation
+- **AND** differing operands SHALL yield input-confounded, identical eligible results no-local-difference-observed, and differing eligible results conditional-local-method-response; ambiguity or a changed source/context SHALL invalidate the comparison, while legitimate earlier exit SHALL be not-reached
+- **AND** it SHALL perform zero new norm or interval evaluations, preserve the contract's role-specific dimensions, and SHALL NOT attribute a local response to final arrival-width contribution or a dominant cause
+
+#### Scenario: Preserve causal limits and independently verify the descriptors
+
+- **WHEN** a diagnosis or its separate saved-only verifier produces a claim
+- **THEN** it SHALL separate observed lineage/widths, conditional local effects, source-supported dependency risks and information absent from the archive; cell-minus-singleton width SHALL NOT become an overestimation/roundoff bound, and distinct rounded radius expressions SHALL NOT be treated as identical without a separate proof
+- **AND** the overall successful status SHALL be lineage-qualified-attribution-unresolved, with explicit inconclusive/invalid/exhausted outcomes; no causal percentage, contracted bound, continuous refusal, eligible command or mission qualification SHALL follow
+- **AND** the new independent verifier SHALL check descriptors from pinned raw endpoints without calling the old scientific audit, importing scientific modules or sharing the producer's analysis routine
+
+#### Scenario: Qualify and bound the saved readback before execution
+
+- **WHEN** preparation or execution is considered
+- **THEN** R5.59r SHALL require a separate instruction and qualify fabricated full24-row/36-slot archives at the pinned source byte volume, confounding/alias/role/unit/zero/non-reached/tampering cases, independent verification, exclusive output and every cap using focused/guarded full pytest, Ruff and strict OpenSpec; no retained numerical analysis SHALL occur during preparation
+- **AND** artificial qualification SHALL use a separate scope with distinct fabricated data/reference/completion pins and output roots, the same immutable source/role map/caps and declared fixture event counts; the retained entry SHALL build its fixed profile internally and reject injected, rehashed, mixed or relabeled qualification inputs
+- **AND** each future reader/verifier SHALL have30 s through durable finalization and4 MiB source inventory including the contract and private source files, with1 MiB combined output/64 KiB verifier reserve,8192 input events,32768 event visits/process,1024 descriptors,768 alias links,36 pair slots and bounded numeric parsing under ADR0229
+- **AND** R5.59s SHALL require qualified preparation and a separate explicit execution instruction, retain at most one readback and one verifier's first complete/partial evidence without retry, and record zero new bounds/traces/points/roots/norms/mass/native/SPICE/kernel/force/integration/R5.60 calls

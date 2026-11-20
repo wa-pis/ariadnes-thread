@@ -7891,3 +7891,51 @@ not its dominant cause, continuous infeasibility, physical error or command admi
 Runtime sources are unchanged; reuse ADR0227 qualification rather than replay tests.
 Automation remains PAUSED. Both this corrected invocation and its audit are consumed;
 no retry, formula change or R5.60 follows automatically.
+
+
+## R5.59q–s saved lineage and conditional local method effects (2026-11-20)
+
+[ADR0229](../../../docs/adr/0229-design-saved-lineage-diagnosis.md) and its
+[pinned contract](../../../docs/adr/experiments/0229-saved-lineage-contract.json)
+freeze a design-only response to the user's request: no new calculations now.
+Use the five ADR0228 artifacts, its manifest, original selection contract and six
+source files; do not reread older study inputs or replay the original audit/mass code.
+Keep rows62/94/125 × cell/singleton × both signs/paths,24 traces/1248 saved events.
+
+A future stdlib-only reader authenticates source/result identities and reconstructs
+exact aliases using call/parent/stage plus semantic role, not flat cross-trace IDs
+or coincident values. Read18 scalar/component checkpoints per trace with units;
+exact widths and cell/singleton differences are descriptive. Preserve undefined
+ratios and legitimate mass-driven not-reached clearance; missing required data is invalid.
+Record common-anomaly, normalization/root and coast/final-mass dependency motifs
+as source-supported risks, not quantitative contributions to final width.
+
+A narrow comparison has36 candidate default/independent norm slots: direct bounds norm[0]
+(impulse², m²/s²), direct reverse norms[1] (radius², m²) and[4] (angular momentum²,
+m⁴/s²), with ordinals counted among direct siblings of that stage. Only identical
+three-component saved input boxes plus fixed source/context isolate a conditional
+square-versus-dot/clamp local implementation response. Otherwise classify confounding,
+not-reached or invalid. Do not evaluate the norm or extrapolate a final-width effect.
+
+Function snapshots omit operation-level internals and joint phase/correlation/extremizer
+data. One midpoint does not identify actual cell variation, dependency overestimation
+or rounding. Ellipse and reverse radius are distinct rounded expressions, without a
+proved replacement/intersection identity. Overall verified output remains
+lineage-qualified-attribution-unresolved; unsupported causal claims fail verification.
+
+R5.59r implementation needs a separate instruction and full-volume artificial
+qualification, independent descriptors/verifier, failure/cap tests and project checks.
+Artificial profiles have distinct fabricated data/reference/completion pins and
+output scope, with the same pinned source/role map/caps and fixture-specific event
+counts. The retained entry builds its fixed profile internally and rejects profile
+injection, rehashing, mixed scopes or relabeled historical bytes.
+R5.59s needs later explicit execution authority for one saved readback and one new
+independent verifier, without shared analysis routines or old scientific imports.
+Future caps are30 s/process through finalization,4 MiB source/process,1 MiB combined
+output with64 KiB verifier reserve,8192 input events/32768 visits,1024 descriptors,
+768 aliases and36 pair slots, plus bounded exact numeric parsing. Artificial timing
+must establish sufficiency, charging contract/private sources as well as the13 inputs
+(3,784,677 bytes); previous producer timing does not qualify this reader.
+All new geometry/interval/norm/mass/native/SPICE/force/integration counters stay zero.
+Design only: no analyzer, verifier or output artifact is created now. Automation PAUSED;
+no formula/cell/gate changes, deeper study, physical proof or R5.60 follows automatically.
