@@ -545,6 +545,15 @@ need separate instructions. Fixed pins, independent verification and bounded30 s
 4 MiB input/1 MiB output are specified; no calculation or scientific replay occurred.
 Automation remains PAUSED; no changed enclosure, new physical run or R5.60 follows.
 
+[ADR0230](../docs/adr/0230-qualify-saved-lineage-reader.md) implements and qualifies
+R5.59r on fabricated data only:24 rows/1248 events/36 candidate slots, separately
+pinned96/1152-event early exits, independent reconstruction and all cap/failure tests.
+70 focused/6648 guarded full passes,494 exclusions; Ruff/strict OpenSpec pass.
+Full artificial input3,888,966 bytes/process, combined output387,623bytes and external
+analyzer/auditor0.236658041/0.178167792 s satisfy the unchanged envelope.
+No retained endpoint analysis or R5.59s ran; its fixed outputs remain absent.
+R5.59s still needs a separate explicit instruction. Automation remains PAUSED.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0230 — Qualify the saved-lineage reader on fabricated archives](0230-qualify-saved-lineage-reader.md): R5.59r implemented;70 focused/6648 guarded full passes, artificial analyzer/auditor qualified; no R5.59s or retained endpoint analysis.
 - [0229 — Design a saved-lineage check of interval widening](0229-design-saved-lineage-diagnosis.md): source-linked archive diagnosis and36 matched-operand norm slots; design only, no retained analysis or dominant-cause claim.
 - [0228 — Verify corrected retained observations](0228-record-corrected-retained-observations.md): one corrected0227 producer and separate saved-only audit pass24 trace/control pairs, six archived matches and24×16 sampled checks; retained width cause remains unresolved.
 - [0227 — Admit the pinned historical audit JSON encoding](0227-admit-pinned-historical-json-encoding.md): versioned role-specific decoder qualified on artificial matrices; all nine real metadata identities pass without scientific work, no retained retry.

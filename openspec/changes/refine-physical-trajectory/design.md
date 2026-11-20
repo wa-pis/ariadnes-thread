@@ -7939,3 +7939,24 @@ must establish sufficiency, charging contract/private sources as well as the13 i
 All new geometry/interval/norm/mass/native/SPICE/force/integration counters stay zero.
 Design only: no analyzer, verifier or output artifact is created now. Automation PAUSED;
 no formula/cell/gate changes, deeper study, physical proof or R5.60 follows automatically.
+
+## R5.59r artificial implementation and qualification (2026-11-21)
+
+[ADR0230](../../../docs/adr/0230-qualify-saved-lineage-reader.md) implements the
+unchanged ADR0229 design with a stdlib dispatcher, separately implemented analyzer
+and verifier, and three content-pinned artificial profiles. The full fabricated
+matrix has24 rows/1248 events/36 slots; declared early-exit variants have96/1152
+events. Input/source bytes are authenticated before parsing; exact source aliases,
+semantic roles, SI units, bounded rational descriptors and claim limits are checked
+independently. Resolved paths and the fabricated content allowlist reject mixed,
+rehashed or relabeled qualification inputs. Source files are text only.
+
+70 focused/6648 guarded full tests pass with494 explicit exclusions;
+Ruff and strict OpenSpec pass. Full artificial qualification consumes3,888,966
+source bytes/process and387,623 combined evidence bytes; external timings are
+0.236658041/0.178167792 s. Work per process:1248 visits/648 descriptors/528 aliases/
+36 pair slots. Every scientific/native/SPICE/integration/replay counter remains zero.
+Source/status snapshots remain identical throughout the frozen full suite.
+No retained endpoints are analysed and no R5.59s output is created. This qualification
+keeps attribution unresolved and does not authorize execution or a scientific method
+change. R5.59s requires a separate explicit instruction; automation remains PAUSED.

@@ -1,0 +1,53 @@
+"""Run one reproducible fabricated full-volume reader and a separate verifier."""
+from hashlib import sha256
+import json
+from pathlib import Path
+import subprocess
+import sys
+from time import monotonic_ns
+
+ROOT = Path('/Users/agrudin/dev/my/ariadna')
+PACK = Path('/private/tmp/ariadna-r559r-20261121/artificial-full')
+PACK.mkdir()
+sys.path.insert(0, str(ROOT / 'tests'))
+from lineage_fixtures import write_artificial_pack, wire
+profile = write_artificial_pack(PACK / 'inputs')
+profile_path = PACK / 'profile.json'
+profile_path.write_bytes(wire(profile))
+script = ROOT / 'docs/adr/experiments/0230-saved-lineage.py'
+base = [sys.executable, '-I', '-S', '-B', str(script)]
+output = PACK / 'result'
+audit = PACK / 'audit.json'
+measurements = []
+for name, args in (
+    ('producer', ['artificial', str(profile_path), str(output)]),
+    ('auditor', None),
+):
+    if args is None:
+        pin = sha256((output / 'completion.json').read_bytes()).hexdigest()
+        args = ['audit-artificial', str(profile_path), str(output), pin, str(audit)]
+    started = monotonic_ns()
+    process = subprocess.run(base + args, capture_output=True, timeout=31, check=False)
+    elapsed = monotonic_ns() - started
+    (PACK / (name + '.stdout')).write_bytes(process.stdout)
+    (PACK / (name + '.stderr')).write_bytes(process.stderr)
+    measurements.append(dict(process=name, args=args, returncode=process.returncode, external_elapsed_ns=elapsed))
+    assert process.returncode == 0, process.stderr
+    assert elapsed < 30_000_000_000
+report = json.loads((output / 'report.json').read_bytes())
+proof = json.loads(audit.read_bytes())
+summary = dict(scope=profile['scope'], stage='R5.59r', measurements=measurements,
+               source_inventory_bytes_per_process=report['source_inventory_bytes'],
+               complete_thirteen_file_inventory_bytes=sum(x['bytes'] for x in profile['pins'].values()) +
+                   sum((ROOT / p).stat().st_size for p in json.loads((script.parent / '0229-saved-lineage-contract.json').read_bytes())['source_bindings'].values()),
+               work=report['work'], auditor_work=proof['work'],
+               combined_output_bytes=sum(p.stat().st_size for p in output.iterdir()) + audit.stat().st_size,
+               source_sha256={str(p.relative_to(ROOT)):sha256(p.read_bytes()).hexdigest() for p in (
+                   script, script.with_name('0230-lineage-core.py'), script.with_name('0230-lineage-audit.py'),
+                   ROOT / 'tests/lineage_fixtures.py', ROOT / 'tests/test_saved_lineage.py', ROOT / 'tests/test_lineage_runner.py')},
+               status=report['status'], audit_status=proof['status'],
+               retained_readback_started=False, spice_queries=0, integrations=0)
+assert summary['combined_output_bytes'] <= 1048576
+assert summary['source_inventory_bytes_per_process'] <= 4194304
+(PACK / 'summary.json').write_bytes(wire(summary))
+print(json.dumps(summary, sort_keys=True))

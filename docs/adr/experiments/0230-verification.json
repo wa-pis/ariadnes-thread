@@ -1,0 +1,187 @@
+{
+  "automation": "PAUSED",
+  "base_commit": "41170043605f2a3c9a3b221e0bf9ce85ef6796ae",
+  "checks": {
+    "finite_json_files": 9,
+    "fixed_retained_outputs": "absent",
+    "frozen_checkout_status_and_sources": "unchanged",
+    "git_diff": "passed",
+    "immutable_contract_and_thirteen_pins": "unchanged",
+    "local_markdown_links": 463,
+    "ruff": "passed",
+    "runtime_dependencies_legacy": "unchanged",
+    "strict_openspec": "passed"
+  },
+  "date": "2026-11-21",
+  "decision": "accepted",
+  "evidence_sha256": {
+    "docs/adr/experiments/0230-qualification/after-status.txt": {
+      "bytes": 229,
+      "sha256": "55a95f0b17ef8c032717572e472f7e1f8493fd7c8ffb2806c56b46032b96ac54"
+    },
+    "docs/adr/experiments/0230-qualification/artificial-audit.json": {
+      "bytes": 752,
+      "sha256": "a1a3d3456e7c722ab4d0c8cfe383bc68932ca1c01953bf7de5fde7f0af653d5e"
+    },
+    "docs/adr/experiments/0230-qualification/artificial-profile.json": {
+      "bytes": 1628,
+      "sha256": "3d134ea1c6ecff04eb9bc061b450d55356c584073f62176d2100afeb9ac1b120"
+    },
+    "docs/adr/experiments/0230-qualification/artificial-result/attempt.json": {
+      "bytes": 2303,
+      "sha256": "954cbae24f461456c1ea1e3afa2b7e985808e864bf07867c07adddc1c1295813"
+    },
+    "docs/adr/experiments/0230-qualification/artificial-result/completion.json": {
+      "bytes": 245,
+      "sha256": "2547a0aff98f7b89f851ffe86664090384ed6beddde9f1511a00ce3be98c8ef5"
+    },
+    "docs/adr/experiments/0230-qualification/artificial-result/receipt.json": {
+      "bytes": 2493,
+      "sha256": "3d761f00b8952b5d19753ebf867835b42c29b617bb5d935edc1ff8188e462e3f"
+    },
+    "docs/adr/experiments/0230-qualification/artificial-result/report.json": {
+      "bytes": 381830,
+      "sha256": "b132b533bc43fbc53c03772306208911d6fa6077761e6c9fd3c59786f791e12a"
+    },
+    "docs/adr/experiments/0230-qualification/artificial-summary.json": {
+      "bytes": 1747,
+      "sha256": "aa337e95f8888fa6eef86091dc0a6f99feb071baebb64c8127e198df75032e01"
+    },
+    "docs/adr/experiments/0230-qualification/auditor.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0230-qualification/auditor.stdout": {
+      "bytes": 487,
+      "sha256": "6faa3e238d4d447fb14482b4f6d58d3be46f2ac5b5498c14de16f3a4616bf1fe"
+    },
+    "docs/adr/experiments/0230-qualification/before-status.txt": {
+      "bytes": 229,
+      "sha256": "55a95f0b17ef8c032717572e472f7e1f8493fd7c8ffb2806c56b46032b96ac54"
+    },
+    "docs/adr/experiments/0230-qualification/focused.log": {
+      "bytes": 99,
+      "sha256": "06c7adc9b9a6b7dc5e4f13b81cb2b7993d1b745dcb5687d31434f2b5738ee7e0"
+    },
+    "docs/adr/experiments/0230-qualification/full-skips.txt": {
+      "bytes": 77492,
+      "sha256": "200a2d159d591f934b1db9037b066fa61017072f6c41d8d548661e57d085356b"
+    },
+    "docs/adr/experiments/0230-qualification/full.log": {
+      "bytes": 8046,
+      "sha256": "a45e9549bc1971e4d8c0dafc9f0db8aa01a7f6e6390e635ba7475e6e8bacb38a"
+    },
+    "docs/adr/experiments/0230-qualification/measured-sources.json": {
+      "bytes": 652,
+      "sha256": "315bd851fe0b2fa58736b1bba063947156a206724abba6c7a19aa0b31ff7b30a"
+    },
+    "docs/adr/experiments/0230-qualification/offline-guard.py.txt": {
+      "bytes": 4427,
+      "sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+    },
+    "docs/adr/experiments/0230-qualification/openspec.log": {
+      "bytes": 45,
+      "sha256": "e100704efd79d707c2c8e21e8f643cd71afcf906342dc7ad0830859d153b0cf0"
+    },
+    "docs/adr/experiments/0230-qualification/producer.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0230-qualification/producer.stdout": {
+      "bytes": 497,
+      "sha256": "938a9eee72185b6918d3e9fcccc6e1619da8fcadd593ed093c0f97d555b5ad25"
+    },
+    "docs/adr/experiments/0230-qualification/qualify.py.txt": {
+      "bytes": 2929,
+      "sha256": "6dfde3cecbc0c5902180f22a2eb312532f8c494d7c9e1779dedae78651c67e61"
+    },
+    "docs/adr/experiments/0230-qualification/ruff.log": {
+      "bytes": 19,
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "docs/adr/experiments/0230-qualification/sitecustomize.py.txt": {
+      "bytes": 4427,
+      "sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+    }
+  },
+  "implementation": "complete-artificial-only",
+  "measured_source_sha256": {
+    "docs/adr/experiments/0230-lineage-audit.py": "0f19464b7f47b355803992c7702a9322bcf0184a65cad2746a85449a98c32862",
+    "docs/adr/experiments/0230-lineage-core.py": "f2a54bf325e68453b18fae554f288b7803f538bf91d76195758aa433070ddad0",
+    "docs/adr/experiments/0230-saved-lineage.py": "c35ea1092603c8f333df2e38e7f11e4e88073264a310b939c6f27e3fbb8b0029",
+    "tests/lineage_fixtures.py": "80ed6d485852a227d50f6e894f3a139662454472f257f4c81297e7a53f46734c",
+    "tests/test_lineage_runner.py": "793baaef88bdc7f017d21e7018c43d593820f12651c59ef3932bfa2a642b5c1a",
+    "tests/test_saved_lineage.py": "1fd32f95b42019fe0460f4fdf929c0a3b8b06b73b69eab8598e9ba2bedf2462a"
+  },
+  "measurement_caveat": "six new source/test files untracked; checkout frozen through full pytest",
+  "qualification": {
+    "audit_status": "lineage-independently-verified",
+    "auditor_work": {
+      "aliases": 528,
+      "descriptors": 648,
+      "event_visits": 1248,
+      "norm_pairs": 36
+    },
+    "combined_output_bytes": 387623,
+    "complete_thirteen_file_inventory_bytes": 3784844,
+    "integrations": 0,
+    "measurements": [
+      {
+        "args": [
+          "artificial",
+          "/private/tmp/ariadna-r559r-20261121/artificial-full/profile.json",
+          "/private/tmp/ariadna-r559r-20261121/artificial-full/result"
+        ],
+        "external_elapsed_ns": 236658041,
+        "process": "producer",
+        "returncode": 0
+      },
+      {
+        "args": [
+          "audit-artificial",
+          "/private/tmp/ariadna-r559r-20261121/artificial-full/profile.json",
+          "/private/tmp/ariadna-r559r-20261121/artificial-full/result",
+          "2547a0aff98f7b89f851ffe86664090384ed6beddde9f1511a00ce3be98c8ef5",
+          "/private/tmp/ariadna-r559r-20261121/artificial-full/audit.json"
+        ],
+        "external_elapsed_ns": 178167792,
+        "process": "auditor",
+        "returncode": 0
+      }
+    ],
+    "retained_readback_started": false,
+    "scope": "artificial-saved-lineage",
+    "source_inventory_bytes_per_process": 3888966,
+    "source_sha256": {
+      "docs/adr/experiments/0230-lineage-audit.py": "0f19464b7f47b355803992c7702a9322bcf0184a65cad2746a85449a98c32862",
+      "docs/adr/experiments/0230-lineage-core.py": "f2a54bf325e68453b18fae554f288b7803f538bf91d76195758aa433070ddad0",
+      "docs/adr/experiments/0230-saved-lineage.py": "c35ea1092603c8f333df2e38e7f11e4e88073264a310b939c6f27e3fbb8b0029",
+      "tests/lineage_fixtures.py": "80ed6d485852a227d50f6e894f3a139662454472f257f4c81297e7a53f46734c",
+      "tests/test_lineage_runner.py": "793baaef88bdc7f017d21e7018c43d593820f12651c59ef3932bfa2a642b5c1a",
+      "tests/test_saved_lineage.py": "1fd32f95b42019fe0460f4fdf929c0a3b8b06b73b69eab8598e9ba2bedf2462a"
+    },
+    "spice_queries": 0,
+    "stage": "R5.59r",
+    "status": "lineage-qualified-attribution-unresolved",
+    "work": {
+      "aliases": 528,
+      "descriptors": 648,
+      "event_visits": 1248,
+      "norm_pairs": 36
+    }
+  },
+  "r559s_started": false,
+  "retained_endpoint_analysis": false,
+  "stage": "R5.59r",
+  "tests": {
+    "focused": {
+      "elapsed_s": 6.33,
+      "passed": 70
+    },
+    "guarded_full": {
+      "elapsed_s": 163.51,
+      "passed": 6648,
+      "skipped": 494
+    }
+  }
+}
