@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0236 — Preserve the matched-norm run rejected at source metadata](0236-record-saved-matched-norms.md): sole R5.59x exits3 before matrix selection;6 selected source hashes match within17 historical roles, but full-map equality rejects;0 methods/oracles, no numerical audit, attempt consumed.
+
 - [0235 — Qualify matched-input norm methods on artificial archives](0235-qualify-matched-input-norms.md):86 focused/6750 guarded full passes;72 boxes/144 methods/72 exact oracles independently verified, no real execution.
 
 - [0234 — Compare norm-squared methods on identical interval boxes](0234-design-matched-input-norm-comparison.md): design only;72 fixed boxes, two source-defined methods, explicit contexts, exact-real and rounded-primitive oracles; no calculations.

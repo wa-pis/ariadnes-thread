@@ -1,0 +1,37 @@
+{
+  "audit_present": false,
+  "auditor_dispatched": false,
+  "base_commit": "063f7a4a0bef5fbc52b2062c8dc415f1ae7a6037",
+  "evidence_paths": {
+    "docs/adr/experiments/0234-matched-norm-result/attempt.json": {
+      "bytes": 2697,
+      "sha256": "40d36146aac5b41498b1f67b9e09729fb249d1f0465948fe3cb3bc6fb85ae1ab"
+    },
+    "docs/adr/experiments/0234-matched-norm-result/failure.json": {
+      "bytes": 553,
+      "sha256": "5742e095c61593a7d926efd9a2d9e2b93cca6257679174b8e4a9a61e514b26bf"
+    }
+  },
+  "expected_runtime_inventory_bytes": 3918908,
+  "measurements": [
+    {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+        "-I",
+        "-S",
+        "-B",
+        "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0235-matched-norm.py",
+        "retained"
+      ],
+      "external_elapsed_ns": 219416833,
+      "process": "producer",
+      "returncode": 3,
+      "timed_out": false
+    }
+  ],
+  "no_retry": true,
+  "one_producer_dispatched": true,
+  "producer_completion_present": false,
+  "qualified_code_unchanged": true,
+  "stage": "R5.59x"
+}

@@ -8057,3 +8057,19 @@ was frozen throughout the suite; existing artificial scientific unit tests run.
 Only fabricated dependencies exercised actual retained/audit command shapes.
 Real0234 output paths remain absent; no SPICE/integration/R5.59x/R5.60 or physical
 claim. A distinct instruction is required for saved execution; automation PAUSED.
+
+## R5.59x first saved attempt rejected at source metadata (2026-11-21)
+
+[ADR0236](../../../docs/adr/0236-record-saved-matched-norms.md) preserves the sole R5.59x dispatch on clean063f7a4:
+exit3 at `matched norm: source/scope identity`, before matrix selection or arithmetic.
+The authenticated6 selected source hashes match within the17-role historical map;
+exact whole-map equality in the evaluator rejects that metadata shape. The unused
+independent numerical auditor has the same guard; artificial fixtures covered only
+the6-role map. Source3,918,908 B, durable attempt/failure3250 B and external
+0.219416833 s are recorded; all work/progress counters remain0. No report/receipt/
+completion exists, so no numerical audit was dispatched. Independent read-only
+failure review confirms the metadata defect and unchanged8 qualified files/13 pins.
+R5.59x remains unchecked and consumed; no retry, repair, data/formula/context/cap
+change or comparison/physical/M3 claim. Automation stays PAUSED. Next requires a
+separately instructed versioned adapter/fixture repair and qualification, then a new
+execution identity preserving this failure; R5.60 stays closed.

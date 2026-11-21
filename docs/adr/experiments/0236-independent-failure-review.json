@@ -1,0 +1,90 @@
+{
+  "base_commit": "063f7a4a0bef5fbc52b2062c8dc415f1ae7a6037",
+  "decision": "Preserve consumed first attempt and leave R5.59x unchecked. No repair or retry; independently qualify a versioned metadata adapter and artificial shape coverage before a separately authorized future execution.",
+  "diagnosis": {
+    "additional_historical_metadata_roles": [
+      "anchors",
+      "archive",
+      "containment",
+      "core",
+      "io",
+      "oracle",
+      "orbit",
+      "points",
+      "reader",
+      "screen",
+      "study"
+    ],
+    "all_six_selected_hashes_match": true,
+    "artificial_coverage_gap": "tests/lineage_fixtures.py constructs method_sha256 and _context.source_pins from the same6 source_bindings; matched_norm_fixtures retains that map shape.",
+    "authentication_boundary": "The original report bytes, including17 metadata hashes, are pinned; only the selected6 source files are separately authenticated in this runner. No additional source-file verification is claimed.",
+    "failing_test": "Exact equality of complete17-key report.method_sha256 with selected6-key authenticated source_pins.",
+    "historical_report_role_count": 17,
+    "independent_audit_has_same_guard": "docs/adr/experiments/0235-matched-norm-audit.py:386; not executed",
+    "matching_selected_bindings": {
+      "bounds": "b1a2673aa5516533320febed3efddeb27edece1f3f60b775323520e71324f83e",
+      "checks": "30f3fbafa1898884c4d4234bdc66369f81dab64271dcd9ec9c4c2e1841ba829a",
+      "interval": "3243ec83031b8bc873dfae47076e0bbb086640893e396b1e56c2dbcf5d865329",
+      "runner": "395d711620fb0e6e4ea092001adb52a769052af8d527300902653df4b6a4d6d7",
+      "trace": "d382d1181c8069d7d5d1b51b8261c75f726be522b95ed08252363c5a1a45c42d",
+      "trace_schema": "e50876ce72c8e80a74d7d615b4f67f6d69ab9a259a10663b041ee56d78730091"
+    },
+    "scope_matches": true,
+    "selected_role_count": 6
+  },
+  "failure": {
+    "before": [
+      "expected-event check",
+      "trace traversal",
+      "selected vector extraction",
+      "local methods",
+      "exact-range oracle",
+      "diagonal compatibility",
+      "paired comparison"
+    ],
+    "emitted_failure_work": {
+      "boxes": 0,
+      "comparisons": 0,
+      "descriptors": 0,
+      "diagonals": 0,
+      "directed_primitives": 0,
+      "event_visits": 0,
+      "methods": 0,
+      "oracles": 0
+    },
+    "error": "matched norm: source/scope identity",
+    "evaluator_guard": "docs/adr/experiments/0235-matched-norm-core.py:490",
+    "invocation_id": "af7aed1d8bdc4f57bef131635e971a11",
+    "partial_rows": 0,
+    "physical_status": "physical-join-not-established",
+    "progress": {
+      "methods": {
+        "attempted": 0,
+        "charged": 0,
+        "completed": 0
+      },
+      "oracles": {
+        "attempted": 0,
+        "charged": 0,
+        "completed": 0
+      }
+    },
+    "source_inventory_bytes": 3918908
+  },
+  "kind": "independent-read-only-failure-metadata-and-source-review",
+  "missing_outputs": [
+    "report.json",
+    "receipt.json",
+    "completion.json",
+    "0234-matched-norm-audit.json"
+  ],
+  "numerical_audit_invocations": 0,
+  "original_thirteen_raw_pins": "match",
+  "original_two_contract_hashes": "match",
+  "producer_invocations": 1,
+  "qualified_eight_source_test_hashes": "match",
+  "reviewer": "separate saved_norm_preflight agent",
+  "scientific_conclusion": "None: no matrix/compatibility/containment/method advantage or downstream physical conclusion.",
+  "scope": "Failure boundary, raw hashes, source metadata and claim limits only; no producer, audit, fixture or numerical function imported or invoked.",
+  "stage": "R5.59x"
+}
