@@ -1,0 +1,119 @@
+{
+  "authorization_recorded_utc": "2026-11-21T10:47:51.354744+00:00",
+  "authorized_client_date": "2026-11-21",
+  "base_commit": "4b708bbb9d867a215b454daa1d8e4dbf248d38a3",
+  "branch": "dev",
+  "contract_sha256": "4c4e6d4c8981428b5931def910aa7d648f7860a9ce5e75d78b16952063a4b087",
+  "fixed_outputs_absent": true,
+  "initial_git_status": "",
+  "instruction": "One offline R5.59s saved readback and independent audit; no SPICE, integration or R5.60; record ADR/OpenSpec, commit and push.",
+  "limits": {
+    "absolute_decimal_exponent": 512,
+    "alias_links": 768,
+    "analyzer_wall_ns": 30000000000,
+    "audit_reserve_bytes": 65536,
+    "auditor_wall_ns": 30000000000,
+    "combined_evidence_bytes": 1048576,
+    "counted_event_visits_per_process": 32768,
+    "decimal_significand_digits": 256,
+    "descriptor_records": 1024,
+    "endpoint_text_chars": 1024,
+    "force_evaluations": 0,
+    "input_event_records": 8192,
+    "integrations": 0,
+    "kernel_accesses": 0,
+    "native_calls": 0,
+    "new_bounds": 0,
+    "new_norms": 0,
+    "new_oracle_mass": 0,
+    "new_point_roots": 0,
+    "new_points": 0,
+    "new_stage_events": 0,
+    "new_traces": 0,
+    "norm_pair_slots": 36,
+    "old_audit_replays": 0,
+    "r560_attempts": 0,
+    "rational_component_bits": 4096,
+    "source_inventory_bytes_per_process": 4194304,
+    "spice_queries": 0
+  },
+  "no_retry": true,
+  "origin_dev": "4b708bbb9d867a215b454daa1d8e4dbf248d38a3",
+  "qualified_source_sha256": {
+    "docs/adr/experiments/0230-lineage-audit.py": "0f19464b7f47b355803992c7702a9322bcf0184a65cad2746a85449a98c32862",
+    "docs/adr/experiments/0230-lineage-core.py": "f2a54bf325e68453b18fae554f288b7803f538bf91d76195758aa433070ddad0",
+    "docs/adr/experiments/0230-saved-lineage.py": "c35ea1092603c8f333df2e38e7f11e4e88073264a310b939c6f27e3fbb8b0029",
+    "tests/lineage_fixtures.py": "80ed6d485852a227d50f6e894f3a139662454472f257f4c81297e7a53f46734c",
+    "tests/test_lineage_runner.py": "793baaef88bdc7f017d21e7018c43d593820f12651c59ef3932bfa2a642b5c1a",
+    "tests/test_saved_lineage.py": "1fd32f95b42019fe0460f4fdf929c0a3b8b06b73b69eab8598e9ba2bedf2462a"
+  },
+  "raw_input_pins": [
+    {
+      "bytes": 500,
+      "path": "docs/adr/experiments/0224-retained-trace-audit.json",
+      "sha256": "6b5c4f0567a42dd6337297db04003874af08a27e962018139569b07b69eeb8ec"
+    },
+    {
+      "bytes": 4075,
+      "path": "docs/adr/experiments/0224-retained-trace-result/attempt.json",
+      "sha256": "ede3377f60ade4fbc005c64cb9cd18f083b0e32699d4c7fb3573800728980f59"
+    },
+    {
+      "bytes": 439,
+      "path": "docs/adr/experiments/0224-retained-trace-result/completion.json",
+      "sha256": "a155ed0b13f07f6b5f2b9979554963a8842f1cbf1946922e7cb103e1be6b6196"
+    },
+    {
+      "bytes": 4243,
+      "path": "docs/adr/experiments/0224-retained-trace-result/receipt.json",
+      "sha256": "351887540567e0397c619c0a327b5841685f82d14567f26cc9a7ab61913705a8"
+    },
+    {
+      "bytes": 3666107,
+      "path": "docs/adr/experiments/0224-retained-trace-result/report.json",
+      "sha256": "13485689f72f45b2ee1482c01cd5eb69e8ddc93204e3b8b62841a2a04e1486d4"
+    },
+    {
+      "bytes": 9152,
+      "path": "docs/adr/experiments/0228-verification.json",
+      "sha256": "31694a511c28b6c2246a7b8752d8c3d410e19573bc30b67426607580dfd32266"
+    },
+    {
+      "bytes": 9690,
+      "path": "docs/adr/experiments/0224-retained-trace-contract.json",
+      "sha256": "118795d87f4084528a1d4096c4f1d61c0936f0afbc927ae6c040f6ec26600dea"
+    },
+    {
+      "bytes": 9513,
+      "path": "docs/adr/experiments/0219-phase-bounds.py",
+      "sha256": "b1a2673aa5516533320febed3efddeb27edece1f3f60b775323520e71324f83e"
+    },
+    {
+      "bytes": 8939,
+      "path": "docs/adr/experiments/0219-interval.py",
+      "sha256": "3243ec83031b8bc873dfae47076e0bbb086640893e396b1e56c2dbcf5d865329"
+    },
+    {
+      "bytes": 12517,
+      "path": "docs/adr/experiments/0223-bound-trace.py",
+      "sha256": "e50876ce72c8e80a74d7d615b4f67f6d69ab9a259a10663b041ee56d78730091"
+    },
+    {
+      "bytes": 4624,
+      "path": "docs/adr/experiments/0225-bound-trace.py",
+      "sha256": "d382d1181c8069d7d5d1b51b8261c75f726be522b95ed08252363c5a1a45c42d"
+    },
+    {
+      "bytes": 20168,
+      "path": "docs/adr/experiments/0225-trace-checks.py",
+      "sha256": "30f3fbafa1898884c4d4234bdc66369f81dab64271dcd9ec9c4c2e1841ba829a"
+    },
+    {
+      "bytes": 34710,
+      "path": "docs/adr/experiments/0227-retained-trace.py",
+      "sha256": "395d711620fb0e6e4ea092001adb52a769052af8d527300902653df4b6a4d6d7"
+    }
+  ],
+  "stage": "R5.59s",
+  "timezone": "Europe/Samara"
+}

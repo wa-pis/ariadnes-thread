@@ -1,0 +1,26 @@
+{
+  "audit_present": false,
+  "auditor_dispatched": false,
+  "base_commit": "4b708bbb9d867a215b454daa1d8e4dbf248d38a3",
+  "measurements": [
+    {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+        "-I",
+        "-S",
+        "-B",
+        "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0230-saved-lineage.py",
+        "retained"
+      ],
+      "external_elapsed_ns": 90031584,
+      "process": "producer",
+      "returncode": 3,
+      "timed_out": false
+    }
+  ],
+  "no_retry": true,
+  "one_producer_dispatched": true,
+  "producer_completion_present": false,
+  "qualified_code_unchanged": true,
+  "stage": "R5.59s"
+}

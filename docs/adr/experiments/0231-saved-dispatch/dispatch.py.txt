@@ -1,0 +1,91 @@
+"""Single authorized saved readback and, only on completion, one separate verifier."""
+from datetime import datetime, timezone
+from hashlib import sha256
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+from time import monotonic_ns
+
+ROOT = Path('/Users/agrudin/dev/my/ariadna')
+ART = ROOT / 'docs/adr/experiments'
+E = ART / '0231-saved-dispatch'
+SCRIPT = ART / '0230-saved-lineage.py'
+RESULT = ART / '0229-saved-lineage-result'
+AUDIT = ART / '0229-saved-lineage-audit.json'
+CONTRACT = ART / '0229-saved-lineage-contract.json'
+EXPECTED = '4b708bbb9d867a215b454daa1d8e4dbf248d38a3'
+
+def write(path, data):
+    raw = data if isinstance(data, bytes) else (json.dumps(data, sort_keys=True, indent=2, allow_nan=False) + '\n').encode()
+    with path.open('xb') as stream:
+        stream.write(raw)
+        stream.flush()
+        os.fsync(stream.fileno())
+    handle = os.open(path.parent, os.O_RDONLY)
+    try:
+        os.fsync(handle)
+    finally:
+        os.close(handle)
+
+head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+remote = subprocess.check_output(['git', 'rev-parse', 'origin/dev'], cwd=ROOT, text=True).strip()
+branch = subprocess.check_output(['git', 'branch', '--show-current'], cwd=ROOT, text=True).strip()
+status = subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True)
+assert head == remote == EXPECTED and branch == 'dev' and status == ''
+assert not RESULT.exists() and not AUDIT.exists() and not E.exists()
+assert not (ROOT / 'docs/adr/0231-record-saved-lineage-result.md').exists()
+assert sha256(CONTRACT.read_bytes()).hexdigest() == '4c4e6d4c8981428b5931def910aa7d648f7860a9ce5e75d78b16952063a4b087'
+c = json.loads(CONTRACT.read_bytes())
+q = json.loads((ART / '0230-verification.json').read_bytes())
+for path, pin in q['measured_source_sha256'].items():
+    assert sha256((ROOT / path).read_bytes()).hexdigest() == pin
+for pin in c['input_artifacts']:
+    raw = (ROOT / pin['path']).read_bytes()
+    assert len(raw) == pin['bytes'] and sha256(raw).hexdigest() == pin['sha256']
+assert sum(pin['bytes'] for pin in c['input_artifacts']) == 3784677
+E.mkdir()
+write(E / 'authorization.json', dict(stage='R5.59s', authorized_client_date='2026-11-21', timezone='Europe/Samara',
+    instruction='One offline R5.59s saved readback and independent audit; no SPICE, integration or R5.60; record ADR/OpenSpec, commit and push.',
+    base_commit=head, origin_dev=remote, branch=branch, initial_git_status=status,
+    contract_sha256=sha256(CONTRACT.read_bytes()).hexdigest(),
+    qualified_source_sha256=q['measured_source_sha256'], raw_input_pins=c['input_artifacts'],
+    fixed_outputs_absent=True, limits=c['future_caps'], no_retry=True,
+    authorization_recorded_utc=datetime.now(timezone.utc).isoformat()))
+write(E / 'dispatch.py.txt', Path(__file__).read_bytes())
+
+commands = [sys.executable, '-I', '-S', '-B', str(SCRIPT)]
+
+def dispatch(name, args):
+    write(E / (name + '-attempt.json'), dict(command=commands + args, utc=datetime.now(timezone.utc).isoformat(), expected_wall_ns=30_000_000_000, ordinal=1))
+    started = monotonic_ns()
+    try:
+        child = subprocess.run(commands + args, stdin=subprocess.DEVNULL, capture_output=True, timeout=31, check=False)
+        stdout, stderr = child.stdout, child.stderr
+        result = dict(returncode=child.returncode, timed_out=False)
+    except subprocess.TimeoutExpired as error:
+        stdout, stderr = error.stdout or b'', error.stderr or b''
+        result = dict(returncode=None, timed_out=True)
+    except OSError as error:
+        stdout, stderr = b'', str(error).encode()
+        result = dict(returncode=None, timed_out=False, launch_error=str(error))
+    result |= dict(external_elapsed_ns=monotonic_ns()-started, command=commands+args, process=name)
+    write(E / (name + '.stdout'), stdout)
+    write(E / (name + '.stderr'), stderr)
+    write(E / (name + '-measurement.json'), result)
+    return result
+
+producer = dispatch('producer', ['retained'])
+measurements = [producer]
+complete = RESULT / 'completion.json'
+if producer['returncode'] == 0 and producer['external_elapsed_ns'] < 30_000_000_000 and complete.is_file():
+    completion_pin = sha256(complete.read_bytes()).hexdigest()
+    write(E / 'completion-pin.json', dict(sha256=completion_pin, bytes=complete.stat().st_size))
+    measurements.append(dispatch('auditor', ['audit', completion_pin]))
+summary = dict(stage='R5.59s', base_commit=head, measurements=measurements,
+    producer_completion_present=complete.is_file(), audit_present=AUDIT.is_file(),
+    one_producer_dispatched=True, auditor_dispatched=len(measurements)==2, no_retry=True,
+    qualified_code_unchanged=all(sha256((ROOT/p).read_bytes()).hexdigest()==h for p,h in q['measured_source_sha256'].items()))
+write(E / 'dispatch-summary.json', summary)
+print(json.dumps(summary, sort_keys=True))

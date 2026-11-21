@@ -7960,3 +7960,22 @@ Source/status snapshots remain identical throughout the frozen full suite.
 No retained endpoints are analysed and no R5.59s output is created. This qualification
 keeps attribution unresolved and does not authorize execution or a scientific method
 change. R5.59s requires a separate explicit instruction; automation remains PAUSED.
+
+
+## R5.59s first saved readback rejected at worker dispatch (2026-11-21)
+
+[ADR0231](../../../docs/adr/0231-record-saved-lineage-result.md) preserves one
+explicitly authorized dispatch of unchanged0230 code on clean4b708bb. The parent
+expands `retained` to four worker arguments but the initial worker guard requires
+at least five. It exits3 before worker CLI/authentication/analyzer/output; external
+0.090031584 s, no timeout. No result/completion exists, so no independent numerical
+verifier was dispatched. A separate source/metadata review confirms the failure
+boundary and unchanged six qualified sources. No endpoint analysis, SPICE,
+integration, old scientific audit or R5.60 occurred.
+
+The single attempt is consumed; R5.59s criteria remain unmet and the task stays
+unchecked. Preserve raw failure records and source bytes; do not repair or retry in
+this execution stage. A separately instructed repair must cover exact retained/audit
+worker command shapes with artificial dependencies and project checks. Only after
+qualified repair and a distinct execution decision could another saved readback be
+considered. Existing scientific assumptions/caps/gates are unchanged; automation PAUSED.

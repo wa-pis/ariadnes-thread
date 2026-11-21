@@ -1,0 +1,47 @@
+{
+  "conclusion": "Retained worker-arity coverage was absent from the artificial qualification. Preserve the consumed attempt; no retry or numerical conclusion.",
+  "findings": {
+    "audit_present": false,
+    "auditor_dispatched": false,
+    "completion_present": false,
+    "dispatcher_elapsed_ns": 76497458,
+    "external_elapsed_ns": 90031584,
+    "failure_before": [
+      "worker Budget construction",
+      "worker CLI",
+      "archive authentication",
+      "scope guard installation",
+      "private analyzer import",
+      "saved endpoint analysis",
+      "output creation"
+    ],
+    "guard_source": "docs/adr/experiments/0230-saved-lineage.py:769",
+    "one_dispatch": true,
+    "parent_scope": "Fixed profile construction reads contract metadata only; external preflight hashes raw input bytes without numerical parsing.",
+    "required_minimum": 5,
+    "result_directory_present": false,
+    "returncode": 3,
+    "source_hashes_match": true,
+    "timed_out": false,
+    "worker_arg_count": 4,
+    "worker_argv_shape": [
+      "worker",
+      "<started_ns>",
+      "<invocation_id>",
+      "retained"
+    ]
+  },
+  "kind": "independent-read-only-dispatch-metadata-and-source-review",
+  "no_new_scientific_work": {
+    "basis": "Source/control-flow inference, not emitted worker counters; no successful report exists.",
+    "integration": false,
+    "new_endpoint_analysis": false,
+    "r560": false,
+    "scientific_helper_evaluations": false,
+    "spice": false
+  },
+  "numeric_verifier_invoked": false,
+  "reviewer": "separate retained_checks agent",
+  "scope": "Failure location/provenance only; no analysis or scientific module invocation.",
+  "stage": "R5.59s"
+}

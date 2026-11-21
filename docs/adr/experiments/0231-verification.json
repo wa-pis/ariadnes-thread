@@ -1,0 +1,118 @@
+{
+  "actual_runtime_descriptor_counts": null,
+  "actual_runtime_source_inventory_bytes": null,
+  "authorization_consumed": true,
+  "automation": "PAUSED",
+  "base_commit": "4b708bbb9d867a215b454daa1d8e4dbf248d38a3",
+  "checks": {
+    "finite_json_files": 6,
+    "git_diff": "passed",
+    "historical_contract_and_thirteen_input_hashes": "unchanged",
+    "independent_metadata_review": "agrees",
+    "local_markdown_links": 466,
+    "no_numerical_verifier_dispatch": "confirmed",
+    "numeric_result_and_audit": "absent",
+    "one_consumed_dispatch": "confirmed",
+    "pytest_and_ruff": "not rerun; code unchanged, ADR0230 qualification reused",
+    "qualified_six_source_test_hashes": "unchanged",
+    "runtime_dependencies_tests_legacy": "unchanged",
+    "runtime_worker_counter_artifact": "absent; no invented ledger",
+    "strict_openspec": "passed"
+  },
+  "date": "2026-11-21",
+  "dispatch_summary": {
+    "audit_present": false,
+    "auditor_dispatched": false,
+    "base_commit": "4b708bbb9d867a215b454daa1d8e4dbf248d38a3",
+    "measurements": [
+      {
+        "command": [
+          "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+          "-I",
+          "-S",
+          "-B",
+          "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0230-saved-lineage.py",
+          "retained"
+        ],
+        "external_elapsed_ns": 90031584,
+        "process": "producer",
+        "returncode": 3,
+        "timed_out": false
+      }
+    ],
+    "no_retry": true,
+    "one_producer_dispatched": true,
+    "producer_completion_present": false,
+    "qualified_code_unchanged": true,
+    "stage": "R5.59s"
+  },
+  "evidence_sha256": {
+    "docs/adr/experiments/0231-independent-dispatch-review.json": {
+      "bytes": 1681,
+      "sha256": "9d9f895cfbc4c4547bbfedc8afaec42a25a77fba1e3a0694964bd013b977131d"
+    },
+    "docs/adr/experiments/0231-saved-dispatch/authorization.json": {
+      "bytes": 4598,
+      "sha256": "e5437c948bc2ddde0855a53ba89eb064e2634d824e737b73d22b4087944a4c9d"
+    },
+    "docs/adr/experiments/0231-saved-dispatch/dispatch-summary.json": {
+      "bytes": 674,
+      "sha256": "4208459cfe7e0ea928a1cd41e7855d4a0544a7223f6bce659283c78900c588db"
+    },
+    "docs/adr/experiments/0231-saved-dispatch/dispatch.py.txt": {
+      "bytes": 4884,
+      "sha256": "bb0fcf7973c48eb859fbfd4e2d5739b156341f2575aca003b35c88d75aabecd9"
+    },
+    "docs/adr/experiments/0231-saved-dispatch/openspec.log": {
+      "bytes": 45,
+      "sha256": "e100704efd79d707c2c8e21e8f643cd71afcf906342dc7ad0830859d153b0cf0"
+    },
+    "docs/adr/experiments/0231-saved-dispatch/producer-attempt.json": {
+      "bytes": 315,
+      "sha256": "dd38e58f3ff0b8489c8874bf495ec7517ee8706f58850dfb1e690dc880ef173b"
+    },
+    "docs/adr/experiments/0231-saved-dispatch/producer-measurement.json": {
+      "bytes": 320,
+      "sha256": "fd0c768782de24f73d3e202bbfc83cf961e58e55c6facdfe7c130a395c9251b1"
+    },
+    "docs/adr/experiments/0231-saved-dispatch/producer.stderr": {
+      "bytes": 25,
+      "sha256": "95d56b6485f415774d41100dcc93351854bd5ddbb3656b18238d456c91be1aec"
+    },
+    "docs/adr/experiments/0231-saved-dispatch/producer.stdout": {
+      "bytes": 52,
+      "sha256": "fce172ec41ecefaf02bc6d2c82f13e265825d5faed08c4b698c04b76b80c2f48"
+    }
+  },
+  "independent_failure_review": "0231-independent-dispatch-review.json",
+  "numerical_audit_dispatched": false,
+  "numerical_readback_complete": false,
+  "prior_test_evidence": {
+    "adr": "ADR0230",
+    "focused_passed": 70,
+    "guarded_exclusions": 494,
+    "guarded_full_passed": 6648,
+    "pytest_rerun": false,
+    "ruff_rerun": false
+  },
+  "qualified_source_sha256": {
+    "docs/adr/experiments/0230-lineage-audit.py": "0f19464b7f47b355803992c7702a9322bcf0184a65cad2746a85449a98c32862",
+    "docs/adr/experiments/0230-lineage-core.py": "f2a54bf325e68453b18fae554f288b7803f538bf91d76195758aa433070ddad0",
+    "docs/adr/experiments/0230-saved-lineage.py": "c35ea1092603c8f333df2e38e7f11e4e88073264a310b939c6f27e3fbb8b0029",
+    "tests/lineage_fixtures.py": "80ed6d485852a227d50f6e894f3a139662454472f257f4c81297e7a53f46734c",
+    "tests/test_lineage_runner.py": "793baaef88bdc7f017d21e7018c43d593820f12651c59ef3932bfa2a642b5c1a",
+    "tests/test_saved_lineage.py": "1fd32f95b42019fe0460f4fdf929c0a3b8b06b73b69eab8598e9ba2bedf2462a"
+  },
+  "scientific_claim": "unchanged; no attribution result",
+  "source_control_flow_inference": {
+    "no_endpoint_analysis": true,
+    "no_integration": true,
+    "no_r560": true,
+    "no_scientific_helper": true,
+    "no_spice": true,
+    "runtime_worker_counters_emitted": false
+  },
+  "stage": "R5.59s",
+  "status": "failed-before-worker-authentication",
+  "task_complete": false
+}

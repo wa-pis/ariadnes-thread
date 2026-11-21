@@ -554,6 +554,15 @@ analyzer/auditor0.236658041/0.178167792 s satisfy the unchanged envelope.
 No retained endpoint analysis or R5.59s ran; its fixed outputs remain absent.
 R5.59s still needs a separate explicit instruction. Automation remains PAUSED.
 
+[ADR0231](../docs/adr/0231-record-saved-lineage-result.md) records the subsequently
+authorized single R5.59s dispatch on4b708bb: exit3 in0.090031584 s before analysis.
+The retained worker has four arguments but its guard requires at least five;
+artificial qualification exercised a longer command shape. No result/completion
+or numerical audit exists. Independent read-only failure review confirms hashes,
+control-flow boundary and no scientific/native work. R5.59s remains unchecked;
+that attempt is consumed, not retried. A separately instructed dispatcher repair,
+artificial qualification and distinct execution decision are needed. Automation PAUSED.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

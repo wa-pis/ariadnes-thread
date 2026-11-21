@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0231 — Preserve the saved-lineage dispatch rejected before analysis](0231-record-saved-lineage-result.md): sole R5.59s returns3 at retained worker arity; no numerical readback/audit, attempt consumed, independent failure review agrees.
+
 - [0230 — Qualify the saved-lineage reader on fabricated archives](0230-qualify-saved-lineage-reader.md): R5.59r implemented;70 focused/6648 guarded full passes, artificial analyzer/auditor qualified; no R5.59s or retained endpoint analysis.
 - [0229 — Design a saved-lineage check of interval widening](0229-design-saved-lineage-diagnosis.md): source-linked archive diagnosis and36 matched-operand norm slots; design only, no retained analysis or dominant-cause claim.
 - [0228 — Verify corrected retained observations](0228-record-corrected-retained-observations.md): one corrected0227 producer and separate saved-only audit pass24 trace/control pairs, six archived matches and24×16 sampled checks; retained width cause remains unresolved.
