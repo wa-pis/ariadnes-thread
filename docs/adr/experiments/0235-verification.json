@@ -1,0 +1,232 @@
+{
+  "automation": "PAUSED",
+  "base_commit": "f4fe57c7272d8f2a6da80391dcba7ceac032ffe5",
+  "baseline_test_correction": {
+    "current_sha256": "e95587387dc1b8a9c2c7c5cdfaf2a94e00fadc327fe92e3ce7604c32b3ff86a3",
+    "first_full": {
+      "elapsed_s": "190.32",
+      "failed": 1,
+      "passed": 6749,
+      "skipped": 494
+    },
+    "path": "tests/test_lineage_runner.py",
+    "prior_sha256": "793baaef88bdc7f017d21e7018c43d593820f12651c59ef3932bfa2a642b5c1a",
+    "reason": "Stale absence assertion after ADR0233 becomes read-only output hash invariance; no exclusions/gates changed"
+  },
+  "checks": {
+    "existing_test_correction": "prior source retained at original hash; no extra exclusions",
+    "final_independent_document_review": "agrees; historical scientific source/evidence wording clarified",
+    "finite_json_files": 15,
+    "frozen_checkout": "unchanged",
+    "future_fixed_outputs": "absent",
+    "git_diff": "passed",
+    "historical_experiments_evidence_sources": "unchanged",
+    "independent_review": "agrees after corrections",
+    "legacy_runtime_dependencies": "unchanged",
+    "links_json_hashes_diff": "passed",
+    "local_markdown_links": 488,
+    "original_thirteen_pins": "unchanged; raw byte hashing only",
+    "ruff": "passed",
+    "strict_openspec": "passed"
+  },
+  "date": "2026-11-21",
+  "decision": "accepted-artificial-qualification",
+  "evidence_sha256": {
+    "docs/adr/experiments/0235-qualification/after-snapshot.json": {
+      "bytes": 1322,
+      "sha256": "445769d5d8f86c58d33a43c383f40eb728559b4a8913ab01d9139e758dce15c2"
+    },
+    "docs/adr/experiments/0235-qualification/artificial-audit.json": {
+      "bytes": 1012,
+      "sha256": "d8c90d231b78ac275a38611a0cef7398eff049e38b56a92746e295828006e5de"
+    },
+    "docs/adr/experiments/0235-qualification/artificial-profile.json": {
+      "bytes": 1934,
+      "sha256": "d94832f0994b17a644d969be1799cfa9fe9790c385779c4e18d45fdc5874183d"
+    },
+    "docs/adr/experiments/0235-qualification/artificial-result/attempt.json": {
+      "bytes": 2708,
+      "sha256": "4db9a8ccec52882b52e8b3bf290759e10940b7ff8e9a3b8c0e12b8eb234a882f"
+    },
+    "docs/adr/experiments/0235-qualification/artificial-result/completion.json": {
+      "bytes": 245,
+      "sha256": "078e41c75bc8235f03cd9fd40ba6a3f6c4ec9f3c229a30c5aa18548c4c5f505d"
+    },
+    "docs/adr/experiments/0235-qualification/artificial-result/receipt.json": {
+      "bytes": 2898,
+      "sha256": "f09f6d52de2f30b1f17c774a781d759164e4c2bbe8dfa5c7e0037916527d000c"
+    },
+    "docs/adr/experiments/0235-qualification/artificial-result/report.json": {
+      "bytes": 546156,
+      "sha256": "d479c3e44f65b302032506c5eb21fa7417517e59d2bc6eb3b92778ca095296bf"
+    },
+    "docs/adr/experiments/0235-qualification/artificial-summary.json": {
+      "bytes": 13791,
+      "sha256": "b1abf7e4d8071d0782c1218b94eb534e343b4d1b379e78358cbf34af1b7925df"
+    },
+    "docs/adr/experiments/0235-qualification/auditor.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0235-qualification/auditor.stdout": {
+      "bytes": 2887,
+      "sha256": "b551f6d5bfdb7bdbf75c5471c0601c43aaae4df0fedf49a66ee7439117527e38"
+    },
+    "docs/adr/experiments/0235-qualification/before-snapshot.json": {
+      "bytes": 1322,
+      "sha256": "445769d5d8f86c58d33a43c383f40eb728559b4a8913ab01d9139e758dce15c2"
+    },
+    "docs/adr/experiments/0235-qualification/bootstrap.json": {
+      "bytes": 2625,
+      "sha256": "46a099df2485236ffa0c778682c031a112243537868e4efc4d4ea1469f4ca880"
+    },
+    "docs/adr/experiments/0235-qualification/bootstrap.py.txt": {
+      "bytes": 4482,
+      "sha256": "aac64d6ca49496725b57ee3ce92792bba8ca1189991b8e5bdcc59bc744bf5f60"
+    },
+    "docs/adr/experiments/0235-qualification/final-document-review.json": {
+      "bytes": 860,
+      "sha256": "e0e1f0724ef46a358e0be0f6512d6bec1edca8c39cc312d14c7d34bf714107f6"
+    },
+    "docs/adr/experiments/0235-qualification/first-after-snapshot.json": {
+      "bytes": 1185,
+      "sha256": "d89aca74139d89eb05f3d4522187f8796ed388281a541ca9cd5eabd9f30318d9"
+    },
+    "docs/adr/experiments/0235-qualification/first-before-snapshot.json": {
+      "bytes": 1185,
+      "sha256": "d89aca74139d89eb05f3d4522187f8796ed388281a541ca9cd5eabd9f30318d9"
+    },
+    "docs/adr/experiments/0235-qualification/first-full-failed.log": {
+      "bytes": 9837,
+      "sha256": "1d819a0db05dec0fd4e1f09be3a05737c6569bc65c7db9bbb31aed9572bd6c9c"
+    },
+    "docs/adr/experiments/0235-qualification/focused.log": {
+      "bytes": 180,
+      "sha256": "72cc10adb619a45b40d7c0c1147600374ec02583288401879ee8b7815745f829"
+    },
+    "docs/adr/experiments/0235-qualification/full-skips.txt": {
+      "bytes": 77492,
+      "sha256": "200a2d159d591f934b1db9037b066fa61017072f6c41d8d548661e57d085356b"
+    },
+    "docs/adr/experiments/0235-qualification/full.log": {
+      "bytes": 8126,
+      "sha256": "16bb063b6d2f50ac7fd634918ec30c9af9493ca96ef94c72aa65519ebdd53fee"
+    },
+    "docs/adr/experiments/0235-qualification/independent-review.json": {
+      "bytes": 2273,
+      "sha256": "34f70cc4b431dd4c859c8046be126356111eb1c0b35ef0f66426b855619fdeb7"
+    },
+    "docs/adr/experiments/0235-qualification/offline-guard.py.txt": {
+      "bytes": 4427,
+      "sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+    },
+    "docs/adr/experiments/0235-qualification/openspec.log": {
+      "bytes": 45,
+      "sha256": "e100704efd79d707c2c8e21e8f643cd71afcf906342dc7ad0830859d153b0cf0"
+    },
+    "docs/adr/experiments/0235-qualification/prior-lineage-runner-test.py.txt": {
+      "bytes": 19577,
+      "sha256": "793baaef88bdc7f017d21e7018c43d593820f12651c59ef3932bfa2a642b5c1a"
+    },
+    "docs/adr/experiments/0235-qualification/producer.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0235-qualification/producer.stdout": {
+      "bytes": 2560,
+      "sha256": "5c1dfaea3c3f2f00f9eb1e8815c80a5ca91100dc16754d3cd1a4cba90b71c628"
+    },
+    "docs/adr/experiments/0235-qualification/qualify.py.txt": {
+      "bytes": 4059,
+      "sha256": "2e8e2502d2476c7fcc450a13dec633ca2584c7e6cfbea2131e4f3962ad62b78a"
+    },
+    "docs/adr/experiments/0235-qualification/ruff.log": {
+      "bytes": 19,
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "docs/adr/experiments/0235-qualification/sitecustomize.py.txt": {
+      "bytes": 4427,
+      "sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+    }
+  },
+  "focused_tests": {
+    "passed": 86
+  },
+  "guarded_full_tests": {
+    "elapsed_s": "186.61",
+    "passed": 6750,
+    "skipped": 494,
+    "unrestricted": false
+  },
+  "implementation_complete": true,
+  "measured_source_sha256": {
+    "docs/adr/experiments/0235-matched-norm-audit.py": "68a61ebf66114c915edf1521dd0187deae415ea9913a937393b68a6b71aa1862",
+    "docs/adr/experiments/0235-matched-norm-core.py": "40eaafba22163f627ea66d299402e4acf2c33a6b197c70ce89eaaa2e22c4b4c0",
+    "docs/adr/experiments/0235-matched-norm.py": "2a3c835298c281eb9dd85b50858aaaffeacde73cef28c96ddb054732f9b31637",
+    "tests/matched_norm_dispatch_harness.py": "aac64d6ca49496725b57ee3ce92792bba8ca1189991b8e5bdcc59bc744bf5f60",
+    "tests/matched_norm_fixtures.py": "226cc7a122ea54e7669eb4d4b65d7630ad4654a4eb12c3045f6fe74b322990e5",
+    "tests/test_lineage_runner.py": "e95587387dc1b8a9c2c7c5cdfaf2a94e00fadc327fe92e3ce7604c32b3ff86a3",
+    "tests/test_matched_norm.py": "0158dd7be285c06c2cd35a403a554140da3105f9a456ae9b8b89f4c2a18a72de",
+    "tests/test_matched_norm_dispatch.py": "06c409ea094de515c98116f94f86735c5cf9ffa64e75c9542b8892f2b27278a4"
+  },
+  "qualification": {
+    "audit_status": "matched-norm-independently-verified",
+    "auditor_output_bytes": 1012,
+    "base_commit": "f4fe57c7272d8f2a6da80391dcba7ceac032ffe5",
+    "combined_output_bytes": 553019,
+    "fixture_recipe": "tests/matched_norm_fixtures.py full unpadded24trace/72box fixture; independent test Decimal snapshots",
+    "producer_output_bytes": 552007,
+    "progress": {
+      "methods": {
+        "attempted": 144,
+        "charged": 144,
+        "completed": 144
+      },
+      "oracles": {
+        "attempted": 72,
+        "charged": 72,
+        "completed": 72
+      }
+    },
+    "qualification_only": true,
+    "r559x_started": false,
+    "r560_started": false,
+    "real_retained_input_reads": 0,
+    "result_status": "matched-norm-qualified-local-only",
+    "scientific_work": {
+      "force_evaluations": 0,
+      "integrations": 0,
+      "kernel_accesses": 0,
+      "native_calls": 0,
+      "new_bounds": 0,
+      "new_oracle_mass": 0,
+      "new_point_roots": 0,
+      "new_points": 0,
+      "new_stage_events": 0,
+      "new_traces": 0,
+      "old_audit_replays": 0,
+      "orbital_norms": 0,
+      "r560_attempts": 0,
+      "spice_queries": 0
+    },
+    "scope": "artificial-matched-norm",
+    "source_inventory_bytes_per_process": 3926066,
+    "source_record_bytes": 3694257,
+    "stage": "R5.59w",
+    "work": {
+      "boxes": 72,
+      "comparisons": 72,
+      "descriptors": 72,
+      "diagonals": 72,
+      "directed_primitives": 3444,
+      "event_visits": 1248,
+      "methods": 144,
+      "oracles": 72
+    }
+  },
+  "r559x_started": false,
+  "r560_started": false,
+  "retained_fixed_outputs": "absent",
+  "scope": "artificial only; no retained endpoint extraction or saved invocation",
+  "stage": "R5.59w"
+}

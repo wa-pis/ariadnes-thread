@@ -1,0 +1,13 @@
+{
+  "head": "f4fe57c7272d8f2a6da80391dcba7ceac032ffe5",
+  "sources": {
+    "docs/adr/experiments/0235-matched-norm-audit.py": "68a61ebf66114c915edf1521dd0187deae415ea9913a937393b68a6b71aa1862",
+    "docs/adr/experiments/0235-matched-norm-core.py": "40eaafba22163f627ea66d299402e4acf2c33a6b197c70ce89eaaa2e22c4b4c0",
+    "docs/adr/experiments/0235-matched-norm.py": "2a3c835298c281eb9dd85b50858aaaffeacde73cef28c96ddb054732f9b31637",
+    "tests/matched_norm_dispatch_harness.py": "aac64d6ca49496725b57ee3ce92792bba8ca1189991b8e5bdcc59bc744bf5f60",
+    "tests/matched_norm_fixtures.py": "226cc7a122ea54e7669eb4d4b65d7630ad4654a4eb12c3045f6fe74b322990e5",
+    "tests/test_matched_norm.py": "0158dd7be285c06c2cd35a403a554140da3105f9a456ae9b8b89f4c2a18a72de",
+    "tests/test_matched_norm_dispatch.py": "06c409ea094de515c98116f94f86735c5cf9ffa64e75c9542b8892f2b27278a4"
+  },
+  "status": "?? docs/adr/experiments/0235-matched-norm-audit.py\n?? docs/adr/experiments/0235-matched-norm-core.py\n?? docs/adr/experiments/0235-matched-norm.py\n?? tests/matched_norm_dispatch_harness.py\n?? tests/matched_norm_fixtures.py\n?? tests/test_matched_norm.py\n?? tests/test_matched_norm_dispatch.py\n"
+}

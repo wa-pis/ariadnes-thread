@@ -599,6 +599,18 @@ calculation, implementation, SPICE, integration or R5.60 occurs. R5.59w artifici
 preparation and R5.59x one-shot execution each need separate instructions.
 No final-width/physical/M3 claim follows; automation remains PAUSED.
 
+
+[ADR0235](../docs/adr/0235-qualify-matched-input-norms.md) completes R5.59w artificial qualification:
+72 boxes/144 local methods/72 exact-real oracles and72 own-origin checks agree with
+an independent integer/Fraction auditor. Complete source3,926,066 B/process,
+combined output553,019 B and external0.271878792/0.269035041 s fit unchanged limits;
+3444 directed primitives fit8192.86 focused/6750 guarded full passes,
+494 explicit exclusions, Ruff/strict and independent review pass. Full checkout
+was frozen throughout the suite; existing artificial scientific unit tests run.
+Only fabricated dependencies exercised actual retained/audit command shapes.
+Real0234 output paths remain absent; no SPICE/integration/R5.59x/R5.60 or physical
+claim. A distinct instruction is required for saved execution; automation PAUSED.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

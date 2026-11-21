@@ -89,9 +89,26 @@ def test_inventory_cap_and_duplicate_read(tmp_path: Path) -> None:
 
 
 def test_fixed_retained_profile_rejects_override_without_input_read(
-    tmp_path: Path,
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     m = runner()
+
+    def saved_metadata() -> tuple[bool, dict[str, str | None]]:
+        paths = {m.AUDIT, *m.OUTPUT.glob("*")}
+        return m.OUTPUT.exists(), {
+            str(path): sha256(path.read_bytes()).hexdigest() if path.exists() else None
+            for path in paths
+        }
+
+    before = saved_metadata()
+    read = m.Budget.read
+    forbidden = {m.HERE.parent / name for name in m.DATA_NAMES}
+
+    def metadata_only(self: Any, path: Path, **kwargs: Any) -> bytes:
+        assert path not in forbidden, "profile rejection must not read retained inputs"
+        return read(self, path, **kwargs)
+
+    monkeypatch.setattr(m.Budget, "read", metadata_only)
     profile = m.retained_profile()
     profile["pins"]["report"]["sha256"] = "0" * 64
     with pytest.raises(ValueError, match="fixed retained profile"):
@@ -99,7 +116,8 @@ def test_fixed_retained_profile_rejects_override_without_input_read(
     profile = m.retained_profile()
     with pytest.raises(ValueError, match="fixed retained profile"):
         m.profile_check(profile, tmp_path / "out")
-    assert not m.OUTPUT.exists() and not m.AUDIT.exists()
+    # ADR0233 legitimately created these files; rejection must preserve any state.
+    assert saved_metadata() == before
 
 
 def pack(tmp_path: Path) -> tuple[Any, dict[str, Any], Path]:
