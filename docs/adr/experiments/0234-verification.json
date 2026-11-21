@@ -1,0 +1,40 @@
+{
+  "automation": "PAUSED",
+  "base_commit": "61a27028152d162f003262db3ba91c141ce6a4c9",
+  "checks": {
+    "finite_json_files": 2,
+    "future_experimental_outputs": "absent",
+    "git_diff": "passed",
+    "independent_static_review": "agrees",
+    "independent_static_review_scope": "Read-only ADR0234/contract/new requirement and R5.59v-w-x review: counts, source controls, context/compatibility gate, exact numeric equality/raw provenance, directed audit scope and fixed width/ratio definitions agree; no material issues. No historical report parsing, arithmetic, imports, edits or tests by reviewer.",
+    "local_markdown_links": 476,
+    "metadata_source_links_json_hashes_diff": "passed",
+    "original_input_pins": 13,
+    "original_sources_and_historical_evidence": "unchanged; raw hashing only, no endpoint parsing",
+    "raw_original_input_bytes": 3784677,
+    "runtime_dependencies_tests_legacy": "unchanged",
+    "static_ast_nodes": 13,
+    "strict_openspec": "passed",
+    "verification_mode": "Metadata/source AST inspection only; no imports of scientific modules, no executable formula, method or oracle call."
+  },
+  "contract": {
+    "bytes": 19146,
+    "path": "docs/adr/experiments/0234-matched-norm-contract.json",
+    "sha256": "86f9b290401623acd033d94475bbb2d8c637a9e8077c523fb3ecbd048d59caa0"
+  },
+  "date": "2026-11-21",
+  "decision": "accepted-design-only",
+  "exact_range_oracle_evaluations": 0,
+  "experimental_outputs_created": false,
+  "implementation_started": false,
+  "integrations": 0,
+  "method_evaluations": 0,
+  "next_steps": "Separate instruction for artificial-only implementation R5.59w; qualified preparation plus another instruction for saved local R5.59x.",
+  "pytest_rerun": false,
+  "r560_attempts": 0,
+  "retained_endpoint_extraction": false,
+  "ruff_rerun": false,
+  "scientific_modules_imported": false,
+  "spice_queries": 0,
+  "stage": "R5.59v"
+}

@@ -586,6 +586,19 @@ new raw artifacts retain inherited R5.59s labels. R5.59u is complete; both newly
 authorized commands are consumed, not repeated. No physical join or eligible
 commands are established. Automation remains PAUSED for a distinct next decision.
 
+[ADR0234](../docs/adr/0234-design-matched-input-norm-comparison.md) designs R5.59v's controlled local norm-squared comparison:
+both saved origins for each of36 structural slots give72 fixed vector boxes,
+each supplied unchanged to both formulas. Fresh explicit Decimal96 contexts,
+144 method evaluations plus72 exact-real box oracles/process, independent directed
+rounding verification and72 own-origin equality checks are specified for the future.
+Any diagonal mismatch is inconclusive; no source/context tuning or selective claim.
+Proposed30 s/4 MiB source/1 MiB combined output limits need full-volume artificial
+qualification. Select from original pinned traces; do not add the large lineage
+report or execute historical interval initialization. No current endpoint extraction,
+calculation, implementation, SPICE, integration or R5.60 occurs. R5.59w artificial
+preparation and R5.59x one-shot execution each need separate instructions.
+No final-width/physical/M3 claim follows; automation remains PAUSED.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

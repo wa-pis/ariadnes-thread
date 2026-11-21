@@ -1,0 +1,375 @@
+{
+  "authorization": "Design and documentation only. No implementation, numerical extraction, local method/oracle evaluation, audit replay, SPICE, integration or R5.60 now.",
+  "automation": {
+    "id": "ariadna-m3",
+    "status": "PAUSED"
+  },
+  "base_commit": "61a27028152d162f003262db3ba91c141ce6a4c9",
+  "caps": {
+    "absolute_decimal_exponent": 512,
+    "audit_reserve_bytes": 65536,
+    "combined_output_bytes": 1048576,
+    "decimal_significand_digits": 256,
+    "descriptor_records": 1024,
+    "diagonal_checks": 72,
+    "directed_primitive_operations_per_process": 8192,
+    "endpoint_text_chars": 1024,
+    "event_visits_per_process": 32768,
+    "exact_box_range_evaluations_per_process": 72,
+    "input_event_records": 8192,
+    "input_vector_boxes": 72,
+    "method_evaluations_per_process": 144,
+    "paired_method_comparisons": 72,
+    "rational_component_bits": 4096,
+    "source_inventory_bytes_per_process": 4194304,
+    "wall_ns_per_command": 30000000000
+  },
+  "context": {
+    "Emax": 999999,
+    "Emin": -999999,
+    "all_other_traps": false,
+    "allowed_final_flags": [
+      "Inexact",
+      "Rounded"
+    ],
+    "capitals": 1,
+    "clamp": 0,
+    "directed_rounding": [
+      "ROUND_FLOOR",
+      "ROUND_CEILING"
+    ],
+    "enabled_traps": [
+      "InvalidOperation",
+      "DivisionByZero",
+      "Overflow"
+    ],
+    "endpoint_construction": "exact Decimal from the saved finite strings, no unary-plus, quantize or float conversion",
+    "historical_claim": "New imposed contexts; no historical runtime-context snapshot is claimed.",
+    "initial_flags": "all cleared",
+    "lifecycle": "fresh explicit lower/upper Context pair per method per input box; properties immutable; record before/after flags",
+    "prec": 96
+  },
+  "date": "2026-11-21",
+  "decision": "accepted-design-only",
+  "diagonal_compatibility": {
+    "checks": 72,
+    "extra_method_evaluations": 0,
+    "mismatch": "Preserve first complete/partial evidence with overall inconclusive and compatibility-mismatch reason; no tuning, selective effect admission, alternative context, reboxing or rerun.",
+    "pass_limit": "Finite compatibility of these72 calls under newly imposed contexts, not recovered historical context or general source/program equivalence.",
+    "rule": "Compare the already-computed own-origin method result with its saved original _norm2 return using exact endpoint values; all72 must match."
+  },
+  "independent_audit": "Separate implementation reconstructs selectors/inputs from fixed raw data; independently implements directed decimal rounding with integers/Fractions, exact-real oracle and descriptors; imports no evaluator arithmetic helpers and does not replay orbital bounds or old auditors.",
+  "inherited_contract": {
+    "bytes": 13805,
+    "path": "docs/adr/experiments/0229-saved-lineage-contract.json",
+    "sha256": "4c4e6d4c8981428b5931def910aa7d648f7860a9ce5e75d78b16952063a4b087"
+  },
+  "methods": [
+    {
+      "expression": "(x.square() + y.square()) + z.square()",
+      "id": "square-sum",
+      "primitives": "source abs before square, directed endpoint products, then left-associated directed additions",
+      "source_branch": "independent=False"
+    },
+    {
+      "expression": "raw = (x*x + y*y) + z*z; result = [max(0, raw.lo), raw.hi]",
+      "id": "product-sum-clipped",
+      "primitives": "all four endpoint products per component in both directed modes; left-associated additions; preserve raw and clipped intervals",
+      "source_branch": "independent=True"
+    }
+  ],
+  "motivation": {
+    "adr": "docs/adr/0233-record-corrected-saved-lineage.md",
+    "reference_only_evidence": {
+      "docs/adr/experiments/0229-saved-lineage-audit.json": {
+        "bytes": 752,
+        "sha256": "f2f64a0422d46ebb2ee9399beb93961d6168d29f31451e4ac2f03527e5c044e8"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/attempt.json": {
+        "bytes": 2291,
+        "sha256": "7a206fba4d01faf7721a0b654ff16da285d9674dc369d4b23d6e628378aaa9cf"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/completion.json": {
+        "bytes": 245,
+        "sha256": "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/receipt.json": {
+        "bytes": 2481,
+        "sha256": "9b3af474c43459191d5671b0af8ff591cab01924d9da65e49014a97f01ed7656"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/report.json": {
+        "bytes": 550761,
+        "sha256": "a9e4b807f342a90886ed1c47c1a4c6d97ed0bebb9b33062e1d330939c379d1b3"
+      }
+    },
+    "result": "36 input-confounded slots; no admitted same-input comparison",
+    "runtime_use": "Motivation only; do not read the 0233-era 550761-byte lineage report into this study. Select directly from original pinned traces, without replaying 0232."
+  },
+  "original_input_artifacts": [
+    {
+      "bytes": 500,
+      "path": "docs/adr/experiments/0224-retained-trace-audit.json",
+      "sha256": "6b5c4f0567a42dd6337297db04003874af08a27e962018139569b07b69eeb8ec"
+    },
+    {
+      "bytes": 4075,
+      "path": "docs/adr/experiments/0224-retained-trace-result/attempt.json",
+      "sha256": "ede3377f60ade4fbc005c64cb9cd18f083b0e32699d4c7fb3573800728980f59"
+    },
+    {
+      "bytes": 439,
+      "path": "docs/adr/experiments/0224-retained-trace-result/completion.json",
+      "sha256": "a155ed0b13f07f6b5f2b9979554963a8842f1cbf1946922e7cb103e1be6b6196"
+    },
+    {
+      "bytes": 4243,
+      "path": "docs/adr/experiments/0224-retained-trace-result/receipt.json",
+      "sha256": "351887540567e0397c619c0a327b5841685f82d14567f26cc9a7ab61913705a8"
+    },
+    {
+      "bytes": 3666107,
+      "path": "docs/adr/experiments/0224-retained-trace-result/report.json",
+      "sha256": "13485689f72f45b2ee1482c01cd5eb69e8ddc93204e3b8b62841a2a04e1486d4"
+    },
+    {
+      "bytes": 9152,
+      "path": "docs/adr/experiments/0228-verification.json",
+      "sha256": "31694a511c28b6c2246a7b8752d8c3d410e19573bc30b67426607580dfd32266"
+    },
+    {
+      "bytes": 9690,
+      "path": "docs/adr/experiments/0224-retained-trace-contract.json",
+      "sha256": "118795d87f4084528a1d4096c4f1d61c0936f0afbc927ae6c040f6ec26600dea"
+    },
+    {
+      "bytes": 9513,
+      "path": "docs/adr/experiments/0219-phase-bounds.py",
+      "sha256": "b1a2673aa5516533320febed3efddeb27edece1f3f60b775323520e71324f83e"
+    },
+    {
+      "bytes": 8939,
+      "path": "docs/adr/experiments/0219-interval.py",
+      "sha256": "3243ec83031b8bc873dfae47076e0bbb086640893e396b1e56c2dbcf5d865329"
+    },
+    {
+      "bytes": 12517,
+      "path": "docs/adr/experiments/0223-bound-trace.py",
+      "sha256": "e50876ce72c8e80a74d7d615b4f67f6d69ab9a259a10663b041ee56d78730091"
+    },
+    {
+      "bytes": 4624,
+      "path": "docs/adr/experiments/0225-bound-trace.py",
+      "sha256": "d382d1181c8069d7d5d1b51b8261c75f726be522b95ed08252363c5a1a45c42d"
+    },
+    {
+      "bytes": 20168,
+      "path": "docs/adr/experiments/0225-trace-checks.py",
+      "sha256": "30f3fbafa1898884c4d4234bdc66369f81dab64271dcd9ec9c4c2e1841ba829a"
+    },
+    {
+      "bytes": 34710,
+      "path": "docs/adr/experiments/0227-retained-trace.py",
+      "sha256": "395d711620fb0e6e4ea092001adb52a769052af8d527300902653df4b6a4d6d7"
+    }
+  ],
+  "original_input_bytes": 3784677,
+  "outputs": {
+    "audit": "docs/adr/experiments/0234-matched-norm-audit.json",
+    "directory": "docs/adr/experiments/0234-matched-norm-result",
+    "evidence": "attempt/report/receipt/completion with invocation/input/source/context identities; separate audit bound to raw completion SHA256; shared parent/worker clocks through durable finalization, owned-marker cleanup, first complete or partial evidence without retry",
+    "exclusive": true
+  },
+  "qualification": {
+    "budget_status": "Proposed limits, not measured sufficient. Qualify full volume before any retained run; if insufficient, stop for separately justified design revision without raising caps automatically.",
+    "cases": [
+      "signed and zero-crossing/touching boxes",
+      "degenerate and asymmetric boxes",
+      "exact zero in multiple finite encodings",
+      "precision96 rounding boundaries and exponent limits",
+      "abs-before-square rounding",
+      "raw negative dot lower and clipping",
+      "method/origin order symmetry and duplicate provenance",
+      "fresh contexts, changed precision/rounding/traps/flags",
+      "exact-real containment and independent primitive endpoint equality",
+      "all72 diagonal pass and single deliberate mismatch =>inconclusive",
+      "missing/tampered call/return/role/unit/pointer/hash/context fields",
+      "all source/work/time/output/bit caps and attempted-work failures",
+      "isolated exact retained/audit parent+worker command shapes with fake dependencies",
+      "exclusive output and late-owned-marker cleanup"
+    ],
+    "checks": "Focused tests, frozen guarded full pytest, Ruff, strict OpenSpec, immutable hashes and independent review; code/stack/dependencies frozen outside private experiment.",
+    "complete_source_inventory": "All13 original files +0229 contract +this contract +all new private source bytes; charge artificial bootstrap/config too. Every file read counts once. No extra large lineage-report load or old numerical audit.",
+    "scope": "Artificial only after separate implementation instruction; no retained endpoint extraction yet.",
+    "volume": "Full72-box/144-method/72-exact-range matrix with all roles/origins, representative endpoint lengths/exponents and at least complete original input byte volume; no padding-only performance qualification."
+  },
+  "question": "How do the two source-defined norm-squared methods enclose the same saved Cartesian interval box under fresh identical explicit contexts?",
+  "reference_oracle": {
+    "containment": "Require R(X) contained in each final method interval, with exact rational endpoint comparisons and zero tolerance.",
+    "domain": "exact-real Cartesian product of the three input intervals; no common-phase/correlated-geometry claim",
+    "formula": "m_j=0 if l_j<=0<=u_j else min(l_j^2,u_j^2); M_j=max(l_j^2,u_j^2); R(X)=[sum_j m_j,sum_j M_j]",
+    "implementation": "Exact Fraction/integer arithmetic, no float, sqrt or Decimal96 evaluation for the real-box range.",
+    "rounded_program": "Containment of the exact-real range alone does not verify a rounded historical program. A separate independent integer/rational directed96 primitive replay must exactly reproduce each new method endpoint and grouping."
+  },
+  "reporting": {
+    "classes": [
+      "equal-enclosures",
+      "square-sum-strict-subset",
+      "product-sum-clipped-strict-subset",
+      "overlap-incomparable",
+      "invalid-containment",
+      "inconclusive-compatibility-mismatch"
+    ],
+    "endpoint_equality": "All arithmetic endpoint, containment, method-parity and diagonal equality is exact rational NUMERIC equality, not Decimal-string equality; signed/scaled exact zeros compare numerically equal.",
+    "footprint": "Summary records only, no full per-primitive transcript; independent audit re-derives bounded arithmetic.",
+    "limitations": "Only controlled local box behavior; no attribution to final arrival width, dominant cause, trajectory feasibility, new mass exclusion, continuous refusal, eligible commands, physical join or strict M3.",
+    "metrics": "For A=square-sum, B=product-sum-clipped and R=exact-real range, W(I)=I.hi-I.lo. width_difference_product_minus_square=W(B)-W(A); width_ratio_product_over_square=W(B)/W(A) only when W(A)!=0. Record per-method lower_excess=R.lo-I.lo, upper_excess=I.hi-R.hi and excess_width=W(I)-W(R), exact rational squared-role units; no downstream interpretation.",
+    "per_vector": "identity/source pointers/raw endpoint payload hash/units/context fingerprint, both final enclosures, raw and clipped dot enclosure, exact-real range, diagonal check, exact widths/gaps and inclusion class",
+    "representation": "Preserve byte-exact raw input strings, raw Decimal output strings and before/after context flags as diagnostic provenance. Also emit canonical reduced rational endpoints (zero as0). Auditor authenticates raw strings, validates bounded finite encoding/context/allowed flags and numeric consistency. No proof of historical Decimal representation or exact per-operation flag history is claimed.",
+    "units": "Retain m2/s2, m2 or m4/s2 per semantic role. Never pool dimensional widths or infer m/s improvement without a separate square-root/downstream study.",
+    "zero_ratio": "When W(A)=0, ratio=null and status=both-widths-zero if W(B)=0, otherwise denominator-zero-numerator-nonzero; no epsilon or infinity."
+  },
+  "schema": "ariadna-matched-norm-design-v1",
+  "selection": {
+    "domains": [
+      "cell",
+      "singleton"
+    ],
+    "duplicates": "Retain all72 provenance identities even if values coincide.",
+    "equality": "Both methods consume byte-identical six endpoint strings and the same vector hash/units; preserve signed/scale zero strings at input; immutable copies, no reboxing, hull, intersection, quantization or result-based selection.",
+    "expected_trace_events": 1248,
+    "expected_trace_rows": 24,
+    "identity": "(selected row, domain, sign, semantic role, source origin)",
+    "norm_pair_roles": [
+      {
+        "direct_norm2_ordinal": 0,
+        "operand_units": "m/s",
+        "parent_path": "bounds",
+        "result_units": "m2/s2",
+        "role": "impulse-squared"
+      },
+      {
+        "direct_norm2_ordinal": 1,
+        "operand_units": "m",
+        "parent_path": "bounds/_reverse[0]",
+        "result_units": "m2",
+        "role": "radius-squared"
+      },
+      {
+        "direct_norm2_ordinal": 4,
+        "operand_units": "m2/s",
+        "parent_path": "bounds/_reverse[0]",
+        "result_units": "m4/s2",
+        "role": "angular-momentum-squared"
+      }
+    ],
+    "operand_binding": "Match structural parent path plus direct _norm2 ordinal; bind call v[0:3], paired return, entry/exit independent flag, original row identity and raw field pointers.",
+    "selected_cells": [
+      {
+        "hi_deg": "4801/32",
+        "lo_deg": "150",
+        "midpoint_deg": "9601/64",
+        "row_index": 62
+      },
+      {
+        "hi_deg": "4833/32",
+        "lo_deg": "151",
+        "midpoint_deg": "9665/64",
+        "row_index": 94
+      },
+      {
+        "hi_deg": "152",
+        "lo_deg": "4863/32",
+        "midpoint_deg": "9727/64",
+        "row_index": 125
+      }
+    ],
+    "selected_row_indices": [
+      62,
+      94,
+      125
+    ],
+    "signs": [
+      "positive",
+      "negative"
+    ],
+    "source_origins": [
+      "default",
+      "independent"
+    ],
+    "structural_slots": 36,
+    "vector_boxes": 72
+  },
+  "source_execution_policy": "Never import/exec entire historical modules. 0219-interval initializes PI=_pi(). A future isolated private kernel reproduces only the pinned local expressions and required scalar constructor/coercion/validation/add/mul/abs/square primitives; verify AST/source identity and grouping. No runtime historical-source execution or arbitrary extraction.",
+  "source_node_hash_format": {
+    "digest": "SHA256 of exactly those bytes under pinned Python3.12.14; line anchor stored separately; raw full-source SHA256 remains mandatory.",
+    "node_scope": "The named ast.FunctionDef, selected Interval method ast.FunctionDef, or named ast.Assign at the pinned source location; no enclosing module execution.",
+    "serialization": "ast.dump(node, annotate_fields=True, include_attributes=False, indent=None).encode('utf-8')"
+  },
+  "source_nodes": {
+    "0219-interval.py:Interval.__add__": {
+      "line": 42,
+      "normalized_ast_sha256": "c71164e80a226a5ce3c75877868222a952fd29db5abc232ae36ff4a3664f1cdc"
+    },
+    "0219-interval.py:Interval.__mul__": {
+      "line": 58,
+      "normalized_ast_sha256": "042cb5bd9c43e9144969fdb5202607fbf2ea159e7c09aa3944c70b857409aaf3"
+    },
+    "0219-interval.py:Interval.__post_init__": {
+      "line": 38,
+      "normalized_ast_sha256": "a7f1d0da39460eb310f98f3667255a23a1e7b524b426732a9f2e0d70d36e6f67"
+    },
+    "0219-interval.py:Interval.abs": {
+      "line": 77,
+      "normalized_ast_sha256": "1350fca15b21f7c33b6e8099d6fe9679f14ca080a9bb8e34a9d128d6315f2e45"
+    },
+    "0219-interval.py:Interval.square": {
+      "line": 82,
+      "normalized_ast_sha256": "1a67928591917c45b7a52c62a31fdf0e4ea07a9c5eb41767873b369227567218"
+    },
+    "0219-interval.py:_HI": {
+      "line": 13,
+      "normalized_ast_sha256": "970e7e6b9c42a55af9a398545bd83f646bb52dd82259c198050654276ab749cd"
+    },
+    "0219-interval.py:_LO": {
+      "line": 12,
+      "normalized_ast_sha256": "c0bf2ad21a67165b788c7f525949902f5f6686ee93f60e3381bb70bf2d14e9cd"
+    },
+    "0219-interval.py:_ZERO": {
+      "line": 15,
+      "normalized_ast_sha256": "d2ec0d090ba734eb8be083d7843dd233e0ec4d968da5892d11cc16ca6b88e957"
+    },
+    "0219-interval.py:_coerce": {
+      "line": 112,
+      "normalized_ast_sha256": "0d7019bb9f0e166c4ecf025fcbe67fb8cca205c8a4f1b42f7ec92f390b431449"
+    },
+    "0219-interval.py:_dec": {
+      "line": 21,
+      "normalized_ast_sha256": "056f1603cd448c5c9df9bd0b88909ffde0429b2c27cd8ea0ff2f260d8bbf4cae"
+    },
+    "0219-interval.py:box": {
+      "line": 106,
+      "normalized_ast_sha256": "c7bb40a7d33faad7741c7db7db1050677fe8df73b14f6e0991f3ada549f45cf8"
+    },
+    "0219-phase-bounds.py:_dot": {
+      "line": 23,
+      "normalized_ast_sha256": "9848986e3ae80561a29ce17598be334140eebdc61a26d15809c1a8f39b02c043"
+    },
+    "0219-phase-bounds.py:_norm2": {
+      "line": 47,
+      "normalized_ast_sha256": "c9a4c34c6c79a422e8d1f0f78d1d837ac40a90fc1954033c637f01a6e9e1b01a"
+    }
+  },
+  "stage": "R5.59v",
+  "stages": {
+    "R559v": "Design only complete after metadata/source/link/JSON/diff/strict checks.",
+    "R559w": "Separate instruction: implement isolated evaluator+independent audit and qualify ONLY on artificial archives.",
+    "R559x": "Only after qualified R5.59w and another explicit instruction: one saved72-box local experiment and one independent audit, no repeat."
+  },
+  "work_accounting": {
+    "allocation": "Bound parsed exponents/significands and check predicted integer/rational growth before multiplication, decimal scaling and allocation; fail rather than exceed4096 component bits.",
+    "directed_primitives": "Precharge each scalar directed abs, multiply, add and final nonnegative clip; auditor charges corresponding rational directed-rounding primitive replays. Cap8192. Selection/validation visits and fixed-fanout exact-range/descriptor arithmetic have separate counts and4096-bit growth checks.",
+    "exact_range": "72 separate exact-box-range evaluations per process, additional to144 method evaluations; not hidden under a zero-new-norms ledger.",
+    "method": "Charge attempted method call before any arithmetic; record attempted/charged/completed separately on failure.",
+    "unrelated": "Zero orbital-bound evaluations, new phase/point/root/geometry/trig/sqrt/exp/mass/native/kernel/SPICE/force/integration/optimizer/old-audit/R5.60 calls. Do not claim local norm calculations are zero."
+  }
+}

@@ -8022,3 +8022,25 @@ R5.60 counters remain0. Historical failure R5.59s stays consumed/unchecked;
 new raw artifacts retain inherited R5.59s labels. R5.59u is complete; both newly
 authorized commands are consumed, not repeated. No physical join or eligible
 commands are established. Automation remains PAUSED for a distinct next decision.
+
+## R5.59v same-box local norm-squared design (2026-11-21)
+
+[ADR0234](../../../docs/adr/0234-design-matched-input-norm-comparison.md) designs R5.59v's controlled local norm-squared comparison:
+both saved origins for each of36 structural slots give72 fixed vector boxes,
+each supplied unchanged to both formulas. Fresh explicit Decimal96 contexts,
+144 method evaluations plus72 exact-real box oracles/process, independent directed
+rounding verification and72 own-origin equality checks are specified for the future.
+Any diagonal mismatch is inconclusive; no source/context tuning or selective claim.
+Proposed30 s/4 MiB source/1 MiB combined output limits need full-volume artificial
+qualification. Select from original pinned traces; do not add the large lineage
+report or execute historical interval initialization. No current endpoint extraction,
+calculation, implementation, SPICE, integration or R5.60 occurs. R5.59w artificial
+preparation and R5.59x one-shot execution each need separate instructions.
+No final-width/physical/M3 claim follows; automation remains PAUSED.
+
+The normative detailed design is ADR0234 and its pinned0234 contract. Neither the
+0232 runner nor ADR0229's zero-new-norm contract is repurposed for new arithmetic.
+Future private scalar methods preserve original operation ordering and are audited
+without shared evaluator arithmetic. The exact Cartesian-box range and rounded
+program endpoint replay are distinct references. Every source/method/context and
+raw input identity must be frozen after artificial qualification before real use.

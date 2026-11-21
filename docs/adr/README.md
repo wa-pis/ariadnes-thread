@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0234 — Compare norm-squared methods on identical interval boxes](0234-design-matched-input-norm-comparison.md): design only;72 fixed boxes, two source-defined methods, explicit contexts, exact-real and rounded-primitive oracles; no calculations.
+
 - [0233 — Record corrected saved-lineage readback](0233-record-corrected-saved-lineage.md): one0232 retained/audit pair passes on real saved data; all36 norm slots input-confounded, attribution unresolved, no scientific replay.
 
 - [0232 — Qualify exact saved-reader command dispatch](0232-qualify-lineage-command-dispatch.md): versioned two-edit repair;17 new/87 focused/6665 guarded full passes,494 exclusions; artificial retained/audit shapes and independent proof pass, no R5.59s retry.

@@ -971,3 +971,35 @@ A newly authorized R5.59u readback SHALL use the qualified unchanged0232 dispatc
 - **WHEN** the first readback and independent audit complete
 - **THEN** the record SHALL verify13 raw pins,24 rows/1248 event visits/648 descriptors/528 aliases/all36 candidate norm dispositions, exact evidence identities and byte/time/work limits, and retain independently verified same-operand, confounded or legitimate non-reached outcomes without changing gates
 - **AND** input-confounded outcomes SHALL not establish a local method response, final-width contribution, dominant cause, continuous exclusion, physical join or strict M3 completion; scientific context assumptions and missing causal information SHALL remain explicit
+
+
+### Requirement: Compare source-defined norm-squared methods on identical saved boxes
+
+The ADR0234 controlled local experiment SHALL isolate the two norm-squared formulas on fixed identical inputs under explicit fresh contexts; R5.59v SHALL remain design only, with separately instructed R5.59w artificial qualification and R5.59x saved execution.
+
+#### Scenario: Freeze a balanced identical-input matrix
+
+- **WHEN** the future local experiment selects inputs from the original authenticated traces
+- **THEN** it SHALL retain both saved origins for each of36 fixed row/domain/sign/semantic-role slots, producing exactly72 provenance-preserving vector boxes and144 method evaluations/process, with identical six endpoint strings/hash/units supplied to both methods for every box
+- **AND** selectors SHALL bind original call/return structural paths, direct-child ordinal and mode flags; no data-dependent selection, deduplication, hull, reboxing, input quantization, new phase or changed historical operand SHALL be admitted
+- **AND** source-defined sum-of-squares and clipped sum-of-self-products SHALL preserve scalar operation grouping, absolute-value rounding and raw/post-clip endpoints, using isolated pinned primitives rather than importing historical modules with mathematical initialization
+
+#### Scenario: Control contexts and require finite saved-call compatibility
+
+- **WHEN** each future method evaluates its fixed input box
+- **THEN** it SHALL use and record fresh identical ADR0234 context settings, cleared initial flags and exact string construction, rejecting context drift or unexpected flags rather than inferring a historical runtime snapshot
+- **AND** all72 own-origin outputs already included in144 evaluations SHALL exactly match their saved original method returns; any mismatch SHALL retain first evidence with overall inconclusive/compatibility-mismatch, without context tuning, retry or selective causal admission
+
+#### Scenario: Verify independent references and scoped local outcomes
+
+- **WHEN** the new local arithmetic and separate auditor are qualified or explicitly executed
+- **THEN** each process SHALL count144 method evaluations plus72 exact-real Cartesian-box oracle evaluations separately; independently implemented integer/rational directed-rounding replay SHALL exactly verify each new method endpoint, and both final enclosures SHALL contain the exact-real box range with zero tolerance
+- **AND** the record SHALL retain exact per-box widths, endpoint/excess gaps, inclusion classification, the fixed product-minus-square width difference/product-over-square ratio with explicit zero-denominator status and role-specific squared units; endpoint parity SHALL use exact rational numeric equality while raw signed/scaled zero strings and flags remain diagnostic provenance, without a representation/flag-history recovery claim; it SHALL distinguish a real-box oracle from a rounded historical program and make no downstream speed, final-width contribution, dominant-cause, exclusion, physical-join or strict M3 claim
+- **AND** complete source/work/time/output/parse/bit limits in ADR0234 SHALL be precharged/enforced and first evidence finalized exclusively; source inventory SHALL include all original13 files, both contracts, every private source and artificial bootstrap/config, without loading the unnecessary large lineage report or replaying old auditors
+
+#### Scenario: Separate design, artificial preparation and saved execution
+
+- **WHEN** only the current R5.59v design instruction is authorized
+- **THEN** only source/AST and metadata/document verification SHALL occur, with zero numerical endpoint extraction, method/oracle evaluations, experimental outputs, SPICE, integration or R5.60
+- **AND** R5.59w SHALL require a separate instruction and full-volume artificial qualification including exact retained/audit command shapes, arithmetic/context/compatibility/limit failures, independent review, focused/frozen guarded full pytest, Ruff and strict OpenSpec; limits SHALL not be treated as sufficient until measured
+- **AND** only qualified R5.59w and another explicit instruction SHALL permit one R5.59x saved local experiment and one independent audit, without retry or historical/production code changes; its new local norm/oracle work SHALL be nonzero and separately counted while orbital/trig/sqrt/exp/mass/native/SPICE/integration/R5.60 work remains zero
