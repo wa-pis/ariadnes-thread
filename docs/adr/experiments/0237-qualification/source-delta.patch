@@ -1,0 +1,152 @@
+--- 0235-matched-norm.py
++++ 0237-matched-norm.py
+@@ -1,4 +1,4 @@
+-"""Bounded matched-input norm qualification; historical modules remain text only."""
++"""Bounded versioned source-map adapter; historical modules remain text only."""
+ 
+ # ruff: noqa: E402 -- Start the shared clock before other imports.
+ from time import monotonic_ns
+@@ -23,9 +23,9 @@
+ REPO = HERE.parents[3]
+ CONTRACT = HERE.with_name("0229-saved-lineage-contract.json")
+ CONTRACT_SHA = "4c4e6d4c8981428b5931def910aa7d648f7860a9ce5e75d78b16952063a4b087"
+-OUTPUT = HERE.with_name("0234-matched-norm-result")
+-AUDIT = HERE.with_name("0234-matched-norm-audit.json")
+-PRIVATE = ("0235-matched-norm.py", "0235-matched-norm-core.py", "0235-matched-norm-audit.py")
++OUTPUT = HERE.with_name("0237-matched-norm-result")
++AUDIT = HERE.with_name("0237-matched-norm-audit.json")
++PRIVATE = ("0237-matched-norm.py", "0237-matched-norm-core.py", "0237-matched-norm-audit.py")
+ DESIGN = HERE.with_name("0234-matched-norm-contract.json")
+ DESIGN_SHA = "86f9b290401623acd033d94475bbb2d8c637a9e8077c523fb3ecbd048d59caa0"
+ ROLES = (
+@@ -75,7 +75,10 @@
+ ]
+ # Content identities of the separately fabricated full and two early-exit profiles.
+ # Paths are excluded so qualification can run in an isolated temporary directory.
+-ARTIFICIAL_PROFILES = {"0ffc74f7ececf08cb57bb10a874439e7dbdfe07ec78cf217fb7cb7c6aad094c7": "full-matched-norm"}
++ARTIFICIAL_PROFILES = {
++    "0ffc74f7ececf08cb57bb10a874439e7dbdfe07ec78cf217fb7cb7c6aad094c7": "legacy-six-role",
++    "acd0c37be40114a34a94fc261bf0aaad1141c9a19ff58cbc0834d1e1aed9797d": "seventeen-role-six-selected",
++}
+ 
+ WALL_NS = 30_000_000_000
+ ZERO = dict.fromkeys(
+@@ -101,7 +104,7 @@
+ 
+ def need(ok: object, message: str) -> None:
+     if not ok:
+-        raise ValueError("R5.59w: " + message)
++        raise ValueError("R5.59y: " + message)
+ 
+ 
+ def wire(value: Any) -> bytes:
+@@ -128,7 +131,7 @@
+         return value
+ 
+     def invalid(text: str) -> Any:
+-        raise ValueError("R5.59w: nonfinite " + text)
++        raise ValueError("R5.59y: nonfinite " + text)
+ 
+     row = json.loads(
+         raw, object_pairs_hook=unique, parse_float=number, parse_constant=invalid
+@@ -457,7 +460,7 @@
+ 
+ def load_private(part: str) -> Any:
+     need(part in ("core", "audit"), "private module selection")
+-    path = HERE.with_name("0235-matched-norm-" + part + ".py")
++    path = HERE.with_name("0237-matched-norm-" + part + ".py")
+     # Load authenticated private source directly; never consult an adjacent bytecode cache.
+     module = ModuleType("_matched_norm_" + part)
+     sys.modules[module.__name__] = module
+@@ -502,7 +505,7 @@
+     output.mkdir()
+     sync_dir(output.parent)
+     head = dict(
+-        stage="R5.59w" if profile["scope"] != "retained" else "R5.59x",
++        stage="R5.59y" if profile["scope"] != "retained" else "R5.59z",
+         scope=profile["scope"],
+         invocation_id=b.invocation_id,
+         contract_sha256=DESIGN_SHA,
+@@ -631,7 +634,7 @@
+         "new invocation identity",
+     )
+     expected_head = dict(
+-        stage="R5.59w" if profile["scope"] != "retained" else "R5.59x",
++        stage="R5.59y" if profile["scope"] != "retained" else "R5.59z",
+         scope=profile["scope"],
+         invocation_id=attempt["invocation_id"],
+         contract_sha256=DESIGN_SHA,
+@@ -763,7 +766,7 @@
+                 "remove outside completion",
+             )
+         if event in ("os.rmdir", "os.rename"):
+-            raise ValueError("R5.59w: destructive operation outside scope")
++            raise ValueError("R5.59y: destructive operation outside scope")
+         if event == "import":
+             need(
+                 str(args[0]).partition(".")[0] in sys.stdlib_module_names
+--- 0235-matched-norm-core.py
++++ 0237-matched-norm-core.py
+@@ -25,6 +25,11 @@
+ 
+ _DECIMAL = re.compile(r"[+-]?(?:[0-9]+(?:\.[0-9]*)?|\.[0-9]+)(?:[Ee][+-]?[0-9]+)?\Z")
+ _HEX = re.compile(r"[0-9a-f]{64}\Z")
++_SOURCE_ROLES = frozenset(("bounds", "checks", "interval", "runner", "trace", "trace_schema"))
++_HISTORICAL_ROLES = _SOURCE_ROLES | frozenset((
++    "anchors", "archive", "containment", "core", "io", "oracle", "orbit", "points", "reader",
++    "screen", "study",
++))
+ _METHODS = ("square-sum", "product-sum-clipped")
+ _SELECTION = (
+     (62, "150", "4801/32", "9601/64"),
+@@ -488,9 +493,14 @@
+     _need(type(scope) is str and bool(scope) and context.get("scope") == scope, "scope")
+     report = _row(archive.get("report"), "report")
+     pins = _row(context.get("source_pins"), "source pins")
+-    _need(pins and all(type(v) is str and _HEX.fullmatch(v) for v in pins.values())
+-          and report.get("method_sha256") == pins and report.get("scope") == scope,
+-          "source/scope identity")
++    metadata = _row(report.get("method_sha256"), "method metadata")
++    # Extra sealed roles are metadata, not additional authenticated source files.
++    _need(set(pins) == _SOURCE_ROLES
++          and set(metadata) in (_SOURCE_ROLES, _HISTORICAL_ROLES)
++          and all(type(v) is str and _HEX.fullmatch(v) for v in pins.values())
++          and all(type(v) is str and _HEX.fullmatch(v) for v in metadata.values())
++          and all(metadata[role] == value for role, value in pins.items())
++          and report.get("scope") == scope, "source/scope identity")
+     expected_events = context.get("expected_events")
+     _need(type(expected_events) is int and 0 < expected_events <= caps["input_event_records"]
+           and _row(report.get("work"), "historical work").get("events") == expected_events,
+--- 0235-matched-norm-audit.py
++++ 0237-matched-norm-audit.py
+@@ -26,6 +26,9 @@
+ _METHODS = ("square-sum", "product-sum-clipped")
+ _NUMBER = re.compile(r"([+-]?)(?:(\d+)(?:\.(\d*))?|\.(\d+))(?:[eE]([+-]?\d+))?\Z", re.ASCII)
+ _HEX = re.compile(r"[0-9a-f]{64}\Z", re.ASCII)
++_SOURCE_BINDINGS = ("bounds", "checks", "interval", "runner", "trace", "trace_schema")
++_METHOD_METADATA = frozenset((*_SOURCE_BINDINGS, "anchors", "archive", "containment", "core",
++                              "io", "oracle", "orbit", "points", "reader", "screen", "study"))
+ _CAPS = dict(endpoint_text_chars=1024, decimal_significand_digits=256,
+              absolute_decimal_exponent=512, rational_component_bits=4096,
+              input_event_records=8192, event_visits_per_process=32768,
+@@ -380,10 +383,17 @@
+     _same(context.get("scope"), scope, "archive.scope")
+     _same(report.get("scope"), scope, "report.scope")
+     pins = _mapping(context.get("source_pins"), "source pins")
+-    if not pins or any(type(value) is not str or _HEX.fullmatch(value) is None
+-                       for value in pins.values()):
++    if set(pins) != set(_SOURCE_BINDINGS) or any(
++        type(value) is not str or _HEX.fullmatch(value) is None for value in pins.values()
++    ):
+         raise ValueError("audit source pins malformed")
+-    _same(report.get("method_sha256"), pins, "report.method_sha256")
++    metadata = _mapping(report.get("method_sha256"), "method metadata")
++    if set(metadata) not in (set(_SOURCE_BINDINGS), _METHOD_METADATA) or any(
++        type(value) is not str or _HEX.fullmatch(value) is None for value in metadata.values()
++    ):
++        raise ValueError("audit method metadata malformed")
++    # Only the selected bindings name source files authenticated by the caller.
++    _same({role: metadata[role] for role in _SOURCE_BINDINGS}, pins, "report.method_sha256")
+     roles = [dict(role=role, parent_path=parent, direct_norm2_ordinal=ordinal,
+                   operand_units=operand, result_units=result)
+              for role, parent, ordinal, operand, result in _ROLES]

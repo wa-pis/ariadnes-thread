@@ -1,0 +1,44 @@
+...............................F........................................ [ 58%]
+....................................................                     [100%]
+=================================== FAILURES ===================================
+_ test_exact_parent_worker_commands_qualify_seventeen_roles_and_keep_consumed_failure _
+
+tmp_path = PosixPath('/private/var/folders/kh/0kc0tcyj5z5_lg7s2qdzc3rm0000gn/T/pytest-of-agrudin/pytest-2281/test_exact_parent_worker_comma0')
+
+    def test_exact_parent_worker_commands_qualify_seventeen_roles_and_keep_consumed_failure(
+        tmp_path: Path,
+    ) -> None:
+        before = _failure_snapshot()
+        case = prepare_dispatch_case(tmp_path / "case")
+        first = invoke(case, "retained")
+        assert first.returncode == 0, first.stderr
+>       assert_dispatch(case, first, ["retained"])
+
+tests/test_matched_norm_metadata.py:314: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = {'audit': PosixPath('/private/var/folders/kh/0kc0tcyj5z5_lg7s2qdzc3rm0000gn/T/pytest-of-agrudin/pytest-2281/test_exact...s/kh/0kc0tcyj5z5_lg7s2qdzc3rm0000gn/T/pytest-of-agrudin/pytest-2281/test_exact_parent_worker_comma0/case/result'), ...}
+result = CompletedProcess(args=['/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python', '-I', '-S', '-B', '/private/...cial_input_reads": 0, "exit_code": 0, "harness_complete": true, "real_input_reads": 0, "role": "parent"}\n', stderr='')
+command = ['retained']
+
+    def assert_dispatch(case: Row, result: subprocess.CompletedProcess[str], command: list[str]) -> None:
+        rows = telemetry(result)
+        dispatched = next(row for row in rows if row.get("harness_dispatch"))
+        worker = next(row for row in rows if row.get("harness_entry") and row["role"] == "worker")
+        parent_budget = next(row for row in rows if row.get("harness_budget") and row["role"] == "parent")
+        expected = ["worker", str(parent_budget["started_ns"]), parent_budget["invocation_id"], *command]
+        assert dispatched["argv"] == worker["argv"] == expected
+        assert len(expected) == (4 if command == ["retained"] else 5)
+        assert dispatched["script"] == worker["script"] == str(SCRIPT)
+        for row in rows:
+            if row.get("harness_complete"):
+                assert row["real_input_reads"] == 0
+                assert row["artificial_input_reads"] == (7 if row["role"] == "worker" else 0)
+            if row.get("harness_budget"):
+>               assert row["started_ns"] == parent_budget["started_ns"]
+E               assert 3433715616214375 == 3433715568597708
+
+tests/test_matched_norm_metadata.py:294: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_matched_norm_metadata.py::test_exact_parent_worker_commands_qualify_seventeen_roles_and_keep_consumed_failure
+1 failed, 123 passed in 15.91s

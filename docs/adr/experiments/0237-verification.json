@@ -1,0 +1,668 @@
+{
+  "automation": "PAUSED",
+  "base_commit": "21c6d69aca5cd1425fba4631ae95d2466fcb0397",
+  "checks": {
+    "finite_json_files": 27,
+    "fixed_future_outputs": "absent",
+    "frozen_checkout": "unchanged;1237 Git-visible files",
+    "git_diff": "Code/docs whitespace checks pass; raw pytest transcript and canonical unified diff retain original formatting.",
+    "guarded_full_skip_node_ids": "identical494exclusions",
+    "independent_review": "agrees: source/tests/qualification/final documents; final metadata checks passed",
+    "links_json_hashes_diff": "passed",
+    "local_markdown_links": 494,
+    "new_qualified_source_test_pins": 6,
+    "original_failure_and_evidence": "unchanged",
+    "original_input_pins": 13,
+    "previous_qualified_source_test_pins": 8,
+    "raw_whitespace_exceptions": [
+      "docs/adr/experiments/0237-qualification/first-focused-failed.log",
+      "docs/adr/experiments/0237-qualification/source-delta.patch"
+    ],
+    "ruff": "passed",
+    "scope": "Metadata/source/document checks only",
+    "source_AST_pins": 13,
+    "source_arithmetic_outside_reviewed_admission_region": "AST-identical",
+    "strict_openspec": "passed"
+  },
+  "date": "2026-11-21",
+  "decision": "ADR0237",
+  "evidence_sha256": {
+    "docs/adr/experiments/0237-qualification/after-snapshot.json": {
+      "bytes": 151936,
+      "sha256": "b87f52604753ef3737dba1f2532b66d9a89e5f8ec28e75b626fc7fe30697adc5"
+    },
+    "docs/adr/experiments/0237-qualification/artificial-audit.json": {
+      "bytes": 1012,
+      "sha256": "b5065555e9a6aac1d129d593b01f85685ecbd42a52cbcf0b876659998f694a56"
+    },
+    "docs/adr/experiments/0237-qualification/artificial-profile.json": {
+      "bytes": 2013,
+      "sha256": "7597aaa49d01a8693c430afb15098094ba371b200c20904984746519710b06be"
+    },
+    "docs/adr/experiments/0237-qualification/artificial-result/attempt.json": {
+      "bytes": 2710,
+      "sha256": "6023a5da92427e70278b3d57a257d6ebf1ebbf04aa883fd7fd51267911c7c0ea"
+    },
+    "docs/adr/experiments/0237-qualification/artificial-result/completion.json": {
+      "bytes": 245,
+      "sha256": "dcfcddb9347b306d63e4dddfa8aa7c8c58ccfc5b1a54ce965bf080501b943fc1"
+    },
+    "docs/adr/experiments/0237-qualification/artificial-result/receipt.json": {
+      "bytes": 2900,
+      "sha256": "5936cbc2b84979318205b1e65a6894bc8f5fb1595f1433f6458feae6a684b302"
+    },
+    "docs/adr/experiments/0237-qualification/artificial-result/report.json": {
+      "bytes": 546158,
+      "sha256": "6d7a1f1ef27eee8a6ebbd281d461e22ae5304c3d7e7725ce744aa611878330fe"
+    },
+    "docs/adr/experiments/0237-qualification/artificial-summary.json": {
+      "bytes": 14006,
+      "sha256": "81077775c1cf622fcc105212d79dbe7f2a7b6d55975378e10d00db7c8748f8fc"
+    },
+    "docs/adr/experiments/0237-qualification/auditor-measurement.json": {
+      "bytes": 3894,
+      "sha256": "0e7a8078657a54017695af4b2af403d1676049021144b7bc8b6c9d69d7dea0f5"
+    },
+    "docs/adr/experiments/0237-qualification/auditor.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0237-qualification/auditor.stdout": {
+      "bytes": 2887,
+      "sha256": "ac77461df732e004891b3fb22589536d5b6dddd1fb308eac72fedae9ded42c36"
+    },
+    "docs/adr/experiments/0237-qualification/before-snapshot.json": {
+      "bytes": 151936,
+      "sha256": "b87f52604753ef3737dba1f2532b66d9a89e5f8ec28e75b626fc7fe30697adc5"
+    },
+    "docs/adr/experiments/0237-qualification/bootstrap.json": {
+      "bytes": 2726,
+      "sha256": "d69815a83bd97b98cd09c672c082b368fc0e4957d9dd1866c7f3460b4ac7e104"
+    },
+    "docs/adr/experiments/0237-qualification/bootstrap.py.txt": {
+      "bytes": 4482,
+      "sha256": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1"
+    },
+    "docs/adr/experiments/0237-qualification/first-focused-after.json": {
+      "bytes": 151936,
+      "sha256": "310af6012aa386dd8617b4c4d19f11631d3eda5a21e4321691ae3dad27da9130"
+    },
+    "docs/adr/experiments/0237-qualification/first-focused-before.json": {
+      "bytes": 151936,
+      "sha256": "310af6012aa386dd8617b4c4d19f11631d3eda5a21e4321691ae3dad27da9130"
+    },
+    "docs/adr/experiments/0237-qualification/first-focused-failed.log": {
+      "bytes": 2909,
+      "sha256": "78cfb6c2ed305bce3075f3cbf8c6acaaf57970bb13816fc7c07cf99fcdec23e4"
+    },
+    "docs/adr/experiments/0237-qualification/first-focused-measurement.json": {
+      "bytes": 671,
+      "sha256": "4f2451941bfb55594b704ea043a6d0d8aeb098e79ce5c8ee8d88346e01dd2784"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/artificial-full/audit.json": {
+      "bytes": 1012,
+      "sha256": "456586b100b0eba417f48ad56768b99ccafb1a039653e30fa1fb3983ae0c4c3a"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/artificial-full/bootstrap.json": {
+      "bytes": 2699,
+      "sha256": "f1158db36a51e8dcea37b9696c9aaf693a8615acd01c33daf83a5a0d3f94354a"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/artificial-full/bootstrap.py.txt": {
+      "bytes": 4482,
+      "sha256": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/artificial-full/result/attempt.json": {
+      "bytes": 2710,
+      "sha256": "571825c0235de31f18a327bd3b3fb8000376a2be611ad0c9fce1fa7bb9ca8e3e"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/artificial-full/result/completion.json": {
+      "bytes": 245,
+      "sha256": "723e9a4fc46ba7716663581ccd632368484261dbacb267f3afe46a891113c3e1"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/artificial-full/result/receipt.json": {
+      "bytes": 2900,
+      "sha256": "94dc8bdfb82908c85a4311c56226254affe380f78f400b4187e6d0035333346c"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/artificial-full/result/report.json": {
+      "bytes": 546158,
+      "sha256": "a1e3e4369de0284d8a3ef6287b1d9e6463de3a206209015e500b128ad76f7933"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/auditor.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/auditor.stdout": {
+      "bytes": 2887,
+      "sha256": "f8cfb1010bcd0a5ace09f0a48ac2d42db63e879bf237b32d0ff8c70396cd5744"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/driver-failure.json": {
+      "bytes": 495,
+      "sha256": "d909d5b553b3319b762f4aa722bb314bace7433b929c8cdb13207003f6dda8b6"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/driver.py.txt": {
+      "bytes": 4179,
+      "sha256": "784dab47bf814e1ec71e73e669754bc2d8c47e7d27bfdd04fe46b6306e11f695"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/producer.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0237-qualification/first-summary-helper-failure/producer.stdout": {
+      "bytes": 2560,
+      "sha256": "c0bb7b70040930122e0f251362d5d1047c9ef230cd1a7672867b6b1f5be3941e"
+    },
+    "docs/adr/experiments/0237-qualification/focused-measurement.json": {
+      "bytes": 681,
+      "sha256": "1934503bad6b9bee7ba71969c1ee0bcc44e0c6c14172952ff89f06e4d155ed1b"
+    },
+    "docs/adr/experiments/0237-qualification/focused.log": {
+      "bytes": 181,
+      "sha256": "c1d72450aa1a45a385d37cd60a1c469fb1a02f1e91b7ab065be55ef5ca82fcd6"
+    },
+    "docs/adr/experiments/0237-qualification/full-measurement.json": {
+      "bytes": 461,
+      "sha256": "0886fa1933504d71c844f681010e3bc433dec25de9b3c3c623cf312eec3d8ce9"
+    },
+    "docs/adr/experiments/0237-qualification/full-skips.txt": {
+      "bytes": 77492,
+      "sha256": "200a2d159d591f934b1db9037b066fa61017072f6c41d8d548661e57d085356b"
+    },
+    "docs/adr/experiments/0237-qualification/full.log": {
+      "bytes": 8206,
+      "sha256": "48aa8324bd5a6daeae43f35657596bb963b2e6ef465ee59ffeefdd3ab7e601a8"
+    },
+    "docs/adr/experiments/0237-qualification/independent-review.json": {
+      "bytes": 1113,
+      "sha256": "7e29667ad2d4d71448d454091f9f1741bd187b441780f46d50d750573cf977c9"
+    },
+    "docs/adr/experiments/0237-qualification/metadata-check.json": {
+      "bytes": 819,
+      "sha256": "1a37ebf4f882099f77fb73c3d446cd59ba57c86cc70c0e92020f14e9d413d9a6"
+    },
+    "docs/adr/experiments/0237-qualification/offline-guard.py.txt": {
+      "bytes": 4427,
+      "sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+    },
+    "docs/adr/experiments/0237-qualification/openspec.log": {
+      "bytes": 45,
+      "sha256": "e100704efd79d707c2c8e21e8f643cd71afcf906342dc7ad0830859d153b0cf0"
+    },
+    "docs/adr/experiments/0237-qualification/producer-measurement.json": {
+      "bytes": 3459,
+      "sha256": "46e03475cc4874fd8b1836b9a3b81ae045925fe7502eb98be5e834b5cfa214d3"
+    },
+    "docs/adr/experiments/0237-qualification/producer.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0237-qualification/producer.stdout": {
+      "bytes": 2560,
+      "sha256": "01b3b7b586e8b1a610fa964063be5fd3d2f9ca575500b044b827b07be3e2fe98"
+    },
+    "docs/adr/experiments/0237-qualification/qualify.py.txt": {
+      "bytes": 4385,
+      "sha256": "778d7258edd750f6608f320141d173cae8d8be52f675fc6e6835d8cc57ebbb4d"
+    },
+    "docs/adr/experiments/0237-qualification/ruff.log": {
+      "bytes": 19,
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "docs/adr/experiments/0237-qualification/sitecustomize.py.txt": {
+      "bytes": 4427,
+      "sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693"
+    },
+    "docs/adr/experiments/0237-qualification/source-delta.patch": {
+      "bytes": 7618,
+      "sha256": "39677e6e25b79d8cc226e1ab54a45858e3460bed4f10d66d30b3e182378d67c7"
+    }
+  },
+  "first_failure_pins": {
+    "docs/adr/experiments/0234-matched-norm-result/attempt.json": {
+      "bytes": 2697,
+      "sha256": "40d36146aac5b41498b1f67b9e09729fb249d1f0465948fe3cb3bc6fb85ae1ab"
+    },
+    "docs/adr/experiments/0234-matched-norm-result/failure.json": {
+      "bytes": 553,
+      "sha256": "5742e095c61593a7d926efd9a2d9e2b93cca6257679174b8e4a9a61e514b26bf"
+    }
+  },
+  "first_focused": {
+    "cause": "Newtest overasserted sharedclock on auxiliarymetadataBudgets; test-only correction, runtime unchanged.",
+    "elapsed_s": "15.91",
+    "failed": 1,
+    "passed": 123
+  },
+  "first_qualification_helper": "Summary metadata-key typo after successful artificial producer/auditor; all first evidence preserved; no external timing invented.",
+  "focused_tests": {
+    "new_cases": 38,
+    "passed": 124
+  },
+  "guarded_full_tests": {
+    "elapsed_s": "182.54",
+    "passed": 6788,
+    "skipped": 494,
+    "unrestricted": false
+  },
+  "implementation_complete": true,
+  "measured_source_sha256": {
+    "docs/adr/experiments/0237-matched-norm-audit.py": "342a82ab5f3d929dccd8e09d91bce0ae16c341d00962221c606cda7c70641308",
+    "docs/adr/experiments/0237-matched-norm-core.py": "50eeffca15534c465fbc5673485061daabe61fccdc7685e5040e2a6fe109079b",
+    "docs/adr/experiments/0237-matched-norm.py": "15d5954d506981ab41ae544e11bb6d47cbf9b103819b92884f6db7ff1ae38af2",
+    "tests/matched_norm_metadata_dispatch_harness.py": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1",
+    "tests/matched_norm_metadata_fixtures.py": "95c3200f01dda863abfb9047684fc5825dad61c19b11e5f804cba07ae07d0f0d",
+    "tests/test_matched_norm_metadata.py": "0c53868230c2f832ec33e103a9c81d58e2a91b1e5712e2be8ebd4539735dfdf0"
+  },
+  "new_fixed_outputs": "absent",
+  "original_qualified_sources": {
+    "docs/adr/experiments/0235-matched-norm-audit.py": "68a61ebf66114c915edf1521dd0187deae415ea9913a937393b68a6b71aa1862",
+    "docs/adr/experiments/0235-matched-norm-core.py": "40eaafba22163f627ea66d299402e4acf2c33a6b197c70ce89eaaa2e22c4b4c0",
+    "docs/adr/experiments/0235-matched-norm.py": "2a3c835298c281eb9dd85b50858aaaffeacde73cef28c96ddb054732f9b31637",
+    "tests/matched_norm_dispatch_harness.py": "aac64d6ca49496725b57ee3ce92792bba8ca1189991b8e5bdcc59bc744bf5f60",
+    "tests/matched_norm_fixtures.py": "226cc7a122ea54e7669eb4d4b65d7630ad4654a4eb12c3045f6fe74b322990e5",
+    "tests/test_lineage_runner.py": "e95587387dc1b8a9c2c7c5cdfaf2a94e00fadc327fe92e3ce7604c32b3ff86a3",
+    "tests/test_matched_norm.py": "0158dd7be285c06c2cd35a403a554140da3105f9a456ae9b8b89f4c2a18a72de",
+    "tests/test_matched_norm_dispatch.py": "06c409ea094de515c98116f94f86735c5cf9ffa64e75c9542b8892f2b27278a4"
+  },
+  "qualification": {
+    "audit_status": "matched-norm-independently-verified",
+    "auditor_output_bytes": 1012,
+    "base_commit": "21c6d69aca5cd1425fba4631ae95d2466fcb0397",
+    "combined_output_bytes": 553025,
+    "fixture_recipe": "tests/matched_norm_metadata_fixtures.py17-role wrapper over full unpadded24trace/72box fixture; six selected bindings and invented extra-role provenance; independent test Decimal snapshots",
+    "measurements": [
+      {
+        "args": [
+          "retained"
+        ],
+        "external_elapsed_ns": 300015750,
+        "returncode": 0,
+        "role": "producer",
+        "telemetry": [
+          {
+            "argv": [
+              "retained"
+            ],
+            "harness_entry": true,
+            "role": "parent",
+            "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py"
+          },
+          {
+            "bootstrap_entry_ns": 3433911543597166,
+            "bootstrap_sha256": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1",
+            "charged_bytes": 7208,
+            "config_sha256": "d69815a83bd97b98cd09c672c082b368fc0e4957d9dd1866c7f3460b4ac7e104",
+            "harness_budget": true,
+            "invocation_id": "46555610046e4188b568f41b9e70389a",
+            "role": "parent",
+            "started_ns": 3433911543597166
+          },
+          {
+            "argv": [
+              "worker",
+              "3433911543597166",
+              "46555610046e4188b568f41b9e70389a",
+              "retained"
+            ],
+            "harness_dispatch": true,
+            "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py"
+          },
+          {
+            "argv": [
+              "worker",
+              "3433911543597166",
+              "46555610046e4188b568f41b9e70389a",
+              "retained"
+            ],
+            "harness_entry": true,
+            "role": "worker",
+            "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py"
+          },
+          {
+            "bootstrap_entry_ns": 3433911568244916,
+            "bootstrap_sha256": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1",
+            "charged_bytes": 7208,
+            "config_sha256": "d69815a83bd97b98cd09c672c082b368fc0e4957d9dd1866c7f3460b4ac7e104",
+            "harness_budget": true,
+            "invocation_id": "46555610046e4188b568f41b9e70389a",
+            "role": "worker",
+            "started_ns": 3433911543597166
+          },
+          {
+            "bootstrap_entry_ns": 3433911568244916,
+            "bootstrap_sha256": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1",
+            "charged_bytes": 7208,
+            "config_sha256": "d69815a83bd97b98cd09c672c082b368fc0e4957d9dd1866c7f3460b4ac7e104",
+            "harness_budget": true,
+            "invocation_id": "faf6956a044a4f2f94f9e7058314fa06",
+            "role": "worker",
+            "started_ns": 3433911586708125
+          },
+          {
+            "scientific_work": {
+              "force_evaluations": 0,
+              "integrations": 0,
+              "kernel_accesses": 0,
+              "native_calls": 0,
+              "new_bounds": 0,
+              "new_oracle_mass": 0,
+              "new_point_roots": 0,
+              "new_points": 0,
+              "new_stage_events": 0,
+              "new_traces": 0,
+              "old_audit_replays": 0,
+              "orbital_norms": 0,
+              "r560_attempts": 0,
+              "spice_queries": 0
+            },
+            "status": "matched-norm-qualified-local-only",
+            "work": {
+              "boxes": 72,
+              "comparisons": 72,
+              "descriptors": 72,
+              "diagonals": 72,
+              "directed_primitives": 3444,
+              "event_visits": 1248,
+              "methods": 144,
+              "oracles": 72
+            }
+          },
+          {
+            "argv": [
+              "worker",
+              "3433911543597166",
+              "46555610046e4188b568f41b9e70389a",
+              "retained"
+            ],
+            "artificial_input_reads": 7,
+            "exit_code": 0,
+            "harness_complete": true,
+            "real_input_reads": 0,
+            "role": "worker"
+          },
+          {
+            "dispatcher_elapsed_ns": 288370667,
+            "exit_code": 0
+          },
+          {
+            "argv": [
+              "retained"
+            ],
+            "artificial_input_reads": 0,
+            "exit_code": 0,
+            "harness_complete": true,
+            "real_input_reads": 0,
+            "role": "parent"
+          }
+        ]
+      },
+      {
+        "args": [
+          "audit",
+          "dcfcddb9347b306d63e4dddfa8aa7c8c58ccfc5b1a54ce965bf080501b943fc1"
+        ],
+        "external_elapsed_ns": 233777375,
+        "returncode": 0,
+        "role": "auditor",
+        "telemetry": [
+          {
+            "argv": [
+              "audit",
+              "dcfcddb9347b306d63e4dddfa8aa7c8c58ccfc5b1a54ce965bf080501b943fc1"
+            ],
+            "harness_entry": true,
+            "role": "parent",
+            "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py"
+          },
+          {
+            "bootstrap_entry_ns": 3433911845246500,
+            "bootstrap_sha256": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1",
+            "charged_bytes": 7208,
+            "config_sha256": "d69815a83bd97b98cd09c672c082b368fc0e4957d9dd1866c7f3460b4ac7e104",
+            "harness_budget": true,
+            "invocation_id": "95f0c1abfc2e445c978c59529803b6f1",
+            "role": "parent",
+            "started_ns": 3433911845246500
+          },
+          {
+            "argv": [
+              "worker",
+              "3433911845246500",
+              "95f0c1abfc2e445c978c59529803b6f1",
+              "audit",
+              "dcfcddb9347b306d63e4dddfa8aa7c8c58ccfc5b1a54ce965bf080501b943fc1"
+            ],
+            "harness_dispatch": true,
+            "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py"
+          },
+          {
+            "argv": [
+              "worker",
+              "3433911845246500",
+              "95f0c1abfc2e445c978c59529803b6f1",
+              "audit",
+              "dcfcddb9347b306d63e4dddfa8aa7c8c58ccfc5b1a54ce965bf080501b943fc1"
+            ],
+            "harness_entry": true,
+            "role": "worker",
+            "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py"
+          },
+          {
+            "bootstrap_entry_ns": 3433911871643791,
+            "bootstrap_sha256": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1",
+            "charged_bytes": 7208,
+            "config_sha256": "d69815a83bd97b98cd09c672c082b368fc0e4957d9dd1866c7f3460b4ac7e104",
+            "harness_budget": true,
+            "invocation_id": "95f0c1abfc2e445c978c59529803b6f1",
+            "role": "worker",
+            "started_ns": 3433911845246500
+          },
+          {
+            "bootstrap_entry_ns": 3433911871643791,
+            "bootstrap_sha256": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1",
+            "charged_bytes": 7208,
+            "config_sha256": "d69815a83bd97b98cd09c672c082b368fc0e4957d9dd1866c7f3460b4ac7e104",
+            "harness_budget": true,
+            "invocation_id": "3b14ae8018124d31a169d00dbf96274d",
+            "role": "worker",
+            "started_ns": 3433911890059583
+          },
+          {
+            "scientific_work": {
+              "force_evaluations": 0,
+              "integrations": 0,
+              "kernel_accesses": 0,
+              "native_calls": 0,
+              "new_bounds": 0,
+              "new_oracle_mass": 0,
+              "new_point_roots": 0,
+              "new_points": 0,
+              "new_stage_events": 0,
+              "new_traces": 0,
+              "old_audit_replays": 0,
+              "orbital_norms": 0,
+              "r560_attempts": 0,
+              "spice_queries": 0
+            },
+            "status": "matched-norm-independently-verified",
+            "work": {
+              "boxes": 72,
+              "comparisons": 72,
+              "descriptors": 72,
+              "diagonals": 72,
+              "directed_primitives": 3444,
+              "event_visits": 1248,
+              "methods": 144,
+              "oracles": 72
+            }
+          },
+          {
+            "argv": [
+              "worker",
+              "3433911845246500",
+              "95f0c1abfc2e445c978c59529803b6f1",
+              "audit",
+              "dcfcddb9347b306d63e4dddfa8aa7c8c58ccfc5b1a54ce965bf080501b943fc1"
+            ],
+            "artificial_input_reads": 7,
+            "exit_code": 0,
+            "harness_complete": true,
+            "real_input_reads": 0,
+            "role": "worker"
+          },
+          {
+            "dispatcher_elapsed_ns": 221699541,
+            "exit_code": 0
+          },
+          {
+            "argv": [
+              "audit",
+              "dcfcddb9347b306d63e4dddfa8aa7c8c58ccfc5b1a54ce965bf080501b943fc1"
+            ],
+            "artificial_input_reads": 0,
+            "exit_code": 0,
+            "harness_complete": true,
+            "real_input_reads": 0,
+            "role": "parent"
+          }
+        ]
+      }
+    ],
+    "producer_output_bytes": 552013,
+    "progress": {
+      "methods": {
+        "attempted": 144,
+        "charged": 144,
+        "completed": 144
+      },
+      "oracles": {
+        "attempted": 72,
+        "charged": 72,
+        "completed": 72
+      }
+    },
+    "qualification_only": true,
+    "r559x_repeated": false,
+    "r559z_started": false,
+    "r560_started": false,
+    "real_retained_input_reads": 0,
+    "result_status": "matched-norm-qualified-local-only",
+    "scientific_work": {
+      "force_evaluations": 0,
+      "integrations": 0,
+      "kernel_accesses": 0,
+      "native_calls": 0,
+      "new_bounds": 0,
+      "new_oracle_mass": 0,
+      "new_point_roots": 0,
+      "new_points": 0,
+      "new_stage_events": 0,
+      "new_traces": 0,
+      "old_audit_replays": 0,
+      "orbital_norms": 0,
+      "r560_attempts": 0,
+      "spice_queries": 0
+    },
+    "scope": "artificial-matched-norm",
+    "source_inventory": {
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0219-interval.py": {
+        "bytes": 8939,
+        "sha256": "3243ec83031b8bc873dfae47076e0bbb086640893e396b1e56c2dbcf5d865329"
+      },
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0219-phase-bounds.py": {
+        "bytes": 9513,
+        "sha256": "b1a2673aa5516533320febed3efddeb27edece1f3f60b775323520e71324f83e"
+      },
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0223-bound-trace.py": {
+        "bytes": 12517,
+        "sha256": "e50876ce72c8e80a74d7d615b4f67f6d69ab9a259a10663b041ee56d78730091"
+      },
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0225-bound-trace.py": {
+        "bytes": 4624,
+        "sha256": "d382d1181c8069d7d5d1b51b8261c75f726be522b95ed08252363c5a1a45c42d"
+      },
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0225-trace-checks.py": {
+        "bytes": 20168,
+        "sha256": "30f3fbafa1898884c4d4234bdc66369f81dab64271dcd9ec9c4c2e1841ba829a"
+      },
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0227-retained-trace.py": {
+        "bytes": 34710,
+        "sha256": "395d711620fb0e6e4ea092001adb52a769052af8d527300902653df4b6a4d6d7"
+      },
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0229-saved-lineage-contract.json": {
+        "bytes": 13805,
+        "sha256": "4c4e6d4c8981428b5931def910aa7d648f7860a9ce5e75d78b16952063a4b087"
+      },
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0234-matched-norm-contract.json": {
+        "bytes": 19146,
+        "sha256": "86f9b290401623acd033d94475bbb2d8c637a9e8077c523fb3ecbd048d59caa0"
+      },
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm-audit.py": {
+        "bytes": 39946,
+        "sha256": "342a82ab5f3d929dccd8e09d91bce0ae16c341d00962221c606cda7c70641308"
+      },
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm-core.py": {
+        "bytes": 31834,
+        "sha256": "50eeffca15534c465fbc5673485061daabe61fccdc7685e5040e2a6fe109079b"
+      },
+      "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py": {
+        "bytes": 30932,
+        "sha256": "15d5954d506981ab41ae544e11bb6d47cbf9b103819b92884f6db7ff1ae38af2"
+      },
+      "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/bootstrap.json": {
+        "bytes": 2726,
+        "sha256": "d69815a83bd97b98cd09c672c082b368fc0e4957d9dd1866c7f3460b4ac7e104"
+      },
+      "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/bootstrap.py": {
+        "bytes": 4482,
+        "sha256": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1"
+      },
+      "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/attempt.json": {
+        "bytes": 1659,
+        "sha256": "1da619a372742090507b00e532f8ab57fba84014ecfd96e1ff8a2c15bfbb1a3f"
+      },
+      "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/audit.json": {
+        "bytes": 348,
+        "sha256": "b58908c8aee953727b94b761b8a4f488370bad103d4a02658564ec0771d6209c"
+      },
+      "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/completion.json": {
+        "bytes": 253,
+        "sha256": "c274b94cf7ab7301adbf4425cc524bb2f8d06f2ec70a0e915ddfea51daaafa6d"
+      },
+      "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/manifest.json": {
+        "bytes": 562,
+        "sha256": "7e4863491f06edc54cd3945af37f0e1687dce249f12ebc76e62282f0b53d250e"
+      },
+      "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/receipt.json": {
+        "bytes": 1825,
+        "sha256": "c4668d9b37c4de59970f334885b8dede73f24dedc3c630c7cce186d7da9ff567"
+      },
+      "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/report.json": {
+        "bytes": 3691752,
+        "sha256": "f97de299667effe1599bf3307adc5bafd3c83235defbbb00946d243dbe473783"
+      },
+      "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/selection_contract.json": {
+        "bytes": 365,
+        "sha256": "8d8f5b840d84fa6f88475e24160d152f956a56a1bcfdc71944e7155816dd6408"
+      }
+    },
+    "source_inventory_bytes_per_process": 3930106,
+    "source_record_bytes": 3696764,
+    "stage": "R5.59y",
+    "work": {
+      "boxes": 72,
+      "comparisons": 72,
+      "descriptors": 72,
+      "diagonals": 72,
+      "directed_primitives": 3444,
+      "event_visits": 1248,
+      "methods": 144,
+      "oracles": 72
+    }
+  },
+  "qualification_only": true,
+  "r559x_repeated": false,
+  "r559z_started": false,
+  "r560_started": false,
+  "scope": "artificial17-role/6-binding adapter qualification",
+  "stage": "R5.59y"
+}

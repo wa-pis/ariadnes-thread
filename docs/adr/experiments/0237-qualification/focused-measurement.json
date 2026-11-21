@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "/private/tmp/ariadna-r559y-checks-v2-20261121/offline-guard.py",
+    "-q",
+    "tests/test_matched_norm_metadata.py",
+    "tests/test_matched_norm.py",
+    "tests/test_matched_norm_dispatch.py",
+    "tests/test_lineage_runner.py::test_fixed_retained_profile_rejects_override_without_input_read"
+  ],
+  "external_elapsed_ns": 16658460041,
+  "frozen_checkout": true,
+  "guard_sha256": "1d3e5176766d788d168abf46423b952a67ab56236c915bb04c2713acd9f26693",
+  "returncode": 0,
+  "scope": "guarded artificial regression; existing artificial science tests execute; no live/native qualification"
+}

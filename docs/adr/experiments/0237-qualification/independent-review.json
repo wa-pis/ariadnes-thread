@@ -1,0 +1,14 @@
+{
+  "coverage": "38 new cases plus inherited guard regressions; all6 missing/mismatched, reducedcontext, malformed/unknown/partialextras,scope,raw/resealed tamper,fullmatrix/legacyexactparity,exclusive/cap/partial output.",
+  "extra_role_status": "sealed metadata only, not new source-file authentication",
+  "first_evidence": "Consumed0234 failure and all0235 measured source/test hashes unchanged.",
+  "historical_roles": 17,
+  "kind": "independent-static-source-and-artificial-evidence-review",
+  "no_saved_numerical_execution": true,
+  "no_spice_integration_r560": true,
+  "reviewer": "separate metadata_repair_review agent; core author additionally reviewed tests",
+  "selected_bindings": 6,
+  "shared_clock": "First main parent/worker Budget starts and invocation IDs agree; auxiliary guard metadata Budgets have independent clocks but unchanged main deadline encloses all work.",
+  "source_delta": "Only closed6/17 source metadata admission, version/source/profile/output/stage bindings; no arithmetic/context/cap/auth/AST change.",
+  "status": "agrees; final document and copied evidence review passed"
+}

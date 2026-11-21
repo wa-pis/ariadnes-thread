@@ -1,0 +1,46 @@
+{
+  "candidate_id": "artificial-matched-norm-case",
+  "completion_sha256": "c274b94cf7ab7301adbf4425cc524bb2f8d06f2ec70a0e915ddfea51daaafa6d",
+  "expected_events": 1248,
+  "inputs": {
+    "attempt": "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/attempt.json",
+    "audit": "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/audit.json",
+    "completion": "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/completion.json",
+    "manifest": "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/manifest.json",
+    "receipt": "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/receipt.json",
+    "report": "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/report.json",
+    "selection_contract": "/private/tmp/ariadna-r559y-qualification-v2-20261121/artificial-full/inputs/selection_contract.json"
+  },
+  "pins": {
+    "attempt": {
+      "bytes": 1659,
+      "sha256": "1da619a372742090507b00e532f8ab57fba84014ecfd96e1ff8a2c15bfbb1a3f"
+    },
+    "audit": {
+      "bytes": 348,
+      "sha256": "b58908c8aee953727b94b761b8a4f488370bad103d4a02658564ec0771d6209c"
+    },
+    "completion": {
+      "bytes": 253,
+      "sha256": "c274b94cf7ab7301adbf4425cc524bb2f8d06f2ec70a0e915ddfea51daaafa6d"
+    },
+    "manifest": {
+      "bytes": 562,
+      "sha256": "7e4863491f06edc54cd3945af37f0e1687dce249f12ebc76e62282f0b53d250e"
+    },
+    "receipt": {
+      "bytes": 1825,
+      "sha256": "c4668d9b37c4de59970f334885b8dede73f24dedc3c630c7cce186d7da9ff567"
+    },
+    "report": {
+      "bytes": 3691752,
+      "sha256": "f97de299667effe1599bf3307adc5bafd3c83235defbbb00946d243dbe473783"
+    },
+    "selection_contract": {
+      "bytes": 365,
+      "sha256": "8d8f5b840d84fa6f88475e24160d152f956a56a1bcfdc71944e7155816dd6408"
+    }
+  },
+  "reference_sha256": "f7bd286dac41255c68af6b32a4e6c9102a8704b69a5ab7510faa6decb68aa0b1",
+  "scope": "artificial-matched-norm"
+}

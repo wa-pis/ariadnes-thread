@@ -8073,3 +8073,30 @@ R5.59x remains unchecked and consumed; no retry, repair, data/formula/context/ca
 change or comparison/physical/M3 claim. Automation stays PAUSED. Next requires a
 separately instructed versioned adapter/fixture repair and qualification, then a new
 execution identity preserving this failure; R5.60 stays closed.
+
+## R5.59y versioned source-map adapter repair (2026-11-21)
+
+[ADR0237](../../../docs/adr/0237-qualify-source-map-adapter.md) accepts artificial-only
+qualification of a versioned0237 runner/core/independent auditor. Each local checker
+requires exact6 authenticated roles and their exact hash projection inside a closed
+6/17-role sealed metadata map; all entries are well-formed lowercase64-hex hashes.
+Unknown/partial/malformed extras, missing/mismatched required roles, reduced context
+maps and scope drift fail before arithmetic. Eleven extra roles remain metadata,
+not newly source-file-authenticated. Formula/context/scientific contract and caps
+are unchanged. New fixed0237 output bindings preserve the consumed0234 failure and
+remain absent; only artificial command-shape tests may use a fake bootstrap.
+Full matrix/independent audit, hostile metadata, original6-role parity, caps,
+immutable history and focused/frozen guarded full tests/Ruff/strict/review are
+required before completion. No R5.59x replay or new saved execution is authorized.
+
+[ADR0237](../../../docs/adr/0237-qualify-source-map-adapter.md) completes R5.59y artificial source-map repair:
+new0237 producer/auditor independently admit closed6/17-role sealed metadata with
+all6 selected hashes required; no new authentication of11 extra source files.
+38 new/124 focused/6788 guarded full passes,494 exclusions; exact old6-role
+analysis parity and independent72-box/144-method/72-oracle/72-diagonal verification.
+Source3,930,106 B/process,553,025 B combined output,3444 directed primitives and
+external0.300015750/0.233777375 s fit unchanged caps. Frozen visible checkout matches;
+old0235 sources/tests,0234 first failure and original contracts/pins unchanged.
+Only artificial command shapes ran. New0237 fixed outputs remain absent; no saved
+execution/R5.59x retry/SPICE/integration/R5.60 or physical/M3 claim. Automation PAUSED.
+Next saved execution needs a distinct instruction and new attempt/output identity.

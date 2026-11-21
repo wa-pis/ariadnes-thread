@@ -1,0 +1,8 @@
+{
+  "boundary": "Both fabricated producer and independent audit returned0 before the outer summary checked a misspelled metadata key.",
+  "cause": "Mechanical helper symbol replacement also modified a source_inventory_bytes dictionary key; qualified runtime/tests unchanged.",
+  "error": "KeyError: sourceinventory_bytes",
+  "external_measurements": "Not serialized by failed first helper; no timing is invented.",
+  "real_saved_execution": false,
+  "stage": "R5.59y-artificial-qualification"
+}

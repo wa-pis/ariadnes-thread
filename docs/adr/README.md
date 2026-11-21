@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0237 — Qualify selected source bindings within sealed archive metadata](0237-qualify-source-map-adapter.md): versioned6/17-role adapter repair qualified on fabricated archives;124 focused/6788 guarded full passes,494 exclusions, no saved execution.
+
 - [0236 — Preserve the matched-norm run rejected at source metadata](0236-record-saved-matched-norms.md): sole R5.59x exits3 before matrix selection;6 selected source hashes match within17 historical roles, but full-map equality rejects;0 methods/oracles, no numerical audit, attempt consumed.
 
 - [0235 — Qualify matched-input norm methods on artificial archives](0235-qualify-matched-input-norms.md):86 focused/6750 guarded full passes;72 boxes/144 methods/72 exact oracles independently verified, no real execution.

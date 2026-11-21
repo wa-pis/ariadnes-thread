@@ -1003,3 +1003,11 @@ The ADR0234 controlled local experiment SHALL isolate the two norm-squared formu
 - **THEN** only source/AST and metadata/document verification SHALL occur, with zero numerical endpoint extraction, method/oracle evaluations, experimental outputs, SPICE, integration or R5.60
 - **AND** R5.59w SHALL require a separate instruction and full-volume artificial qualification including exact retained/audit command shapes, arithmetic/context/compatibility/limit failures, independent review, focused/frozen guarded full pytest, Ruff and strict OpenSpec; limits SHALL not be treated as sufficient until measured
 - **AND** only qualified R5.59w and another explicit instruction SHALL permit one R5.59x saved local experiment and one independent audit, without retry or historical/production code changes; its new local norm/oracle work SHALL be nonzero and separately counted while orbital/trig/sqrt/exp/mass/native/SPICE/integration/R5.60 work remains zero
+
+#### Scenario: Admit selected source bindings within sealed historical metadata
+
+- **WHEN** the separately authorized ADR0237/R5.59y versioned adapter and independent auditor qualify on artificial archives
+- **THEN** each SHALL independently require exactly6 authenticated source roles and match every selected hash within a well-formed sealed metadata map of the closed6-role or17-role form, rejecting missing/mismatched selected roles, reduced contexts, malformed/unknown/partial extras or scope drift before numerical work
+- **AND** the additional11 entries SHALL remain sealed metadata, without claiming their source files were newly authenticated; all original raw/source/AST/private pins and numerical formulas/contexts/caps SHALL remain unchanged
+- **AND** full-volume artificial17/6 and legacy6/6 inputs SHALL pass the complete72-box/144-method/72-oracle/72-diagonal comparison and independent audit, with exact parent/worker shapes, caps and exclusive evidence verified; old0234 failure/0235 sources SHALL remain immutable and new0237 fixed outputs absent
+- **AND** R5.59x SHALL remain consumed and unchecked; any future saved execution SHALL need a distinct explicit instruction/new output identity, with no SPICE, integration, R5.60 or physical/M3 claim from artificial repair

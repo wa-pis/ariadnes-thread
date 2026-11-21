@@ -625,6 +625,18 @@ change or comparison/physical/M3 claim. Automation stays PAUSED. Next requires a
 separately instructed versioned adapter/fixture repair and qualification, then a new
 execution identity preserving this failure; R5.60 stays closed.
 
+[ADR0237](../docs/adr/0237-qualify-source-map-adapter.md) completes R5.59y artificial source-map repair:
+new0237 producer/auditor independently admit closed6/17-role sealed metadata with
+all6 selected hashes required; no new authentication of11 extra source files.
+38 new/124 focused/6788 guarded full passes,494 exclusions; exact old6-role
+analysis parity and independent72-box/144-method/72-oracle/72-diagonal verification.
+Source3,930,106 B/process,553,025 B combined output,3444 directed primitives and
+external0.300015750/0.233777375 s fit unchanged caps. Frozen visible checkout matches;
+old0235 sources/tests,0234 first failure and original contracts/pins unchanged.
+Only artificial command shapes ran. New0237 fixed outputs remain absent; no saved
+execution/R5.59x retry/SPICE/integration/R5.60 or physical/M3 claim. Automation PAUSED.
+Next saved execution needs a distinct instruction and new attempt/output identity.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

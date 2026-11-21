@@ -1,0 +1,97 @@
+"""Offline test guard: reject real Python bindings and direct CSPICE loads."""
+import importlib.abc
+import os
+import sys
+
+PACKAGES = {"tudatpy", "spiceypy"}
+
+
+def install(block):
+    assert not any(name.split(".", 1)[0] in PACKAGES for name in sys.modules)
+
+    class DenyNative(importlib.abc.MetaPathFinder):
+        def find_spec(self, fullname, path=None, target=None):
+            if fullname.split(".", 1)[0] in PACKAGES:
+                block(fullname)
+            return None
+
+    def deny_cspice(event, args):
+        if event == "ctypes.dlopen" and args[0] is not None:
+            library = os.fsdecode(args[0]).lower()
+            if any(name in library for name in (*PACKAGES, "cspice")):
+                block(os.path.basename(library))
+
+    sys.meta_path.insert(0, DenyNative())
+    sys.addaudithook(deny_cspice)
+
+
+def refuse(name):
+    raise RuntimeError("R5.42 blocked native import or load: " + name)
+
+
+if __name__ == "sitecustomize":
+    install(refuse)
+
+
+if __name__ == "__main__":
+    from pathlib import Path
+    from threading import current_thread, main_thread
+
+    import pytest
+
+    def skip(name):
+        if current_thread() is not main_thread():
+            refuse(name)
+        pytest.skip("R5.42 excludes native SPICE access: " + name)
+
+    class Skips:
+        def pytest_collection_modifyitems(self, items):
+            # Streamlit runs these live scenario searches on a separate thread.
+            live_ui = {
+                "test_example_search_slider_edit_and_invalid_rerun",
+                "test_search_failure_clears_previous_result",
+                "test_sampling_failure_removes_result",
+                "test_provenance_lifecycle_and_no_repeated_work",
+                "test_failure_clears_successful_provenance",
+                "test_preferences_filter_help_and_budget",
+                "test_elapsed_days_reset_on_candidate_change",
+            }
+            live_export = {
+                "test_ui_positive_export_stale_inputs_candidate_and_sort",
+                "test_ui_exchange_failure_retains_diagnostics_without_download",
+                "test_ui_resource_change_invalidates_downloads",
+                "test_unqualified_coast_is_never_promoted",
+                "test_other_stale_identity_invalidates_downloads",
+                "test_search_error_retains_available_diagnostics",
+            }
+            by_file = {"test_explorer_ui.py": live_ui, "test_research_export.py": live_export}
+            saved_science = {
+                "test_split_coast_study.py": {"test_split_path_replays_archived_bits"},
+                "test_trajectory_schwarzschild_vector.py": {"test_retained_fresh_schwarzschild_vector"},
+                "test_trajectory_srp_vector.py": {"test_retained_fresh_srp_vector"},
+                "test_trajectory_harmonic_profile.py": {"test_stored_mars_harmonic_profile"},
+                "test_trajectory_fourth_inputs.py": {"test_fourth_harmonic_binary64_input_binding"},
+                "test_moving_inputs.py": {"test_hash_bound_input_loader_exposes_saved_zero_reference",
+                                          "test_real_metadata_preflight_stays_stdlib_only"},
+            }
+            for item in items:
+                if (item.originalname in saved_science.get(item.path.name, ()) or
+                        (item.path.name == "test_moving_inputs.py" and "retained" in item.fixturenames)):
+                    item.add_marker(pytest.mark.skip(reason="R5.42 excludes retained real force and record evaluation"))
+                if item.originalname in by_file.get(item.path.name, ()):
+                    item.add_marker(pytest.mark.skip(reason="R5.42 excludes Streamlit live ephemerides"))
+
+            # The immutable R5.34 fixtures start a 60 s clock at import.
+            # Run that file first so unrelated tests do not consume its budget.
+            items.sort(key=lambda item: item.path.name != "test_split_coast_study.py")
+
+        def pytest_runtest_logreport(self, report):
+            if report.skipped:
+                path = Path(os.environ["ARIADNA_R542_SKIPS"])
+                with path.open("a", encoding="utf-8") as stream:
+                    stream.write(report.nodeid + "\t" + report.when + "\t" +
+                                 str(report.longrepr[-1]) + "\n")
+
+    os.environ["PYTHONPATH"] = str(Path(__file__).resolve().parent)
+    install(skip)
+    raise SystemExit(pytest.main(sys.argv[1:], plugins=[Skips()]))

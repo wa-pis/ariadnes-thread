@@ -1,0 +1,20 @@
+{
+  "finite_json_files": 27,
+  "fixed_future_outputs": "absent",
+  "git_diff": "Code/docs whitespace checks pass; raw pytest transcript and canonical unified diff retain original formatting.",
+  "guarded_full_skip_node_ids": "identical494exclusions",
+  "local_markdown_links": 494,
+  "new_qualified_source_test_pins": 6,
+  "original_failure_and_evidence": "unchanged",
+  "original_input_pins": 13,
+  "previous_qualified_source_test_pins": 8,
+  "raw_whitespace_exceptions": [
+    "docs/adr/experiments/0237-qualification/first-focused-failed.log",
+    "docs/adr/experiments/0237-qualification/source-delta.patch"
+  ],
+  "ruff": "passed",
+  "scope": "Metadata/source/document checks only",
+  "source_AST_pins": 13,
+  "source_arithmetic_outside_reviewed_admission_region": "AST-identical",
+  "strict_openspec": "passed"
+}

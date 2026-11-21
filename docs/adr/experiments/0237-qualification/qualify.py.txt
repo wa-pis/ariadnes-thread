@@ -1,0 +1,69 @@
+"""Full artificial17/6 source-map qualification through exact retained/audit argv."""
+from hashlib import sha256
+import json
+from pathlib import Path
+import sys
+from time import monotonic_ns
+
+ROOT=Path('/Users/agrudin/dev/my/ariadna')
+BASE=Path('/private/tmp/ariadna-r559y-qualification-v2-20261121')
+sys.path.insert(0,str(ROOT/'tests'))
+from test_matched_norm_metadata import (
+    SCRIPT, assert_dispatch as _assert_dispatch, inventory_bytes as _inventory_bytes, invoke, load_dispatcher,
+    prepare_dispatch_case, telemetry,
+)
+
+def wire(value):
+    return (json.dumps(value,indent=2,sort_keys=True,allow_nan=False)+'\n').encode()
+
+BASE.mkdir()
+case=prepare_dispatch_case(BASE/'artificial-full')
+records=[]
+for role in ('producer','auditor'):
+    args=['retained'] if role=='producer' else ['audit',sha256((case['output']/'completion.json').read_bytes()).hexdigest()]
+    start=monotonic_ns()
+    result=invoke(case,*args)
+    elapsed=monotonic_ns()-start
+    (BASE/f'{role}.stdout').write_text(result.stdout)
+    (BASE/f'{role}.stderr').write_text(result.stderr)
+    (BASE/f'{role}-measurement.json').write_bytes(wire(dict(role=role,args=args,returncode=result.returncode,external_elapsed_ns=elapsed,telemetry=telemetry(result))))
+    assert result.returncode==0,result.stderr
+    _assert_dispatch(case,result,args)
+    assert elapsed<30_000_000_000
+    records.append(dict(role=role,args=args,returncode=result.returncode,
+                        external_elapsed_ns=elapsed,telemetry=telemetry(result)))
+report=json.loads((case['output']/'report.json').read_bytes())
+audit=json.loads(case['audit'].read_bytes())
+assert report['scope']=='artificial-matched-norm'
+assert report['stage']=='R5.59y'
+assert report['status']=='matched-norm-qualified-local-only'
+assert audit['status']=='matched-norm-independently-verified'
+assert report['work']==audit['work']==audit['proof']['counts']
+assert report['analysis']['progress']==dict(methods=dict(attempted=144,charged=144,completed=144),
+                                          oracles=dict(attempted=72,charged=72,completed=72))
+assert len(report['analysis']['rows'])==72
+assert all(row['diagonal']['matches'] for row in report['analysis']['rows'])
+assert report['source_inventory_bytes']==_inventory_bytes(case)<=4194304
+assert report['commands'] is None and report['physical_status']=='physical-join-not-established'
+module=load_dispatcher()
+contract=json.loads(module.CONTRACT.read_bytes())
+paths={case['bootstrap'],case['config'],module.CONTRACT,module.DESIGN}
+paths.update(Path(path) for path in case['profile']['inputs'].values())
+paths.update(SCRIPT.with_name(name) for name in module.PRIVATE)
+paths.update(ROOT/path for path in contract['source_bindings'].values())
+inventory={str(path):dict(bytes=path.stat().st_size,sha256=sha256(path.read_bytes()).hexdigest()) for path in sorted(paths)}
+assert sum(row['bytes'] for row in inventory.values())==report['source_inventory_bytes']
+output_bytes=sum(path.stat().st_size for path in case['output'].iterdir())
+audit_bytes=case['audit'].stat().st_size
+assert output_bytes<=1048576-65536 and audit_bytes<=65536 and output_bytes+audit_bytes<=1048576
+summary=dict(stage='R5.59y',scope='artificial-matched-norm',base_commit='21c6d69aca5cd1425fba4631ae95d2466fcb0397',
+             result_status=report['status'],audit_status=audit['status'],work=report['work'],progress=report['analysis']['progress'],
+             measurements=records,source_inventory=inventory,source_inventory_bytes_per_process=report['source_inventory_bytes'],
+             source_record_bytes=sum(row['bytes'] for row in case['profile']['pins'].values()),
+             producer_output_bytes=output_bytes,auditor_output_bytes=audit_bytes,combined_output_bytes=output_bytes+audit_bytes,
+             real_retained_input_reads=0,scientific_work=module.ZERO,
+             fixture_recipe='tests/matched_norm_metadata_fixtures.py17-role wrapper over full unpadded24trace/72box fixture; six selected bindings and invented extra-role provenance; independent test Decimal snapshots',
+             qualification_only=True,r559x_repeated=False,r559z_started=False,r560_started=False)
+(BASE/'artificial-summary.json').write_bytes(wire(summary))
+(BASE/'artificial-profile.json').write_bytes(wire(case['profile']))
+print(json.dumps({key:value for key,value in summary.items() if key not in {'measurements','source_inventory'}}))
