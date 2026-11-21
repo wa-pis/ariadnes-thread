@@ -1,0 +1,103 @@
+{
+  "alias_records": 528,
+  "assumptions": [
+    "Decimal96 context equality follows conditionally from pinned source/provenance, not a runtime context snapshot; do not report it as observed data. If this assumption cannot be justified, reject local-effect admission."
+  ],
+  "audit_status": "lineage-independently-verified",
+  "auditor_output_bytes": 752,
+  "base_commit": "b8b241325938b4491476098fe72505a15b041858",
+  "checkpoint_records": 432,
+  "combined_output_bytes": 556530,
+  "commands": null,
+  "comparison_records": 216,
+  "counts": {
+    "aliases": 528,
+    "descriptors": 648,
+    "event_visits": 1248,
+    "norm_pairs": 36
+  },
+  "evidence_sha256": {
+    "docs/adr/experiments/0229-saved-lineage-audit.json": {
+      "bytes": 752,
+      "sha256": "f2f64a0422d46ebb2ee9399beb93961d6168d29f31451e4ac2f03527e5c044e8"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/attempt.json": {
+      "bytes": 2291,
+      "sha256": "7a206fba4d01faf7721a0b654ff16da285d9674dc369d4b23d6e628378aaa9cf"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/completion.json": {
+      "bytes": 245,
+      "sha256": "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/receipt.json": {
+      "bytes": 2481,
+      "sha256": "9b3af474c43459191d5671b0af8ff591cab01924d9da65e49014a97f01ed7656"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/report.json": {
+      "bytes": 550761,
+      "sha256": "a9e4b807f342a90886ed1c47c1a4c6d97ed0bebb9b33062e1d330939c379d1b3"
+    }
+  },
+  "historical_r559s_status": "consumed-failure; task remains unchecked",
+  "inherited_raw_stage": "R5.59s",
+  "limitations": [
+    "cell width minus singleton width is not dependency overestimation or a rounding-error bound",
+    "one midpoint cannot determine within-cell extrema or separate phase variation, dependency loss and rounding",
+    "ellipse radius and reverse radius are distinct rounded expressions; no identity/contraction without a separate proof",
+    "local matched-operand response does not quantify contribution to final arrival width",
+    "missing operation-level snapshots/common-phase correlation/covariance/extremizer witnesses remain missing"
+  ],
+  "measurements": [
+    {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+        "-I",
+        "-S",
+        "-B",
+        "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py",
+        "retained"
+      ],
+      "external_elapsed_ns": 265408750,
+      "process": "producer",
+      "returncode": 0,
+      "timed_out": false
+    },
+    {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+        "-I",
+        "-S",
+        "-B",
+        "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py",
+        "audit",
+        "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+      ],
+      "external_elapsed_ns": 217269209,
+      "process": "auditor",
+      "returncode": 0,
+      "timed_out": false
+    }
+  ],
+  "no_retry": true,
+  "norm_dispositions": {
+    "input-confounded": 36
+  },
+  "norm_dispositions_by_role": {
+    "angular-momentum-squared": {
+      "input-confounded": 12
+    },
+    "impulse-squared": {
+      "input-confounded": 12
+    },
+    "radius-squared": {
+      "input-confounded": 12
+    }
+  },
+  "physical_status": "physical-join-not-established",
+  "producer_output_bytes": 555778,
+  "scientific_claim": "Every pair is input-confounded; no matched-operand local-method effect or final-width attribution is established.",
+  "scope": "retained",
+  "source_inventory_bytes_per_process": 3887171,
+  "stage": "R5.59u",
+  "status": "lineage-qualified-attribution-unresolved"
+}

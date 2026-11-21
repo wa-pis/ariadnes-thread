@@ -1,0 +1,30 @@
+{
+  "analysis_sha256": "062cdcadc72acbd31421e7f0788f5bfaec918587f64a3a189296b7301952d6eb",
+  "combined_output_bytes": 556530,
+  "command_replay": false,
+  "completion_sha256": "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756",
+  "counts": {
+    "aliases": 528,
+    "descriptors": 648,
+    "event_visits": 1248,
+    "norm_pairs": 36
+  },
+  "evidence_chain": "attempt/report/receipt/completion/audit and canonical analysis hash match",
+  "findings": [],
+  "integrations": 0,
+  "norm_dispositions": {
+    "input-confounded": 36
+  },
+  "prohibited_work_fields": 14,
+  "prohibited_work_values": "strict integer zero",
+  "reviewer": "independent retained_checks subagent",
+  "runtime_constraints": "unchanged source hashes and worker guard support saved arithmetic only",
+  "saved_pointer_checks": "528 alias endpoints match; all36 norm pairs have differing operand endpoints; no matched-input local claim admitted",
+  "scientific_helper_load": false,
+  "scope": "read-only saved references, bounded endpoint-string comparisons, metadata, hashes, counts and identities",
+  "source_inventory_bytes": 3887171,
+  "spice_queries": 0,
+  "stage": "R5.59u",
+  "status": "agrees",
+  "writes": false
+}

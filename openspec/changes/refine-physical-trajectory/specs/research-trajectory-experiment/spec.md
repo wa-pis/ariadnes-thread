@@ -954,3 +954,20 @@ The R5.59t repair SHALL preserve historical0230 and the consumed ADR0231 failure
 - **THEN** a test-only isolated bootstrap SHALL exercise the complete parent/child retained and audit argument forms using explicit content-pinned fabricated archives and isolated outputs, without changing the command argument lists or substituting authentication, guards, analyzer or independent verifier
 - **AND** full24-row/1248-event/36-slot analysis and separate verification, malformed arities, existing artificial aliases, exclusivity and inherited clocks/work/input/output limits SHALL pass focused and frozen guarded full pytest, Ruff and strict OpenSpec; complete charged inventory SHALL include bootstrap/configuration source bytes
 - **AND** no historical numerical payload, consumed R5.59s dispatch, SPICE, integration, old scientific audit or R5.60 SHALL run; fixed retained outputs and all original evidence/source bytes SHALL remain untouched, with a separate execution decision required for any future retained readback
+
+
+### Requirement: Record a distinct saved-only readback after qualified dispatch repair
+
+A newly authorized R5.59u readback SHALL use the qualified unchanged0232 dispatcher and unchanged ADR0229 contract, preserving the historical consumed R5.59s failure and all scientific limits.
+
+#### Scenario: Execute the separately authorized retained and audit pair
+
+- **WHEN** a separate explicit user instruction authorizes saved-data readback after R5.59t qualification
+- **THEN** exactly one unmodified0232 retained command and, only after successful durable completion, one independent audit command bound to the raw new completion SHA256 SHALL run under the same pinned Conda/isolation/profile/input/source rules and caps; first complete or partial evidence SHALL be preserved without retry
+- **AND** the stage record SHALL identify the new authorization separately from historical R5.59s, preserve inherited raw artifact labels, and verify zero new scientific/native/SPICE/kernel/force/integration/old-audit-replay/R5.60 calls
+
+#### Scenario: Verify saved dispositions without a causal overclaim
+
+- **WHEN** the first readback and independent audit complete
+- **THEN** the record SHALL verify13 raw pins,24 rows/1248 event visits/648 descriptors/528 aliases/all36 candidate norm dispositions, exact evidence identities and byte/time/work limits, and retain independently verified same-operand, confounded or legitimate non-reached outcomes without changing gates
+- **AND** input-confounded outcomes SHALL not establish a local method response, final-width contribution, dominant cause, continuous exclusion, physical join or strict M3 completion; scientific context assumptions and missing causal information SHALL remain explicit

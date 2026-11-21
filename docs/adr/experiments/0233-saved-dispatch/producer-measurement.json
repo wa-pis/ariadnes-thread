@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py",
+    "retained"
+  ],
+  "external_elapsed_ns": 265408750,
+  "process": "producer",
+  "returncode": 0,
+  "timed_out": false
+}

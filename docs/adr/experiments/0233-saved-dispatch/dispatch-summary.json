@@ -1,0 +1,65 @@
+{
+  "audit_present": true,
+  "auditor_dispatched": true,
+  "base_commit": "b8b241325938b4491476098fe72505a15b041858",
+  "evidence_paths": {
+    "docs/adr/experiments/0229-saved-lineage-audit.json": {
+      "bytes": 752,
+      "sha256": "f2f64a0422d46ebb2ee9399beb93961d6168d29f31451e4ac2f03527e5c044e8"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/attempt.json": {
+      "bytes": 2291,
+      "sha256": "7a206fba4d01faf7721a0b654ff16da285d9674dc369d4b23d6e628378aaa9cf"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/completion.json": {
+      "bytes": 245,
+      "sha256": "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/receipt.json": {
+      "bytes": 2481,
+      "sha256": "9b3af474c43459191d5671b0af8ff591cab01924d9da65e49014a97f01ed7656"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/report.json": {
+      "bytes": 550761,
+      "sha256": "a9e4b807f342a90886ed1c47c1a4c6d97ed0bebb9b33062e1d330939c379d1b3"
+    }
+  },
+  "expected_runtime_inventory_bytes": 3887171,
+  "inherited_raw_stage": "R5.59s",
+  "measurements": [
+    {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+        "-I",
+        "-S",
+        "-B",
+        "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py",
+        "retained"
+      ],
+      "external_elapsed_ns": 265408750,
+      "process": "producer",
+      "returncode": 0,
+      "timed_out": false
+    },
+    {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+        "-I",
+        "-S",
+        "-B",
+        "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py",
+        "audit",
+        "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+      ],
+      "external_elapsed_ns": 217269209,
+      "process": "auditor",
+      "returncode": 0,
+      "timed_out": false
+    }
+  ],
+  "no_retry": true,
+  "one_producer_dispatched": true,
+  "producer_completion_present": true,
+  "qualified_code_unchanged": true,
+  "stage": "R5.59u"
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py",
+    "audit",
+    "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+  ],
+  "expected_wall_ns": 30000000000,
+  "ordinal": 1,
+  "utc": "2026-11-21T11:37:03.433685+00:00"
+}

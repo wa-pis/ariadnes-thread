@@ -574,6 +574,18 @@ and fixed outputs are preserved; no R5.59s retry. Its attempt remains consumed a
 unchecked, attribution unresolved, R5.60 closed and automation PAUSED. Any distinct
 retained execution needs a separate explicit instruction.
 
+[ADR0233](../docs/adr/0233-record-corrected-saved-lineage.md) records a newly and separately authorized R5.59u readback
+through unchanged qualified0232 at cleanb8b2413: one retained command and one
+independent audit return0.13 raw pins and all24 rows/1248 visits/648 descriptors/
+528 aliases/36 norm slots agree. All36 slots are input-confounded (12 per role),
+so no same-operand local-method response or dominant final-width cause is established.
+Source3,887,171 B/process, combined output556,530 B and external0.265408750/
+0.217269209 s satisfy unchanged caps; scientific/native/SPICE/integration/replay/
+R5.60 counters remain0. Historical failure R5.59s stays consumed/unchecked;
+new raw artifacts retain inherited R5.59s labels. R5.59u is complete; both newly
+authorized commands are consumed, not repeated. No physical join or eligible
+commands are established. Automation remains PAUSED for a distinct next decision.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

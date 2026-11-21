@@ -1,0 +1,315 @@
+{
+  "automation": "PAUSED",
+  "base_commit": "b8b241325938b4491476098fe72505a15b041858",
+  "both_new_commands_consumed": true,
+  "checks": {
+    "durable_chain_completion_and_proof": "passed",
+    "final_independent_document_review": "agrees; no material scope, gate, count, hash or interpretation mismatch",
+    "finite_json_files": 15,
+    "git_diff": "passed",
+    "historical_qualification_and_failed_dispatch_evidence": "unchanged",
+    "independent_read_only_review": "agrees; no replay",
+    "local_markdown_links": 476,
+    "one_retained_and_one_audit": "confirmed; no retry",
+    "qualified_source_tests": "unchanged",
+    "raw_thirteen_pins_and_contract": "unchanged",
+    "runtime_dependencies_tests_legacy": "unchanged",
+    "strict_openspec": "passed",
+    "time_bytes_work_and_prohibited_counters": "passed"
+  },
+  "date": "2026-11-21",
+  "dispatch_summary": {
+    "audit_present": true,
+    "auditor_dispatched": true,
+    "base_commit": "b8b241325938b4491476098fe72505a15b041858",
+    "evidence_paths": {
+      "docs/adr/experiments/0229-saved-lineage-audit.json": {
+        "bytes": 752,
+        "sha256": "f2f64a0422d46ebb2ee9399beb93961d6168d29f31451e4ac2f03527e5c044e8"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/attempt.json": {
+        "bytes": 2291,
+        "sha256": "7a206fba4d01faf7721a0b654ff16da285d9674dc369d4b23d6e628378aaa9cf"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/completion.json": {
+        "bytes": 245,
+        "sha256": "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/receipt.json": {
+        "bytes": 2481,
+        "sha256": "9b3af474c43459191d5671b0af8ff591cab01924d9da65e49014a97f01ed7656"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/report.json": {
+        "bytes": 550761,
+        "sha256": "a9e4b807f342a90886ed1c47c1a4c6d97ed0bebb9b33062e1d330939c379d1b3"
+      }
+    },
+    "expected_runtime_inventory_bytes": 3887171,
+    "inherited_raw_stage": "R5.59s",
+    "measurements": [
+      {
+        "command": [
+          "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+          "-I",
+          "-S",
+          "-B",
+          "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py",
+          "retained"
+        ],
+        "external_elapsed_ns": 265408750,
+        "process": "producer",
+        "returncode": 0,
+        "timed_out": false
+      },
+      {
+        "command": [
+          "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+          "-I",
+          "-S",
+          "-B",
+          "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py",
+          "audit",
+          "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+        ],
+        "external_elapsed_ns": 217269209,
+        "process": "auditor",
+        "returncode": 0,
+        "timed_out": false
+      }
+    ],
+    "no_retry": true,
+    "one_producer_dispatched": true,
+    "producer_completion_present": true,
+    "qualified_code_unchanged": true,
+    "stage": "R5.59u"
+  },
+  "evidence_sha256": {
+    "docs/adr/experiments/0229-saved-lineage-audit.json": {
+      "bytes": 752,
+      "sha256": "f2f64a0422d46ebb2ee9399beb93961d6168d29f31451e4ac2f03527e5c044e8"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/attempt.json": {
+      "bytes": 2291,
+      "sha256": "7a206fba4d01faf7721a0b654ff16da285d9674dc369d4b23d6e628378aaa9cf"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/completion.json": {
+      "bytes": 245,
+      "sha256": "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/receipt.json": {
+      "bytes": 2481,
+      "sha256": "9b3af474c43459191d5671b0af8ff591cab01924d9da65e49014a97f01ed7656"
+    },
+    "docs/adr/experiments/0229-saved-lineage-result/report.json": {
+      "bytes": 550761,
+      "sha256": "a9e4b807f342a90886ed1c47c1a4c6d97ed0bebb9b33062e1d330939c379d1b3"
+    },
+    "docs/adr/experiments/0233-independent-saved-review.json": {
+      "bytes": 1204,
+      "sha256": "02f07f1729aed111e4a289edc4cef0abf8efbd149fa5794acc90209b34fd8c50"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/auditor-attempt.json": {
+      "bytes": 384,
+      "sha256": "348d0bb1fefc8455664f7ec0b1417922ba2cf867c209b97137117924838adfaa"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/auditor-measurement.json": {
+      "bytes": 389,
+      "sha256": "524fbb698d5d837819dafb544f65d7cd3480ddb0a475147964460d2f51586a3e"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/auditor.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/auditor.stdout": {
+      "bytes": 487,
+      "sha256": "dcefd23e74e0dfaaf859471c4201bebbcb83a1a6fbe77a0238581cda1a3b4a5f"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/authorization.json": {
+      "bytes": 8987,
+      "sha256": "500da984965300a5010a7189b465be5dc7f64a716a0e9525156797ae24cc2c47"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/completion-pin.json": {
+      "bytes": 99,
+      "sha256": "5b3625708ca650993f836791bb577807002c0b21242e6448d2b103ef1b5106bd"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/dispatch-summary.json": {
+      "bytes": 2123,
+      "sha256": "b11ba18dddc2e26b2c9ec9ea3e5dd5eafbd327415bd2202ccd21817a7408af43"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/dispatch.py.txt": {
+      "bytes": 6416,
+      "sha256": "5ddfaa0279788961bfbecb2363be7439afa7af3585036629f4d940c137df1301"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/openspec.log": {
+      "bytes": 45,
+      "sha256": "e100704efd79d707c2c8e21e8f643cd71afcf906342dc7ad0830859d153b0cf0"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/producer-attempt.json": {
+      "bytes": 315,
+      "sha256": "91b240512e76ca9af5b3ca056f16f4cb6012f0bcc966ef7d390912dd2818cf5e"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/producer-measurement.json": {
+      "bytes": 321,
+      "sha256": "8f5e6ddf79a335f95f44583034e299dccf80f6075d4d2bfe5d4aabddade6b3d7"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/producer.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/producer.stdout": {
+      "bytes": 497,
+      "sha256": "c456cb0b498ca114665345081c977af24ef32a868f788185c6bca55d600864bf"
+    },
+    "docs/adr/experiments/0233-saved-dispatch/result-summary.json": {
+      "bytes": 3770,
+      "sha256": "63886cb1c7f5afe7cce8b49e5785cc941173d07b0838848ad0cdebe36d62bf61"
+    }
+  },
+  "independent_read_only_review": {
+    "analysis_sha256": "062cdcadc72acbd31421e7f0788f5bfaec918587f64a3a189296b7301952d6eb",
+    "combined_output_bytes": 556530,
+    "command_replay": false,
+    "completion_sha256": "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756",
+    "counts": {
+      "aliases": 528,
+      "descriptors": 648,
+      "event_visits": 1248,
+      "norm_pairs": 36
+    },
+    "evidence_chain": "attempt/report/receipt/completion/audit and canonical analysis hash match",
+    "findings": [],
+    "integrations": 0,
+    "norm_dispositions": {
+      "input-confounded": 36
+    },
+    "prohibited_work_fields": 14,
+    "prohibited_work_values": "strict integer zero",
+    "reviewer": "independent retained_checks subagent",
+    "runtime_constraints": "unchanged source hashes and worker guard support saved arithmetic only",
+    "saved_pointer_checks": "528 alias endpoints match; all36 norm pairs have differing operand endpoints; no matched-input local claim admitted",
+    "scientific_helper_load": false,
+    "scope": "read-only saved references, bounded endpoint-string comparisons, metadata, hashes, counts and identities",
+    "source_inventory_bytes": 3887171,
+    "spice_queries": 0,
+    "stage": "R5.59u",
+    "status": "agrees",
+    "writes": false
+  },
+  "prior_qualification": {
+    "adr": "ADR0232",
+    "focused_passed": 87,
+    "guarded_exclusions": 494,
+    "guarded_full_passed": 6665,
+    "pytest_rerun": false,
+    "reason": "Runtime/source/test bytes unchanged; this stage records one bounded execution and documentation.",
+    "ruff_rerun": false
+  },
+  "r559s_historical_task_complete": false,
+  "result_summary": {
+    "alias_records": 528,
+    "assumptions": [
+      "Decimal96 context equality follows conditionally from pinned source/provenance, not a runtime context snapshot; do not report it as observed data. If this assumption cannot be justified, reject local-effect admission."
+    ],
+    "audit_status": "lineage-independently-verified",
+    "auditor_output_bytes": 752,
+    "base_commit": "b8b241325938b4491476098fe72505a15b041858",
+    "checkpoint_records": 432,
+    "combined_output_bytes": 556530,
+    "commands": null,
+    "comparison_records": 216,
+    "counts": {
+      "aliases": 528,
+      "descriptors": 648,
+      "event_visits": 1248,
+      "norm_pairs": 36
+    },
+    "evidence_sha256": {
+      "docs/adr/experiments/0229-saved-lineage-audit.json": {
+        "bytes": 752,
+        "sha256": "f2f64a0422d46ebb2ee9399beb93961d6168d29f31451e4ac2f03527e5c044e8"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/attempt.json": {
+        "bytes": 2291,
+        "sha256": "7a206fba4d01faf7721a0b654ff16da285d9674dc369d4b23d6e628378aaa9cf"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/completion.json": {
+        "bytes": 245,
+        "sha256": "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/receipt.json": {
+        "bytes": 2481,
+        "sha256": "9b3af474c43459191d5671b0af8ff591cab01924d9da65e49014a97f01ed7656"
+      },
+      "docs/adr/experiments/0229-saved-lineage-result/report.json": {
+        "bytes": 550761,
+        "sha256": "a9e4b807f342a90886ed1c47c1a4c6d97ed0bebb9b33062e1d330939c379d1b3"
+      }
+    },
+    "historical_r559s_status": "consumed-failure; task remains unchecked",
+    "inherited_raw_stage": "R5.59s",
+    "limitations": [
+      "cell width minus singleton width is not dependency overestimation or a rounding-error bound",
+      "one midpoint cannot determine within-cell extrema or separate phase variation, dependency loss and rounding",
+      "ellipse radius and reverse radius are distinct rounded expressions; no identity/contraction without a separate proof",
+      "local matched-operand response does not quantify contribution to final arrival width",
+      "missing operation-level snapshots/common-phase correlation/covariance/extremizer witnesses remain missing"
+    ],
+    "measurements": [
+      {
+        "command": [
+          "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+          "-I",
+          "-S",
+          "-B",
+          "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py",
+          "retained"
+        ],
+        "external_elapsed_ns": 265408750,
+        "process": "producer",
+        "returncode": 0,
+        "timed_out": false
+      },
+      {
+        "command": [
+          "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+          "-I",
+          "-S",
+          "-B",
+          "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py",
+          "audit",
+          "822626c615b0c41646d89d25ecf0e2f0ccb5a50f488339134bfcd02e99470756"
+        ],
+        "external_elapsed_ns": 217269209,
+        "process": "auditor",
+        "returncode": 0,
+        "timed_out": false
+      }
+    ],
+    "no_retry": true,
+    "norm_dispositions": {
+      "input-confounded": 36
+    },
+    "norm_dispositions_by_role": {
+      "angular-momentum-squared": {
+        "input-confounded": 12
+      },
+      "impulse-squared": {
+        "input-confounded": 12
+      },
+      "radius-squared": {
+        "input-confounded": 12
+      }
+    },
+    "physical_status": "physical-join-not-established",
+    "producer_output_bytes": 555778,
+    "scientific_claim": "Every pair is input-confounded; no matched-operand local-method effect or final-width attribution is established.",
+    "scope": "retained",
+    "source_inventory_bytes_per_process": 3887171,
+    "stage": "R5.59u",
+    "status": "lineage-qualified-attribution-unresolved"
+  },
+  "scientific_claim": "Every pair is input-confounded; no matched-operand local-method effect or final-width attribution is established.",
+  "stage": "R5.59u",
+  "status": "saved-readback-and-independent-audit-complete",
+  "task_complete": true
+}
