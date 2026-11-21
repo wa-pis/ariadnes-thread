@@ -7979,3 +7979,32 @@ this execution stage. A separately instructed repair must cover exact retained/a
 worker command shapes with artificial dependencies and project checks. Only after
 qualified repair and a distinct execution decision could another saved readback be
 considered. Existing scientific assumptions/caps/gates are unchanged; automation PAUSED.
+
+
+## R5.59t exact command-shape repair and artificial qualification (2026-11-21)
+
+[ADR0232](../../../docs/adr/0232-qualify-lineage-command-dispatch.md) accepts the
+user-instructed versioned repair after ADR0231. Preserve0230; copy the dispatcher as
+0232, admit a minimum four-item worker prefix, and retain the existing exact CLI
+arity checks. Update only private self-source identity; no dummy args, profile
+escape, mathematical change or weakened gate. Reuse unchanged0230 analyzer/verifier.
+Test retained/audit through parent plus actual isolated child using fabricated,
+content-pinned dependency injection confined to a test bootstrap. Only the subprocess
+script path may redirect; worker command arguments must be unchanged. Authentication,
+guards and both analysis implementations remain real. Charge test bootstrap/config
+bytes in the same inventory, then qualify full volume, failure paths, limits and
+project checks before completion. R5.59s remains consumed/unchecked; fixed outputs
+must remain absent. No retained analysis or execution instruction is granted.
+
+Qualification result:
+
+[ADR0232](../../../docs/adr/0232-qualify-lineage-command-dispatch.md) qualifies R5.59t's versioned dispatcher repair on artificial
+archives only: exact four-item retained and five-item audit worker forms, shared
+parent/child clock and nonce, unchanged admission/authentication/guards and separate
+verifier.17 new/87 focused/6665 guarded full tests pass with494 exclusions;
+Ruff/strict validation pass. Charged source3,894,481 B/process; combined output387,623 B;
+external0.214605959/0.211662958 s, all inherited caps pass. Real input reads and new
+scientific/native work are zero in the qualification commands. Historical0230/0231
+and fixed outputs are preserved; no R5.59s retry. Its attempt remains consumed and
+unchecked, attribution unresolved, R5.60 closed and automation PAUSED. Any distinct
+retained execution needs a separate explicit instruction.

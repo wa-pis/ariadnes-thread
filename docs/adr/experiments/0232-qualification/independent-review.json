@@ -1,0 +1,24 @@
+{
+  "combined_output_bytes": 387623,
+  "conclusion": "Exact command dispatch, proof chain, independent verifier, measured identities and inherited caps agree; artificial evidence only.",
+  "exact_worker_argv_lengths": [
+    4,
+    5
+  ],
+  "final_document_review": "No material count, cap, hash, scope or gate mismatch; qualification only. CURRENT_STATE read scope wording narrowed to retained-input files; historical source/contract reads remain allowed.",
+  "findings": [],
+  "numerical_replay": false,
+  "real_retained_input_reads": 0,
+  "reviewer": "independent retained_checks subagent",
+  "scope": "read-only artificial qualification evidence and new code/tests",
+  "shared_start_and_nonce": true,
+  "source_inventory_bytes": 3894481,
+  "status": "agrees",
+  "work": {
+    "aliases": 528,
+    "descriptors": 648,
+    "event_visits": 1248,
+    "norm_pairs": 36
+  },
+  "writes": false
+}

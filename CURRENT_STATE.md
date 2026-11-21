@@ -5,25 +5,27 @@ Updated: 2026-11-21. Keep under 60 lines; durable evidence is in ADRs.
 ## Goal and scheduling
 Near-term product: one understandable independently checked research trajectory/export.
 Keep Python/TudatPy/SPICE/Streamlit and the extensible open-platform vision.
-Automation `ariadna-m3` remains PAUSED; no automatic retry.
-[ADR0231](docs/adr/0231-record-saved-lineage-result.md): sole authorized R5.59s
-on clean4b708bb exits3 at retained worker argument guard: four args, minimum five.
-Failure precedes worker authentication/analyzer/output. External0.090031584 s;
-no completion/report/numeric audit. Independent read-only failure review agrees.
-Attempt consumed; R5.59s remains unchecked. No endpoint analysis, scientific helper,
-SPICE, integration or R5.60 ran. Code and all original inputs remain unchanged.
-Next decision: separately repair/qualify exact retained/audit command handling on
-artificial dependencies, then separately authorize any distinct retained attempt.
+Automation `ariadna-m3` remains PAUSED; no automatic retained dispatch.
+[ADR0232](docs/adr/0232-qualify-lineage-command-dispatch.md): R5.59t repair complete.
+New0232 dispatcher changes only minimum worker prefix5→4 and private self-name.
+Exact retained/audit commands exercise actual parent/child on fabricated dependencies;
+no production profile escape, authentication/guards/analyzer/verifier changes.
+17 new/87 focused/6665 guarded full passes,494 explicit exclusions; Ruff/strict pass.
+Frozen full suite status/source hashes match. Artificial independent proof passes:
+24 rows/1248 events/648 descriptors/528 aliases/36 norm slots; source3,894,481 B,
+combined output387,623 B; external0.214605959/0.211662958 s, all caps pass.
+New qualification commands read0 retained-input files and perform0 scientific/native work.
+Historical sources/evidence and fixed real output absence are preserved.
 
-## Verified preparation and execution limits
-[ADR0230](docs/adr/0230-qualify-saved-lineage-reader.md): R5.59r artificial-only
-qualification,70 focused/6648 guarded full passes,494 exclusions; Ruff/strict pass.
-No code change in ADR0231: tests/Ruff not repeated; hashes/JSON/links/diff/strict checked.
+## Saved-readback boundary and next decision
+[ADR0231](docs/adr/0231-record-saved-lineage-result.md): sole R5.59s on4b708bb
+failed at historical worker arity before analysis/output. Attempt remains consumed
+and unchecked; repair does not retry it. Next: separately authorize any distinct
+saved readback/audit using qualified0232; no automatic execution or scientific change.
 [ADR0229](docs/adr/0229-design-saved-lineage-diagnosis.md) remains the contract:
 13 fixed raw pins,24 traces/1248 events,18 checkpoints and36 candidate norm slots.
 Only descriptive widths and conditional exact-same-operand local comparisons.
 Decimal96 equality is a source/provenance assumption, not a runtime snapshot.
-Artificial qualification did not exercise the exact retained worker argument count.
 No formula/cell/cap changes, scientific replay, new physical run or R5.60 authorized.
 
 ## Latest retained numerical result
@@ -31,10 +33,9 @@ No formula/cell/cap changes, scientific replay, new physical run or R5.60 author
 on918d13c, corrected0227 adapter with unchanged ADR0224 pins/matrix/caps.
 24 exact pairs, six archived matches,24×16 sampled checks;48bounds/1248events,
 producer12/auditor6mass calls are historical work only. No new direct points/SPICE.
-External1.129278666/0.326211875 s; evidence3,675,364 B. Positive cell speed widths
-94.115–98.406 m/s; singleton widths~1.8e-89 m/s. Positive whole cells unresolved;
-singletons/negative whole cells mass-excluded. Dominant cause remains unproved.
-Raw inherited labels and ADR0226/ADR0231 failures are preserved.
+Positive cell speed widths94.115–98.406 m/s; singleton widths~1.8e-89 m/s.
+Positive whole cells unresolved; singletons/negative whole cells mass-excluded.
+Dominant cause remains unproved; raw inherited labels and failures are preserved.
 
 ## Unresolved continuous question
 [ADR0221](docs/adr/0221-record-retained-inter-node-result.md): consumed R5.59i,

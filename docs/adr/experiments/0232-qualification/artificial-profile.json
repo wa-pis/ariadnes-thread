@@ -1,0 +1,46 @@
+{
+  "candidate_id": "artificial-saved-lineage-case",
+  "completion_sha256": "1e173abc045c9a22a5e95db13ee0aa224875af449c991d7b455d8aa95110a69e",
+  "expected_events": 1248,
+  "inputs": {
+    "attempt": "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/attempt.json",
+    "audit": "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/audit.json",
+    "completion": "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/completion.json",
+    "manifest": "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/manifest.json",
+    "receipt": "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/receipt.json",
+    "report": "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/report.json",
+    "selection_contract": "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/selection_contract.json"
+  },
+  "pins": {
+    "attempt": {
+      "bytes": 826,
+      "sha256": "3133962eeb8a69e118e18ec1ee536502ddff0579d86a735c4b9389983cb732f0"
+    },
+    "audit": {
+      "bytes": 349,
+      "sha256": "d7d804e17b4a66258fd597ce1309f4194015b57be16ef774928cf924e60c0b11"
+    },
+    "completion": {
+      "bytes": 253,
+      "sha256": "1e173abc045c9a22a5e95db13ee0aa224875af449c991d7b455d8aa95110a69e"
+    },
+    "manifest": {
+      "bytes": 561,
+      "sha256": "72a8d6ebee02d080adfe76ab704a8841525b995d390800200782ace26a4a43f7"
+    },
+    "receipt": {
+      "bytes": 992,
+      "sha256": "bf78443bced70427d9023395061d21e2550582e254aec194813b1f0432546ac3"
+    },
+    "report": {
+      "bytes": 3691026,
+      "sha256": "d158e6fe796829a79f304c8f2b5526c97bc5f4276df557a96ccb305e019d6350"
+    },
+    "selection_contract": {
+      "bytes": 366,
+      "sha256": "b7e063fbd7506f446a1bffda7e91dbca5ccbf37f0d0b3c05630c511ae566c5e2"
+    }
+  },
+  "reference_sha256": "d86dd1a8496ae7f1238f97a712759f1be353bb1a30ff050af11e2eb97b2afe35",
+  "scope": "artificial-saved-lineage"
+}

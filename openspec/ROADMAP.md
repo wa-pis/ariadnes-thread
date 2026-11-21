@@ -563,6 +563,17 @@ control-flow boundary and no scientific/native work. R5.59s remains unchecked;
 that attempt is consumed, not retried. A separately instructed dispatcher repair,
 artificial qualification and distinct execution decision are needed. Automation PAUSED.
 
+[ADR0232](../docs/adr/0232-qualify-lineage-command-dispatch.md) qualifies R5.59t's versioned dispatcher repair on artificial
+archives only: exact four-item retained and five-item audit worker forms, shared
+parent/child clock and nonce, unchanged admission/authentication/guards and separate
+verifier.17 new/87 focused/6665 guarded full tests pass with494 exclusions;
+Ruff/strict validation pass. Charged source3,894,481 B/process; combined output387,623 B;
+external0.214605959/0.211662958 s, all inherited caps pass. Real input reads and new
+scientific/native work are zero in the qualification commands. Historical0230/0231
+and fixed outputs are preserved; no R5.59s retry. Its attempt remains consumed and
+unchecked, attribution unresolved, R5.60 closed and automation PAUSED. Any distinct
+retained execution needs a separate explicit instruction.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

@@ -1,0 +1,7 @@
+ M openspec/changes/refine-physical-trajectory/design.md
+ M openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md
+ M openspec/changes/refine-physical-trajectory/tasks.md
+?? docs/adr/0232-qualify-lineage-command-dispatch.md
+?? docs/adr/experiments/0232-saved-lineage.py
+?? tests/lineage_dispatch_harness.py
+?? tests/test_lineage_dispatch.py

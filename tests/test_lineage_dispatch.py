@@ -1,0 +1,243 @@
+"""Exercise exact dispatcher commands using isolated, explicitly fabricated inputs."""
+
+from hashlib import sha256
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+from time import monotonic_ns
+from types import ModuleType
+from typing import Any
+
+import pytest
+
+from lineage_fixtures import wire, write_artificial_pack
+
+ROOT = Path(__file__).resolve().parents[1]
+SCRIPT = ROOT / "docs/adr/experiments/0232-saved-lineage.py"
+HARNESS = Path(__file__).with_name("lineage_dispatch_harness.py")
+COUNTS = dict(event_visits=1248, descriptors=648, aliases=528, norm_pairs=36)
+type Row = dict[str, Any]
+
+
+def load_dispatcher() -> ModuleType:
+    module = ModuleType("_lineage_dispatch_tests")
+    module.__file__ = str(SCRIPT)
+    sys.modules[module.__name__] = module
+    exec(compile(SCRIPT.read_bytes(), str(SCRIPT), "exec"), module.__dict__)
+    return module
+
+
+def prepare_dispatch_case(
+    folder: Path, *, forbid_archive_reads: bool = False,
+    fail_worker_after_success: tuple[str, ...] = (),
+) -> Row:
+    """Expose the same test-only bootstrap/configuration API to qualification drivers."""
+    folder.mkdir()
+    module = load_dispatcher()
+    profile = write_artificial_pack(folder / "inputs")
+    bootstrap = folder / "bootstrap.py"
+    shutil.copyfile(HARNESS, bootstrap)
+    config_path = bootstrap.with_suffix(".json")
+    output, audit = folder / "result", folder / "audit.json"
+    config = dict(
+        script=str(SCRIPT), profile=profile, output=str(output), audit=str(audit),
+        forbidden_real_inputs=[str(SCRIPT.parent / name) for name in module.DATA_NAMES],
+        forbid_archive_reads=forbid_archive_reads,
+        fail_worker_after_success=list(fail_worker_after_success),
+    )
+    config_path.write_bytes(wire(config))
+    return dict(profile=profile, bootstrap=bootstrap, config=config_path, output=output, audit=audit)
+
+
+def invoke(case: Row, *args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [sys.executable, "-I", "-S", "-B", str(case["bootstrap"]), *args],
+        capture_output=True, text=True, timeout=35, check=False,
+    )
+
+
+def telemetry(result: subprocess.CompletedProcess[str]) -> list[Row]:
+    return [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
+
+
+def _digest(path: Path) -> str:
+    return sha256(path.read_bytes()).hexdigest()
+
+
+def _saved(output: Path) -> dict[str, str]:
+    return {path.name: _digest(path) for path in output.iterdir()}
+
+
+def _inventory_bytes(case: Row) -> int:
+    module = load_dispatcher()
+    design = json.loads(module.CONTRACT.read_bytes())
+    paths = {case["bootstrap"], case["config"], module.CONTRACT}
+    paths.update(Path(path) for path in case["profile"]["inputs"].values())
+    paths.update(SCRIPT.with_name(name) for name in module.PRIVATE)
+    paths.update(ROOT / path for path in design["source_bindings"].values())
+    return sum(path.stat().st_size for path in paths)
+
+
+def _assert_dispatch(case: Row, result: subprocess.CompletedProcess[str], command: list[str]) -> None:
+    rows = telemetry(result)
+    dispatch = next(row for row in rows if row.get("harness_dispatch"))
+    worker = next(row for row in rows if row.get("harness_entry") and row["role"] == "worker")
+    parent_budget = next(row for row in rows if row.get("harness_budget") and row["role"] == "parent")
+    worker_budget = next(row for row in rows if row.get("harness_budget") and row["role"] == "worker")
+    expected = ["worker", str(parent_budget["started_ns"]), parent_budget["invocation_id"], *command]
+    assert dispatch["argv"] == worker["argv"] == expected
+    assert len(expected) == (4 if command == ["retained"] else 5)
+    assert dispatch["script"] == worker["script"] == str(SCRIPT)
+    assert parent_budget["started_ns"] == parent_budget["bootstrap_entry_ns"]
+    assert worker_budget["started_ns"] == parent_budget["started_ns"]
+    assert worker_budget["invocation_id"] == parent_budget["invocation_id"]
+    assert len(parent_budget["invocation_id"]) == 32
+    expected_charge = case["bootstrap"].stat().st_size + case["config"].stat().st_size
+    for row in rows:
+        if row.get("harness_budget"):
+            assert row["charged_bytes"] == expected_charge
+            assert row["bootstrap_sha256"] == _digest(case["bootstrap"])
+            assert row["config_sha256"] == _digest(case["config"])
+        if row.get("harness_complete"):
+            assert row["real_input_reads"] == 0
+            assert row["artificial_input_reads"] == (7 if row["role"] == "worker" else 0)
+    work = next(row for row in rows if "scientific_work" in row)
+    assert work["work"] == COUNTS and all(value == 0 for value in work["scientific_work"].values())
+    dispatcher = next(row for row in rows if "dispatcher_elapsed_ns" in row)
+    assert 0 <= dispatcher["dispatcher_elapsed_ns"] < 30_000_000_000
+
+
+def test_exact_retained_and_audit_commands_reach_independent_verifier_on_fake_data(tmp_path: Path) -> None:
+    case = prepare_dispatch_case(tmp_path / "case")
+    first = invoke(case, "retained")
+    assert first.returncode == 0, first.stderr
+    _assert_dispatch(case, first, ["retained"])
+    pin = _digest(case["output"] / "completion.json")
+    second = invoke(case, "audit", pin)
+    assert second.returncode == 0, second.stderr
+    _assert_dispatch(case, second, ["audit", pin])
+    report = json.loads((case["output"] / "report.json").read_bytes())
+    audit = json.loads(case["audit"].read_bytes())
+    expected_bytes = _inventory_bytes(case)
+    assert 3_784_677 <= expected_bytes <= 4 * 1024**2
+    assert report["source_inventory_bytes"] == expected_bytes
+    assert report["scope"] == "artificial-saved-lineage" and report["stage"] == "R5.59r"
+    assert report["source_pins"] == case["profile"]["pins"]
+    assert report["commands"] is None and report["physical_status"] == "physical-join-not-established"
+    assert report["status"] == "lineage-qualified-attribution-unresolved"
+    assert report["work"] == audit["work"] == audit["proof"]["counts"] == COUNTS
+    assert audit["status"] == "lineage-independently-verified"
+    assert sum(path.stat().st_size for path in case["output"].iterdir()) <= 1048576 - 65536
+    assert case["audit"].stat().st_size <= 65536
+    assert sum(path.stat().st_size for path in case["output"].iterdir()) + case["audit"].stat().st_size <= 1048576
+    before, audit_before = _saved(case["output"]), _digest(case["audit"])
+    for args in (("retained",), ("audit", pin)):
+        refused = invoke(case, *args)
+        assert refused.returncode == 3
+        assert not any(row.get("harness_dispatch") for row in telemetry(refused))
+        assert all(row["artificial_input_reads"] == row["real_input_reads"] == 0
+                   for row in telemetry(refused) if row.get("harness_complete"))
+    assert _saved(case["output"]) == before and _digest(case["audit"]) == audit_before
+
+
+@pytest.mark.parametrize("args", [(), ("retained", "extra"), ("audit",), ("audit", "pin", "extra"), ("unknown",)])
+def test_malformed_outer_commands_do_not_read_any_archive(tmp_path: Path, args: tuple[str, ...]) -> None:
+    case = prepare_dispatch_case(tmp_path / "case", forbid_archive_reads=True)
+    result = invoke(case, *args)
+    assert result.returncode == 3
+    assert not any(row.get("harness_dispatch") for row in telemetry(result))
+    assert all(row["artificial_input_reads"] == row["real_input_reads"] == 0
+               for row in telemetry(result) if row.get("harness_complete"))
+    assert not case["output"].exists() and not case["audit"].exists()
+
+
+@pytest.mark.parametrize("tail", [None, "start-only", (), ("audit",), ("retained", "extra"), ("audit", "pin", "extra"), ("unknown",)])
+def test_truncated_and_malformed_worker_commands_do_not_read_any_archive(
+    tmp_path: Path, tail: tuple[str, ...] | str | None,
+) -> None:
+    case = prepare_dispatch_case(tmp_path / "case", forbid_archive_reads=True)
+    if tail is None:
+        args = ["worker"]
+    elif tail == "start-only":
+        args = ["worker", str(monotonic_ns())]
+    else:
+        assert type(tail) is tuple
+        args = ["worker", str(monotonic_ns()), "c" * 32, *tail]
+    result = invoke(case, *args)
+    assert result.returncode == 3
+    assert not any(row.get("harness_dispatch") for row in telemetry(result))
+    assert all(row["artificial_input_reads"] == row["real_input_reads"] == 0
+               for row in telemetry(result) if row.get("harness_complete"))
+    assert not case["output"].exists() and not case["audit"].exists()
+
+
+@pytest.mark.parametrize("mode", ["retained", "audit"])
+def test_parent_removes_only_owned_success_marker_after_child_failure(tmp_path: Path, mode: str) -> None:
+    case = prepare_dispatch_case(tmp_path / "case", fail_worker_after_success=(mode,))
+    first = invoke(case, "retained")
+    if mode == "retained":
+        assert first.returncode == 3, first.stderr
+        _assert_dispatch(case, first, ["retained"])
+        assert set(_saved(case["output"])) == {"attempt.json", "report.json", "receipt.json"}
+        before = _saved(case["output"])
+        refused = invoke(case, "retained")
+        assert refused.returncode == 3 and _saved(case["output"]) == before
+        assert not any(row.get("harness_dispatch") for row in telemetry(refused))
+    else:
+        assert first.returncode == 0, first.stderr
+        before = _saved(case["output"])
+        pin = _digest(case["output"] / "completion.json")
+        failed = invoke(case, "audit", pin)
+        assert failed.returncode == 3, failed.stderr
+        _assert_dispatch(case, failed, ["audit", pin])
+        assert _saved(case["output"]) == before
+    assert not case["audit"].exists()
+
+
+def test_existing_artificial_cli_modes_still_dispatch_without_bootstrap(tmp_path: Path) -> None:
+    profile = write_artificial_pack(tmp_path / "inputs")
+    profile_path = tmp_path / "profile.json"
+    profile_path.write_bytes(wire(profile))
+    output, audit_path = tmp_path / "out", tmp_path / "audit.json"
+    base = [sys.executable, "-I", "-S", "-B", str(SCRIPT)]
+    first = subprocess.run([*base, "artificial", str(profile_path), str(output)],
+                           capture_output=True, text=True, timeout=35, check=False)
+    assert first.returncode == 0, first.stderr
+    pin = _digest(output / "completion.json")
+    second = subprocess.run([*base, "audit-artificial", str(profile_path), str(output), pin, str(audit_path)],
+                            capture_output=True, text=True, timeout=35, check=False)
+    assert second.returncode == 0, second.stderr
+    for result in (first, second):
+        work = next(row for row in telemetry(result) if "scientific_work" in row)
+        assert work["work"] == COUNTS and all(value == 0 for value in work["scientific_work"].values())
+    assert json.loads(audit_path.read_bytes())["status"] == "lineage-independently-verified"
+
+
+def test_production_profile_remains_fixed_and_versioned_source_delta_is_only_dispatch_repair(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path,
+) -> None:
+    original = SCRIPT.with_name("0230-saved-lineage.py").read_bytes()
+    expected = original.replace(b'"0230-saved-lineage.py", "0230-lineage-core.py"',
+                                b'"0232-saved-lineage.py", "0230-lineage-core.py"', 1)
+    expected = expected.replace(b'need(len(args) >= 5, "worker arguments")',
+                                b'need(len(args) >= 4, "worker arguments")', 1)
+    assert SCRIPT.read_bytes() == expected
+    module = load_dispatcher()
+    forbidden = {SCRIPT.parent / name for name in module.DATA_NAMES}
+    read = module.Budget.read
+
+    def metadata_only(self: Any, path: Path, **kwargs: Any) -> bytes:
+        assert path not in forbidden, "fixed-profile inspection must not open retained observations"
+        return read(self, path, **kwargs)
+
+    monkeypatch.setattr(module.Budget, "read", metadata_only)
+    profile = module.retained_profile()
+    assert profile["scope"] == "retained" and profile["candidate_id"] == "d0001-t0035"
+    assert {Path(path) for path in profile["inputs"].values()} == forbidden
+    profile["reference_sha256"] = "0" * 64
+    with pytest.raises(ValueError, match="fixed retained profile"):
+        module.profile_check(profile, module.OUTPUT)
+    with pytest.raises(ValueError, match="arity"):
+        module.cli(["retained", str(tmp_path / "injected-profile.json")], module.Budget())

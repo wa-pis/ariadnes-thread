@@ -1,0 +1,6 @@
+{
+  "baseline_sha256": "c35ea1092603c8f333df2e38e7f11e4e88073264a310b939c6f27e3fbb8b0029",
+  "diff": "--- 0230-saved-lineage.py\n+++ 0232-saved-lineage.py\n@@ -24,7 +24,7 @@\n CONTRACT_SHA = \"4c4e6d4c8981428b5931def910aa7d648f7860a9ce5e75d78b16952063a4b087\"\n OUTPUT = HERE.with_name(\"0229-saved-lineage-result\")\n AUDIT = HERE.with_name(\"0229-saved-lineage-audit.json\")\n-PRIVATE = (\"0230-saved-lineage.py\", \"0230-lineage-core.py\", \"0230-lineage-audit.py\")\n+PRIVATE = (\"0232-saved-lineage.py\", \"0230-lineage-core.py\", \"0230-lineage-audit.py\")\n ROLES = (\n     \"attempt\",\n     \"report\",\n@@ -766,7 +766,7 @@\n         \"use -I -S -B\",\n     )\n     if args and args[0] == \"worker\":\n-        need(len(args) >= 5, \"worker arguments\")\n+        need(len(args) >= 4, \"worker arguments\")\n         b = Budget(started_ns=int(args[1]), invocation_id=args[2])\n         profile, output, pin, target = cli(args[3:], b)\n         profile_check(profile, output, target)\n",
+  "exact_two_change_delta": true,
+  "versioned_sha256": "27213db58d711adf66634a960ffdbd12c060cbf68e327bcaac5ec42561cdc9c1"
+}

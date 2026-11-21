@@ -936,3 +936,21 @@ The R5.59q–s profile SHALL distinguish saved dataflow, conditional local imple
 - **AND** artificial qualification SHALL use a separate scope with distinct fabricated data/reference/completion pins and output roots, the same immutable source/role map/caps and declared fixture event counts; the retained entry SHALL build its fixed profile internally and reject injected, rehashed, mixed or relabeled qualification inputs
 - **AND** each future reader/verifier SHALL have30 s through durable finalization and4 MiB source inventory including the contract and private source files, with1 MiB combined output/64 KiB verifier reserve,8192 input events,32768 event visits/process,1024 descriptors,768 alias links,36 pair slots and bounded numeric parsing under ADR0229
 - **AND** R5.59s SHALL require qualified preparation and a separate explicit execution instruction, retain at most one readback and one verifier's first complete/partial evidence without retry, and record zero new bounds/traces/points/roots/norms/mass/native/SPICE/kernel/force/integration/R5.60 calls
+
+
+### Requirement: Preserve command-shape parity in the versioned saved-reader dispatcher
+
+The R5.59t repair SHALL preserve historical0230 and the consumed ADR0231 failure while qualifying the exact retained/audit command shapes with artificial dependencies only under unchanged ADR0229 scientific rules and limits.
+
+#### Scenario: Admit the exact retained and audit worker forms
+
+- **WHEN** the qualified dispatcher expands retained or audit commands into an isolated worker
+- **THEN** a retained worker SHALL admit its four argv items (worker, start, invocation, retained), and an audit worker SHALL admit its five items including the completion pin; the existing CLI SHALL reject truncated, unknown and extra-argument forms without archive access
+- **AND** the repair SHALL change only the minimum worker prefix and versioned private self-source identity, not add dummy arguments, weaken profile authentication or expose a production retained-profile override
+
+#### Scenario: Qualify real command shapes with fabricated dependencies
+
+- **WHEN** the dispatcher repair is qualified
+- **THEN** a test-only isolated bootstrap SHALL exercise the complete parent/child retained and audit argument forms using explicit content-pinned fabricated archives and isolated outputs, without changing the command argument lists or substituting authentication, guards, analyzer or independent verifier
+- **AND** full24-row/1248-event/36-slot analysis and separate verification, malformed arities, existing artificial aliases, exclusivity and inherited clocks/work/input/output limits SHALL pass focused and frozen guarded full pytest, Ruff and strict OpenSpec; complete charged inventory SHALL include bootstrap/configuration source bytes
+- **AND** no historical numerical payload, consumed R5.59s dispatch, SPICE, integration, old scientific audit or R5.60 SHALL run; fixed retained outputs and all original evidence/source bytes SHALL remain untouched, with a separate execution decision required for any future retained readback

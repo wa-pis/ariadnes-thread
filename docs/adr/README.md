@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0232 — Qualify exact saved-reader command dispatch](0232-qualify-lineage-command-dispatch.md): versioned two-edit repair;17 new/87 focused/6665 guarded full passes,494 exclusions; artificial retained/audit shapes and independent proof pass, no R5.59s retry.
+
 - [0231 — Preserve the saved-lineage dispatch rejected before analysis](0231-record-saved-lineage-result.md): sole R5.59s returns3 at retained worker arity; no numerical readback/audit, attempt consumed, independent failure review agrees.
 
 - [0230 — Qualify the saved-lineage reader on fabricated archives](0230-qualify-saved-lineage-reader.md): R5.59r implemented;70 focused/6648 guarded full passes, artificial analyzer/auditor qualified; no R5.59s or retained endpoint analysis.

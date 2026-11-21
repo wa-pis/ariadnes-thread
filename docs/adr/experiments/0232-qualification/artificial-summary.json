@@ -1,0 +1,357 @@
+{
+  "audit_status": "lineage-independently-verified",
+  "auditor_output_bytes": 752,
+  "combined_output_bytes": 387623,
+  "fixture_recipe": "tests/lineage_fixtures.py:write_artificial_pack; full unpadded fixture",
+  "inherited_raw_stage": "R5.59r",
+  "integrations": 0,
+  "measured_source_sha256": {
+    "docs/adr/experiments/0232-saved-lineage.py": "27213db58d711adf66634a960ffdbd12c060cbf68e327bcaac5ec42561cdc9c1",
+    "tests/lineage_dispatch_harness.py": "abbad6350806afc98d27bc575fc45591243589830a4070247a3f034266efd041",
+    "tests/test_lineage_dispatch.py": "ed7ce250f575aa14f92800081266e82bc212069f0ef6449d8857c2c767480827"
+  },
+  "measurements": [
+    {
+      "args": [
+        "retained"
+      ],
+      "external_elapsed_ns": 214605959,
+      "returncode": 0,
+      "role": "producer",
+      "telemetry": [
+        {
+          "argv": [
+            "retained"
+          ],
+          "harness_entry": true,
+          "role": "parent",
+          "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py"
+        },
+        {
+          "bootstrap_entry_ns": 3404033714802875,
+          "bootstrap_sha256": "abbad6350806afc98d27bc575fc45591243589830a4070247a3f034266efd041",
+          "charged_bytes": 7143,
+          "config_sha256": "571193f2f9e6e8232078896133d36c960bae885878bf0508d0f2120d1697f946",
+          "harness_budget": true,
+          "invocation_id": "53f7bdecf3c848a48419ee1de8f75f3f",
+          "role": "parent",
+          "started_ns": 3404033714802875
+        },
+        {
+          "argv": [
+            "worker",
+            "3404033714802875",
+            "53f7bdecf3c848a48419ee1de8f75f3f",
+            "retained"
+          ],
+          "harness_dispatch": true,
+          "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py"
+        },
+        {
+          "argv": [
+            "worker",
+            "3404033714802875",
+            "53f7bdecf3c848a48419ee1de8f75f3f",
+            "retained"
+          ],
+          "harness_entry": true,
+          "role": "worker",
+          "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py"
+        },
+        {
+          "bootstrap_entry_ns": 3404033738080666,
+          "bootstrap_sha256": "abbad6350806afc98d27bc575fc45591243589830a4070247a3f034266efd041",
+          "charged_bytes": 7143,
+          "config_sha256": "571193f2f9e6e8232078896133d36c960bae885878bf0508d0f2120d1697f946",
+          "harness_budget": true,
+          "invocation_id": "53f7bdecf3c848a48419ee1de8f75f3f",
+          "role": "worker",
+          "started_ns": 3404033714802875
+        },
+        {
+          "bootstrap_entry_ns": 3404033738080666,
+          "bootstrap_sha256": "abbad6350806afc98d27bc575fc45591243589830a4070247a3f034266efd041",
+          "charged_bytes": 7143,
+          "config_sha256": "571193f2f9e6e8232078896133d36c960bae885878bf0508d0f2120d1697f946",
+          "harness_budget": true,
+          "invocation_id": "e0168c84738c493d90c653ef24fff216",
+          "role": "worker",
+          "started_ns": 3404033755539500
+        },
+        {
+          "scientific_work": {
+            "force_evaluations": 0,
+            "integrations": 0,
+            "kernel_accesses": 0,
+            "native_calls": 0,
+            "new_bounds": 0,
+            "new_norms": 0,
+            "new_oracle_mass": 0,
+            "new_point_roots": 0,
+            "new_points": 0,
+            "new_stage_events": 0,
+            "new_traces": 0,
+            "old_audit_replays": 0,
+            "r560_attempts": 0,
+            "spice_queries": 0
+          },
+          "status": "lineage-qualified-attribution-unresolved",
+          "work": {
+            "aliases": 528,
+            "descriptors": 648,
+            "event_visits": 1248,
+            "norm_pairs": 36
+          }
+        },
+        {
+          "argv": [
+            "worker",
+            "3404033714802875",
+            "53f7bdecf3c848a48419ee1de8f75f3f",
+            "retained"
+          ],
+          "artificial_input_reads": 7,
+          "exit_code": 0,
+          "harness_complete": true,
+          "real_input_reads": 0,
+          "role": "worker"
+        },
+        {
+          "dispatcher_elapsed_ns": 204115916,
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "retained"
+          ],
+          "artificial_input_reads": 0,
+          "exit_code": 0,
+          "harness_complete": true,
+          "real_input_reads": 0,
+          "role": "parent"
+        }
+      ]
+    },
+    {
+      "args": [
+        "audit",
+        "eeb8882b940a618466466ea5f0daac7b341feef7da3aed867302be56aa82259c"
+      ],
+      "external_elapsed_ns": 211662958,
+      "returncode": 0,
+      "role": "auditor",
+      "telemetry": [
+        {
+          "argv": [
+            "audit",
+            "eeb8882b940a618466466ea5f0daac7b341feef7da3aed867302be56aa82259c"
+          ],
+          "harness_entry": true,
+          "role": "parent",
+          "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py"
+        },
+        {
+          "bootstrap_entry_ns": 3404033929926791,
+          "bootstrap_sha256": "abbad6350806afc98d27bc575fc45591243589830a4070247a3f034266efd041",
+          "charged_bytes": 7143,
+          "config_sha256": "571193f2f9e6e8232078896133d36c960bae885878bf0508d0f2120d1697f946",
+          "harness_budget": true,
+          "invocation_id": "47a078fb58234421b25092dcfdf6acf0",
+          "role": "parent",
+          "started_ns": 3404033929926791
+        },
+        {
+          "argv": [
+            "worker",
+            "3404033929926791",
+            "47a078fb58234421b25092dcfdf6acf0",
+            "audit",
+            "eeb8882b940a618466466ea5f0daac7b341feef7da3aed867302be56aa82259c"
+          ],
+          "harness_dispatch": true,
+          "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py"
+        },
+        {
+          "argv": [
+            "worker",
+            "3404033929926791",
+            "47a078fb58234421b25092dcfdf6acf0",
+            "audit",
+            "eeb8882b940a618466466ea5f0daac7b341feef7da3aed867302be56aa82259c"
+          ],
+          "harness_entry": true,
+          "role": "worker",
+          "script": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py"
+        },
+        {
+          "bootstrap_entry_ns": 3404033953321916,
+          "bootstrap_sha256": "abbad6350806afc98d27bc575fc45591243589830a4070247a3f034266efd041",
+          "charged_bytes": 7143,
+          "config_sha256": "571193f2f9e6e8232078896133d36c960bae885878bf0508d0f2120d1697f946",
+          "harness_budget": true,
+          "invocation_id": "47a078fb58234421b25092dcfdf6acf0",
+          "role": "worker",
+          "started_ns": 3404033929926791
+        },
+        {
+          "bootstrap_entry_ns": 3404033953321916,
+          "bootstrap_sha256": "abbad6350806afc98d27bc575fc45591243589830a4070247a3f034266efd041",
+          "charged_bytes": 7143,
+          "config_sha256": "571193f2f9e6e8232078896133d36c960bae885878bf0508d0f2120d1697f946",
+          "harness_budget": true,
+          "invocation_id": "dfde6de8537040268e4e2a38edc3bf10",
+          "role": "worker",
+          "started_ns": 3404033970708583
+        },
+        {
+          "scientific_work": {
+            "force_evaluations": 0,
+            "integrations": 0,
+            "kernel_accesses": 0,
+            "native_calls": 0,
+            "new_bounds": 0,
+            "new_norms": 0,
+            "new_oracle_mass": 0,
+            "new_point_roots": 0,
+            "new_points": 0,
+            "new_stage_events": 0,
+            "new_traces": 0,
+            "old_audit_replays": 0,
+            "r560_attempts": 0,
+            "spice_queries": 0
+          },
+          "status": "lineage-independently-verified",
+          "work": {
+            "aliases": 528,
+            "descriptors": 648,
+            "event_visits": 1248,
+            "norm_pairs": 36
+          }
+        },
+        {
+          "argv": [
+            "worker",
+            "3404033929926791",
+            "47a078fb58234421b25092dcfdf6acf0",
+            "audit",
+            "eeb8882b940a618466466ea5f0daac7b341feef7da3aed867302be56aa82259c"
+          ],
+          "artificial_input_reads": 7,
+          "exit_code": 0,
+          "harness_complete": true,
+          "real_input_reads": 0,
+          "role": "worker"
+        },
+        {
+          "dispatcher_elapsed_ns": 200265959,
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "audit",
+            "eeb8882b940a618466466ea5f0daac7b341feef7da3aed867302be56aa82259c"
+          ],
+          "artificial_input_reads": 0,
+          "exit_code": 0,
+          "harness_complete": true,
+          "real_input_reads": 0,
+          "role": "parent"
+        }
+      ]
+    }
+  ],
+  "producer_output_bytes": 386871,
+  "r559s_repeated": false,
+  "r560_started": false,
+  "real_retained_input_reads": 0,
+  "report_status": "lineage-qualified-attribution-unresolved",
+  "scope": "artificial-saved-lineage",
+  "source_inventory": {
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0219-interval.py": {
+      "bytes": 8939,
+      "sha256": "3243ec83031b8bc873dfae47076e0bbb086640893e396b1e56c2dbcf5d865329"
+    },
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0219-phase-bounds.py": {
+      "bytes": 9513,
+      "sha256": "b1a2673aa5516533320febed3efddeb27edece1f3f60b775323520e71324f83e"
+    },
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0223-bound-trace.py": {
+      "bytes": 12517,
+      "sha256": "e50876ce72c8e80a74d7d615b4f67f6d69ab9a259a10663b041ee56d78730091"
+    },
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0225-bound-trace.py": {
+      "bytes": 4624,
+      "sha256": "d382d1181c8069d7d5d1b51b8261c75f726be522b95ed08252363c5a1a45c42d"
+    },
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0225-trace-checks.py": {
+      "bytes": 20168,
+      "sha256": "30f3fbafa1898884c4d4234bdc66369f81dab64271dcd9ec9c4c2e1841ba829a"
+    },
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0227-retained-trace.py": {
+      "bytes": 34710,
+      "sha256": "395d711620fb0e6e4ea092001adb52a769052af8d527300902653df4b6a4d6d7"
+    },
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0229-saved-lineage-contract.json": {
+      "bytes": 13805,
+      "sha256": "4c4e6d4c8981428b5931def910aa7d648f7860a9ce5e75d78b16952063a4b087"
+    },
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0230-lineage-audit.py": {
+      "bytes": 30590,
+      "sha256": "0f19464b7f47b355803992c7702a9322bcf0184a65cad2746a85449a98c32862"
+    },
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0230-lineage-core.py": {
+      "bytes": 30335,
+      "sha256": "f2a54bf325e68453b18fae554f288b7803f538bf91d76195758aa433070ddad0"
+    },
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0232-saved-lineage.py": {
+      "bytes": 27764,
+      "sha256": "27213db58d711adf66634a960ffdbd12c060cbf68e327bcaac5ec42561cdc9c1"
+    },
+    "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/bootstrap.json": {
+      "bytes": 2664,
+      "sha256": "571193f2f9e6e8232078896133d36c960bae885878bf0508d0f2120d1697f946"
+    },
+    "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/bootstrap.py": {
+      "bytes": 4479,
+      "sha256": "abbad6350806afc98d27bc575fc45591243589830a4070247a3f034266efd041"
+    },
+    "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/attempt.json": {
+      "bytes": 826,
+      "sha256": "3133962eeb8a69e118e18ec1ee536502ddff0579d86a735c4b9389983cb732f0"
+    },
+    "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/audit.json": {
+      "bytes": 349,
+      "sha256": "d7d804e17b4a66258fd597ce1309f4194015b57be16ef774928cf924e60c0b11"
+    },
+    "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/completion.json": {
+      "bytes": 253,
+      "sha256": "1e173abc045c9a22a5e95db13ee0aa224875af449c991d7b455d8aa95110a69e"
+    },
+    "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/manifest.json": {
+      "bytes": 561,
+      "sha256": "72a8d6ebee02d080adfe76ab704a8841525b995d390800200782ace26a4a43f7"
+    },
+    "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/receipt.json": {
+      "bytes": 992,
+      "sha256": "bf78443bced70427d9023395061d21e2550582e254aec194813b1f0432546ac3"
+    },
+    "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/report.json": {
+      "bytes": 3691026,
+      "sha256": "d158e6fe796829a79f304c8f2b5526c97bc5f4276df557a96ccb305e019d6350"
+    },
+    "/private/tmp/ariadna-dispatch-repair-20261121/artificial-full/inputs/selection_contract.json": {
+      "bytes": 366,
+      "sha256": "b7e063fbd7506f446a1bffda7e91dbca5ccbf37f0d0b3c05630c511ae566c5e2"
+    }
+  },
+  "source_inventory_bytes_per_process": 3894481,
+  "source_redirection": "test-only bootstrap; exact argv; real admission/authentication/guards/analyzer/verifier",
+  "spice_queries": 0,
+  "stage": "R5.59t",
+  "work": {
+    "aliases": 528,
+    "descriptors": 648,
+    "event_visits": 1248,
+    "norm_pairs": 36
+  }
+}
