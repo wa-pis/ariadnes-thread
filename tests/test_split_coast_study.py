@@ -148,13 +148,16 @@ def artificial_state(body: str, epoch: float, frame: str, abcorr: str, observer:
     return [0., 0., z, 0., 0., 0.]
 
 
-def test_injected_full_study_and_independent_audit(tmp_path: Path) -> None:
+def test_injected_full_study_and_independent_audit(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(study, "PROCESS_START", -120.)
     ref = study.load(ROOT, "0180-split-reference.py")
     audit = study.load(ROOT, "0180-split-audit.py")
     bundle = artificial_bundle()
     path = tmp_path/"study.json"
     loader = lambda root, check: deepcopy(bundle)  # noqa: E731
-    report = study.execute(path, inputs_loader=loader, references=ref,
+    report = study.execute(path, clock=lambda: 0., inputs_loader=loader, references=ref,
         provider=artificial_state, identity_provider=lambda: bundle["historical_identity"])
     assert report["status"] == "passed", report.get("error")
     assert report["finalization_gate"] == "passed" and report["scientific_verified"] is False
@@ -164,7 +167,7 @@ def test_injected_full_study_and_independent_audit(tmp_path: Path) -> None:
     assert report["counts"]["moon_earth_checks"]["completed"] == 28
     assert report["counts"]["reference_fields"]["completed"] == 448
     assert 84 <= report["counts"]["record_evaluations"]["completed"] <= 168
-    checked = audit.audit(path, tmp_path/"audit.json", inputs_loader=loader, references=ref)
+    checked = audit.audit(path, tmp_path/"audit.json", clock=lambda: 0., inputs_loader=loader, references=ref)
     assert checked["audit_status"] == "passed", checked.get("error")
     assert checked["scientific_verified"] is False
     ledger = report["ledger"]
@@ -201,7 +204,7 @@ def test_normal_sample_failure_prevents_tighter(tmp_path: Path, monkeypatch: pyt
         raise ValueError("force gate negative control")
     monkeypatch.setattr(ref, "assess_observation", fail)
     path = tmp_path/"study.json"
-    report = study.execute(path, inputs_loader=lambda root, check: bundle, references=ref,
+    report = study.execute(path, clock=lambda: 0., inputs_loader=lambda root, check: bundle, references=ref,
         provider=artificial_state, identity_provider=lambda: bundle["historical_identity"])
     assert [p["name"] for p in report["profiles"]] == ["normal"]
     assert report["status"] == "failed" and report["error"]["stage"] == "selected-force-reference-normal"
@@ -210,7 +213,7 @@ def test_normal_sample_failure_prevents_tighter(tmp_path: Path, monkeypatch: pyt
     receipt = json.loads(path.with_suffix(".receipt.json").read_bytes())
     assert receipt["evidence_sha256"] == sha256(path.read_bytes()).hexdigest()
     with pytest.raises(ValueError, match="exclusive"):
-        study.execute(path, inputs_loader=lambda root, check: bundle)
+        study.execute(path, clock=lambda: 0., inputs_loader=lambda root, check: bundle)
 
 
 @pytest.mark.parametrize("mutate", ["observer", "frame", "body", "aberration", "epoch_tdb_s", "state_si"])
@@ -314,7 +317,8 @@ def test_injected_mode_cannot_fall_back_to_native(tmp_path: Path, monkeypatch: p
         pytest.fail("attempted to reach the native boundary")
     monkeypatch.setattr(study, "runtime_identity", forbidden)
     monkeypatch.setattr(study, "real_provider", forbidden)
-    report = study.execute(tmp_path/"study.json", inputs_loader=lambda root, check: bundle, references=ref)
+    report = study.execute(tmp_path/"study.json", clock=lambda: 0.,
+        inputs_loader=lambda root, check: bundle, references=ref)
     assert report["status"] == "failed"
     assert report["error"]["message"] == "injected identity and state providers required"
     assert not report["state_requests"] and not report["identities"]

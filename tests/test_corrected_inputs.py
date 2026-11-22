@@ -39,6 +39,7 @@ def validate(records: tuple[dict[str, Any], ...]) -> dict[str, Any]:
     return inputs.validate_bundle(*records)
 
 
+@pytest.mark.archive
 def test_metadata_loader_matches_frozen_contract() -> None:
     bundle = inputs.load_inputs()
     assert bundle["offsets_s"] == [0., 50., 100., 150., 200., 250., 300.]
@@ -217,6 +218,7 @@ def test_deadline_stops_before_further_reads() -> None:
     assert calls == 2
 
 
+@pytest.mark.archive
 def test_clean_process_imports_no_scientific_package() -> None:
     script = f'''import importlib.util,sys
 p={str(PATH)!r}

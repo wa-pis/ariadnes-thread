@@ -21,6 +21,10 @@ where = ["src"]
 testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = ["--strict-config", "--strict-markers"]
+markers = [
+    "live: existing regression requiring TudatPy/SPICE or native resources",
+    "archive: exact historical runtime or binary replay; opt in with --run-archive",
+]
 
 [tool.uv]
 managed = false

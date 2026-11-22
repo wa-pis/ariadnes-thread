@@ -1,11 +1,13 @@
 # Ariadna Space Navigation Roadmap
 
-Automation `ariadna-m3` is PAUSED after ADR0148 by the user's stop-on-required-decision rule.
-Do not resume or repeat the failed once-only R5 study without the user decision
-and a separately justified experimental contract. Do not
-repeat successful studies or unchanged full regressions automatically.
+Latest maintenance: regression tests and CI policy repaired after the process
+review, without new scientific experiments. Keep automation `ariadna-m3` PAUSED. The latest
+scientific result is [ADR0238](../docs/adr/0238-record-versioned-saved-norms.md):
+72 equal local matched-input enclosures; physical join and strict M3 remain open.
+See [CURRENT_STATE](../CURRENT_STATE.md) for verified checks and the next decision.
+Do not repeat consumed studies or change scientific contracts through test policy.
 
-## Current priority R5 — short-coast Earth-gravity sensitivity
+## Retained R5 history — short-coast Earth-gravity sensitivity and follow-ups
 
 [ADR0137](../docs/adr/0137-short-coast-earth-gravity-contract.md) freezes one300s
 unpowered parked-state comparison: direct Sun/Moon versus Sun/Moon/Earth, same

@@ -297,6 +297,7 @@ def test_cooperative_check_reaches_reconstruction(bundle: tuple[dict[str, Any], 
     assert count == 20
 
 
+@pytest.mark.archive
 def test_current_pinned_interpreter_identity() -> None:
     identity = inputs.interpreter_identity()
     assert identity["python_version"] == "3.12.14"

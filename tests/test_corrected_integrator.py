@@ -194,7 +194,11 @@ def test_original_profiles_are_literal_contract_values(name: str, expected: Any)
     assert core.settings(name) == expected
 
 
-def test_pinned_controller_and_coefficients_without_native_setup() -> None:
+@pytest.mark.parametrize("exact_archive", [
+    pytest.param(False, id="source-and-coefficients"),
+    pytest.param(True, id="exact-runtime", marks=pytest.mark.archive),
+])
+def test_pinned_controller_and_coefficients_without_native_setup(exact_archive: bool) -> None:
     from hashlib import sha256
     import json
     from scipy.integrate import solve_ivp
@@ -208,7 +212,13 @@ def test_pinned_controller_and_coefficients_without_native_setup() -> None:
     for name, function in (("solve_ivp", solve_ivp), ("rk_step", rk.rk_step),
         ("DOP853_step", rk.DOP853._step_impl), ("DOP853_error", rk.DOP853._estimate_error_norm),
         ("DOP853_dense", rk.DOP853._dense_output_impl)):
-        assert identity.callable_identity(function) == frozen["callables"][name]
+        actual = identity.callable_identity(function)
+        expected = frozen["callables"][name]
+        portable_keys = ("module", "qualname", "source_sha256")
+        assert {key: actual[key] for key in portable_keys} == {key: expected[key] for key in portable_keys}
+        if exact_archive:
+            # Marshalled code includes co_filename; full identity binds the historical host.
+            assert actual == expected
     for name, expected in frozen["coefficients"].items():
         array = getattr(coeff, name)
         assert list(array.shape) == expected["shape"]

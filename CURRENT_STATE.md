@@ -20,13 +20,17 @@ Both exit 0; raw hash chain, source/input/AST pins and independent review pass.
 All 14 prohibited counters zero; no SPICE, integration or R5.60. No retry.
 Equal finite local results do not explain incoming/final widths or dominant cause.
 
-## Qualification and maintenance boundary
-[ADR0237](docs/adr/0237-qualify-source-map-adapter.md): historical artificial repair
-passed 124 focused / 6788 guarded full tests, 494 exclusions; Ruff/strict passed.
-No code/test change or pytest/Ruff rerun in the saved evidence stage.
-Known lifecycle maintenance: test_matched_norm_metadata.py:352 assumes fixed outputs
-absent; authorized z now created them. Adapt that test in a separate code stage
-before a new full-suite claim; qualified sources and scientific audit stay intact.
+## Test and CI maintenance
+Test-only maintenance on base 72154b7 repairs temporary-output and import-age
+assumptions; portable saved-data validation is separate from exact archive replay.
+Required pinned-Conda lanes pass: 6837 portable (193.21 s), 412 live (608.54 s).
+Their JUnit union equals all 7249 collected non-archive cases, without overlap.
+42 exact historical runtime/checkout or bit-replay cases are explicitly skipped,
+not verified. Existing platform/dependency skips still apply on other hosts.
+All 1311 Git-visible files, HEAD and Git status stayed frozen during both lanes.
+Ruff and strict OpenSpec pass; Make and Ubuntu CI require the same two lanes.
+Scientific sources, dependencies, retained evidence and moon_to_mars.py unchanged.
+No consumed experiment/auditor rerun, new scientific result or M3 advancement.
 Next scientific investigation needs a separately scoped question/decision.
 
 ## Preserved history and unresolved science

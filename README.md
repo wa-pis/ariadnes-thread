@@ -102,8 +102,10 @@ they cannot describe the Conda-only TudatPy and native dependency graph.
 make check
 ```
 
-This runs Ruff and the complete test suite in `space-nav`. `make setup` refreshes
-the Conda environment and editable install. GitHub Actions runs the same checks,
+This runs Ruff and both required test lanes (portable and live native regression)
+in `space-nav`. Exact historical runtime/bit-replay checks are available separately
+with `make test-archive`; see the test policy in `CONTRIBUTING.md`. `make setup`
+refreshes the Conda environment and editable install. GitHub Actions runs the same checks,
 including a real TudatPy/SPICE runtime preflight, on pull requests and pushes to
 `main` and `dev`.
 

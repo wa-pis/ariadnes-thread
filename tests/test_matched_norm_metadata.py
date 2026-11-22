@@ -335,7 +335,7 @@ def test_exact_parent_worker_commands_qualify_seventeen_roles_and_keep_consumed_
 
 
 def test_new_fixed_paths_and_original_profiles_cannot_reuse_the_consumed_output(
-    monkeypatch: pytest.MonkeyPatch,
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path,
 ) -> None:
     module = load_dispatcher()
     forbidden = {ART / name for name in module.DATA_NAMES}
@@ -349,11 +349,22 @@ def test_new_fixed_paths_and_original_profiles_cannot_reuse_the_consumed_output(
     profile = module.retained_profile()
     assert module.OUTPUT == ART / "0237-matched-norm-result"
     assert module.AUDIT == ART / "0237-matched-norm-audit.json"
-    assert not module.OUTPUT.exists() and not module.AUDIT.exists()
     assert all(name.startswith("0237-") for name in module.PRIVATE)
     module.profile_check(profile, module.OUTPUT, module.AUDIT)
     with pytest.raises(ValueError, match="fixed retained profile"):
         module.profile_check(profile, ART / "0234-matched-norm-result")
+
+    output, audit = tmp_path / "result", tmp_path / "audit.json"
+    monkeypatch.setattr(module, "OUTPUT", output)
+    monkeypatch.setattr(module, "AUDIT", audit)
+    module.profile_check(profile, output, audit)
+    output.mkdir()
+    previous = output / "attempt.json"
+    previous.write_bytes(b"previous attempt\n")
+    with pytest.raises(ValueError, match="existing output"):
+        module.run(output, profile)
+    assert list(output.iterdir()) == [previous]
+    assert previous.read_bytes() == b"previous attempt\n" and not audit.exists()
 
 
 def test_changed_artificial_raw_metadata_is_rejected_before_output(tmp_path: Path) -> None:

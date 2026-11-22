@@ -73,7 +73,7 @@
   Documentation-only changes require accurate claims, working local links and a
   clean diff, plus strict validation when OpenSpec is touched. Report explicitly
   when runtime tests were not rerun.
-- Run focused tests while iterating and `conda run -n space-nav python -m pytest -q` before completing implementation work.
+- Run focused tests while iterating and `make test` (both required portable and live lanes, as in CI) before completing implementation work. Exact historical runtime/checkout replay is opt-in; see `CONTRIBUTING.md`.
 - Use real SPICE/TudatPy parity checks for scientific boundaries and pure injected tests for deterministic error paths.
 - Do not mark an OpenSpec task complete until its stated check passes.
 - Report numerical tolerances, scientific limitations, test results, and any unverified assumptions.

@@ -4,7 +4,6 @@ from __future__ import annotations
 from copy import deepcopy
 from hashlib import sha256
 import importlib.util
-import json
 from pathlib import Path
 import subprocess
 import sys
@@ -32,13 +31,25 @@ inputs = load()
 
 @pytest.fixture(scope="module")
 def retained() -> tuple[dict[str, Any], dict[str, Any]]:
-    """Read existing evidence only; immutable reference fields are not reevaluated."""
+    """Validate archived bytes without admitting this host as the historical runtime."""
     base = inputs.load_base(ROOT)
-    bundle = base.load_inputs(ROOT)
-    records = {name: json.loads((HERE / name).read_bytes()) for name in inputs.INPUT_SHA}
+    parser = base.strict_json()
+    records: dict[str, Any] = {}
+    for name, expected in inputs.INPUT_SHA.items():
+        raw = (HERE / name).read_bytes()
+        assert sha256(raw).hexdigest() == expected
+        records[name] = parser.parse(raw)
+    bundle = base.validate_bundle(records["0136-retained-boundary-audit.json"],
+        records["0148-short-coast-study.json"], records["0155-real-source.json"],
+        base.load_oracle(ROOT))
+    bundle["input_sha256"] = dict(base.INPUT_SHA)
+    bundle["helper_sha256"] = {"0153-real-ephemeris-oracle.py": base.ORACLE_SHA,
+                              "0145-short-coast-evidence.py": base.STRICT_SHA}
+    bundle["identity"] = deepcopy(records["0158-fixed-gravity-study.json"]["inputs"]["identity"])
     return bundle, records
 
 
+@pytest.mark.archive
 def test_hash_bound_input_loader_exposes_saved_zero_reference() -> None:
     result = inputs.load_inputs(ROOT)
     assert len(result["input_sha256"]) == 6 and len(result["rows"]) == 21
@@ -208,6 +219,7 @@ def test_historical_helpers_stay_pinned(tmp_path: Path, helper: str) -> None:
         inputs.load_inputs(tmp_path)
 
 
+@pytest.mark.archive
 def test_real_metadata_preflight_stays_stdlib_only() -> None:
     script = f"""
 import importlib.util,pathlib,sys

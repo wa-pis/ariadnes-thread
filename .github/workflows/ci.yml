@@ -44,8 +44,10 @@ jobs:
         run: |
           python -c 'from tudatpy.interface import spice; import spiceypy; spice.load_standard_kernels()'
           space-nav --help
-      - name: Test
-        run: python -m pytest -q -ra --junitxml=test-results/pytest.xml
+      - name: Unit and portable saved-data tests
+        run: python -m pytest -q -ra --offline --junitxml=test-results/unit.xml
+      - name: Scientific regression tests
+        run: python -m pytest -q -ra -m live --junitxml=test-results/live.xml
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

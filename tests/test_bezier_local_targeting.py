@@ -599,6 +599,7 @@ def test_late_completed_endpoint_keeps_budget_failure_classification(at: float) 
     assert report["proposals"][0]["final_state_si"] is None
 
 
+@pytest.mark.archive
 def test_retained_pinned_binding_selects_accepted_158_without_native_work(retained: Any) -> None:
     reference, study, steering, old = retained
     domain, endpoint = bez._bind_references(reference, study, steering, old,
@@ -617,10 +618,20 @@ def test_retained_pinned_binding_selects_accepted_158_without_native_work(retain
         assert hashlib.sha256(path.read_bytes()).hexdigest() == expected
 
 
-@pytest.mark.parametrize("key", ["candidate", "model", "algorithm", "profile", "resource", "endpoint", "residual",
-    "mass", "seed", "accepted", "command", "units", "counter", "target", "numpy-version", "scipy-version"])
+@pytest.mark.parametrize("key", ["candidate", "model", "algorithm", "profile", "resource",
+    pytest.param("endpoint", marks=pytest.mark.archive),
+    pytest.param("residual", marks=pytest.mark.archive),
+    pytest.param("mass", marks=pytest.mark.archive),
+    pytest.param("seed", marks=pytest.mark.archive),
+    pytest.param("accepted", marks=pytest.mark.archive),
+    pytest.param("command", marks=pytest.mark.archive),
+    "units", "counter", "target", "numpy-version", "scipy-version"])
 def test_pure_binder_rejects_inconsistent_retained_evidence(retained: Any, key: str) -> None:
     reference, study, steering, saved = retained
+    exact_replay = key in {"endpoint", "residual", "mass", "seed", "accepted", "command"}
+    if exact_replay:
+        # Prove admission first so an unrelated earlier replay failure cannot satisfy rejection.
+        bez._bind_references(reference, study, steering, saved, tuple(study["launch_window_tdb_s"]))
     old = deepcopy(saved)
     if key == "candidate":
         old["candidate_id"] = "other"
@@ -654,7 +665,8 @@ def test_pure_binder_rejects_inconsistent_retained_evidence(retained: Any, key: 
         old["runtime_versions"]["numpy"] = "changed"
     elif key == "scipy-version":
         old["runtime_versions"]["scipy"] = "1.17.2"
-    with pytest.raises(ValueError):
+    match = None if exact_replay else "D17 retained bounded/model/resource binding mismatch"
+    with pytest.raises(ValueError, match=match):
         bez._bind_references(reference, study, steering, old, tuple(study["launch_window_tdb_s"]))
 
 
@@ -669,21 +681,36 @@ def test_runner_clock_includes_binding_before_both_replays() -> None:
 
 def test_runner_provenance_and_counts_with_pure_injected_campaign(monkeypatch: pytest.MonkeyPatch, retained: Any) -> None:
     _, study, steering, old = retained
-    window = iter(study["launch_window_tdb_s"])
+    domain = synthetic()
+    seed = initial(domain)
+    residual = (2., 0., 0., 0., 0., 0.)
+    endpoint = state_for(domain, seed, residual)
+    window = iter(domain.launch_window_tdb_s)
+    bound_windows: list[tuple[float, float]] = []
     monkeypatch.setattr(local.ephemeris, "utc_to_tdb", lambda text: next(window))
     monkeypatch.setattr(local.ephemeris, "kernel_metadata", lambda: {"synthetic": True})
+    monkeypatch.setattr(bez, "_SEED", seed)
     original = bez._correct_target
+
+    def bind(reference_record: dict[str, Any], study_record: dict[str, Any],
+             steering_record: dict[str, Any], bounded_record: dict[str, Any],
+             launch_window: tuple[float, float]) -> tuple[target._TargetDomain, local.State7]:
+        assert (reference_record, study_record, steering_record, bounded_record) == retained
+        bound_windows.append(launch_window)
+        return domain, endpoint
 
     def injected(domain: target._TargetDomain, seed: Controls, endpoint: local.State7,
                  shared: bez._BezierBudget, report: dict[str, Any]) -> None:
-        residual = tuple((a-b)/s for a, b, s in zip(endpoint[:6], domain.baseline.target_state_si[:6],
-                                                  target._RESIDUAL_SCALES))
         evaluate, reference_evaluate, _ = oracle(lambda x: residual)
         original(domain, seed, endpoint, shared, report, evaluate=evaluate,
                  reference_evaluate=reference_evaluate)
 
+    # Runner accounting uses a synthetic campaign; exact retained admission has its own tests.
+    monkeypatch.setattr(bez, "_bind_references", bind)
     monkeypatch.setattr(bez, "_correct_target", injected)
     report = bez._run_bezier_local_targeting(REFERENCE, STUDY, STEERING, BOUNDED, monotonic=lambda: 0.)
+    assert bound_windows == [domain.launch_window_tdb_s]
+    assert report["solver_result"] is not None, report["reason"]
     status = report["solver_result"]["status"]
     assert report["outcome"] == ("stationary-unclosed" if status == 1 else "stagnated-unclosed")
     assert status in (1, 2, 3, 4)

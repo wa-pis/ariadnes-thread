@@ -168,6 +168,7 @@ def test_startup_deadline_and_missing_injections_do_not_use_reference(tmp_path: 
     assert marker["adapter_mode"] == "injected-test"
 
 
+@pytest.mark.archive
 def test_saved_a_baselines_validate_without_physics() -> None:
     bundle = module("inputs").load_inputs(ROOT)
     assert bundle["offsets_s"] == [0.,50.,100.,150.,200.,250.,300.]

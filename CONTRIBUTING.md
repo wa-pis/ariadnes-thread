@@ -11,20 +11,48 @@ Install Miniforge, then follow the environment setup in `README.md`.
 lock file. Do not generate a competing uv or pip dependency lock.
 
 Run `make setup` to create or refresh the environment and editable installation.
-Run `make check` before committing; it runs Ruff and the complete pytest suite.
+Run `make check` before committing. It runs Ruff and both required regression
+lanes, using the same pytest options as CI:
+
+```sh
+make test-unit     # portable tests, including saved-data arithmetic; no live native access
+make test-live     # existing TudatPy/SPICE and native-resource regression
+make test-archive  # opt-in exact replay in its historical environment and checkout
+```
+
 Override `CONDA` or `ENV` when necessary, for example `make CONDA=/path/to/conda check`.
-Without Make, use:
+Without Make, use the pinned environment:
 
 ```sh
 conda run -n space-nav ruff check src tests
-conda run -n space-nav python -m pytest -q
+conda run -n space-nav python -m pytest -q -ra --offline
+conda run -n space-nav python -m pytest -q -ra -m live
 ```
 
-For focused development, pass a test path to pytest. A focused run does not
-replace the complete suite. CI installs the same environment on Ubuntu, checks
-real TudatPy/SPICE kernel loading and the installed CLI, then runs all tests.
-Investigate skipped scientific tests: a missing dependency is not evidence that
-a numerical contract passes. CI retains the JUnit report and the resolved Conda package list for 14 days.
+The two required lanes together cover all non-archive tests. Plain `pytest -q`
+applies no live exclusion and skips `archive` checks by default; existing
+platform/dependency skips still apply. Archive
+checks authenticate historical machine/build and protected-checkout identities or
+require exact old floating-point replay. Use `--run-archive -m archive` in the
+matching historical environment and checkout; this maintenance checkout is not
+claimed to satisfy those old identities.
+They must not be relabeled as passing on another operating system or silently
+weakened to make a build green. Portable saved-data validators remain in the
+required suite; reading a historical file alone does not make a test archival.
+
+`live` marks existing tests that need TudatPy/SPICE, CSPICE or native resources.
+`--offline` excludes them before execution and fails unexpected in-process native
+imports/loads instead of silently skipping unclassified tests. This guard is not
+a sandbox for arbitrary isolated Python child processes; classify subprocess tests
+explicitly. The maintained test policy replaces archival ad-hoc skip scripts.
+
+For focused development, pass a test path to pytest. A focused run does not replace
+the required lanes. Test exclusivity on temporary paths and use injected clocks
+for artificial deadline checks; repository output history and test order must not
+determine whether ordinary regression passes. CI installs the pinned environment
+on Ubuntu, checks real TudatPy/SPICE kernel loading and the installed CLI, and runs
+both required lanes. It retains separate JUnit reports and the resolved Conda
+package list for 14 days. A skipped archive test is not a verified scientific result.
 
 Ruff checks syntax, undefined names, unused imports, and related basic errors.
 EditorConfig establishes whitespace conventions. Keep formatting changes limited
