@@ -1,0 +1,64 @@
+{
+  "audit_present": true,
+  "auditor_dispatched": true,
+  "base_commit": "f5437e44bcbaebf14c977b67c1fa6f1617d578fc",
+  "evidence_paths": {
+    "docs/adr/experiments/0237-matched-norm-audit.json": {
+      "bytes": 997,
+      "sha256": "b17566fe9ba8d65304dabfb566189b0e2f774cd1b13c73b9d45d77ce990d811c"
+    },
+    "docs/adr/experiments/0237-matched-norm-result/attempt.json": {
+      "bytes": 2697,
+      "sha256": "79807801913f7609c7fd4716870a1e3ee73bb5a1d0ba92db8c7a94bdee852109"
+    },
+    "docs/adr/experiments/0237-matched-norm-result/completion.json": {
+      "bytes": 245,
+      "sha256": "aa0d8696294093c6c812c2ce5dac78f684c963c89156f92dca36e9c2773f7243"
+    },
+    "docs/adr/experiments/0237-matched-norm-result/receipt.json": {
+      "bytes": 2887,
+      "sha256": "ad23c5bd218ba44ba571270cfc8bb852c23b913e1faecbe30e7000a3feeb3490"
+    },
+    "docs/adr/experiments/0237-matched-norm-result/report.json": {
+      "bytes": 635819,
+      "sha256": "11e4feeda2f60b559bfb7d6a683e4a59e1473c267cdb5eff2352183396ea2d77"
+    }
+  },
+  "expected_runtime_inventory_bytes": 3920340,
+  "measurements": [
+    {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+        "-I",
+        "-S",
+        "-B",
+        "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py",
+        "retained"
+      ],
+      "external_elapsed_ns": 397030292,
+      "process": "producer",
+      "returncode": 0,
+      "timed_out": false
+    },
+    {
+      "command": [
+        "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+        "-I",
+        "-S",
+        "-B",
+        "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py",
+        "audit",
+        "aa0d8696294093c6c812c2ce5dac78f684c963c89156f92dca36e9c2773f7243"
+      ],
+      "external_elapsed_ns": 330206208,
+      "process": "auditor",
+      "returncode": 0,
+      "timed_out": false
+    }
+  ],
+  "no_retry": true,
+  "one_producer_dispatched": true,
+  "producer_completion_present": true,
+  "qualified_code_unchanged": true,
+  "stage": "R5.59z"
+}

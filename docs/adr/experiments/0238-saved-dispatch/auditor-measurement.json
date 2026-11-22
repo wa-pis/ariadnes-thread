@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py",
+    "audit",
+    "aa0d8696294093c6c812c2ce5dac78f684c963c89156f92dca36e9c2773f7243"
+  ],
+  "external_elapsed_ns": 330206208,
+  "process": "auditor",
+  "returncode": 0,
+  "timed_out": false
+}

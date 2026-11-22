@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py",
+    "audit",
+    "aa0d8696294093c6c812c2ce5dac78f684c963c89156f92dca36e9c2773f7243"
+  ],
+  "expected_wall_ns": 30000000000,
+  "ordinal": 1,
+  "utc": "2026-11-22T10:15:47.056595+00:00"
+}

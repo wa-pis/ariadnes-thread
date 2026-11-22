@@ -1,0 +1,344 @@
+{
+  "analysis_sha256": "75e7359daf77711893a073d4812231ad6a5ef1ac3797da53635a60efad777afd",
+  "auditor_authorization_consumed": true,
+  "automation": "PAUSED",
+  "base_commit": "f5437e44bcbaebf14c977b67c1fa6f1617d578fc",
+  "checks": {
+    "analysis_sha256": "75e7359daf77711893a073d4812231ad6a5ef1ac3797da53635a60efad777afd",
+    "audit_output_bytes": 997,
+    "base_commit": "f5437e44bcbaebf14c977b67c1fa6f1617d578fc",
+    "caps": "Original caps pass; exact saved work/progress, durable deadlines, source and output volume verified.",
+    "classifications": {
+      "equal-enclosures": 72
+    },
+    "combined_output_bytes": 642645,
+    "containment_flags_true": 144,
+    "context_pair_fingerprint": "fd1906f2c2eaa3b2266f36e6b453eed95a141ab037217761440412fd6b48127b",
+    "contract_hashes_unchanged": true,
+    "counts": {
+      "boxes": 72,
+      "comparisons": 72,
+      "descriptors": 72,
+      "diagonals": 72,
+      "directed_primitives": 3672,
+      "event_visits": 1248,
+      "methods": 144,
+      "oracles": 72
+    },
+    "decision": "ADR0238",
+    "diagonals_true": 72,
+    "diff_check": "pass; documentation changes only, new outputs separately preserved",
+    "equal_stored_endpoint_pairs": 72,
+    "external_evidence_copy": "byte-identical",
+    "finite_json_files_before_manifest": 15,
+    "known_test_lifecycle": "line352 absent-output assertion stale after authorized execution; no test run or code change",
+    "legacy_unchanged": true,
+    "local_markdown_links": 499,
+    "numerical_module_imports_or_reexecution_in_metadata_check": false,
+    "origin_counts": {
+      "default": 36,
+      "independent": 36
+    },
+    "original_input_pins": 13,
+    "prior_failure_evidence_pins": 12,
+    "prior_qualification_evidence_pins": 47,
+    "producer_output_bytes": 641648,
+    "prohibited_counters": {
+      "force_evaluations": 0,
+      "integrations": 0,
+      "kernel_accesses": 0,
+      "native_calls": 0,
+      "new_bounds": 0,
+      "new_oracle_mass": 0,
+      "new_point_roots": 0,
+      "new_points": 0,
+      "new_stage_events": 0,
+      "new_traces": 0,
+      "old_audit_replays": 0,
+      "orbital_norms": 0,
+      "r560_attempts": 0,
+      "spice_queries": 0
+    },
+    "pytest_and_ruff": "not rerun for evidence/document stage; historical artificial qualification is not a new post-run suite claim",
+    "python": "3.12.14",
+    "qualified_files_unchanged": 6,
+    "raw_chain": "verified",
+    "role_counts": {
+      "angular-momentum-squared": 24,
+      "impulse-squared": 24,
+      "radius-squared": 24
+    },
+    "source_AST_pins": 13,
+    "source_inventory_bytes": 3920340,
+    "stage": "R5.59z",
+    "stored_width_difference": "0 for all 72",
+    "stored_width_ratio": "1, finite for all 72",
+    "strict_openspec": "passed; actual output captured after successful CLI check"
+  },
+  "claim_limit": "72 fixed local comparisons under imposed context pairs only; no global equivalence, incoming/final-width or dominant cause, speed/fuel benefit, eligible commands, physical join, safety or strict M3 proof.",
+  "commands": null,
+  "contract_sha256": "4c4e6d4c8981428b5931def910aa7d648f7860a9ce5e75d78b16952063a4b087",
+  "date": "2026-11-22",
+  "decision": "ADR0238",
+  "design_sha256": "86f9b290401623acd033d94475bbb2d8c637a9e8077c523fb3ecbd048d59caa0",
+  "dispatch_summary": {
+    "audit_present": true,
+    "auditor_dispatched": true,
+    "base_commit": "f5437e44bcbaebf14c977b67c1fa6f1617d578fc",
+    "evidence_paths": {
+      "docs/adr/experiments/0237-matched-norm-audit.json": {
+        "bytes": 997,
+        "sha256": "b17566fe9ba8d65304dabfb566189b0e2f774cd1b13c73b9d45d77ce990d811c"
+      },
+      "docs/adr/experiments/0237-matched-norm-result/attempt.json": {
+        "bytes": 2697,
+        "sha256": "79807801913f7609c7fd4716870a1e3ee73bb5a1d0ba92db8c7a94bdee852109"
+      },
+      "docs/adr/experiments/0237-matched-norm-result/completion.json": {
+        "bytes": 245,
+        "sha256": "aa0d8696294093c6c812c2ce5dac78f684c963c89156f92dca36e9c2773f7243"
+      },
+      "docs/adr/experiments/0237-matched-norm-result/receipt.json": {
+        "bytes": 2887,
+        "sha256": "ad23c5bd218ba44ba571270cfc8bb852c23b913e1faecbe30e7000a3feeb3490"
+      },
+      "docs/adr/experiments/0237-matched-norm-result/report.json": {
+        "bytes": 635819,
+        "sha256": "11e4feeda2f60b559bfb7d6a683e4a59e1473c267cdb5eff2352183396ea2d77"
+      }
+    },
+    "expected_runtime_inventory_bytes": 3920340,
+    "measurements": [
+      {
+        "command": [
+          "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+          "-I",
+          "-S",
+          "-B",
+          "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py",
+          "retained"
+        ],
+        "external_elapsed_ns": 397030292,
+        "process": "producer",
+        "returncode": 0,
+        "timed_out": false
+      },
+      {
+        "command": [
+          "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+          "-I",
+          "-S",
+          "-B",
+          "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0237-matched-norm.py",
+          "audit",
+          "aa0d8696294093c6c812c2ce5dac78f684c963c89156f92dca36e9c2773f7243"
+        ],
+        "external_elapsed_ns": 330206208,
+        "process": "auditor",
+        "returncode": 0,
+        "timed_out": false
+      }
+    ],
+    "no_retry": true,
+    "one_producer_dispatched": true,
+    "producer_completion_present": true,
+    "qualified_code_unchanged": true,
+    "stage": "R5.59z"
+  },
+  "evidence_sha256": {
+    "docs/adr/experiments/0237-matched-norm-audit.json": {
+      "bytes": 997,
+      "sha256": "b17566fe9ba8d65304dabfb566189b0e2f774cd1b13c73b9d45d77ce990d811c"
+    },
+    "docs/adr/experiments/0237-matched-norm-result/attempt.json": {
+      "bytes": 2697,
+      "sha256": "79807801913f7609c7fd4716870a1e3ee73bb5a1d0ba92db8c7a94bdee852109"
+    },
+    "docs/adr/experiments/0237-matched-norm-result/completion.json": {
+      "bytes": 245,
+      "sha256": "aa0d8696294093c6c812c2ce5dac78f684c963c89156f92dca36e9c2773f7243"
+    },
+    "docs/adr/experiments/0237-matched-norm-result/receipt.json": {
+      "bytes": 2887,
+      "sha256": "ad23c5bd218ba44ba571270cfc8bb852c23b913e1faecbe30e7000a3feeb3490"
+    },
+    "docs/adr/experiments/0237-matched-norm-result/report.json": {
+      "bytes": 635819,
+      "sha256": "11e4feeda2f60b559bfb7d6a683e4a59e1473c267cdb5eff2352183396ea2d77"
+    },
+    "docs/adr/experiments/0238-independent-saved-review.json": {
+      "bytes": 2375,
+      "sha256": "68a63245988666fd8c73ee1b710298859ac9d12cd9724dd69b2b22b4b82aa81b"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/auditor-attempt.json": {
+      "bytes": 383,
+      "sha256": "457c5319b99895644a3231a1d5a2c42421ddc24deb7ed40dd7fef2a4ce580c21"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/auditor-measurement.json": {
+      "bytes": 388,
+      "sha256": "bc08e48cdab90ba6616bd7de0c101511130af095a881b3217e579bcd74fafa80"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/auditor.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/auditor.stdout": {
+      "bytes": 570,
+      "sha256": "123cbd852103dd30cc1d104b5ae8b6c9ec2a5e31793312431a11b53534a5d60d"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/authorization.json": {
+      "bytes": 8642,
+      "sha256": "63e24d45d72363126306f4c3574e940bfdd96c00163b60050e2892cdc024a06c"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/completion-pin.json": {
+      "bytes": 99,
+      "sha256": "62d318d76e06c58e345a6181c2f6c75076cd6c71911a5c66d877ffe1398394f6"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/dispatch-summary.json": {
+      "bytes": 2081,
+      "sha256": "9d6baac74b47c419cfe21e21e8790fa460bbe75cc7166a679b94f65db5954af1"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/dispatch.py.txt": {
+      "bytes": 6604,
+      "sha256": "005a154675c086b2e0799da5afe8be6b1947a4cf9ce82c34b23cb03c05491274"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/initial-metadata-check-failure.json": {
+      "bytes": 496,
+      "sha256": "9d1ea0df752bb183daaa77201eacc140745ce3601d3d480d53f9af93f09fbd15"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/metadata-check.json": {
+      "bytes": 2437,
+      "sha256": "3012177f759ae567f7783234b5c10233452cb8d4c5b3d5a80b1127f2bd0c14b3"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/openspec.log": {
+      "bytes": 45,
+      "sha256": "e100704efd79d707c2c8e21e8f643cd71afcf906342dc7ad0830859d153b0cf0"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/producer-attempt.json": {
+      "bytes": 314,
+      "sha256": "7f8fd234e962fc96b847506299e04c96364402a2ffb63688194bad3faf34d66b"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/producer-measurement.json": {
+      "bytes": 320,
+      "sha256": "dcbe18240d59db65ce8b645eb38d666fb1b952c0f3cacf99406b35b563a33b51"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/producer.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/producer.stdout": {
+      "bytes": 568,
+      "sha256": "838fa589468780c17bd02f6df7d61e6517bdba4543b9139f5a05559fc32def91"
+    },
+    "docs/adr/experiments/0238-saved-dispatch/second-metadata-check-failure.json": {
+      "bytes": 530,
+      "sha256": "50d084b855218874de04def7848bdb43629e426bcd82ceff69852dc3c6ff3f7d"
+    }
+  },
+  "final_inventory_validation": {
+    "all_actual_ADR_links_resolve": true,
+    "count_note": "Historical metadata-check count 15 precedes creation of metadata-check.json and this manifest; its original bytes remain pinned.",
+    "evidence_json_files": 16,
+    "evidence_pins_verified": 22,
+    "finite_json_including_manifest": 17,
+    "independent_manifest_review": "pass; read-only metadata/hash checks, no numerical calls or tests",
+    "staged_diff_check": "passed"
+  },
+  "independent_final_document_review": "agrees; separate read-only agent; context-pair wording corrected",
+  "independent_numerical_audit": "matched-norm-independently-verified",
+  "independent_saved_review": "0238-independent-saved-review.json",
+  "numerical_comparison_complete": true,
+  "physical_status": "physical-join-not-established",
+  "prior_test_evidence": {
+    "adr": "ADR0237",
+    "explicit_exclusions": 494,
+    "focused_passed": 124,
+    "guarded_full_passed": 6788,
+    "pytest_rerun": false,
+    "ruff_rerun": false,
+    "scope": "Historical artificial qualification with absent new outputs; lifecycle assertion now stale. No current full-suite claim."
+  },
+  "producer_authorization_consumed": true,
+  "qualified_source_sha256": {
+    "docs/adr/experiments/0237-matched-norm-audit.py": "342a82ab5f3d929dccd8e09d91bce0ae16c341d00962221c606cda7c70641308",
+    "docs/adr/experiments/0237-matched-norm-core.py": "50eeffca15534c465fbc5673485061daabe61fccdc7685e5040e2a6fe109079b",
+    "docs/adr/experiments/0237-matched-norm.py": "15d5954d506981ab41ae544e11bb6d47cbf9b103819b92884f6db7ff1ae38af2",
+    "tests/matched_norm_metadata_dispatch_harness.py": "3b9c74667d6e5df79e92b685352e8c826529046b1ab3dfbacadb4a3c03ab54e1",
+    "tests/matched_norm_metadata_fixtures.py": "95c3200f01dda863abfb9047684fc5825dad61c19b11e5f804cba07ae07d0f0d",
+    "tests/test_matched_norm_metadata.py": "0c53868230c2f832ec33e103a9c81d58e2a91b1e5712e2be8ebd4539735dfdf0"
+  },
+  "r559x": "consumed and unchecked; original evidence unchanged",
+  "r560_started": false,
+  "raw_input_pins": [
+    {
+      "bytes": 500,
+      "path": "docs/adr/experiments/0224-retained-trace-audit.json",
+      "sha256": "6b5c4f0567a42dd6337297db04003874af08a27e962018139569b07b69eeb8ec"
+    },
+    {
+      "bytes": 4075,
+      "path": "docs/adr/experiments/0224-retained-trace-result/attempt.json",
+      "sha256": "ede3377f60ade4fbc005c64cb9cd18f083b0e32699d4c7fb3573800728980f59"
+    },
+    {
+      "bytes": 439,
+      "path": "docs/adr/experiments/0224-retained-trace-result/completion.json",
+      "sha256": "a155ed0b13f07f6b5f2b9979554963a8842f1cbf1946922e7cb103e1be6b6196"
+    },
+    {
+      "bytes": 4243,
+      "path": "docs/adr/experiments/0224-retained-trace-result/receipt.json",
+      "sha256": "351887540567e0397c619c0a327b5841685f82d14567f26cc9a7ab61913705a8"
+    },
+    {
+      "bytes": 3666107,
+      "path": "docs/adr/experiments/0224-retained-trace-result/report.json",
+      "sha256": "13485689f72f45b2ee1482c01cd5eb69e8ddc93204e3b8b62841a2a04e1486d4"
+    },
+    {
+      "bytes": 9152,
+      "path": "docs/adr/experiments/0228-verification.json",
+      "sha256": "31694a511c28b6c2246a7b8752d8c3d410e19573bc30b67426607580dfd32266"
+    },
+    {
+      "bytes": 9690,
+      "path": "docs/adr/experiments/0224-retained-trace-contract.json",
+      "sha256": "118795d87f4084528a1d4096c4f1d61c0936f0afbc927ae6c040f6ec26600dea"
+    },
+    {
+      "bytes": 9513,
+      "path": "docs/adr/experiments/0219-phase-bounds.py",
+      "sha256": "b1a2673aa5516533320febed3efddeb27edece1f3f60b775323520e71324f83e"
+    },
+    {
+      "bytes": 8939,
+      "path": "docs/adr/experiments/0219-interval.py",
+      "sha256": "3243ec83031b8bc873dfae47076e0bbb086640893e396b1e56c2dbcf5d865329"
+    },
+    {
+      "bytes": 12517,
+      "path": "docs/adr/experiments/0223-bound-trace.py",
+      "sha256": "e50876ce72c8e80a74d7d615b4f67f6d69ab9a259a10663b041ee56d78730091"
+    },
+    {
+      "bytes": 4624,
+      "path": "docs/adr/experiments/0225-bound-trace.py",
+      "sha256": "d382d1181c8069d7d5d1b51b8261c75f726be522b95ed08252363c5a1a45c42d"
+    },
+    {
+      "bytes": 20168,
+      "path": "docs/adr/experiments/0225-trace-checks.py",
+      "sha256": "30f3fbafa1898884c4d4234bdc66369f81dab64271dcd9ec9c4c2e1841ba829a"
+    },
+    {
+      "bytes": 34710,
+      "path": "docs/adr/experiments/0227-retained-trace.py",
+      "sha256": "395d711620fb0e6e4ea092001adb52a769052af8d527300902653df4b6a4d6d7"
+    }
+  ],
+  "retry_performed": false,
+  "stage": "R5.59z",
+  "status": "matched-norm-qualified-local-only",
+  "task_complete": true,
+  "timezone": "Europe/Samara"
+}

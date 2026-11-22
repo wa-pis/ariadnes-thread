@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0238 — Record the versioned matched-input saved comparison](0238-record-versioned-saved-norms.md): sole R5.59z and independent audit pass; all 72 own-origin checks and equal local enclosures on identical inputs, without downstream attribution.
+
 - [0237 — Qualify selected source bindings within sealed archive metadata](0237-qualify-source-map-adapter.md): versioned6/17-role adapter repair qualified on fabricated archives;124 focused/6788 guarded full passes,494 exclusions, no saved execution.
 
 - [0236 — Preserve the matched-norm run rejected at source metadata](0236-record-saved-matched-norms.md): sole R5.59x exits3 before matrix selection;6 selected source hashes match within17 historical roles, but full-map equality rejects;0 methods/oracles, no numerical audit, attempt consumed.

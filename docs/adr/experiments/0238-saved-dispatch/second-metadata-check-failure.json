@@ -1,0 +1,7 @@
+{
+  "correction": "Permit only that exact pending manifest target during the forward-link check and assert the file exists after exclusive creation. No other missing link allowed. No producer/auditor rerun or scientific arithmetic.",
+  "error": "AssertionError on the new ADR forward link to experiments/0238-verification.json, which the same finalizer had not yet written",
+  "failed_metadata_check_only": true,
+  "result": "second outer check stopped before writing manifest",
+  "stage": "R5.59z documentation metadata check"
+}

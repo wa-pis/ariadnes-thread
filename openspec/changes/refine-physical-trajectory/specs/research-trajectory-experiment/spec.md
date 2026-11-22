@@ -1011,3 +1011,11 @@ The ADR0234 controlled local experiment SHALL isolate the two norm-squared formu
 - **AND** the additional11 entries SHALL remain sealed metadata, without claiming their source files were newly authenticated; all original raw/source/AST/private pins and numerical formulas/contexts/caps SHALL remain unchanged
 - **AND** full-volume artificial17/6 and legacy6/6 inputs SHALL pass the complete72-box/144-method/72-oracle/72-diagonal comparison and independent audit, with exact parent/worker shapes, caps and exclusive evidence verified; old0234 failure/0235 sources SHALL remain immutable and new0237 fixed outputs absent
 - **AND** R5.59x SHALL remain consumed and unchecked; any future saved execution SHALL need a distinct explicit instruction/new output identity, with no SPICE, integration, R5.60 or physical/M3 claim from artificial repair
+
+
+#### Scenario: Execute the separately authorized versioned saved comparison
+
+- **WHEN** ADR0237/R5.59y is qualified and a new explicit instruction authorizes R5.59z on the fixed 72 saved input boxes
+- **THEN** exactly one unchanged 0237 producer and, only after its successful durable completion, one independent audit bound to that raw completion SHALL execute under the original ADR0234 numerical, context, input, work, byte and time limits, using the distinct 0237 fixed output namespace and preserving the consumed unchecked R5.59x failure
+- **AND** all 72 own-origin compatibility checks, 144 method evaluations, 72 exact-real box oracles and 72 paired comparisons SHALL be verified; a mismatch SHALL remain inconclusive with first evidence preserved and no tuning, retry or selection
+- **AND** final evidence SHALL distinguish the finite same-box local outcome from incoming interval width, correlated-domain range, final arrival-width contribution, general formula equivalence or physical/M3 admission; local norm/oracle work SHALL be counted separately while all prohibited SPICE/kernel/native/force/integration/old-audit/R5.60 counters remain zero

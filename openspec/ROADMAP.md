@@ -637,6 +637,24 @@ Only artificial command shapes ran. New0237 fixed outputs remain absent; no save
 execution/R5.59x retry/SPICE/integration/R5.60 or physical/M3 claim. Automation PAUSED.
 Next saved execution needs a distinct instruction and new attempt/output identity.
 
+
+[ADR0238](../docs/adr/0238-record-versioned-saved-norms.md) completes the separately authorized R5.59z through unchanged
+0237 on clean f5437e4: one producer and one separate numerical audit return 0.
+All 72 own-origin checks pass and all 144 method intervals contain the exact-real
+box range. All 72 matched-input final enclosures are equal (24 per semantic role,
+36 per saved origin); stored width differences 0 and finite ratios 1. This is
+finite local compatibility under fresh imposed contexts, not recovered historical
+contexts or an explanation of incoming/final widths or the dominant cause.
+Per process: 72 boxes/144 methods/72 oracles/72 diagonals/72 comparisons,
+1248 events/3672 primitives. Source 3,920,340 B; combined output 642,645 B;
+external 0.397030292/0.330206208 s, all original caps pass. Raw chain, unchanged
+pins and independent saved-evidence review agree; all 14 prohibited counters 0.
+No SPICE/integration/R5.60. Both new authorizations consumed; historical x failure
+stays unchecked/immutable. Qualified code/tests unchanged; no pytest/Ruff rerun.
+The pre-execution test at test_matched_norm_metadata.py:352 now has a stale
+absent-output assumption; maintain it separately before a new full-suite claim.
+Commands null, physical join and strict M3 unproved; automation PAUSED.
+
 ## Completed R4 — define finite-radius interfaces before new propagation
 
 [ADR0134](../docs/adr/0134-boundary-evidence-reuse.md) reviews the existing evidence:

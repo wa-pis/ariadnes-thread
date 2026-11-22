@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "Raw attempt/report/receipt/completion/audit chain and canonical analysis SHA agree; audit bound to completion aa0d8696294093c6c812c2ce5dac78f684c963c89156f92dca36e9c2773f7243.",
+    "Both retained commands return 0 under Python 3.12.14; producer, analysis and proof result are matched-norm-qualified-local-only with null reason.",
+    "72 rows: 24 per semantic role, 36 per saved origin. All 72 diagonal flags and 144 containment flags true; 72 final rational endpoint pairs equal, stored width differences 0 and finite ratios 1.",
+    "Counts/progress agree: 72 boxes, 144 methods, 72 oracles, 72 diagonals, 72 comparisons, 1248 events and 3672 directed primitives/process.",
+    "All 144 context fingerprints agree; initial flags clear and final flags allowed.",
+    "Source 3920340 B; outputs 642645 B combined. External 397030292/330206208 ns and dispatcher 381559375/314619875 ns meet original caps.",
+    "Qualified six files, original thirteen inputs, prior failure/evidence and both contracts unchanged. All 14 prohibited counters zero; commands null and physical join not established."
+  ],
+  "claim_limit": "Finite 72 local saved-call comparisons only; no general formula equivalence, correlated-domain range, dominant/final-width cause, speed/mission benefit, eligible commands, physical join or strict M3 conclusion.",
+  "date": "2026-11-22",
+  "decision": "ADR0238",
+  "known_test_lifecycle_caveat": {
+    "finding": "Historical pre-execution qualification asserts fixed 0237 output/audit paths absent. Authorized z now created them, making that precondition stale on the post-run checkout.",
+    "line": 352,
+    "path": "tests/test_matched_norm_metadata.py",
+    "scope": "No test run/failure claimed; no test/source change in this evidence stage. Historical y qualification remains scoped to its absent-output precondition. Numerical audit and scientific gates unaffected; address test lifecycle in a separate code stage.",
+    "test": "test_new_fixed_paths_and_original_profiles_cannot_reuse_the_consumed_output"
+  },
+  "method": "Saved JSON metadata, raw hashes, stored endpoint/metric comparisons and static source reads only; no numerical helper, auditor, test execution or edits by reviewer.",
+  "result": "pass; no material issues",
+  "reviewer": "Independent read-only subagent /root/metadata_repair_review",
+  "stage": "R5.59z"
+}

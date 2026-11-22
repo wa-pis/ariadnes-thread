@@ -1,0 +1,116 @@
+"""Dispatch the single authorized R5.59z retained/audit pair, preserving first evidence."""
+
+from datetime import datetime, timezone
+from hashlib import sha256
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+from time import monotonic_ns
+
+ROOT = Path('/Users/agrudin/dev/my/ariadna')
+ART = ROOT / 'docs/adr/experiments'
+E = Path('/private/tmp/ariadna-r559z-20261122')
+SCRIPT = ART / '0237-matched-norm.py'
+RESULT = ART / '0237-matched-norm-result'
+AUDIT = ART / '0237-matched-norm-audit.json'
+CONTRACT = ART / '0229-saved-lineage-contract.json'
+DESIGN = ART / '0234-matched-norm-contract.json'
+EXPECTED = 'f5437e44bcbaebf14c977b67c1fa6f1617d578fc'
+
+
+def write(path: Path, data: object) -> None:
+    raw = data if isinstance(data, bytes) else (json.dumps(data, sort_keys=True, indent=2, allow_nan=False) + '\n').encode()
+    with path.open('xb') as stream:
+        stream.write(raw)
+        stream.flush()
+        os.fsync(stream.fileno())
+    handle = os.open(path.parent, os.O_RDONLY)
+    try:
+        os.fsync(handle)
+    finally:
+        os.close(handle)
+
+
+assert sys.version_info[:3] == (3, 12, 14), sys.version
+head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+remote = subprocess.check_output(['git', 'rev-parse', 'origin/dev'], cwd=ROOT, text=True).strip()
+branch = subprocess.check_output(['git', 'branch', '--show-current'], cwd=ROOT, text=True).strip()
+status = subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True)
+assert head == remote == EXPECTED and branch == 'dev' and status == ''
+assert not any(os.path.lexists(path) for path in (RESULT, AUDIT, E))
+assert not (ROOT / 'docs/adr/0238-record-versioned-saved-norms.md').exists()
+assert sha256(CONTRACT.read_bytes()).hexdigest() == '4c4e6d4c8981428b5931def910aa7d648f7860a9ce5e75d78b16952063a4b087'
+assert sha256(DESIGN.read_bytes()).hexdigest() == '86f9b290401623acd033d94475bbb2d8c637a9e8077c523fb3ecbd048d59caa0'
+c = json.loads(CONTRACT.read_bytes())
+d = json.loads(DESIGN.read_bytes())
+q = json.loads((ART / '0237-verification.json').read_bytes())
+pins = q['measured_source_sha256']
+assert len(pins) == 6
+for path, pin in pins.items():
+    assert sha256((ROOT / path).read_bytes()).hexdigest() == pin, path
+for pin in c['input_artifacts']:
+    raw = (ROOT / pin['path']).read_bytes()
+    assert len(raw) == pin['bytes'] and sha256(raw).hexdigest() == pin['sha256'], pin['path']
+assert c['input_artifacts'] == d['original_input_artifacts']
+assert len(c['input_artifacts']) == 13 and sum(pin['bytes'] for pin in c['input_artifacts']) == 3784677
+private = ['0237-matched-norm.py', '0237-matched-norm-core.py', '0237-matched-norm-audit.py']
+runtime_paths = {ROOT / pin['path'] for pin in c['input_artifacts']} | {CONTRACT, DESIGN} | {ART / name for name in private}
+inventory = {str(path.relative_to(ROOT)): dict(bytes=path.stat().st_size, sha256=sha256(path.read_bytes()).hexdigest())
+             for path in sorted(runtime_paths)}
+inventory_bytes = sum(row['bytes'] for row in inventory.values())
+assert inventory_bytes == 3920340 < d['caps']['source_inventory_bytes_per_process']
+E.mkdir()
+write(E / 'authorization.json', dict(stage='R5.59z',
+    authorized_client_date='2026-11-22', timezone='Europe/Samara',
+    instruction='Давай один раз запустим R5.59z офлайн через версию 0237 на 72 сохранённых наборах и проверим независимым аудитом. Без SPICE, интегрирования и R5.60. Зафиксируем результаты в ADR и OpenSpec, сделаем коммит и пуш.',
+    base_commit=head, origin_dev=remote, branch=branch, initial_git_status=status,
+    python_executable=sys.executable, python_version=sys.version,
+    contract_sha256=sha256(CONTRACT.read_bytes()).hexdigest(),
+    design_sha256=sha256(DESIGN.read_bytes()).hexdigest(),
+    qualified_source_sha256=pins, raw_input_pins=c['input_artifacts'],
+    runtime_inventory=inventory, expected_runtime_inventory_bytes=inventory_bytes,
+    fixed_outputs_absent=True, limits=d['caps'], no_retry=True,
+    authorization_recorded_utc=datetime.now(timezone.utc).isoformat()))
+write(E / 'dispatch.py.txt', Path(__file__).read_bytes())
+commands = [sys.executable, '-I', '-S', '-B', str(SCRIPT)]
+
+
+def dispatch(name: str, args: list[str]) -> dict:
+    write(E / (name + '-attempt.json'), dict(command=commands + args,
+          utc=datetime.now(timezone.utc).isoformat(), expected_wall_ns=30_000_000_000, ordinal=1))
+    started = monotonic_ns()
+    try:
+        child = subprocess.run(commands + args, stdin=subprocess.DEVNULL, capture_output=True, timeout=31, check=False)
+        stdout, stderr = child.stdout, child.stderr
+        result = dict(returncode=child.returncode, timed_out=False)
+    except subprocess.TimeoutExpired as error:
+        stdout, stderr = error.stdout or b'', error.stderr or b''
+        result = dict(returncode=None, timed_out=True)
+    except OSError as error:
+        stdout, stderr = b'', str(error).encode()
+        result = dict(returncode=None, timed_out=False, launch_error=str(error))
+    result |= dict(external_elapsed_ns=monotonic_ns()-started, command=commands+args, process=name)
+    write(E / (name + '.stdout'), stdout)
+    write(E / (name + '.stderr'), stderr)
+    write(E / (name + '-measurement.json'), result)
+    return result
+
+
+producer = dispatch('producer', ['retained'])
+measurements = [producer]
+complete = RESULT / 'completion.json'
+if producer['returncode'] == 0 and producer['external_elapsed_ns'] < 30_000_000_000 and complete.is_file():
+    completion_pin = sha256(complete.read_bytes()).hexdigest()
+    write(E / 'completion-pin.json', dict(sha256=completion_pin, bytes=complete.stat().st_size))
+    measurements.append(dispatch('auditor', ['audit', completion_pin]))
+summary = dict(stage='R5.59z', base_commit=head, measurements=measurements,
+    producer_completion_present=complete.is_file(), audit_present=AUDIT.is_file(),
+    one_producer_dispatched=True, auditor_dispatched=len(measurements)==2, no_retry=True,
+    qualified_code_unchanged=all(sha256((ROOT/p).read_bytes()).hexdigest()==h for p,h in pins.items()),
+    expected_runtime_inventory_bytes=inventory_bytes,
+    evidence_paths={str(path.relative_to(ROOT)): dict(bytes=path.stat().st_size,sha256=sha256(path.read_bytes()).hexdigest())
+                    for path in [*(sorted(RESULT.iterdir()) if RESULT.is_dir() else []), *([AUDIT] if AUDIT.is_file() else [])]})
+write(E / 'dispatch-summary.json', summary)
+print(json.dumps(summary, sort_keys=True))

@@ -1,0 +1,8 @@
+{
+  "correction": "Compare the first version token, retaining the full original authorization bytes. No producer/auditor rerun, input change or scientific arithmetic.",
+  "error": "AssertionError at stdin line 34: full sys.version string was compared to bare 3.12.14",
+  "failed_metadata_check_only": true,
+  "observed": "3.12.14 (main, Sep  3 2026, 03:46:19) [Clang 21.1.8 ]",
+  "result": "initial outer check stopped before writing manifest",
+  "stage": "R5.59z documentation metadata check"
+}
