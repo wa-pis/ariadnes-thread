@@ -1045,3 +1045,40 @@ This requirement SHALL NOT authorize a new numerical method or execution.
 - **WHEN** an analytical witness uses a different Mars phase
 - **THEN** its changed target six-state SHALL require separate boundary and immutable-command selection review before any physical proposal; it SHALL NOT enter the original R5.60
 - **AND** all ADR0205/0207 resource, full-model reverse/reference, endpoint-error, event/mass, enforceable-budget and separate-execution gates SHALL remain required; automation SHALL remain PAUSED and strict M3 SHALL remain open
+
+
+### Requirement: Use bounded scalar search only to propose an analytical witness
+
+The next local method SHALL use ADR0240 bounded Brent as a point proposer under
+ADR0239, with all original independent command-admission gates unchanged.
+
+#### Scenario: Propose off-grid points within the fixed analytical family
+
+- **WHEN** a separately implemented and qualified proposer is explicitly authorized
+- **THEN** it SHALL verify anchors 150°, 151°, 152° and use pinned SciPy 1.17.1 `minimize_scalar(method="bounded", bounds=(150.0, 152.0))`, with degree `xatol=1e-5`, `maxiter=62`, `disp=0`, separately for positive then negative Mars signs and the fixed positive lunar branch
+- **AND** all three anchors SHALL match authenticated saved states, root and pair refusals before search; the frozen comparator SHALL require no eligible anchor, and a new witness contradicting its saved refusal SHALL be invalid; artificial endpoint-witness checks SHALL exercise only the isolated point verifier
+- **AND** its objective SHALL be the finite total analytical impulse in m/s for the active sign, including mass-rejected pairs; every proposed phase SHALL inspect both signed point checks first and may stop at any independently passing witness regardless of optimizer status
+- **AND** a definitively guard-rejected or agreed-degenerate active branch SHALL end only that sign's scalar search without penalties, nonfinite objectives, subdivision or restart; missing signed inventory, unresolved arithmetic, anchor mismatch or independent disagreement SHALL terminate invalid/inconclusive
+
+#### Scenario: Admit literal commands at the exact proposed phase
+
+- **WHEN** a future candidate is checked for analytical admissibility
+- **THEN** a new versioned adapter SHALL retain its binary64 phase hex word and exact degree ratio without grid snapping, and its six original command words with phase/sign/endpoint binding
+- **AND** the pinned independent orbit/conic path SHALL verify all ADR0218 state, asymptote, impulse, incoming-leg guard, arrival reversal, TNW, event, historical exclusion, duration/mass, unrounded ideal-budget and both exact commanded/effective 500 kg ledger gates, without replacing commands by newly rounded oracle values
+- **AND** unresolved classification of either signed root SHALL prevent admission; a different Mars phase SHALL remain a changed analytical target, with no executable pair, original R5.60 admission or physical/M3 claim
+
+#### Scenario: Bound actual work and audit the saved points independently
+
+- **WHEN** the method is artificially qualified or later explicitly executed
+- **THEN** all attempts including duplicates/errors SHALL be precharged within 3 anchors, 62 callbacks per sign and 2 final checks of already-recorded completed-search results: at most 129 direct phases, 258 Mars root slots and 258 pair slots per arithmetic path, with zero interval cells/bounds
+- **AND** the separate auditor SHALL independently check only recorded phases and literal commands under its own same caps, without optimizer replay; producer readback SHALL be structural/hash-only without uncounted phase work
+- **AND** the original four archive pins SHALL remain fixed, and new source/runtime identities SHALL be frozen after qualification; the producer SHALL declare its pinned SciPy/NumPy runtime instead of weakening the historical stdlib-only guard or claiming zero native-library loads
+- **AND** all archive/private/scientific/bootstrap/config/profile and selected solver/wrapper-source authentication reads including rereads SHALL count toward the 4 MiB input ceiling; only preinstalled interpreter/NumPy/SciPy import artifacts SHALL be a runtime exception under an exact qualified path/build/digest allowlist and frozen measured volume, with no general scan or omitted load/authentication time
+- **AND** startup/imports through durable producer finalization/readback SHALL fit 30 s, with a separate 30 s audit, 4 MiB pinned input per reader and 4 MiB combined new evidence; SPICE/kernel/force/integration/old-study/R5.60 work SHALL remain zero and first partial/complete evidence exclusive
+
+#### Scenario: Preserve the outcome limit and separate design from execution
+
+- **WHEN** the bounded scalar method ends
+- **THEN** it SHALL report only an independently verified analytical witness or inconclusive/invalid; no witness, optimizer success or a reported above-budget minimum SHALL certify continuous refusal or global optimality
+- **AND** automatic continuation SHALL stop after either result; a required refusal proof SHALL need a separate reviewed method decision
+- **AND** this design stage SHALL perform zero scientific imports, numerical evaluations or experiments; implementation SHALL require a separate instruction and ADR0240 full-volume artificial qualification with both required regression lanes, while saved execution SHALL require another explicit instruction and qualified identities; automation SHALL remain PAUSED

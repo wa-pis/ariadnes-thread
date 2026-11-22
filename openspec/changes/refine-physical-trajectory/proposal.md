@@ -20,9 +20,13 @@ open; the broader platform direction is not abandoned.
 ADR0239 stops automatic R5.59 diagnostic continuation. The next scientific
 objective is a verified analytical witness or gap-free local refusal on the
 unchanged ADR0218 [150 degrees, 152 degrees] domain, otherwise inconclusive and
-stop. This planning stage selects no new numerical method or execution; a witness
-is not an executable pair, adopted Mars target, physical join or M3 completion.
-The retained priorities below explain history and do not authorize another run.
+stop. ADR0240 now selects bounded Brent scalar minimization per Mars sign as a
+witness proposer, with unchanged independent point and literal-command gates.
+It cannot certify continuous refusal: no witness means inconclusive and stop.
+The design preserves exact binary64 phases, both mass ledgers and the existing
+129-phase/time/byte envelope. No implementation, qualification or run occurs here;
+a witness is not an executable pair, adopted Mars target, physical join or M3
+completion. The retained priorities below do not authorize another run.
 
 ### Current priority — R1 mission-first demonstration
 

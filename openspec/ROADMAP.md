@@ -1,11 +1,14 @@
 # Ariadna Space Navigation Roadmap
 
-Current scheduling decision: [ADR0239](../docs/adr/0239-stop-diagnostics-at-a-feasibility-decision.md).
-Stop automatic R5.59 diagnostics. The next scientific objective is one independently
-checked analytical witness or complete local refusal on the existing [150 degrees,
-152 degrees] domain, otherwise inconclusive and stop. No new numerical method or
-execution is authorized; a changed Mars phase is not the original R5.60 target.
-Physical admission and strict M3 remain open; automation `ariadna-m3` stays PAUSED.
+Current method: [ADR0240](../docs/adr/0240-choose-bounded-scalar-witness-search.md),
+under the [ADR0239](../docs/adr/0239-stop-diagnostics-at-a-feasibility-decision.md)
+stop policy. Bounded Brent proposes analytical witnesses on the unchanged
+[150 degrees, 152 degrees] domain, separately for both Mars signs; original
+independent point/command/mass gates decide admission. Finding no witness yields
+an inconclusive result, not a continuous refusal. Design only: separate implementation/qualification and
+execution instructions remain required. No automatic R5.59 diagnostic successor.
+A changed Mars phase is not the original R5.60 target. Physical admission and
+strict M3 remain open; automation `ariadna-m3` stays PAUSED.
 
 Test/CI maintenance is complete on e2b82fe, with successful Ubuntu CI. The latest
 scientific result remains [ADR0238](../docs/adr/0238-record-versioned-saved-norms.md).

@@ -9,8 +9,11 @@ Keep Python/TudatPy/SPICE/Streamlit and the extensible platform vision.
 R5.59 diagnostics. Next scientific objective: one independently checked analytical
 witness or gap-free two-sign refusal on the existing [150 degrees, 152 degrees]
 domain; otherwise inconclusive and stop. Existing evidence is still inconclusive.
-A complete, justified method contract is required before new implementation.
-This planning stage selects no new formula and authorizes no numerical execution.
+[ADR0240](docs/adr/0240-choose-bounded-scalar-witness-search.md) selects bounded
+Brent per Mars sign as a witness proposer, with unchanged independent point gates.
+No witness means inconclusive, never continuous refusal. Design only; no code/run.
+Budget: 3 anchors + 62 callbacks/sign + 2 final checks = 129 phases/path.
+Separate implementation/full-volume qualification and execution instructions required.
 A different Mars phase changes the target and cannot enter the original R5.60.
 Automation `ariadna-m3` stays PAUSED; no further saved execution is authorized.
 
@@ -29,7 +32,7 @@ Local: 6837 portable + 412 live pass; exact JUnit union covers 7249 non-archive 
 42 exact historical runtime/checkout or bit-replay cases are skipped, not verified.
 Ubuntu CI 45016544787: 7212 pass, 42 archival + 37 platform skips, zero failures.
 Ruff/strict OpenSpec pass; frozen checkout verified through both local full lanes.
-No scientific source/dependency/evidence changes. No local runtime rerun for ADR0239 docs.
+No scientific source/dependency/evidence changes. No local runtime rerun for ADR0239/0240 docs.
 
 ## Preserved history and unresolved science
 [ADR0221](docs/adr/0221-record-retained-inter-node-result.md): 64 unresolved leaves;
@@ -41,5 +44,5 @@ ADR0236 R5.59x and ADR0231 R5.59s remain failed/consumed/unchecked; no replay.
 [ADR0119](docs/adr/0119-positive-ideal-m2-reference.md): d0001-t0035 ideal reference;
 [ADR0129](docs/adr/0129-reference-coast-verification-passes.md): 121 ideal nodes only.
 No accepted executable pair, physical join, D17.3/strict M3/task 3.9 or mission safety.
-R5.60 closed. No new search/optimizer/D17/D18/M4–M6/ML/UI qualification/publication.
+R5.60 closed. No optimizer execution/D17/D18/M4–M6/ML/UI qualification/publication.
 Use pinned Conda; preserve all historical contracts/evidence and moon_to_mars.py.

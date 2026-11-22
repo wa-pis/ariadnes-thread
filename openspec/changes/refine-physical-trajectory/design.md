@@ -8,9 +8,28 @@ family, point/mass gates, two-sign coverage and outer work/time/byte ceilings.
 The next scientific deliverable must establish one independently checked witness,
 a complete local refusal, or an explicit inconclusive/invalid result and stop.
 The existing evidence remains inconclusive; do not rerun it to restate that fact.
-No new method is implementation-ready here. Before new code or retained arithmetic,
-one reviewed contract must justify a different complete proof/witness method,
-independent verification and full-volume qualification within the existing caps.
+[ADR0240](../../../docs/adr/0240-choose-bounded-scalar-witness-search.md) selects
+`scipy.optimize.minimize_scalar(method="bounded")` on [150°, 152°], separately for
+positive then negative Mars signs, minimizing the sum of analytical impulse norms.
+The optimizer proposes points; unchanged independent point/command gates admit them.
+No witness means inconclusive, never a refusal certificate or a global minimum.
+
+Use explicit degree `xatol=1e-5`, `maxiter=62`, and hard precharged callback caps:
+3 anchors + 62 callbacks/sign + 2 already-recorded final checks = 129 phases/path,
+both signed slots at every phase; no interval work. Preserve each arbitrary
+binary64 phase by hex/exact ratio and the six original command words through a
+new minimal adapter; the old dyadic-only point wrapper strips those words.
+Mass-failing finite costs remain searchable; an unavailable active objective ends
+that sign's search, while unresolved classification/disagreement ends the attempt.
+No penalties, restarts, hidden readback recalculation or audit optimizer replay.
+
+The new producer explicitly permits pinned SciPy 1.17.1 / NumPy 1.26.4; the old
+stdlib-only runtime cannot be reused unchanged. The independent audit stays
+stdlib-only; SPICE/kernel/force/integration/old-study/R5.60 work remains forbidden.
+ADR0240 fixes inherited point gates, exact archive pins, work/time/byte ceilings,
+new source/runtime binding and full-volume artificial qualification before saved
+execution. Implementation, qualification and numerical execution remain unstarted;
+separate implementation and execution instructions are still required.
 No further stage-attribution branch is scheduled by default. An off-grid phase
 changes the Mars target and does not admit commands to the original R5.60;
 ADR0205/0207 physical-readiness gates remain unchanged. Automation stays PAUSED.

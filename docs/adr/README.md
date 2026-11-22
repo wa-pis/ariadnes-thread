@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0240 — Choose bounded scalar search for an analytical witness](0240-choose-bounded-scalar-witness-search.md): bounded Brent proposes points; unchanged independent command/mass gates decide admission. Design only, no continuous refusal proof or execution.
+
 - [0239 — Stop diagnostics at one feasibility decision](0239-stop-diagnostics-at-a-feasibility-decision.md): one terminal analytical witness, local refusal or inconclusive outcome; no new method, retained run or physical admission.
 
 - [0238 — Record the versioned matched-input saved comparison](0238-record-versioned-saved-norms.md): sole R5.59z and independent audit pass; all 72 own-origin checks and equal local enclosures on identical inputs, without downstream attribution.
