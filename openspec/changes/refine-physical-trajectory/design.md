@@ -1,5 +1,22 @@
 ## Context
 
+### Current scheduling decision — one terminal feasibility outcome (2026-11-22)
+
+[ADR0239](../../../docs/adr/0239-stop-diagnostics-at-a-feasibility-decision.md)
+stops automatic diagnostic continuation after ADR0238. Reuse the ADR0218 local
+family, point/mass gates, two-sign coverage and outer work/time/byte ceilings.
+The next scientific deliverable must establish one independently checked witness,
+a complete local refusal, or an explicit inconclusive/invalid result and stop.
+The existing evidence remains inconclusive; do not rerun it to restate that fact.
+No new method is implementation-ready here. Before new code or retained arithmetic,
+one reviewed contract must justify a different complete proof/witness method,
+independent verification and full-volume qualification within the existing caps.
+No further stage-attribution branch is scheduled by default. An off-grid phase
+changes the Mars target and does not admit commands to the original R5.60;
+ADR0205/0207 physical-readiness gates remain unchanged. Automation stays PAUSED.
+This documentation stage introduces no scientific calculation and does not close M3.
+The dated priorities below remain historical context.
+
 ### Current priority — R1 mission-first demonstration (2026-10-29)
 
 [ADR 0117](../../../docs/adr/0117-mission-first-demonstration-priority.md)

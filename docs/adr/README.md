@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0239 — Stop diagnostics at one feasibility decision](0239-stop-diagnostics-at-a-feasibility-decision.md): one terminal analytical witness, local refusal or inconclusive outcome; no new method, retained run or physical admission.
+
 - [0238 — Record the versioned matched-input saved comparison](0238-record-versioned-saved-norms.md): sole R5.59z and independent audit pass; all 72 own-origin checks and equal local enclosures on identical inputs, without downstream attribution.
 
 - [0237 — Qualify selected source bindings within sealed archive metadata](0237-qualify-source-map-adapter.md): versioned6/17-role adapter repair qualified on fabricated archives;124 focused/6788 guarded full passes,494 exclusions, no saved execution.

@@ -1019,3 +1019,29 @@ The ADR0234 controlled local experiment SHALL isolate the two norm-squared formu
 - **THEN** exactly one unchanged 0237 producer and, only after its successful durable completion, one independent audit bound to that raw completion SHALL execute under the original ADR0234 numerical, context, input, work, byte and time limits, using the distinct 0237 fixed output namespace and preserving the consumed unchecked R5.59x failure
 - **AND** all 72 own-origin compatibility checks, 144 method evaluations, 72 exact-real box oracles and 72 paired comparisons SHALL be verified; a mismatch SHALL remain inconclusive with first evidence preserved and no tuning, retry or selection
 - **AND** final evidence SHALL distinguish the finite same-box local outcome from incoming interval width, correlated-domain range, final arrival-width contribution, general formula equivalence or physical/M3 admission; local norm/oracle work SHALL be counted separately while all prohibited SPICE/kernel/native/force/integration/old-audit/R5.60 counters remain zero
+
+### Requirement: Stop diagnostics at one terminal feasibility decision
+
+The next scientific work objective after ADR0238 SHALL be one terminal analytical
+feasibility decision under ADR0239, preserving all existing scientific gates.
+This requirement SHALL NOT authorize a new numerical method or execution.
+
+#### Scenario: Select a complete result instead of another diagnostic branch
+
+- **WHEN** follow-up scientific work is proposed after R5.59z
+- **THEN** it SHALL target an independently verified witness or a gap-free two-sign refusal on the unchanged ADR0218 closed [150 degrees, 152 degrees] domain, or return inconclusive/invalid and stop
+- **AND** a single reviewed method contract SHALL specify a justified different complete method, exact pins, independent verifier and counted artificial qualification within the existing ADR0218 work/time/byte ceilings before implementation or retained evaluation; this planning stage SHALL perform zero new research numerical evaluations
+- **AND** equal local enclosures or passing tests SHALL NOT authorize another norm trace, deeper/wider search, consumed-study replay, changed tolerance or automatic diagnostic successor
+
+#### Scenario: Preserve the limit of each feasibility conclusion
+
+- **WHEN** the future complete deliverable reports a witness, refusal or incomplete proof
+- **THEN** a witness SHALL pass every original point and exact commanded/effective mass-ledger gate; a refusal SHALL cover every point and both signed roots of the declared closed domain; missing evidence, disagreement or exhausted caps SHALL remain inconclusive/invalid
+- **AND** a witness SHALL NOT be an executable command selection or global optimum, and local refusal SHALL NOT become a whole-orbit or physical-infeasibility claim
+- **AND** every terminal result SHALL stop automatic continuation; existing unresolved evidence SHALL NOT be rerun merely to restate its status
+
+#### Scenario: Keep analytical existence separate from the physical mission
+
+- **WHEN** an analytical witness uses a different Mars phase
+- **THEN** its changed target six-state SHALL require separate boundary and immutable-command selection review before any physical proposal; it SHALL NOT enter the original R5.60
+- **AND** all ADR0205/0207 resource, full-model reverse/reference, endpoint-error, event/mass, enforceable-budget and separate-execution gates SHALL remain required; automation SHALL remain PAUSED and strict M3 SHALL remain open

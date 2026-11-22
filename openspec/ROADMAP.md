@@ -1,11 +1,16 @@
 # Ariadna Space Navigation Roadmap
 
-Latest maintenance: regression tests and CI policy repaired after the process
-review, without new scientific experiments. Keep automation `ariadna-m3` PAUSED. The latest
-scientific result is [ADR0238](../docs/adr/0238-record-versioned-saved-norms.md):
-72 equal local matched-input enclosures; physical join and strict M3 remain open.
-See [CURRENT_STATE](../CURRENT_STATE.md) for verified checks and the next decision.
-Do not repeat consumed studies or change scientific contracts through test policy.
+Current scheduling decision: [ADR0239](../docs/adr/0239-stop-diagnostics-at-a-feasibility-decision.md).
+Stop automatic R5.59 diagnostics. The next scientific objective is one independently
+checked analytical witness or complete local refusal on the existing [150 degrees,
+152 degrees] domain, otherwise inconclusive and stop. No new numerical method or
+execution is authorized; a changed Mars phase is not the original R5.60 target.
+Physical admission and strict M3 remain open; automation `ariadna-m3` stays PAUSED.
+
+Test/CI maintenance is complete on e2b82fe, with successful Ubuntu CI. The latest
+scientific result remains [ADR0238](../docs/adr/0238-record-versioned-saved-norms.md).
+See [CURRENT_STATE](../CURRENT_STATE.md) for verified checks and scope limits.
+Historical instructions below do not authorize consumed studies to be repeated.
 
 ## Retained R5 history — short-coast Earth-gravity sensitivity and follow-ups
 

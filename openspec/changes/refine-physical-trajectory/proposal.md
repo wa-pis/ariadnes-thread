@@ -15,6 +15,15 @@ open; the broader platform direction is not abandoned.
 
 ## What Changes
 
+### Current scheduling decision — one terminal feasibility outcome
+
+ADR0239 stops automatic R5.59 diagnostic continuation. The next scientific
+objective is a verified analytical witness or gap-free local refusal on the
+unchanged ADR0218 [150 degrees, 152 degrees] domain, otherwise inconclusive and
+stop. This planning stage selects no new numerical method or execution; a witness
+is not an executable pair, adopted Mars target, physical join or M3 completion.
+The retained priorities below explain history and do not authorize another run.
+
 ### Current priority — R1 mission-first demonstration
 
 - Accepted ADR 0118 fixes the concrete M2 reference: unchanged explicit hypothetical inputs, 50 kg reserve for <=100 m/s additional ideal delta-v, deterministic selection and two bounded reproducibility checks. Separately authorized ADR 0119 verification passes R1.1 (887.966464 kg final >=550 kg); R1.2–R1.4 and strict M3 remain open. The MSL/GRAIL source audit is not a historical replay or same-force oracle.

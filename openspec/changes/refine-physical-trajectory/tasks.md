@@ -1,8 +1,12 @@
+## Current scheduling decision — one terminal feasibility outcome
+
+- [x] P1 Record ADR0239's single next scientific objective and stop automatic diagnostic continuation. Verify the exact local domain, witness/refusal/inconclusive semantics, changed-Mars-target restriction, inherited mass/proof/budget gates, independent scope review, local links, documentation-only diff and strict OpenSpec. Planning only: no new formula, implementation, numerical evaluation or scientific completion; a complete method contract and separate instructions are still required. No speculative implementation/execution successor is scheduled.
+
 ## Verification infrastructure maintenance — 2026-11-22
 
 - [x] Q1 Repair temporary-output and artificial-clock isolation, keep portable saved-data validation separate from exact historical runtime replay, and make local/CI use the same required portable and live-regression lanes. Verify targeted failures, lane selection and native-access refusal, both required regression lanes on a frozen checkout, Ruff, strict OpenSpec and unchanged scientific sources/evidence. This is test/CI maintenance only; no new scientific experiment, changed physics/tolerance or M3 completion.
 
-## Current priority R5 — short-coast Earth-gravity sensitivity
+## Retained R5 studies — consumed attempts and unmet scientific gates
 
 - [x] R5.1 Inspect existing physical/independent-engine adapters and test evidence before specifying a short-coast comparison from the ADR0135/0136 retained initial state. Freeze the physical question, exact input/body-time data and interval, two named force models and omissions, independent same-model numerical reference, separate arithmetic/integration versus model-sensitivity gates, provenance and finite native/time budget in OpenSpec/ADR. Reuse existing verified infrastructure; no new search, candidate/phase/control change, optimizer, propagation, dependency or experiment is authorized by this planning task. Verify sources/local facts, links/diff, strict OpenSpec and protected evidence. Pause only if a needed action/choice exceeds current authorization. ADR0137 freezes the300s parked Sun/Moon versus Sun/Moon/Earth question, exact audited initial state, direct SSB forces/GMs, independent Tudat RK4 and SciPy DOP853 profiles, separate numerical/model gates,60s/four-native/four-oracle limits and explicit omissions. No scientific execution or implementation.
 
