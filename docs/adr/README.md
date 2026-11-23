@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0242 — Complete P3 regression qualification](0242-finish-p3-regression-qualification.md): preserve the first CI failure, repair Linux current-process metadata and artificial clocks, and verify existing regression lanes without a retained search.
+
 - [0241 — Qualify bounded witness search on artificial inputs](0241-qualify-artificial-bounded-witness-search.md): P3 implementation and artificial-only verification; independent literal-point/trace audit and full-volume limits, with required live qualification still unverified.
 
 - [0240 — Choose bounded scalar search for an analytical witness](0240-choose-bounded-scalar-witness-search.md): bounded Brent proposes points; unchanged independent command/mass gates decide admission. Design only, no continuous refusal proof or execution.

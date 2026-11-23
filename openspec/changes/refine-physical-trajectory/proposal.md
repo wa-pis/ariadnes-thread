@@ -27,10 +27,15 @@ The design preserves exact binary64 phases, both mass ledgers and the existing
 129-phase/time/byte envelope. ADR0241 implements P3 and verifies artificial
 inputs only, including independent literal-command/trace audit and full-volume
 limits. Full portable regression passes 6961 tests (42 archival skips, 412 live
-deselections); live/CI is deliberately not run under
-the user's no-SPICE constraint. Full qualification and saved execution remain
+deselections); at ADR0241 live/CI was deliberately not run under
+the then-applicable no-SPICE constraint. Full qualification and saved execution remain
 unavailable; an artificial witness is not an executable pair, adopted Mars target,
 physical join or M3 completion. The retained priorities below do not authorize another run.
+
+ADR0242 follows the separately authorized live/CI qualification: 412 local live
+tests pass on 4f5cbb3, initial Ubuntu CI exposes proc-path/artificial-clock failures,
+and minimal repairs pass 151 focused cases. Repaired portable passes 6964 cases; current-source CI remains pending;
+no new saved P3 search or mission experiment is authorized.
 
 ### Current priority — R1 mission-first demonstration
 

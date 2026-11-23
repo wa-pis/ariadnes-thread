@@ -1,6 +1,6 @@
 # Current State
 
-Updated: 2026-11-23. Keep under 60 lines; durable evidence in ADRs.
+Updated: 2026-11-24. Keep under 60 lines; durable evidence in ADRs.
 
 ## Goal and scheduling
 One independently checked research trajectory/export remains the goal.
@@ -14,8 +14,10 @@ Brent per Mars sign as a witness proposer, with unchanged independent point gate
 [ADR0241](docs/adr/0241-qualify-artificial-bounded-witness-search.md) implements
 P3 artificial-only: 124 focused tests/Ruff pass, full 129-phase stress and audit.
 Full portable: 6961 pass, 42 archival skips, 412 live deselections; checkout frozen.
-Live/CI unverified under the no-SPICE instruction.
-Full P3 qualification and retained execution unavailable; no refusal proof.
+[ADR0242](docs/adr/0242-finish-p3-regression-qualification.md): 412 live pass on4f5cbb3;
+initial CI fails Linux proc-path/artificial-clock cases. Minimal repairs:151 focused pass.
+Repaired portable:6964 pass/42 archival skips; current-source CI pending.
+Full P3 open, retained execution unavailable.
 A different Mars phase changes the target and cannot enter the original R5.60.
 Automation `ariadna-m3` stays PAUSED; no further saved execution is authorized.
 

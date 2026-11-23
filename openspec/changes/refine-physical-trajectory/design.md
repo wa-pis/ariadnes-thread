@@ -31,8 +31,8 @@ new source/runtime binding and full-volume artificial qualification before saved
 execution. [ADR0241](../../../docs/adr/0241-qualify-artificial-bounded-witness-search.md)
 implements the private adapter, proposer, independent trace/point audit and
 artificial-only cold-process invocation. 124 focused tests and Ruff pass, including
-full 129-phase/258-slot stress; it has no retained entrypoint. Required full live
-regression remains unverified under the user's no-SPICE constraint; full portable
+full 129-phase/258-slot stress; it has no retained entrypoint. At ADR0241 full live
+regression was unverified under the then-applicable no-SPICE constraint; full portable
 regression passes 6961 tests (42 archival skips, 412 live deselections), with
 1327 checkout files frozen throughout. No retained execution, physical admission or M3 closure.
 No further stage-attribution branch is scheduled by default. An off-grid phase
@@ -41,6 +41,11 @@ ADR0205/0207 physical-readiness gates remain unchanged. Automation stays PAUSED.
 ADR0239/0240 were planning only; ADR0241 adds artificial numerical qualification,
 without a retained scientific run or M3 closure.
 The dated priorities below remain historical context.
+
+ADR0242 follows the separately authorized live/CI qualification: 412 local live
+tests pass on 4f5cbb3, initial Ubuntu CI exposes proc-path/artificial-clock failures,
+and minimal repairs pass 151 focused cases. Repaired portable passes 6964 cases; current-source CI remains pending;
+no new saved P3 search or mission experiment is authorized.
 
 ### Current priority — R1 mission-first demonstration (2026-10-29)
 

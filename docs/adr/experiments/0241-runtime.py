@@ -190,7 +190,7 @@ def _native_images(guard: Guard) -> tuple[set[str], list[str]]:
             guard.inspecting_native = False
     elif sys.platform.startswith("linux"):
         # Kernel-generated process metadata, not a package/directory scan.
-        path = Path("/proc/self/maps")
+        path = Path("/proc/self/maps").resolve()
         guard.private.add(str(path))
         with path.open("rb") as stream:
             raw = stream.read(512 * 1024 + 1)

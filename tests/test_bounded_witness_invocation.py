@@ -224,3 +224,46 @@ def test_global_source_cap_counts_repeated_reads(tmp_path: Path) -> None:
     assert guard.source_bytes == 4 * 1024**2
     with pytest.raises(ValueError, match="byte cap"):
         guard.hook("open", (str(source), "r", 0))
+
+
+@pytest.mark.parametrize("fault", [None, "metadata-cap", "source-cap"])
+def test_linux_loader_metadata_uses_canonical_current_process_path(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, fault: str | None,
+) -> None:
+    runtime = run_path(str(ART / "0241-runtime.py"))
+    guard = runtime["Guard"](set(), set(), tmp_path / "out", lambda: None, None, scientific=True)
+    maps = tmp_path / "current-maps"
+    alias = tmp_path / "self-maps"
+    alias.symlink_to(maps)
+    raw = f"1000-2000 r-xp 0000 00:00 1 {sys.executable}\n".encode()
+    if fault == "metadata-cap":
+        raw = b"x" * (512 * 1024 + 1)
+    maps.write_bytes(raw)
+    if fault == "source-cap":
+        guard.source_bytes = 4 * 1024**2 - 2 * len(raw) + 1
+    original_open = Path.open
+
+    def checked_open(path: Path, *args: Any, **kwargs: Any) -> Any:
+        if path.resolve() == maps:
+            guard.hook("open", (str(path), "rb", 0))
+        return original_open(path, *args, **kwargs)
+
+    # Simulate proc's self symlink on either host, retaining real hook accounting.
+    monkeypatch.setitem(runtime["_native_images"].__globals__, "Path",
+                        lambda value: alias if value == "/proc/self/maps" else Path(value))
+    monkeypatch.setattr(runtime["sys"], "platform", "linux")
+    monkeypatch.setattr(Path, "open", checked_open)
+    if fault:
+        reason = "native metadata input cap" if fault == "source-cap" else "native image metadata cap"
+        with pytest.raises(ValueError, match=reason):
+            runtime["_native_images"](guard)
+        return
+    images, opaque = runtime["_native_images"](guard)
+    assert str(maps) in guard.private and str(alias) not in guard.private
+    assert str(Path(sys.executable).resolve()) in images and opaque == []
+    assert guard.source_bytes >= len(raw)
+    for name in ("other-pid-maps", "environ", "unrelated.json"):
+        with pytest.raises(ValueError, match="out-of-scope"):
+            guard.hook("open", (str(tmp_path / name), "rb", 0))
+    with pytest.raises(ValueError, match="input mutation"):
+        guard.hook("open", (str(maps), "wb", runtime["os"].O_WRONLY))

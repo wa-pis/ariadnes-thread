@@ -56,8 +56,11 @@ def provider(body: str, epoch: float) -> list[float]:
 def analytic_result(tmp_path_factory: Any) -> tuple[dict[str, Any], Path, dict[str, Any]]:
     data = synthetic_bundle()
     output = tmp_path_factory.mktemp("corrected-analytic")/"study.json"
-    result = study.execute(output, inputs_loader=lambda root, check: deepcopy(data), references=reference,
-        provider=provider, identity_provider=lambda: deepcopy(data["historical_identity"]))
+    with pytest.MonkeyPatch.context() as monkeypatch:
+        monkeypatch.setattr(study, "PROCESS_START", study.monotonic()-120.)
+        result = study.execute(output, clock=lambda: 0.,
+            inputs_loader=lambda root, check: deepcopy(data), references=reference,
+            provider=provider, identity_provider=lambda: deepcopy(data["historical_identity"]))
     return result, output, data
 
 
@@ -81,7 +84,8 @@ def test_actual_saved_synthetic_run_passes_independent_arithmetic_replay(analyti
     result = auditor.check_saved(report, bundle, reference)
     assert result["passed"] is True
     destination = path.with_name("audit.json")
-    audited = auditor.audit(path, destination, inputs_loader=lambda root, check: deepcopy(bundle), references=reference)
+    audited = auditor.audit(path, destination, clock=lambda: 0.,
+                            inputs_loader=lambda root, check: deepcopy(bundle), references=reference)
     assert audited["audit_status"] == "passed", audited.get("error")
     assert audited["scientific_verified"] is False
     assert audited["counts"]["reference_fields"]["completed"] == 448
@@ -92,7 +96,7 @@ def test_exclusive_outputs_do_not_replay(analytic_result: Any) -> None:
     report, path, data = analytic_result
     previous = path.read_bytes()
     with pytest.raises(ValueError, match="exclusive"):
-        study.execute(path, inputs_loader=lambda root, check: data, identity_provider=lambda: {})
+        study.execute(path, clock=lambda: 0., inputs_loader=lambda root, check: data, identity_provider=lambda: {})
     assert path.read_bytes() == previous
 
 
@@ -114,7 +118,7 @@ def test_first_solve_failure_prevents_tighter_and_preserves_partial(tmp_path: Pa
         budget.event("solves", "attempt")
         report["profiles"].append({"name": name, "partial_raw": [123.]})
         raise ValueError("deliberate solve interruption")
-    result = study.execute(tmp_path/"failed.json", inputs_loader=lambda root, check: data,
+    result = study.execute(tmp_path/"failed.json", clock=lambda: 0., inputs_loader=lambda root, check: data,
         identity_provider=lambda: data["historical_identity"], provider=provider, references=reference, integrate=fail)
     assert result["status"] == "failed" and calls == ["normal"]
     assert result["profiles"][0]["partial_raw"] == [123.]
@@ -127,7 +131,7 @@ def test_native_gate_failure_does_not_initialize_or_solve(tmp_path: Path) -> Non
     data["native_samples"]["tighter"][0][0] += 1.
     def forbidden() -> Any:
         raise AssertionError("identity must not execute")
-    result = study.execute(tmp_path/"gate.json", inputs_loader=lambda root, check: data,
+    result = study.execute(tmp_path/"gate.json", clock=lambda: 0., inputs_loader=lambda root, check: data,
         identity_provider=forbidden, references=reference)
     assert result["status"] == "failed"
     assert result["identities"] == {} and result["profiles"] == []
@@ -261,7 +265,7 @@ def test_final_input_mutation_downgrades_complete_numeric_run(tmp_path: Path) ->
         if len(calls) == 2:
             data["input_sha256"]["changed"] = "late mutation"
         return deepcopy(data["historical_identity"])
-    report = study.execute(tmp_path/"mutated.json", inputs_loader=lambda root, check: deepcopy(data),
+    report = study.execute(tmp_path/"mutated.json", clock=lambda: 0., inputs_loader=lambda root, check: deepcopy(data),
                            identity_provider=identity, provider=provider, references=reference)
     assert report["status"] == "failed"
     assert "before/after input identity" in report["error"]["message"]
@@ -278,12 +282,12 @@ def test_measured_force_gate_failure_is_independently_audited_as_partial(tmp_pat
             raw[0] += 1e-7  # 0.1mm source floor: state parity passes; force gate fails.
         return raw
     source = tmp_path/"force-failed.json"
-    report = study.execute(source, inputs_loader=lambda root, check: deepcopy(data),
+    report = study.execute(source, clock=lambda: 0., inputs_loader=lambda root, check: deepcopy(data),
         identity_provider=lambda: deepcopy(data["historical_identity"]), provider=biased, references=reference)
     assert report["status"] == "failed" and report["error"]["stage"] == "selected-force-reference"
     assert len(report["observations"]) == 1
     auditor = study.load(ROOT, "0163-corrected-audit.py")
-    checked = auditor.audit(source, tmp_path/"partial-audit.json",
+    checked = auditor.audit(source, tmp_path/"partial-audit.json", clock=lambda: 0.,
                             inputs_loader=lambda root, check: deepcopy(data), references=reference)
     assert checked["audit_status"] == "partial", checked.get("error")
     assert checked["scientific_verified"] is False

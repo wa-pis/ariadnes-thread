@@ -1,0 +1,60 @@
+{
+  "base_revision": "4f5cbb3fb2cd2a162fb1ba62d39f8e7294af1e45",
+  "checks": {
+    "historical_0241_evidence_unchanged": true,
+    "independent_review": "passed",
+    "ruff": "passed",
+    "strict_openspec": "passed"
+  },
+  "ci_after_repair": {
+    "status": "pending"
+  },
+  "date": "2026-11-24",
+  "focused": {
+    "elapsed_s": 11.05,
+    "log_sha256": "293b879e12f4e3d16c182d0b092e85626634f0173c4ce1f59c16df53646690a3",
+    "passed": 151
+  },
+  "historical_0241_evidence": "unchanged; profiles and source hashes describe commit 4f5cbb3 only",
+  "local_lane_coverage": {
+    "all_cases": 7418,
+    "archive_skips": 42,
+    "case_inventory_sha256": "cbc17458901df6ff767fcb2dded3c97374145892c012f90f7cd391c9607e72ac",
+    "disjoint_lanes": true,
+    "live_revision": "4f5cbb3",
+    "live_selected_test_production_and_historical_scientific_sources_unchanged": true,
+    "passing_non_archive": 7376,
+    "portable_revision": "4f5cbb3 plus bound repairs"
+  },
+  "local_live_before_repair": {
+    "deselected": 7003,
+    "elapsed_s": 635.88,
+    "frozen_checkout_files": 1328,
+    "frozen_checkout_unchanged": true,
+    "junit_sha256": "7b73b4d79974ee7c43d4978e24aa7ad41265243b6c265cbfe2772598f69918ee",
+    "log_sha256": "29ead324eb5968fc8647f351f923cd630c6c67e1cb752289c4da14946007a345",
+    "passed": 412,
+    "revision": "4f5cbb3fb2cd2a162fb1ba62d39f8e7294af1e45",
+    "skipped": 0
+  },
+  "new_retained_p3_searches": 0,
+  "portable_after_repair": {
+    "deselected_live": 412,
+    "elapsed_s": 209.59,
+    "frozen_checkout_files": 1335,
+    "frozen_checkout_unchanged": true,
+    "junit_sha256": "963242628c7c2398aa63c8b9d6e648af56de97e9ed45b46b24b6f6172c38d235",
+    "log_sha256": "51d6b9d58e64d13e2af895367a126ae5fb524c7e2ae53c6f5eded97ca7bdcc28",
+    "passed": 6964,
+    "skipped_archive": 42,
+    "status": "passed"
+  },
+  "r560_attempts": 0,
+  "schema": "ariadna-p3-qualification-repair-v1",
+  "scope": "regression-qualification-only",
+  "source_sha256": {
+    "docs/adr/experiments/0241-runtime.py": "bf56ee4738fc4441f809ed7f7234d5a6a2c1fd8e14c7063c7639a89532b3bcaf",
+    "tests/test_bounded_witness_invocation.py": "89d62d3893a18a2debfeafed8c0f92a1010814ac51c5301880f98283b0fe84fe",
+    "tests/test_corrected_study.py": "5847ffd53672757c5aef6ba12d0836e96e9da0f18497aea071702a63dd39026b"
+  }
+}

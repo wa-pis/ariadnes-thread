@@ -1091,3 +1091,12 @@ ADR0239, with all original independent command-admission gates unchanged.
 - **AND** a labelled maximum-volume driver SHALL exercise both signed branches and all 129 direct phases on an explicitly artificial fixture, without claiming it is a Brent result, changing real mission inputs or weakening gates
 - **AND** runtime profiles SHALL authenticate the explicit interpreter/NumPy/SciPy/native artifact inventory before import and count all source/configuration/rereads, startup/finalization and evidence against unchanged caps; opaque OS shared-cache contents SHALL remain explicitly outside content-hash claims
 - **AND** prohibited live/CI execution SHALL not occur or be labelled passing; the required live lane SHALL remain unverified and full P3/retained readiness SHALL stay unavailable, even after the requested artificial and portable checks pass
+
+
+#### Scenario: Finish regression qualification after explicit SPICE authorization
+
+- **WHEN** the user separately authorizes existing live SPICE regression and CI, while prohibiting a new P3 search on saved real inputs
+- **THEN** qualification SHALL require both frozen required regression lanes, unchanged scientific/source identity checks, independent repair review, Ruff and strict OpenSpec; a failed CI run or skipped lane SHALL remain failed or unverified until repaired-current-source evidence passes
+- **AND** exact current-process loader metadata normalization and injected artificial test clocks MAY be repaired without widening permissions, changing historical scientific sources, budgets, tolerances, command/mass gates or immutable evidence
+- **AND** old no-SPICE qualification evidence SHALL remain historical; new source/profile identities and regression outcomes SHALL be retained separately, distinguishing archive/platform skips from passes
+- **AND** successful P3 qualification SHALL authorize no retained binding/search, real witness/refusal, adopted target, physical join, R5.60, M3 closure or automation continuation

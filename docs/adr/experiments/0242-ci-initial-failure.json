@@ -1,0 +1,178 @@
+{
+  "archive_skips": 42,
+  "attempt": 1,
+  "conclusion": "failure",
+  "failed_cases": [
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_actual_producer_independent_audit_and_full_volume[witness-bounded-verified-analytical-witness]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_actual_producer_independent_audit_and_full_volume[refusal-bounded-inconclusive/invalid]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_actual_producer_independent_audit_and_full_volume[refusal-artificial-full-volume-inconclusive/invalid]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_artificial_identity_failures_never_publish_a_witness[source-hash]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_artificial_identity_failures_never_publish_a_witness[archive-hash]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_artificial_identity_failures_never_publish_a_witness[scope]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_artificial_identity_failures_never_publish_a_witness[runtime-hash]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_artificial_identity_failures_never_publish_a_witness[solver-hash]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_artificial_identity_failures_never_publish_a_witness[native-file-bypass]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_exact_parent_worker_argument_forms"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_config_cap_output_exclusivity_and_external_deadline"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_structural_readback_rejects_metadata_tampering[extra-file]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_structural_readback_rejects_metadata_tampering[boolean-exit]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_structural_readback_rejects_metadata_tampering[schema]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_structural_readback_rejects_metadata_tampering[late]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_structural_readback_rejects_metadata_tampering[unknown-status]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_strict_finite_json[{\"x\":1e999}]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_strict_finite_json[{\"x\":NaN}]"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "kind": "error",
+      "message": "failed on setup with \"AssertionError: ValueError: bounded runtime: out-of-scope runtime file: /proc/4623/maps\nassert 2 == 0\"",
+      "name": "test_strict_finite_json[{\"x\":1,\"x\":2}]"
+    },
+    {
+      "class": "tests.test_corrected_study",
+      "kind": "failure",
+      "message": "AssertionError: {'message': 'process deadline/clock', 'stage': 'preflight', 'type': 'ValueError'}\nassert 'failed' == 'passed'\n  \n  - passed\n  + failed",
+      "name": "test_full_artificial_orbit_orchestration"
+    },
+    {
+      "class": "tests.test_corrected_study",
+      "kind": "failure",
+      "message": "KeyError: 'inputs'",
+      "name": "test_actual_saved_synthetic_run_passes_independent_arithmetic_replay"
+    },
+    {
+      "class": "tests.test_corrected_study",
+      "kind": "failure",
+      "message": "AssertionError: assert ('failed' == 'failed'\n  \n    failed and [] == ['normal']\n  \n  Right contains one more item: 'normal'\n  \n  Full diff:\n  + []\n  - [\n  -     'normal',\n  - ])",
+      "name": "test_first_solve_failure_prevents_tighter_and_preserves_partial"
+    },
+    {
+      "class": "tests.test_corrected_study",
+      "kind": "failure",
+      "message": "IndexError: list index out of range",
+      "name": "test_native_gate_failure_does_not_initialize_or_solve"
+    },
+    {
+      "class": "tests.test_corrected_study",
+      "kind": "failure",
+      "message": "AssertionError: assert 'before/after input identity' in 'process deadline/clock'",
+      "name": "test_final_input_mutation_downgrades_complete_numeric_run"
+    },
+    {
+      "class": "tests.test_corrected_study",
+      "kind": "failure",
+      "message": "AssertionError: assert ('failed' == 'failed'\n  \n    failed and 'preflight' == 'selected-force-reference'\n  \n  - selected-force-reference\n  + preflight)",
+      "name": "test_measured_force_gate_failure_is_independently_audited_as_partial"
+    }
+  ],
+  "live_status": "not-run-after-portable-failure",
+  "passed": 6935,
+  "platform_skips": 1,
+  "raw_failed_log_sha256": "b2cdb36857fb1601d6969f55bd3a2c849121fee71e7a991516872d2cb5f3a770",
+  "raw_junit_sha256": "132f964f0786feb25d478e532d7a65a8989ddb243429f9b8ebb67486c14ab3aa",
+  "revision": "4f5cbb3fb2cd2a162fb1ba62d39f8e7294af1e45",
+  "run_id": 45252415905,
+  "schema": "ariadna-p3-ci-failure-v1",
+  "suite": [
+    {
+      "errors": "19",
+      "failures": "6",
+      "hostname": "runnervmeozm8",
+      "name": "pytest",
+      "skipped": "43",
+      "tests": "7003",
+      "time": "439.741",
+      "timestamp": "2026-11-23T19:48:19.155258+00:00"
+    }
+  ],
+  "url": "https://github.com/wa-pis/ariadnes-thread/actions/runs/45252415905"
+}
