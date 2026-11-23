@@ -14,10 +14,11 @@ Brent per Mars sign as a witness proposer, with unchanged independent point gate
 [ADR0241](docs/adr/0241-qualify-artificial-bounded-witness-search.md) implements
 P3 artificial-only: 124 focused tests/Ruff pass, full 129-phase stress and audit.
 Full portable: 6961 pass, 42 archival skips, 412 live deselections; checkout frozen.
-[ADR0242](docs/adr/0242-finish-p3-regression-qualification.md): 412 live pass on4f5cbb3;
-first repair:6964 portable pass. Two failed CI outcomes are preserved.
-Latest executable-map/early-error repair:152 focused/6965 portable pass; CI pending.
-Full P3 open, retained execution unavailable.
+[ADR0242](docs/adr/0242-finish-p3-regression-qualification.md) closes P3 preparation:
+412 local live pass on4f5cbb3; latest repair152 focused/6965 local portable pass.
+CI45260154283 on1812360:7340 pass,42 archival+37 platform skips,0fail/error;
+all128 P3 cases pass; all7419 case IDs match local combined inventories.
+Both failed CI outcomes preserved; retained execution remains unavailable.
 A different Mars phase changes the target and cannot enter the original R5.60.
 Automation `ariadna-m3` stays PAUSED; no further saved execution is authorized.
 
@@ -31,12 +32,12 @@ Both authorizations consumed; no SPICE, integration or R5.60, and no retry.
 No incoming/final-width attribution, general equivalence or physical conclusion.
 
 ## Verified test and CI maintenance
-Commit e2b82fe: output lifecycle/clocks repaired, portable and live lanes required.
-Local: 6837 portable + 412 live pass; exact JUnit union covers 7249 non-archive cases.
-42 exact historical runtime/checkout or bit-replay cases are skipped, not verified.
-Ubuntu CI 45016544787: 7212 pass, 42 archival + 37 platform skips, zero failures.
-Ruff/strict OpenSpec pass; frozen checkout verified through both local full lanes.
-No scientific source/dependency/evidence changes. No local runtime rerun for ADR0239/0240 docs.
+Latest qualified runtime/test source:1812360; full local checkout frozen per lane.
+Ruff/strict OpenSpec and independent review pass; final recording is docs/evidence only.
+CI platform skips are explicit and pass locally;42 exact historical environment/replay
+checks remain skipped and unverified. No scientific source/dependency/workflow changes.
+New P3 retained searches and mission experiments:0; ordinary native regressions ran.
+No full suite repeated for the final documentation-only recording.
 
 ## Preserved history and unresolved science
 [ADR0221](docs/adr/0221-record-retained-inter-node-result.md): 64 unresolved leaves;

@@ -1,0 +1,695 @@
+{
+  "automation": "PAUSED",
+  "ci": {
+    "attempt": 1,
+    "conclusion": "success",
+    "createdAt": "2026-11-23T20:30:55Z",
+    "databaseId": 45260154283,
+    "event": "push",
+    "headSha": "1812360ec117b1a1f23fba3f137020b8b8afa3a7",
+    "jobs": [
+      {
+        "completedAt": "2026-11-23T20:50:08Z",
+        "conclusion": "success",
+        "databaseId": 137992438677,
+        "name": "Python quality and scientific tests",
+        "startedAt": "2026-11-23T20:30:59Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-11-23T20:31:02Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-11-23T20:30:59Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:31:06Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 2,
+            "startedAt": "2026-11-23T20:31:02Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:32:12Z",
+            "conclusion": "success",
+            "name": "Run conda-incubator/setup-miniconda@fc2d68f6413eb2d87b895e92f8584b5b94a10167",
+            "number": 3,
+            "startedAt": "2026-11-23T20:31:06Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:32:14Z",
+            "conclusion": "success",
+            "name": "Record resolved environment",
+            "number": 4,
+            "startedAt": "2026-11-23T20:32:12Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:32:14Z",
+            "conclusion": "success",
+            "name": "Install editable package",
+            "number": 5,
+            "startedAt": "2026-11-23T20:32:14Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:32:15Z",
+            "conclusion": "success",
+            "name": "Lint",
+            "number": 6,
+            "startedAt": "2026-11-23T20:32:14Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:32:16Z",
+            "conclusion": "success",
+            "name": "Verify scientific runtime and installed CLI",
+            "number": 7,
+            "startedAt": "2026-11-23T20:32:15Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:37:27Z",
+            "conclusion": "success",
+            "name": "Unit and portable saved-data tests",
+            "number": 8,
+            "startedAt": "2026-11-23T20:32:16Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:50:04Z",
+            "conclusion": "success",
+            "name": "Scientific regression tests",
+            "number": 9,
+            "startedAt": "2026-11-23T20:37:27Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:50:05Z",
+            "conclusion": "success",
+            "name": "Upload test results",
+            "number": 10,
+            "startedAt": "2026-11-23T20:50:04Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:50:07Z",
+            "conclusion": "success",
+            "name": "Post Run conda-incubator/setup-miniconda@fc2d68f6413eb2d87b895e92f8584b5b94a10167",
+            "number": 19,
+            "startedAt": "2026-11-23T20:50:05Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:50:07Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 20,
+            "startedAt": "2026-11-23T20:50:07Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-23T20:50:07Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 21,
+            "startedAt": "2026-11-23T20:50:07Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/wa-pis/ariadnes-thread/actions/runs/45260154283/job/137992438677"
+      }
+    ],
+    "startedAt": "2026-11-23T20:30:55Z",
+    "status": "completed",
+    "updatedAt": "2026-11-23T20:50:09Z",
+    "url": "https://github.com/wa-pis/ariadnes-thread/actions/runs/45260154283"
+  },
+  "ci_conda_explicit": {
+    "file": "0242-ci-conda-explicit.txt",
+    "sha256": "43f9326bb3544d71704f1f23cce14c46b2779880ee0c686ff709a5733642564a"
+  },
+  "ci_skips": {
+    "live": [
+      {
+        "case": "tests.test_trajectory_ephemeris::test_native_queries_preserve_sampled_fpcr",
+        "reason": "Only the Darwin/arm64 fenv ABI has been inspected"
+      },
+      {
+        "case": "tests.test_trajectory_ephemeris::test_native_arithmetic_binary_matches_static_observation",
+        "reason": "No static native arithmetic observation for this platform"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[-1.0-0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[-1.0-1]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[-1.0-2]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[-1.0-19]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[0.3-0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[0.3-1]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[0.3-2]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[0.3-19]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[1.0-0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[1.0-1]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[1.0-2]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[1.0-19]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[-1.0-1.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[-1.0-32.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[0.3-1.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[0.3-32.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[1.0-1.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[1.0-32.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_spk_position_replay_distinguishes_fused_rounding",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_loaded_spk_chain_coverage_contains_candidate_interval[native-readback]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Sun-10-expected_chain0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Mercury-1-expected_chain1]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Venus-2-expected_chain2]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Earth-399-expected_chain3]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Moon-301-expected_chain4]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Mars-499-expected_chain5]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Jupiter-599-expected_chain6]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Saturn-699-expected_chain7]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_saturn_spk_segment_junction[300.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_saturn_spk_segment_junction[150.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_saturn_spk_segment_junction[75.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_saturn_junction_query_order_is_repeatable",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_saturn_source_file_segment_inventory",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_unknown_spk_body_has_no_descriptor",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      }
+    ],
+    "portable": [
+      {
+        "case": "tests.test_bezier_local_targeting::test_retained_pinned_binding_selects_accepted_158_without_native_work",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[endpoint]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[residual]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[mass]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[seed]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[accepted]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[command]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_corrected_inputs::test_metadata_loader_matches_frozen_contract",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_corrected_inputs::test_clean_process_imports_no_scientific_package",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_corrected_integrator::test_pinned_controller_and_coefficients_without_native_setup[exact-runtime]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_earth_coast_study::test_saved_a_baselines_validate_without_physics",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_fixed_gravity_inputs::test_current_pinned_interpreter_identity",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_moving_inputs::test_hash_bound_input_loader_exposes_saved_zero_reference",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_moving_inputs::test_real_metadata_preflight_stays_stdlib_only",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[0]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[1]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[2]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[3]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[4]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[5]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[6]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[7]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[8]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[9]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[10]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[11]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[12]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[13]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[14]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[15]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[16]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[17]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[18]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[19]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[20]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[21]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[22]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[23]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[24]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[25]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[26]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[27]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_spk_record_selector_matches_inspected_binary",
+        "reason": "No static SPK reader observation for this platform"
+      }
+    ]
+  },
+  "ci_total": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 7340,
+    "skipped_archive": 42,
+    "skipped_platform": 37,
+    "unique_cases": 7419
+  },
+  "final_recording_commit_scope": "documentation/evidence only; reuse successful current-source CI without another unchanged full suite",
+  "full_ci_log_sha256": "859f5656135f971756104463d6bda98354fd5d7b0b619c196f9fccb238ae37a4",
+  "historical_failed_ci_preserved": [
+    45252415905,
+    45256674267
+  ],
+  "inventory_check": {
+    "ci_lane_overlap": [],
+    "extra": [],
+    "local_and_ci_case_sets_equal": true,
+    "local_lane_overlap": [],
+    "missing": [],
+    "sorted_union_sha256": "3f1155d2b32034c328c129cc458f2f471a8d6ff7376d29ad0cdc09d9645e6f2d"
+  },
+  "lanes": {
+    "live": {
+      "cases": 412,
+      "junit_elapsed_s": 755.344,
+      "junit_sha256": "1ee354dc838fe07a802c04a4da9b92501517c1e4ecdacbd779b7463f9c53fc08",
+      "outcomes": {
+        "passed": 376,
+        "skipped": 36
+      },
+      "skip_reasons": {
+        "No static native arithmetic observation for this platform": 1,
+        "Only the Darwin/arm64 fenv ABI has been inspected": 1,
+        "Only the installed Darwin/arm64 CSPICE ABI was inspected": 34
+      },
+      "sorted_case_ids_sha256": "beb27332ad49339dfbb95796c6f59520cc535c1b5f7f9350dc1cc2556ffa26ca"
+    },
+    "local_live": {
+      "cases": 412,
+      "junit_elapsed_s": 635.869,
+      "junit_sha256": "7b73b4d79974ee7c43d4978e24aa7ad41265243b6c265cbfe2772598f69918ee",
+      "outcomes": {
+        "passed": 412
+      },
+      "skip_reasons": {},
+      "sorted_case_ids_sha256": "beb27332ad49339dfbb95796c6f59520cc535c1b5f7f9350dc1cc2556ffa26ca"
+    },
+    "local_portable": {
+      "cases": 7007,
+      "junit_elapsed_s": 208.526,
+      "junit_sha256": "1e30e689479ad40a8861d3414722af79437ecd7cff73a23d86dea07468aafc90",
+      "outcomes": {
+        "passed": 6965,
+        "skipped": 42
+      },
+      "skip_reasons": {
+        "exact historical-environment check; enable with --run-archive": 42
+      },
+      "sorted_case_ids_sha256": "2ae56c0a3f378023482866d828e8d95a7dbcd3fcb0fa900e2864653fdbbf07c4"
+    },
+    "portable": {
+      "cases": 7007,
+      "junit_elapsed_s": 309.958,
+      "junit_sha256": "559a11148bcbea5edfd69ff6369a7d947dabf5220c728e1decc1865eb71a117d",
+      "outcomes": {
+        "passed": 6964,
+        "skipped": 43
+      },
+      "skip_reasons": {
+        "No static SPK reader observation for this platform": 1,
+        "exact historical-environment check; enable with --run-archive": 42
+      },
+      "sorted_case_ids_sha256": "2ae56c0a3f378023482866d828e8d95a7dbcd3fcb0fa900e2864653fdbbf07c4"
+    }
+  },
+  "local_live_reuse": "unchanged selected live paths; not relabeled as repaired-revision local execution",
+  "local_live_revision": "4f5cbb3fb2cd2a162fb1ba62d39f8e7294af1e45",
+  "new_mission_experiments": 0,
+  "new_retained_p3_searches": 0,
+  "p3": {
+    "case_ids": [
+      "tests.test_bounded_witness_invocation::test_actual_producer_independent_audit_and_full_volume[refusal-artificial-full-volume-inconclusive/invalid]",
+      "tests.test_bounded_witness_invocation::test_actual_producer_independent_audit_and_full_volume[refusal-bounded-inconclusive/invalid]",
+      "tests.test_bounded_witness_invocation::test_actual_producer_independent_audit_and_full_volume[witness-bounded-verified-analytical-witness]",
+      "tests.test_bounded_witness_invocation::test_artificial_identity_failures_never_publish_a_witness[archive-hash]",
+      "tests.test_bounded_witness_invocation::test_artificial_identity_failures_never_publish_a_witness[native-file-bypass]",
+      "tests.test_bounded_witness_invocation::test_artificial_identity_failures_never_publish_a_witness[runtime-hash]",
+      "tests.test_bounded_witness_invocation::test_artificial_identity_failures_never_publish_a_witness[scope]",
+      "tests.test_bounded_witness_invocation::test_artificial_identity_failures_never_publish_a_witness[solver-hash]",
+      "tests.test_bounded_witness_invocation::test_artificial_identity_failures_never_publish_a_witness[source-hash]",
+      "tests.test_bounded_witness_invocation::test_cli_early_worker_error_has_bounded_diagnostics",
+      "tests.test_bounded_witness_invocation::test_cli_rejects_retained_mode_without_dispatch",
+      "tests.test_bounded_witness_invocation::test_config_cap_output_exclusivity_and_external_deadline",
+      "tests.test_bounded_witness_invocation::test_exact_parent_worker_argument_forms",
+      "tests.test_bounded_witness_invocation::test_global_source_cap_counts_repeated_reads",
+      "tests.test_bounded_witness_invocation::test_guard_rejects_mission_access_and_unrelated_mutation[ctypes.dlopen-args2]",
+      "tests.test_bounded_witness_invocation::test_guard_rejects_mission_access_and_unrelated_mutation[import-args0]",
+      "tests.test_bounded_witness_invocation::test_guard_rejects_mission_access_and_unrelated_mutation[import-args1]",
+      "tests.test_bounded_witness_invocation::test_guard_rejects_mission_access_and_unrelated_mutation[os.mkdir-args5]",
+      "tests.test_bounded_witness_invocation::test_guard_rejects_mission_access_and_unrelated_mutation[os.remove-args3]",
+      "tests.test_bounded_witness_invocation::test_guard_rejects_mission_access_and_unrelated_mutation[os.rename-args4]",
+      "tests.test_bounded_witness_invocation::test_linux_loader_metadata_uses_canonical_current_process_path[None]",
+      "tests.test_bounded_witness_invocation::test_linux_loader_metadata_uses_canonical_current_process_path[metadata-cap]",
+      "tests.test_bounded_witness_invocation::test_linux_loader_metadata_uses_canonical_current_process_path[source-cap]",
+      "tests.test_bounded_witness_invocation::test_strict_finite_json[{\"x\":1,\"x\":2}]",
+      "tests.test_bounded_witness_invocation::test_strict_finite_json[{\"x\":1e999}]",
+      "tests.test_bounded_witness_invocation::test_strict_finite_json[{\"x\":NaN}]",
+      "tests.test_bounded_witness_invocation::test_structural_readback_rejects_metadata_tampering[boolean-exit]",
+      "tests.test_bounded_witness_invocation::test_structural_readback_rejects_metadata_tampering[extra-file]",
+      "tests.test_bounded_witness_invocation::test_structural_readback_rejects_metadata_tampering[late]",
+      "tests.test_bounded_witness_invocation::test_structural_readback_rejects_metadata_tampering[schema]",
+      "tests.test_bounded_witness_invocation::test_structural_readback_rejects_metadata_tampering[unknown-status]",
+      "tests.test_bounded_witness_points::test_audit_never_replays_primary_or_optimizer",
+      "tests.test_bounded_witness_points::test_endpoint_witness_only_in_isolated_point_verifier",
+      "tests.test_bounded_witness_points::test_exact_binary64_phase_and_independent_readback[150.0]",
+      "tests.test_bounded_witness_points::test_exact_binary64_phase_and_independent_readback[151.00000000000003]",
+      "tests.test_bounded_witness_points::test_exact_binary64_phase_and_independent_readback[151.23456789012346]",
+      "tests.test_bounded_witness_points::test_exact_binary64_phase_and_independent_readback[152.0]",
+      "tests.test_bounded_witness_points::test_frozen_anchor_refusals_and_costs_are_preserved",
+      "tests.test_bounded_witness_points::test_guard_and_degenerate_keep_two_explicit_slots",
+      "tests.test_bounded_witness_points::test_historical_and_event_refusals_retain_objective",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[angle_word]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[branch-sign]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[branch-slot]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[command]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[eligible]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[independent_relative_si]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[ledger]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[phase_ratio]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[phase_word]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[relative_si]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[speed]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[ssb_si]",
+      "tests.test_bounded_witness_points::test_independent_audit_rejects_record_tampering[tnw]",
+      "tests.test_bounded_witness_points::test_newly_rounded_oracle_commands_cannot_replace_literals",
+      "tests.test_bounded_witness_points::test_off_grid_witness_keeps_literal_commands",
+      "tests.test_bounded_witness_points::test_plain_float_subclass_is_rejected",
+      "tests.test_bounded_witness_points::test_reject_non_binary64_and_out_of_domain[149.99999999999997]",
+      "tests.test_bounded_witness_points::test_reject_non_binary64_and_out_of_domain[150]",
+      "tests.test_bounded_witness_points::test_reject_non_binary64_and_out_of_domain[152.00000000000003]",
+      "tests.test_bounded_witness_points::test_reject_non_binary64_and_out_of_domain[True]",
+      "tests.test_bounded_witness_points::test_reject_non_binary64_and_out_of_domain[inf]",
+      "tests.test_bounded_witness_points::test_reject_non_binary64_and_out_of_domain[nan]",
+      "tests.test_bounded_witness_points::test_reject_non_binary64_and_out_of_domain[phase2]",
+      "tests.test_bounded_witness_points::test_reject_retained_scope_and_fixed_lunar_drift",
+      "tests.test_bounded_witness_points::test_unresolved_second_root_prevents_any_admission",
+      "tests.test_bounded_witness_search::test_active_guard_aborts_only_its_search[degenerate]",
+      "tests.test_bounded_witness_search::test_active_guard_aborts_only_its_search[guard]",
+      "tests.test_bounded_witness_search::test_actual_pinned_scipy_finds_unimodal_synthetic_witness",
+      "tests.test_bounded_witness_search::test_actual_pinned_scipy_guard_and_admitted_other_root[False]",
+      "tests.test_bounded_witness_search::test_actual_pinned_scipy_guard_and_admitted_other_root[True]",
+      "tests.test_bounded_witness_search::test_actual_pinned_scipy_missed_multimodal_witness_stays_inconclusive",
+      "tests.test_bounded_witness_search::test_all_three_frozen_anchors_precede_the_first_scalar_call",
+      "tests.test_bounded_witness_search::test_anchor_refusal_drift_is_invalid_without_search[eligible]",
+      "tests.test_bounded_witness_search::test_anchor_refusal_drift_is_invalid_without_search[mismatch]",
+      "tests.test_bounded_witness_search::test_arbitrary_ratio_keeps_exact_words_without_grid_snap",
+      "tests.test_bounded_witness_search::test_bad_inventory_is_terminal_even_with_other_sign_eligible[independent-mass]",
+      "tests.test_bounded_witness_search::test_bad_inventory_is_terminal_even_with_other_sign_eligible[missing-pair]",
+      "tests.test_bounded_witness_search::test_bad_inventory_is_terminal_even_with_other_sign_eligible[missing-root]",
+      "tests.test_bounded_witness_search::test_bad_inventory_is_terminal_even_with_other_sign_eligible[nonfinite]",
+      "tests.test_bounded_witness_search::test_bad_inventory_is_terminal_even_with_other_sign_eligible[phase-drift]",
+      "tests.test_bounded_witness_search::test_bad_inventory_is_terminal_even_with_other_sign_eligible[unresolved]",
+      "tests.test_bounded_witness_search::test_callback_cap_stops_before_extra_scientific_work",
+      "tests.test_bounded_witness_search::test_deadline_and_point_errors_keep_charged_partial_row",
+      "tests.test_bounded_witness_search::test_full_129_slots_charge_duplicates_and_final_repeats",
+      "tests.test_bounded_witness_search::test_invalid_or_value_losing_callback_phase_is_precharged[149.99]",
+      "tests.test_bounded_witness_search::test_invalid_or_value_losing_callback_phase_is_precharged[151.2]",
+      "tests.test_bounded_witness_search::test_invalid_or_value_losing_callback_phase_is_precharged[152.01]",
+      "tests.test_bounded_witness_search::test_invalid_or_value_losing_callback_phase_is_precharged[True]",
+      "tests.test_bounded_witness_search::test_invalid_or_value_losing_callback_phase_is_precharged[inf]",
+      "tests.test_bounded_witness_search::test_invalid_or_value_losing_callback_phase_is_precharged[nan]",
+      "tests.test_bounded_witness_search::test_invalid_or_value_losing_callback_phase_is_precharged[phase6]",
+      "tests.test_bounded_witness_search::test_optimizer_cannot_swallow_guard_and_continue",
+      "tests.test_bounded_witness_search::test_ordinary_pair_refusals_keep_finite_objective[commanded-dry-floor]",
+      "tests.test_bounded_witness_search::test_ordinary_pair_refusals_keep_finite_objective[effective-dry-floor]",
+      "tests.test_bounded_witness_search::test_ordinary_pair_refusals_keep_finite_objective[event-order]",
+      "tests.test_bounded_witness_search::test_ordinary_pair_refusals_keep_finite_objective[historically-rejected]",
+      "tests.test_bounded_witness_search::test_other_sign_witness_precedes_active_guard_and_optimizer_success",
+      "tests.test_bounded_witness_search::test_result_must_bind_recorded_callback_and_cost",
+      "tests.test_bounded_witness_search::test_transcript_does_not_alias_adapter_memory",
+      "tests.test_bounded_witness_trace::test_callback_63_is_rejected_even_below_the_total_phase_ceiling",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[callback-after-guard]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[callback-count]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[counter-bool]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[duplicate-positive-final]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[false-refusal]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[false-witness]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[missing-pair]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[missing-root]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[nan]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[negative-first]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[new-result-x]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[nfev]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[nit]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[objective-after-final]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[objective-cost]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[ratio]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[result-metadata]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[settings]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[status]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[success]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[unavailable-cost]",
+      "tests.test_bounded_witness_trace::test_complete_trace_tampering_is_rejected[unresolved]",
+      "tests.test_bounded_witness_trace::test_full_129_duplicate_phases_are_counted_without_optimizer",
+      "tests.test_bounded_witness_trace::test_guard_aborts_positive_and_negative_search_still_completes",
+      "tests.test_bounded_witness_trace::test_other_root_witness_stops_before_active_guard_or_optimizer_result",
+      "tests.test_bounded_witness_trace::test_partial_or_blocked_attempt_never_receives_complete_verification[False]",
+      "tests.test_bounded_witness_trace::test_partial_or_blocked_attempt_never_receives_complete_verification[True]",
+      "tests.test_bounded_witness_trace::test_trace_auditor_has_only_stdlib_imports_and_no_proposer_dispatch"
+    ],
+    "passed": 128,
+    "skipped": 0
+  },
+  "protected_paths_unchanged_since_base": [
+    "src",
+    "environment.yml",
+    ".github/workflows/ci.yml",
+    "Makefile",
+    "moon_to_mars.py"
+  ],
+  "qualification": "complete",
+  "qualified_source_revision": "1812360ec117b1a1f23fba3f137020b8b8afa3a7",
+  "repair_binding_file": "docs/adr/experiments/0242-linux-profile-repair.json",
+  "repair_binding_sha256": "2fa68a9a9311686a736028c707d71a04aba1c7bfbb8256501d452bfd34f1aae7",
+  "retained_log": {
+    "file": "0242-ci-qualified-tests.log",
+    "sha256": "6a333b4119978d46bd7d162bb17c79eed9122ecaf5267563aaef1f000233f715"
+  },
+  "schema": "ariadna-p3-completed-regression-qualification-v1",
+  "scientific_claim": "no real witness/refusal, accepted executable pair, physical join, R5.60, M3 closure or safety result",
+  "scope": "artificial P3 preparation and existing regression qualification only",
+  "source_sha256": {
+    "docs/adr/experiments/0241-bounded-invocation.py": "ed7956d5ec65d5693309773a2361295fe097ff5357cca5b27cb0a74c4f64c524",
+    "docs/adr/experiments/0241-runtime.py": "3863f812f210d162c9834e73b6f15672d9a2ff4d4c2d3fc5df0eb83e50f86ff1",
+    "tests/test_bounded_witness_invocation.py": "9d1f4f744b082ab53e88913de8d8846ea2a8ed14636755aac761e1fb5902e879"
+  }
+}

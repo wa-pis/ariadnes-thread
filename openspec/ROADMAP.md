@@ -9,17 +9,16 @@ an inconclusive result, not a continuous refusal.
 [ADR0241](../docs/adr/0241-qualify-artificial-bounded-witness-search.md) implements
 P3 artificial-only, including a full 129-phase workload. Its live/CI verification
 was deferred under the earlier no-SPICE scope. Separately authorized
-[ADR0242](../docs/adr/0242-finish-p3-regression-qualification.md) records 412 local
-live passes, the first CI failure and minimal Linux metadata/test-clock repairs:
-first repair:151 focused/6964 portable passes. Second CI leaves three early artificial
-producer failures; executable-map/diagnostic repair passes152 focused/6965 portable.
-Current-source CI remains pending;
-P3 stays open and retained execution unavailable. No automatic diagnostic successor.
+[ADR0242](../docs/adr/0242-finish-p3-regression-qualification.md) completes P3:
+412 local live passes on 4f5cbb3, latest repairs pass 152 focused/6965 portable.
+CI45260154283 on 1812360 passes both lanes: 7340 pass, 42 archival and 37 platform
+skips, zero failures/errors; all 128 P3 cases pass. Two failed CI runs remain
+preserved. Retained execution remains unavailable; no automatic diagnostic successor.
 A changed Mars phase is not the original R5.60 target. Physical admission and
 strict M3 remain open; automation `ariadna-m3` stays PAUSED.
 
-Test/CI maintenance is complete on e2b82fe, with successful Ubuntu CI. The latest
-scientific result remains [ADR0238](../docs/adr/0238-record-versioned-saved-norms.md).
+Test/CI maintenance and P3 regression qualification are complete; scientific
+admission is separate. The latest scientific result remains [ADR0238](../docs/adr/0238-record-versioned-saved-norms.md).
 See [CURRENT_STATE](../CURRENT_STATE.md) for verified checks and scope limits.
 Historical instructions below do not authorize consumed studies to be repeated.
 

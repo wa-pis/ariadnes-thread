@@ -2,8 +2,8 @@
 
 Date: 2026-11-24 (Europe/Samara; initial runs began on 2026-11-23)
 Decision status: accepted
-Implementation: minimal runtime/test repairs complete; P3 qualification remains open pending repaired CI
-Verification: 412 live tests passed before repair; first repair passes 151 focused/6964 portable; latest repair passes 152 focused/6965 portable; current-source CI pending
+Implementation: minimal runtime/test repairs and P3 preparation qualification complete; no retained entrypoint
+Verification: 412 local live passes on 4f5cbb3; latest repair passes 152 focused/6965 portable; CI on 1812360 passes 7340 cases, with 42 archival and 37 platform skips
 Scope / milestone: P3 regression qualification within the active M3 change
 Base revision: `4f5cbb3fb2cd2a162fb1ba62d39f8e7294af1e45`; repaired sources bound in [preparation evidence](experiments/0242-preparation.json)
 Related OpenSpec: [requirements](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md#requirement-use-bounded-scalar-search-only-to-propose-an-analytical-witness), [design](../../openspec/changes/refine-physical-trajectory/design.md), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md), [roadmap](../../openspec/ROADMAP.md)
@@ -69,7 +69,7 @@ pre-repair live inventory are disjoint and cover 7418 cases (7376 passes and
 42 archival skips). Selected live tests, production and historical scientific
 sources are byte-identical across this repair; that live result is reused only
 for those unchanged paths. Independent review, Ruff and strict OpenSpec pass.
-Repaired-current-source CI must still pass both lanes before checking P3 complete.
+At that stage, repaired-current-source CI was still required before checking P3 complete.
 
 ## Follow-up — executable native mappings only
 
@@ -104,11 +104,40 @@ without copying or changing historical records; their old top-level source maps
 remain historical. The [latest full portable lane](experiments/0242-linux-portable-tests.log)
 passes 6965 tests in 208.60 s (42 archival skips, 412 live deselections), on a
 frozen 1339-file checkout. Ruff, independent review and strict OpenSpec pass.
-Current-source CI remains pending; P3 is not checked complete yet.
+At that stage, current-source CI was pending and P3 remained unchecked.
+
+## Completed current-source CI qualification
+
+The [third CI](https://github.com/wa-pis/ariadnes-thread/actions/runs/45260154283)
+on clean `1812360ec117b1a1f23fba3f137020b8b8afa3a7` succeeds on its first
+attempt. All job steps pass, including lint, actual standard-kernel loading,
+installed CLI smoke, portable and live scientific regression. The
+[completion evidence](experiments/0242-ci-verification.json),
+[selected job log](experiments/0242-ci-qualified-tests.log) and
+[resolved CI environment](experiments/0242-ci-conda-explicit.txt) preserve the
+run/source identity, raw log/JUnit hashes, exact skip and P3-case inventories.
+Earlier failure and pending-preparation records remain unchanged history.
+
+Ubuntu portable: 6964 pass, 42 archival and 1 platform skip (309.958 s JUnit).
+Ubuntu live: 376 pass and 36 platform skips (755.344 s JUnit).
+Total: 7340 pass, 79 skip, zero failures/errors. All 128 P3 cases pass, without
+P3 skips. Independent review confirms the 7419 unique CI cases exactly equal the
+union of the latest local portable and pre-repair local live inventories, with
+no missing, extra or overlapping cases. Local live remains 412 passes on
+`4f5cbb3`; it is not relabelled a current-source local run. The 37 Ubuntu platform
+skips pass locally; 42 exact historical-environment checks remain unverified.
+
+No changes to production, environment, workflow, Makefile or the educational
+model occurred between `4f5cbb3` and the successful CI source. The final recording
+commit changes documentation/evidence only: reuse this successful CI and the
+completed local lanes rather than rerunning an unchanged full suite. Check
+links, artifact syntax/digests, protected paths, diff and strict OpenSpec again.
+P3 is complete as qualified artificial preparation only. No new retained P3
+search or mission experiment was run.
 
 ## Consequences and revisit conditions
 
-This closes preparation only after its required regressions succeed. It does not
+This closes preparation after its required regressions succeed. It does not
 produce a real analytical witness, continuous refusal, executable pair, adopted
 Mars target, physical join, M3 completion or safety claim. The command still has
 no retained entrypoint. Any saved binding/execution needs a separate instruction

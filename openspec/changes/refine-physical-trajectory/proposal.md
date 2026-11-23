@@ -28,14 +28,18 @@ The design preserves exact binary64 phases, both mass ledgers and the existing
 inputs only, including independent literal-command/trace audit and full-volume
 limits. Full portable regression passes 6961 tests (42 archival skips, 412 live
 deselections); at ADR0241 live/CI was deliberately not run under
-the then-applicable no-SPICE constraint. Full qualification and saved execution remain
-unavailable; an artificial witness is not an executable pair, adopted Mars target,
-physical join or M3 completion. The retained priorities below do not authorize another run.
+the then-applicable no-SPICE constraint. ADR0242 completes the deferred regression
+qualification; saved execution remains unavailable. An artificial witness is not
+an executable pair, adopted Mars target, physical join or M3 completion.
+The retained priorities below do not authorize another run.
 
-ADR0242 follows the separately authorized live/CI qualification: 412 local live
-tests pass on 4f5cbb3, initial Ubuntu CI exposes proc-path/artificial-clock failures,
-and minimal repairs pass 151 focused cases. Repaired portable passes 6964 cases; current-source CI remains pending;
-no new saved P3 search or mission experiment is authorized.
+ADR0242 completes the separately authorized live/CI qualification: 412 local live
+tests pass on 4f5cbb3; minimal runtime/test repairs pass 152 focused and 6965 local
+portable cases. Both Ubuntu CI lanes pass on 1812360: 7340 passed, 42 archival and
+37 platform skips, zero failures/errors, all 128 P3 cases passed. The 7419 CI cases
+exactly match the local combined inventories; prior CI failures remain preserved.
+P3 preparation is qualified; no saved P3 search or mission experiment was run or
+newly authorized. Retained execution, physical admission and M3 closure remain unavailable.
 
 ### Current priority — R1 mission-first demonstration
 

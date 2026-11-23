@@ -1,0 +1,29 @@
+CI45260154283; source 1812360ec117b1a1f23fba3f137020b8b8afa3a7; selected lines from the authenticated full job log.
+Lint	2026-11-23T20:32:15.4703823Z All checks passed!
+Verify scientific runtime and installed CLI	2026-11-23T20:32:15.4751269Z ##[group]Run python -c 'from tudatpy.interface import spice; import spiceypy; spice.load_standard_kernels()'
+Verify scientific runtime and installed CLI	2026-11-23T20:32:15.4752098Z ^[[36;1mpython -c 'from tudatpy.interface import spice; import spiceypy; spice.load_standard_kernels()'^[[0m
+Verify scientific runtime and installed CLI	2026-11-23T20:32:16.3217816Z usage: space-nav [-h] {validate,ephemeris,plan} ...
+Unit and portable saved-data tests	2026-11-23T20:37:27.4726569Z SKIPPED [1] tests/test_bezier_local_targeting.py:602: exact historical-environment check; enable with --run-archive
+Unit and portable saved-data tests	2026-11-23T20:37:27.4727113Z SKIPPED [6] tests/test_bezier_local_targeting.py:621: exact historical-environment check; enable with --run-archive
+Unit and portable saved-data tests	2026-11-23T20:37:27.4727660Z SKIPPED [1] tests/test_corrected_inputs.py:42: exact historical-environment check; enable with --run-archive
+Unit and portable saved-data tests	2026-11-23T20:37:27.4728167Z SKIPPED [1] tests/test_corrected_inputs.py:221: exact historical-environment check; enable with --run-archive
+Unit and portable saved-data tests	2026-11-23T20:37:27.4728704Z SKIPPED [1] tests/test_corrected_integrator.py:197: exact historical-environment check; enable with --run-archive
+Unit and portable saved-data tests	2026-11-23T20:37:27.4729225Z SKIPPED [1] tests/test_earth_coast_study.py:171: exact historical-environment check; enable with --run-archive
+Unit and portable saved-data tests	2026-11-23T20:37:27.4729729Z SKIPPED [1] tests/test_fixed_gravity_inputs.py:300: exact historical-environment check; enable with --run-archive
+Unit and portable saved-data tests	2026-11-23T20:37:27.4730582Z SKIPPED [1] tests/test_moving_inputs.py:52: exact historical-environment check; enable with --run-archive
+Unit and portable saved-data tests	2026-11-23T20:37:27.4731065Z SKIPPED [1] tests/test_moving_inputs.py:222: exact historical-environment check; enable with --run-archive
+Unit and portable saved-data tests	2026-11-23T20:37:27.4731807Z SKIPPED [28] tests/test_split_coast_study.py:51: exact historical-environment check; enable with --run-archive
+Unit and portable saved-data tests	2026-11-23T20:37:27.4732273Z SKIPPED [1] tests/test_trajectory_spk.py:35: No static SPK reader observation for this platform
+Unit and portable saved-data tests	2026-11-23T20:37:27.4732642Z 6964 passed, 43 skipped, 412 deselected in 310.00s (0:05:09)
+Scientific regression tests	2026-11-23T20:50:04.4653532Z SKIPPED [1] tests/test_trajectory_ephemeris.py:43: Only the Darwin/arm64 fenv ABI has been inspected
+Scientific regression tests	2026-11-23T20:50:04.4654009Z SKIPPED [1] tests/test_trajectory_ephemeris.py:100: No static native arithmetic observation for this platform
+Scientific regression tests	2026-11-23T20:50:04.4654484Z SKIPPED [12] tests/test_trajectory_spk.py:264: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Scientific regression tests	2026-11-23T20:50:04.4655094Z SKIPPED [6] tests/test_trajectory_spk.py:412: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Scientific regression tests	2026-11-23T20:50:04.4655626Z SKIPPED [1] tests/test_trajectory_spk.py:484: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Scientific regression tests	2026-11-23T20:50:04.4656503Z SKIPPED [1] tests/test_trajectory_spk.py:620: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Scientific regression tests	2026-11-23T20:50:04.4656941Z SKIPPED [8] tests/test_trajectory_spk.py:7176: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Scientific regression tests	2026-11-23T20:50:04.4657390Z SKIPPED [3] tests/test_trajectory_spk.py:7309: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Scientific regression tests	2026-11-23T20:50:04.4657955Z SKIPPED [1] tests/test_trajectory_spk.py:7391: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Scientific regression tests	2026-11-23T20:50:04.4658406Z SKIPPED [1] tests/test_trajectory_spk.py:7439: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Scientific regression tests	2026-11-23T20:50:04.4658854Z SKIPPED [1] tests/test_trajectory_spk.py:7678: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Scientific regression tests	2026-11-23T20:50:04.4659254Z 376 passed, 36 skipped, 7007 deselected, 3 warnings in 755.36s (0:12:35)
