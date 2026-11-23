@@ -1,0 +1,85 @@
+{
+  "base_revision": "390edfc0d070e0ab52293bd1a0de5e55b1dbf0c6",
+  "checks": {
+    "independent_review": "passed",
+    "ruff": "passed",
+    "strict_openspec": "passed"
+  },
+  "ci": {
+    "status": "pending"
+  },
+  "date": "2026-11-24",
+  "focused": {
+    "elapsed_s": 11.78,
+    "log_sha256": "c149a0e843cc2e5a397d26847a9c3c009ebe7a6364329761962f718896aa56ff",
+    "passed": 152
+  },
+  "new_retained_p3_searches": 0,
+  "portable": {
+    "deselected_live": 412,
+    "elapsed_s": 208.6,
+    "frozen_checkout_files": 1339,
+    "frozen_checkout_unchanged": true,
+    "junit_sha256": "1e30e689479ad40a8861d3414722af79437ecd7cff73a23d86dea07468aafc90",
+    "log_sha256": "8d967c37fe2b2ce02acfae843d77204c4c293f45752bb43da478141b4e5506bc",
+    "passed": 6965,
+    "skipped_archive": 42,
+    "status": "passed"
+  },
+  "qualified_profile_bindings": {
+    "audit": {
+      "runtime_table_file": "docs/adr/experiments/0242-audit-runtime.json",
+      "runtime_table_sha256": "4d3acd6fa70c5cd2f36eeaf6bc24b92dc11b2c1e0e47de88f2c1bc4724e7f575",
+      "solver_sources": {},
+      "source_sha256": {
+        "anchors": "7fadcb3fc9de4a43aa1ce80efd30d2e6499f76ee4918519cf8783d50bca2057e",
+        "archive": "43c4c3b7fe1f82324a4833ea74a22aaed9922e8c0f9ea67fa0aa76161062dcf8",
+        "artificial_bootstrap": "f52ca97c25a63bc35f7dbb563150fc59607e49d7dfdceb183f69dae5a106e68a",
+        "core": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+        "invocation": "ed7956d5ec65d5693309773a2361295fe097ff5357cca5b27cb0a74c4f64c524",
+        "io": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+        "oracle": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+        "orbit": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+        "points": "6f908729ae72c1f37f763f8e8683cc7a0b2fc9c82d70c826be5116a11510bd07",
+        "reader": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+        "runtime": "3863f812f210d162c9834e73b6f15672d9a2ff4d4c2d3fc5df0eb83e50f86ff1",
+        "screen": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b",
+        "search": "dba342eadc49a34e0cdc0ec6bed06fdb8e3595457cb250d36b7b2d38ecffcbdd",
+        "trace": "f564df19de8c4b614d69af26fd0df7774a8b73e48954e0d857b4d74a17c22f14"
+      }
+    },
+    "producer": {
+      "runtime_table_file": "docs/adr/experiments/0242-producer-runtime.json",
+      "runtime_table_sha256": "50cf66470b9a52a479738d2c695b3dfb8be79239fe91aa929272df6cf6c7038a",
+      "solver_sources": {
+        "_minimize.py": "5afd3ecbeaba6606c27f5f9f298782c0dae80dd0e3e01d98d4249922ede6b7ea",
+        "_optimize.py": "041a1807ccaa68115c93b07bed497d25c294a7d730ce5a7cb1f21fc5a185fa61"
+      },
+      "source_sha256": {
+        "anchors": "7fadcb3fc9de4a43aa1ce80efd30d2e6499f76ee4918519cf8783d50bca2057e",
+        "archive": "43c4c3b7fe1f82324a4833ea74a22aaed9922e8c0f9ea67fa0aa76161062dcf8",
+        "artificial_bootstrap": "f52ca97c25a63bc35f7dbb563150fc59607e49d7dfdceb183f69dae5a106e68a",
+        "core": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+        "invocation": "ed7956d5ec65d5693309773a2361295fe097ff5357cca5b27cb0a74c4f64c524",
+        "io": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+        "oracle": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+        "orbit": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+        "points": "6f908729ae72c1f37f763f8e8683cc7a0b2fc9c82d70c826be5116a11510bd07",
+        "reader": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+        "runtime": "3863f812f210d162c9834e73b6f15672d9a2ff4d4c2d3fc5df0eb83e50f86ff1",
+        "screen": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b",
+        "search": "dba342eadc49a34e0cdc0ec6bed06fdb8e3595457cb250d36b7b2d38ecffcbdd",
+        "trace": "f564df19de8c4b614d69af26fd0df7774a8b73e48954e0d857b4d74a17c22f14"
+      }
+    }
+  },
+  "runtime_tables_reused_identically": true,
+  "schema": "ariadna-p3-executable-native-inventory-repair-v1",
+  "scope": "artificial-and-existing-regression-qualification-only",
+  "source_sha256": {
+    "docs/adr/experiments/0241-bounded-invocation.py": "ed7956d5ec65d5693309773a2361295fe097ff5357cca5b27cb0a74c4f64c524",
+    "docs/adr/experiments/0241-runtime.py": "3863f812f210d162c9834e73b6f15672d9a2ff4d4c2d3fc5df0eb83e50f86ff1",
+    "tests/test_bounded_witness_invocation.py": "9d1f4f744b082ab53e88913de8d8846ea2a8ed14636755aac761e1fb5902e879"
+  },
+  "stderr_scope": "operational diagnostics, not numerical evidence; worker1024characters plus newline; parent last4096captured bytes decoded"
+}

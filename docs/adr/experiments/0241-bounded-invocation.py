@@ -389,6 +389,8 @@ def launch(mode: str, output: Path, *, config: Path | None = None, config_pin: s
     try:
         done = subprocess.run(command, capture_output=True, timeout=wall_ns / 1e9, check=False)
         if monotonic_ns() - started >= wall_ns or done.returncode not in (0, 2):
+            if done.stderr:
+                print(done.stderr[-4096:].decode("utf-8", errors="replace"), file=sys.stderr, end="")
             completion = output / "completion.json"
             if completion.exists() and _json(completion.read_bytes()).get("run_id") == run_id:
                 completion.unlink()
@@ -417,5 +419,6 @@ def main(args: list[str]) -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main(sys.argv[1:]))
-    except (OSError, ValueError, ArithmeticError, KeyError, TypeError):
+    except (OSError, ValueError, ArithmeticError, KeyError, TypeError) as error:
+        print(f"{type(error).__name__}: {error}"[:1024], file=sys.stderr)
         raise SystemExit(3)

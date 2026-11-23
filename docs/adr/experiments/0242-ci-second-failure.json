@@ -1,0 +1,46 @@
+{
+  "actual_rejected_filename": "not captured by that invocation version",
+  "archive_skips": 42,
+  "conclusion": "failure",
+  "failed_cases": [
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "message": "FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-runner/pytest-0/test_actual_producer_independe0/study/report.json'",
+      "name": "test_actual_producer_independent_audit_and_full_volume[witness-bounded-verified-analytical-witness]",
+      "time_s": "1.168"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "message": "FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-runner/pytest-0/test_actual_producer_independe1/study/report.json'",
+      "name": "test_actual_producer_independent_audit_and_full_volume[refusal-bounded-inconclusive/invalid]",
+      "time_s": "0.055"
+    },
+    {
+      "class": "tests.test_bounded_witness_invocation",
+      "message": "FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-runner/pytest-0/test_actual_producer_independe2/study/report.json'",
+      "name": "test_actual_producer_independent_audit_and_full_volume[refusal-artificial-full-volume-inconclusive/invalid]",
+      "time_s": "0.055"
+    }
+  ],
+  "live_status": "not-run-after-portable-failure",
+  "passed": 6960,
+  "platform_skips": 1,
+  "raw_failed_log_sha256": "ce831f570e35b0066dc57ff097ad0fc4ba4b1b83f32d34c06132598d4ac74a71",
+  "raw_junit_sha256": "200fb003f62a5ee0deaea6811fa42d6ba4fb30ebc9c5e00a8613407db22934b7",
+  "revision": "390edfc0d070e0ab52293bd1a0de5e55b1dbf0c6",
+  "run_id": 45256674267,
+  "schema": "ariadna-p3-ci-failure-v1",
+  "suite": [
+    {
+      "errors": "0",
+      "failures": "3",
+      "hostname": "ip-10-0-129-122",
+      "name": "pytest",
+      "skipped": "43",
+      "tests": "7006",
+      "time": "300.704",
+      "timestamp": "2026-11-23T20:12:27.406568+00:00"
+    }
+  ],
+  "url": "https://github.com/wa-pis/ariadnes-thread/actions/runs/45256674267"
+}

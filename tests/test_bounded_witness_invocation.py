@@ -107,7 +107,9 @@ def test_actual_producer_independent_audit_and_full_volume(
 
 
 @pytest.mark.parametrize("fault", ["source-hash", "archive-hash", "scope", "runtime-hash", "solver-hash", "native-file-bypass"])
-def test_artificial_identity_failures_never_publish_a_witness(harness: Row, tmp_path: Path, fault: str) -> None:
+def test_artificial_identity_failures_never_publish_a_witness(
+    harness: Row, tmp_path: Path, fault: str, capsys: pytest.CaptureFixture[str],
+) -> None:
     row = study_config(harness, tmp_path, "refusal")
     row = deepcopy(row)
     if fault == "source-hash":
@@ -126,9 +128,16 @@ def test_artificial_identity_failures_never_publish_a_witness(harness: Row, tmp_
         row["runtime"]["native_files"].append(str(SCRIPT.resolve()))
         row["runtime"]["files"][str(SCRIPT.resolve())] = dict(bytes=1, sha256="0" * 64)
     code, output = launch_config(harness, tmp_path, row)
-    assert code in (2, 3)
-    if (output / "report.json").exists():
-        assert read(output)["status"] == "artificial-invalid"
+    if fault in {"scope", "native-file-bypass"}:
+        assert code == 3 and not (output / "report.json").exists()
+        reason = "artificial mode required" if fault == "scope" else "unqualified native image root/type"
+        assert reason in capsys.readouterr().err
+    else:
+        report = read(output)
+        assert code == 2 and report["status"] == "artificial-invalid"
+        reason = {"source-hash": "qualified source drift", "archive-hash": "artificial archive pin",
+                  "runtime-hash": "runtime artifact drift", "solver-hash": "selected scalar-solver sources"}[fault]
+        assert reason in report["error"]
 
 
 def test_exact_parent_worker_argument_forms(harness: Row, monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
@@ -235,7 +244,13 @@ def test_linux_loader_metadata_uses_canonical_current_process_path(
     maps = tmp_path / "current-maps"
     alias = tmp_path / "self-maps"
     alias.symlink_to(maps)
-    raw = f"1000-2000 r-xp 0000 00:00 1 {sys.executable}\n".encode()
+    extension = Path(sys.modules["_hashlib"].__file__).resolve()
+    data_file = Path(runtime["sysconfig"].__file__).resolve()
+    raw = (f"1000-2000 r-xp 0000 00:00 1 {sys.executable}\n"
+           f"2000-3000 r-xp 0000 00:00 2 {extension}\n"
+           f"3000-4000 r--p 0000 00:00 3 {data_file}\n"
+           "4000-5000 r--p 0000 00:00 4 /usr/lib/locale/C.utf8/LC_CTYPE\n"
+           "5000-6000 r--p 0000 00:00 5 /unrelated/data\n").encode()
     if fault == "metadata-cap":
         raw = b"x" * (512 * 1024 + 1)
     maps.write_bytes(raw)
@@ -260,10 +275,19 @@ def test_linux_loader_metadata_uses_canonical_current_process_path(
         return
     images, opaque = runtime["_native_images"](guard)
     assert str(maps) in guard.private and str(alias) not in guard.private
-    assert str(Path(sys.executable).resolve()) in images and opaque == []
+    assert images == {str(Path(sys.executable).resolve()), str(extension)} and opaque == []
+    assert str(data_file) not in guard.native_files
     assert guard.source_bytes >= len(raw)
     for name in ("other-pid-maps", "environ", "unrelated.json"):
         with pytest.raises(ValueError, match="out-of-scope"):
             guard.hook("open", (str(tmp_path / name), "rb", 0))
     with pytest.raises(ValueError, match="input mutation"):
         guard.hook("open", (str(maps), "wb", runtime["os"].O_WRONLY))
+
+
+def test_cli_early_worker_error_has_bounded_diagnostics(tmp_path: Path) -> None:
+    done = subprocess.run([sys.executable, "-I", "-S", "-B", str(SCRIPT), "worker",
+                           "profile-audit", "-", "-", str(tmp_path / "out"), "a" * 32, "1", "0"],
+                          capture_output=True, check=False, timeout=5)
+    assert done.returncode == 3 and b"worker deadline" in done.stderr
+    assert len(done.stderr) <= 1025 and list(tmp_path.iterdir()) == []

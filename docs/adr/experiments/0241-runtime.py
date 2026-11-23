@@ -199,7 +199,7 @@ def _native_images(guard: Guard) -> tuple[set[str], list[str]]:
         need(guard.source_bytes <= 4 * 1024**2, "native metadata input cap")
         for line in raw.decode().splitlines():
             fields = line.split(maxsplit=5)
-            if len(fields) == 6 and fields[5].startswith("/"):
+            if len(fields) == 6 and "x" in fields[1] and fields[5].startswith("/"):
                 images.add(fields[5])
     else:
         raise ValueError("unqualified loader-inventory platform")

@@ -11,7 +11,9 @@ P3 artificial-only, including a full 129-phase workload. Its live/CI verificatio
 was deferred under the earlier no-SPICE scope. Separately authorized
 [ADR0242](../docs/adr/0242-finish-p3-regression-qualification.md) records 412 local
 live passes, the first CI failure and minimal Linux metadata/test-clock repairs:
-151 focused and 6964 repaired portable tests pass. Current-source CI is pending;
+first repair:151 focused/6964 portable passes. Second CI leaves three early artificial
+producer failures; executable-map/diagnostic repair passes152 focused/6965 portable.
+Current-source CI remains pending;
 P3 stays open and retained execution unavailable. No automatic diagnostic successor.
 A changed Mars phase is not the original R5.60 target. Physical admission and
 strict M3 remain open; automation `ariadna-m3` stays PAUSED.

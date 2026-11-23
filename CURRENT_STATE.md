@@ -15,8 +15,8 @@ Brent per Mars sign as a witness proposer, with unchanged independent point gate
 P3 artificial-only: 124 focused tests/Ruff pass, full 129-phase stress and audit.
 Full portable: 6961 pass, 42 archival skips, 412 live deselections; checkout frozen.
 [ADR0242](docs/adr/0242-finish-p3-regression-qualification.md): 412 live pass on4f5cbb3;
-initial CI fails Linux proc-path/artificial-clock cases. Minimal repairs:151 focused pass.
-Repaired portable:6964 pass/42 archival skips; current-source CI pending.
+first repair:6964 portable pass. Two failed CI outcomes are preserved.
+Latest executable-map/early-error repair:152 focused/6965 portable pass; CI pending.
 Full P3 open, retained execution unavailable.
 A different Mars phase changes the target and cannot enter the original R5.60.
 Automation `ariadna-m3` stays PAUSED; no further saved execution is authorized.
