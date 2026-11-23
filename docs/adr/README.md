@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0241 — Qualify bounded witness search on artificial inputs](0241-qualify-artificial-bounded-witness-search.md): P3 implementation and artificial-only verification; independent literal-point/trace audit and full-volume limits, with required live qualification still unverified.
+
 - [0240 — Choose bounded scalar search for an analytical witness](0240-choose-bounded-scalar-witness-search.md): bounded Brent proposes points; unchanged independent command/mass gates decide admission. Design only, no continuous refusal proof or execution.
 
 - [0239 — Stop diagnostics at one feasibility decision](0239-stop-diagnostics-at-a-feasibility-decision.md): one terminal analytical witness, local refusal or inconclusive outcome; no new method, retained run or physical admission.

@@ -1,0 +1,204 @@
+{
+  "base_revision": "5270f00c037de3118e5f4f0dd13bb677822e2c64",
+  "cases": {
+    "bounded-refusal": {
+      "audit": {
+        "counters": {
+          "anchors": 3,
+          "blocked_attempts": 0,
+          "finals": 1,
+          "objective": {
+            "negative": 1,
+            "positive": 26
+          },
+          "pair_slots": 62,
+          "phases": 31,
+          "root_slots": 62
+        },
+        "elapsed_through_completion_ns": 195578625,
+        "evidence_bytes": 31986,
+        "external_under_30_s": true,
+        "runtime_read_bytes": 38953165,
+        "source_bytes": 947155,
+        "status": "artificial-audit-verified"
+      },
+      "combined_evidence_bytes": 379815,
+      "study": {
+        "counters": {
+          "anchors": 3,
+          "blocked_attempts": 0,
+          "finals": 1,
+          "objective": {
+            "negative": 1,
+            "positive": 26
+          },
+          "pair_slots": 62,
+          "phases": 31,
+          "root_slots": 62
+        },
+        "elapsed_through_completion_ns": 780588916,
+        "evidence_bytes": 347829,
+        "external_under_30_s": true,
+        "runtime_read_bytes": 213095921,
+        "source_bytes": 1184524,
+        "status": "inconclusive/invalid"
+      }
+    },
+    "bounded-witness": {
+      "audit": {
+        "counters": {
+          "anchors": 3,
+          "blocked_attempts": 0,
+          "finals": 0,
+          "objective": {
+            "negative": 0,
+            "positive": 3
+          },
+          "pair_slots": 12,
+          "phases": 6,
+          "root_slots": 12
+        },
+        "elapsed_through_completion_ns": 160813416,
+        "evidence_bytes": 27525,
+        "external_under_30_s": true,
+        "runtime_read_bytes": 38953165,
+        "source_bytes": 856631,
+        "status": "artificial-audit-verified"
+      },
+      "combined_evidence_bytes": 284798,
+      "study": {
+        "counters": {
+          "anchors": 3,
+          "blocked_attempts": 0,
+          "finals": 0,
+          "objective": {
+            "negative": 0,
+            "positive": 3
+          },
+          "pair_slots": 12,
+          "phases": 6,
+          "root_slots": 12
+        },
+        "elapsed_through_completion_ns": 774513791,
+        "evidence_bytes": 257273,
+        "external_under_30_s": true,
+        "runtime_read_bytes": 213095921,
+        "source_bytes": 1184556,
+        "status": "verified-analytical-witness"
+      }
+    },
+    "full-volume-refusal": {
+      "audit": {
+        "counters": {
+          "anchors": 3,
+          "blocked_attempts": 0,
+          "finals": 2,
+          "objective": {
+            "negative": 62,
+            "positive": 62
+          },
+          "pair_slots": 258,
+          "phases": 129,
+          "root_slots": 258
+        },
+        "elapsed_through_completion_ns": 341918459,
+        "evidence_bytes": 47371,
+        "external_under_30_s": true,
+        "runtime_read_bytes": 38953165,
+        "source_bytes": 1339308,
+        "status": "artificial-audit-verified"
+      },
+      "combined_evidence_bytes": 786225,
+      "study": {
+        "counters": {
+          "anchors": 3,
+          "blocked_attempts": 0,
+          "finals": 2,
+          "objective": {
+            "negative": 62,
+            "positive": 62
+          },
+          "pair_slots": 258,
+          "phases": 129,
+          "root_slots": 258
+        },
+        "elapsed_through_completion_ns": 926132541,
+        "evidence_bytes": 738854,
+        "external_under_30_s": true,
+        "runtime_read_bytes": 213095921,
+        "source_bytes": 1185652,
+        "status": "inconclusive/invalid"
+      }
+    }
+  },
+  "checks": {
+    "diff_whitespace_and_protected_history": "passed",
+    "independent_review": "passed-no-fatal-findings",
+    "local_links_and_anchors": "passed",
+    "openspec_strict": "passed",
+    "ruff": "passed-src-tests-and-five-new-private-modules"
+  },
+  "ci": {
+    "reason": "workflow loads SPICE; commit will explicitly skip CI",
+    "status": "not-run"
+  },
+  "date": "2026-11-23",
+  "focused": {
+    "elapsed_s": 7.97,
+    "passed": 124
+  },
+  "forbidden_work": {
+    "kernel_accesses": 0,
+    "mission_integrations": 0,
+    "new_retained_evaluations": 0,
+    "r560_attempts": 0,
+    "spice_queries": 0
+  },
+  "live": {
+    "reason": "user forbids SPICE/integration",
+    "status": "not-run"
+  },
+  "portable_full": {
+    "command": "conda run --no-capture-output -n space-nav python -m pytest -q -ra --offline --junitxml=/private/tmp/ariadna-p3-full.xml",
+    "deselected_live": 412,
+    "elapsed_s": 205.09,
+    "errors": 0,
+    "failures": 0,
+    "frozen_checkout": {
+      "files": 1327,
+      "head": "5270f00c037de3118e5f4f0dd13bb677822e2c64",
+      "head_status_and_contents_verified": true,
+      "unchanged": true
+    },
+    "junit_elapsed_s": 205.004,
+    "junit_sha256": "a3637ff5f51a2aa9d21ad71fb6b6fa0e8052c9585ffb5ff878e20921f342ce94",
+    "log": "docs/adr/experiments/0241-offline-tests.log",
+    "log_sha256": "8ebb7417cec727f0a9e27771e18d40bb39960eedfd3ed03095e9a446338be8ba",
+    "passed": 6961,
+    "skipped_archive": 42,
+    "status": "passed"
+  },
+  "qualification": {
+    "full_p3": "unverified-required-live-lane",
+    "requested_artificial_preparation": "passed",
+    "retained_execution": "unavailable"
+  },
+  "runtime_profile_sha256": {
+    "docs/adr/experiments/0241-audit-runtime.json": "74d526c16ea6086964c6ace7207afbe2df71dfcec750e5c25e85d2e2320d5a35",
+    "docs/adr/experiments/0241-producer-runtime.json": "b407057ccbfee16cba1c7b2ee10974001925765ba4b9217402f2e403bad784ad"
+  },
+  "schema": "ariadna-p3-artificial-qualification-v1",
+  "scope": "artificial-only",
+  "source_sha256": {
+    "docs/adr/experiments/0241-bounded-invocation.py": "1ba796768ca91e0ecd57e62f5cd473622d6b4a20f5c35cb8f44624a1d4074bfc",
+    "docs/adr/experiments/0241-bounded-search.py": "dba342eadc49a34e0cdc0ec6bed06fdb8e3595457cb250d36b7b2d38ecffcbdd",
+    "docs/adr/experiments/0241-phase-points.py": "6f908729ae72c1f37f763f8e8683cc7a0b2fc9c82d70c826be5116a11510bd07",
+    "docs/adr/experiments/0241-runtime.py": "f72ea48f398679e180a55bb4ade931afb86b846a12b0785b9a87b5fbbb0c40cf",
+    "docs/adr/experiments/0241-trace-audit.py": "f564df19de8c4b614d69af26fd0df7774a8b73e48954e0d857b4d74a17c22f14",
+    "tests/bounded_witness_fixtures.py": "f52ca97c25a63bc35f7dbb563150fc59607e49d7dfdceb183f69dae5a106e68a",
+    "tests/test_bounded_witness_invocation.py": "710bab00dc7c90e6c0f6a1f0cdf228446e3d21792ec2b14b275f9d42979e4244",
+    "tests/test_bounded_witness_points.py": "ac9e77b9a0ff1e0be0f5add41b13e7b2db5c3235e8f7e2526b3796e181ef22c1",
+    "tests/test_bounded_witness_search.py": "45d584f4ae77933b37656ea01d1d548d4c1d557bb6cdc40a499b9d58a3d1d328",
+    "tests/test_bounded_witness_trace.py": "8c4cdd214bfb2bcedd96eeba1c13efd99978cd33787b63e072d1367e77ca330c"
+  }
+}

@@ -24,9 +24,13 @@ stop. ADR0240 now selects bounded Brent scalar minimization per Mars sign as a
 witness proposer, with unchanged independent point and literal-command gates.
 It cannot certify continuous refusal: no witness means inconclusive and stop.
 The design preserves exact binary64 phases, both mass ledgers and the existing
-129-phase/time/byte envelope. No implementation, qualification or run occurs here;
-a witness is not an executable pair, adopted Mars target, physical join or M3
-completion. The retained priorities below do not authorize another run.
+129-phase/time/byte envelope. ADR0241 implements P3 and verifies artificial
+inputs only, including independent literal-command/trace audit and full-volume
+limits. Full portable regression passes 6961 tests (42 archival skips, 412 live
+deselections); live/CI is deliberately not run under
+the user's no-SPICE constraint. Full qualification and saved execution remain
+unavailable; an artificial witness is not an executable pair, adopted Mars target,
+physical join or M3 completion. The retained priorities below do not authorize another run.
 
 ### Current priority — R1 mission-first demonstration
 

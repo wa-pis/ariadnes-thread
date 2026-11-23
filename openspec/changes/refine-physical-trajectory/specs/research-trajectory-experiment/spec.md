@@ -1082,3 +1082,12 @@ ADR0239, with all original independent command-admission gates unchanged.
 - **THEN** it SHALL report only an independently verified analytical witness or inconclusive/invalid; no witness, optimizer success or a reported above-budget minimum SHALL certify continuous refusal or global optimality
 - **AND** automatic continuation SHALL stop after either result; a required refusal proof SHALL need a separate reviewed method decision
 - **AND** this design stage SHALL perform zero scientific imports, numerical evaluations or experiments; implementation SHALL require a separate instruction and ADR0240 full-volume artificial qualification with both required regression lanes, while saved execution SHALL require another explicit instruction and qualified identities; automation SHALL remain PAUSED
+
+
+#### Scenario: Deliver artificial preparation without implying forbidden regression or execution
+
+- **WHEN** the P3 instruction authorizes artificial preparation while forbidding saved real-data execution, SPICE and integration
+- **THEN** ADR0241 private commands SHALL expose only artificial/profile/audit routes, reject retained or repository-evidence paths before opening, and qualify exact phase/word gates, independent traces and 129-phase limits using fabricated records only
+- **AND** a labelled maximum-volume driver SHALL exercise both signed branches and all 129 direct phases on an explicitly artificial fixture, without claiming it is a Brent result, changing real mission inputs or weakening gates
+- **AND** runtime profiles SHALL authenticate the explicit interpreter/NumPy/SciPy/native artifact inventory before import and count all source/configuration/rereads, startup/finalization and evidence against unchanged caps; opaque OS shared-cache contents SHALL remain explicitly outside content-hash claims
+- **AND** prohibited live/CI execution SHALL not occur or be labelled passing; the required live lane SHALL remain unverified and full P3/retained readiness SHALL stay unavailable, even after the requested artificial and portable checks pass

@@ -5,8 +5,12 @@ under the [ADR0239](../docs/adr/0239-stop-diagnostics-at-a-feasibility-decision.
 stop policy. Bounded Brent proposes analytical witnesses on the unchanged
 [150 degrees, 152 degrees] domain, separately for both Mars signs; original
 independent point/command/mass gates decide admission. Finding no witness yields
-an inconclusive result, not a continuous refusal. Design only: separate implementation/qualification and
-execution instructions remain required. No automatic R5.59 diagnostic successor.
+an inconclusive result, not a continuous refusal.
+[ADR0241](../docs/adr/0241-qualify-artificial-bounded-witness-search.md) implements
+P3 with artificial-only tests and a full 129-phase workload. Full portable regression
+passes 6961 tests (42 archival skips, 412 live deselections); live/CI is not run
+under the user's no-SPICE instruction. Full
+qualification and any retained execution remain unavailable. No automatic R5.59 diagnostic successor.
 A changed Mars phase is not the original R5.60 target. Physical admission and
 strict M3 remain open; automation `ariadna-m3` stays PAUSED.
 

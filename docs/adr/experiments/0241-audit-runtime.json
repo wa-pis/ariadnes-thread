@@ -1,0 +1,532 @@
+{
+  "runtime": {
+    "artifact_bytes": 17929804,
+    "denied_optional_imports": [],
+    "denied_optional_operations": [],
+    "directories": [
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/ctypes"
+    ],
+    "files": {
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python3.12": {
+        "bytes": 6829984,
+        "sha256": "795d8316b7dabff1c64e56d5f5787caf0fe1b1e18580d34fc3a4956d501475c2"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/libcrypto.3.dylib": {
+        "bytes": 5055488,
+        "sha256": "750252bae464e2ca8e69a0d47338aa9bb923014a71ab24380f994cdd9f7ea5f0"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/libffi.8.dylib": {
+        "bytes": 121488,
+        "sha256": "c98788ece1f44cbf62e79dca94d1e2a58fe99e0df8bc928eec3555ff56cc50c9"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/ast.cpython-312.pyc": {
+        "bytes": 99729,
+        "sha256": "99cf99e3a2b905c5ab31ea482580d3e141a410f21803f1671db930b285f218c6"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/copy.cpython-312.pyc": {
+        "bytes": 9752,
+        "sha256": "02783e1ceae13c532b9e2f7d7820f200e3e6a147d72b30c5b1c9494754c6aa62"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/dataclasses.cpython-312.pyc": {
+        "bytes": 44886,
+        "sha256": "83418dbbf2bbcbf6c4468cc7063a791e28080b53a6caa0dc7df058fa8cb368da"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/decimal.cpython-312.pyc": {
+        "bytes": 2926,
+        "sha256": "4939546005b94d553545011ee7f4dd47518f54420b6fcfb0009e7e8eafb3b5df"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/dis.cpython-312.pyc": {
+        "bytes": 34436,
+        "sha256": "11493ed95b2fa2788f75a9791a856e3b278950694db8450f42d259d76ad3767e"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/fractions.cpython-312.pyc": {
+        "bytes": 36750,
+        "sha256": "36c39651ac71d270fc8a94be52d38ca477b79d485c8ffb40cd735c7ee4ea0219"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/inspect.cpython-312.pyc": {
+        "bytes": 134358,
+        "sha256": "24c66f849ca8d054c9cdc6d215c4c34851241fa4ca3d3c87195d3ba20af28a9a"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/linecache.cpython-312.pyc": {
+        "bytes": 6544,
+        "sha256": "5d1f8aad952d22154bc847ee4885817d570fbad5b1fede162d40c7b3be121679"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/numbers.cpython-312.pyc": {
+        "bytes": 13962,
+        "sha256": "db098fe3ce629d5b71467df359fde5b5decb181f03482a5c8493a51e5531635d"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/opcode.cpython-312.pyc": {
+        "bytes": 14711,
+        "sha256": "edb50102794ff3fa046d13b06a937c53c34db63fdd224611c9ca2f1ea2c8beb2"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/struct.cpython-312.pyc": {
+        "bytes": 320,
+        "sha256": "f4d87576ba3568d9d8a6b0f1defce466a1ddd47ed4c9f8b56a1b30140507d873"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/token.cpython-312.pyc": {
+        "bytes": 3564,
+        "sha256": "a22463ba32e67113d57bf95dcf9487aeb81878f185687b6c5aae92cccd187f63"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/tokenize.cpython-312.pyc": {
+        "bytes": 25371,
+        "sha256": "4d07022a010d7b04acae2609a8053211b3a10d174208db7f74c08d329d5dfa21"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/__pycache__/weakref.cpython-312.pyc": {
+        "bytes": 31206,
+        "sha256": "3821ec333f3e831e670a49b2b425dd3e9d3c9711ad87f93aa768b83dd6e3eace"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/_collections_abc.py": {
+        "bytes": 32089,
+        "sha256": "d4945c8410c4bab351741b04bca3de066f7c27ed7e38df89e206a96617102ffb"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/_osx_support.py": {
+        "bytes": 22023,
+        "sha256": "363d3240acbba18a270bd3161f1ddb478f8492dc14fc451b2dc314db5c5ee09c"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/_sysconfigdata__darwin_darwin.py": {
+        "bytes": 76523,
+        "sha256": "0543f801ea0638063d106676b63e81dbf4870211c4a4c03325d0fbcb5a414c34"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/_weakrefset.py": {
+        "bytes": 5893,
+        "sha256": "91895a451d06e9f521a1171b31b9b19bc9740f35af00d4fa106338ab7167c9ac"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/abc.py": {
+        "bytes": 6538,
+        "sha256": "e558702a95cdce3febd289da021715d2b92bc43995b8a1bc58dfa1c3d8010287"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/ast.py": {
+        "bytes": 64452,
+        "sha256": "b515c23dbbc459329d3b802a3aac742cc456d7472e66f7ed6e9dc97e40596d7d"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/codecs.py": {
+        "bytes": 36870,
+        "sha256": "7b7839e53a77961153240aecfe11edc8054d05b1dedd83894450dae21ec05785"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/collections/__init__.py": {
+        "bytes": 52378,
+        "sha256": "7fdb04dd248ab37909f46d2085bfee56b32d7e91e49ad3a2fad99c453295659b"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/collections/abc.py": {
+        "bytes": 119,
+        "sha256": "9cb4208f99128a0489b6c8e6c61637617dd7d4250c59e065491957eda084dd10"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/contextlib.py": {
+        "bytes": 27637,
+        "sha256": "8b7a477f978a8532852fd81e241c78182516bc4975d672d580a5848a76e11eb6"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/copy.py": {
+        "bytes": 8412,
+        "sha256": "cbd25547933176fcf6bb05c2adc9f4796d15ac20b9b82dcf890daea7203daeab"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/copyreg.py": {
+        "bytes": 7614,
+        "sha256": "c8eda41f05c6bf95a4da4726a530409d2485ae060b8d019b3a8034389a15d3e9"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/ctypes/__init__.py": {
+        "bytes": 18210,
+        "sha256": "e0db1242e78267cba0124ee9fe5963b72d1c8a1832bb51a88abcf012a9cbce76"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/ctypes/__pycache__/__init__.cpython-312.pyc": {
+        "bytes": 23463,
+        "sha256": "987ac75cc9b92b0bb1ea3b49c018b9d33f038e1843308096456a74a4f37b3d90"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/ctypes/__pycache__/_endian.cpython-312.pyc": {
+        "bytes": 3368,
+        "sha256": "0d97950e84fd8a86809fb1ef545657981bad7e883ce5565bb23fa16d951df190"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/ctypes/_endian.py": {
+        "bytes": 2535,
+        "sha256": "c5d692bdce10dfee242752620061bab684633bc72445a3def484961ef1bdbf3a"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/dataclasses.py": {
+        "bytes": 62085,
+        "sha256": "d242aea5fcf6408b1c1f622442f88f68b9526ce1f8bd2890d74a144677c427d9"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/decimal.py": {
+        "bytes": 2805,
+        "sha256": "c3e37c55ef72b3dd6cb7b466a907b966467b6a9c58d85302193e64cbb5fd53d0"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/dis.py": {
+        "bytes": 30227,
+        "sha256": "44c0b389c96124d8fb5cb0bc41c7a2aa7a6848ef4001b4000dcbd858efa4a1a2"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/encodings/__init__.py": {
+        "bytes": 5884,
+        "sha256": "78c4744d407690f321565488710b5aaf6486b5afa8d185637aa1e7633ab59cd8"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/encodings/aliases.py": {
+        "bytes": 15677,
+        "sha256": "6fdcc49ba23a0203ae6cf28e608f8e6297d7c4d77d52e651db3cb49b9564c6d2"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/encodings/utf_8.py": {
+        "bytes": 1005,
+        "sha256": "ba0cac060269583523ca9506473a755203037c57d466a11aa89a30a5f6756f3d"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/enum.py": {
+        "bytes": 81540,
+        "sha256": "f35e542d8c4c1d2b5e910138d726fa48774925f3c4dc5462793ebcb66aa55501"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/fnmatch.py": {
+        "bytes": 5999,
+        "sha256": "6683da36e47af523f3f41e18ad244d837783e19e98911cc0b7415dea81494ebc"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/fractions.py": {
+        "bytes": 38147,
+        "sha256": "d52d1ab9d5be26924e4914a5e40069c992bbfa68f773694c2e5ee8452d0766a0"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/functools.py": {
+        "bytes": 37940,
+        "sha256": "de4a1d37c795e2a065124b5c49357893433bc6bb111b41277ccc9930ef08d4c9"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/genericpath.py": {
+        "bytes": 5572,
+        "sha256": "2b0b35d2206778af4081cf81dd9b513876e72c35a55bec941402e1fa62b1f1aa"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/hashlib.py": {
+        "bytes": 9349,
+        "sha256": "6dbdebf270868b391080e21dc9687eddfaf321c965ad979f68d3f5c423c613ab"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/importlib/__init__.py": {
+        "bytes": 4784,
+        "sha256": "d540b5ac137fcb3e26a8d5f2939649e34373c6685f98a30a9f682cf231be5854"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/importlib/__pycache__/__init__.cpython-312.pyc": {
+        "bytes": 4554,
+        "sha256": "b1eada2d619dbaeaf7d17e1a79b17f43db437bc2f69559ec3222c7564f0daf94"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/importlib/_bootstrap.py": {
+        "bytes": 57057,
+        "sha256": "d112d54b7831cf4a818d4841d5ff8003b54df220a6dabafa61f67d7c7a5603f7"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/importlib/_bootstrap_external.py": {
+        "bytes": 69428,
+        "sha256": "e6ad72f3f0f9b65c99ab52598cd02ab748511dcdce1dd51f18dace9be9a680c6"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/importlib/machinery.py": {
+        "bytes": 880,
+        "sha256": "d045cd7ecf2a12b6ecbfbef79eb114e87ef2ebd756f5b705f73e6f3266e3dede"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/inspect.py": {
+        "bytes": 127125,
+        "sha256": "5c54ebf0bfdc25397750e5d0f63800751650ee50e65325ff3ea4069c9bfa5f75"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/io.py": {
+        "bytes": 3582,
+        "sha256": "7cec3cb8ac004058dd0a5af246e6d950fb59c7ddd0058fda48bcb3fcb98d8822"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/ipaddress.py": {
+        "bytes": 81414,
+        "sha256": "ba8d3389ff084fcb232b48204ec04f2b3ea4bd0eadf7b18c814947d185de2c64"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/json/__init__.py": {
+        "bytes": 14020,
+        "sha256": "d5d41e2c29049515d295d81a6d40b4890fbec8d8482cfb401630f8ef2f77e4d5"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/json/decoder.py": {
+        "bytes": 12525,
+        "sha256": "382cd02af6f7efede5a6d4abbcda1015e5c7a75794b0016022878f9cf32a24f6"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/json/encoder.py": {
+        "bytes": 16075,
+        "sha256": "52bfb1b66029cc70fa3bd7fe11df9f2e03922d413407a341b387a22c987f24f8"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/json/scanner.py": {
+        "bytes": 2434,
+        "sha256": "572958017eae8842eeddd0e3d18d3c56cc0a197348224915e1d87ce937841764"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/keyword.py": {
+        "bytes": 1073,
+        "sha256": "18c2be738c04ad20ad375f6a71db34b3823c7f40b0340f5294d0e89f3c9b093b"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_blake2.cpython-312-darwin.so": {
+        "bytes": 72720,
+        "sha256": "4a76b4ac7a757cdecfa20b30aaf0d7a2d4ae5c4fd93d289360106da6f2ce24bb"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_ctypes.cpython-312-darwin.so": {
+        "bytes": 142192,
+        "sha256": "bb4897958ef57095b10be880162188f7e7f494d0590ae718b44f8966800c369e"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_decimal.cpython-312-darwin.so": {
+        "bytes": 328000,
+        "sha256": "3795ebccca13cc98d1b1b472ce87c13d2152da6f3c9fd955e9176b60d755a6cf"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_hashlib.cpython-312-darwin.so": {
+        "bytes": 81536,
+        "sha256": "90a2b1ae5d013193df938fc144bf95594e2dbfbe92e01d5940ae3f95bc12000b"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_json.cpython-312-darwin.so": {
+        "bytes": 73664,
+        "sha256": "7a2670a7c716f86f23560feebab202280a3bfdcc706eb285f6631c937d341a0a"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_opcode.cpython-312-darwin.so": {
+        "bytes": 52352,
+        "sha256": "af8ea60e68acb4dc031c0c2109427212ef595954456b21709626ba2a8ace4682"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_posixsubprocess.cpython-312-darwin.so": {
+        "bytes": 55520,
+        "sha256": "0e59e49f2aa6972f99af8c925e13dc29b762730c689e0ea9dab47f20662d4f21"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_struct.cpython-312-darwin.so": {
+        "bytes": 78064,
+        "sha256": "8ca04846ea8a46d2cff0b0bf94a49bbf3353feb93b90838b9e3a816875e3e3a6"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_uuid.cpython-312-darwin.so": {
+        "bytes": 51648,
+        "sha256": "8c360f02120a32db9342c93fc328c232c532cb2a0bdf8d391f6265945c8b73e9"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/fcntl.cpython-312-darwin.so": {
+        "bytes": 53584,
+        "sha256": "49f808a208a84d9b0b388fb9ebfbc86b88cbf3409cda7bbf36b4786001fbfbe5"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/math.cpython-312-darwin.so": {
+        "bytes": 94768,
+        "sha256": "477b6c11e8d4b80b0159ccb145525c1521e398f45ee290493ed563e65058cbd3"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/select.cpython-312-darwin.so": {
+        "bytes": 75984,
+        "sha256": "70b40004a95ee9614c2eaf035d57fbc76dfc751786fe5dd5ccfca59582c9145d"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/linecache.py": {
+        "bytes": 5800,
+        "sha256": "9eb9194707991b49f9fea67a5222b0e6a0e49c865cdffc69fbc80a1f829e77fb"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/locale.py": {
+        "bytes": 78599,
+        "sha256": "3988c5419552d5b9f0bef3695102376f79357f0f440e9cd1f32c501f966e6ef3"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/ntpath.py": {
+        "bytes": 30404,
+        "sha256": "6c0d55ee892f98ef87b1ed3c50c9dfc7e267a98d2db47e08d3dc67529af56725"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/numbers.py": {
+        "bytes": 11467,
+        "sha256": "ac381960a3dc1db0498b0bd43d8ef278d6599713121a186b153ff09d9552e0db"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/opcode.py": {
+        "bytes": 13174,
+        "sha256": "192f6008508f28d3273bff42eaea9b01c8394dab1607cd36aea778bdd166c3a6"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/operator.py": {
+        "bytes": 10965,
+        "sha256": "b2af20f67667203c1730e686cc5d0427becc94db4c97f1d3efe3ed2158473f6a"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/os.py": {
+        "bytes": 40821,
+        "sha256": "54c43a1fc69c979c70d8f7d097174cee163bfe59937723ee353043dd4a0211e1"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/pathlib.py": {
+        "bytes": 51052,
+        "sha256": "10ba48ae8063cfe7589436041d0d4628c05f427c7709cf8e75e486f8930cc32c"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/posixpath.py": {
+        "bytes": 17356,
+        "sha256": "03825681086638649a43480954f7f6a16b4da3bd41ece956864ae96e4f795cd9"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/re/__init__.py": {
+        "bytes": 16315,
+        "sha256": "8ff3c37c63b917fcf8dc8d50993a502292a3dc159e41de4f4018c72a53d1c07b"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/re/_casefix.py": {
+        "bytes": 5444,
+        "sha256": "1b12d9136f23db6c3f6f26053fefc15ca964b886838c7b9c1fabf8d2efc1e5c8"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/re/_compiler.py": {
+        "bytes": 26399,
+        "sha256": "c75620761098a70ed75b9accef63ef2881d8abb6d4e5cbfd10074bd165eefe4d"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/re/_constants.py": {
+        "bytes": 5930,
+        "sha256": "fa4fdb200f238f9e7817b63892b0d69833d8165134801e775e10cc113348a375"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/re/_parser.py": {
+        "bytes": 41201,
+        "sha256": "a51a85b37cf3f44ba7ff25754da5f31306e4ccfa6eb3c017f9d37bdf4e770840"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/reprlib.py": {
+        "bytes": 7148,
+        "sha256": "e177bc70da83a7fbcde6fd261dc15da34e8a20873b1cccd4f9a1f8f27cca3779"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/selectors.py": {
+        "bytes": 19671,
+        "sha256": "1eeb102373e18c96311203f30c516e785bd8642275aa0bd66e43a284c9692385"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/signal.py": {
+        "bytes": 2495,
+        "sha256": "0363c964c90ac0b3e515de5749205e6e6454051a1211058375d84d91eab6071a"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/stat.py": {
+        "bytes": 5485,
+        "sha256": "052af0327eae6941b69b05c088b3e748f79995635f80ac4cc7125eb333eb4c77"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/struct.py": {
+        "bytes": 257,
+        "sha256": "9c231f9497caf513a22dee8f790b07f969b0e45854a0bdd6dd84b492e08c2856"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/subprocess.py": {
+        "bytes": 88747,
+        "sha256": "85d29b2bf0249f5436838298c9a60ee93508b1102e9ac43b001f8a7e7ae8f375"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/sysconfig.py": {
+        "bytes": 31926,
+        "sha256": "e9a916680e27278b130d8c4add824d55b952bef284bee354083ca9b436d5103e"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/threading.py": {
+        "bytes": 60200,
+        "sha256": "846f450ae794e4aab823a163f8c71d27751148af33e91dd3de886686a4e8ebfb"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/token.py": {
+        "bytes": 2511,
+        "sha256": "1a4d994ce9744f4bfe2d964fc24d112a1e76796a08c2e45a2d73c82a8587f922"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/tokenize.py": {
+        "bytes": 21570,
+        "sha256": "026f566ac63e60d69c8185a3880831b657accc5eac984fadf271fc99a5e5825d"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/types.py": {
+        "bytes": 10993,
+        "sha256": "345474ef027a1273f353da9bdc1f7c18f65335e72e681bcc0376774cc51f2405"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/typing.py": {
+        "bytes": 118836,
+        "sha256": "be92d60fb8382bb29ead21c128825d7c96d0e8c915b44f840791e49f5a8d554c"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/urllib/__init__.py": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/urllib/parse.py": {
+        "bytes": 45676,
+        "sha256": "e6af7f475262f1de335bb2e41e26adb94d6103977cf5fe1ddc430dc6a3b1623f"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/uuid.py": {
+        "bytes": 29656,
+        "sha256": "fe357bff7241e9fd6f86ee81567fd20aeec2e17460428ea9b7924bebf57301fc"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/warnings.py": {
+        "bytes": 21909,
+        "sha256": "6405e281882932205eae641b2d31fba7776f94517a206d289465a1caffbf310e"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/weakref.py": {
+        "bytes": 21513,
+        "sha256": "56f8d313fb74019e53eb9287400702fbce788b7fe30e097b0b6e06296f3f080c"
+      },
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/zipimport.py": {
+        "bytes": 27840,
+        "sha256": "a96f1d7a7b6aaf421a3cf382b94b1422f4f0ad452fdd0bb61d635b560d7a4e91"
+      },
+      "/usr/lib/system/libsystem_kernel.dylib": {
+        "bytes": 1346496,
+        "sha256": "fb1753efbfd41622f00757d89b57172984a7e4f6957b94a222ae8fd735e970f5"
+      },
+      "/usr/lib/system/libsystem_platform.dylib": {
+        "bytes": 514032,
+        "sha256": "0e4588f3c7e7f855acbfc0e540b9517b318545e8d60ccf5c31ddd04966fc791c"
+      },
+      "/usr/lib/system/libsystem_pthread.dylib": {
+        "bytes": 493104,
+        "sha256": "684d6f4e2c2acfbe307ec93620f4fa2052d1ad395e86d9f6c3cb9943b0f057dd"
+      }
+    },
+    "global_loader_opens": 2,
+    "host": [
+      "Darwin",
+      "Black-Pearl.local",
+      "25.6.0",
+      "Darwin Kernel Version 25.6.0: Fri Jul 31 19:17:26 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T6041",
+      "arm64"
+    ],
+    "identity": {
+      "numpy": null,
+      "prefix": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav",
+      "python": [
+        3,
+        12,
+        14
+      ],
+      "scipy": null
+    },
+    "native_files": [
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python3.12",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/libcrypto.3.dylib",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/libffi.8.dylib",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_blake2.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_ctypes.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_decimal.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_hashlib.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_json.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_opcode.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_posixsubprocess.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_struct.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/_uuid.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/fcntl.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/math.cpython-312-darwin.so",
+      "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/lib-dynload/select.cpython-312-darwin.so",
+      "/usr/lib/system/libsystem_kernel.dylib",
+      "/usr/lib/system/libsystem_platform.dylib",
+      "/usr/lib/system/libsystem_pthread.dylib"
+    ],
+    "os_loader_shared_cache_images": [
+      "/usr/lib/libRosetta.dylib",
+      "/usr/lib/libSystem.B.dylib",
+      "/usr/lib/libc++.1.dylib",
+      "/usr/lib/libc++abi.dylib",
+      "/usr/lib/libobjc.A.dylib",
+      "/usr/lib/system/libcache.dylib",
+      "/usr/lib/system/libcommonCrypto.dylib",
+      "/usr/lib/system/libcompiler_rt.dylib",
+      "/usr/lib/system/libcopyfile.dylib",
+      "/usr/lib/system/libcorecrypto.dylib",
+      "/usr/lib/system/libdispatch.dylib",
+      "/usr/lib/system/libdyld.dylib",
+      "/usr/lib/system/libkeymgr.dylib",
+      "/usr/lib/system/libmacho.dylib",
+      "/usr/lib/system/libquarantine.dylib",
+      "/usr/lib/system/libremovefile.dylib",
+      "/usr/lib/system/libsystem_asl.dylib",
+      "/usr/lib/system/libsystem_blocks.dylib",
+      "/usr/lib/system/libsystem_c.dylib",
+      "/usr/lib/system/libsystem_collections.dylib",
+      "/usr/lib/system/libsystem_configuration.dylib",
+      "/usr/lib/system/libsystem_containermanager.dylib",
+      "/usr/lib/system/libsystem_coreservices.dylib",
+      "/usr/lib/system/libsystem_darwin.dylib",
+      "/usr/lib/system/libsystem_darwindirectory.dylib",
+      "/usr/lib/system/libsystem_dnssd.dylib",
+      "/usr/lib/system/libsystem_eligibility.dylib",
+      "/usr/lib/system/libsystem_featureflags.dylib",
+      "/usr/lib/system/libsystem_info.dylib",
+      "/usr/lib/system/libsystem_m.dylib",
+      "/usr/lib/system/libsystem_malloc.dylib",
+      "/usr/lib/system/libsystem_networkextension.dylib",
+      "/usr/lib/system/libsystem_notify.dylib",
+      "/usr/lib/system/libsystem_sandbox.dylib",
+      "/usr/lib/system/libsystem_sanitizers.dylib",
+      "/usr/lib/system/libsystem_secinit.dylib",
+      "/usr/lib/system/libsystem_symptoms.dylib",
+      "/usr/lib/system/libsystem_trace.dylib",
+      "/usr/lib/system/libsystem_trial.dylib",
+      "/usr/lib/system/libunwind.dylib",
+      "/usr/lib/system/libxpc.dylib"
+    ],
+    "runtime_read_cap_bytes": 71719216,
+    "schema": "ariadna-bounded-runtime-v1"
+  },
+  "solver_sources": {},
+  "source_sha256": {
+    "anchors": "7fadcb3fc9de4a43aa1ce80efd30d2e6499f76ee4918519cf8783d50bca2057e",
+    "archive": "43c4c3b7fe1f82324a4833ea74a22aaed9922e8c0f9ea67fa0aa76161062dcf8",
+    "artificial_bootstrap": "f52ca97c25a63bc35f7dbb563150fc59607e49d7dfdceb183f69dae5a106e68a",
+    "core": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+    "invocation": "1ba796768ca91e0ecd57e62f5cd473622d6b4a20f5c35cb8f44624a1d4074bfc",
+    "io": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "oracle": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+    "orbit": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+    "points": "6f908729ae72c1f37f763f8e8683cc7a0b2fc9c82d70c826be5116a11510bd07",
+    "reader": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+    "runtime": "f72ea48f398679e180a55bb4ade931afb86b846a12b0785b9a87b5fbbb0c40cf",
+    "screen": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b",
+    "search": "dba342eadc49a34e0cdc0ec6bed06fdb8e3595457cb250d36b7b2d38ecffcbdd",
+    "trace": "f564df19de8c4b614d69af26fd0df7774a8b73e48954e0d857b4d74a17c22f14"
+  }
+}
