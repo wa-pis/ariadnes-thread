@@ -7,8 +7,10 @@ Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 [ADR0250](docs/adr/0250-design-coupled-coordinate-bridge.md): one private coordinate,
 exact-event/derived-mass/artificial-arc interface; no native adapter or optimizer.
 Verified149 focused,7289 portable+42archive skips,412live;1421 files/Gitstatus frozen.
-Ruff, independent review, links/protected history and strict pass. Source-commit
-CI not yet observed. Measured basea89e322 plus3new source/test files; hashes in ADR.
+Ruff/review/links/protected history/strict pass. Source-bound CI45507393487 on
+7a1a1da passes7664cases/79skips, all149new;7743local/CI case IDs match exactly.
+CI skips42archive+37platform are unchanged; original receipts remain immutable.
+Measured basea89e322 plus3new source/test files; hashes/newCIreceipt in ADR.
 Cold affine fixture:73controls+3replays/228simulated slots,64KiB input/647B output,
 producer0.038593334s/external0.043013209s; no new scientific calls/integration.
 Zero-work claim applies to new guarded fixture; existing live regressions use SPICE.
@@ -16,8 +18,8 @@ Zero-work claim applies to new guarded fixture; existing live regressions use SP
 manufactured coupled recovery and independent actual-command audit, plus verified CI.
 
 ## Next action and scheduler
-Verify source-bound CI after the F5 commit; do not repeat successful local suites.
-Before native implementation/study, define a concrete native/solver contract:
+F5 source-bound CI is verified; do not repeat successful tests or CI downloads.
+Next define a concrete minimal native/solver design contract before implementation:
 exact-time/realized-mass, seed, derivatives, guards/full-force and endpoint bounds
 remain unqualified; production73/76/228/300s and prescribed method are unchanged.
 No automatic mission run, new boundary or consumed-study replay is admitted.

@@ -2,7 +2,10 @@ F4 preparation is limited by [ADR0250](../../../docs/adr/0250-design-coupled-coo
 to a private normalized-node/exact-event/artificial-arc bridge contract.
 [ADR0251](../../../docs/adr/0251-qualify-coupled-coordinate-bridge.md) completes
 F5 artificial interface qualification:149 focused/7289 portable/412 live checks
-pass on one1421-file frozen checkout; CI for this source commit remains unobserved. This does not adopt an F0 optimizer,
+pass on one1421-file frozen checkout. Source-bound CI45507393487 on7a1a1da
+passes7664cases/79skips with all149new and7743exact local/CI case IDs; the new
+ADR0251 receipt preserves unchanged skips and the original artifact ZIP.
+This does not adopt an F0 optimizer,
 change the production method or authorize native/mission execution.
 
 ## Why

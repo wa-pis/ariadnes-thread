@@ -1,0 +1,29 @@
+{
+  "anchors": 5,
+  "base_revision": "7a1a1da2ae79218c528ff474ad72789c42c12b6c",
+  "changed_markdown_files": [
+    "CURRENT_STATE.md",
+    "docs/adr/0251-qualify-coupled-coordinate-bridge.md",
+    "docs/adr/README.md",
+    "openspec/ROADMAP.md",
+    "openspec/changes/refine-physical-trajectory/design.md",
+    "openspec/changes/refine-physical-trajectory/proposal.md",
+    "openspec/changes/refine-physical-trajectory/tasks.md"
+  ],
+  "ci_receipt_sha256": "d70d319d516aeead328d00e8a744c01ae9093f58380f8e77478c94eb0f49acd5",
+  "current_state_lines": 49,
+  "independent_final_document_review": "passed; seven Markdown files, source/counters/date/scope/historical receipts coherent",
+  "independent_review": "raw original ZIP, source/qualification/workflow/JUnit hashes, all case inventories, skip reasons, receipt; no blockers",
+  "local_links": 560,
+  "new_scientific_execution": false,
+  "original_ci_zip_sha256": "40e0a0a14584e89b31feb04f960653dcdc2d0c236224d6d6d3292fe90364d207",
+  "runtime_tests_rerun": false,
+  "scope": "documentation and source-bound CI receipt only; no runtime/scientific rerun",
+  "status": "passed",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1123
+}

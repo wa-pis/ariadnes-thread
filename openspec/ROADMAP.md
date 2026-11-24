@@ -17,14 +17,16 @@ platform skips, zero failures/errors and all89 new F3 cases passing; ADR0249
 preserves the original JUnit/environment ZIP and a separate CI receipt.
 [ADR0250](../docs/adr/0250-design-coupled-coordinate-bridge.md) narrows F4
 to one private coordinate/event/arc-request bridge contract with finite artificial
-checks. F5 may qualify that interface; no physical optimizer/native adapter is
+checks. F5 qualifies that artificial interface; no physical optimizer/native adapter is
 adopted. Full-force seed, timing/mass/derivatives/guards and independent endpoint
 bounds remain required; the mandated production method and caps stay unchanged.
 [ADR0251](../docs/adr/0251-qualify-coupled-coordinate-bridge.md) completes F5:
 149 focused/7289 portable/412 live checks,1421 frozen files, guarded73+3/228-slot
 affine fixture, Ruff/review/strict pass. Only the private coordinate/event/derived-
 mass interface is qualified; native timing/guards/full-force and physical F0
-remain open. No source-commit CI result is claimed yet.
+remain open. CI45507393487 on7a1a1da passes7664cases/79skips; all149new pass
+and7743local/CI IDs match. Unchanged42archive+37platform skips and the original
+JUnit/environment ZIP are preserved in the new ADR0251 CI receipt.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

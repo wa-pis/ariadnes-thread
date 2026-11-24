@@ -14,7 +14,11 @@ qualifies only this private interface:149 focused/7289 portable/412 live checks,
 uses73 shooting+3 replay evaluations/228 simulated slots,64KiB input/647B durable
 output and0.043013209s external completion. Fresh interface identity is not proof
 of native-body isolation; these artificial checks do not establish F0 feasibility
-or native timing/mass/error bounds. Source-commit CI remains unobserved.
+or native timing/mass/error bounds. Source-bound CI45507393487 on7a1a1da
+passes7664cases/79skips and all149new;7743local/CI case IDs match exactly.
+The new [CI receipt](../../../docs/adr/experiments/0251-ci-verification.json)
+preserves the original ZIP and unchanged42archive+37platform skip inventory;
+previous qualification JSON retains its historical CI-unobserved status.
 
 #### Binding F0 data and reuse limits
 

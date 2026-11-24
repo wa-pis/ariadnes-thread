@@ -3,7 +3,7 @@
 Date: 2026-11-25 (Europe/Samara)
 Decision status: accepted (private interface implementation only)
 Implementation: complete private bridge and artificial tests; no native adapter or physical optimizer
-Verification: 149 focused, 7289 portable and 412 live checks pass; frozen checkout, Ruff, independent review and documentation/strict checks complete
+Verification: 149 focused, 7289 portable and 412 live checks pass; frozen checkout, Ruff, independent review and documentation/strict checks complete; source-bound CI45507393487 verified
 Scope / milestone: F5 / M3 artificial preparation in the sole active change
 Base revision: `a89e322b75389088a67230812b54ed01dfec99cf` plus three new source/test files; exact measured hashes in the qualification/freeze evidence
 Related OpenSpec: [requirement](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md#requirement-qualify-the-coupled-coordinate-bridge-before-native-adoption), [bridge contract](../../openspec/changes/refine-physical-trajectory/design.md#f4-private-coordinate-bridge-before-native-adoption-2026-11-25), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md)
@@ -98,8 +98,27 @@ Completed checks:
   cases pass, with no lane overlap and no failures/errors.
 - Independent review, protected prior non-Markdown bytes, relative links/anchors,
   diff, CURRENT_STATE under60lines and strict OpenSpec pass. Required local
-  qualification completes F5. Source-commit CI has not yet been observed; this
-  record does not claim it has completed.
+  qualification completes F5. Subsequent source-bound CI is recorded below;
+  the original qualification and final-verification JSON retain their historical
+  CI-unobserved status unchanged.
+
+Subsequent [CI45507393487](https://github.com/wa-pis/ariadnes-thread/actions/runs/45507393487)
+on exact source commit `7a1a1da2ae79218c528ff474ad72789c42c12b6c` succeeds at
+2026-11-24T23:35:00Z. Portable:7288 passed/43 skipped; live:376 passed/36 skipped.
+All7743 unique case IDs match the retained local combined inventory exactly,
+with zero lane overlap, failures or errors; all149 new F5 cases pass. The79 CI
+skips are the same exact ID/reason inventory as ADR0249:42 archival plus37 Linux
+platform cases; every additional platform skip passed locally.
+
+The new [CI receipt](experiments/0251-ci-verification.json) binds run/job/source,
+three measured source/test hashes, workflow, local JUnit files and the original
+[artifact ZIP](experiments/0251-ci-validation-results.zip). ZIP SHA-256
+`40e0a0a14584e89b31feb04f960653dcdc2d0c236224d6d6d3292fe90364d207`
+matches GitHub; both JUnit files and the resolved Conda environment are retained.
+The CI guarded fixture completes in0.100230334s with64KiB input/639B durable
+output; all73+3 evaluations/228 slots and original capacity gates pass.
+This documentary verification reruns no tests or scientific work; the successful
+CI itself includes the existing authorized SPICE/native regression.
 
 Zero SPICE/kernel/real-archive access, native propagations, numerical integrations
 and optimizer calls applies to the **new artificial fixture**, not the whole
