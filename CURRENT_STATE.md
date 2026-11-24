@@ -19,6 +19,9 @@ Full portable: 6961 pass, 42 archival skips, 412 live deselections; checkout fro
 CI45260154283 on1812360:7340 pass,42 archival+37 platform skips,0fail/error;
 all128 P3 cases pass; all7419 case IDs match local combined inventories.
 Both failed CI outcomes preserved; retained execution remains unavailable.
+[ADR0243](docs/adr/0243-design-one-retained-bounded-attempt.md) designs one fixed
+saved attempt: P4 complete; P5 retained binding/qualification and P6 dispatch pending.
+No new calculation or execution authority; four original pins and all gates retained.
 A different Mars phase changes the target and cannot enter the original R5.60.
 Automation `ariadna-m3` stays PAUSED; no further saved execution is authorized.
 

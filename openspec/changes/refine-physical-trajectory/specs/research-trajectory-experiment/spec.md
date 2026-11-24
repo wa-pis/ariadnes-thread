@@ -1100,3 +1100,28 @@ ADR0239, with all original independent command-admission gates unchanged.
 - **AND** exact current-process loader metadata normalization and injected artificial test clocks MAY be repaired without widening permissions, changing historical scientific sources, budgets, tolerances, command/mass gates or immutable evidence
 - **AND** old no-SPICE qualification evidence SHALL remain historical; new source/profile identities and regression outcomes SHALL be retained separately, distinguishing archive/platform skips from passes
 - **AND** successful P3 qualification SHALL authorize no retained binding/search, real witness/refusal, adopted target, physical join, R5.60, M3 closure or automation continuation
+
+
+#### Scenario: Design one retained attempt without executing it
+
+- **WHEN** the user authorizes ADR0243/P4 planning after P3 qualification while forbidding execution, SPICE and integration
+- **THEN** only source/AST, existing metadata, raw hash/size and documentation checks SHALL occur; saved numerical operand extraction/evaluation, scientific imports, new profiles/experimental outputs and retained dispatch SHALL remain zero
+- **AND** the completed 0241 artificial invocation, qualified numerical helpers, historical evidence and scientific gates SHALL remain byte-for-byte unchanged; a minimal versioned retained binding SHALL require separate implementation/qualification and later explicit execution authority
+
+#### Scenario: Seal the one-shot scientific and runtime binding
+
+- **WHEN** a future retained P3 adapter is qualified under ADR0243
+- **THEN** it SHALL independently require exactly the original 0215 attempt/report/receipt and 0217 audit roles/raw hashes fixed in ADR0243 and 0220 PINS, preserving historical encoding/exact-zero view, lineage/upstream metadata, reference digest, candidate d0001-t0035, original epoch words, fixed positive lunar branch and every other physical operand
+- **AND** only Mars anomaly on [150°,152°] SHALL vary under unchanged ADR0240 settings and all point/literal-command/mass gates; no extra scientific archive, endpoint queries, old 360-point numerical replay, source canonicalization or upstream producer/audit execution SHALL be permitted
+- **AND** because the 0241 point adapter admits only artificial scope/candidate, a versioned adapter SHALL change only that identity gate, preserving every other validation/numerical/oracle/literal-command operation and the original source; restricted source/AST difference, both point/audit paths and scope/candidate cross-pair rejection SHALL be verified on fabricated inputs
+- **AND** new retained dispatcher/point/configuration/source identities SHALL be frozen only after artificial qualification, using the repaired 0242 helper bindings and exact qualified local producer/auditor runtime tables/read caps; artificial-bootstrap identity, opaque shared-cache coverage and native loading SHALL NOT be relabelled or overstated, and any drift SHALL leave execution unavailable
+
+#### Scenario: Consume one bounded retained attempt and audit complete outcomes
+
+- **WHEN** P5 is fully qualified and a separate explicit instruction authorizes P6
+- **THEN** one fixed no-argument retained route SHALL atomically reserve only `docs/adr/experiments/0243-p3-retained/` before dispatch, and launch at most one isolated producer plus one separate stdlib independent auditor, with no caller-selected input/profile/phase/output override, overwrite, retry or resume; namespace existence or dispatched failure SHALL consume the whole attempt
+- **AND** work SHALL be precharged within the inherited 129-phase/258-root/258-pair caps per arithmetic path, 30 s startup/authentication/finalization-inclusive producer and separate 30 s auditor, 4 MiB charged source/inputs including rereads and producer-evidence reads per reader, exact frozen runtime read caps, zero interval cells/bounds and 4 MiB total new evidence
+- **AND** that evidence SHALL include a launcher record <=4096 B and separate canonical four-record producer/auditor chains, with <=64 KiB reserved for audit and producer limited to the remaining (4 MiB - 4096 B - 64 KiB); full-volume artificial verification SHALL demonstrate these allocations before real dispatch without raising caps
+- **AND** a complete authenticated producer chain with witness or complete inconclusive exit status SHALL receive the one raw-completion-hash-bound independent audit of every recorded phase, both signed slots, original command words, ledgers, anchors and trace/work/stopping identity, with zero optimizer calls or unrecorded probes; partial/unauthenticated chains SHALL remain failed/consumed without numerical audit
+- **AND** only an independently agreed durably complete witness SHALL conclude analytical existence; an audited no-witness transcript SHALL remain inconclusive, and drift/timeout/partial evidence/cap failure SHALL remain invalid/unverified, never continuous refusal, optimality, adopted target, executable pair, R5.60, physical/M3 closure or safety
+- **AND** all SPICE/kernel/force/integration/old-study/R5.60 work SHALL remain zero while actual numerical/native runtime work SHALL be counted; every terminal result SHALL stop, with automation PAUSED and no automatic successor

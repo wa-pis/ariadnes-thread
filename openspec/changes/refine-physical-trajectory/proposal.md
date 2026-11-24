@@ -41,6 +41,15 @@ exactly match the local combined inventories; prior CI failures remain preserved
 P3 preparation is qualified; no saved P3 search or mission experiment was run or
 newly authorized. Retained execution, physical admission and M3 closure remain unavailable.
 
+ADR0243 now designs one future retained attempt using the same four scientific
+archive pins, candidate/epochs, qualified helper family, [150°,152°] domain,
+129-phase/30 s-per-process/4 MiB limits and independent recorded-point audit.
+Keep the completed artificial invocation unchanged. A minimal retained dispatcher
+and versioned point scope/candidate gate, with all numerical code preserved,
+must qualify on fabricated files before a separately instructed once-only dispatch;
+this stage is design only, with no scientific evaluation, SPICE or integration.
+No result or additional execution authority follows from this proposal.
+
 ### Current priority — R1 mission-first demonstration
 
 - Accepted ADR 0118 fixes the concrete M2 reference: unchanged explicit hypothetical inputs, 50 kg reserve for <=100 m/s additional ideal delta-v, deterministic selection and two bounded reproducibility checks. Separately authorized ADR 0119 verification passes R1.1 (887.966464 kg final >=550 kg); R1.2–R1.4 and strict M3 remain open. The MSL/GRAIL source audit is not a historical replay or same-force oracle.

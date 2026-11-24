@@ -14,6 +14,11 @@ was deferred under the earlier no-SPICE scope. Separately authorized
 CI45260154283 on 1812360 passes both lanes: 7340 pass, 42 archival and 37 platform
 skips, zero failures/errors; all 128 P3 cases pass. Two failed CI runs remain
 preserved. Retained execution remains unavailable; no automatic diagnostic successor.
+[ADR0243](../docs/adr/0243-design-one-retained-bounded-attempt.md) designs one future
+saved attempt with the original four pins, fixed [150°,152°] domain, 129-phase /
+30 s-per-process / 4 MiB limits and separate recorded-point audit. P4 is design only;
+P5 must qualify the minimal retained binding before a separately instructed P6.
+No dispatch, new profile, scientific calculation, SPICE or integration in this stage.
 A changed Mars phase is not the original R5.60 target. Physical admission and
 strict M3 remain open; automation `ariadna-m3` stays PAUSED.
 

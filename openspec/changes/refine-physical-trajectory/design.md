@@ -50,6 +50,43 @@ exactly match the local combined inventories; prior CI failures remain preserved
 P3 preparation is qualified; no saved P3 search or mission experiment was run or
 newly authorized. Retained execution, physical admission and M3 closure remain unavailable.
 
+### P4: one retained bounded attempt (2026-11-24)
+
+[ADR0243](../../../docs/adr/0243-design-one-retained-bounded-attempt.md) fixes exactly
+ADR0215 attempt/report/receipt plus ADR0217 audit, with original raw hashes,
+reference/epoch words and candidate d0001-t0035. Reuse unchanged ADR0240 numerical
+settings and all independent literal-command/mass gates. The 0241 point adapter
+also hard-codes artificial scope/candidate: version only that identity admission,
+preserving all remaining validation/arithmetic and qualifying both point/audit paths.
+A new minimal dispatcher must preserve the completed 0241 command and helpers;
+new dispatcher/point/config/source identities await separate preparation.
+
+The single future `retained` command has no caller-supplied scientific/profile/path
+options. Atomically reserve fixed `docs/adr/experiments/0243-p3-retained/` before
+worker dispatch: one launcher record, producer/ and audit/ four-record chains.
+One cold producer and at most one separate stdlib auditor; namespace existence
+or dispatch failure consumes the whole attempt, with no overwrite/retry/resume.
+Audit any complete authenticated witness or inconclusive transcript (exit0 or2),
+bound to its raw completion hash; never replay the optimizer or probe new phases.
+
+Retain 129 phases / 258 Mars root and pair slots per arithmetic path, 30 s producer
+and separate 30 s auditor inclusive of startup/authentication/finalization, 4 MiB
+charged source/inputs including rereads per process, and 4 MiB aggregate evidence.
+Inside that aggregate allocate <=4096 B launcher, <=64 KiB audit and the remainder
+to producer. The 47,371 B earlier artificial full-volume audit motivates this
+reserve; new full-volume qualification must demonstrate it. Use the exact local
+0242 runtime tables/read caps and current repaired helper identities, never a
+regenerated profile or silently relabelled artificial bootstrap. Missing readiness
+or any exhausted cap blocks execution, without scientific/tolerance changes.
+
+P4 is planning only: no numerical operands evaluated, real run, SPICE or integration.
+P5 needs a separate implementation instruction and artificial command/chain/scope/
+limit/audit qualification plus applicable project checks. Only qualified immutable
+bindings and a new explicit instruction permit P6. Final conclusions remain an
+independently verified analytical witness or inconclusive/invalid; no continuous
+refusal, executable pair, adopted target, physical/M3 closure or automatic successor.
+Automation stays PAUSED; the original R5.60 remains closed.
+
 ### Current priority — R1 mission-first demonstration (2026-10-29)
 
 [ADR 0117](../../../docs/adr/0117-mission-first-demonstration-priority.md)

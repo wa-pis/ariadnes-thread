@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0243 — Design one retained bounded witness attempt](0243-design-one-retained-bounded-attempt.md): fixed four-file binding, unchanged search/point gates, one-shot producer and independent audit; design only, no saved execution.
+
 - [0242 — Complete P3 regression qualification](0242-finish-p3-regression-qualification.md): preserve two CI failures, repair Linux metadata/native-map classification and test clocks; both CI lanes pass on 1812360 without a retained search.
 
 - [0241 — Qualify bounded witness search on artificial inputs](0241-qualify-artificial-bounded-witness-search.md): P3 implementation and artificial-only verification; independent literal-point/trace audit and full-volume limits, with required live qualification still unverified.
