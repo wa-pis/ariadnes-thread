@@ -23,6 +23,8 @@ Both failed CI outcomes preserved; retained execution remains unavailable.
 saved attempt: P4 complete; P5 retained binding/qualification and P6 dispatch pending.
 [ADR0244](docs/adr/0244-start-bounded-autonomous-preparation.md): P5a point unit
 passes161 focused/6998 portable/412 live; CI45347814462 passes, full P5/P6 pending.
+[ADR0245](docs/adr/0245-qualify-retained-dispatch-lifecycle.md):53 synthetic/7051 portable/
+412 live pass; shared-process test seams repaired, CI/readiness/full P5 pending.
 A different Mars phase changes the target and cannot enter the original R5.60.
 Automation ACTIVE/5min; user goal:one admissible saved pair with independent audit.
 
@@ -36,12 +38,12 @@ Both authorizations consumed; no SPICE, integration or R5.60, and no retry.
 No incoming/final-width attribution, general equivalence or physical conclusion.
 
 ## Verified test and CI maintenance
-P5a source:bdfe775; local frozen1347-file checkout on7251265+additive0244.
-Ruff/strict/review and CI45347814462 pass; all7452 local/CI case IDs match.
-CI7373 pass,42 archive+37 platform skips; all33 new tests and local platform cases pass.
-42 exact historical checks remain unverified. Arithmetic/dependencies/workflow unchanged.
-New P3 retained searches and mission experiments:0; ordinary native regressions ran.
-Full local regression rerun for the isolated new P5a code;42archive skips unverified.
+Latest P5 code:f572464c dispatcher; frozen1359-file checkout on3760152+additive0245.
+7505 disjoint local cases:7463pass/42archive skips; current-source CI pending.
+Ruff/strict/review pass;53 new invocation cases pass in the full portable lane.
+P5a CI45347814462 remains verified. New saved searches/mission experiments:0.
+42 exact historical checks unverified; arithmetic/dependencies/workflow unchanged.
+Ordinary live regression used native/SPICE resources; no retained readiness yet.
 
 ## Preserved history and unresolved science
 [ADR0221](docs/adr/0221-record-retained-inter-node-result.md): 64 unresolved leaves;

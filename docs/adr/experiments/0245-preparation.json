@@ -1,0 +1,119 @@
+{
+  "all_previous_non_markdown_files_unchanged": 1052,
+  "base_revision": "376015224484a3739852d86cbab1ff3d0c3ef949",
+  "checks": {
+    "focused-final": {
+      "case_ids_sha256": "0e31ab1ef20cf42372168cd2af21a464e78258b6d5ed6dc8717b9b1ee3aa8164",
+      "junit_elapsed_s": 6.145,
+      "junit_sha256": "317f10a43b2024103d80737172cb28c9ece4610f03c37eb063d8c7948a77aee6",
+      "log_file": "0245-focused-final-tests.log",
+      "log_sha256": "322b4d12bf9d500640fb07f80cb4406f8142e0a44c9bd225fa37e120e5df686b",
+      "outcomes": {
+        "passed": 53
+      },
+      "skip_reasons": {}
+    },
+    "live": {
+      "case_ids_sha256": "beb27332ad49339dfbb95796c6f59520cc535c1b5f7f9350dc1cc2556ffa26ca",
+      "junit_elapsed_s": 579.977,
+      "junit_sha256": "d7cccfed5979f0ebdcc5cbb800a6680c836f04d4bc520be9d1ba4076e291de1f",
+      "log_file": "0245-live-tests.log",
+      "log_sha256": "c7f6d258695efde50bcda62fd43bd221a1433dd79e1a208f5e92a7999ba69d68",
+      "outcomes": {
+        "passed": 412
+      },
+      "skip_reasons": {}
+    },
+    "portable": {
+      "case_ids_sha256": "b12d9c69c76f4e3b8d6a0542261d9e51f6a0d42cbea618c55744da373c82dd91",
+      "junit_elapsed_s": 195.099,
+      "junit_sha256": "136d7910843a333fcdaaf26152a8e218008fb42170bbdb73f8b511e2293bce79",
+      "log_file": "0245-portable-tests.log",
+      "log_sha256": "15273212aee55cacab21bd0460b7a481cae51e1d7d72b047cf4d98cda9254a94",
+      "outcomes": {
+        "passed": 7051,
+        "skipped": 42
+      },
+      "skip_reasons": {
+        "exact historical-environment check; enable with --run-archive": 42
+      }
+    },
+    "reread-cap-repair": {
+      "case_ids_sha256": "cfc243b1c71c3eef23f51a20e5a8a0c5648c0ef805c3953f7b4c74157489cb01",
+      "junit_elapsed_s": 0.209,
+      "junit_sha256": "fcd1d96f8d7f3a71cf2f37856efff9a3124257eec4fe42190bed52b0ee22c230",
+      "log_file": "0245-reread-cap-repair-tests.log",
+      "log_sha256": "4749926e82dc70248ebe26b4a4a5957a7acb3cd7d0c2f630cf4a683b6065afec",
+      "outcomes": {
+        "passed": 3
+      },
+      "skip_reasons": {}
+    }
+  },
+  "ci": {
+    "status": "pending"
+  },
+  "first_failed_portable": {
+    "archive_skips": 42,
+    "elapsed_s": 195.31,
+    "failures": [
+      "tests.test_retained_bounded_invocation::test_per_reader_cap_charges_each_reread[configuration]",
+      "tests.test_retained_bounded_invocation::test_per_reader_cap_charges_each_reread[producer-evidence]",
+      "tests.test_retained_bounded_invocation::test_per_reader_cap_charges_each_reread[source]"
+    ],
+    "frozen_checkout_verified": true,
+    "log_sha256": "69d85969d137adfeac603585666f67ea42db73a20c59b26301bd6b59088199d1",
+    "passed": 7048,
+    "reason": "3 common reader-cap unit seams used a stdlib-only Guard in a pytest process with prior NumPy/SciPy imports; production and scientific gates unchanged"
+  },
+  "focused_test_sha256_before_shared_process_seam_repair": {
+    "tests/retained_bounded_fixtures.py": "9ad0c7416a3b1e5000af36f24eec4f2330b968f5056cddce08a07ac7e92adece",
+    "tests/test_retained_bounded_invocation.py": "47d24ce4d4212c89bb89a2be97be6c91640ff5c0cf35003b50cf352369794934"
+  },
+  "frozen_checkout": {
+    "after_sha256": "615e23fd83297e5a45b5d345cfbe1219ef75a73bc076e956602f6afbd845f7c9",
+    "before_sha256": "615e23fd83297e5a45b5d345cfbe1219ef75a73bc076e956602f6afbd845f7c9",
+    "git_visible_files": 1359,
+    "head_and_status_and_all_visible_files_unchanged": true
+  },
+  "initial_focused_failure": {
+    "failed": 2,
+    "log_sha256": "e1216f00b5792257b069cdcac8bd89940d279439129f7dae8e5947d3aef17295",
+    "passed": 48,
+    "reason": "stale test interception after bootstrap read boundary changed"
+  },
+  "interrupted_nonqualifying_invocation": {
+    "log_sha256": "fbb3883b227f1dfb9ddd5e186251074a7e12db5c5cbb9c19b3d5055f6ba45cbc",
+    "reason": "missing --offline; deliberately interrupted, not counted as qualification"
+  },
+  "local_case_union": {
+    "archive_skips": 42,
+    "lane_overlap": 0,
+    "passed": 7463,
+    "unique_cases": 7505
+  },
+  "new_mission_experiments": 0,
+  "new_retained_searches": 0,
+  "ordinary_live_regression_includes_spice_and_native_work": true,
+  "p5_complete": false,
+  "retained_readiness_created": false,
+  "review": "passed; no blocking findings",
+  "ruff": "passed",
+  "schema": "ariadna-p5-retained-dispatch-preparation-v1",
+  "science_outcome": "none; fabricated qualification only",
+  "selected_goal": "one admissible pair on fixed saved inputs with independent audit; no99%probability or physical closure claim",
+  "source_sha256": {
+    "docs/adr/experiments/0245-binding.json": "bbf8c676cad43bfcc955f83f8bab41605bdfe4275f797931b610761c68c312e5",
+    "docs/adr/experiments/0245-retained-invocation.py": "f572464c18824308e51783490618e460b886562615fe86a716856f61e4749bb3",
+    "tests/retained_bounded_fixtures.py": "9ad0c7416a3b1e5000af36f24eec4f2330b968f5056cddce08a07ac7e92adece",
+    "tests/test_retained_bounded_invocation.py": "c296c2a44a743ef73d95224eb755060ba4f376d045a9825f4cfbdff83aa1ff1f"
+  },
+  "strict_openspec": "passed",
+  "synthetic_observations": {
+    "file": "0245-synthetic-observations.json",
+    "focused_successful_cold_pipelines": 6,
+    "retained_runtime_tables_unchanged": true,
+    "sha256": "25746f1e7dca78e2aadad01d71bd15a8f19e0ab44a292139d3ba0a605d9630d7"
+  },
+  "tested_checkout": "frozen dirty additive0245 checkout; no clean-revision claim"
+}

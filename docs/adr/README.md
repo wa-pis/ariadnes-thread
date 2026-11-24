@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0245 — Qualify the retained dispatch lifecycle](0245-qualify-retained-dispatch-lifecycle.md): remaining P5 implementation and fabricated full-volume qualification in progress; fixed saved attempt remains unavailable.
+
 - [0244 — Start bounded autonomous preparation](0244-start-bounded-autonomous-preparation.md): user selects one admissible pair with independent audit; five-minute automation is active, and the isolated point-identity unit passes local checks and source-bound CI while full P5 remains open.
 
 - [0243 — Design one retained bounded witness attempt](0243-design-one-retained-bounded-attempt.md): fixed four-file binding, unchanged search/point gates, one-shot producer and independent audit; design only, no saved execution.

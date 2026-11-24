@@ -24,7 +24,10 @@ records the new standing instruction: independent P5 preparation may proceed;
 P5a point-identity unit passes161 focused/6998 portable/412 live checks, with42
 archive skips. CI45347814462 onbdfe775 passes all33 new cases; all7452 local/CI
 case IDs match, with7373 CI passes and42 archive+37 platform skips. Full P5/P6
-remain unavailable. User
+remain unavailable. [ADR0245](../docs/adr/0245-qualify-retained-dispatch-lifecycle.md)
+implements the remaining dispatcher:53 synthetic/7051 portable/412 live checks
+pass with42 archival skips;1359-file checkout frozen. CI and retained readiness
+remain pending. User
 selected one admissible saved pair plus independent audit; the five-minute
 heartbeat is ACTIVE and will stop on a terminal result or needed decision.
 A changed Mars phase is not the original R5.60 target. Physical admission and

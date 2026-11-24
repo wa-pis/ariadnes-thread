@@ -1,0 +1,233 @@
+{
+  "focused_successful_cold_pipelines_total": 6,
+  "new_retained_searches": 0,
+  "new_spice_or_force_or_integrations": 0,
+  "observations": [
+    {
+      "audit_chain_bytes": 27898,
+      "audit_completion_sha256": "4f4e5a5983c57e03f88bac43a300d4c4785bcd11b67209f8d3c1e97e37a6e6c6",
+      "audit_counters": {
+        "anchors": 3,
+        "blocked_attempts": 0,
+        "finals": 0,
+        "objective": {
+          "negative": 0,
+          "positive": 3
+        },
+        "pair_slots": 12,
+        "phases": 6,
+        "root_slots": 12
+      },
+      "audit_optimizer_calls": 0,
+      "audit_report": "/private/var/folders/kh/0kc0tcyj5z5_lg7s2qdzc3rm0000gn/T/pytest-of-agrudin/pytest-2413/test_cold_parent_producer_and_0/run/audit/report.json",
+      "audit_runtime_read_bytes": 38953165,
+      "audit_source_bytes": 918291,
+      "combined_evidence_bytes": 287261,
+      "counters": {
+        "anchors": 3,
+        "blocked_attempts": 0,
+        "finals": 0,
+        "objective": {
+          "negative": 0,
+          "positive": 3
+        },
+        "pair_slots": 12,
+        "phases": 6,
+        "root_slots": 12
+      },
+      "driver": "bounded",
+      "input_bytes": 125636,
+      "input_inventory_rows": 360,
+      "input_pair_slots": 360,
+      "producer_chain_bytes": 257507,
+      "producer_completion_sha256": "fffb2a882c34a65647dee4527762f222cc1223c5c55966e32b30d2f7fa6735a9",
+      "producer_report": "/private/var/folders/kh/0kc0tcyj5z5_lg7s2qdzc3rm0000gn/T/pytest-of-agrudin/pytest-2413/test_cold_parent_producer_and_0/run/producer/report.json",
+      "producer_runtime_read_bytes": 213095921,
+      "producer_source_bytes": 1498790,
+      "runtime_exact_0242": {
+        "audit": true,
+        "producer": true
+      },
+      "scientific_status": "verified-analytical-witness",
+      "scope": "artificial",
+      "terminal": {
+        "evidence_bytes": 287261,
+        "exit_code": 0,
+        "parent_elapsed_ns": 901681625,
+        "parent_source_bytes": 787141,
+        "schema": "ariadna-p3-retained-terminal-v1",
+        "stages": [
+          {
+            "elapsed_ns": 743643875,
+            "exit_code": 0,
+            "mode": "producer"
+          },
+          {
+            "elapsed_ns": 158036583,
+            "exit_code": 0,
+            "mode": "audit"
+          }
+        ],
+        "terminal_status": "verified-analytical-witness"
+      }
+    },
+    {
+      "audit_chain_bytes": 32360,
+      "audit_completion_sha256": "034c0f243feb98a006a83dc45439ce4505cb1e978146e003b3ec3dca34401557",
+      "audit_counters": {
+        "anchors": 3,
+        "blocked_attempts": 0,
+        "finals": 1,
+        "objective": {
+          "negative": 1,
+          "positive": 26
+        },
+        "pair_slots": 62,
+        "phases": 31,
+        "root_slots": 62
+      },
+      "audit_optimizer_calls": 0,
+      "audit_report": "/private/var/folders/kh/0kc0tcyj5z5_lg7s2qdzc3rm0000gn/T/pytest-of-agrudin/pytest-2413/test_cold_parent_producer_and_1/run/audit/report.json",
+      "audit_runtime_read_bytes": 38953165,
+      "audit_source_bytes": 1013277,
+      "combined_evidence_bytes": 382279,
+      "counters": {
+        "anchors": 3,
+        "blocked_attempts": 0,
+        "finals": 1,
+        "objective": {
+          "negative": 1,
+          "positive": 26
+        },
+        "pair_slots": 62,
+        "phases": 31,
+        "root_slots": 62
+      },
+      "driver": "bounded",
+      "input_bytes": 125604,
+      "input_inventory_rows": 360,
+      "input_pair_slots": 360,
+      "producer_chain_bytes": 348063,
+      "producer_completion_sha256": "368153c18154aa8281cd974e6339673564ec534e79640de1effb8eb68bc5b64a",
+      "producer_report": "/private/var/folders/kh/0kc0tcyj5z5_lg7s2qdzc3rm0000gn/T/pytest-of-agrudin/pytest-2413/test_cold_parent_producer_and_1/run/producer/report.json",
+      "producer_runtime_read_bytes": 213095921,
+      "producer_source_bytes": 1589314,
+      "runtime_exact_0242": {
+        "audit": true,
+        "producer": true
+      },
+      "scientific_status": "inconclusive/invalid",
+      "scope": "artificial",
+      "terminal": {
+        "evidence_bytes": 382279,
+        "exit_code": 2,
+        "parent_elapsed_ns": 956297541,
+        "parent_source_bytes": 882159,
+        "schema": "ariadna-p3-retained-terminal-v1",
+        "stages": [
+          {
+            "elapsed_ns": 768916666,
+            "exit_code": 2,
+            "mode": "producer"
+          },
+          {
+            "elapsed_ns": 187379667,
+            "exit_code": 0,
+            "mode": "audit"
+          }
+        ],
+        "terminal_status": "inconclusive/invalid"
+      }
+    },
+    {
+      "audit_chain_bytes": 47744,
+      "audit_completion_sha256": "704cd46f3fa8822f33cc4a69c0ee96320dfd4857310d4c970a23daa649fd8db9",
+      "audit_counters": {
+        "anchors": 3,
+        "blocked_attempts": 0,
+        "finals": 2,
+        "objective": {
+          "negative": 62,
+          "positive": 62
+        },
+        "pair_slots": 258,
+        "phases": 129,
+        "root_slots": 258
+      },
+      "audit_optimizer_calls": 0,
+      "audit_report": "/private/var/folders/kh/0kc0tcyj5z5_lg7s2qdzc3rm0000gn/T/pytest-of-agrudin/pytest-2413/test_cold_parent_producer_and_2/run/audit/report.json",
+      "audit_runtime_read_bytes": 38953165,
+      "audit_source_bytes": 2360056,
+      "combined_evidence_bytes": 788688,
+      "counters": {
+        "anchors": 3,
+        "blocked_attempts": 0,
+        "finals": 2,
+        "objective": {
+          "negative": 62,
+          "positive": 62
+        },
+        "pair_slots": 258,
+        "phases": 129,
+        "root_slots": 258
+      },
+      "driver": "artificial-full-volume",
+      "input_bytes": 1065959,
+      "input_inventory_rows": 360,
+      "input_pair_slots": 720,
+      "producer_chain_bytes": 739088,
+      "producer_completion_sha256": "3f152416b6787364f9b878b8efb29e88882ea2082ef22b70e6a7d1e048b455e0",
+      "producer_report": "/private/var/folders/kh/0kc0tcyj5z5_lg7s2qdzc3rm0000gn/T/pytest-of-agrudin/pytest-2413/test_cold_parent_producer_and_2/run/producer/report.json",
+      "producer_runtime_read_bytes": 213095921,
+      "producer_source_bytes": 2920709,
+      "runtime_exact_0242": {
+        "audit": true,
+        "producer": true
+      },
+      "scientific_status": "inconclusive/invalid",
+      "scope": "artificial",
+      "terminal": {
+        "evidence_bytes": 788688,
+        "exit_code": 2,
+        "parent_elapsed_ns": 1220976167,
+        "parent_source_bytes": 1288583,
+        "schema": "ariadna-p3-retained-terminal-v1",
+        "stages": [
+          {
+            "elapsed_ns": 905123250,
+            "exit_code": 2,
+            "mode": "producer"
+          },
+          {
+            "elapsed_ns": 315852000,
+            "exit_code": 0,
+            "mode": "audit"
+          }
+        ],
+        "terminal_status": "inconclusive/invalid"
+      }
+    }
+  ],
+  "schema": "ariadna-p5-final-synthetic-observations-v1",
+  "scope": "fabricated qualification only; no retained data or namespace",
+  "source_sha256": {
+    "anchors": "7fadcb3fc9de4a43aa1ce80efd30d2e6499f76ee4918519cf8783d50bca2057e",
+    "archive": "43c4c3b7fe1f82324a4833ea74a22aaed9922e8c0f9ea67fa0aa76161062dcf8",
+    "core": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+    "invocation": "f572464c18824308e51783490618e460b886562615fe86a716856f61e4749bb3",
+    "io": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "legacy_audit": "ed7956d5ec65d5693309773a2361295fe097ff5357cca5b27cb0a74c4f64c524",
+    "oracle": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+    "orbit": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+    "points": "5c8d8b549419ba93199fc7c42db99b7160e15e30a9ba54562ae97061918e5440",
+    "reader": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+    "runtime": "3863f812f210d162c9834e73b6f15672d9a2ff4d4c2d3fc5df0eb83e50f86ff1",
+    "screen": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b",
+    "search": "dba342eadc49a34e0cdc0ec6bed06fdb8e3595457cb250d36b7b2d38ecffcbdd",
+    "trace": "f564df19de8c4b614d69af26fd0df7774a8b73e48954e0d857b4d74a17c22f14"
+  },
+  "test_sources_sha256": {
+    "tests/retained_bounded_fixtures.py": "9ad0c7416a3b1e5000af36f24eec4f2330b968f5056cddce08a07ac7e92adece",
+    "tests/test_retained_bounded_invocation.py": "47d24ce4d4212c89bb89a2be97be6c91640ff5c0cf35003b50cf352369794934"
+  }
+}
