@@ -1,5 +1,38 @@
 ## ADDED Requirements
 
+### Requirement: Qualify the coupled coordinate bridge before native adoption
+
+Private preparation SHALL follow ADR0250's coordinate/event/arc-request contract
+using six physical controls and two auxiliary normalized translation nodes.
+It SHALL NOT adopt a physical optimizer, change the production algorithm/caps,
+or imply native/full-force/physical qualification from fabricated tests.
+
+#### Scenario: Preserve normalized coordinates and exact event meaning
+
+- **WHEN** the private bridge decodes an artificial18-value input
+- **THEN** its two nodes use the fixed1000m/1m/s scales with exact rational accumulation and one binary64 rounding, raw signed defects remain in SI and separate scaled residuals use1000m/0.01m/s, zero offsets preserve anchor words, and t0/tf words stay fixed with exact rational t1/t2 from binary64 duration inputs
+- **AND** exact events/ledger, rounded labels/masses and signed conversion differences remain separate; mass uses the existing binary64 rate word, equality at dry mass is admitted and a sub-ULP shortfall is rejected
+- **AND** boolean/nonfinite/malformed inputs, collapsed physical perturbations and unsupported native time reduction cannot silently become valid physical trials
+
+#### Scenario: Exercise modes and continuity without native execution
+
+- **WHEN** the evaluator uses the injected artificial arc function
+- **THEN** departure/coast/arrival receive the specified starts, derived masses, exact events and Moon-TNW/no-engine/Mars-TNW modes in a fresh mutable context, with signed18translation defects and separate time/mass checks
+- **AND** shooting and unreset replay are distinct explicit three-arc evaluation modes; replay carries actual preceding state/mass and is independent of node changes at fixed controls; exact rational endpoint identity is mandatory before the separate1e-6s rounded-label check, and no unsafe/partial/failed arc yields a normal physical result or retry
+
+#### Scenario: Independently verify large-coordinate and finite-capacity cases
+
+- **WHEN** F5 artificial qualification runs
+- **THEN** independent rational/affine expectations check unshifted and2^37m/2^14m/s/1e9s shifted inputs within0.001m/1e-6m/s/1e-6s/1e-9kg, and every field is exercised with the declared fixed physical increments without asserting F0 derivative accuracy
+- **AND** a full-volume fixture checks73controls+3diagnostics/228injected arc slots and next-work refusal, first failure, shared15s deadline including startup/finalization,10s producer cutoff,64KiB input/128KiB output and zero new SPICE/kernel/real-archive/native/integration/optimizer work, with simulated_arc_slots separated from actual native_propagations=0
+- **AND** focused and both frozen required regression lanes, Ruff, independent review and strict OpenSpec pass before F5 is marked complete; ordinary existing live regression remains permitted separately
+
+#### Scenario: Keep native and physical adoption unavailable
+
+- **WHEN** F4 design or later artificial F5 completes
+- **THEN** only bridge design or interface qualification is claimed respectively; original boundary/hardware/force/target/join/safety/error-bound gates and production73/76/228/300s ceilings remain binding
+- **AND** a complete native seed, exact-event/realized-mass qualification, guards/full-force parity, physical derivatives, independent endpoint bounds and explicit production-method reconciliation remain required before native/physical adoption; no mission experiment or consumed-study replay is authorized
+
 ### Requirement: Qualify coupled shooting on an analytic finite-burn benchmark
 
 Before a coupled method is adopted for F0, private preparation SHALL implement

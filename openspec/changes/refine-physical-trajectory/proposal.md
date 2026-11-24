@@ -1,3 +1,8 @@
+F4 preparation is limited by [ADR0250](../../../docs/adr/0250-design-coupled-coordinate-bridge.md)
+to a private normalized-node/exact-event/artificial-arc bridge contract. F5 may
+qualify its interface on fabricated data. This does not adopt an F0 optimizer,
+change the production method or authorize native/mission execution.
+
 ## Why
 
 Resumed by explicit user approval on 2026-09-07 after delivery and archival of

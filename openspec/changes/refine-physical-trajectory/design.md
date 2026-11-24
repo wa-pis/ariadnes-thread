@@ -1,5 +1,124 @@
 ## Context
 
+### F4: private coordinate bridge before native adoption (2026-11-25)
+
+[ADR0250](../../../docs/adr/0250-design-coupled-coordinate-bridge.md) selects one
+small artificial interface qualification before a physical optimizer. F4's
+previous promise of a complete executable F0 profile is narrowed explicitly:
+this contract selects coordinate/event/arc-request semantics only. F0 method
+adoption and mission execution remain unavailable.
+
+#### Binding F0 data and reuse limits
+
+Keep [ADR0135](../../../docs/adr/0135-fixed-orbit-boundary-contract.md)'s exact
+0098 departure-ignition/target six-states, UTC labels and the four pins in
+[ADR0205](../../../docs/adr/0205-design-fixed-command-physical-join.md#inputs-events-and-declared-mass).
+Candidate is d0001-t0035, t0 word `0x1.d2d247f9d7e7ap+29`, tf word
+`0x1.ded341cb4c44bp+29`; units SI, TDB seconds since J2000, SSB/J2000.
+Hardware stays2000/500 kg,1000 N,Isp450 s,area20 m^2,Cr1.3. No dates, phases,
+planes, apsides, extra burns, hardware, force resources or gates become free.
+These values are copied from existing records, not evaluated in F4.
+
+| Existing seam | Reuse boundary / unresolved qualification |
+| --- | --- |
+| `trajectory._build_physical_environment` | Direct geometric SPICE; Sun/Mercury/Venus/Earth/Moon/Mars/Jupiter/Saturn, Moon200/Mars120 harmonics, other six point gravities, solar SRP with Moon/Earth/Mars occultation and Sun Schwarzschild. Retain all resources/frames/coverage/PPN checks; no environment is built in F4/F5. |
+| `_install_tnw_engine`, `_build_arc_force_models` | Departure uses moving Moon-relative TNW, arrival Mars-relative TNW; coast has no thrust. Explicit mode applies through an arc's final stage. Native bodies/models are mutable and must not leak between evaluations. |
+| `_build_coupled_arc_settings`, `_run_native_arc`, `_read_completed_arc_state` | Arbitrary seven-state starts and checked native endpoint reading exist; float-only epoch reduction is not qualification of exact event packets. Future native wiring must preserve or bound clock conversion and propagated mass. |
+| `_RefinementBudget` | Keep73control/76evaluation/228native-call caps, three arcs/evaluation and300s inclusive deadline. Cooperative checks cannot preempt opaque native work; full-force inner counters and watchdog admission remain open. |
+| Whole research executor / production corrector | Do not reuse as an optimizer. The former chains endpoints and rejects mass==dry; production explicitly mandates six-control FD/lstsq, fixed probes/damping and eight iterations. F3's TRF is not adopted here. |
+
+#### Private bridge interface and arithmetic
+
+Use one private module, planned as `space_nav._coupled_bridge`, with one injected
+three-phase arc callable for tests. No plugin registry, public CLI/API or generic
+propagation framework. Accept fixed initial/target six-states, endpoint words,
+vehicle, two immutable six-state anchors A1/A2 and an 18-value vector:
+six physical `(a_d,e_d,tau_d,a_a,e_a,tau_a)` values in rad/s, then two
+six-component dimensionless offsets u1/u2. Times and masses are not variables.
+
+1. Reconstruct z_i=A_i+S*u_i with S=(1000,1000,1000 m,1,1,1 m/s).
+   Accumulate each component from exact Fractions of its binary64 inputs, then
+   round once to binary64; do not use an unspecified multiply/add order.
+   Zero offsets return the anchor word directly, including signed zero. Keep raw
+   decoded states and signed18 translation defects. Residual scaling remains
+   1000 m per position and0.01 m/s per velocity component; it is distinct from S.
+   No node box, trust region, optimizer or Jacobian policy is adopted.
+2. Canonical control/domain rules remain those of `_prepare_burn_controls`:
+   azimuth[-pi,pi), elevation[-pi/2,pi/2], positive burns/coast, finite nonboolean
+   inputs and exact dry-mass comparison. Reuse compatible pure helpers; its
+   rounded absolute switch tests are not an oracle for exact event packets.
+   Cross-check canonical/domain parity wherever the float and exact domains agree.
+3. Treat each input float as its exact binary64 value with stdlib Fraction.
+   Store t0/tf words unchanged, exact t1=Fraction(t0)+Fraction(tau_d) and
+   t2=Fraction(tf)-Fraction(tau_a), and exact ordered spans. Retain rounded
+   labels and signed rounding differences separately. Neither labels nor an
+   elapsed clock may silently replace these exact event meanings. A positive
+   exact span with collapsed float labels is unready for the current native path,
+   not proof that the physical control is invalid. No new time freedom is added.
+4. First compute the existing binary64 exhaust velocity `float(g0*Isp)` and
+   binary64 b=`F/exhaust_velocity`; freeze that word. Form exact m1=m0-b*tau_d,
+   m2=m1 and mf=m1-b*tau_a using Fractions of those words. Check against exact
+   dry mass before one float conversion; equality is allowed. Retain exact
+   ledger, rounded mass and signed conversion error. This does not qualify
+   native mass or erase realized-duration discrepancies.
+5. Build departure request(y0,m0,t0,t1,Moon,TNW,burn), coast request(z1,m1,t1,t2,
+   no engine), arrival request(z2,m2,t2,tf,Mars,TNW,burn). Each request carries
+   exact events, SI/SSB/J2000 metadata and explicit mode; fabricated inputs are
+   additionally labelled artificial. Use a fresh injected mutable context per
+   evaluation, not a cached native body system. No parallel SPICE/PPN mutation.
+6. Collect raw signed translation defects `Phi_d(y0)-z1`, `Phi_c(z1)-z2`,
+   `Phi_a(z2)-target`. Check event/mass outputs separately against exact packets;
+   never append free node masses or silently overwrite them. An unreset replay
+   starts at y0/m0 and carries each returned state AND mass into the next arc.
+   Changing a shooting node may change defects but cannot change that replay
+   at fixed controls. Shooting and unreset replay are separate explicit modes;
+   one evaluation performs exactly one three-arc path, never an implicit extra
+   replay. The injected endpoint must retain EXACT rational event identity;
+   the1e-6s rounded-label gate is secondary and cannot hide premature reduction.
+   Failure/unresolved safety discards the context and exposes no normal physical
+   result; no penalty, retry or best-effort trajectory.
+
+Future native adoption requires an admissible complete unreset full-force seed
+for A1/A2; M2/v-infinity is a control seed, not those native nodes. F5 uses only
+explicit fabricated anchors. Rational bookkeeping alone does not show that
+Tudat/SPICE consumes the time packet or supplies independent error bounds.
+
+#### F5 artificial verification and finite budget
+
+Independent test expectations use stdlib exact rational arithmetic for event,
+mass and affine maps, not the bridge's own decoder. Inject a separately written
+closed-form affine test flow or explicit spy endpoints, not a real force model.
+No optimizer, numerical integration, SPICE, kernel/real-archive access or native
+propagation is permitted in the new bridge qualification; existing required
+live regression tests remain separately permitted.
+
+| Check | Explicit artificial closure criterion |
+| --- | --- |
+| Coordinate/epoch offset cases | Test unshifted and synthetic large-coordinate anchors using exact offsets2^37 m in position,2^14 m/s in velocity and1e9 s in epoch, with consistent affine position/velocity/time translation. Compare decoded defects/replay with independently rounded exact expectations within0.001 m/1e-6 m/s and time/mass within1e-6 s/1e-9 kg. Zero offsets preserve words. No real SSB/ephemeris-truth claim. |
+| Perturbation signal | Exercise every control field with existing1e-5 rad/1s forward increments and every node field with1m/1e-4m/s increments, mapped through S. Assert requested changed physical components survive reconstruction; collapsed/nonfinite increments fail explicitly, without increasing a step. These are artificial representability checks, not an adopted/validated F0 Jacobian. |
+| Clock and mass | Exact t0/tf word binding, fractional durations, premature-float-conversion tampering, collapsed rounded spans, sequential ledger, equality at dry mass and sub-ULP shortfall; wrong decimal mass-rate recomputation is rejected. |
+| Arc/lifecycle behavior | Check all three starts, derived masses/events, Moon/Mars/coast modes, fresh context, terminal-stage mode, unsafe/failed/partial arc and missing native-time information; a normal read is not a safety certificate. Fake replay cannot reset to nodes or ledger mass. |
+| Full volume / failures | In one fixture exercise73shooting control evaluations plus3explicit frozen replay/diagnostic evaluations,228injected arc slots total. Existing budget increment rules apply before analytic rejection/native-slot attempt; reject the next control/evaluation/arc before work. Test abort on first failure, no retry, one shared deadline and reserve, and exact/above byte caps. Report simulated_arc_slots separately from actual native_propagations=0; no native work is hidden under a fake counter name. |
+
+Full-volume fixture limit: one shared15s including subprocess bootstrap and durable
+summary, with producer complete by10s and remaining5s reserved for finalization;
+external stdlib subprocess watchdog15s, no clock resets. At most64KiB explicit
+fabricated input and128KiB summary/log output, no per-stage history. Only228
+small injected calls are permitted, with no opaque native work; this justifies
+checking interface capacity cheaply, not projecting mission runtime. Use a
+small test subprocess, not a new production launcher. Other artificial fixtures
+use the same per-fixture ceilings; full pytest/CI retain their existing limits.
+
+Completion requires focused tests, both frozen required regression lanes, Ruff,
+independent review, links/protected bytes/diff and strict OpenSpec; preserve new
+evidence and failures. Report interface qualification only. Native exact-time/
+mass/guards/full-inventory parity, safe seed, physical derivative accuracy,
+independent reverse path and endpoint-error bounds remain explicit blockers to
+physical adoption. The unchanged final1000m/0.01m/s and join1e-6s/0.001m/1e-6m/s/
+1e-9kg gates, model/profile diagnostics and300s mission cap are not replaced.
+Before native implementation or a mission study, adopt a concrete native/solver
+contract and applicable authority; no automatic R5.60 or diagnostic successor.
+
 ### F3: artificial coupled method qualified (2026-11-25)
 
 [ADR0249](../../../docs/adr/0249-qualify-coupled-artificial-shooting.md) implements

@@ -16,12 +16,13 @@ Ruff/review/links/protected history/strict pass. CI45493818215 on95ae3a3 passes:
 Measured base0e09f5c plus6new source/test files; exact hashes/logs in ADR0249.
 
 ## Next action and scheduler
-F4: review existing full-force/time/frame/mass wiring, boundary/seed binding,
-scaling and independent numerical/model/error-bound gaps; write one concrete
-bounded F0 method/verification contract before implementation or a mission run.
-Use the simplest end-to-end path; no automatic extra diagnostic campaign.
+[ADR0250](docs/adr/0250-design-coupled-coordinate-bridge.md) completes F4 design:
+private normalized-node/exact-event/artificial-arc bridge; no physical solver adopted.
+Next F5: qualify only this interface with independent fabricated inputs and cap tests.
+Native timing/mass/seed/derivatives/guards/full-force/error bounds remain unqualified;
+production corrector and73/76/228/300s caps stay unchanged. No automatic mission run.
 User resumed `ariadna-m3` on2026-11-25: ACTIVE every5minutes, samechat.
-Continue authorized read-only preparation with pinned Conda and ponytail.
+Continue ADR0250 artificial preparation with pinned Conda and ponytail.
 Pause on required user choice/access/authorization, contract-changing failure,
 or independently verified agreed success. Do not replay consumed studies/R5.60.
 

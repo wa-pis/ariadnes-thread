@@ -15,8 +15,11 @@ P6 is consumed and physical F0 feasibility/strict M3 remain open.
 Source-bound CI45493818215 on95ae3a3 passes7515 cases, with42 archival and37
 platform skips, zero failures/errors and all89 new F3 cases passing; ADR0249
 preserves the original JUnit/environment ZIP and a separate CI receipt.
-Next F4 reviews the minimal production adoption gaps and writes one concrete
-bounded F0 method/verification contract before implementation or a mission run.
+[ADR0250](../docs/adr/0250-design-coupled-coordinate-bridge.md) narrows F4
+to one private coordinate/event/arc-request bridge contract with finite artificial
+checks. F5 may qualify that interface; no physical optimizer/native adapter is
+adopted. Full-force seed, timing/mass/derivatives/guards and independent endpoint
+bounds remain required; the mandated production method and caps stay unchanged.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.
