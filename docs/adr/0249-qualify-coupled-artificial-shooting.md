@@ -95,7 +95,9 @@ binds run/job/commit, six source/test hashes and the original
 [artifact ZIP](experiments/0249-ci-validation-results.zip), including both JUnit
 files and the resolved Conda environment; the ZIP matches GitHub
 SHA-256 `60b564fd8aae4b1673a6db5516b650dcc02738cffd7f4bc9ae86c3c3ca1e6d42`.
-This documentation/evidence update reruns no tests or scientific work.
+This documentation/evidence update reruns no tests or scientific work. The
+receipt verification counters describe this documentary update only; the
+completed CI live lane includes existing SPICE/native regression work.
 
 Evidence: [final run](experiments/0249-coupled-benchmark/report.json),
 [independent audit](experiments/0249-coupled-benchmark/audit.json),
