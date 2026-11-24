@@ -1,5 +1,69 @@
 ## ADDED Requirements
 
+### Requirement: Classify the coupled mission inputs before another search
+
+The M3 research design SHALL maintain ADR0247's source-linked ledger separating
+mission requirements, currently fixed boundary/reference data, existing physical
+controls, derived quantities, auxiliary transcription unknowns and proposed future
+variables. Historical reproduction choices SHALL NOT silently become universal
+mission requirements or currently free inputs. Design acceptance SHALL NOT
+change the public physical-refinement contract or authorize a scientific run.
+
+#### Scenario: Review the complete variable ledger
+
+- **WHEN** the coupled formulation is reviewed before method selection
+- **THEN** it identifies vehicle data, both orbit geometries/phases, date bounds, selected epochs, boundary six-states, all six existing TNW/duration controls, switching epochs, masses, seed data, checkpoint role, dynamics/resources and acceptance gates with their sources and current roles
+- **AND** switching epochs and masses are marked derived, while any shooting states are auxiliary unknowns subject to continuity rather than additional maneuvers
+
+#### Scenario: Preserve binding boundaries while exposing proposed freedom
+
+- **WHEN** free dates, departure/arrival phase or orbit-membership targeting are considered
+- **THEN** they remain proposed extensions until an explicit changed boundary contract is adopted; the original fixed t0/tf, configured phases, plane/apsides, hardware and tolerances remain binding for F0 and all retained evidence is unchanged
+- **AND** an altered phase or date cannot be labelled the original ADR0135/0205 target or reuse an obsolete body state as its new boundary
+
+### Requirement: Formulate one coupled orbit-to-orbit finite-burn problem
+
+F0 SHALL specify one SI/SSB/J2000 seven-component position/velocity/mass history
+in TDB seconds since J2000 from the configured lunar ignition state to the
+configured Martian cutoff state. It SHALL use the unchanged full M3 force model,
+two maximum-thrust TNW burns and the six already specified controls. M2 Lambert
+endpoints/excess vectors SHALL be seed information rather than additional
+physical endpoint constraints. This is a mathematical design, not a solver.
+
+#### Scenario: Define the physical events and mass constraints
+
+- **WHEN** F0 is expressed as equations and constraints
+- **THEN** it includes dr/dt=v, non-thrust plus finite-thrust acceleration, dm/dt=-F/(g0*Isp) on burns and zero coast mass rate, fixed initial/target six-states at their respective epochs, t1=t0+tau_d<t2=tf-tau_a with positive durations, and m(t)>=500 kg for this reference
+- **AND** terminal mass is derived rather than fixed equal to 500 kg; any R1 reserve claim retains its additional 550 kg threshold and declared scope
+
+#### Scenario: Give shooting unknowns no unphysical freedom
+
+- **WHEN** multiple shooting is considered as a possible transcription
+- **THEN** every auxiliary arc-start state has position, velocity, mass and common-epoch continuity constraints; additional nodes add zero impulses, no force-model switch and no independently assignable checkpoint mass
+- **AND** a later acceptance check must use the frozen commands from the original lunar state through arrival without intermediate node resets, with the same independent-validation requirements
+- **AND** the saved R5.51 checkpoint is not prescribed as an achieved spacecraft target or a burn event; R5.60 retains its own additional admission and ordering rules
+
+### Requirement: Keep coupled feasibility and numerical evidence distinct
+
+The formulation SHALL preserve separate scientific gates and require a complete
+method/benchmark contract before another solver implementation or experiment.
+It SHALL NOT treat the consumed P6 no-witness result as continuous refusal,
+global optimality, or impossibility of the physical mission. Documentation
+checks SHALL NOT be reported as runtime or trajectory verification.
+
+#### Scenario: Preserve closure, join and error-bound gates
+
+- **WHEN** a future coupled candidate is assessed
+- **THEN** final Mars-relative position and velocity norms must separately satisfy 1000 m and 0.01 m/s, joins retain 1e-6 s/0.001 m/1e-6 m/s/1e-9 kg, and all original mass/collision/force/resource and strict M3 numerical/model qualifications remain required
+- **AND** copied nodes, a small scaled residual, optimizer success or cross-integrator agreement cannot replace ADR0205's independently justified endpoint-error bounds or certify mission safety
+
+#### Scenario: Complete formulation without starting research
+
+- **WHEN** the ADR0247 documentation stage is completed
+- **THEN** its table/equations, source facts, local links/anchors, requirement scenarios, protected-file comparison and strict OpenSpec validation are checked, with zero scientific evaluations, kernel reads, SPICE calls, force evaluations, integrations or new benchmark runs
+- **AND** no method, node count, command pair, new target or scientific success is selected; automation remains PAUSED and all consumed studies/R5.60 remain unavailable
+- **AND** before later implementation, a separate contract must name the exact benchmark, physical inputs/variables, independent oracle, tolerances, pinned method and finite work/time limits without silently increasing the current 300 s M3 deadline
+
 ### Requirement: Mission-first demonstration readiness after local research
 
 R1 SHALL prioritize one reproducible research demonstrator with an independently

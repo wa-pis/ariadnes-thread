@@ -1,6 +1,136 @@
 ## Context
 
-### Current scheduling decision — one terminal feasibility outcome (2026-11-22)
+### Coupled Moon-to-Mars formulation (2026-11-25)
+
+[ADR0247](../../../docs/adr/0247-formulate-coupled-moon-mars-problem.md) accepts this
+classification and mathematical formulation only. F0 denotes the existing fixed
+boundary problem, not a new search or an assertion that its six controls suffice.
+No data, command, numerical profile, dependency or tolerance changes here.
+
+#### Requirements, fixed parameters and variable ledger
+
+Roles below apply to F0. A historical value can be fixed for reproduction without
+being a universal platform requirement. A proposed extension is not a currently
+free variable. The normalized scenario and full stored state/epoch words remain
+authoritative; displayed numbers are not a replacement input packet.
+
+| Quantity | Requirement and retained value/source | Role in F0 / possible later change |
+| --- | --- | --- |
+| State conventions | SI; TDB seconds since J2000; SSB origin; J2000 orientation; body-relative osculating elements on J2000 axes at the event epoch. | Fixed scientific contract; label every public boundary and conversion. |
+| Vehicle | R1/R4: initial 2000 kg, dry 500 kg, maximum thrust 1000 N, Isp 450 s, area 20 m^2, Cr 1.3; g0=9.80665 m/s^2. | Fixed inputs of this reference; no vehicle redesign or hidden defaults. |
+| Departure orbit | Moon circular 100 km altitude; inclination 90 degrees, RAAN/argument/anomaly zero in the explicit scenario; shape radius 1737400 m. | Fixed orbit and initial phase. A future free lunar phase needs a changed boundary contract; circular phase means argument of latitude, not two independent angles. |
+| Target orbit | Mars periapsis 300 km, apoapsis 10000 km; inclination 25 degrees, RAAN/argument/anomaly zero; shape radius 3389500 m; retain normalized eccentricity. | Fixed six-state target at cutoff. Orbit membership with free phase is a proposed different problem; plane and apsides remain constrained. |
+| Scenario date bounds | Explicit R1 window 2031-01-01T00:00:00Z to 2031-12-31T00:00:00Z; flight duration 180–320 days. | Fixed input bounds for M2. They do not make dates free in the current candidate-bound M3 contract. |
+| Selected epochs | ADR0135: t0=978995455.2304223, tf=1004169273.4122404 TDB s; departure ignition / arrival cutoff. | Fixed for F0. Choosing dates within the supplied window is a proposed extension, not automatic retiming. |
+| Initial/target Cartesian states | Full retained ADR0135/0136 lunar ignition and Mars cutoff six-states, with harmonic GMs and distinct shape/gravity radii. | Fixed boundary data; neither is a body-centre Lambert endpoint. |
+| Two finite-burn controls | q=(a_d,e_d,tau_d,a_a,e_a,tau_a), radians and seconds; directions in Moon-relative/Mars-relative TNW respectively. | Six existing physical variables: azimuths in [-pi,pi), elevations in [-pi/2,pi/2], positive durations and positive coast. No steering nodes, throttle freedom or additional burns introduced. |
+| Switching epochs | t1=t0+tau_d; t2=tf-tau_a. | Derived from durations; t0<t1<t2<tf. They are not independent additional timing controls. |
+| Interface/terminal masses | Physical mass flow with m0=2000 kg and m(t)>=500 kg; no reset at joins. | Derived quantities, not independently assignable masses or an equality mf=500 kg. A reserve claim additionally requires mf>=550 kg under its stated scope. |
+| M2 candidate / excess vectors | Retained d0001-t0035 and R1 provenance remain immutable; public M3 uses the reproduced candidate as a targeting seed. | Historical seed/reference inputs, not extra velocity constraints on the physical solution. A new candidate requires an explicit new binding. |
+| P3 analytical family | ADR0212/0240: fixed lunar impulse/excess vectors, Mars signs and [150,152] degree phase domain; P6 consumed in ADR0246. | Historical surrogate restrictions only; they neither define F0's control space nor admit a changed Mars target. No replay is authorized. |
+| R5.51 checkpoint | ADR0205 t*=979014965.9635216 TDB s, sampled during the coast for that test. | Historical comparison epoch, not a prescribed spacecraft state, a physical burn event or a new target. If R5.60 is later used, all its additional ordering/admission rules still apply. |
+| Dynamics/resources | Unchanged full M3 model and pinned direct SPICE, GMs, harmonic files/frames, SRP/shadows and relativity. | Fixed force/resource contract throughout every arc; reduced models may only be separately labelled benchmarks or seeds. |
+| Numerical/scientific gates | Existing joins, final closure, validation, error-bound and collision requirements, summarized below. | Acceptance constraints, never optimizer variables or adjustable weights. |
+| Shooting nodes, if selected later | Auxiliary seven-component arc-start states with common event epochs. | Computational unknowns constrained by continuity, not extra physical freedom, independent impulses or adjustable checkpoint mass. Node count/method remain unselected. |
+
+Sources: [R1 scenario](../../../examples/r1_m2_reserve_reference.toml),
+[ideal reference limitations](../../../docs/adr/0119-positive-ideal-m2-reference.md),
+[fixed boundaries](../../../docs/adr/0135-fixed-orbit-boundary-contract.md),
+[checkpoint contract](../../../docs/adr/0205-design-fixed-command-physical-join.md),
+[analytical family](../../../docs/adr/0212-design-mars-capture-phase-seed.md),
+[physical requirements](specs/physical-trajectory-refinement/spec.md), and
+[orbit semantics](specs/mission-scenario/spec.md).
+
+#### One coupled finite-burn feasibility problem
+
+Write y=(r,v,m), with SSB/J2000 Cartesian position r in m, velocity v in m/s,
+mass m in kg and physical time t in TDB seconds since J2000. Let a_full denote
+all non-thrust acceleration in the unchanged production model
+`ssb-j2000-nbody-gggrx1200-200x200-jgmro120d-120x120-cannonball-srp-schwarzschild-direct-spice-v2`.
+This includes the six prescribed point fields, Moon/Mars harmonics once each,
+cannonball SRP with current mass and Moon/Earth/Mars occultation, and Sun
+Schwarzschild; body motion/rotation and all constants retain their pinned sources.
+
+The equations on all arcs are:
+
+```text
+dr/dt = v
+dv/dt = a_full(t,r,v,m) + chi(t) * F/m * d_hat_B(t,r,v; a_B,e_B)
+dm/dt = -chi(t) * F/(g0*Isp)
+```
+
+Here F is maximum thrust in N. chi=1 during the two finite burns and chi=0
+during the coast; B is Moon on departure and Mars on arrival. d_hat_B is a unit
+vector with constant commanded TNW azimuth/elevation, using the basis rebuilt
+from the current body-relative state exactly as in the physical requirement.
+There is no instantaneous impulse, origin switch or non-thrust force-model
+switch at a join; thrust turns on/off only at the declared burn events.
+
+For the current fixed t0/tf and configured phases, impose:
+
+```text
+y(t0) = (x_Moon_orbit(t0, configured_phase_d), m0)
+(r(tf),v(tf)) matches x_Mars_orbit(tf, configured_phase_a)
+t1 = t0 + tau_d; t2 = tf - tau_a; t0 < t1 < t2 < tf
+m1 = m0 - F*tau_d/(g0*Isp)
+m2 = m1; mf = m2 - F*tau_a/(g0*Isp); m(t) >= dry_mass
+```
+
+Each x_orbit is a six-state formed from the specified central-body-relative
+osculating elements plus that body's state at the same epoch, using the proper
+harmonic GM and shape radius. The retained full state/normalized words bind F0;
+rounded table values must not reconstruct different boundary data. The target is
+a state at arrival cutoff, not a claim that its osculating ellipse is a complete
+propagated Martian orbit under the full force model.
+
+First seek feasibility of all constraints. Use the signed three-position and
+three-velocity terminal residual in Mars-relative coordinates at the same tf;
+the existing component scales are 1000 m and 0.01 m/s. Their Euclidean norms
+must separately meet the corresponding closure limits. A lower residual score,
+optimizer stop or lower ideal delta-v does not itself pass. Secondary propellant
+or flight-time optimization, new objective weights and global optimality are not
+selected by this formulation.
+
+If multiple shooting is subsequently selected, let Phi_i(q,z_i,t_i,t_{i+1})
+propagate arc-start state z_i under these same equations. Impose signed defects
+Phi_i-z_(i+1)=0 in position, velocity and mass, and common boundary epochs. The
+physical burn boundaries remain t1/t2; extra coast subdivisions are numerical
+nodes only. These equalities are transcription constraints, checked using the
+existing tolerances; they cannot inject a receiver state into a forward history.
+Final validation must propagate from the original lunar state with the frozen
+commands and no node resets, and must preserve the independent-check requirements.
+No node count, optimizer, derivative scheme or implementation is chosen here.
+
+#### Distinct acceptance gates and unresolved design choices
+
+| Claim | Unchanged acceptance / limitation |
+| --- | --- |
+| Arc assembly | Join differences <=1e-6 s, 0.001 m, 1e-6 m/s, 1e-9 kg. Copied handoffs alone verify bookkeeping only. |
+| Arrival closure | Final position <=1000 m and velocity <=0.01 m/s relative to the configured Mars target at tf; no target substitution. |
+| Numerical/model validation | Preserve nominal/tighter common-boundary limits 10 m, 1e-4 m/s, 1e-6 kg, Moon-400 sensitivity and Mars-60 reporting, plus all remaining strict M3 qualifications. Profile agreement is not absolute accuracy. |
+| Physical-checkpoint verdict | ADR0205 additionally requires justified endpoint/comparison error bounds and its pass/fail/inconclusive rules under the tighter join gates. A solver defect norm or independent-engine agreement cannot replace these bounds. |
+| Mass/safety | Preserve dry mass, actual-event-span accounting, collision/resource guards and all strict continuous-safety prerequisites; sampled clearance alone cannot certify safety. R1's 50 kg reserve remains a separate limited ideal-model claim. |
+
+The following are explicitly unresolved before a changed mission-design problem:
+(1) keep exact candidate epochs or vary dates within the supplied window;
+(2) keep each configured phase or allow a named departure/arrival phase domain;
+(3) require the exact cutoff six-state or arrival anywhere on the same specified
+orbit with free phase. Any adopted extension needs an explicit boundary identity
+and affected requirement review; timing changes require coepoch body states and
+new seed provenance, not reuse of old body states/excess vectors as constraints.
+Plane/apsides, hardware and accuracy stay binding unless separately changed.
+F0 is documented without resolving these extensions or claiming it is feasible.
+
+A later method contract must select one small published or analytic benchmark,
+its exact events/controls/force model and independent oracle, measurable gates,
+pinned implementation and finite work/time limits before implementation or runs.
+The existing 300 s M3 deadline is not raised or reset here and is not a measured
+runtime prediction for another transcription. Until that contract exists, this
+stage permits zero scientific evaluations, kernel reads, SPICE calls, force
+calculations or integrations. No retry of P6/R5.60, automation restart, M3 closure
+or M4–M6 work follows. Only documentation validation is performed now.
+
+### Retained P1–P6 scheduling decision — terminal feasibility outcome (2026-11-22)
 
 [ADR0239](../../../docs/adr/0239-stop-diagnostics-at-a-feasibility-decision.md)
 stops automatic diagnostic continuation after ADR0238. Reuse the ADR0218 local

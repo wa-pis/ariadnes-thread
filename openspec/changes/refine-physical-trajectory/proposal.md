@@ -15,7 +15,19 @@ open; the broader platform direction is not abandoned.
 
 ## What Changes
 
-### Current scheduling decision — one terminal feasibility outcome
+### Current planning decision — coupled problem formulation (2026-11-25)
+
+[ADR0247](../../../docs/adr/0247-formulate-coupled-moon-mars-problem.md) records the
+user-requested requirements/fixed-input/free-variable ledger and coupled F0
+orbit-to-orbit feasibility problem. Preserve current fixed boundary states and
+six existing burn controls; distinguish M2 seed data, historical surrogate
+restrictions, derived masses and possible auxiliary shooting nodes. Dates or
+phases remain proposed extensions, not silently freed inputs. Solver selection,
+a benchmark contract and execution are separate future decisions. This stage
+changes documentation only, with zero calculations, SPICE or integration;
+P6 stays consumed, automation PAUSED and all strict M3 gates unchanged.
+
+### Retained P1–P6 decision — terminal feasibility outcome
 
 ADR0239 stops automatic R5.59 diagnostic continuation. The next scientific
 objective is a verified analytical witness or gap-free local refusal on the

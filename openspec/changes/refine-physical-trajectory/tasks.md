@@ -1,4 +1,9 @@
-## Current scheduling decision — one terminal feasibility outcome
+## Current planning decision — coupled mission formulation
+
+- [x] F1 Record ADR0247's source-linked requirements/fixed-data/free-variable ledger and the existing-boundary coupled Moon-to-Mars feasibility problem. Verify all six current controls and derived/auxiliary roles, exact-state versus orbit-membership and date/phase distinctions, single full-force state/mass continuity, unchanged closure/join/error-bound gates, source facts, independent review, local links/anchors, protected files, documentation-only diff and strict OpenSpec. Planning only: no scientific calculations, new method/benchmark implementation, SPICE, integration, new target adoption or execution authority; automation remains PAUSED.
+- [ ] F2 Before any further implementation or experiment, specify a minimal benchmark and method contract for the documented coupled problem. Verify a named published/analytic case, exact physical boundaries and permitted variables, independent same-model oracle, dimensional tolerances, pinned dependencies and finite work/time/validation limits; reconcile any proposed boundary change explicitly with existing requirements. No run is authorized by F1 or this unchecked task.
+
+## Retained P1–P6 schedule — consumed terminal feasibility outcome
 
 - [x] P1 Record ADR0239's single next scientific objective and stop automatic diagnostic continuation. Verify the exact local domain, witness/refusal/inconclusive semantics, changed-Mars-target restriction, inherited mass/proof/budget gates, independent scope review, local links, documentation-only diff and strict OpenSpec. Planning only: no new formula, implementation, numerical evaluation or scientific completion; a complete method contract and separate instructions remained required at that stage. No speculative implementation/execution successor was scheduled by P1.
 

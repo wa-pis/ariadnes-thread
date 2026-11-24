@@ -1,6 +1,15 @@
 # Ariadna Space Navigation Roadmap
 
-Current method: [ADR0240](../docs/adr/0240-choose-bounded-scalar-witness-search.md),
+Current planning priority (2026-11-25):
+[ADR0247](../docs/adr/0247-formulate-coupled-moon-mars-problem.md) documents the
+[requirements/variable ledger and coupled F0 problem](changes/refine-physical-trajectory/design.md#coupled-moon-to-mars-formulation-2026-11-25).
+Current fixed boundaries and six burn controls remain binding; altered dates,
+free phases and orbit-membership targeting are proposed extensions only.
+F1 is documentation complete; F2 method/independent-benchmark readiness remains
+unselected. No calculations or new execution authority; P6 is consumed,
+automation PAUSED and physical feasibility/strict M3 remain open.
+
+Retained P1–P6 method (consumed): [ADR0240](../docs/adr/0240-choose-bounded-scalar-witness-search.md),
 under the [ADR0239](../docs/adr/0239-stop-diagnostics-at-a-feasibility-decision.md)
 stop policy. Bounded Brent proposes analytical witnesses on the unchanged
 [150 degrees, 152 degrees] domain, separately for both Mars signs; original

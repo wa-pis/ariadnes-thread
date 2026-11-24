@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0247 — Formulate the coupled Moon-to-Mars problem](0247-formulate-coupled-moon-mars-problem.md): source-linked requirements/variable ledger and fixed-boundary feasibility formulation; proposed extensions remain unadopted, no calculations or method execution.
+
 - [0246 — Record bounded retained inconclusive result](0246-record-bounded-retained-inconclusive.md): one qualified P6 yields no witness; all13 recorded points independently audited; attempt consumed and automation paused for a user choice.
 
 - [0245 — Qualify the retained dispatch lifecycle](0245-qualify-retained-dispatch-lifecycle.md): remaining P5 implementation and fabricated full-volume qualification in progress; fixed saved attempt remains unavailable.
