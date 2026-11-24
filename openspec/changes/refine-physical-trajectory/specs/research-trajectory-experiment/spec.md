@@ -1,5 +1,47 @@
 ## ADDED Requirements
 
+### Requirement: Qualify coupled shooting on an analytic finite-burn benchmark
+
+Before a coupled method is adopted for F0, private preparation SHALL implement
+ADR0248's explicit manufactured uniform-gravity two-burn problem and independent
+checker, using the pinned stack without changing production controls or limits.
+The benchmark SHALL remain synthetic and SHALL NOT claim full-force feasibility,
+absolute physical accuracy, mission safety or ADR0205 error-bound admission.
+
+#### Scenario: Admit an independent finite-burn reference
+
+- **WHEN** the artificial fixture is prepared
+- **THEN** it uses the exact ADR0248 inputs, SYNTHETIC_INERTIAL/elapsed-second labels, two dynamically rebuilt TNW burns and gravity on all arcs; the known T-only witness target is independently composed with Decimal80/100 using before-arc velocity and sequential mass
+- **AND** the precision paths agree within 1e-9 m/1e-12 m/s/1e-15 kg, gravity's total speed contribution is at least half the initial speed, and witness mass loss is at least ten percent of initial mass before the reference is admitted
+- **AND** witness propagation agrees with analytic nodes within 0.001 m/1e-6 m/s/1e-9 kg and 1e-6 s without calling the closed form for perturbed steering
+
+#### Scenario: Recover from a genuinely unclosed seed
+
+- **WHEN** the pinned bounded TRF method evaluates ADR0248's perturbed controls and nodes
+- **THEN** the initial defects fail a qualification gate, exactly six controls plus two translation nodes are the 18 unknowns, node masses/epochs are derived, and all 18 raw translation defects and independent callback counts are retained
+- **AND** all final shooting defects satisfy 0.001 m/1e-6 m/s, mass/time continuity satisfies 1e-9 kg/1e-6 s, and an unreset forward replay meets the independent target within 0.1 m/1e-5 m/s while respecting the 500 kg floor
+- **AND** solver status alone, copied witness commands/nodes, a rank assumption or a lower scaled residual cannot pass qualification; invalid/nonfinite/TNW/domain trials stop without penalties or restarts
+
+#### Scenario: Check the recovered command independently
+
+- **WHEN** the separate stdlib auditor verifies a candidate result
+- **THEN** it independently rebuilds TNW/RHS, checks the actual recovered command on 4096/8192-step-per-arc RK4 meshes, and uses an explicit arc mode through the final RK stage before switching thrust
+- **AND** witness and returned-command paths satisfy all ADR0248 event/analytic/mesh/candidate checks, including 0.001 m/1e-6 m/s/1e-9 kg cross-path differences and the independent final 0.1 m/1e-5 m/s gate
+- **AND** mass stage values use its independent linear ledger, no node is injected into a forward history, and cross-method agreement is reported as diagnostic rather than a certified physical bound
+
+#### Scenario: Bound synthetic work without changing mission budgets
+
+- **WHEN** preparation or the fixed artificial qualification runs
+- **THEN** the shared parent limit is 300 s including durable finalization, producer<=210 s, auditor<=60 s, with 30 s reserved; hard caps are 400 callback entries including Jacobian calls, 1206 producer synthetic arcs, 1000000 producer RHS, 12 audit arcs and 300000 audit RHS
+- **AND** explicit input is <=64 KiB and all evidence/logs <=2 MiB, precharged counters and deadline/watchdog/finalization paths are tested, and no cap or tolerance is raised after failure
+- **AND** SPICE/kernel/real-archive/native-propagation counts are zero; production's 73-control/76-evaluation/228-native-call/300-second limits and all F0 scientific requirements remain unchanged
+
+#### Scenario: Separate contract completion from qualification
+
+- **WHEN** F2 is marked complete
+- **THEN** source/API facts, independent scientific/reuse review, local links/anchors, protected files, diff and strict OpenSpec pass, with no numerical execution or qualification claim
+- **AND** F3 remains unchecked until the implementation, independent checker, focused and both frozen required regression lanes, Ruff/review/strict and the declared artificial gates pass; no retained/mission study follows from an artificial pass
+
 ### Requirement: Classify the coupled mission inputs before another search
 
 The M3 research design SHALL maintain ADR0247's source-linked ledger separating

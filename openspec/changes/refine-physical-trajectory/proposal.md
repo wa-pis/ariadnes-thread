@@ -15,7 +15,18 @@ open; the broader platform direction is not abandoned.
 
 ## What Changes
 
-### Current planning decision — coupled problem formulation (2026-11-25)
+### Current preparation contract — coupled artificial benchmark (2026-11-25)
+
+[ADR0248](../../../docs/adr/0248-design-coupled-synthetic-benchmark.md) completes F2:
+a private two-node multiple-shooting method and manufactured uniform-gravity,
+variable-mass two-burn TNW problem with an independent analytic target and separate
+returned-command auditor. Explicit inputs/controls/profiles/gates/work/time caps
+precede implementation. No new dependency or production solver change. This
+stage performs documentation checks only; F3 must qualify implementation and
+artificial recovery before any method-adoption decision. No real-data or physical
+mission run, boundary relaxation or R5.60 is authorized by this design.
+
+### F1 planning decision — coupled problem formulation (2026-11-25)
 
 [ADR0247](../../../docs/adr/0247-formulate-coupled-moon-mars-problem.md) records the
 user-requested requirements/fixed-input/free-variable ledger and coupled F0

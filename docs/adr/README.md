@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0248 — Check coupled shooting on an analytic finite-burn problem](0248-design-coupled-synthetic-benchmark.md): F2 private two-node method and uniform-gravity known-witness/recovery contract; independent Decimal/RK4 checks and finite budgets; no numerical run.
+
 - [0247 — Formulate the coupled Moon-to-Mars problem](0247-formulate-coupled-moon-mars-problem.md): source-linked requirements/variable ledger and fixed-boundary feasibility formulation; proposed extensions remain unadopted, no calculations or method execution.
 
 - [0246 — Record bounded retained inconclusive result](0246-record-bounded-retained-inconclusive.md): one qualified P6 yields no witness; all13 recorded points independently audited; attempt consumed and automation paused for a user choice.

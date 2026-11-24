@@ -1,5 +1,31 @@
 ## Context
 
+### F2: minimal coupled method and artificial benchmark (2026-11-25)
+
+[ADR0248](../../../docs/adr/0248-design-coupled-synthetic-benchmark.md) specifies the
+private method/fixture/profile/budget contract required by
+[the benchmark requirement](specs/research-trajectory-experiment/spec.md#requirement-qualify-coupled-shooting-on-an-analytic-finite-burn-benchmark).
+Choose bounded direct multiple shooting with the existing six physical control
+roles and two translation nodes. Derive node mass/time analytically, retaining
+seven-state propagation and explicit continuity checks; there are 18 unknowns
+and 18 translation defects, without a rank or reachability promise.
+
+The manufactured uniform-gravity problem has two finite maximum-thrust TNW burns,
+variable mass and a known exact-axis witness. Independently derive its target
+with Decimal closed forms, then recover from an explicitly perturbed seed.
+Use pinned SciPy TRF/DOP853 only on the candidate side and separate stdlib RK4
+with independent TNW/RHS and two fixed meshes to check the actual returned
+command from the original state, without resetting to shooting nodes.
+All fixture values, bounds/scales, profiles, dimensional gates, callback/RHS/arc
+caps and the shared 300 s synthetic ceiling are explicit in ADR0248.
+
+This checks an artificial numerical method, not Moon/Mars dynamics or certified
+physical error bounds. Reuse pure guidance helpers and process patterns; do not
+repurpose historical local correctors, add dependencies or create a backend.
+F2 is documentation only. F3 preparation/artificial verification is authorized by
+the resumed task after this contract; no real archives, SPICE, mission integration,
+changed F0 boundaries, consumed-study replay or R5.60 admission follows.
+
 ### Coupled Moon-to-Mars formulation (2026-11-25)
 
 [ADR0247](../../../docs/adr/0247-formulate-coupled-moon-mars-problem.md) accepts this
