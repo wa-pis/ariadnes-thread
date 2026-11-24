@@ -27,6 +27,14 @@ mass interface is qualified; native timing/guards/full-force and physical F0
 remain open. CI45507393487 on7a1a1da passes7664cases/79skips; all149new pass
 and7743local/CI IDs match. Unchanged42archive+37platform skips and the original
 JUnit/environment ZIP are preserved in the new ADR0251 CI receipt.
+[ADR0252](../docs/adr/0252-design-native-analytic-arc-conformance.md) defines F6's
+next minimal native seam: the existing synthetic known witness, three forward
+and three independently seeded reverse arcs, strict representable-event transport,
+actual state/mass carry and independent analytic checks under finite limits.
+Source inspection distinguishes native Time from double termination endpoints;
+no native failure or numerical result is observed. F6 source/design review,
+557links/five anchors,1126 protected files and strict OpenSpec pass; F7 native
+qualification and all full-force/physical adoption gates remain open.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

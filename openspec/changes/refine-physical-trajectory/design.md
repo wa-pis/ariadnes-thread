@@ -1,5 +1,138 @@
 ## Context
 
+### F6: native analytic arc conformance (2026-11-25)
+
+[ADR0252](../../../docs/adr/0252-design-native-analytic-arc-conformance.md) selects
+one private native conformance fixture after F5, not an F0 optimizer/adapter.
+F6 is documentation-only. F7 may prepare/qualify the fixed synthetic fixture under
+standing reversible test authority after the design checks pass. No real archive,
+SPICE/kernel acquisition, mission propagation, new search or consumed-study replay
+is admitted by either stage. Existing required live regression remains permitted.
+
+#### Fixed question, data and native reuse
+
+Use exactly ADR0248's SYNTHETIC_INERTIAL/elapsed-second uniform-field witness:
+r0=(10000000,0,0)m, v0=(0,1000,0)m/s, m0/dry=2000/500kg, F=1000N,
+Isp=450s, g0=9.80665m/s^2, uniform g=(0,0.1,0)m/s^2 on every arc;
+q*=(0,0,1000,0,0,1000) in radians/seconds. Events are0/1000/9000/10000s.
+No optimizer, perturbed seed, fitted node, new force or selected real trajectory.
+The known collinear path makes TNW +Y/-X/+Z; rebuild it dynamically anyway.
+
+Reuse `_install_tnw_engine`, `_build_coupled_arc_settings` and the tighter
+`_arc_integrator_profile` only at their inspected low-level boundaries.
+Construct fresh synthetic bodies/engines for each arc; Moon/Mars reference names,
+if used by existing guidance, both denote the fixed synthetic origin. The actual
+native carrier may use SSB/J2000 names, but exported scientific metadata remains
+SYNTHETIC_INERTIAL/elapsed_seconds and explicitly disclaims ephemeris truth.
+Do not call `_build_physical_environment` or use a default ephemeris/kernel.
+Keep one private conformance packet, separate from F5's production-labelled
+`ArcRequest`/`ArcResponse`; no generic backend, CLI or optimizer is needed.
+
+Use RKDP87, relative1e-13, absolute(1e-5m x3,1e-8m/s x3,1e-11kg).
+Burn initial/minimum/maximum step magnitudes are0.25/1e-8/7.5s;
+coast75/1e-5/21600s. Forward initial steps are positive, reverse negative;
+min/max remain positive magnitudes. Throw below minimum, reject NaN/infinity
+steps, assess termination on full steps and request exact final-condition time.
+The explicit arc mode still applies at the last or beyond-end derivative stage.
+These settings do not provide a certified global endpoint-error enclosure.
+
+#### Exact requests and observed native endpoints
+
+Pinned source uses native Time but stores `time_termination` endpoints as double.
+Before any native attempt require exact Fraction events equal Fraction(label),
+finite strictly ordered labels and positive exact spans. Unsupported conversion
+is `unavailable-transport`, not physical infeasibility; do not quantize commands.
+Pure tests must cover both collapsed labels and distinct-but-inexact labels.
+Integer events here do not qualify arbitrary fractional or large F0 events.
+
+Store requested Fraction numerator/denominator, label hex, expected `Time(label)`,
+observed native label, equality-to-expected and `(observed-expected).to_float()`.
+Subtract Time objects BEFORE float conversion; compare native start/end history
+by propagation direction, max for forward and min for reverse, and bind each
+seven-state to its native key. Require successful completion, finite seven-state
+and actual native equality at both events, separately from the1e-6s label/residual
+gate. A near-but-unequal native Time is not exact identity; retain diagnostic
+state comparisons and mark transport unavailable, never forge F5 event fields.
+Failure, partial state or missing native history cannot yield a normal result.
+
+#### Actual carry, reverse path and independent references
+
+Forward: initial state -> departure -> coast -> arrival. Reverse: ADR0248
+exact-decimal100-digit final seven-state, each component rounded once to binary64,
+then arrival -> coast -> departure. This frozen reverse start must not be the
+forward output or selected from whichever reference passes. Both paths carry every returned state AND mass into
+the next fresh native context; no node or ledger reset. Keep the same physical
+RHS/TNW/thrust and dm/dt=-b during reverse propagation; only dt changes sign.
+Use an explicit zero-thrust/zero-mass-rate coast. Forward/reverse agreement alone
+is insufficient; compare all four events independently with analytic nodes.
+
+Preserve ADR0248's original exact-decimal physical oracle and its80/100-digit
+1e-9m/1e-12m/s/1e-15kg precision gate. Independently construct a second reference
+from exact binary64 F/gravity/b words via Decimal.from_float; b is the existing
+binary64 F/float(g0*Isp) word. Use the same before-arc formulas with effective
+exhaust F/b, not an assumption that rounded b equals exact F/(g0*Isp).
+Use80/100 digits and the same precision gate; record signed constant/conversion
+and target-rounding differences separately. Do not change the old oracle.
+Check native endpoint/state versus BOTH references, and mass versus exact
+Fraction(b)*commanded-duration ledger (reverse anchored at its own initial mass).
+At each event require Euclidean position<=0.001m, velocity<=1e-6m/s,
+absolute mass<=1e-9kg and time<=1e-6s, plus the separate exact native equality.
+Every inspected stage/history must be finite, mass>=500kg and TNW nondegenerate;
+this is a synthetic-domain check, not a physical collision/coverage certificate.
+The independent stdlib audit uses retained endpoint operands and its own
+arithmetic; it imports no native candidate flow/guidance or scientific library.
+It recomputes request/label and reference checks; native Time equality remains
+producer-observed evidence, never reconstructed or independently certified from
+rounded labels.
+
+#### Finite qualification and first failure
+
+Per cold fixture, charge each native attempt before entry, including failures:
+forward3 then reverse3, maximum6. No retry, profile tuning or extra propagation.
+A single shared custom uniform-gravity provider counter charges BEFORE its own
+work, maximum100000 entries across all arcs, including rejected/minor stages
+that actually call it. The callback's time is a double; it cannot prove native
+Time identity or total-RHS accounting. Check deadline and domain at each entry;
+qualify exception propagation and context disposal on fabricated failure paths.
+
+Record native cumulative function-evaluation history separately and use the
+maximum count VALUE, not the maximum epoch's entry or time-sorted monotonicity:
+rejected steps and reverse integration break that assumption. This is post-run
+telemetry, not a live RHS hard limit; inaccessible production inner-RHS enforcement
+remains open. Do not relabel provider counts as all RHS calls.
+
+A parent hard watchdog bounds the complete cold fixture to60s including startup,
+imports, evidence and durable finalization: producer45s, independent audit10s,
+reserve5s. Input<=64KiB; combined retained evidence/logs<=2MiB, checked before
+writes. Six arcs and no optimization justify a small, fixed workload; these
+engineering ceilings are predeclared, not measured claims or a cap increase.
+Reuse existing subprocess/deadline patterns; no general launcher is needed.
+Retain per-arc request/start/end state/time/mass/mode, native/provider counters,
+source/runtime identity, independent differences and first failure. Do not dump
+unbounded histories. A watchdog or provider/byte failure prevents qualification.
+Native attempts/provider entries/reported functions are distinct counters;
+SPICE queries/kernel reads/real archive reads/optimizer entries are zero.
+
+F7 completion requires focused artificial boundary/failure tests, the bounded
+native fixture, both frozen required portable/live regression lanes, Ruff,
+independent review, links/protected history and strict OpenSpec. Store results
+without overwriting old evidence; repetitions of the new fixture remain synthetic
+conformance. Existing required live/CI regression may separately use SPICE/native
+resources. Neither admits replay of a consumed mission study. F6 completion
+alone records a contract and source review, not any numerical conformance pass.
+
+#### Physical adoption remains separate
+
+Neither outcome adopts F5 native responses, an arbitrary-node optimizer, changed
+F0 boundaries/forces/hardware/gates, the F3 eighteen-variable TRF or a new solver.
+The original six-control forward-FD/lstsq, probes/damping/eight iterations and
+73controls/76evaluations/228native/300s stay binding. A complete safe unreset
+full-force seed is still missing; it need not hit the target before a corrector.
+Qualified native fractional/large-epoch transport, arbitrary guidance/derivatives,
+full-force inventory/resource/safety checks and ADR0205's independent reverse/
+endpoint-error bounds remain required. Synthetic conformance is neither an F0
+witness,99% probability nor mission safety. No M4–M6/ML/UI/publication follows.
+
 ### F4: private coordinate bridge before native adoption (2026-11-25)
 
 [ADR0250](../../../docs/adr/0250-design-coupled-coordinate-bridge.md) selects one

@@ -1,0 +1,122 @@
+{
+  "anchors": 5,
+  "base_revision": "c8195e9f74587ed508e34056bbd95db9dac509cf",
+  "changed_markdown_files": [
+    "CURRENT_STATE.md",
+    "docs/adr/0252-design-native-analytic-arc-conformance.md",
+    "docs/adr/README.md",
+    "openspec/ROADMAP.md",
+    "openspec/changes/refine-physical-trajectory/design.md",
+    "openspec/changes/refine-physical-trajectory/proposal.md",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md",
+    "openspec/changes/refine-physical-trajectory/tasks.md"
+  ],
+  "current_state_lines": 52,
+  "git_diff_check": "passed",
+  "independent_reviews": [
+    {
+      "scope": "scientific scope/authority/frames/limits",
+      "status": "passed after restricting synthetic repetition claims to new fixture"
+    },
+    {
+      "scope": "pinned APIs/negative step/Time/mass/telemetry",
+      "status": "passed after freezing reverse start to original Decimal100 reference"
+    }
+  ],
+  "local_links": 557,
+  "native_source_facts": "API/storage inspection only, not observed native failure or runtime qualification",
+  "new_native_imports": 0,
+  "new_native_propagations": 0,
+  "new_oracle_or_trajectory_evaluations": 0,
+  "new_spice_queries": 0,
+  "open_gates": "F7 native execution/transport/isolation/abort qualification; original F0 full-force seed, timing, derivatives, hard inner-work bounds and independent endpoint error bounds remain open",
+  "pinned_native_installation": {
+    "build": "py312h2196d89_3",
+    "environment": "space-nav",
+    "metadata_sha256": "26b84d68ee96cc430a708bd90d42d574954abfa79145c6fe12aed517a4390cc9",
+    "name": "tudatpy",
+    "sources": {
+      "include/tudat/astro/basic_astro/customAccelerationModel.h": {
+        "inspected_lines": [
+          28
+        ],
+        "sha256": "c117c8cccd1791c51f7126f742224b3e0c58581f2adb1845fe6935f8b17a672b"
+      },
+      "include/tudat/basics/timeType.h": {
+        "inspected_lines": [
+          156
+        ],
+        "sha256": "215ef2ee0856a6d476580ec5a4c447a4403a4d51d11bde4cbdc410e423a316d6"
+      },
+      "include/tudat/math/integrators/stepSizeController.h": {
+        "inspected_lines": [
+          95
+        ],
+        "sha256": "6cda8986e0b6c8b9ece4a97bda533d1ff18b9820c9192875aeb44c7727ae8e9c"
+      },
+      "include/tudat/simulation/propagation_setup/propagationTerminationSettings.h": {
+        "inspected_lines": [
+          83,
+          91,
+          289
+        ],
+        "sha256": "06a20eb3f8d3010e883448de7e58d3dfcb64581e22289c1d60ffc759bf952190"
+      },
+      "include/tudatpy/scalarTypes.h": {
+        "inspected_lines": [
+          18,
+          19
+        ],
+        "sha256": "6d7ab09180d4108ad554e579548c0f2d0f4816570b5d453a828a22c3516ec9ec"
+      },
+      "lib/python3.12/site-packages/tudatpy/astro/time_representation/expose_time_representation.cpp": {
+        "inspected_lines": [
+          179,
+          203,
+          242,
+          268
+        ],
+        "sha256": "a70324509ecaec7359de2db3b9c888859a5230ee6aa0fb7c2b54495abb5287a3"
+      },
+      "lib/python3.12/site-packages/tudatpy/dynamics/propagation/expose_propagation.cpp": {
+        "inspected_lines": [
+          644,
+          674
+        ],
+        "sha256": "9b0d6776e30a5202de053505ccabba5d6d2c17197da851944861f251f340c16f"
+      },
+      "lib/python3.12/site-packages/tudatpy/dynamics/propagation_setup/acceleration/expose_acceleration.cpp": {
+        "inspected_lines": [
+          1080
+        ],
+        "sha256": "a1e61a1ebd1ef4983b0ac8fb430e2920dc3b94a8501b08b99e07e497aecd35d3"
+      },
+      "lib/python3.12/site-packages/tudatpy/dynamics/propagation_setup/integrator/expose_integrator.cpp": {
+        "inspected_lines": [
+          1066
+        ],
+        "sha256": "325bb3952d05c144fe88277b61efe3d93a04e8f123eead99d98c630c44d7dcf6"
+      },
+      "lib/python3.12/site-packages/tudatpy/dynamics/simulator/expose_simulator.cpp": {
+        "inspected_lines": [
+          218
+        ],
+        "sha256": "01380844570f64427bb51a1dc244730ff9b29160df251b98eb46a47bc2102fb2"
+      }
+    },
+    "version": "1.0.0"
+  },
+  "primary_sources": [
+    "https://py.api.tudat.space/en/latest/migration_guide.html",
+    "https://py.api.tudat.space/en/latest/dynamics/propagation_setup/propagator.html"
+  ],
+  "runtime_tests_rerun": false,
+  "scope": "F6 documentation and pinned-source review only; no scientific execution",
+  "status": "passed",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1126
+}

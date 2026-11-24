@@ -19,10 +19,13 @@ manufactured coupled recovery and independent actual-command audit, plus verifie
 
 ## Next action and scheduler
 F5 source-bound CI is verified; do not repeat successful tests or CI downloads.
-Next define a concrete minimal native/solver design contract before implementation:
-exact-time/realized-mass, seed, derivatives, guards/full-force and endpoint bounds
-remain unqualified; production73/76/228/300s and prescribed method are unchanged.
-No automatic mission run, new boundary or consumed-study replay is admitted.
+[ADR0252](docs/adr/0252-design-native-analytic-arc-conformance.md) specifies F6:
+existing synthetic analytic witness,6native forward/reverse arcs, actual state/mass,
+strict representable events and separate observed Time identity; design checks pass.
+F7 next implements/qualifies that private fixture; no mission search.
+Pinned source stores termination endpoints as double despite native Time; this is
+an untested transport risk, not observed trajectory error or physical infeasibility.
+F0 seed/derivatives/full-force/clock/error bounds and73/76/228/300s stay open.
 User resumed `ariadna-m3` on2026-11-25: ACTIVE every5minutes, samechat.
 Continue ordinary reversible preparation with pinned Conda and ponytail.
 Pause on required user choice/access/authorization, contract-changing failure,

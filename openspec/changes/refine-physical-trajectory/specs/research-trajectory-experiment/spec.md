@@ -1,5 +1,38 @@
 ## ADDED Requirements
 
+### Requirement: Check native arcs on the existing analytic witness
+
+Private native preparation SHALL follow ADR0252's fixed synthetic uniform-field
+witness and separate request/observed-endpoint contract. It SHALL NOT imply
+physical F0 or F5 native-adapter adoption, change scientific gates or admit a
+mission search from interface/CI success.
+
+#### Scenario: Refuse unsupported event transport before native work
+
+- **WHEN** an exact event differs from Fraction of its binary64 label, even with distinct labels
+- **THEN** native attempts remain zero, the request is unavailable-transport and no command/duration is quantized or classified physically infeasible
+- **AND** admitted requests retain requested Fraction, label word, expected and observed native Time identity and Time-before-float residual separately; native inequality cannot pass as exact identity through a1e-6s tolerance or manufactured F5 response
+
+#### Scenario: Verify the fixed native paths without node resets
+
+- **WHEN** F7 qualifies the ADR0248 known q* fixture in native translation/mass dynamics
+- **THEN** three forward arcs and three separately requested reverse arcs use the fixed uniform gravity, explicit burn/coast modes and pinned directional tighter RKDP87 settings; reverse starts from ADR0248's exact-decimal100-digit final seven-state rounded once per component and changes only integration direction
+- **AND** actual returned state and mass cross every fresh-context join, native endpoints are selected by direction, and all four events agree with independent Decimal80/100 exact-decimal and binary64-word references within0.001m/1e-6m/s/1e-9kg and1e-6s, with native Time equality checked separately
+- **AND** SYNTHETIC_INERTIAL/elapsed_seconds labels, separate constant/target conversion differences, exact mass ledger and finite500kg/TNW domain checks are retained; no real ephemeris or collision-safety claim follows
+
+#### Scenario: Enforce the bounded synthetic fixture honestly
+
+- **WHEN** the cold native fixture runs
+- **THEN** native attempts including failures are precharged<=6 and uniform-gravity provider entries<=100000 before provider work; first failure stops without retry/tuning and discards mutable contexts
+- **AND** a hard external60s deadline covers producer45s/audit10s/reserve5s including startup/finalization, input<=64KiB and combined evidence/logs<=2MiB; synthetic tests cover counter/deadline/byte/abort and partial-history failures
+- **AND** native reported function counts use maximum count values and remain post-run telemetry distinct from provider entries; no total-RHS hard-cap or production admission is inferred, and new SPICE/kernel/real-archive/optimizer counts are zero
+
+#### Scenario: Separate design, native conformance and physical readiness
+
+- **WHEN** F6 design or F7 qualification is marked complete
+- **THEN** source/reuse/scientific review, links/anchors/protected bytes/diff and strict OpenSpec verify F6; focused tests, bounded native fixture, both frozen required regression lanes, Ruff and independent review additionally verify F7
+- **AND** integer-event synthetic conformance does not qualify fractional/large F0 epochs, arbitrary guidance, full-force seeds/guards, physical derivatives or ADR0205 reverse/endpoint bounds; original solver,73/76/228/300s caps and every physical gate remain binding
+
 ### Requirement: Qualify the coupled coordinate bridge before native adoption
 
 Private preparation SHALL follow ADR0250's coordinate/event/arc-request contract

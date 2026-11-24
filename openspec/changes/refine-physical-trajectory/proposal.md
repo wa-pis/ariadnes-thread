@@ -36,6 +36,16 @@ F4 subsequently specifies ADR0250's private bridge contract; F5 qualifies only
 that artificial interface under ADR0251. No physical optimizer/native adoption
 or automatic mission-run admission follows.
 
+### F6 preparation contract — native analytic arc seam (2026-11-25)
+
+[ADR0252](../../../docs/adr/0252-design-native-analytic-arc-conformance.md) freezes
+one minimal native conformance fixture using ADR0248's existing known witness,
+independent analytic reference, explicit forward/reverse state/mass carry and
+separate exact-request/observed-Time evidence. Source-level double endpoint
+storage limits this path to representable events; it is not an observed error.
+Finite native/provider/watchdog/byte limits precede implementation. Design only;
+F7 tests remain separate and no physical solver, mission run or altered gate follows.
+
 ### F2 preparation contract — coupled artificial benchmark (2026-11-25)
 
 [ADR0248](../../../docs/adr/0248-design-coupled-synthetic-benchmark.md) completes F2:
