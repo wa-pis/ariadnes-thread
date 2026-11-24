@@ -1,0 +1,1 @@
+ERROR conda.cli.main_run:execute(148): `conda run python -I -S -B /Users/agrudin/dev/my/ariadna/docs/adr/experiments/0245-retained-invocation.py retained` failed. (See above for error)

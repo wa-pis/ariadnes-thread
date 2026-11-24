@@ -1,0 +1,190 @@
+{
+  "all_previous_non_markdown_files_unchanged": 1069,
+  "attempt_consumed": true,
+  "automation": {
+    "id": "ariadna-m3",
+    "reason": "terminal bounded inconclusive outcome requires a new user choice; no automatic successor",
+    "status": "PAUSED"
+  },
+  "base_revision": "33fea7c8b9c2414ff16dda2ec28ecf298a13293e",
+  "binding_sha256": "bbf8c676cad43bfcc955f83f8bab41605bdfe4275f797931b610761c68c312e5",
+  "command": "conda run --no-capture-output -n space-nav python -I -S -B /Users/agrudin/dev/my/ariadna/docs/adr/experiments/0245-retained-invocation.py retained",
+  "continuous_refusal_proved": false,
+  "counter_agreement": true,
+  "counters": {
+    "anchors": 3,
+    "blocked_attempts": 0,
+    "finals": 1,
+    "objective": {
+      "negative": 1,
+      "positive": 8
+    },
+    "pair_slots": 26,
+    "phases": 13,
+    "root_slots": 26
+  },
+  "final_positive_proposal": {
+    "independent_ideal_budget_m_s": "6117.70661841436804437423340087368363216045792722465146583273074764526945394596243181377386016226",
+    "independent_total_delta_v_m_s": "6157.71278730959437831203272509550872041831792882915407868711804211513543870769145208362935394680",
+    "phase_ratio": [
+      1331123224034429,
+      8796093022208
+    ],
+    "phase_word": "0x1.2ea991baef1f4p+7",
+    "reason": "commanded-dry-floor",
+    "reported_ideal_budget_m_s": 6117.706618414368,
+    "reported_phase_deg": "1331123224034429/8796093022208",
+    "reported_total_delta_v_m_s": 6157.712787309595,
+    "within_ideal_budget": false
+  },
+  "gates_and_inputs_unchanged": true,
+  "independent_audit_status": "recorded-point-audit-verified",
+  "namespace": "0243-p3-retained",
+  "new_integrations": 0,
+  "new_spice_queries": 0,
+  "operational_stderr": {
+    "bytes": 185,
+    "file": "0246-retained-stderr.log",
+    "meaning": "Conda reports expected nonzero analytical-inconclusive exit2; no worker failure",
+    "sha256": "0f69adbe25ac2aa498ed12f301cd464b2090ea87681efa17366676f0164df31b"
+  },
+  "operational_stdout": {
+    "bytes": 306,
+    "file": "0246-retained-terminal.json",
+    "sha256": "472a68a70b5e016226b3da0ce8c17841113d6ce92734d0412549264f204f287a"
+  },
+  "optimizer_replayed_by_audit": false,
+  "outcome": "complete-inconclusive-no-verified-witness",
+  "p6_execution_and_audit_complete": true,
+  "physical_join_established": false,
+  "probability_claim": null,
+  "producer_status": "inconclusive/invalid",
+  "qualified_ci": 45358338765,
+  "qualified_code_revision": "aad842f4332cc23c89fa47d06ecbaa4f04077064",
+  "r560_attempts": 0,
+  "raw_evidence": {
+    "0243-p3-retained/audit/attempt.json": {
+      "bytes": 697,
+      "sha256": "686944887f2546ba79838925acc7c0be5fd85418b3d9c333600cfd516f6e653f"
+    },
+    "0243-p3-retained/audit/completion.json": {
+      "bytes": 167,
+      "sha256": "56252038f24bedd9225f7a17456fadaa203eb51acfc6e2b472ea2900332f5bd9"
+    },
+    "0243-p3-retained/audit/receipt.json": {
+      "bytes": 277,
+      "sha256": "a188af2690ce55a2d375d33ec0cbed0f3777e57a8d4163937fc4f610b7d7af6c"
+    },
+    "0243-p3-retained/audit/report.json": {
+      "bytes": 27894,
+      "sha256": "2051fdbc37dbfb8d19d3c6052c9fa7d87ef48ceeda78cb9039f448ee6dc5c9af"
+    },
+    "0243-p3-retained/invocation.json": {
+      "bytes": 1854,
+      "sha256": "43cd251e8fad12d6522d2f6e286f20efe596373ee6d63623c2d070ab46ac1be6"
+    },
+    "0243-p3-retained/producer/attempt.json": {
+      "bytes": 638,
+      "sha256": "3cafe4c12aac427c82ca60ac462ba9cc8dbca08c59dbe2192958bd2abbdf4254"
+    },
+    "0243-p3-retained/producer/completion.json": {
+      "bytes": 167,
+      "sha256": "da7b758dc33d15f61b7b900e0ffc8e9b2ca54a79db939e8d72074b7061f770fd"
+    },
+    "0243-p3-retained/producer/receipt.json": {
+      "bytes": 268,
+      "sha256": "154471329a02dae3d694aedf793b33ef8efc05a5d760f34ab3db9fbaf8d5d7d7"
+    },
+    "0243-p3-retained/producer/report.json": {
+      "bytes": 281018,
+      "sha256": "7eb9b691ea50f9d83c28c52554527de58ac23a4b8acbac2cf19ba0899f9ba701"
+    }
+  },
+  "readiness_sha256": "702d12fe24a756da6633e5555fdeca2c8b7f9509703bea4c029ee290bdd2ff4f",
+  "runtime_and_read_counts": {
+    "audit": {
+      "readback_bytes": 29035,
+      "runtime_read_bytes": 38953165,
+      "runtime_read_cap_bytes": 71719216,
+      "source_bytes_including_readback": 1884640
+    },
+    "producer": {
+      "readback_bytes": 282091,
+      "runtime_read_bytes": 213095921,
+      "runtime_read_cap_bytes": 340344044,
+      "source_bytes_including_readback": 2464002
+    }
+  },
+  "schema": "ariadna-p6-retained-bounded-attempt-v1",
+  "scientific_execution_count": 1,
+  "searches": {
+    "negative": {
+      "callbacks": 1,
+      "reason": "guard",
+      "result": null,
+      "status": "objective-unavailable"
+    },
+    "positive": {
+      "callbacks": 8,
+      "reason": null,
+      "result": {
+        "fun_word": "0x1.80db6793aa7b7p+12",
+        "message": "Solution found.",
+        "nfev": 8,
+        "nit": 8,
+        "status": 0,
+        "success": true,
+        "x_ratio": [
+          1331123224034429,
+          8796093022208
+        ],
+        "x_word": "0x1.2ea991baef1f4p+7"
+      },
+      "status": "completed"
+    }
+  },
+  "selected_goal_achieved": false,
+  "source_pins": {
+    "attempt.json": "ac1d02f445ebed82ac5b4f728193ea8533890188ed2422117523db50d087bf0a",
+    "audit.json": "bdc9eb8225a4af912327d0c8cd62231bf4f625991f6d4233ea58a5e9481172d5",
+    "receipt.json": "395d20ab4771b9a9e4743e038e5c50338d12b8d890018befc3879bf3de21a18b",
+    "report.json": "323c2c71e17168a46e9dd5280015a3fecb0865016b9b6954dcb051de4def1800"
+  },
+  "source_sha256": {
+    "anchors": "7fadcb3fc9de4a43aa1ce80efd30d2e6499f76ee4918519cf8783d50bca2057e",
+    "archive": "43c4c3b7fe1f82324a4833ea74a22aaed9922e8c0f9ea67fa0aa76161062dcf8",
+    "core": "4907db44f0ef53cb657cd563a6fa27df8a138442807c703a66c1343bde4788ba",
+    "invocation": "f572464c18824308e51783490618e460b886562615fe86a716856f61e4749bb3",
+    "io": "ff1cd800a74f40f3bc91f74550c4b49205713f391d436e37360e92a9740c1a1e",
+    "legacy_audit": "ed7956d5ec65d5693309773a2361295fe097ff5357cca5b27cb0a74c4f64c524",
+    "oracle": "cf4041c69e5204f79ab6786be5e393c0dbc0977317e693587eb1a85e8265e475",
+    "orbit": "ba78ca47097703cb27ed7dca8d844b9be34c61b1fee9a5668fae97db039979c3",
+    "points": "5c8d8b549419ba93199fc7c42db99b7160e15e30a9ba54562ae97061918e5440",
+    "reader": "a6e1b9a32f0c46c9e03974c1367a8b04d2849eca86d807907a3bcefa1f0e8920",
+    "runtime": "3863f812f210d162c9834e73b6f15672d9a2ff4d4c2d3fc5df0eb83e50f86ff1",
+    "screen": "39d59baecb394f759ef6a775ce6cca548e4828dbfef94207b47c9e048d1d0f2b",
+    "search": "dba342eadc49a34e0cdc0ec6bed06fdb8e3595457cb250d36b7b2d38ecffcbdd",
+    "trace": "f564df19de8c4b614d69af26fd0df7774a8b73e48954e0d857b4d74a17c22f14"
+  },
+  "terminal": {
+    "evidence_bytes": 312980,
+    "exit_code": 2,
+    "parent_elapsed_ns": 1048381667,
+    "parent_source_bytes": 813170,
+    "schema": "ariadna-p3-retained-terminal-v1",
+    "stages": [
+      {
+        "elapsed_ns": 875374083,
+        "exit_code": 2,
+        "mode": "producer"
+      },
+      {
+        "elapsed_ns": 173006333,
+        "exit_code": 0,
+        "mode": "audit"
+      }
+    ],
+    "terminal_status": "inconclusive/invalid"
+  },
+  "verification": "completed qualified independent numerical audit plus separate read-only chain/metadata review; no numerical replay"
+}

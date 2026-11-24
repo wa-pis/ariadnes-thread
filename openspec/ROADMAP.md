@@ -13,7 +13,7 @@ was deferred under the earlier no-SPICE scope. Separately authorized
 412 local live passes on 4f5cbb3, latest repairs pass 152 focused/6965 portable.
 CI45260154283 on 1812360 passes both lanes: 7340 pass, 42 archival and 37 platform
 skips, zero failures/errors; all 128 P3 cases pass. Two failed CI runs remain
-preserved. Retained execution remains unavailable; no automatic diagnostic successor.
+preserved. That stage did not admit retained execution or an automatic diagnostic successor.
 [ADR0243](../docs/adr/0243-design-one-retained-bounded-attempt.md) designs one future
 saved attempt with the original four pins, fixed [150°,152°] domain, 129-phase /
 30 s-per-process / 4 MiB limits and separate recorded-point audit. P4 is design only;
@@ -28,15 +28,18 @@ alone did not close full P5 or permit P6. [ADR0245](../docs/adr/0245-qualify-ret
 implements the remaining dispatcher:53 synthetic/7051 portable/412 live checks
 pass with42 archival skips;1359-file checkout frozen. CI45358338765 on aad842f
 passes7426 cases with unchanged42archive+37platform skips, all53 new cases pass;
-all7505 case IDs match local. Full P5 and fixed0245 readiness are complete; P6
-remains unexecuted. User
-selected one admissible saved pair plus independent audit; the five-minute
-heartbeat is ACTIVE and will stop on a terminal result or needed decision.
+all7505 case IDs match local. Full P5 and fixed0245 readiness are complete.
+[ADR0246](../docs/adr/0246-record-bounded-retained-inconclusive.md) records the one
+P6 on clean33fea7c: complete inconclusive/no witness, all13 recorded points
+independently audited, no optimizer replay. Positive proposal fails mass floor;
+negative objective guarded. All original caps/pins hold; authorization consumed.
+The user-selected admissible-pair goal is unmet, and automation is PAUSED for a
+new scientific choice. No repeated attempt or automatic diagnostic successor.
 A changed Mars phase is not the original R5.60 target. Physical admission and
-strict M3 remain open; automation `ariadna-m3` follows the bounded ADR0244 schedule.
+strict M3 remain open; automation `ariadna-m3` is PAUSED under the bounded stop policy.
 
 Test/CI maintenance and P3 regression qualification are complete; scientific
-admission is separate. The latest scientific result remains [ADR0238](../docs/adr/0238-record-versioned-saved-norms.md).
+admission is separate. The latest scientific result is [ADR0246](../docs/adr/0246-record-bounded-retained-inconclusive.md).
 See [CURRENT_STATE](../CURRENT_STATE.md) for verified checks and scope limits.
 Historical instructions below do not authorize consumed studies to be repeated.
 

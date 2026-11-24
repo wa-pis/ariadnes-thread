@@ -1,0 +1,1 @@
+{"evidence_bytes":312980,"exit_code":2,"parent_elapsed_ns":1048381667,"parent_source_bytes":813170,"schema":"ariadna-p3-retained-terminal-v1","stages":[{"elapsed_ns":875374083,"exit_code":2,"mode":"producer"},{"elapsed_ns":173006333,"exit_code":0,"mode":"audit"}],"terminal_status":"inconclusive/invalid"}
