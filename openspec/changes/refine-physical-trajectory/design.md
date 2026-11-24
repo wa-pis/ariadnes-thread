@@ -8,6 +8,11 @@ bounded process runner. All artificial recovery/reference/continuity/mesh/target
 gates and89 focused/7140 portable/412 live checks pass on frozen source. The
 outer monotonic start is explicitly inherited through CLI bootstrap and workers;
 full startup-through-finalization is bounded without changing scientific limits.
+The source-bound [CI receipt](../../../docs/adr/experiments/0249-ci-verification.json)
+records successful CI45493818215 on95ae3a3:7515 passes,42 archival and37 platform
+skips, zero failures/errors, all89 new cases pass. Both JUnit files and the
+resolved environment are preserved in the original artifact ZIP. No exact
+local/CI case-ID equality is claimed from count-only local logs.
 
 Independent flow verification replays the actual unreset command; reported
 reset-arc defects are checked algebraically and callback history is not

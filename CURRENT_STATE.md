@@ -11,7 +11,8 @@ Final external3.621921458s;174callbacks/528arcs/228552RHS; audit12arcs/294912RHS
 Independent target discrepancy1.37836e-6m/1.81899e-12m/s, diagnostic only.
 Zero benchmark SPICE/kernel/real-archive reads/native propagations.
 Verified89focused,7140portable+42archive skips,412live;1393-file checkout frozen.
-Ruff/review/links/protected history/strict pass; forthcoming commit CI unobserved.
+Ruff/review/links/protected history/strict pass. CI45493818215 on95ae3a3 passes:
+7515passed/79skipped, zero failures/errors; all89 new cases pass (ADR0249).
 Measured base0e09f5c plus6new source/test files; exact hashes/logs in ADR0249.
 
 ## Next action and scheduler

@@ -12,6 +12,9 @@ perturbed-seed recovery and independent actual-command RK4 checking pass all
 artificial gates,89 focused/7140 portable/412 live tests, with unchanged frozen
 source and protected history. This qualifies the manufactured problem only;
 P6 is consumed and physical F0 feasibility/strict M3 remain open.
+Source-bound CI45493818215 on95ae3a3 passes7515 cases, with42 archival and37
+platform skips, zero failures/errors and all89 new F3 cases passing; ADR0249
+preserves the original JUnit/environment ZIP and a separate CI receipt.
 Next F4 reviews the minimal production adoption gaps and writes one concrete
 bounded F0 method/verification contract before implementation or a mission run.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.

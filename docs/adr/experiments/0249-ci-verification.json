@@ -1,0 +1,358 @@
+{
+  "schema": "ariadna-f3-ci-verification-v1",
+  "date": "2026-11-25",
+  "scope": "F3 CI qualification only; no F0 feasibility or new scientific execution",
+  "ci": {
+    "attempt": 1,
+    "conclusion": "success",
+    "createdAt": "2026-11-24T21:42:39Z",
+    "databaseId": 45493818215,
+    "event": "push",
+    "headSha": "95ae3a3a9ef32844009ed017895c39f7e51df736",
+    "jobs": [
+      {
+        "completedAt": "2026-11-24T22:02:39Z",
+        "conclusion": "success",
+        "databaseId": 138798880010,
+        "name": "Python quality and scientific tests",
+        "startedAt": "2026-11-24T21:42:42Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-11-24T21:42:47Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-11-24T21:42:43Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T21:42:52Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 2,
+            "startedAt": "2026-11-24T21:42:47Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T21:44:21Z",
+            "conclusion": "success",
+            "name": "Run conda-incubator/setup-miniconda@fc2d68f6413eb2d87b895e92f8584b5b94a10167",
+            "number": 3,
+            "startedAt": "2026-11-24T21:42:52Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T21:44:23Z",
+            "conclusion": "success",
+            "name": "Record resolved environment",
+            "number": 4,
+            "startedAt": "2026-11-24T21:44:21Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T21:44:24Z",
+            "conclusion": "success",
+            "name": "Install editable package",
+            "number": 5,
+            "startedAt": "2026-11-24T21:44:23Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T21:44:24Z",
+            "conclusion": "success",
+            "name": "Lint",
+            "number": 6,
+            "startedAt": "2026-11-24T21:44:24Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T21:44:25Z",
+            "conclusion": "success",
+            "name": "Verify scientific runtime and installed CLI",
+            "number": 7,
+            "startedAt": "2026-11-24T21:44:24Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T21:49:58Z",
+            "conclusion": "success",
+            "name": "Unit and portable saved-data tests",
+            "number": 8,
+            "startedAt": "2026-11-24T21:44:25Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T22:02:33Z",
+            "conclusion": "success",
+            "name": "Scientific regression tests",
+            "number": 9,
+            "startedAt": "2026-11-24T21:49:58Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T22:02:35Z",
+            "conclusion": "success",
+            "name": "Upload test results",
+            "number": 10,
+            "startedAt": "2026-11-24T22:02:33Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T22:02:36Z",
+            "conclusion": "success",
+            "name": "Post Run conda-incubator/setup-miniconda@fc2d68f6413eb2d87b895e92f8584b5b94a10167",
+            "number": 19,
+            "startedAt": "2026-11-24T22:02:35Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T22:02:36Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 20,
+            "startedAt": "2026-11-24T22:02:36Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T22:02:36Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 21,
+            "startedAt": "2026-11-24T22:02:36Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/wa-pis/ariadnes-thread/actions/runs/45493818215/job/138798880010"
+      }
+    ],
+    "status": "completed",
+    "updatedAt": "2026-11-24T22:02:40Z",
+    "url": "https://github.com/wa-pis/ariadnes-thread/actions/runs/45493818215",
+    "workflowName": "CI"
+  },
+  "github_artifact": {
+    "id": 14969086278,
+    "node_id": "MDg6QXJ0aWZhY3QxNDk2OTA4NjI3OA==",
+    "name": "validation-results",
+    "size_in_bytes": 99692,
+    "url": "https://api.github.com/repos/wa-pis/ariadnes-thread/actions/artifacts/14969086278",
+    "archive_download_url": "https://api.github.com/repos/wa-pis/ariadnes-thread/actions/artifacts/14969086278/zip",
+    "expired": false,
+    "digest": "sha256:60b564fd8aae4b1673a6db5516b650dcc02738cffd7f4bc9ae86c3c3ca1e6d42",
+    "created_at": "2026-11-24T22:02:35Z",
+    "updated_at": "2026-11-24T22:02:35Z",
+    "expires_at": "2026-12-08T22:02:33Z",
+    "workflow_run": {
+      "id": 45493818215,
+      "repository_id": 1357505524,
+      "head_repository_id": 1357505524,
+      "head_branch": "dev",
+      "head_sha": "95ae3a3a9ef32844009ed017895c39f7e51df736"
+    }
+  },
+  "retained_archive": {
+    "file": "0249-ci-validation-results.zip",
+    "bytes": 99692,
+    "sha256": "60b564fd8aae4b1673a6db5516b650dcc02738cffd7f4bc9ae86c3c3ca1e6d42",
+    "members": {
+      "conda-explicit.txt": {
+        "bytes": 32878,
+        "sha256": "78918415110787de6d80306c0663d3c2fedb938fd92301bdb5f56992de00ec3c"
+      },
+      "unit.xml": {
+        "bytes": 3025001,
+        "sha256": "95e319f500a83e0c5930938f2433973321bc758ad7f18be42b41757e8cdd7c8c"
+      },
+      "live.xml": {
+        "bytes": 66435,
+        "sha256": "7ed0ab934d5b03178b16f5122f552ddee379932c88879469f2bcca8bb9c727f5"
+      }
+    }
+  },
+  "ci_lanes": {
+    "portable": {
+      "tests": 7182,
+      "outcomes": {
+        "passed": 7139,
+        "skipped": 43
+      },
+      "case_ids_sha256": "6c2ccc7a2e04ac19a7a861e41d088c3a0e6511be91f5ea4d4b9b55f85ea4178d",
+      "skip_reasons": {
+        "exact historical-environment check; enable with --run-archive": 42,
+        "No static SPK reader observation for this platform": 1
+      },
+      "junit_elapsed_s": 330.322
+    },
+    "live": {
+      "tests": 412,
+      "outcomes": {
+        "passed": 376,
+        "skipped": 36
+      },
+      "case_ids_sha256": "61e6e61fbc607764e81cc8d5253f8b9188e040efe8f6c8f2e32cf810a0a9bddb",
+      "skip_reasons": {
+        "Only the Darwin/arm64 fenv ABI has been inspected": 1,
+        "No static native arithmetic observation for this platform": 1,
+        "Only the installed Darwin/arm64 CSPICE ABI was inspected": 34
+      },
+      "junit_elapsed_s": 754.189
+    }
+  },
+  "ci_totals": {
+    "unique_cases": 7594,
+    "passed": 7515,
+    "skipped": 79,
+    "failures": 0,
+    "errors": 0,
+    "lane_overlap": 0
+  },
+  "case_id_encoding": "SHA-256 of sorted classname::name lines with one trailing LF, UTF-8",
+  "new_f3_cases": {
+    "passed": 89,
+    "by_module": {
+      "tests.test_coupled_benchmark": 23,
+      "tests.test_coupled_benchmark_oracle": 34,
+      "tests.test_coupled_benchmark_run": 32
+    },
+    "case_ids": [
+      "tests.test_coupled_benchmark::test_bad_integrator_result_fails_without_retry[epoch]",
+      "tests.test_coupled_benchmark::test_bad_integrator_result_fails_without_retry[failure]",
+      "tests.test_coupled_benchmark::test_bad_integrator_result_fails_without_retry[mass]",
+      "tests.test_coupled_benchmark::test_bad_integrator_result_fails_without_retry[nonfinite]",
+      "tests.test_coupled_benchmark::test_budget_counts_last_attempt_and_stops_before_extra_work[residual_calls-400]",
+      "tests.test_coupled_benchmark::test_budget_counts_last_attempt_and_stops_before_extra_work[rhs_attempts-1000000]",
+      "tests.test_coupled_benchmark::test_budget_counts_last_attempt_and_stops_before_extra_work[synthetic_arc_attempts-1206]",
+      "tests.test_coupled_benchmark::test_burn_endpoint_uses_burn_mode_and_coast_uses_no_thrust",
+      "tests.test_coupled_benchmark::test_changed_fixture_rejected_before_any_propagation[final_s-9999]",
+      "tests.test_coupled_benchmark::test_changed_fixture_rejected_before_any_propagation[gravity_m_s2-value0]",
+      "tests.test_coupled_benchmark::test_changed_fixture_rejected_before_any_propagation[initial_mass_kg-True]",
+      "tests.test_coupled_benchmark::test_changed_fixture_rejected_before_any_propagation[thrust_n-nan]",
+      "tests.test_coupled_benchmark::test_deadline_and_backwards_clock",
+      "tests.test_coupled_benchmark::test_invalid_tnw_is_counted_and_stops",
+      "tests.test_coupled_benchmark::test_nonfinite_boolean_and_nonnumeric_values_rejected[bool]",
+      "tests.test_coupled_benchmark::test_nonfinite_boolean_and_nonnumeric_values_rejected[infinity]",
+      "tests.test_coupled_benchmark::test_nonfinite_boolean_and_nonnumeric_values_rejected[nan]",
+      "tests.test_coupled_benchmark::test_nonfinite_boolean_and_nonnumeric_values_rejected[overflow]",
+      "tests.test_coupled_benchmark::test_nonfinite_boolean_and_nonnumeric_values_rejected[string]",
+      "tests.test_coupled_benchmark::test_perturbed_seed_recovers_unreset_synthetic_target",
+      "tests.test_coupled_benchmark::test_reference_precision_and_configuration_size_guards",
+      "tests.test_coupled_benchmark::test_residual_checks_bounds_before_launch_and_counts_failure",
+      "tests.test_coupled_benchmark::test_solver_cached_fun_cannot_hide_actual_defect",
+      "tests.test_coupled_benchmark_oracle::test_changed_recovered_command_is_checked_beyond_a_valid_witness",
+      "tests.test_coupled_benchmark_oracle::test_changed_reference_and_solver_profiles_are_rejected",
+      "tests.test_coupled_benchmark_oracle::test_deadline_and_exact_work_limits_fail_closed",
+      "tests.test_coupled_benchmark_oracle::test_decimal_reference_obeys_independent_mass_and_velocity_invariants",
+      "tests.test_coupled_benchmark_oracle::test_full_independent_inventory_and_known_witness_parity",
+      "tests.test_coupled_benchmark_oracle::test_no_candidate_or_scientific_library_imports",
+      "tests.test_coupled_benchmark_oracle::test_nodes_cannot_supply_an_independent_mass_or_epoch",
+      "tests.test_coupled_benchmark_oracle::test_packet_failure_precedes_replay[controls-value3-finite number]",
+      "tests.test_coupled_benchmark_oracle::test_packet_failure_precedes_replay[controls-value4-domain]",
+      "tests.test_coupled_benchmark_oracle::test_packet_failure_precedes_replay[controls-value5-finite number]",
+      "tests.test_coupled_benchmark_oracle::test_packet_failure_precedes_replay[defects-value7-raw defect]",
+      "tests.test_coupled_benchmark_oracle::test_packet_failure_precedes_replay[frame-SSB-frame]",
+      "tests.test_coupled_benchmark_oracle::test_packet_failure_precedes_replay[initial_defects-value6-initial defects]",
+      "tests.test_coupled_benchmark_oracle::test_packet_failure_precedes_replay[schema-other-schema]",
+      "tests.test_coupled_benchmark_oracle::test_packet_failure_precedes_replay[status-targeting-failed-status]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[kernel_reads-1]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[native_propagations-1]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[real_archive_reads-1]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[residual_calls--1]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[residual_calls-401]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[residual_calls-True]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[rhs_attempts-1000001]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[rhs_attempts-8]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[spice_queries-1]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[synthetic_arc_attempts-10]",
+      "tests.test_coupled_benchmark_oracle::test_producer_counter_type_cap_and_coherence[synthetic_arc_attempts-1207]",
+      "tests.test_coupled_benchmark_oracle::test_public_audit_cannot_extend_its_sixty_second_deadline",
+      "tests.test_coupled_benchmark_oracle::test_reference_packets_are_fresh",
+      "tests.test_coupled_benchmark_oracle::test_tnw_uses_current_velocity_and_coast_has_gravity_without_thrust",
+      "tests.test_coupled_benchmark_oracle::test_unknown_fields_are_not_admitted[counts]",
+      "tests.test_coupled_benchmark_oracle::test_unknown_fields_are_not_admitted[reference]",
+      "tests.test_coupled_benchmark_oracle::test_unknown_fields_are_not_admitted[report]",
+      "tests.test_coupled_benchmark_oracle::test_unknown_fields_are_not_admitted[solver]",
+      "tests.test_coupled_benchmark_oracle::test_unknown_fields_are_not_admitted[witness]",
+      "tests.test_coupled_benchmark_run::test_audit_failure_does_not_leave_successful_report",
+      "tests.test_coupled_benchmark_run::test_cli_passes_explicit_parent_start",
+      "tests.test_coupled_benchmark_run::test_existing_output_directory_is_never_overwritten",
+      "tests.test_coupled_benchmark_run::test_expired_inherited_budget_never_starts_worker[211.0]",
+      "tests.test_coupled_benchmark_run::test_expired_inherited_budget_never_starts_worker[301.0]",
+      "tests.test_coupled_benchmark_run::test_explicit_input_cap_is_checked_before_parsing",
+      "tests.test_coupled_benchmark_run::test_failed_producer_preserves_partial_counts_and_skips_audit",
+      "tests.test_coupled_benchmark_run::test_future_parent_start_cannot_create_directory",
+      "tests.test_coupled_benchmark_run::test_independent_worker_guard_blocks_cached_and_relative_imports",
+      "tests.test_coupled_benchmark_run::test_inherited_start_shortens_producer_deadline",
+      "tests.test_coupled_benchmark_run::test_input_rejects_nonobject_and_nonfinite[[]]",
+      "tests.test_coupled_benchmark_run::test_input_rejects_nonobject_and_nonfinite[{\"x\":1e999}]",
+      "tests.test_coupled_benchmark_run::test_input_rejects_nonobject_and_nonfinite[{\"x\":NaN}]",
+      "tests.test_coupled_benchmark_run::test_input_rejects_nonobject_and_nonfinite[{bad]",
+      "tests.test_coupled_benchmark_run::test_invalid_parent_start_cannot_create_directory[-inf]",
+      "tests.test_coupled_benchmark_run::test_invalid_parent_start_cannot_create_directory[True]",
+      "tests.test_coupled_benchmark_run::test_invalid_parent_start_cannot_create_directory[inf]",
+      "tests.test_coupled_benchmark_run::test_invalid_parent_start_cannot_create_directory[nan]",
+      "tests.test_coupled_benchmark_run::test_late_durable_write_leaves_failed_report",
+      "tests.test_coupled_benchmark_run::test_packet_cannot_claim_success_without_contract",
+      "tests.test_coupled_benchmark_run::test_parent_bounds_stdout_and_stderr_while_running",
+      "tests.test_coupled_benchmark_run::test_pipeline_uses_separate_workers_and_keeps_complete_evidence",
+      "tests.test_coupled_benchmark_run::test_real_producer_dispatch_imports_pure_helpers_then_rejects_bad_fixture",
+      "tests.test_coupled_benchmark_run::test_runtime_pin_failure_is_retained",
+      "tests.test_coupled_benchmark_run::test_timeout_preserves_failure_with_unknown_counters",
+      "tests.test_coupled_benchmark_run::test_unexpected_failure_is_recorded_and_propagated",
+      "tests.test_coupled_benchmark_run::test_watchdog_kills_stalled_worker",
+      "tests.test_coupled_benchmark_run::test_worker_bad_input_has_expected_exit_and_no_invented_counters",
+      "tests.test_coupled_benchmark_run::test_worker_cannot_reset_parent_start",
+      "tests.test_coupled_benchmark_run::test_worker_command_round_trips_private_argument_shape",
+      "tests.test_coupled_benchmark_run::test_worker_dispatches_fabricated_packet[audit]",
+      "tests.test_coupled_benchmark_run::test_worker_dispatches_fabricated_packet[producer]"
+    ],
+    "case_ids_sha256": "ffe6372b7fc6edff629f805e5c3ec2fd31ab559c8c74c5fe80dddfa850e7b470"
+  },
+  "skip_inventory_identical_to_0245": true,
+  "skip_inventory_source_sha256": "f41f86ba7add2357fe38b42f4d48f592b2961d9929407bc6ae442aa60d3da262",
+  "qualification_file": "0249-qualification.json",
+  "qualification_sha256": "396219dd2f9371b346e82f60f4b98462783b04574c83b1fa9187629bde04a2b6",
+  "source_test_sha256": {
+    "src/space_nav/_coupled_benchmark.py": "22a58d0457a5c0aeaca9ee6bc00aa50c07ec666bcdb643f2b74dd5eea0151b0f",
+    "src/space_nav/_coupled_benchmark_oracle.py": "0118227170ddfe2c816266a948cc618c6f665d8dfbe74fe8e59315b15a919f45",
+    "src/space_nav/_coupled_benchmark_run.py": "216ccd347c5a8025d24a54ffb55ab97a2267461907cb3e6ebae2a3e2b23e408d",
+    "tests/test_coupled_benchmark.py": "c5d03a16371fa153e0d73cb40fb0f9a6e08a4dcf1139228b866414a8bfe4fa53",
+    "tests/test_coupled_benchmark_oracle.py": "1d4ad11dcbfb775a3784277ea0afa6f0b96e14823b9fe85fb4081dab22b9005a",
+    "tests/test_coupled_benchmark_run.py": "638aa1a1e3ea8f2f2443a2aeef816573bef277acdd4052c72f925927e5bc8cb3"
+  },
+  "workflow_sha256": "c082a41da3155b0b307f5a62692b5dbfabf2e906478e2dc809cb649187b82cdd",
+  "local_results": {
+    "command": "make test CONDA=/opt/homebrew/bin/conda",
+    "portable": {
+      "passed": 7140,
+      "archival_skipped": 42,
+      "live_deselected": 412,
+      "elapsed_s": 208.42
+    },
+    "live": {
+      "passed": 412,
+      "deselected": 7182,
+      "elapsed_s": 603.9
+    }
+  },
+  "local_ci_comparison": {
+    "total_case_counts_equal": true,
+    "local_cases": 7594,
+    "ci_cases": 7594,
+    "additional_ci_platform_skips": 37,
+    "exact_local_ci_case_id_equality": "not established; retained local logs contain counts, not case inventory"
+  },
+  "verification": {
+    "all_89_new_tests_pass": true,
+    "all_original_0249_artifact_hashes_unchanged": true,
+    "runtime_tests_rerun": false,
+    "new_mission_experiments": 0,
+    "new_spice_queries": 0,
+    "new_integrations": 0
+  },
+  "limitations": [
+    "CI success qualifies software checks on the CI platform only",
+    "42 archival checks remain skipped;37 Darwin-specific cases are skipped on Linux",
+    "No admissible Moon-to-Mars command pair, physical join, safety or99%probability result"
+  ]
+}

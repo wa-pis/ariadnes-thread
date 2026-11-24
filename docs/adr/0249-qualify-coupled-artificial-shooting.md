@@ -2,7 +2,7 @@
 
 Date: 2026-11-25 (Europe/Samara)
 Decision status: accepted (private artificial implementation under ADR0248)
-Implementation: complete; artificial qualification and required local regressions verified
+Implementation: complete; artificial qualification, required local regressions and source-bound CI verified
 Scope / milestone: F3 / M3 preparation; production F0 unchanged
 Base revision: `0e09f5c544ccd17cde4ba16a02445e73f2f1243c`, with six new source/test files; exact measured hashes in the evidence
 Related OpenSpec: [requirement](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md#requirement-qualify-coupled-shooting-on-an-analytic-finite-burn-benchmark), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md)
@@ -80,7 +80,22 @@ Focused tests:89 pass. Required `make test` passes7140 portable tests in208.42 s
 (7182 deselections). All1393 frozen files and Git status remain unchanged across
 both lanes; all1081 previously protected non-Markdown files remain unchanged.
 Repository Ruff, separate scientific/code/evidence review, local links, diff and
-strict OpenSpec pass. CI for the forthcoming commit has not yet been observed.
+strict OpenSpec pass.
+
+Subsequent [CI45493818215](https://github.com/wa-pis/ariadnes-thread/actions/runs/45493818215)
+on exact commit `95ae3a3a9ef32844009ed017895c39f7e51df736` completes successfully
+at2026-11-24T22:02:40Z. Portable:7139 pass/43 skip; live:376 pass/36 skip.
+All89 new F3 cases pass; total7594 unique cases,7515 passes,79 skips and zero
+failures/errors, with no lane overlap. The42 archival and37 platform-specific
+skips have exactly the same case/reason inventory as ADR0245. The local logs
+support the same total count, but contain no case inventory; exact local/CI
+case-ID equality is not asserted. Preserve the original qualification manifest
+with its historical CI-unobserved status. The new [CI receipt](experiments/0249-ci-verification.json)
+binds run/job/commit, six source/test hashes and the original
+[artifact ZIP](experiments/0249-ci-validation-results.zip), including both JUnit
+files and the resolved Conda environment; the ZIP matches GitHub
+SHA-256 `60b564fd8aae4b1673a6db5516b650dcc02738cffd7f4bc9ae86c3c3ca1e6d42`.
+This documentation/evidence update reruns no tests or scientific work.
 
 Evidence: [final run](experiments/0249-coupled-benchmark/report.json),
 [independent audit](experiments/0249-coupled-benchmark/audit.json),
