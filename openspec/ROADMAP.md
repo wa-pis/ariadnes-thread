@@ -6,8 +6,11 @@ Current planning priority (2026-11-25):
 Current fixed boundaries and six burn controls remain binding; altered dates,
 free phases and orbit-membership targeting are proposed extensions only.
 F1 is documentation complete; F2 method/independent-benchmark readiness remains
-unselected. No calculations or new execution authority; P6 is consumed,
-automation PAUSED and physical feasibility/strict M3 remain open.
+unselected. F1 performed no calculations; P6 is consumed and physical
+feasibility/strict M3 remain open. On 2026-11-25 the user resumed automation
+`ariadna-m3` every 5 minutes, starting F2 with its required contract before
+implementation/runs. No changed boundaries, old-study replay or R5.60 admission;
+pause on required user participation or independently verified agreed success.
 
 Retained P1–P6 method (consumed): [ADR0240](../docs/adr/0240-choose-bounded-scalar-witness-search.md),
 under the [ADR0239](../docs/adr/0239-stop-diagnostics-at-a-feasibility-decision.md)

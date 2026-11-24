@@ -1,5 +1,11 @@
 ## Current planning decision — coupled mission formulation
 
+User resumed `ariadna-m3` on 2026-11-25, every 5 minutes, starting F2.
+This scheduling instruction permits ordinary reversible progress within accepted
+contracts; it does not free F0 boundaries, revive consumed studies or admit
+R5.60. Complete the F2 method/benchmark contract before implementation/runs;
+pause when a user decision/access/authorization is needed or agreed success is verified.
+
 - [x] F1 Record ADR0247's source-linked requirements/fixed-data/free-variable ledger and the existing-boundary coupled Moon-to-Mars feasibility problem. Verify all six current controls and derived/auxiliary roles, exact-state versus orbit-membership and date/phase distinctions, single full-force state/mass continuity, unchanged closure/join/error-bound gates, source facts, independent review, local links/anchors, protected files, documentation-only diff and strict OpenSpec. Planning only: no scientific calculations, new method/benchmark implementation, SPICE, integration, new target adoption or execution authority; automation remains PAUSED.
 - [ ] F2 Before any further implementation or experiment, specify a minimal benchmark and method contract for the documented coupled problem. Verify a named published/analytic case, exact physical boundaries and permitted variables, independent same-model oracle, dimensional tolerances, pinned dependencies and finite work/time/validation limits; reconcile any proposed boundary change explicitly with existing requirements. No run is authorized by F1 or this unchecked task.
 

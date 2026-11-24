@@ -18,8 +18,13 @@ Keep pinned Python/TudatPy/SPICE/Streamlit and the extensible platform vision.
 ## Goal and stop state
 One independently audited admissible analytical pair was the user-selected goal;
 it remains unmet. No 99% probability, physical closure or safety claim.
-Automation `ariadna-m3` remains PAUSED after the once-only P6 result.
-F1 authorizes documentation only, no automatic successor or scientific run.
+User resumed `ariadna-m3` on 2026-11-25: ACTIVE, every 5 minutes, same chat.
+Begin F2 method/independent-benchmark contract before implementation or runs.
+Ordinary reversible preparation may advance within the accepted contract;
+F1 alone supplied no execution authority. No date/phase/hardware relaxation,
+old-study replay or R5.60. Pause on required user choice/access/authorization,
+contract-changing failure, or independently verified agreed success.
+Automation status/prompt were checked through the app and saved configuration.
 
 ## Latest scientific result
 [ADR0246](docs/adr/0246-record-bounded-retained-inconclusive.md): on clean33fea7c,
