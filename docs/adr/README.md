@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0249 — Qualify coupled shooting on the artificial problem](0249-qualify-coupled-artificial-shooting.md): F3 recovery and independent actual-command audit pass;89 focused,7140 portable and412 live checks; original F0 feasibility remains unverified.
+
 - [0248 — Check coupled shooting on an analytic finite-burn problem](0248-design-coupled-synthetic-benchmark.md): F2 private two-node method and uniform-gravity known-witness/recovery contract; independent Decimal/RK4 checks and finite budgets; no numerical run.
 
 - [0247 — Formulate the coupled Moon-to-Mars problem](0247-formulate-coupled-moon-mars-problem.md): source-linked requirements/variable ledger and fixed-boundary feasibility formulation; proposed extensions remain unadopted, no calculations or method execution.

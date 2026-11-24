@@ -1,5 +1,22 @@
 ## Context
 
+### F3: artificial coupled method qualified (2026-11-25)
+
+[ADR0249](../../../docs/adr/0249-qualify-coupled-artificial-shooting.md) implements
+ADR0248 through three private modules: candidate, independent stdlib oracle and
+bounded process runner. All artificial recovery/reference/continuity/mesh/target
+gates and89 focused/7140 portable/412 live checks pass on frozen source. The
+outer monotonic start is explicitly inherited through CLI bootstrap and workers;
+full startup-through-finalization is bounded without changing scientific limits.
+
+Independent flow verification replays the actual unreset command; reported
+reset-arc defects are checked algebraically and callback history is not
+reconstructed from endpoint data. This is numerical qualification on one
+manufactured case, not physical F0 reachability or a global error certificate.
+Before another implementation/run, F4 reviews full-force reuse/wiring, boundary
+and seed identity, scaling and independent qualification/error-bound gaps, then
+writes a concrete bounded contract. No mission execution follows automatically.
+
 ### F2: minimal coupled method and artificial benchmark (2026-11-25)
 
 [ADR0248](../../../docs/adr/0248-design-coupled-synthetic-benchmark.md) specifies the

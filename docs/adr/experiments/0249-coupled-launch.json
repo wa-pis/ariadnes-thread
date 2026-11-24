@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "-m",
+    "space_nav._coupled_benchmark_run",
+    "/private/tmp/ariadna-0249-coupled-benchmark",
+    "--parent-start",
+    "3675711.643344125"
+  ],
+  "exit_code": 0,
+  "external_elapsed_s": 3.6219214582815766,
+  "external_limit_s": 300.0,
+  "scope": "artificial benchmark only; no mission data/SPICE/native work"
+}

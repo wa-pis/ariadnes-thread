@@ -6,13 +6,16 @@ Current planning priority (2026-11-25):
 Current fixed boundaries and six burn controls remain binding; altered dates,
 free phases and orbit-membership targeting are proposed extensions only.
 F1 is documentation complete. [ADR0248](../docs/adr/0248-design-coupled-synthetic-benchmark.md)
-completes F2: private bounded two-node shooting and an analytic uniform-gravity
-finite-burn benchmark, with independent returned-command audit and explicit
-profiles/gates/budgets. No benchmark was run; F3 artificial implementation and
-qualification remain pending. P6 is consumed; physical feasibility/strict M3
-remain open. On 2026-11-25 the user resumed automation
-`ariadna-m3` every 5 minutes. F2 supplies the contract for authorized F3
-preparation/artificial tests, not a production or mission-run contract. No changed boundaries, old-study replay or R5.60 admission;
+completes F2's private method/fixture contract.
+[ADR0249](../docs/adr/0249-qualify-coupled-artificial-shooting.md) completes F3:
+perturbed-seed recovery and independent actual-command RK4 checking pass all
+artificial gates,89 focused/7140 portable/412 live tests, with unchanged frozen
+source and protected history. This qualifies the manufactured problem only;
+P6 is consumed and physical F0 feasibility/strict M3 remain open.
+Next F4 reviews the minimal production adoption gaps and writes one concrete
+bounded F0 method/verification contract before implementation or a mission run.
+On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
+No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.
 
 Retained P1–P6 method (consumed): [ADR0240](../docs/adr/0240-choose-bounded-scalar-witness-search.md),
@@ -48,10 +51,12 @@ all7505 case IDs match local. Full P5 and fixed0245 readiness are complete.
 P6 on clean33fea7c: complete inconclusive/no witness, all13 recorded points
 independently audited, no optimizer replay. Positive proposal fails mass floor;
 negative objective guarded. All original caps/pins hold; authorization consumed.
-The user-selected admissible-pair goal is unmet, and automation is PAUSED for a
-new scientific choice. No repeated attempt or automatic diagnostic successor.
+The user-selected admissible-pair goal was unmet at ADR0246, and automation was
+paused for a new scientific choice. Resumed F2/F3 preparation is described above;
+no repeated P6 attempt or automatic diagnostic successor is admitted.
 A changed Mars phase is not the original R5.60 target. Physical admission and
-strict M3 remain open; automation `ariadna-m3` is PAUSED under the bounded stop policy.
+strict M3 remain open; the consumed P6 stop policy remains binding despite
+resumption of separately contracted preparation.
 
 Test/CI maintenance and P3 regression qualification are complete; scientific
 admission is separate. The latest scientific result is [ADR0246](../docs/adr/0246-record-bounded-retained-inconclusive.md).

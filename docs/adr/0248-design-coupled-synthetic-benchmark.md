@@ -2,7 +2,7 @@
 
 Date: 2026-11-25 (Europe/Samara)
 Decision status: accepted (F2 method and artificial-benchmark contract only)
-Implementation: not started; no benchmark executed or scientific result obtained
+Implementation at F2: not started; subsequent artificial qualification in [ADR0249](0249-qualify-coupled-artificial-shooting.md)
 Scope / milestone: private M3 preparation; no change to the production F0 solver
 Base revision: `ea5ee6b3c24b976126425ff85a68c2449b138f73`, clean `dev` before design
 Related OpenSpec: [requirement](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md#requirement-qualify-coupled-shooting-on-an-analytic-finite-burn-benchmark), [design](../../openspec/changes/refine-physical-trajectory/design.md#f2-minimal-coupled-method-and-artificial-benchmark-2026-11-25), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md)

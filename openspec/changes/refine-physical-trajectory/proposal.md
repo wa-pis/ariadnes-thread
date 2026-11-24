@@ -15,7 +15,17 @@ open; the broader platform direction is not abandoned.
 
 ## What Changes
 
-### Current preparation contract — coupled artificial benchmark (2026-11-25)
+### Current preparation result — artificial method qualified (2026-11-25)
+
+[ADR0249](../../../docs/adr/0249-qualify-coupled-artificial-shooting.md) completes
+F3: the private method recovers from the perturbed seed and the separate auditor
+checks the actual unreset command against the independent manufactured target.
+All original artificial gates, focused/frozen portable/live checks and review
+pass. Production F0 is unchanged and physical feasibility remains unverified.
+F4 next reviews production adoption gaps and specifies one concrete bounded
+contract, without scientific execution or automatic mission-run admission.
+
+### F2 preparation contract — coupled artificial benchmark (2026-11-25)
 
 [ADR0248](../../../docs/adr/0248-design-coupled-synthetic-benchmark.md) completes F2:
 a private two-node multiple-shooting method and manufactured uniform-gravity,

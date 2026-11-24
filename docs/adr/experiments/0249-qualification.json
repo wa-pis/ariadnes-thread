@@ -1,0 +1,145 @@
+{
+  "schema": "ariadna-coupled-qualification-v1",
+  "date": "2026-11-25",
+  "status": "passed",
+  "scope": "private manufactured benchmark only; no F0 feasibility, physical error-bound or mission-safety claim",
+  "base_revision": "0e09f5c544ccd17cde4ba16a02445e73f2f1243c",
+  "measured_tree": "base plus six new source/test files; documentation/evidence added after frozen regressions",
+  "source_test_sha256": {
+    "src/space_nav/_coupled_benchmark.py": "22a58d0457a5c0aeaca9ee6bc00aa50c07ec666bcdb643f2b74dd5eea0151b0f",
+    "src/space_nav/_coupled_benchmark_oracle.py": "0118227170ddfe2c816266a948cc618c6f665d8dfbe74fe8e59315b15a919f45",
+    "src/space_nav/_coupled_benchmark_run.py": "216ccd347c5a8025d24a54ffb55ab97a2267461907cb3e6ebae2a3e2b23e408d",
+    "tests/test_coupled_benchmark.py": "c5d03a16371fa153e0d73cb40fb0f9a6e08a4dcf1139228b866414a8bfe4fa53",
+    "tests/test_coupled_benchmark_oracle.py": "1d4ad11dcbfb775a3784277ea0afa6f0b96e14823b9fe85fb4081dab22b9005a",
+    "tests/test_coupled_benchmark_run.py": "638aa1a1e3ea8f2f2443a2aeef816573bef277acdd4052c72f925927e5bc8cb3"
+  },
+  "focused": {
+    "passed": 89,
+    "elapsed_s": 4.72
+  },
+  "required_regressions": {
+    "command": "make test CONDA=/opt/homebrew/bin/conda",
+    "portable": {
+      "passed": 7140,
+      "archival_skipped": 42,
+      "live_deselected": 412,
+      "elapsed_s": 208.42
+    },
+    "live": {
+      "passed": 412,
+      "deselected": 7182,
+      "elapsed_s": 603.9
+    }
+  },
+  "frozen_checkout": {
+    "status": "passed",
+    "files_unchanged": 1393,
+    "git_status_unchanged": true,
+    "frozen_manifest_sha256": "9b4cf40c17bcbbc02b36a23b03f3fc888cde8f397da39e4fa558fbee0d31b80f",
+    "base_revision": "0e09f5c544ccd17cde4ba16a02445e73f2f1243c"
+  },
+  "previous_protected_nonmarkdown_files_unchanged": 1081,
+  "benchmark": {
+    "directory": "0249-coupled-benchmark",
+    "external_elapsed_s": 3.6219214582815766,
+    "internal_evidence_bytes": 8804,
+    "producer_counts": {
+      "kernel_reads": 0,
+      "native_propagations": 0,
+      "real_archive_reads": 0,
+      "residual_calls": 174,
+      "rhs_attempts": 228552,
+      "spice_queries": 0,
+      "synthetic_arc_attempts": 528
+    },
+    "audit_counts": {
+      "kernel_reads": 0,
+      "native_propagations": 0,
+      "optimizer_calls": 0,
+      "real_archive_reads": 0,
+      "rhs_attempts": 294912,
+      "spice_queries": 0,
+      "synthetic_arc_attempts": 12
+    },
+    "max_errors": {
+      "candidate_rk4": {
+        "epoch_s": 0.0,
+        "mass_kg": 1.1368683772161603e-12,
+        "position_m": 1.5944242477416992e-06,
+        "velocity_m_s": 1.2278178473934531e-11
+      },
+      "candidate_target": {
+        "epoch_s": 0.0,
+        "mass_kg": 1.1368683772161603e-12,
+        "position_m": 2.9802322387695326e-08,
+        "velocity_m_s": 1.3642420529747941e-12
+      },
+      "independent_target": {
+        "epoch_s": 0.0,
+        "mass_kg": 0.0,
+        "position_m": 1.3783574104309082e-06,
+        "velocity_m_s": 1.818989403782408e-12
+      },
+      "mesh": {
+        "epoch_s": 0.0,
+        "mass_kg": 0.0,
+        "position_m": 2.1979212760925293e-06,
+        "velocity_m_s": 8.412825991399586e-12
+      },
+      "shooting": {
+        "epoch_s": 0.0,
+        "mass_kg": 6.821210263296962e-13,
+        "position_m": 3.558578560974971e-08,
+        "velocity_m_s": 4.547473508871726e-13
+      },
+      "witness": {
+        "epoch_s": 0.0,
+        "mass_kg": 6.821210263296962e-13,
+        "position_m": 1.560896635055542e-06,
+        "velocity_m_s": 1.1823431123048067e-11
+      }
+    }
+  },
+  "timing_pilot": {
+    "directory": "0249-bootstrap-pilot",
+    "limitation": "CLI bootstrap preceded internal clock; not complete timing qualification",
+    "final_producer_bytes_identical": true,
+    "final_audit_bytes_identical": true
+  },
+  "checks": {
+    "ruff": "passed",
+    "strict_openspec": "passed",
+    "independent_code_and_scientific_review": "passed; timing finding repaired and tested",
+    "independent_evidence_claims_review": "passed",
+    "ci": "not yet observed for forthcoming commit"
+  },
+  "limitations": [
+    "independent RK4 covers actual unreset command and witness, not separate reset-arc flow histories",
+    "producer callback counts are reported facts checked for type/cap/coherence, not reconstructed history",
+    "mesh agreement is diagnostic, not certified global error enclosure",
+    "no retained real-data/SPICE mission study, F0 or R5.60 execution"
+  ],
+  "artifacts_bytes_before_manifest": 202546,
+  "artifact_sha256": {
+    "0249-benchmark-invocation.py": "28bab4a636ce36dccdbe5d7cb641c646ef452e3453ea5723700db7e6b9823e25",
+    "0249-bootstrap-cli.log": "caf520ce96eac3aed45178d2e2dfa484fbbbe50facfda4204ec9575a74fa14e5",
+    "0249-bootstrap-launch.json": "db2732157a7da6c622b40e2d49f5eb254714a06f7c5e316b1ef20aabb048ff41",
+    "0249-bootstrap-pilot/audit.json": "c48c2cf1c599d1c4383ec5df5541e3749e0498329ba3289df8be9fd4c7ef68ac",
+    "0249-bootstrap-pilot/producer.json": "9dec3f6ef3fbcce30ddcf5426632bb87d69de65a2e13975269d5c81fc47d456c",
+    "0249-bootstrap-pilot/reference.json": "0c6ec1153cde90dcd1404b835413f9886a10ec028943be03a44a0280e4e7c553",
+    "0249-bootstrap-pilot/report.json": "cc232dac96e00811b2d59aec7abd31574cabf885626343cb33908076b3106eae",
+    "0249-coupled-benchmark/audit.json": "c48c2cf1c599d1c4383ec5df5541e3749e0498329ba3289df8be9fd4c7ef68ac",
+    "0249-coupled-benchmark/producer.json": "9dec3f6ef3fbcce30ddcf5426632bb87d69de65a2e13975269d5c81fc47d456c",
+    "0249-coupled-benchmark/reference.json": "0c6ec1153cde90dcd1404b835413f9886a10ec028943be03a44a0280e4e7c553",
+    "0249-coupled-benchmark/report.json": "80fdcc2f5e132425dca4b650e502a4099b6648bdd8da14b6176a022f3f7a9862",
+    "0249-coupled-cli.log": "8847feea485b894c78f5c0dc742568181020f655ae12fe2243161916969704ad",
+    "0249-coupled-launch.json": "61781b08d9083df9302b5c0f6cba68b2374ac7b90ccf96ef66a2d10b2788e700",
+    "0249-focused-before-clock-fix.log": "0792b669971556a2d0828a1d95f232dc35ee33b99ffb7cade1bd837c6d4d0fe9",
+    "0249-focused-tests.log": "644aec29f816c4d5a734cafa5e16b292500136fddb133ff3d7164315fbc65036",
+    "0249-freeze-verification.json": "a6334edb929ba2b0eea62e13e9ba1f8e02aae643ad576cf7eeb73a39490a5897",
+    "0249-frozen-checkout.json": "9b4cf40c17bcbbc02b36a23b03f3fc888cde8f397da39e4fa558fbee0d31b80f",
+    "0249-openspec.log": "e100704efd79d707c2c8e21e8f643cd71afcf906342dc7ad0830859d153b0cf0",
+    "0249-regression.log": "7745a1141fdcb7b02b8e064ab81e87aedbeb316c20448dbc4942bd82918dc54f",
+    "0249-ruff.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  }
+}
