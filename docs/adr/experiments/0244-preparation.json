@@ -1,0 +1,78 @@
+{
+  "all_previous_non_markdown_files_unchanged": 1043,
+  "automation": {
+    "id": "ariadna-m3",
+    "interval_minutes": 5,
+    "pause_on": "agreed witness, terminal one-shot result or needed user decision",
+    "prompt_sha256": "79f79493f77f446c7ad3db0da9efb2b40a099dc000a08619e17868a3544b1b50",
+    "status": "ACTIVE"
+  },
+  "base_revision": "7251265ddd22de3dc0e644e4d78392fe4519cb1b",
+  "checks": {
+    "focused": {
+      "case_ids_sha256": "45df4049073e75f1a3ea6d0154cec2ee11355ee5fc340cae8b3f2a3d96bcfd0c",
+      "junit_elapsed_s": 6.904,
+      "junit_sha256": "7728b8823840af3f1073a905e7ea73df69ff9921250af898751e8a6d2e8463ff",
+      "log_sha256": "af7741258e88257b87652bd72c24cc0cf99a42f081f3ea23d6f203323a050e10",
+      "outcomes": {
+        "passed": 161
+      },
+      "skip_reasons": {}
+    },
+    "live": {
+      "case_ids_sha256": "beb27332ad49339dfbb95796c6f59520cc535c1b5f7f9350dc1cc2556ffa26ca",
+      "junit_elapsed_s": 577.203,
+      "junit_sha256": "ba6460c8280f4f31f71b8676488fbbc9e00194359e38d62a582e1eaf002fc07a",
+      "log_sha256": "43f8c796336955bef9e9cb8f0b2e358aa8fc394fb62b247ca761588e4f87c1ef",
+      "outcomes": {
+        "passed": 412
+      },
+      "skip_reasons": {}
+    },
+    "portable": {
+      "case_ids_sha256": "3da87d31615cd4d1e64cf5a747c2956194a2405658001acef1e5302e2f92ddb6",
+      "junit_elapsed_s": 198.209,
+      "junit_sha256": "d39a0489dff6e8c099d66f4a8421a62b7ebd2b54931798375cf458ebfeb97b6c",
+      "log_sha256": "69c957926d391c18d2ab1c8276dfb4fcf3184c619685cf1f255fe4dfbf5b2c6e",
+      "outcomes": {
+        "passed": 6998,
+        "skipped": 42
+      },
+      "skip_reasons": {
+        "exact historical-environment check; enable with --run-archive": 42
+      }
+    }
+  },
+  "ci": {
+    "status": "pending"
+  },
+  "frozen_checkout": {
+    "after_sha256": "7b9fca935653654a91a71c1ad4962bcf8fbb09ac08fc4735c0ce40722a42a0eb",
+    "before_sha256": "7b9fca935653654a91a71c1ad4962bcf8fbb09ac08fc4735c0ce40722a42a0eb",
+    "git_visible_files": 1347,
+    "head_and_status_and_all_visible_files_unchanged": true
+  },
+  "local_case_union": {
+    "archive_skips": 42,
+    "lane_overlap": 0,
+    "passed": 7410,
+    "unique_cases": 7452
+  },
+  "new_mission_experiments": 0,
+  "new_retained_dispatcher_or_profile": false,
+  "new_retained_searches": 0,
+  "ordinary_live_regression_includes_spice_and_native_work": true,
+  "p5_complete": false,
+  "review": "passed; no blocking findings",
+  "ruff": "passed",
+  "schema": "ariadna-p5-point-identity-unit-v1",
+  "science_outcome": "none; synthetic identity qualification only",
+  "selected_goal": "one admissible pair on fixed saved real inputs with independent audit, preserving every strict gate; no99%probability claim",
+  "source_sha256": {
+    "docs/adr/experiments/0241-phase-points.py": "6f908729ae72c1f37f763f8e8683cc7a0b2fc9c82d70c826be5116a11510bd07",
+    "docs/adr/experiments/0244-phase-points.py": "5c8d8b549419ba93199fc7c42db99b7160e15e30a9ba54562ae97061918e5440",
+    "tests/test_retained_bounded_points.py": "7606a9e19326d9fbb3ea375d73df2011888c8add45306e157d3b733a589e7134"
+  },
+  "strict_openspec": "passed",
+  "tested_checkout": "frozen dirty checkout with additive0244 code/tests/documentation; no clean-revision claim"
+}

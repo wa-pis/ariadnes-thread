@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0244 — Start bounded autonomous preparation](0244-start-bounded-autonomous-preparation.md): user selects one admissible pair with independent audit; five-minute automation is active, and the isolated point-identity unit passes local checks while full P5 remains open.
+
 - [0243 — Design one retained bounded witness attempt](0243-design-one-retained-bounded-attempt.md): fixed four-file binding, unchanged search/point gates, one-shot producer and independent audit; design only, no saved execution.
 
 - [0242 — Complete P3 regression qualification](0242-finish-p3-regression-qualification.md): preserve two CI failures, repair Linux metadata/native-map classification and test clocks; both CI lanes pass on 1812360 without a retained search.

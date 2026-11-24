@@ -17,10 +17,16 @@ preserved. Retained execution remains unavailable; no automatic diagnostic succe
 [ADR0243](../docs/adr/0243-design-one-retained-bounded-attempt.md) designs one future
 saved attempt with the original four pins, fixed [150°,152°] domain, 129-phase /
 30 s-per-process / 4 MiB limits and separate recorded-point audit. P4 is design only;
-P5 must qualify the minimal retained binding before a separately instructed P6.
-No dispatch, new profile, scientific calculation, SPICE or integration in this stage.
+P5 must qualify the minimal retained binding before P6 under ADR0244 authority.
+That planning stage performed no dispatch, new profile, scientific calculation,
+SPICE or integration. [ADR0244](../docs/adr/0244-start-bounded-autonomous-preparation.md)
+records the new standing instruction: independent P5 preparation may proceed;
+P5a point-identity unit passes161 focused/6998 portable/412 live checks, with42
+archive skips and current-source CI pending; full P5/P6 remain unavailable. User
+selected one admissible saved pair plus independent audit; the five-minute
+heartbeat is ACTIVE and will stop on a terminal result or needed decision.
 A changed Mars phase is not the original R5.60 target. Physical admission and
-strict M3 remain open; automation `ariadna-m3` stays PAUSED.
+strict M3 remain open; automation `ariadna-m3` follows the bounded ADR0244 schedule.
 
 Test/CI maintenance and P3 regression qualification are complete; scientific
 admission is separate. The latest scientific result remains [ADR0238](../docs/adr/0238-record-versioned-saved-norms.md).

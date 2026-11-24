@@ -21,9 +21,10 @@ all128 P3 cases pass; all7419 case IDs match local combined inventories.
 Both failed CI outcomes preserved; retained execution remains unavailable.
 [ADR0243](docs/adr/0243-design-one-retained-bounded-attempt.md) designs one fixed
 saved attempt: P4 complete; P5 retained binding/qualification and P6 dispatch pending.
-No new calculation or execution authority; four original pins and all gates retained.
+[ADR0244](docs/adr/0244-start-bounded-autonomous-preparation.md): P5a point unit
+passes161 focused/6998 portable/412 live; full P5/P6 unavailable, CI pending.
 A different Mars phase changes the target and cannot enter the original R5.60.
-Automation `ariadna-m3` stays PAUSED; no further saved execution is authorized.
+Automation ACTIVE/5min; user goal:one admissible saved pair with independent audit.
 
 ## Latest verified science
 [ADR0238](docs/adr/0238-record-versioned-saved-norms.md): R5.59z completed once on
@@ -35,12 +36,12 @@ Both authorizations consumed; no SPICE, integration or R5.60, and no retry.
 No incoming/final-width attribution, general equivalence or physical conclusion.
 
 ## Verified test and CI maintenance
-Latest qualified runtime/test source:1812360; full local checkout frozen per lane.
-Ruff/strict OpenSpec and independent review pass; final recording is docs/evidence only.
+Latest P5a local source:7251265+additive0244; frozen1347-file checkout across both lanes.
+Ruff/strict OpenSpec and independent review pass; P5a code qualified locally, CI pending.
 CI platform skips are explicit and pass locally;42 exact historical environment/replay
-checks remain skipped and unverified. No scientific source/dependency/workflow changes.
+checks remain skipped and unverified. Scientific arithmetic/dependencies/workflow unchanged.
 New P3 retained searches and mission experiments:0; ordinary native regressions ran.
-No full suite repeated for the final documentation-only recording.
+Full local regression rerun for the isolated new P5a code;42archive skips unverified.
 
 ## Preserved history and unresolved science
 [ADR0221](docs/adr/0221-record-retained-inter-node-result.md): 64 unresolved leaves;
