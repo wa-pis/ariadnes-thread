@@ -2,8 +2,8 @@
 
 Date: 2026-11-24 (Europe/Samara)
 Decision status: accepted
-Implementation: dispatcher and candidate binding implemented; full P5 qualification pending
-Verification:53 synthetic cases,7051 portable and412 live pass; Ruff/review/strict pass; CI pending; no saved attempt
+Implementation: complete retained dispatcher/binding qualification; readiness frozen; P6 unexecuted
+Verification:53 synthetic/7051 portable/412 live pass; CI45358338765 succeeds on aad842f; Ruff/review/strict pass; no saved attempt
 Scope / milestone: remaining P5 preparation inside active M3
 Base revision: `376015224484a3739852d86cbab1ff3d0c3ef949`, clean `dev` before this stage
 Related OpenSpec: [requirements](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md#requirement-use-bounded-scalar-search-only-to-propose-an-analytical-witness), [design](../../openspec/changes/refine-physical-trajectory/design.md#p4-one-retained-bounded-attempt-2026-11-24), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md), [roadmap](../../openspec/ROADMAP.md)
@@ -132,3 +132,32 @@ The verbatim initial-focused and first-portable failure logs retain22 original
 trailing-whitespace rows from pytest tracebacks. Whitespace checking excludes
 only those raw logs; changed code, tests and prose pass. Their recorded raw hashes
 are preserved rather than normalizing evidence after the fact.
+
+
+### CI closure and fixed readiness
+
+[CI45358338765](https://github.com/wa-pis/ariadnes-thread/actions/runs/45358338765)
+succeeds on the exact code commit `aad842f4332cc23c89fa47d06ecbaa4f04077064`.
+The immutable [CI verification](experiments/0245-ci-verification.json) checks all
+7,505 local/CI case IDs, with7,426 CI passes and the identical42 archival+37 platform
+skips. All53 invocation cases pass without skips, and every37-platform case passes
+locally;42 archival checks remain unverified. The exact0242 local runtime tables,
+binding/source hashes and all1,052 pre-existing non-Markdown files are unchanged.
+Earlier pending-CI evidence and failed checks remain historical and unmodified.
+
+P5 is now complete. The canonical [readiness receipt](experiments/0245-readiness.json)
+pins the qualified raw binding and CI evidence; it is created only after the
+preceding verification, avoiding a self-hash cycle. No numerical saved input was
+opened and no retained namespace exists at this closure. Ordinary unchanged
+runtime tests are not repeated for this documentation/evidence/readiness record;
+local links, hashes, independent review and strict OpenSpec are checked.
+
+The resolved user objective and standing instruction in ADR0244 authorize exactly
+one subsequent fixed no-argument0245 `retained` command under unchanged ADR0243.
+This completion does not itself dispatch P6, establish an admissible saved pair,
+change a target, open R5.60, or qualify physical closure/M3/probability. The next
+terminal P6 outcome stops automatic research with no retry or successor study.
+
+The selected verbatim CI log retains six original trailing-whitespace timestamp
+rows; only that raw log is excluded from the closing whitespace check, preserving
+its recorded bytes. All changed prose and canonical receipt/JSON pass.

@@ -20,11 +20,11 @@ CI45260154283 on1812360:7340 pass,42 archival+37 platform skips,0fail/error;
 all128 P3 cases pass; all7419 case IDs match local combined inventories.
 Both failed CI outcomes preserved; retained execution remains unavailable.
 [ADR0243](docs/adr/0243-design-one-retained-bounded-attempt.md) designs one fixed
-saved attempt: P4 complete; P5 retained binding/qualification and P6 dispatch pending.
+saved attempt: P4/P5 complete; one fixed P6 dispatch remains pending.
 [ADR0244](docs/adr/0244-start-bounded-autonomous-preparation.md): P5a point unit
-passes161 focused/6998 portable/412 live; CI45347814462 passes, full P5/P6 pending.
-[ADR0245](docs/adr/0245-qualify-retained-dispatch-lifecycle.md):53 synthetic/7051 portable/
-412 live pass; shared-process test seams repaired, CI/readiness/full P5 pending.
+passes161 focused/6998 portable/412 live and CI45347814462; unit-only qualification.
+[ADR0245](docs/adr/0245-qualify-retained-dispatch-lifecycle.md): P5 complete;53 new cases,
+7051 portable/412 live pass; CI45358338765 on aad842f and fixed readiness verified.
 A different Mars phase changes the target and cannot enter the original R5.60.
 Automation ACTIVE/5min; user goal:one admissible saved pair with independent audit.
 
@@ -39,11 +39,11 @@ No incoming/final-width attribution, general equivalence or physical conclusion.
 
 ## Verified test and CI maintenance
 Latest P5 code:f572464c dispatcher; frozen1359-file checkout on3760152+additive0245.
-7505 disjoint local cases:7463pass/42archive skips; current-source CI pending.
+7505 exact local/CI IDs; CI7426pass+42archive+37platform skips, all53 new cases pass.
 Ruff/strict/review pass;53 new invocation cases pass in the full portable lane.
 P5a CI45347814462 remains verified. New saved searches/mission experiments:0.
 42 exact historical checks unverified; arithmetic/dependencies/workflow unchanged.
-Ordinary live regression used native/SPICE resources; no retained readiness yet.
+Ordinary live regression used native/SPICE resources; fixed retained readiness now present.
 
 ## Preserved history and unresolved science
 [ADR0221](docs/adr/0221-record-retained-inter-node-result.md): 64 unresolved leaves;
