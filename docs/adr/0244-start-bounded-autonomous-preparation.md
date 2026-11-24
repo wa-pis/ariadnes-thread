@@ -3,7 +3,7 @@
 Date: 2026-11-24 (Europe/Samara)
 Decision status: accepted
 Implementation: P5a point-identity unit complete; complete retained dispatcher/qualification pending
-Verification: 161 focused / 6998 portable / 412 live passes; Ruff, review and strict OpenSpec pass; CI pending; no retained scientific result
+Verification: 161 focused / 6998 portable / 412 live passes; CI45347814462 passes on bdfe775, with all33 new cases; Ruff/review/strict pass; no retained scientific result
 Scope / milestone: independent P5 preparation and scheduling within active M3
 Base revision: `7251265ddd22de3dc0e644e4d78392fe4519cb1b`, clean `dev` before this stage
 Related OpenSpec: [requirements](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md#requirement-use-bounded-scalar-search-only-to-propose-an-analytical-witness), [design](../../openspec/changes/refine-physical-trajectory/design.md), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md), [roadmap](../../openspec/ROADMAP.md)
@@ -112,3 +112,26 @@ SPICE/native resources; no new retained P3 search or mission experiment occurred
 The active automation prompt records the selected analytical goal and stops on
 a terminal outcome or needed user decision. No physical or99%probability result
 is claimed.
+
+
+### CI closure
+
+[CI45347814462](https://github.com/wa-pis/ariadnes-thread/actions/runs/45347814462)
+succeeds on the exact code commit `bdfe7757e17acb0349b16e639d303ebac4ff2c58`.
+The immutable [CI verification](experiments/0244-ci-verification.json) binds the
+JUnit hashes, selected logs, resolved environment and source identities. Portable:
+6997 pass/43 skip; live:376 pass/36 skip. All7452 unique case IDs equal the local
+combined inventory;7373 CI passes plus42 archival and37 platform skips. The exact
+skip inventory/reasons match ADR0242. All37 platform cases pass locally; the42
+historical-environment cases remain skipped and unverified. All33 new P5a cases
+pass in CI without skips. All1043 previous non-Markdown files remain unchanged.
+
+The first preparation artifact intentionally preserves its then-pending CI status;
+this new artifact records completion without rewriting history. Final closure
+changes only documentation/evidence, so successful unchanged runtime tests are
+not rerun. Local links, evidence hashes and strict OpenSpec pass. Whitespace checks
+pass for changed prose; six original trailing spaces on blank timestamp rows in
+the verbatim selected GitHub log are retained, preserving its recorded raw hash.
+P5a is complete; full retained dispatcher/profile P5 and the one P6 attempt remain
+pending. Automation stays ACTIVE for that bounded preparation under the selected
+goal and existing conditional authority. No saved scientific attempt is consumed.

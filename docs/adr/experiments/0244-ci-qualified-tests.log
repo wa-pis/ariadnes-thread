@@ -1,0 +1,188 @@
+Python quality and scientific tests	Lint	﻿2026-11-24T07:26:18.6068844Z ##[group]Run ruff check src tests
+Python quality and scientific tests	Lint	2026-11-24T07:26:18.6069089Z ^[[36;1mruff check src tests^[[0m
+Python quality and scientific tests	Lint	2026-11-24T07:26:18.6097919Z shell: /usr/bin/bash -el {0}
+Python quality and scientific tests	Lint	2026-11-24T07:26:18.6098137Z env:
+Python quality and scientific tests	Lint	2026-11-24T07:26:18.6098288Z   INPUT_RUN_POST: true
+Python quality and scientific tests	Lint	2026-11-24T07:26:18.6098459Z   CONDA: /home/runner/miniconda3
+Python quality and scientific tests	Lint	2026-11-24T07:26:18.6098634Z ##[endgroup]
+Python quality and scientific tests	Lint	2026-11-24T07:26:19.1208552Z All checks passed!
+Python quality and scientific tests	Verify scientific runtime and installed CLI	﻿2026-11-24T07:26:19.1249781Z ##[group]Run python -c 'from tudatpy.interface import spice; import spiceypy; spice.load_standard_kernels()'
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.1250338Z ^[[36;1mpython -c 'from tudatpy.interface import spice; import spiceypy; spice.load_standard_kernels()'^[[0m
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.1250719Z ^[[36;1mspace-nav --help^[[0m
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.1278787Z shell: /usr/bin/bash -el {0}
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.1279012Z env:
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.1279163Z   INPUT_RUN_POST: true
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.1279334Z   CONDA: /home/runner/miniconda3
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.1279511Z ##[endgroup]
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9699333Z usage: space-nav [-h] {validate,ephemeris,plan} ...
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9699611Z 
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9699688Z Space navigation diagnostics
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9699813Z 
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9699879Z positional arguments:
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9700060Z   {validate,ephemeris,plan}
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9700264Z     validate            validate a mission scenario
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9700509Z     ephemeris           inspect a SPICE body state
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9700813Z     plan                plan impulsive Moon-to-Mars transfers
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9700980Z 
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9701038Z options:
+Python quality and scientific tests	Verify scientific runtime and installed CLI	2026-11-24T07:26:19.9701224Z   -h, --help            show this help message and exit
+Python quality and scientific tests	Unit and portable saved-data tests	﻿2026-11-24T07:26:19.9810421Z ##[group]Run python -m pytest -q -ra --offline --junitxml=test-results/unit.xml
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:19.9810820Z ^[[36;1mpython -m pytest -q -ra --offline --junitxml=test-results/unit.xml^[[0m
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:19.9837765Z shell: /usr/bin/bash -el {0}
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:19.9837977Z env:
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:19.9838132Z   INPUT_RUN_POST: true
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:19.9838308Z   CONDA: /home/runner/miniconda3
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:19.9838487Z ##[endgroup]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:34.4397049Z ........................................................................ [  1%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:34.6341908Z ........................................................................ [  2%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:34.9521022Z ........................................................................ [  3%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:35.4561227Z ......................................s.....ssssss...................... [  4%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:35.6293124Z ........................................................................ [  5%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:46.8707447Z ........................................................................ [  6%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:48.2584173Z ........................................................................ [  7%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:50.6330257Z ........................................................................ [  8%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:51.1208640Z ........................................................................ [  9%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:52.2453160Z ........................................................................ [ 10%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:26:52.7949773Z ........................................................................ [ 11%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:16.8712606Z ......................................................................s. [ 12%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:21.7168204Z ........................................................................ [ 13%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:22.1296635Z .......s...........................................s.................... [ 14%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:24.6384827Z ........................................................................ [ 15%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:31.8506346Z ........................................................................ [ 16%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:32.1411718Z .s...................................................................... [ 17%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:43.7664368Z ........................................................................ [ 18%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:43.9408517Z ........................................................................ [ 19%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:47.7786484Z ........................................................................ [ 20%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:48.2829819Z ............................................................s........... [ 21%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:48.3702932Z ........................................................................ [ 22%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:27:50.8043068Z ........................................................................ [ 23%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:28:05.8653637Z ........................................................................ [ 24%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:28:08.0939646Z ........................................................................ [ 25%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:28:08.1554178Z ........................................................................ [ 26%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:28:08.2760645Z ........................................................................ [ 27%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:28:23.6868927Z ........................................................................ [ 28%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:28:34.2636001Z ........................................................................ [ 29%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:28:48.6584345Z ........................................................................ [ 30%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:28:56.8934082Z ........................................................................ [ 31%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:00.9181514Z .............................................s.......................... [ 32%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:06.2304619Z .........................................s.............................. [ 33%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:06.3254671Z ........................................................................ [ 34%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:17.3916772Z ........................................................................ [ 35%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:38.6415584Z ........................................................................ [ 36%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:40.1290778Z ........................................................................ [ 37%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:40.2159705Z ........................................................................ [ 38%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:41.3166621Z ........................................................................ [ 39%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:42.5014432Z ........................................................................ [ 40%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:44.0169540Z ........................................................................ [ 41%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:44.7359219Z ........................................................................ [ 42%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:45.1696141Z ........................................................................ [ 43%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:45.3454283Z ........................................................................ [ 45%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:45.3994257Z ........................................................................ [ 46%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:45.7290427Z ........................................................................ [ 47%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:46.0006692Z ........................................................................ [ 48%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:29:46.1524028Z ........................................................................ [ 49%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:02.7257651Z ........................................................................ [ 50%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:11.8625411Z ........................................................................ [ 51%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:17.9686065Z ........................................................................ [ 52%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:18.9326772Z ...................................................................sssss [ 53%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:22.4954701Z sssssssssssssssssssssss................................................. [ 54%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:27.8660166Z ........................................................................ [ 55%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:29.7942275Z ........................................................................ [ 56%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:29.8324528Z ........................................................................ [ 57%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:31.5616161Z ........................................................................ [ 58%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:31.6200734Z ........................................................................ [ 59%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:31.7180467Z ........................................................................ [ 60%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:31.7540661Z ........................................................................ [ 61%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:31.8551310Z ........................................................................ [ 62%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.4229472Z ........................................................................ [ 63%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.4547852Z ........................................................................ [ 64%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.5581758Z ........................................................................ [ 65%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.6380067Z ........................................................................ [ 66%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.6674552Z ........................................................................ [ 67%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.6965042Z ........................................................................ [ 68%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.7671154Z ........................................................................ [ 69%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.8375020Z ........................................................................ [ 70%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.9075704Z ........................................................................ [ 71%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.9529889Z ........................................................................ [ 72%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:32.9935397Z ........................................................................ [ 73%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:33.0272743Z ........................................................................ [ 74%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:33.0602687Z ........................................................................ [ 75%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:33.0907071Z ........................................................................ [ 76%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:33.1916935Z ........................................................................ [ 77%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:33.2358820Z ........................................................................ [ 78%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:33.2779698Z ........................................................................ [ 79%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:33.4154322Z ........................................................................ [ 80%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:33.4821152Z ........................................................................ [ 81%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:35.3054157Z ........................................................................ [ 82%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:35.6632192Z ........................................................................ [ 83%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:35.7771619Z ........................................................................ [ 84%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:35.8564504Z ........................................................................ [ 85%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:35.9467224Z ........................................................................ [ 86%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:36.0175194Z ....s................................................................... [ 87%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:36.0497680Z ........................................................................ [ 88%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:36.0851358Z ........................................................................ [ 90%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:36.5887827Z ........................................................................ [ 91%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:36.6308349Z ........................................................................ [ 92%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:30:36.9226259Z ........................................................................ [ 93%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:23.2926390Z ........................................................................ [ 94%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:23.4585139Z ........................................................................ [ 95%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:28.2732416Z ........................................................................ [ 96%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:28.3225805Z ........................................................................ [ 97%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:28.3801843Z ........................................................................ [ 98%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:28.4973679Z ........................................................................ [ 99%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1070480Z ........................................................                 [100%]
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1071007Z - generated xml file: /home/runner/work/ariadnes-thread/ariadnes-thread/test-results/unit.xml -
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1071622Z =========================== short test summary info ============================
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1072170Z SKIPPED [1] tests/test_bezier_local_targeting.py:602: exact historical-environment check; enable with --run-archive
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1072937Z SKIPPED [6] tests/test_bezier_local_targeting.py:621: exact historical-environment check; enable with --run-archive
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1074821Z SKIPPED [1] tests/test_corrected_inputs.py:42: exact historical-environment check; enable with --run-archive
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1075646Z SKIPPED [1] tests/test_corrected_inputs.py:221: exact historical-environment check; enable with --run-archive
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1076222Z SKIPPED [1] tests/test_corrected_integrator.py:197: exact historical-environment check; enable with --run-archive
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1076761Z SKIPPED [1] tests/test_earth_coast_study.py:171: exact historical-environment check; enable with --run-archive
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1077297Z SKIPPED [1] tests/test_fixed_gravity_inputs.py:300: exact historical-environment check; enable with --run-archive
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1078133Z SKIPPED [1] tests/test_moving_inputs.py:52: exact historical-environment check; enable with --run-archive
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1078663Z SKIPPED [1] tests/test_moving_inputs.py:222: exact historical-environment check; enable with --run-archive
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1079187Z SKIPPED [28] tests/test_split_coast_study.py:51: exact historical-environment check; enable with --run-archive
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1079687Z SKIPPED [1] tests/test_trajectory_spk.py:35: No static SPK reader observation for this platform
+Python quality and scientific tests	Unit and portable saved-data tests	2026-11-24T07:31:29.1080075Z 6997 passed, 43 skipped, 412 deselected in 308.05s (0:05:08)
+Python quality and scientific tests	Scientific regression tests	﻿2026-11-24T07:31:29.5202510Z ##[group]Run python -m pytest -q -ra -m live --junitxml=test-results/live.xml
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:31:29.5203081Z ^[[36;1mpython -m pytest -q -ra -m live --junitxml=test-results/live.xml^[[0m
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:31:29.5230405Z shell: /usr/bin/bash -el {0}
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:31:29.5230648Z env:
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:31:29.5230804Z   INPUT_RUN_POST: true
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:31:29.5230984Z   CONDA: /home/runner/miniconda3
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:31:29.5231161Z ##[endgroup]
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:32:55.9746525Z ........................................................................ [ 17%]
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:33:09.7670438Z ........................................................................ [ 34%]
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:33:20.1090172Z ........................................................................ [ 52%]
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:35:22.9614649Z ...................................................................ss... [ 69%]
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:42:48.5252456Z ..................................................................ssssss [ 87%]
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7681018Z sssssssssssss.s.......sssssssssssss...s.............                     [100%]
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7681654Z =============================== warnings summary ===============================
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7682103Z tests/test_bezier_local_physics.py::test_native_nonzero_curvature_independent_variable_mass_integral[False]
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7682793Z   /home/runner/miniconda3/envs/space-nav/lib/python3.12/site-packages/tudatpy/data/mission_data_downloader/mission_data_downloader.py:58: SyntaxWarning: invalid escape sequence '\d'
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7683558Z     "spk": "^(?P<data>(ORMM|ORMF))_(?P<SPK_type>T19)_(?P<start_date_file>\d{6})_?(?P<end_date_file>\d{6})_(?P<version>\d{5})(?P<extension>\.BSP)?$",
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7683860Z 
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7684069Z tests/test_bezier_local_physics.py::test_native_nonzero_curvature_independent_variable_mass_integral[False]
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7684741Z   /home/runner/miniconda3/envs/space-nav/lib/python3.12/site-packages/tudatpy/data/mission_data_downloader/mission_data_downloader.py:528: SyntaxWarning: invalid escape sequence '\*'
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7685725Z     - `wanted_files_pattern` (`str`, optional): A pattern (e.g., '\*.tf') to match filenames for downloading.
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7685993Z 
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7686215Z tests/test_bezier_local_physics.py::test_native_nonzero_curvature_independent_variable_mass_integral[False]
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7686874Z   /home/runner/miniconda3/envs/space-nav/lib/python3.12/site-packages/tudatpy/data/mission_data_downloader/mission_data_downloader.py:1285: SyntaxWarning: invalid escape sequence '\w'
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7687445Z     reduced_filename = reduced_filename.replace("\w", "*")
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7687615Z 
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7687778Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7688177Z - generated xml file: /home/runner/work/ariadnes-thread/ariadnes-thread/test-results/live.xml -
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7688541Z =========================== short test summary info ============================
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7688907Z SKIPPED [1] tests/test_trajectory_ephemeris.py:43: Only the Darwin/arm64 fenv ABI has been inspected
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7689372Z SKIPPED [1] tests/test_trajectory_ephemeris.py:100: No static native arithmetic observation for this platform
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7689826Z SKIPPED [12] tests/test_trajectory_spk.py:264: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7690259Z SKIPPED [6] tests/test_trajectory_spk.py:412: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7690687Z SKIPPED [1] tests/test_trajectory_spk.py:484: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7691119Z SKIPPED [1] tests/test_trajectory_spk.py:620: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7691553Z SKIPPED [8] tests/test_trajectory_spk.py:7176: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7691987Z SKIPPED [3] tests/test_trajectory_spk.py:7309: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7692813Z SKIPPED [1] tests/test_trajectory_spk.py:7391: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7693242Z SKIPPED [1] tests/test_trajectory_spk.py:7439: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7693670Z SKIPPED [1] tests/test_trajectory_spk.py:7678: Only the installed Darwin/arm64 CSPICE ABI was inspected
+Python quality and scientific tests	Scientific regression tests	2026-11-24T07:44:08.7694145Z 376 passed, 36 skipped, 7040 deselected, 3 warnings in 758.20s (0:12:38)

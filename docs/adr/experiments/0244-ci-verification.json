@@ -1,0 +1,531 @@
+{
+  "all_37_platform_skips_pass_locally": true,
+  "all_previous_non_markdown_files_unchanged": 1043,
+  "archive_skips_unverified": 42,
+  "automation": "ACTIVE every5min; agreed witness or required user decision/terminal scientific outcome pauses it",
+  "ci": {
+    "attempt": 1,
+    "conclusion": "success",
+    "createdAt": "2026-11-24T07:25:00Z",
+    "databaseId": 45347814462,
+    "event": "push",
+    "headSha": "bdfe7757e17acb0349b16e639d303ebac4ff2c58",
+    "jobs": [
+      {
+        "completedAt": "2026-11-24T07:44:14Z",
+        "conclusion": "success",
+        "databaseId": 138286547363,
+        "name": "Python quality and scientific tests",
+        "startedAt": "2026-11-24T07:25:04Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-11-24T07:25:08Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-11-24T07:25:05Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:25:13Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 2,
+            "startedAt": "2026-11-24T07:25:08Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:26:16Z",
+            "conclusion": "success",
+            "name": "Run conda-incubator/setup-miniconda@fc2d68f6413eb2d87b895e92f8584b5b94a10167",
+            "number": 3,
+            "startedAt": "2026-11-24T07:25:13Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:26:17Z",
+            "conclusion": "success",
+            "name": "Record resolved environment",
+            "number": 4,
+            "startedAt": "2026-11-24T07:26:16Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:26:18Z",
+            "conclusion": "success",
+            "name": "Install editable package",
+            "number": 5,
+            "startedAt": "2026-11-24T07:26:17Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:26:19Z",
+            "conclusion": "success",
+            "name": "Lint",
+            "number": 6,
+            "startedAt": "2026-11-24T07:26:18Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:26:19Z",
+            "conclusion": "success",
+            "name": "Verify scientific runtime and installed CLI",
+            "number": 7,
+            "startedAt": "2026-11-24T07:26:19Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:31:29Z",
+            "conclusion": "success",
+            "name": "Unit and portable saved-data tests",
+            "number": 8,
+            "startedAt": "2026-11-24T07:26:19Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:44:09Z",
+            "conclusion": "success",
+            "name": "Scientific regression tests",
+            "number": 9,
+            "startedAt": "2026-11-24T07:31:29Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:44:10Z",
+            "conclusion": "success",
+            "name": "Upload test results",
+            "number": 10,
+            "startedAt": "2026-11-24T07:44:09Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:44:11Z",
+            "conclusion": "success",
+            "name": "Post Run conda-incubator/setup-miniconda@fc2d68f6413eb2d87b895e92f8584b5b94a10167",
+            "number": 19,
+            "startedAt": "2026-11-24T07:44:10Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:44:12Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+            "number": 20,
+            "startedAt": "2026-11-24T07:44:11Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T07:44:12Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 21,
+            "startedAt": "2026-11-24T07:44:12Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/wa-pis/ariadnes-thread/actions/runs/45347814462/job/138286547363"
+      }
+    ],
+    "startedAt": "2026-11-24T07:25:00Z",
+    "status": "completed",
+    "updatedAt": "2026-11-24T07:44:15Z",
+    "url": "https://github.com/wa-pis/ariadnes-thread/actions/runs/45347814462"
+  },
+  "ci_conda_explicit": {
+    "file": "0244-ci-conda-explicit.txt",
+    "sha256": "326fea96d7de0c584cc7fb3f8c1efff85508b830c0b8c829220e39cd978b46a0"
+  },
+  "ci_lanes": {
+    "live": {
+      "case_ids_sha256": "beb27332ad49339dfbb95796c6f59520cc535c1b5f7f9350dc1cc2556ffa26ca",
+      "junit_elapsed_s": 758.192,
+      "junit_sha256": "7d86f712082c9d1f11d2c438bb436709a76bfdd4b44c246f00996e5d030ceff2",
+      "outcomes": {
+        "passed": 376,
+        "skipped": 36
+      },
+      "skip_reasons": {
+        "No static native arithmetic observation for this platform": 1,
+        "Only the Darwin/arm64 fenv ABI has been inspected": 1,
+        "Only the installed Darwin/arm64 CSPICE ABI was inspected": 34
+      }
+    },
+    "portable": {
+      "case_ids_sha256": "3da87d31615cd4d1e64cf5a747c2956194a2405658001acef1e5302e2f92ddb6",
+      "junit_elapsed_s": 308.012,
+      "junit_sha256": "7b0bf9046df2bf1bdbd171a5269489838c4418310140360929a71adcb01d36ca",
+      "outcomes": {
+        "passed": 6997,
+        "skipped": 43
+      },
+      "skip_reasons": {
+        "No static SPK reader observation for this platform": 1,
+        "exact historical-environment check; enable with --run-archive": 42
+      }
+    }
+  },
+  "ci_log": {
+    "file": "0244-ci-qualified-tests.log",
+    "sha256": "f005cfe7c45b09ce8d2536c9eedcff5d70bba0d7f48a070489eccc8c06e410c2"
+  },
+  "ci_skip_inventory_identical_to_0242": true,
+  "ci_skips": {
+    "live": [
+      {
+        "case": "tests.test_trajectory_ephemeris::test_native_arithmetic_binary_matches_static_observation",
+        "reason": "No static native arithmetic observation for this platform"
+      },
+      {
+        "case": "tests.test_trajectory_ephemeris::test_native_queries_preserve_sampled_fpcr",
+        "reason": "Only the Darwin/arm64 fenv ABI has been inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_loaded_spk_chain_coverage_contains_candidate_interval[native-readback]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Earth-399-expected_chain3]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Jupiter-599-expected_chain6]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Mars-499-expected_chain5]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Mercury-1-expected_chain1]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Moon-301-expected_chain4]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Saturn-699-expected_chain7]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Sun-10-expected_chain0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_sampled_spk_chains_match_tudat_states[Venus-2-expected_chain2]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_saturn_junction_query_order_is_repeatable",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_saturn_source_file_segment_inventory",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_saturn_spk_segment_junction[150.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_saturn_spk_segment_junction[300.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_saturn_spk_segment_junction[75.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_spk_position_replay_distinguishes_fused_rounding",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[-1.0-0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[-1.0-19]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[-1.0-1]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[-1.0-2]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[0.3-0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[0.3-19]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[0.3-1]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[0.3-2]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[1.0-0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[1.0-19]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[1.0-1]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type2_velocity_replay_matches_native_single_modes[1.0-2]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[-1.0-1.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[-1.0-32.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[0.3-1.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[0.3-32.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[1.0-1.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_type3_velocity_uses_stored_series_not_position_derivative[1.0-32.0]",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_unknown_spk_body_has_no_descriptor",
+        "reason": "Only the installed Darwin/arm64 CSPICE ABI was inspected"
+      }
+    ],
+    "portable": [
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[accepted]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[command]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[endpoint]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[mass]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[residual]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[seed]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_bezier_local_targeting::test_retained_pinned_binding_selects_accepted_158_without_native_work",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_corrected_inputs::test_clean_process_imports_no_scientific_package",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_corrected_inputs::test_metadata_loader_matches_frozen_contract",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_corrected_integrator::test_pinned_controller_and_coefficients_without_native_setup[exact-runtime]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_earth_coast_study::test_saved_a_baselines_validate_without_physics",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_fixed_gravity_inputs::test_current_pinned_interpreter_identity",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_moving_inputs::test_hash_bound_input_loader_exposes_saved_zero_reference",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_moving_inputs::test_real_metadata_preflight_stays_stdlib_only",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[0]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[10]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[11]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[12]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[13]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[14]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[15]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[16]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[17]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[18]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[19]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[1]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[20]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[21]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[22]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[23]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[24]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[25]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[26]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[27]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[2]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[3]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[4]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[5]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[6]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[7]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[8]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_split_coast_study::test_split_path_replays_archived_bits[9]",
+        "reason": "exact historical-environment check; enable with --run-archive"
+      },
+      {
+        "case": "tests.test_trajectory_spk::test_spk_record_selector_matches_inspected_binary",
+        "reason": "No static SPK reader observation for this platform"
+      }
+    ]
+  },
+  "ci_totals": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 7373,
+    "skipped": 79,
+    "unique_cases": 7452
+  },
+  "local_and_ci_case_sets_equal": true,
+  "local_case_union": {
+    "archive_skips": 42,
+    "lane_overlap": 0,
+    "passed": 7410,
+    "unique_cases": 7452
+  },
+  "new_mission_experiments": 0,
+  "new_retained_searches": 0,
+  "ordinary_live_regression_includes_spice_and_native_work": true,
+  "p5_complete": false,
+  "p5a_unit": {
+    "case_ids_sha256": "8ad2b370ab77f18899ef32c1f0d4dae09d2b466a0fd62111f64ee130eaa714ca",
+    "cases": 33,
+    "passed": 33,
+    "skipped": 0
+  },
+  "preparation_file": "0244-preparation.json",
+  "preparation_sha256": "18d1397de263c9e08924a0d99ca79a55a7bbfe167ced41b080e3f7002afeeda8",
+  "qualified_source_revision": "bdfe7757e17acb0349b16e639d303ebac4ff2c58",
+  "schema": "ariadna-p5a-completed-regression-qualification-v1",
+  "science_outcome": "none; no admissible saved command pair, physical join, M3 closure or99%probability result",
+  "scope": "isolated point-identity unit only; full retained dispatcher/profile P5 pending",
+  "source_sha256": {
+    "docs/adr/experiments/0241-phase-points.py": "6f908729ae72c1f37f763f8e8683cc7a0b2fc9c82d70c826be5116a11510bd07",
+    "docs/adr/experiments/0244-phase-points.py": "5c8d8b549419ba93199fc7c42db99b7160e15e30a9ba54562ae97061918e5440",
+    "tests/test_retained_bounded_points.py": "7606a9e19326d9fbb3ea375d73df2011888c8add45306e157d3b733a589e7134"
+  },
+  "union_case_ids_sha256": "953d484de04bc3f467df51a5be1aaaf00139ceab9aa37e0a49c03b91e359260a"
+}

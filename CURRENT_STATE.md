@@ -6,9 +6,9 @@ Updated: 2026-11-24. Keep under 60 lines; durable evidence in ADRs.
 One independently checked research trajectory/export remains the goal.
 Keep Python/TudatPy/SPICE/Streamlit and the extensible platform vision.
 [ADR0239](docs/adr/0239-stop-diagnostics-at-a-feasibility-decision.md) stops automatic
-R5.59 diagnostics. Next scientific objective: one independently checked analytical
-witness or gap-free two-sign refusal on the existing [150 degrees, 152 degrees]
-domain; otherwise inconclusive and stop. Existing evidence is still inconclusive.
+R5.59 diagnostics. User selected one admissible analytical pair plus independent
+audit on fixed saved inputs. No witness means inconclusive and stop; Brent
+cannot prove continuous refusal. Existing evidence remains inconclusive.
 [ADR0240](docs/adr/0240-choose-bounded-scalar-witness-search.md) selects bounded
 Brent per Mars sign as a witness proposer, with unchanged independent point gates.
 [ADR0241](docs/adr/0241-qualify-artificial-bounded-witness-search.md) implements
@@ -22,7 +22,7 @@ Both failed CI outcomes preserved; retained execution remains unavailable.
 [ADR0243](docs/adr/0243-design-one-retained-bounded-attempt.md) designs one fixed
 saved attempt: P4 complete; P5 retained binding/qualification and P6 dispatch pending.
 [ADR0244](docs/adr/0244-start-bounded-autonomous-preparation.md): P5a point unit
-passes161 focused/6998 portable/412 live; full P5/P6 unavailable, CI pending.
+passes161 focused/6998 portable/412 live; CI45347814462 passes, full P5/P6 pending.
 A different Mars phase changes the target and cannot enter the original R5.60.
 Automation ACTIVE/5min; user goal:one admissible saved pair with independent audit.
 
@@ -36,10 +36,10 @@ Both authorizations consumed; no SPICE, integration or R5.60, and no retry.
 No incoming/final-width attribution, general equivalence or physical conclusion.
 
 ## Verified test and CI maintenance
-Latest P5a local source:7251265+additive0244; frozen1347-file checkout across both lanes.
-Ruff/strict OpenSpec and independent review pass; P5a code qualified locally, CI pending.
-CI platform skips are explicit and pass locally;42 exact historical environment/replay
-checks remain skipped and unverified. Scientific arithmetic/dependencies/workflow unchanged.
+P5a source:bdfe775; local frozen1347-file checkout on7251265+additive0244.
+Ruff/strict/review and CI45347814462 pass; all7452 local/CI case IDs match.
+CI7373 pass,42 archive+37 platform skips; all33 new tests and local platform cases pass.
+42 exact historical checks remain unverified. Arithmetic/dependencies/workflow unchanged.
 New P3 retained searches and mission experiments:0; ordinary native regressions ran.
 Full local regression rerun for the isolated new P5a code;42archive skips unverified.
 
