@@ -20,6 +20,11 @@ to one private coordinate/event/arc-request bridge contract with finite artifici
 checks. F5 may qualify that interface; no physical optimizer/native adapter is
 adopted. Full-force seed, timing/mass/derivatives/guards and independent endpoint
 bounds remain required; the mandated production method and caps stay unchanged.
+[ADR0251](../docs/adr/0251-qualify-coupled-coordinate-bridge.md) completes F5:
+149 focused/7289 portable/412 live checks,1421 frozen files, guarded73+3/228-slot
+affine fixture, Ruff/review/strict pass. Only the private coordinate/event/derived-
+mass interface is qualified; native timing/guards/full-force and physical F0
+remain open. No source-commit CI result is claimed yet.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

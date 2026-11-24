@@ -1,6 +1,8 @@
 F4 preparation is limited by [ADR0250](../../../docs/adr/0250-design-coupled-coordinate-bridge.md)
-to a private normalized-node/exact-event/artificial-arc bridge contract. F5 may
-qualify its interface on fabricated data. This does not adopt an F0 optimizer,
+to a private normalized-node/exact-event/artificial-arc bridge contract.
+[ADR0251](../../../docs/adr/0251-qualify-coupled-coordinate-bridge.md) completes
+F5 artificial interface qualification:149 focused/7289 portable/412 live checks
+pass on one1421-file frozen checkout; CI for this source commit remains unobserved. This does not adopt an F0 optimizer,
 change the production method or authorize native/mission execution.
 
 ## Why
@@ -27,8 +29,9 @@ F3: the private method recovers from the perturbed seed and the separate auditor
 checks the actual unreset command against the independent manufactured target.
 All original artificial gates, focused/frozen portable/live checks and review
 pass. Production F0 is unchanged and physical feasibility remains unverified.
-F4 next reviews production adoption gaps and specifies one concrete bounded
-contract, without scientific execution or automatic mission-run admission.
+F4 subsequently specifies ADR0250's private bridge contract; F5 qualifies only
+that artificial interface under ADR0251. No physical optimizer/native adoption
+or automatic mission-run admission follows.
 
 ### F2 preparation contract — coupled artificial benchmark (2026-11-25)
 

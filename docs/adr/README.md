@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0251 — Qualify the artificial coupled coordinate bridge](0251-qualify-coupled-coordinate-bridge.md): F5 private interface passes149 focused/7289 portable/412 live checks; native and physical F0 adoption remain unavailable.
+
 - [0250 — Qualify a coordinate bridge before physical solver adoption](0250-design-coupled-coordinate-bridge.md): narrow F4 to a private normalized-node/exact-event/artificial-arc contract; native timing, seed, derivatives and physical optimizer remain unqualified.
 
 - [0249 — Qualify coupled shooting on the artificial problem](0249-qualify-coupled-artificial-shooting.md): F3 recovery and independent actual-command audit pass;89 focused,7140 portable and412 live checks; original F0 feasibility remains unverified.

@@ -9,6 +9,9 @@ Base revision: `5af711d8cdea0c68f08af4742bc8b131dd7c5f18`, clean dev before desi
 Related OpenSpec: [requirement](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md#requirement-qualify-the-coupled-coordinate-bridge-before-native-adoption), [bridge contract](../../openspec/changes/refine-physical-trajectory/design.md#f4-private-coordinate-bridge-before-native-adoption-2026-11-25), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md)
 Supersedes / Superseded by: none; narrows the F4 work unit without replacing any physical solver or gate
 
+Later implementation: [ADR0251](0251-qualify-coupled-coordinate-bridge.md) records
+subsequent artificial F5 qualification; the original F4 result below remains design-only.
+
 ## Context and constraints
 
 [ADR0249](0249-qualify-coupled-artificial-shooting.md) qualifies recovery on a

@@ -1,0 +1,145 @@
+{
+  "artifacts": {
+    "0251-focused-tests.log": {
+      "bytes": 341,
+      "sha256": "0fe21ee1620c4f12e117cea81bcd4432a0733da4fd4c16a15c1a12d1ce7a463e"
+    },
+    "0251-focused.xml": {
+      "bytes": 21365,
+      "sha256": "e3668f18adbf3db1f0badf8ca2ba230a816252c8b8c948ccb470b9e6a2446abc"
+    },
+    "0251-freeze-verification.json": {
+      "bytes": 878,
+      "sha256": "2df690098c7fc676909bcc1275690dcac82f2404f226dfdab732be912020393f"
+    },
+    "0251-frozen-checkout.json": {
+      "bytes": 175283,
+      "sha256": "0c1376a289c73fd12151cffc986ebdfc50476e510b2de843865ab5f80e572bd3"
+    },
+    "0251-live.xml": {
+      "bytes": 57266,
+      "sha256": "061b475a6a84d4cf8ff6e347cbbd3a5a9cc526c1d576bc8770d89b10dd2d7eb8"
+    },
+    "0251-portable.xml": {
+      "bytes": 3045031,
+      "sha256": "2cca927ef2fe22954a2c1e6ce0ec81d8057e22a39ef2ddcc662eeecb5583bfe0"
+    },
+    "0251-regression-invocation.py": {
+      "bytes": 2378,
+      "sha256": "0affcc8d5432dc3c2966385eab5316e53dc7ad71f6e02e44cc6e93b45b9e529f"
+    },
+    "0251-regression.log": {
+      "bytes": 10295,
+      "sha256": "185b71cf6ef8b9f3d79ce065ab96ff5f6d4c3d2432a5851989051a3558d69610"
+    }
+  },
+  "ci_status": "not yet observed for the future source commit",
+  "freeze_verification": {
+    "files_unchanged": 1421,
+    "frozen_manifest_sha256": "0c1376a289c73fd12151cffc986ebdfc50476e510b2de843865ab5f80e572bd3",
+    "git_status_unchanged": true,
+    "lanes": [
+      {
+        "checkout_unchanged": true,
+        "command": [
+          "make",
+          "test-unit",
+          "CONDA=/opt/homebrew/bin/conda"
+        ],
+        "elapsed_s": 201.22378016682342,
+        "lane": "portable",
+        "pytest_addopts": "--junitxml=/private/tmp/ariadna-0251-portable.xml",
+        "returncode": 0
+      },
+      {
+        "checkout_unchanged": true,
+        "command": [
+          "make",
+          "test-live",
+          "CONDA=/opt/homebrew/bin/conda"
+        ],
+        "elapsed_s": 580.5991456247866,
+        "lane": "live",
+        "pytest_addopts": "--junitxml=/private/tmp/ariadna-0251-live.xml",
+        "returncode": 0
+      }
+    ],
+    "revision": "a89e322b75389088a67230812b54ed01dfec99cf",
+    "status": "passed"
+  },
+  "full_required_case_count": 7743,
+  "full_volume_fabricated_fixture": {
+    "durable_output_bytes": 647,
+    "external_after_receipt_elapsed_s": 0.043013209011405706,
+    "input_bytes": 65536,
+    "producer_report": {
+      "arc_calls": 228,
+      "closed": 76,
+      "contexts": 76,
+      "counts": {
+        "control_attempts": 73,
+        "diagnostic_attempts": 3,
+        "input_bytes": 65536,
+        "integrations": 0,
+        "kernel_reads": 0,
+        "native_propagations": 0,
+        "optimizer_calls": 0,
+        "output_bytes": 0,
+        "propagation_evaluations": 76,
+        "real_archive_reads": 0,
+        "simulated_arc_slots": 228,
+        "spice_queries": 0
+      },
+      "counts_phase": "producer-before-summary-write",
+      "inherited_start_s": 3680963.879147791,
+      "max_raw_defect": 0.0,
+      "producer_elapsed_s": 0.03859333414584398,
+      "scope": "fabricated affine interface qualification only"
+    }
+  },
+  "local_tests": {
+    "focused": {
+      "passed": 149,
+      "skipped": 0,
+      "tests": 149,
+      "time_s": 0.358
+    },
+    "live": {
+      "passed": 412,
+      "skipped": 0,
+      "tests": 412,
+      "time_s": 578.902
+    },
+    "portable": {
+      "passed": 7289,
+      "skipped": 42,
+      "tests": 7331,
+      "time_s": 199.06
+    }
+  },
+  "measured_base_revision": "a89e322b75389088a67230812b54ed01dfec99cf",
+  "new_source_sha256": {
+    "src/space_nav/_coupled_bridge.py": "95b1efda14fa407a83630474b70ac633214ea114a2533220e6fb86d7f41765c6",
+    "tests/test_coupled_bridge.py": "5dc09878301592a5d3de4c628141260438a04d4f4d4224ca8eec786b4cd54bd0",
+    "tests/test_coupled_bridge_limits.py": "8b6cce922e548a9a6c9f2c5699c13be6eda75505518e01263c38a97fb6137a25"
+  },
+  "review": {
+    "caveats": [
+      "Fresh interface object identity is not proof of native-body isolation.",
+      "Fixed artificial subprocess output qualification is not a generic production launcher limit."
+    ],
+    "clock_callback_poison_fix_verified": true,
+    "status": "no blocking findings"
+  },
+  "ruff": "src and tests passed",
+  "schema": "ariadna-f5-interface-qualification-v1",
+  "scientific_scope": {
+    "consumed_studies_replayed": false,
+    "native_optimizer_adoption": false,
+    "new_guarded_fixture": "No SPICE/kernel/real-archive/native/integration/optimizer work; zero counters are scoped to the guarded fixture.",
+    "original_admissible_pair": "not established",
+    "physical_error_bounds": "not established",
+    "required_live_regression": "Existing separately authorized SPICE/native regressions; not covered by the zero-work claim."
+  },
+  "scope": "Private artificial coordinate/event/derived-mass/arc-request interface only; not native or physical F0 qualification"
+}

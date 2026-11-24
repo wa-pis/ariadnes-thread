@@ -1,0 +1,60 @@
+{
+  "ci": "not yet observed for source commit",
+  "documentation": {
+    "anchors": 7,
+    "current_state_lines": 47,
+    "local_links": 563,
+    "markdown_files": [
+      "CURRENT_STATE.md",
+      "docs/adr/0250-design-coupled-coordinate-bridge.md",
+      "docs/adr/0251-qualify-coupled-coordinate-bridge.md",
+      "docs/adr/README.md",
+      "openspec/ROADMAP.md",
+      "openspec/changes/refine-physical-trajectory/design.md",
+      "openspec/changes/refine-physical-trajectory/proposal.md",
+      "openspec/changes/refine-physical-trajectory/tasks.md"
+    ],
+    "status": "passed",
+    "unchanged_measured_non_markdown_files": 1113,
+    "unchanged_prior_tracked_non_markdown_files": 1110
+  },
+  "independent_review": {
+    "status": "no blocking findings",
+    "verified": [
+      "artifact byte counts and SHA-256",
+      "three measured source hashes",
+      "all JUnit inventories and scoped results",
+      "no portable/live case overlap",
+      "all149 focused cases present in portable",
+      "artificial/native/physical distinctions",
+      "prior non-Markdown history unchanged"
+    ]
+  },
+  "notes": [
+    "Documentation checks occurred after both required frozen lanes ended.",
+    "No successful unchanged scientific experiment or full regression was repeated."
+  ],
+  "qualification_sha256": "ce4a7874313b63aa04a22006a29c2034898c8a72a0acd3b673c88b4213af1cb9",
+  "ruff": {
+    "command": [
+      "ruff",
+      "check",
+      "src",
+      "tests"
+    ],
+    "output": "All checks passed!\n",
+    "returncode": 0
+  },
+  "schema": "ariadna-f5-final-verification-v1",
+  "status": "passed",
+  "strict_openspec": {
+    "command": [
+      "openspec",
+      "validate",
+      "refine-physical-trajectory",
+      "--strict"
+    ],
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  }
+}

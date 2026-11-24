@@ -3,31 +3,31 @@
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
 ## Current preparation result
-[ADR0249](docs/adr/0249-qualify-coupled-artificial-shooting.md) completes artificial F3
-under [ADR0248](docs/adr/0248-design-coupled-synthetic-benchmark.md): two-node coupled
-shooting recovers from the perturbed seed; separate stdlib RK4 checks the actual
-unreset command. All original synthetic gates pass, no settings/limits retuned.
-Final external3.621921458s;174callbacks/528arcs/228552RHS; audit12arcs/294912RHS.
-Independent target discrepancy1.37836e-6m/1.81899e-12m/s, diagnostic only.
-Zero benchmark SPICE/kernel/real-archive reads/native propagations.
-Verified89focused,7140portable+42archive skips,412live;1393-file checkout frozen.
-Ruff/review/links/protected history/strict pass. CI45493818215 on95ae3a3 passes:
-7515passed/79skipped, zero failures/errors; all89 new cases pass (ADR0249).
-Measured base0e09f5c plus6new source/test files; exact hashes/logs in ADR0249.
+[ADR0251](docs/adr/0251-qualify-coupled-coordinate-bridge.md) completes F5 under
+[ADR0250](docs/adr/0250-design-coupled-coordinate-bridge.md): one private coordinate,
+exact-event/derived-mass/artificial-arc interface; no native adapter or optimizer.
+Verified149 focused,7289 portable+42archive skips,412live;1421 files/Gitstatus frozen.
+Ruff, independent review, links/protected history and strict pass. Source-commit
+CI not yet observed. Measured basea89e322 plus3new source/test files; hashes in ADR.
+Cold affine fixture:73controls+3replays/228simulated slots,64KiB input/647B output,
+producer0.038593334s/external0.043013209s; no new scientific calls/integration.
+Zero-work claim applies to new guarded fixture; existing live regressions use SPICE.
+[ADR0249](docs/adr/0249-qualify-coupled-artificial-shooting.md) retains earlier F3
+manufactured coupled recovery and independent actual-command audit, plus verified CI.
 
 ## Next action and scheduler
-[ADR0250](docs/adr/0250-design-coupled-coordinate-bridge.md) completes F4 design:
-private normalized-node/exact-event/artificial-arc bridge; no physical solver adopted.
-Next F5: qualify only this interface with independent fabricated inputs and cap tests.
-Native timing/mass/seed/derivatives/guards/full-force/error bounds remain unqualified;
-production corrector and73/76/228/300s caps stay unchanged. No automatic mission run.
+Verify source-bound CI after the F5 commit; do not repeat successful local suites.
+Before native implementation/study, define a concrete native/solver contract:
+exact-time/realized-mass, seed, derivatives, guards/full-force and endpoint bounds
+remain unqualified; production73/76/228/300s and prescribed method are unchanged.
+No automatic mission run, new boundary or consumed-study replay is admitted.
 User resumed `ariadna-m3` on2026-11-25: ACTIVE every5minutes, samechat.
-Continue ADR0250 artificial preparation with pinned Conda and ponytail.
+Continue ordinary reversible preparation with pinned Conda and ponytail.
 Pause on required user choice/access/authorization, contract-changing failure,
-or independently verified agreed success. Do not replay consumed studies/R5.60.
+or independently verified agreed success. No replay of consumed studies/R5.60.
 
 ## Physical goal remains open
-The user-selected original admissible pair is unmet; artificial F3 is not that pair.
+The original admissible pair is unmet; artificial F3/F5 are not that pair.
 [ADR0247](docs/adr/0247-formulate-coupled-moon-mars-problem.md) retains fixed F0
 orbital six-states/epochs/planes/phases, hardware and six finite-burn controls.
 M2/excess vectors are seeds, not endpoint equalities; masses/times are derived.
@@ -37,8 +37,8 @@ No99% probability, physical closure, safe mission or certified error-bound claim
 ## Preserved evidence and boundaries
 [ADR0246](docs/adr/0246-record-bounded-retained-inconclusive.md): one P6 on33fea7c
 is complete inconclusive/no witness;13points independently audited, no replay.
-Positive151.33118995827647deg proposal fails floor:6157.712787309595m/s versus
-6117.706618414368m/s; negative guarded. Namespace0243-p3-retained consumed.
+Positive proposal fails floor:6157.712787309595m/s versus6117.706618414368m/s;
+negative guarded. Namespace0243-p3-retained consumed.
 [ADR0135](docs/adr/0135-fixed-orbit-boundary-contract.md)/
 [ADR0205](docs/adr/0205-design-fixed-command-physical-join.md) retain all fixed
 boundary/join/error-bound gates. No physical join or strictM3/task3.9 completion.

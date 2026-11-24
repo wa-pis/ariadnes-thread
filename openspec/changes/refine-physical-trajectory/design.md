@@ -8,6 +8,14 @@ previous promise of a complete executable F0 profile is narrowed explicitly:
 this contract selects coordinate/event/arc-request semantics only. F0 method
 adoption and mission execution remain unavailable.
 
+[ADR0251](../../../docs/adr/0251-qualify-coupled-coordinate-bridge.md) subsequently
+qualifies only this private interface:149 focused/7289 portable/412 live checks,
+1421 frozen files, independent review/Ruff/strict pass. The guarded affine fixture
+uses73 shooting+3 replay evaluations/228 simulated slots,64KiB input/647B durable
+output and0.043013209s external completion. Fresh interface identity is not proof
+of native-body isolation; these artificial checks do not establish F0 feasibility
+or native timing/mass/error bounds. Source-commit CI remains unobserved.
+
 #### Binding F0 data and reuse limits
 
 Keep [ADR0135](../../../docs/adr/0135-fixed-orbit-boundary-contract.md)'s exact

@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "revision": "a89e322b75389088a67230812b54ed01dfec99cf",
+  "files_unchanged": 1421,
+  "git_status_unchanged": true,
+  "frozen_manifest_sha256": "0c1376a289c73fd12151cffc986ebdfc50476e510b2de843865ab5f80e572bd3",
+  "lanes": [
+    {
+      "lane": "portable",
+      "command": [
+        "make",
+        "test-unit",
+        "CONDA=/opt/homebrew/bin/conda"
+      ],
+      "pytest_addopts": "--junitxml=/private/tmp/ariadna-0251-portable.xml",
+      "returncode": 0,
+      "elapsed_s": 201.22378016682342,
+      "checkout_unchanged": true
+    },
+    {
+      "lane": "live",
+      "command": [
+        "make",
+        "test-live",
+        "CONDA=/opt/homebrew/bin/conda"
+      ],
+      "pytest_addopts": "--junitxml=/private/tmp/ariadna-0251-live.xml",
+      "returncode": 0,
+      "elapsed_s": 580.5991456247866,
+      "checkout_unchanged": true
+    }
+  ]
+}
