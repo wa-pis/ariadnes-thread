@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0272 — Once-only cold import diagnostic](0272-record-cold-import-diagnostic.md) — F18.6 complete: six markers/audit/outer finalization in0.847950s; old timeout cause and owner/physical gates remain open.
 - [0271 — Artificial import-only diagnostic](0271-qualify-artificial-import-probe.md) — F18.5 complete:124artificial/7848portable+413live passes; F18.6 unexecuted, no owner or physical qualification.
 - [0270 — Import-only timeout observation](0270-design-import-only-timeout-observation.md) — saved/source diagnosis and narrow next design; cause unresolved, no new probe or F18.3 retry.
 - [0269 — Actual-owner producer timeout](0269-record-owner-producer-timeout.md) — one consumed45s producer failure; failure accounting PASS, native-owner/numerical qualification unavailable, no retry.

@@ -1,3 +1,10 @@
+[ADR0272](../../../docs/adr/0272-record-cold-import-diagnostic.md) completes
+only the separately authorized F18.6 cold import:6markers, childexit0, independent
+trace/control audits and outer cleanup/finalfsync PASS in0.847950292s. Exact
+pinned preflight/profile/caps preserved; no SPICE query/integration/trajectory.
+All protected files match, image detached. Import success does not locate0269's
+timeout or qualify owner/physical gates. Permission consumed, automation PAUSED.
+
 [ADR0271](../../../docs/adr/0271-qualify-artificial-import-probe.md) completes
 F18.5 artificial import-only preparation:124new cases,7848portable+413live pass,
 42unchanged archival skips, frozen1540files, independent review/Ruff/strict pass.

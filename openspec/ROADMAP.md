@@ -107,6 +107,15 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0272](../docs/adr/0272-record-cold-import-diagnostic.md) completes F18.6:
+one explicitly authorized cold import passes all6markers/childexit0/independent
+trace audit and outer cleanup/post-fsync in0.847950292s<60s45/10/5. Preflight
+394.802s admission/413.895s start/consumed413.945s<600s; exact0269env/roleflags
+and read-only profile preserved. Trace1009B/input355B/10270Bstructured+64Blogs.
+Independent saved-only result audit PASS,71459operational paths/source/native/
+resource/old-ledger pins unchanged; image detached. No SPICE query/integration
+or trajectory. Same warning occurs on success;0269cause/counts remain unknown.
+F18.6 permission consumed; no F18.3retry/owner/physical gate closure. PAUSED.
 [ADR0271](../docs/adr/0271-qualify-artificial-import-probe.md) completes F18.5:
 124artificial cases included in7848portable passes,413live passes,42unchanged
 archival skips,0failures.1540files/Git status frozen; Ruff/review/strict pass.

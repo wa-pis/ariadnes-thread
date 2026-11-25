@@ -142,6 +142,12 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **THEN** at most six ordered <=512B JSONL markers in a <=4KiB trace SHALL remain within unchanged2MiB evidence/64KiB input-log/60s inclusive45-10-5 phases and600s preflight; exact role-specific flags, environment, read-only resources and source/kernel pins SHALL be preserved with zero explicit produce/context/factory/integration/owner/helper calls
 - **AND** independent stdlib audit SHALL require marker sequence, bounded times/identity, successful child exit and finalization for import completion; a last enter without return SHALL bracket import and adjacent observer I/O without proving cause, a native instruction, old operation counts or F18.3/physical qualification
 
+#### Scenario: Retain successful import evidence without retrospective causal claims
+
+- **WHEN** the once-only F18.6 probe reaches all six markers with childexit0, independent audit and supervised outer cleanup/post-fsync observations under the admitted unchanged profile and caps
+- **THEN** only this import observation MAY be marked complete; durable prefinal receipts SHALL remain distinct from observed post-fsync returns, and saved-only postpacket review SHALL NOT be counted as a new native episode
+- **AND** a warning shared with the old failure SHALL NOT establish its cause or earlier import completion; F18.3 remains consumed/unqualified, historical counts unknown, owner/physical gates open and a new native observation requires its own explicit decision
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

@@ -1,0 +1,112 @@
+{
+  "schema": "ariadna.f18.cold-import-documentary-verification.v1",
+  "status": "PASS",
+  "base_revision": "2566fb4c72a3c316f8f5ac11a2a18cdd88196027",
+  "checked_utc": "2026-11-25T14:47:53.865240+00:00",
+  "protected_prior_blobs_unchanged": 1537,
+  "protected_prior_non_markdown_blobs_unchanged": 1215,
+  "local_links_excluding_pending_receipt": 632,
+  "anchors": 5,
+  "current_state_lines": 38,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "80d7d3e1fb9730df96c81e74a71742c117110e600b1e3144f3d272f3730d2b65",
+    "docs/adr/0272-record-cold-import-diagnostic.md": "43957f2caf304f99f09aefa973c83ad4fb3104462cb79d476c3efb90af8866d0",
+    "docs/adr/README.md": "7b2d565d13f048ca6b73a7e9a8045e92bafdf0eaaca468d7bffac87b31feec98",
+    "openspec/ROADMAP.md": "1f7f20859ff09fdb618200a828386fd4824e4b1a4608684f37927c0990019a4b",
+    "openspec/changes/refine-physical-trajectory/design.md": "7682c70d2514b930b1599b5f0a8f1736ad69e9d51a68f74e55b3fab84d968fdd",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "15bdd36f1e070aee80368b069c295505afd4714adb33fc2a8e0a6a9c06e2f38f",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "6ff72c5e34c2bb18d666bc8d6c4ae5885928b28ff66d52b4c2c9cd4e7cf19561",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "46d63dbd47a626ed1e0dc2e3f1e2a29f824086d83b103380326c4d34cede15b3"
+  },
+  "archive_manifest_unique_relative_members_originals_hashes_syntax": "PASS105members",
+  "archive_sha256": "921986d43c79fd919ffe80292dfef80a8a21ad40656c25e6d5b69d12fea2dcde",
+  "result_sha256": "14a588b7546ce9c17882d239cb0f2e867ca16ca001db22a1728a0d51e9bc27eb",
+  "episode_bytes": {
+    "structured_including_caller_tool_records": 10270,
+    "logs": 64
+  },
+  "unchanged_runtime_and_test_source_pins": 45,
+  "diff_whitespace": "PASS",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "tests_and_ruff": "No runtime/test source changes: successful ADR0271 checks reused, not rerun. New external wiring artificial3cases passed.",
+  "scope": "Only once-only F18.6 cold import complete. Owner/F18.3/physical gates remain open; no new SPICE/integration/trajectory.",
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "prompt_sha256": "d6edec4b09230e7e015356384551e9784dfe354cdfaced38c308259aa5634c6e"
+  },
+  "parent_check_record_sha256": "092cc71316f3c297120b1df979868c05be35ea5d62ffd8e4a47ed45ffec666c4",
+  "parent_check_script_sha256": "43571ab089eed7c8cb5aec9d50b260093ebc45102fb7435003688eb251c05c41",
+  "independent_documentary_review": {
+    "sha256": "aa36eb7db61760e4a6ad2aa702d5c6b2687dce29ff54b4efe7fb7617820ced02",
+    "record": {
+      "schema": "ariadna.f18.cold-import-documentary-review.v1",
+      "status": "PASS",
+      "reviewer": "f186_controls",
+      "checked_utc": "2026-11-25T14:48:03.758501+00:00",
+      "findings": [],
+      "scope": "Independent documentary comparison of exact7existingMDdiffs, newADR/result/archive against raw saved0272records. No repository edits, native/scientific imports, tests, SPICE or integration.",
+      "verified": [
+        "Archive105unique members,88264ZIPbytes/192245expanded, archive/member hashes and all retained raw originals match manifest.",
+        "Six raw markers,355Binput/1009Btrace/max320Bmarker, childexit0 and independent trace audit match result.",
+        "Nested durable pending receipts distinguished from post-fsync returns; outer0.8479502918198705s and admission/start/consumption394.802256/413.894826/413.944815s match raw records.",
+        "Independent resummation10270structured+64logbytes below unchanged2MiB/64KiB; all45projectsource pins remain exact.",
+        "Saved preservation71459paths/1646916124regularbytes, native/resource/old-ledger counters, detached image and PAUSEDscheduler accurately transcribed.",
+        "OnlyF18.6checkbox changed; all7tracked modifications are documentation and src/tests/runtime/environment/moon_to_mars.py unchanged.",
+        "Same64Bwarning compared directly with0269raw failure. No causal/oldcounts/owner/physical/99percent/safety/retry claim.",
+        "Artificial harness issues and failure preserved; static/outer wiring success distinguished from native/scientific correctness."
+      ],
+      "reviewed_pins": {
+        "CURRENT_STATE.md": {
+          "bytes": 2424,
+          "sha256": "80d7d3e1fb9730df96c81e74a71742c117110e600b1e3144f3d272f3730d2b65"
+        },
+        "docs/adr/README.md": {
+          "bytes": 48166,
+          "sha256": "7b2d565d13f048ca6b73a7e9a8045e92bafdf0eaaca468d7bffac87b31feec98"
+        },
+        "openspec/ROADMAP.md": {
+          "bytes": 86623,
+          "sha256": "1f7f20859ff09fdb618200a828386fd4824e4b1a4608684f37927c0990019a4b"
+        },
+        "openspec/changes/refine-physical-trajectory/design.md": {
+          "bytes": 615907,
+          "sha256": "7682c70d2514b930b1599b5f0a8f1736ad69e9d51a68f74e55b3fab84d968fdd"
+        },
+        "openspec/changes/refine-physical-trajectory/proposal.md": {
+          "bytes": 32587,
+          "sha256": "15bdd36f1e070aee80368b069c295505afd4714adb33fc2a8e0a6a9c06e2f38f"
+        },
+        "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+          "bytes": 172565,
+          "sha256": "6ff72c5e34c2bb18d666bc8d6c4ae5885928b28ff66d52b4c2c9cd4e7cf19561"
+        },
+        "openspec/changes/refine-physical-trajectory/tasks.md": {
+          "bytes": 502060,
+          "sha256": "46d63dbd47a626ed1e0dc2e3f1e2a29f824086d83b103380326c4d34cede15b3"
+        },
+        "docs/adr/0272-record-cold-import-diagnostic.md": {
+          "bytes": 7646,
+          "sha256": "43957f2caf304f99f09aefa973c83ad4fb3104462cb79d476c3efb90af8866d0"
+        },
+        "docs/adr/experiments/0272-cold-import-result.json": {
+          "bytes": 24764,
+          "sha256": "14a588b7546ce9c17882d239cb0f2e867ca16ca001db22a1728a0d51e9bc27eb"
+        },
+        "docs/adr/experiments/0272-cold-import-evidence.zip": {
+          "bytes": 88264,
+          "sha256": "921986d43c79fd919ffe80292dfef80a8a21ad40656c25e6d5b69d12fea2dcde"
+        }
+      },
+      "not_rerun": "No runtime/tests/native rerun. Root performs separate final links/anchors/protected-prior-blob/diff/strict validation and creates final0272docverification."
+    }
+  },
+  "completed_utc": "2026-11-25T14:48:44.898451+00:00",
+  "pending_receipt_links_resolved_at_completion": [
+    "experiments/0272-doc-verification.json"
+  ],
+  "artifact_syntax_note": "Empty producer.json role files retained by design; all nonempty JSON and all JSONL/Python parse. Initial overbroad JSON parse check corrected; evidence unchanged."
+}

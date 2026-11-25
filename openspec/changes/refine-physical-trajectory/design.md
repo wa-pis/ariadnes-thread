@@ -1,5 +1,27 @@
 ## Context
 
+### F18.6 cold import-only result (2026-11-25)
+
+[ADR0272](../../../docs/adr/0272-record-cold-import-diagnostic.md) consumes the
+user's one explicit import permission. Independent file/profile/control admission
+completes within the original600s; exact0269env/roleflags/source/kernel/resources,
+read-only image and sandbox restrictions are preserved. Reused caller is exact;
+only external schema/input/dispatch adaptations and adapterpin/fresh output path
+are added around qualified controls, independently reviewed and artificially
+qualified for pass/unfinalized/coldstall. Setup failures are preserved before
+native consumption; no old runner or project runtime/test source changes.
+All6markers/childexit0/separate stdlib audit/observed nested post-fsync and outer
+cleanup pass in0.847950292s<60s45/10/5. Input355B, trace1009B, episode10270B
+structured+64Blogs satisfy unchanged caps. Durable pending receipts remain
+separate from post-fsync returned observations. A separate postpacket saved-only
+audit verifies timing/records and absent groups without another native import.
+All71459operational paths plus source/native/resource/old-ledger pins match;
+image detached, no new acquisition/SPICE query/integration/trajectory. Same64B
+warning persists on success: no inference about0269cause, counts or last phase.
+Only this import completes; F18.3/F17/F17.1/owner/carry/prior arithmetic/physical
+F0/M3/99percent/safety gates remain open. Permission consumed and PAUSED; a next
+owner-stage observation needs a distinct bounded plan and explicit decision.
+
 ### F18.5 artificial import-only qualification (2026-11-25)
 
 [ADR0271](../../../docs/adr/0271-qualify-artificial-import-probe.md) qualifies
