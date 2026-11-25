@@ -1,0 +1,29 @@
+{
+  "F14": "conditional no-op domain; original-native pre-export basis missing",
+  "HTTP": 0,
+  "actual_native_readback_and_physical_admission": "unavailable",
+  "anchors": 5,
+  "base_revision": "f83f673be2799b428fa004868dca4cf6eed14994",
+  "changed_markdown_sha256": {
+    "CURRENT_STATE.md": "fc849e779985fe0a0ceb564fd440a4cfc112c5912e4e14f9c4be852959f6cfd1",
+    "docs/adr/0260-bound-time-construction-export-domain.md": "77b9e0529f46d1d4f062a8a74ab758e7b72f0ac3be137106426cbf77810b0cca",
+    "docs/adr/README.md": "b51d8bec3f257a83f0a67aef92ce3256caf3a75dd70b6826ce3d1acdc9d9f5bf",
+    "openspec/ROADMAP.md": "23b3a14f48e73df29559d19ab249e78c398fae8318a45d3ace56001f0387fd61",
+    "openspec/changes/refine-physical-trajectory/design.md": "5e9b14b4db860b043038f326f2ab247d18d5e72b1d9aba45718e5c57051aa778",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "cacdd28fed392fff65985ecd4f823a607dcbdc5c2935e270d64712eeab75b017",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "1845e3bb255d868f34b3fc0ffae6e438f3b35eb01b85dc1bd2910453ed347d7c",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "e55eae8c60300682ebd160be5c7d1df1acaa1d2c785e15ea174163b81b25d31c"
+  },
+  "current_state_lines": 59,
+  "git_diff_check": "passed",
+  "independent_source_reviews": "Two source/domain reviews completed within208s; final documentary review separate",
+  "local_links": 590,
+  "new_scientific_work": false,
+  "production_code_unchanged": true,
+  "runtime_tests_rerun": false,
+  "schema": "ariadna-f14-doc-verification-v1",
+  "source_review_sha256": "4f8440673cd0d20872b849d7c673eb4c9fac8d1779afcf9a0a80f3fff6e975d2",
+  "status": "passed: conditional source-domain reasoning only",
+  "strict_openspec": "passed",
+  "unchanged_prior_non_markdown_files": 1171
+}

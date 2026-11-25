@@ -3,6 +3,8 @@
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
 ## Current preparation result
+[ADR0260](docs/adr/0260-bound-time-construction-export-domain.md) completes F14 no-op
+construction/copy domain; original-key pre-export basis remains missing.
 [ADR0259](docs/adr/0259-inspect-pinned-split-time-caster.md) completes F13:5HTTP200,
 215077raw/decoded bytes; pinned generic double route, actualreadback unavailable.
 [ADR0258](docs/adr/0258-lookup-exact-split-time-build-source.md): F12 attempt
@@ -14,9 +16,8 @@ conditional enclosure, not actual readback. No native/code/scientific qualificat
 packet checker: exact words/rationals, signed event/span intervals, shared
 actual-chain declarations, separate mass ledgers/floor/matching and gate outcomes.
 94focused/7530portable+42archive/413live pass;1469files/Gitstatus frozen.
-Independent review, parser repairs, Ruff and doc/strict checks pass.
-Final test-only EOF normalization preserves the exact AST;94focused/Ruff pass
-again. Original full frozen lanes are reused; final hashes have a separate receipt.
+Parser/review/Ruff/strict pass; final EOF-only AST-preserving repair reuses full
+lanes with separate final hashes and94focused/Ruff rerun.
 Outer15s supervised pure harness and64KiB/2MiB limits pass; immutable report
 says pending-parent-check, separate observation confirms post-fsync completion.
 CI45530971440 on exact a9fa9cf passes7906cases/79skips; all94new pass.
@@ -30,10 +31,9 @@ native double-stop restriction. No actual native bound/adapter/profile is qualif
 
 ## Next action and scheduler
 Do not repeat successful local/CI runs or artifact downloads on unchanged code.
-Next: bound finite/range premises for narrow Time construction/copy/export from
-retained sources only; no new HTTP/native/scientific work by default.
-No refetch/controller replay, generic framework/native campaign, changed target,
-old-study replay or R5.60.
+Next: design one original-key pre-export admission path, preserving reference
+provenance/prior-arithmetic obligations; no HTTP/native/campaign by default.
+No refetch/controller replay, framework/native campaign, changed target or old replay.
 Full-force seed/derivatives/guards/error bounds and73/76/228/300s remain open.
 User resumed `ariadna-m3` on2026-11-25: ACTIVE every5minutes, samechat.
 Pause for concrete required user choice/access/authorization or contract change,

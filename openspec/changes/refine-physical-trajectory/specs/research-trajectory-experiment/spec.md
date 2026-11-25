@@ -37,6 +37,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 - **AND** outer600s/per-response60s watchdogs,6actual HTTP responses,256KiB per body and separate2MiB aggregate raw-body/decoded-source/retained-evidence ledgers cover errors, partials, logs and finalization; redirects/compression/unsupported chains fail closed with zero new archive members or runtime/scientific work
 - **AND** source/dependency declarations stay separate from compiled-header/effective-FP/lawful-domain evidence; missing premises keep actual readback and physical admission unavailable
 
+#### Scenario: Separate pre-export construction facts from propagated readback
+
+- **WHEN** ADR0260 reviews the named retained-source Time construction/copy/export route
+- **THEN** record explicit finite/input/FP/selection and integer-range preconditions separately from justified construction/normalization/copy/getter invariants, with pinned hashes/line anchors and source reasoning<=600s
+- **AND** finite output/roundtrip cannot supply pre-export safety; any missing primitive remains unavailable and the narrow route cannot qualify arbitrary propagated keys, native carry or physical gates
+- **AND** no new HTTP, code, tests, native import, SPICE, numerical/scientific evaluation or integration occurs
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

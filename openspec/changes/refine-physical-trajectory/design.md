@@ -1,5 +1,61 @@
 ## Context
 
+### F14: narrow pre-export finite-domain review (2026-11-25)
+
+[ADR0260](../../../docs/adr/0260-bound-time-construction-export-domain.md) asks
+one remaining F11 premise: what finite/range invariants follow from the pinned
+Time split-construction → copy → getter/pickle-export route, and which exact
+primitive or input premise is still missing? Use only retained/installed source
+already pinned by F11–F13; no new acquisition or broad stop/integrator review.
+
+Fix the paths before reading: Time's split/default constructor, copy constructor,
+normalization helper and two component getters; the existing pickle tuple/inverse
+binding; and the already captured generic tuple/floating caster. Review only
+callee lines needed for that route. Preserve source SHA/line anchors. Original
+F0 states/epochs/planes/phases, six commands/hardware, force model, tolerances and
+73/76/228/300s remain fixed and unevaluated.
+
+The scoped source review has at most600s from its recorded first source read,
+including independent source reasoning, with zero HTTP, archive/package refetch,
+native/TudatPy/SPICE imports, runtime tests, numerical/oracle/command/trajectory
+evaluations or integration. Documentation/hash/link/strict validation follows
+separately. No helper/checker/framework, compiled build or experiment is added.
+
+Completion is a source-linked table separating explicit caller preconditions,
+construction/normalization operations and integer-range hazards, copy/getter
+preservation, pre-export native-domain versus post-export observations, and the
+precise remaining primitive. Derive only invariants justified under stated FP/
+selection premises; no universal normalized-remainder or native-precision claim.
+A documented gap is not a physical failure or execution authority. This narrow
+route does not qualify propagation arithmetic, actual original-key provenance,
+compiled configuration, readback/carry or physical clock/mass/force/endpoints.
+
+Independently review the source argument, verify documentary links/anchors,
+protected bytes/CURRENT/diff/strict, and commit/push only the observed unit. No
+repetition of successful tests, lookup or old studies follows. Any next step
+must address a concrete remaining premise rather than extend diagnostics by
+habit; pause for a concrete required user or scientific-contract decision.
+
+#### F14 observed source result
+
+The source review03:35:17Z–03:38:45Z (208s) and two independent reviews establish
+one conditional no-op domain: valid C++int h, already known finite native0<=r<T,
+qualified T=3600 and selected-source/copy/comparison semantics. Split construction
+and copying both call normalization; in this domain its guard is false, so no
+helper, integer conversion or hour addition executes. Component getters return
+the stored fields. Copying is not an unconditional representation/bit identity.
+All five source hashes match the exact package inventory.
+
+Outside that domain the helper invokes an integer quotient conversion/possible
+decrement before unchecked signed-int hour addition. NaN can bypass the guard
+under ordinary unordered semantics; no finiteness check follows from that guard.
+The remaining basis is validation/provenance of the ORIGINAL native key before
+export and before any normalizing copy. A conceptual const-reference native
+finite/range predicate is not an implemented API and cannot certify earlier
+arithmetic, actual carry or physical gates. ADR0260 explicitly qualifies ADR0254's
+intended-storage wording; F11–F13 actual readback remains unavailable. No new
+HTTP, code, runtime/native/SPICE or scientific evaluation occurred.
+
 ### F13: bounded pinned-source continuation (2026-11-25)
 
 [ADR0259](../../../docs/adr/0259-inspect-pinned-split-time-caster.md) reuses

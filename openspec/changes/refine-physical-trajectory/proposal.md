@@ -1,3 +1,8 @@
+[ADR0260](../../../docs/adr/0260-bound-time-construction-export-domain.md) completes
+F14 conditional source reasoning: finite0<=r<3600 gives a no-op through split
+construction and copying; original-key pre-export basis remains missing. No code,
+HTTP, native experiment or physical admission follows.
+
 [ADR0259](../../../docs/adr/0259-inspect-pinned-split-time-caster.md) completes F13's
 source-only capture:5HTTP200 and215077bytes pin the declared generic caster.
 Actual compiled selection/domain/readback and physical gates stay unavailable.

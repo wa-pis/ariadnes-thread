@@ -1,0 +1,1482 @@
+{
+  "base_revision": "f83f673be2799b428fa004868dca4cf6eed14994",
+  "independent_reviews": "Two independent retained-source/domain reviews passed before the review window ended.",
+  "pre_read_contract": {
+    "base_revision": "f83f673be2799b428fa004868dca4cf6eed14994",
+    "before_first_scoped_source_read": true,
+    "contract_sha256": {
+      "CURRENT_STATE.md": "47767156348133f7cf7a51d316ce456ea33f2a77455ac29b967c42f5998b1f4b",
+      "docs/adr/0260-bound-time-construction-export-domain.md": "52bf4ab0693e10bffb5ba227b0a48e06aebbc3e7101cc74b9695b814e7cec820",
+      "docs/adr/README.md": "b51d8bec3f257a83f0a67aef92ce3256caf3a75dd70b6826ce3d1acdc9d9f5bf",
+      "openspec/ROADMAP.md": "53debd599e0586478f73d8249c52aade7df7bb30f61f0b581cfeab8789f05cd7",
+      "openspec/changes/refine-physical-trajectory/design.md": "7be1cf727e2a49d8378633da3848934ff4483a33398888dd0a0965e3e9ef7e9c",
+      "openspec/changes/refine-physical-trajectory/proposal.md": "996fcdaeef270347dd72a9ba93618e1e05ff947e04161aaba7fe0182e849d227",
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "1845e3bb255d868f34b3fc0ffae6e438f3b35eb01b85dc1bd2910453ed347d7c",
+      "openspec/changes/refine-physical-trajectory/tasks.md": "f3b8ecfd2144c0ba1f0310f659160d68e959856c1e711f2a9b43171038fa4c49"
+    }
+  },
+  "precise_missing_basis": "Pre-export domain validation/provenance of the original native remainder before narrowing AND before any normalizing copy. A const-reference native finite/range predicate is one conceptual primitive, not an implemented/qualified API; it would not certify earlier arithmetic, source selection or actual carry.",
+  "premises": [
+    "Actual inspected-source selection and lawful finite copy/comparison/constant semantics remain explicit premises.",
+    "h is already a valid C++ int; r is known finite before any copy/export and 0<=r<T with T the qualified3600 constant.",
+    "The original source object and its prior arithmetic have separate lawful provenance; Python output cannot establish this retroactively."
+  ],
+  "schema": "ariadna-f14-source-domain-review-v1",
+  "scope": {
+    "HTTP": 0,
+    "SPICE_queries": 0,
+    "actual_compiled_selection_and_FP": "unavailable",
+    "actual_native_readback_and_physical_admission": "unavailable",
+    "command_or_trajectory_evaluations": 0,
+    "integration": 0,
+    "native_imports": 0,
+    "original_F0_inputs_and_gates_unchanged": true,
+    "production_changes": false,
+    "runtime_tests": 0
+  },
+  "source_derivation": [
+    "Split constructor stores h/r and invokes normalization.",
+    "Copy constructor copies h/r, resets daysToAdd=0 and ALSO invokes normalization.",
+    "For the stated domain both guard comparisons are false, so the helper, integer cast and hour addition are not executed.",
+    "Same-type component getters return the stored fields; numeric preservation is not whole-object bit identity or observed carry."
+  ],
+  "source_records": {
+    "binding": {
+      "matching_exact_package_path": "lib/python3.12/site-packages/tudatpy/astro/time_representation/expose_time_representation.cpp",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/astro/time_representation/expose_time_representation.cpp",
+      "selections": [
+        {
+          "line": 210,
+          "text": "     Parameters"
+        },
+        {
+          "line": 211,
+          "text": "     ----------"
+        },
+        {
+          "line": 212,
+          "text": "     full_periods : int"
+        },
+        {
+          "line": 213,
+          "text": "         Number of full hours since epoch"
+        },
+        {
+          "line": 214,
+          "text": "     seconds_into_full_period : float"
+        },
+        {
+          "line": 215,
+          "text": "         Number of seconds into current hour. Need not be in range [0, 3600];"
+        },
+        {
+          "line": 216,
+          "text": "         the time representation is normalized automatically."
+        },
+        {
+          "line": 217,
+          "text": "     "
+        },
+        {
+          "line": 218,
+          "text": "     Returns"
+        },
+        {
+          "line": 219,
+          "text": "     -------"
+        },
+        {
+          "line": 220,
+          "text": "     astro.time_representation.Time"
+        },
+        {
+          "line": 221,
+          "text": "         Time object initialized to specified time"
+        },
+        {
+          "line": 222,
+          "text": "     "
+        },
+        {
+          "line": 223,
+          "text": "     Examples"
+        },
+        {
+          "line": 224,
+          "text": "     --------"
+        },
+        {
+          "line": 225,
+          "text": "     >>> from tudatpy.kernel import Time"
+        },
+        {
+          "line": 226,
+          "text": "     >>> t = Time(2, 1800.0)  # 2.5 hours after epoch"
+        },
+        {
+          "line": 227,
+          "text": "     )doc\" )"
+        },
+        {
+          "line": 228,
+          "text": "        .def(py::pickle("
+        },
+        {
+          "line": 229,
+          "text": "            [](const Time &p) { // __getstate__"
+        },
+        {
+          "line": 230,
+          "text": "                /* Return a tuple that fully encodes the state of the object */"
+        },
+        {
+          "line": 231,
+          "text": "                return py::make_tuple(p.getFullPeriods(), p.getSecondsIntoFullPeriod());"
+        },
+        {
+          "line": 232,
+          "text": "            },"
+        },
+        {
+          "line": 233,
+          "text": "            [](py::tuple t) { // __setstate__"
+        },
+        {
+          "line": 234,
+          "text": "                if (t.size() != 2)"
+        },
+        {
+          "line": 235,
+          "text": "                    throw std::runtime_error(\"Invalid state!\");"
+        },
+        {
+          "line": 236,
+          "text": ""
+        },
+        {
+          "line": 237,
+          "text": "                /* Create a new C++ instance */"
+        },
+        {
+          "line": 238,
+          "text": "                return Time(t[0].cast<int>(), t[1].cast<long double>());"
+        },
+        {
+          "line": 239,
+          "text": ""
+        },
+        {
+          "line": 240,
+          "text": "            }"
+        },
+        {
+          "line": 241,
+          "text": "        ))"
+        },
+        {
+          "line": 242,
+          "text": "            .def( \"to_float\","
+        },
+        {
+          "line": 243,
+          "text": "                  &tudat::Time::getSeconds< double >,"
+        },
+        {
+          "line": 244,
+          "text": "                  R\"doc("
+        },
+        {
+          "line": 245,
+          "text": "    Converts the time to a float (double) representing seconds since J2000."
+        },
+        {
+          "line": 246,
+          "text": "        "
+        },
+        {
+          "line": 247,
+          "text": "    Returns"
+        },
+        {
+          "line": 248,
+          "text": "    -------"
+        },
+        {
+          "line": 249,
+          "text": "    float"
+        },
+        {
+          "line": 250,
+          "text": "        Number of seconds since J2000"
+        },
+        {
+          "line": 251,
+          "text": "    "
+        },
+        {
+          "line": 252,
+          "text": "    Examples"
+        },
+        {
+          "line": 253,
+          "text": "    --------"
+        },
+        {
+          "line": 254,
+          "text": "    In this example, a Time object is converted back to seconds since J2000."
+        },
+        {
+          "line": 255,
+          "text": "    "
+        },
+        {
+          "line": 256,
+          "text": "    .. code-block:: python"
+        },
+        {
+          "line": 257,
+          "text": "    "
+        },
+        {
+          "line": 258,
+          "text": "        from tudatpy.kernel import Time"
+        },
+        {
+          "line": 259,
+          "text": "        "
+        },
+        {
+          "line": 260,
+          "text": "        # Create a Time object from seconds since J2000"
+        },
+        {
+          "line": 261,
+          "text": "        t = Time(3600.0)  # 1 hour after J2000"
+        },
+        {
+          "line": 262,
+          "text": "        "
+        },
+        {
+          "line": 263,
+          "text": "        # Convert back to seconds"
+        },
+        {
+          "line": 264,
+          "text": "        seconds = t.to_float()"
+        },
+        {
+          "line": 265,
+          "text": "        print(seconds)  # prints 3600.0"
+        },
+        {
+          "line": 266,
+          "text": "    )doc\" )"
+        },
+        {
+          "line": 267,
+          "text": "            .def( \"__float__\", &tudat::Time::getSeconds< double > )"
+        },
+        {
+          "line": 268,
+          "text": "            .def( \"__eq__\", []( const tudat::Time& self, const tudat::Time& other ) { return self == other; } )"
+        },
+        {
+          "line": 269,
+          "text": "            .def( \"__hash__\", []( const Time& self ) { return self.hash( ); } )"
+        },
+        {
+          "line": 270,
+          "text": "            .def( py::self + py::self )"
+        },
+        {
+          "line": 271,
+          "text": "            .def( py::self + double( ) )"
+        },
+        {
+          "line": 272,
+          "text": "            .def( double( ) + py::self )"
+        },
+        {
+          "line": 273,
+          "text": "            .def( py::self += py::self )"
+        },
+        {
+          "line": 274,
+          "text": "            .def( py::self += double( ) )"
+        },
+        {
+          "line": 275,
+          "text": "            .def( py::self - py::self )"
+        }
+      ],
+      "sha256": "a70324509ecaec7359de2db3b9c888859a5230ee6aa0fb7c2b54495abb5287a3"
+    },
+    "integer_floor": {
+      "matching_exact_package_path": "include/tudat/basics/utilities.h",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/include/tudat/basics/utilities.h",
+      "selections": [
+        {
+          "line": 862,
+          "text": "{"
+        },
+        {
+          "line": 863,
+          "text": "    std::vector< A > vectorOfFirstEntries;"
+        },
+        {
+          "line": 864,
+          "text": "    for( unsigned int i = 0; i < tupleVector.size( ); i++ )"
+        },
+        {
+          "line": 865,
+          "text": "    {"
+        },
+        {
+          "line": 866,
+          "text": "        vectorOfFirstEntries.push_back( std::get< 0 >( tupleVector.at( i ) ) );"
+        },
+        {
+          "line": 867,
+          "text": "    }"
+        },
+        {
+          "line": 868,
+          "text": "    return vectorOfFirstEntries;"
+        },
+        {
+          "line": 869,
+          "text": "}"
+        },
+        {
+          "line": 870,
+          "text": ""
+        },
+        {
+          "line": 871,
+          "text": "template< typename T >"
+        },
+        {
+          "line": 872,
+          "text": "constexpr int constexpr_int_floor( const T& f )"
+        },
+        {
+          "line": 873,
+          "text": "{"
+        },
+        {
+          "line": 874,
+          "text": "    const int i = static_cast< int >( f );"
+        },
+        {
+          "line": 875,
+          "text": "    return f < i ? i - 1 : i;"
+        },
+        {
+          "line": 876,
+          "text": "}"
+        },
+        {
+          "line": 877,
+          "text": ""
+        },
+        {
+          "line": 878,
+          "text": "template< typename IntType >"
+        },
+        {
+          "line": 879,
+          "text": "std::string paddedZeroIntString( const IntType valueToConvert, const int numberOfDigits )"
+        },
+        {
+          "line": 880,
+          "text": "{"
+        }
+      ],
+      "sha256": "453747db3b4a758ee74917ffbea2edf4e20261636a32256409da35e72f9851f3"
+    },
+    "normalization_helper": {
+      "matching_exact_package_path": "include/tudat/math/basic/basicMathematicsFunctions.h",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/include/tudat/math/basic/basicMathematicsFunctions.h",
+      "selections": [
+        {
+          "line": 65,
+          "text": " * Computes the remainder of division of one floating-point number by another. The modulo"
+        },
+        {
+          "line": 66,
+          "text": " * computation is based on the mathematical definition of congruence, which is different from the"
+        },
+        {
+          "line": 67,
+          "text": " * implementation of std::fmod() in the cmath standard library. For a description of congruence"
+        },
+        {
+          "line": 68,
+          "text": " * see: http://mathworld.wolfram.com/Congruence.html. The remainder is in the range [ 0, divisor )."
+        },
+        {
+          "line": 69,
+          "text": " * This function also returns (by reference) the number of times divisor goes into dividend, i.e. the division from which"
+        },
+        {
+          "line": 70,
+          "text": " * the moduloValue is the remainder."
+        },
+        {
+          "line": 71,
+          "text": " * \\param dividend Number to be divided."
+        },
+        {
+          "line": 72,
+          "text": " * \\param divisor Number that is divided by."
+        },
+        {
+          "line": 73,
+          "text": " * \\param moduloValue Remainder of division of dividend by divisor (returned by reference)."
+        },
+        {
+          "line": 74,
+          "text": " * \\param numberOfDivisors Number of times divisor goes into dividend (returned by reference)."
+        },
+        {
+          "line": 75,
+          "text": " */"
+        },
+        {
+          "line": 76,
+          "text": "template< typename ScalarType >"
+        },
+        {
+          "line": 77,
+          "text": "constexpr void computeModuloAndRemainder( const ScalarType dividend,"
+        },
+        {
+          "line": 78,
+          "text": "                                          const ScalarType divisor,"
+        },
+        {
+          "line": 79,
+          "text": "                                          ScalarType& moduloValue,"
+        },
+        {
+          "line": 80,
+          "text": "                                          int& numberOfDivisors )"
+        },
+        {
+          "line": 81,
+          "text": "{"
+        },
+        {
+          "line": 82,
+          "text": "    numberOfDivisors = utilities::constexpr_int_floor< ScalarType >( dividend / divisor );"
+        },
+        {
+          "line": 83,
+          "text": "    moduloValue = dividend - divisor * static_cast< ScalarType >( numberOfDivisors );"
+        },
+        {
+          "line": 84,
+          "text": "}"
+        },
+        {
+          "line": 85,
+          "text": ""
+        },
+        {
+          "line": 86,
+          "text": "//! Raise floating point variable to integer power."
+        },
+        {
+          "line": 87,
+          "text": "template< typename ScalarType >"
+        },
+        {
+          "line": 88,
+          "text": "ScalarType raiseToIntegerPower( const ScalarType baseValue, const int integerPower )"
+        },
+        {
+          "line": 89,
+          "text": "{"
+        },
+        {
+          "line": 90,
+          "text": "    // Declare local variable."
+        },
+        {
+          "line": 91,
+          "text": "    // Declare result of raising base to integer power."
+        },
+        {
+          "line": 92,
+          "text": "    // Initialise with value."
+        }
+      ],
+      "sha256": "68b0d86c0a5d0c2eeadba6ed90b88db7098e7d5cc0eda0a7013b0cd2bc8f685d"
+    },
+    "normalization_term": {
+      "matching_exact_package_path": "include/tudat/math/basic/mathematicalConstants.h",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/include/tudat/math/basic/mathematicalConstants.h",
+      "selections": [
+        {
+          "line": 72,
+          "text": " */"
+        },
+        {
+          "line": 73,
+          "text": "#define TUDAT_NAN std::numeric_limits< double >::signaling_NaN( )"
+        },
+        {
+          "line": 74,
+          "text": ""
+        },
+        {
+          "line": 75,
+          "text": "//! Function to return an integer in a floating point representation, for arbitrary"
+        },
+        {
+          "line": 76,
+          "text": "//! floating point type"
+        },
+        {
+          "line": 77,
+          "text": "/*!"
+        },
+        {
+          "line": 78,
+          "text": " * Function to return an integer in a floating point representation, for arbitrary"
+        },
+        {
+          "line": 79,
+          "text": " * floating point type. The function is defined as constexpr so that all operations occur"
+        },
+        {
+          "line": 80,
+          "text": " * at compile time."
+        },
+        {
+          "line": 81,
+          "text": " * \\param integer Integer to be represented as floating point value."
+        },
+        {
+          "line": 82,
+          "text": " * \\return Integer in floating point representation."
+        },
+        {
+          "line": 83,
+          "text": " */"
+        },
+        {
+          "line": 84,
+          "text": "template< typename ScalarType >"
+        },
+        {
+          "line": 85,
+          "text": "constexpr ScalarType getFloatingInteger( const int integer )"
+        },
+        {
+          "line": 86,
+          "text": "{"
+        },
+        {
+          "line": 87,
+          "text": "    return static_cast< ScalarType >( integer );"
+        },
+        {
+          "line": 88,
+          "text": "}"
+        },
+        {
+          "line": 89,
+          "text": ""
+        },
+        {
+          "line": 90,
+          "text": "//! Function to return a rational number in a floating point representation, for arbitrary"
+        },
+        {
+          "line": 91,
+          "text": "//! floating point type"
+        },
+        {
+          "line": 92,
+          "text": "/*!"
+        },
+        {
+          "line": 93,
+          "text": " * Function to return a rational number in a floating point representation, for arbitrary"
+        },
+        {
+          "line": 94,
+          "text": " * floating point type. The function is defined as constexpr so that all operations occur"
+        },
+        {
+          "line": 95,
+          "text": " * at compile time."
+        },
+        {
+          "line": 96,
+          "text": " * \\param numerator Numerator of rational number to be represented as floating point value."
+        },
+        {
+          "line": 97,
+          "text": " * \\param denominator Denominator of rational number to be represented as floating point value."
+        }
+      ],
+      "sha256": "4fb8ccd13a6fa45f95f6ad383a20c356eeff0ce126fb618f72da243a667e05af"
+    },
+    "time": {
+      "matching_exact_package_path": "include/tudat/basics/timeType.h",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/include/tudat/basics/timeType.h",
+      "selections": [
+        {
+          "line": 30,
+          "text": ""
+        },
+        {
+          "line": 31,
+          "text": "namespace tudat"
+        },
+        {
+          "line": 32,
+          "text": "{"
+        },
+        {
+          "line": 33,
+          "text": ""
+        },
+        {
+          "line": 34,
+          "text": "static constexpr int TIME_NORMALIZATION_INTEGER_TERM = 3600;"
+        },
+        {
+          "line": 35,
+          "text": ""
+        },
+        {
+          "line": 36,
+          "text": "static constexpr long double TIME_NORMALIZATION_TERM ="
+        },
+        {
+          "line": 37,
+          "text": "        mathematical_constants::getFloatingInteger< long double >( TIME_NORMALIZATION_INTEGER_TERM );"
+        },
+        {
+          "line": 38,
+          "text": ""
+        },
+        {
+          "line": 39,
+          "text": "static constexpr int TIME_NORMALIZATION_TERMS_PER_DAY = physical_constants::JULIAN_DAY_INT / TIME_NORMALIZATION_INTEGER_TERM;"
+        },
+        {
+          "line": 40,
+          "text": ""
+        },
+        {
+          "line": 41,
+          "text": "static constexpr int TIME_NORMALIZATION_TERMS_PER_HALF_DAY = TIME_NORMALIZATION_TERMS_PER_DAY / 2;"
+        },
+        {
+          "line": 42,
+          "text": ""
+        },
+        {
+          "line": 43,
+          "text": "static constexpr int J2000_JULIAN_DAY_IN_FULL_PERIODS = physical_constants::JULIAN_DAY_INT * TIME_NORMALIZATION_TERMS_PER_DAY;"
+        },
+        {
+          "line": 44,
+          "text": ""
+        },
+        {
+          "line": 45,
+          "text": "//! Class for defining time with a resolution that is sub-fs for very long periods of time."
+        },
+        {
+          "line": 46,
+          "text": "/*!"
+        },
+        {
+          "line": 47,
+          "text": " *  Class for defining time with a resolution that is sub-fs for very long periods of time. Using double or long double"
+        },
+        {
+          "line": 48,
+          "text": " *  precision as a representation of time, the issue of reduced quality will occur that over long time-period. For instance,"
+        },
+        {
+          "line": 49,
+          "text": " *  over a period of 10^8 seconds (about 3 years), double and long double representations have resolution of about 10^-8 and"
+        },
+        {
+          "line": 50,
+          "text": " *  10^-11 s respectively, which is insufficient for various applications. This type uses an int to represent the number of"
+        },
+        {
+          "line": 51,
+          "text": " *  hours since an epoch, and long double to represent the number of seconds into the present hour. This provides a"
+        },
+        {
+          "line": 52,
+          "text": " *  resulution of < 1 femtosecond, over a range of 2147483647 hours (about 300,000 years), which is more than sufficient for"
+        },
+        {
+          "line": 53,
+          "text": " *  practical applications."
+        },
+        {
+          "line": 54,
+          "text": " */"
+        },
+        {
+          "line": 55,
+          "text": "class Time"
+        },
+        {
+          "line": 56,
+          "text": "{"
+        },
+        {
+          "line": 57,
+          "text": "public:"
+        },
+        {
+          "line": 58,
+          "text": "    constexpr Time( ): fullPeriods_( 0 ), secondsIntoFullPeriod_( 0.0L ), daysToAdd( 0 ) { }"
+        },
+        {
+          "line": 59,
+          "text": ""
+        },
+        {
+          "line": 60,
+          "text": "    //! Constructor, sets current hour and time into current hour directly"
+        },
+        {
+          "line": 61,
+          "text": "    /*!"
+        },
+        {
+          "line": 62,
+          "text": "     * Constructor, sets current hour and time into current hour directly"
+        },
+        {
+          "line": 63,
+          "text": "     * \\param fullPeriods Number of full hours since epoch"
+        },
+        {
+          "line": 64,
+          "text": "     * \\param secondsIntoFullPeriod Number of seconds into current hour. Note that this value need not be in the range"
+        },
+        {
+          "line": 65,
+          "text": "     * between 0 and 3600: the time representation is normalized upon construction to ensure that the internal representation"
+        },
+        {
+          "line": 66,
+          "text": "     * is in this range."
+        },
+        {
+          "line": 67,
+          "text": "     */"
+        },
+        {
+          "line": 68,
+          "text": "    constexpr Time( const int fullPeriods, const long double secondsIntoFullPeriod ):"
+        },
+        {
+          "line": 69,
+          "text": "        fullPeriods_( fullPeriods ), secondsIntoFullPeriod_( secondsIntoFullPeriod ), daysToAdd( 0 )"
+        },
+        {
+          "line": 70,
+          "text": "    {"
+        },
+        {
+          "line": 71,
+          "text": "        normalizeMembers( );"
+        },
+        {
+          "line": 72,
+          "text": "    }"
+        },
+        {
+          "line": 73,
+          "text": ""
+        },
+        {
+          "line": 74,
+          "text": "    //! Constructor, sets number of seconds since epoch (with long double representation as input)"
+        },
+        {
+          "line": 75,
+          "text": "    /*!"
+        },
+        {
+          "line": 76,
+          "text": "     * Constructor, sets number of seconds since epoch (with long double representation as input)"
+        },
+        {
+          "line": 77,
+          "text": "     * \\param numberOfSeconds Number of seconds since epoch."
+        },
+        {
+          "line": 78,
+          "text": "     */"
+        },
+        {
+          "line": 79,
+          "text": "    constexpr Time( const long double numberOfSeconds ): fullPeriods_( 0 ), secondsIntoFullPeriod_( numberOfSeconds ), daysToAdd( 0 )"
+        },
+        {
+          "line": 80,
+          "text": "    {"
+        },
+        {
+          "line": 81,
+          "text": "        normalizeMembers( );"
+        },
+        {
+          "line": 82,
+          "text": "    }"
+        },
+        {
+          "line": 83,
+          "text": ""
+        },
+        {
+          "line": 84,
+          "text": "    //! Constructor, sets number of seconds since epoch (with double representation as input)"
+        },
+        {
+          "line": 85,
+          "text": "    /*!"
+        },
+        {
+          "line": 86,
+          "text": "     * Constructor, sets number of seconds since epoch (with double representation as input)"
+        },
+        {
+          "line": 87,
+          "text": "     * \\param secondsIntoFullPeriod Number of seconds since epoch."
+        },
+        {
+          "line": 88,
+          "text": "     */"
+        },
+        {
+          "line": 89,
+          "text": "    constexpr Time( const double secondsIntoFullPeriod ):"
+        },
+        {
+          "line": 90,
+          "text": "        fullPeriods_( 0 ), secondsIntoFullPeriod_( static_cast< long double >( secondsIntoFullPeriod ) ), daysToAdd( 0 )"
+        },
+        {
+          "line": 91,
+          "text": "    {"
+        },
+        {
+          "line": 92,
+          "text": "        normalizeMembers( );"
+        },
+        {
+          "line": 93,
+          "text": "    }"
+        },
+        {
+          "line": 94,
+          "text": ""
+        },
+        {
+          "line": 95,
+          "text": "    //! Constructor, sets number of seconds since epoch (with int representation as input)"
+        },
+        {
+          "line": 96,
+          "text": "    /*!"
+        },
+        {
+          "line": 97,
+          "text": "     * Constructor, sets number of seconds since epoch (with int representation as input)"
+        },
+        {
+          "line": 98,
+          "text": "     * \\param secondsIntoFullPeriod Number of seconds since epoch."
+        },
+        {
+          "line": 99,
+          "text": "     */"
+        },
+        {
+          "line": 100,
+          "text": "    constexpr Time( const int secondsIntoFullPeriod ):"
+        },
+        {
+          "line": 101,
+          "text": "        fullPeriods_( 0 ), secondsIntoFullPeriod_( static_cast< long double >( secondsIntoFullPeriod ) ), daysToAdd( 0 )"
+        },
+        {
+          "line": 102,
+          "text": "    {"
+        },
+        {
+          "line": 103,
+          "text": "        normalizeMembers( );"
+        },
+        {
+          "line": 104,
+          "text": "    }"
+        },
+        {
+          "line": 105,
+          "text": ""
+        },
+        {
+          "line": 106,
+          "text": "    //! Copy constructor"
+        },
+        {
+          "line": 107,
+          "text": "    /*!"
+        },
+        {
+          "line": 108,
+          "text": "     * Copy constructor"
+        },
+        {
+          "line": 109,
+          "text": "     * \\param otherTime Time that is to be copied."
+        },
+        {
+          "line": 110,
+          "text": "     */"
+        },
+        {
+          "line": 111,
+          "text": "    constexpr Time( const Time& otherTime ):"
+        },
+        {
+          "line": 112,
+          "text": "        fullPeriods_( otherTime.fullPeriods_ ), secondsIntoFullPeriod_( otherTime.secondsIntoFullPeriod_ ), daysToAdd( 0 )"
+        },
+        {
+          "line": 113,
+          "text": "    {"
+        },
+        {
+          "line": 114,
+          "text": "        normalizeMembers( );"
+        },
+        {
+          "line": 115,
+          "text": "    }"
+        },
+        {
+          "line": 116,
+          "text": ""
+        },
+        {
+          "line": 117,
+          "text": "    std::size_t hash() const"
+        },
+        {
+          "line": 118,
+          "text": "    {"
+        },
+        {
+          "line": 119,
+          "text": "        std::size_t h1 = std::hash<int>{}(fullPeriods_);"
+        },
+        {
+          "line": 120,
+          "text": ""
+        },
+        {
+          "line": 121,
+          "text": "        // Quantize to microseconds to avoid floating point instability"
+        },
+        {
+          "line": 122,
+          "text": "        long long quantized_seconds = static_cast<long long>(secondsIntoFullPeriod_ * 1e12);"
+        },
+        {
+          "line": 123,
+          "text": "        std::size_t h2 = std::hash<long long>{}(quantized_seconds);"
+        },
+        {
+          "line": 124,
+          "text": ""
+        },
+        {
+          "line": 125,
+          "text": "        return h1 ^ (h2 << 1);  // Combine the two hashes"
+        },
+        {
+          "line": 126,
+          "text": "    }"
+        },
+        {
+          "line": 127,
+          "text": ""
+        },
+        {
+          "line": 128,
+          "text": "    //! Definition of = operator for Time type"
+        },
+        {
+          "line": 129,
+          "text": "    /*!"
+        },
+        {
+          "line": 130,
+          "text": "     * Definition of = operator for Time type"
+        },
+        {
+          "line": 131,
+          "text": "     * \\param timeToCopy Time that is to be copied by operator"
+        },
+        {
+          "line": 132,
+          "text": "     * \\return Assigned Time object"
+        },
+        {
+          "line": 133,
+          "text": "     */"
+        },
+        {
+          "line": 134,
+          "text": "    Time& operator=( const Time& timeToCopy )"
+        },
+        {
+          "line": 135,
+          "text": "    {"
+        },
+        {
+          "line": 136,
+          "text": "        if( this == &timeToCopy )"
+        },
+        {
+          "line": 137,
+          "text": "        {"
+        },
+        {
+          "line": 138,
+          "text": "            return *this;"
+        },
+        {
+          "line": 139,
+          "text": "        }"
+        },
+        {
+          "line": 140,
+          "text": "        else"
+        },
+        {
+          "line": 962,
+          "text": ""
+        },
+        {
+          "line": 963,
+          "text": "    //! Function to get the total seconds since epoch, in int precision (cast of Time to long sdouble)"
+        },
+        {
+          "line": 964,
+          "text": "    /*!"
+        },
+        {
+          "line": 965,
+          "text": "     *  Function to get the total seconds since epoch, in int precision (cast of Time to long double)"
+        },
+        {
+          "line": 966,
+          "text": "     *  \\return Total seconds int epoch."
+        },
+        {
+          "line": 967,
+          "text": "     */"
+        },
+        {
+          "line": 968,
+          "text": "    operator long double( ) const"
+        },
+        {
+          "line": 969,
+          "text": "    {"
+        },
+        {
+          "line": 970,
+          "text": "        return getSeconds< long double >( );"
+        },
+        {
+          "line": 971,
+          "text": "    }"
+        },
+        {
+          "line": 972,
+          "text": ""
+        },
+        {
+          "line": 973,
+          "text": "    //! Function to get the number of full hours since epoch"
+        },
+        {
+          "line": 974,
+          "text": "    /*!"
+        },
+        {
+          "line": 975,
+          "text": "     * \\brief Function to get the number of full hours since epoch"
+        },
+        {
+          "line": 976,
+          "text": "     * \\return Number of full hours since epoch"
+        },
+        {
+          "line": 977,
+          "text": "     */"
+        },
+        {
+          "line": 978,
+          "text": "    int getFullPeriods( ) const"
+        },
+        {
+          "line": 979,
+          "text": "    {"
+        },
+        {
+          "line": 980,
+          "text": "        return fullPeriods_;"
+        },
+        {
+          "line": 981,
+          "text": "    }"
+        },
+        {
+          "line": 982,
+          "text": ""
+        },
+        {
+          "line": 983,
+          "text": "    //! Function to get the number of seconds into current hour"
+        },
+        {
+          "line": 984,
+          "text": "    /*!"
+        },
+        {
+          "line": 985,
+          "text": "     * \\brief Function to get the number of seconds into current hour"
+        },
+        {
+          "line": 986,
+          "text": "     * \\return"
+        },
+        {
+          "line": 987,
+          "text": "     */"
+        },
+        {
+          "line": 988,
+          "text": "    long double getSecondsIntoFullPeriod( ) const"
+        },
+        {
+          "line": 989,
+          "text": "    {"
+        },
+        {
+          "line": 990,
+          "text": "        return secondsIntoFullPeriod_;"
+        },
+        {
+          "line": 991,
+          "text": "    }"
+        },
+        {
+          "line": 992,
+          "text": ""
+        },
+        {
+          "line": 993,
+          "text": "    int fullDaysSinceEpoch( ) const"
+        },
+        {
+          "line": 994,
+          "text": "    {"
+        },
+        {
+          "line": 995,
+          "text": "        if( fullPeriods_ >= 0 || ( ( fullPeriods_ % TIME_NORMALIZATION_TERMS_PER_DAY ) == 0 ) )"
+        },
+        {
+          "line": 996,
+          "text": "        {"
+        },
+        {
+          "line": 997,
+          "text": "            return fullPeriods_ / TIME_NORMALIZATION_TERMS_PER_DAY;"
+        },
+        {
+          "line": 998,
+          "text": "        }"
+        },
+        {
+          "line": 999,
+          "text": "        else"
+        },
+        {
+          "line": 1000,
+          "text": "        {"
+        },
+        {
+          "line": 1001,
+          "text": "            return fullPeriods_ / TIME_NORMALIZATION_TERMS_PER_DAY - 1;"
+        },
+        {
+          "line": 1002,
+          "text": "        }"
+        },
+        {
+          "line": 1003,
+          "text": "    }"
+        },
+        {
+          "line": 1004,
+          "text": ""
+        },
+        {
+          "line": 1005,
+          "text": "    int fullPeriodsIntoCurrentDay( ) const"
+        },
+        {
+          "line": 1006,
+          "text": "    {"
+        },
+        {
+          "line": 1007,
+          "text": "        return fullPeriods_ - fullDaysSinceEpoch( ) * TIME_NORMALIZATION_TERMS_PER_DAY;"
+        },
+        {
+          "line": 1008,
+          "text": "    }"
+        },
+        {
+          "line": 1009,
+          "text": ""
+        },
+        {
+          "line": 1010,
+          "text": "    long double secondsSinceNoon( ) const"
+        },
+        {
+          "line": 1011,
+          "text": "    {"
+        },
+        {
+          "line": 1012,
+          "text": "        return static_cast< long double >( fullPeriodsIntoCurrentDay( ) * TIME_NORMALIZATION_TERM ) + secondsIntoFullPeriod_;"
+        },
+        {
+          "line": 1013,
+          "text": "    }"
+        },
+        {
+          "line": 1014,
+          "text": ""
+        },
+        {
+          "line": 1015,
+          "text": "    int fullPeriodsSinceMidnight( ) const"
+        },
+        {
+          "line": 1016,
+          "text": "    {"
+        },
+        {
+          "line": 1017,
+          "text": "        int fullPeriodsIntoCurrentDay = this->fullPeriodsIntoCurrentDay( );"
+        },
+        {
+          "line": 1018,
+          "text": "        if( fullPeriodsIntoCurrentDay < TIME_NORMALIZATION_TERMS_PER_HALF_DAY )"
+        },
+        {
+          "line": 1019,
+          "text": "        {"
+        },
+        {
+          "line": 1020,
+          "text": "            return fullPeriodsIntoCurrentDay + TIME_NORMALIZATION_TERMS_PER_HALF_DAY;"
+        },
+        {
+          "line": 1021,
+          "text": "        }"
+        },
+        {
+          "line": 1022,
+          "text": "        else"
+        },
+        {
+          "line": 1023,
+          "text": "        {"
+        },
+        {
+          "line": 1024,
+          "text": "            return fullPeriodsIntoCurrentDay - TIME_NORMALIZATION_TERMS_PER_HALF_DAY;"
+        },
+        {
+          "line": 1025,
+          "text": "        }"
+        },
+        {
+          "line": 1026,
+          "text": "    }"
+        },
+        {
+          "line": 1027,
+          "text": ""
+        },
+        {
+          "line": 1028,
+          "text": "    long double secondsSinceMidnight( ) const"
+        },
+        {
+          "line": 1029,
+          "text": "    {"
+        },
+        {
+          "line": 1030,
+          "text": "        return static_cast< long double >( fullPeriodsSinceMidnight( ) * TIME_NORMALIZATION_TERM ) + secondsIntoFullPeriod_;"
+        },
+        {
+          "line": 1031,
+          "text": "    }"
+        },
+        {
+          "line": 1032,
+          "text": ""
+        },
+        {
+          "line": 1033,
+          "text": "protected:"
+        },
+        {
+          "line": 1034,
+          "text": "    //! Function to renormalize the members of the Time object, so that secondsIntoFullPeriod_ is between 0 and 3600"
+        },
+        {
+          "line": 1035,
+          "text": "    constexpr void normalizeMembers( )"
+        },
+        {
+          "line": 1036,
+          "text": "    {"
+        },
+        {
+          "line": 1037,
+          "text": "        if( secondsIntoFullPeriod_ < 0.0L || secondsIntoFullPeriod_ >= TIME_NORMALIZATION_TERM )"
+        },
+        {
+          "line": 1038,
+          "text": "        {"
+        },
+        {
+          "line": 1039,
+          "text": "            basic_mathematics::computeModuloAndRemainder< long double >("
+        },
+        {
+          "line": 1040,
+          "text": "                    secondsIntoFullPeriod_, TIME_NORMALIZATION_TERM, secondsIntoFullPeriod_, daysToAdd );"
+        },
+        {
+          "line": 1041,
+          "text": "            fullPeriods_ += daysToAdd;"
+        },
+        {
+          "line": 1042,
+          "text": "        }"
+        },
+        {
+          "line": 1043,
+          "text": "    }"
+        },
+        {
+          "line": 1044,
+          "text": ""
+        },
+        {
+          "line": 1045,
+          "text": "    //! Number of full hours since epoch"
+        },
+        {
+          "line": 1046,
+          "text": "    int fullPeriods_;"
+        },
+        {
+          "line": 1047,
+          "text": ""
+        },
+        {
+          "line": 1048,
+          "text": "    //! Number of seconds into current hour"
+        },
+        {
+          "line": 1049,
+          "text": "    long double secondsIntoFullPeriod_;"
+        },
+        {
+          "line": 1050,
+          "text": ""
+        },
+        {
+          "line": 1051,
+          "text": "    //! Pre-declared variable used in often-called normalizeMembers function"
+        },
+        {
+          "line": 1052,
+          "text": "    int daysToAdd;"
+        },
+        {
+          "line": 1053,
+          "text": "};"
+        },
+        {
+          "line": 1054,
+          "text": ""
+        },
+        {
+          "line": 1055,
+          "text": "//! The Time at JD0"
+        },
+        {
+          "line": 1056,
+          "text": "constexpr static Time TIME_AT_JD0 = Time( -basic_astrodynamics::JULIAN_DAY_ON_J2000_INT * tudat::TIME_NORMALIZATION_TERMS_PER_DAY, 0.0L );"
+        },
+        {
+          "line": 1057,
+          "text": ""
+        },
+        {
+          "line": 1058,
+          "text": "//! The Time at MJD0"
+        }
+      ],
+      "sha256": "215ef2ee0856a6d476580ec5a4c447a4403a4d51d11bde4cbdc410e423a316d6"
+    }
+  },
+  "source_review_window_UTC": {
+    "elapsed_s": 208,
+    "end": "2026-11-25 03:38:45 UTC",
+    "includes_independent_source_reviews": true,
+    "maximum_s": 600,
+    "start": "2026-11-25 03:35:17 UTC"
+  },
+  "source_wording_clarification": "ADR0254 finite normalized split storage describes intended representation only; it is not a universal checked finite-domain invariant. F11/F13 remain conditional.",
+  "status": "conditional source invariant established; original native readback unavailable",
+  "unsupported_routes": [
+    "NaN may make both comparisons false under ordinary unordered-NaN semantics; the guard does not validate finiteness.",
+    "Active normalization calls integer-floor conversion and possible integer decrement, then unchecked signed-int hour addition; it needs separate arithmetic/range premises.",
+    "Arbitrary propagated keys and prior operations are outside the narrow construction/copy/export derivation."
+  ]
+}

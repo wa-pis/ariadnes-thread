@@ -67,6 +67,10 @@ conditional split-Time enclosure design: exact integer-hour plus adjacent-word
 rational enclosure under explicit conversion premises. Current caster/build and
 lawful finite-domain qualification are missing; actual readback stays unavailable.
 No code, native experiment or physical admission follows.
+[ADR0260](../docs/adr/0260-bound-time-construction-export-domain.md) completes F14
+source reasoning in208s: known finite0<=r<3600 makes construction/copy normalization
+inactive. Original-key pre-export validation/provenance remains missing; no new
+HTTP/native/scientific work or actual readback/physical qualification.
 [ADR0259](../docs/adr/0259-inspect-pinned-split-time-caster.md) completes F13's
 pinned-source capture:5HTTP200/215077bytes, one annotated tag and independently
 corroborated generic double route. Actual compiled/domain/readback remain unavailable;
