@@ -69,8 +69,12 @@ lawful finite-domain qualification are missing; actual readback stays unavailabl
 No code, native experiment or physical admission follows.
 [ADR0261](../docs/adr/0261-design-original-key-pre-export-admission.md) completes
 F15's298s admission design: existing checks follow export; a native original-row
-visitor is proposed. AutomationPAUSED for the user's native-build/interface choice;
-no build/dependency/profile or scientific admission is adopted.
+visitor is proposed. F15 ended PAUSED for a native-build/interface choice.
+The user has resumed research every5minutes: next bound one source-only comparison
+of the two proposed routes, reconciling tasks/design/specs before the review.
+Reuse retained evidence; no build/dependency/profile or scientific admission is
+adopted by this restart. Pause with one concrete recommendation if a user choice
+is required; do not repeat F15 or start an open-ended diagnostic chain.
 [ADR0260](../docs/adr/0260-bound-time-construction-export-domain.md) completes F14
 source reasoning in208s: known finite0<=r<3600 makes construction/copy normalization
 inactive. Original-key pre-export validation/provenance remains missing; no new

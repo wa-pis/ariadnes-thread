@@ -31,13 +31,13 @@ native double-stop restriction. No actual native bound/adapter/profile is qualif
 
 ## Next action and scheduler
 Do not repeat successful local/CI runs or artifact downloads on unchanged code.
-Next: user choice on one native-adapter build/interface before implementation.
-Existing Python reader checks after export; no native build/campaign admitted.
-No refetch/controller replay, framework/native campaign, changed target or old replay.
+Next: bound one source-only comparison of the two proposed native build routes.
+Existing Python checks follow export; implementation/build choice remains open.
+No refetch/controller replay, native campaign, changed target or old replay.
 Full-force seed/derivatives/guards/error bounds and73/76/228/300s remain open.
-`ariadna-m3` PAUSED: required native-adapter choice in ADR0261; no auto successor.
-Pause for concrete required user choice/access/authorization or contract change,
-or independently verified agreed success. Existing F3/F5/F7 evidence is retained.
+`ariadna-m3` ACTIVE: user resumed every5minutes on2026-11-25 for solution research.
+Reconcile the finite preparation contract before review; pause for a concrete
+build/dependency/contract choice or verified success. Retain F3/F5/F7 evidence.
 
 ## Physical goal remains open
 The original admissible pair is unmet; fabricated F3/F5/F7/F10 are not that pair.
