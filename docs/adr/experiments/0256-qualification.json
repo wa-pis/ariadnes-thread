@@ -1,0 +1,134 @@
+{
+  "anchors": 5,
+  "archival_skip_count": 42,
+  "base_revision": "c15efa4b741525feddcd12af5652091a62ffcad7",
+  "checked_at_utc": "2026-11-25T02:03:20.847657+00:00",
+  "current_state_lines": 49,
+  "existing_archival_skip_id_message_map_matches_0253": true,
+  "existing_live_regression_separately_authorized": true,
+  "focused": {
+    "command": "python -m pytest -q --offline tests/test_realized_clock_packet.py tests/test_realized_clock_run.py --junitxml=/private/tmp/ariadna-f10-focused.xml",
+    "passed": 94,
+    "xml_sha256": "879d023e4be8277fcc65a89cc3b47fa1f2f9b96cf81fbe74b396142bfb2c8271"
+  },
+  "git_diff_check": "passed",
+  "independent_reviews": [
+    {
+      "result": "No remaining issue after explicit UTF8 and pre-qualification structural checks; eight regression cases cover findings",
+      "scope": "Core arithmetic, exact words/intervals/mass/continuity and physical authority"
+    },
+    {
+      "result": "Forward/reverse, boundary/outcome/refusal, inherited watchdog and stalled parent-finalization cases pass",
+      "scope": "Separate independent fabricated rational tests and bounded process tests"
+    }
+  ],
+  "local_links": 569,
+  "new_checker_native_spice_archive_integration_optimizer_work": 0,
+  "outer_supervised_fabricated_fixture": {
+    "durable_finalization": "pending-parent-check",
+    "external_observation": {
+      "elapsed_s": 0.09311920823529363,
+      "exit_code": 0
+    },
+    "external_total_s": 0.09360383404418826,
+    "inherited_start_s": 3691842.778078666,
+    "outer_deadline_s": 3691857.778078666,
+    "physical_admission": "unavailable",
+    "returned_finalization": "checked-after-fsync",
+    "runner_evidence_bytes": 16459,
+    "scientific_admission": "unavailable",
+    "source": "portable.xml suite property ariadna-f10-isolated-fixture"
+  },
+  "physical_pair_goal": "unmet; all original gates and consumed-study restrictions preserved",
+  "qualified_local_regressions": {
+    "base_revision": "c15efa4b741525feddcd12af5652091a62ffcad7",
+    "checkout_files": 1469,
+    "final_checkout_unchanged": true,
+    "phases": [
+      {
+        "checkout_unchanged": true,
+        "command": [
+          "/opt/homebrew/bin/conda",
+          "run",
+          "--no-capture-output",
+          "-n",
+          "space-nav",
+          "python",
+          "-m",
+          "pytest",
+          "-q",
+          "-ra",
+          "--offline",
+          "--junitxml=/private/tmp/ariadna-f10-regression/portable.xml"
+        ],
+        "elapsed_s": 199.89144441578537,
+        "errors": 0,
+        "failures": 0,
+        "label": "portable",
+        "returncode": 0,
+        "skipped": 42,
+        "testcases": 7572
+      },
+      {
+        "checkout_unchanged": true,
+        "command": [
+          "/opt/homebrew/bin/conda",
+          "run",
+          "--no-capture-output",
+          "-n",
+          "space-nav",
+          "python",
+          "-m",
+          "pytest",
+          "-q",
+          "-ra",
+          "-m",
+          "live",
+          "--junitxml=/private/tmp/ariadna-f10-regression/live.xml"
+        ],
+        "elapsed_s": 580.1828954168595,
+        "errors": 0,
+        "failures": 0,
+        "label": "live",
+        "returncode": 0,
+        "skipped": 0,
+        "testcases": 413
+      }
+    ],
+    "status": "passed"
+  },
+  "ruff": {
+    "command": "ruff check --no-cache src tests",
+    "result": "passed"
+  },
+  "schema": "ariadna-f10-qualification-v1",
+  "scope": "Private fabricated arithmetic and bounded pure harness only; not native readback, physical force/endpoint bounds or F0 pair qualification",
+  "source_bound_ci": "unobserved at local qualification; observe once after implementation push",
+  "source_sha256": {
+    "src/space_nav/_realized_clock_packet.py": "0937a152c1cc7d7c29975fe6613e514e9a1fbab121fbede090b7ea6eb7c8a25f",
+    "src/space_nav/_realized_clock_run.py": "383debb54bedad8d8b6efb3b518d7ac11eb9956f11f140e7da7b7de36c74d59c",
+    "tests/test_realized_clock_packet.py": "f566274ac2b59b272f82ece123ecaf7051c242446e47ebc51dd64eb70fbeecfc",
+    "tests/test_realized_clock_run.py": "61cb0926ab2015e8eca751c1495682e64f5657aff4b4b0641752b6e3419d8cbf"
+  },
+  "status": "passed",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1152,
+  "validation_archive": {
+    "bytes": 184336,
+    "contents": [
+      "portable.xml",
+      "live.xml",
+      "focused.xml",
+      "portable.log",
+      "live.log",
+      "frozen-checkout.json",
+      "progress.json"
+    ],
+    "path": "docs/adr/experiments/0256-local-validation-results.zip",
+    "sha256": "ba0819b4c49002094e2eac337d48e83a79d06553c6fbc2e9d0bc487ac2d934f9"
+  }
+}

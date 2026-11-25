@@ -1,3 +1,8 @@
+[ADR0256](../../../docs/adr/0256-qualify-fabricated-clock-packet.md) completes F10
+fabricated arithmetic/limit qualification with94 focused/7530 portable/413 live
+passes and1469 frozen files. Physical/native qualification remains unavailable;
+source-bound CI is unobserved and no mission experiment is admitted.
+
 [ADR0255](../../../docs/adr/0255-design-realized-clock-packet.md) completes F9:
 one distinct realized-clock evidence contract, actual time/state/mass handoffs,
 commanded/effective ledgers and justified endpoint-error obligations. Missing

@@ -55,6 +55,65 @@ needs a separately qualified basis and implementation contract. F10 may choose
 routine private field encodings consistent with these named fields, documenting
 any necessary clarification before implementation; no public API is introduced.
 
+#### F10 private field encodings (2026-11-25)
+
+The pure consumer accepts UTF-8 JSON bytes through `check_packet`, not arbitrary
+references or a native producer. Duplicate/unknown keys, noncanonical words,
+non-reduced rationals, nonfinite/boolean numbers and excess shape/bytes are invalid.
+All hexadecimal words use Python binary64 `float.hex()` spelling, preserving signed
+zero. Fixed-shape arrays are chronological except the three directed arc rows and
+their six start/end observation rows, which follow traversal order.
+
+- `identity` contains `units`, `time_scale`, `origin`, `orientation`, six `hashes`
+  (`boundary`, `commands`, `source`, `runtime`, `model`, `kernels`),
+  `endpoints_hex[2]`, `boundary_states_hex[2][6]`, `initial_mass_hex`,
+  `dry_mass_hex` and `rate_hex`. Hardware words remain2000kg/500kg and
+  binary64 `1000/float(9.80665*450)` kg/s; hashes are declarations, not verified
+  sources. An observation's source hash must match the declared source hash.
+- Each requested event has `id`, `exact_s`, `label_hex`, `label_error_s`.
+  Each node has `id`, `state_hex[7]`, `mass_bound`. Node endpoint six-states
+  match the corresponding fixed boundary words in either traversal direction.
+- Each native observation has `event_id`, `token`, `state_hex[7]`, `readback`
+  and `epoch_bound`. `readback` retains `route`, `component_types[2]`,
+  `components[2]` (integer hours and remainder word), `comparison_target_hex`,
+  `native_equal`, `difference_hex`, `roundtrip_equal`, `abi`, `rounding`,
+  `normalization`, and `source_sha256`. Equality flags remain producer observations.
+  For a fabricated-only arithmetic check the sole recognized route is
+  `fabricated-split-binary64`: its inline rational hours/remainder operands must
+  lie in the supplied interval. This is not a native Time emulator or a native
+  readback bound. Other routes/bases remain unavailable; failed roundtrip cannot
+  become a zero bound. A shared event requires the same token, exact state words
+  and readback/bound operands plus the explicit arc handoff observation.
+- Each arc has `name`, `start`, `end`, `start_observation`, `end_observation`,
+  `handoff_equal`, `complete`, `domain_ok`. Node/event IDs remain E0..E3;
+  observations index0..5 follow traversal. Signed span/discrepancy and all mass
+  ledgers are derived by the checker, not accepted as caller-computed results.
+- Every bound is `{interval,unavailable_reason}`. A known interval is
+  `{lower,upper,unit,basis}`; a basis records `domain`, `derivation`, `evidence`,
+  `qualification_scope`. Only `fabricated` / `explicit-rational` / `inline` /
+  `fabricated-only` supplies artificial test operands, never physical authority.
+  Null intervals require a nonempty reason; other bases remain unqualified.
+- `bounds` has eight nonnegative norm/error operands: `join_position_m`,
+  `join_velocity_m_s`, `join_mass_kg`, `target_position_m`, `target_velocity_m_s`,
+  `clock_position_m`, `clock_velocity_m_s`, `clock_mass_kg`. Their limits are
+  respectively .001m/1e-6m/s/1e-9kg/1000m/.01m/s/.001m/1e-6m/s/1e-9kg.
+  These explicit artificial operands test gate arithmetic only; no force bound
+  is inferred. `counts` records nonnegative integer `native`, `provider` and
+  `reported_rhs` observations, not new checker work. `outcome` has `complete`
+  and `physical_admission`, which must remain `unavailable`.
+
+The summary retains structural status, named gate decisions, exact directed
+span/discrepancy/global/local ledger values, first non-pass and explicit unavailable
+physical/scientific admission. A physical-unqualified scope cannot use the
+artificial basis to obtain qualified scientific gates. No public CLI is added;
+a private isolated harness may reuse the existing bounded stdlib worker reader
+for the inherited15s watchdog and combined durable evidence limit. The caller
+must supervise the complete run-parent with the same absolute15s deadline;
+post-fsync clock checks alone cannot bound an opaque blocked parent filesystem
+operation. The immutable durable report labels finalization pending; a separate
+returned/external observation can record the subsequent post-fsync check without
+rewriting that report. Its result cannot override any physical readiness gate.
+
 #### Readback and actual handoff
 
 F8's pinned Time serialization returns integer hours and a long-double remainder

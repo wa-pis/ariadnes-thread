@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0256 — Qualify the fabricated realized-clock checker](0256-qualify-fabricated-clock-packet.md):94 focused/7530 portable+42 archival/413 live pass with1469 frozen files, independent review and bounded pure harness. Artificial consistency only; physical admission and source-bound CI remain unverified.
+
 - [0255 — Design a distinct bounded-realized-clock packet](0255-design-realized-clock-packet.md): F9 separates immutable requests, actual native handoffs, justified clock/mass/force enclosures and physical admission under ADR0205. Contract only; no native bound, implementation or execution.
 
 - [0254 — Preserve requested events across native transport limits](0254-record-native-event-transport-limits.md): F8 pins the double-stop/custom-condition limitation without declaring F0 impossible; a distinct bounded-realized-clock design may use ADR0205, preserving F5/F7 exact semantics. Source/design only.

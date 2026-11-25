@@ -54,6 +54,11 @@ contract-only: actual native event/state/mass chain, separate requested/effectiv
 ledgers and independently justified discrepancy/endpoint allowances. No bounds
 or native adapter are supplied. A pure fabricated checker may be prepared next;
 physical certificate acceptance, implementation of native wiring and runs stay closed.
+[ADR0256](../docs/adr/0256-qualify-fabricated-clock-packet.md) completes F10 artificial
+checker qualification:94 focused/7530 portable+42 archival/413 live pass with1469
+frozen files, unchanged physical gates, independent arithmetic/review and bounded
+outer-watchdog evidence. Scientific/physical admission stays unavailable;
+source-bound CI is pending observation and no native profile is admitted.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

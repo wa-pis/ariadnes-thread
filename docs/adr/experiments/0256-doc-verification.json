@@ -1,0 +1,34 @@
+{
+  "anchors": 5,
+  "base_revision": "c15efa4b741525feddcd12af5652091a62ffcad7",
+  "changed_markdown_sha256": {
+    "CURRENT_STATE.md": "4567aa4fa0a95f528a3f6956148216176f7e510841a2a52c0563caddc9d2b0a3",
+    "docs/adr/0256-qualify-fabricated-clock-packet.md": "9a321dd812b8d24f41fcac4a0917a4673f9dc0ee841c27a9b496d50b5de6370c",
+    "docs/adr/README.md": "e23df838a0033dfa34dc0e41c6e77fafce718baaf77e008284e574b1b4cc0474",
+    "openspec/ROADMAP.md": "294afea5f3e8d4ae78f03330602358c7e9d626af3b84938a765e882f3559a88d",
+    "openspec/changes/refine-physical-trajectory/design.md": "551bd2765f59215d373f75b0540c89fc0d34743fde97b7d87a0d31531eed92c7",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "8815cb8fcc5f0545216573c1f03685cb557e095ff4f87cbba1f9fa0ffa75e150",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "9f255060c4ff0c6e178f20a6960500f5b8b2a3f3f0e26e13de915f1f28939832",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "ae2dfbdd76843192ae5116d7a5124371440225b1297693198ac2da62e4bf0abc"
+  },
+  "current_state_lines": 49,
+  "git_diff_check": "passed",
+  "independent_final_review": "Scientific scope/evidence truthful; stale through-F7 planning line corrected to F10 artificial qualification with F10 CI unobserved",
+  "local_links": 570,
+  "new_runtime_or_scientific_runs": 0,
+  "qualification_receipt_sha256": "77816dc715f4e00f0cfa720c2af5f43aaa825c62a9bf0ae139321e893f5ffb84",
+  "schema": "ariadna-f10-final-doc-verification-v1",
+  "source_sha256": {
+    "src/space_nav/_realized_clock_packet.py": "0937a152c1cc7d7c29975fe6613e514e9a1fbab121fbede090b7ea6eb7c8a25f",
+    "src/space_nav/_realized_clock_run.py": "383debb54bedad8d8b6efb3b518d7ac11eb9956f11f140e7da7b7de36c74d59c",
+    "tests/test_realized_clock_packet.py": "f566274ac2b59b272f82ece123ecaf7051c242446e47ebc51dd64eb70fbeecfc",
+    "tests/test_realized_clock_run.py": "61cb0926ab2015e8eca751c1495682e64f5657aff4b4b0641752b6e3419d8cbf"
+  },
+  "status": "passed",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1152
+}

@@ -31,6 +31,12 @@ semantics and all F0 data, gates and production budgets SHALL remain unchanged.
 - **THEN** the scientific gate remains unavailable/inconclusive, never a zero-error pass; the original target epoch/state is retained and physical execution stays unavailable
 - **AND** complete justified interval decisions retain1e-6s/0.001m/1e-6m/s/1e-9kg join and1000m/0.01m/s target gates; no packet-only success certifies full-force safety, a physical command pair or endpoint bounds
 
+#### Scenario: Reject malformed artificial declarations before qualification
+
+- **WHEN** a pure fabricated packet is parsed, even with unknown basis or physical-unqualified scope
+- **THEN** only UTF-8 JSON with unique fixed fields, canonical finite binary64 words and reduced positive-denominator rationals is accepted; declared mass intervals must contain the actual word and norm intervals must be nonnegative before qualification filtering
+- **AND** the artificial checker retains unavailable scientific/physical admission; the isolated qualification uses one outer15s startup-through-finalization supervisor and retains distinct pre-fsync report and post-fsync observation without rewriting history
+
 #### Scenario: Bound pure preparation separately from native execution
 
 - **WHEN** a future pure fabricated checker is qualified
