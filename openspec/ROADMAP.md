@@ -107,6 +107,12 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0271](../docs/adr/0271-qualify-artificial-import-probe.md) completes F18.5:
+124artificial cases included in7848portable passes,413live passes,42unchanged
+archival skips,0failures.1540files/Git status frozen; Ruff/review/strict pass.
+Private import-only probe/controller reuses unchanged owner controls; stdlib
+independent trace audit remains conditional on external admission/finalization.
+No F18.6/native probe or F18.3retry, owner or physical gate closure. PAUSED.
 [ADR0270](../docs/adr/0270-design-import-only-timeout-observation.md) completes
 F18.4 saved/source diagnosis and import-only design in396.204s including review
 and read-only detach, below600s. The same64Bwarning occurs in0266success;

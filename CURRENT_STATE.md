@@ -3,33 +3,30 @@
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
 ## Current result
-[ADR0270](docs/adr/0270-design-import-only-timeout-observation.md) completes F18.4
-saved/source diagnosis and import-only design.38named files/hash/excerpts and two
-independent design reviews pass;396.204s including read-only detach <600s.
-The failure's64BOMPwarning also occurs in0266success. No phase trace identifies
-which import/setup/constructor/visitor/integration step stalled; cause unresolved.
-Read-only/temp/write-scope/role-specific flags differ; they are hypotheses.
-[Design evidence](docs/adr/experiments/0270-timeout-diagnosis.json) pins facts,
-contract and caveats. No new native imports/probes/tests/SPICE/integration/builds
-or resource copies. Runtime/tests unchanged; pytest/Ruff/CI not repeated.
+[ADR0271](docs/adr/0271-qualify-artificial-import-probe.md) completes F18.5:
+private import-only probe/controller plus independent stdlib saved-trace auditor.
+124artificial cases pass and are included in7848portable passes;413live passes,
+42unchanged opt-in archival skips,0failures. All1540files/Git status frozen;
+Ruff, independent connected-code review and strict OpenSpec pass.
+[Qualification](docs/adr/experiments/0271-qualification.json) pins sources,
+raw logs/JUnit and observer/cap/clock failure checks. New probe branch uses
+artificial imports/files/hooks only; existing live regressions retain old scope.
+No F18.6/native probe, owner packet, new physical study/build/dependency/data.
 
 ## Next action and scheduler
-ariadna-m3 PAUSED. Next F18.5: minimal private import-only probe and independent
-stdlib trace auditor; artificial tests plus required frozen regression checks.
-F18.6 needs separate explicit authority after qualification: one import attempt
-under exact0269flags/env/read-only resources, zero explicit owner/trajectory work.
-Six bounded phase markers do not prove a cause or old native operation counts;
-observer I/O and successful exit/finalization must be distinguished.
-Do not change TMP/thread settings, limits or replay F18.3 automatically.
-[ADR0269](docs/adr/0269-record-owner-producer-timeout.md) preserves one consumed
-45s failure, finalfsync45.035707s<60; scientific file empty, numerical audit absent,
-actual native counts unknown. F18.3 remains unqualified; no retry authority.
-[ADR0268](docs/adr/0268-qualify-artificial-owner-runner.md): F18.2 complete,
-194artificial included in7724portable+413live passes/42archival skips.
-[ADR0266](docs/adr/0266-verify-provisioned-native-fixture.md) preserves consumed
-11-case manufactured helper PASS; never replay it or historical failures.
-Kernel04f7af4c…/all5resources131662B/acquisition497045495B/old clocks unchanged;
-retained image detached. Local resource identity is not upstream authentication.
+ariadna-m3 PAUSED. F18.6 requires separate explicit authority and <=600s pinned
+source/kernel/resources/role-flags/read-only profile/control admission, then at
+most one fixed cold import-only attempt under unchanged60s45/10/5 and byte caps.
+Stop before produce/context/factories/integration/owner/helper calls.
+A visible last marker does not prove fsync/child completion or locate a cause;
+independent trace acceptance also requires supervised outer cleanup/finalization.
+Full prefix/resource provenance is separate from saved-record/selfhash parity.
+[ADR0270](docs/adr/0270-design-import-only-timeout-observation.md) keeps diagnosis
+unresolved: same64BOMPwarning occurs in0266success; env differences are hypotheses.
+[ADR0269](docs/adr/0269-record-owner-producer-timeout.md) retains consumed45s
+F18.3failure; empty scientific output, no numerical audit, native counts unknown.
+No F18.3retry/TMP/thread/limit changes. Retained private image was not mounted
+or modified in this stage; no new resource acquisition or historical replay.
 
 ## Physical goal remains open
 [ADR0247](docs/adr/0247-formulate-coupled-moon-mars-problem.md): fixed F0 states,

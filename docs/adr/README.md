@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0271 — Artificial import-only diagnostic](0271-qualify-artificial-import-probe.md) — F18.5 complete:124artificial/7848portable+413live passes; F18.6 unexecuted, no owner or physical qualification.
 - [0270 — Import-only timeout observation](0270-design-import-only-timeout-observation.md) — saved/source diagnosis and narrow next design; cause unresolved, no new probe or F18.3 retry.
 - [0269 — Actual-owner producer timeout](0269-record-owner-producer-timeout.md) — one consumed45s producer failure; failure accounting PASS, native-owner/numerical qualification unavailable, no retry.
 - [0268 — Artificial owner runner](0268-qualify-artificial-owner-runner.md) — F18.2 complete:194artificial cases,7724portable+413live/42archival skips; no F18.3.

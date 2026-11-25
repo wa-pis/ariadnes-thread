@@ -130,6 +130,12 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **THEN** source/design review including independent review and read-only detach SHALL complete within600s with zero native imports/probes/SPICE/integration/builds/payload copies; environment differences and a warning shared with a success SHALL NOT be promoted to a causal explanation
 - **AND** F18.5 SHALL qualify the minimal private import-only probe/auditor on artificial data and required frozen regressions before separately explicit F18.6 authority can permit one import attempt; no earlier failed packet SHALL be repeated implicitly
 
+#### Scenario: Artificial import-only preparation cannot admit native execution
+
+- **WHEN** F18.5 qualifies ADR0270's private probe/controller and independent stdlib trace auditor
+- **THEN** injected imports/identities/processes SHALL verify strict phase order, bounded trace/input/log/clock handling, partial failure retention and a visible complete marker with unsuccessful or stalled fsync; required portable/live regressions SHALL preserve their prior scope and source pins SHALL match the frozen reviewed files
+- **AND** only F18.5 preparation MAY be completed; saved child-record parity SHALL NOT replace separate F18.6 source/kernel/resource/environment admission, supervised outer cleanup/finalization or qualify the consumed F18.3/physical trajectory
+
 #### Scenario: Bound an import-only trace without inferring owner success
 
 - **WHEN** separately authorized F18.6 observes the exact0269cold import prefix after F18.5 qualification

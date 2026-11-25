@@ -1,0 +1,249 @@
+{
+  "schema": "ariadna.f18.import-probe-documentary-verification.v1",
+  "status": "PASS_PARENT_AND_INDEPENDENT_DOCUMENTARY_CHECKS",
+  "base_revision": "6195fe41cd1806eed484503e8ecbc6a78fbd30a6",
+  "checked_utc": "2026-11-25T13:52:58.928364+00:00",
+  "protected_prior_non_markdown_blobs_unchanged": 1208,
+  "qualified_source_pins_match": {
+    "src/space_nav/_import_probe.py": {
+      "bytes": 13657,
+      "sha256": "ffcc586d948ea7aa05036faada10910fccf28721deadaf7a2e7d7bb00b912a61"
+    },
+    "src/space_nav/_import_probe_audit.py": {
+      "bytes": 8536,
+      "sha256": "2ce1f87b7575ddf03a733e15a45e59dc0403fb4e06c5f47db4e30ba8443f3d82"
+    },
+    "tests/test_import_probe.py": {
+      "bytes": 18218,
+      "sha256": "d426a0b05ab1c6cdcf0ce56f490fe707e25fb478a8dbc42743be58df2018c340"
+    },
+    "tests/test_import_probe_audit.py": {
+      "bytes": 11613,
+      "sha256": "dda58abcfd3d8261106a687119680dcb08282c4eac38112e0b657c57796a8f6c"
+    }
+  },
+  "local_links_excluding_pending_receipt": 628,
+  "anchors": 5,
+  "current_state_lines": 38,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "2dadcd64ba799d68923aac0c86eceed9003aa89a84a8adccdb73e13fd5709157",
+    "docs/adr/0271-qualify-artificial-import-probe.md": "38011a10090d99a61a61b3b332f99581abd214d7968710f866ff3cabff3f27c2",
+    "docs/adr/README.md": "a16423c36e3f75bb48bf2dc3feb1703e7113caa58d71393c22747b2e08e966cb",
+    "openspec/ROADMAP.md": "01af28374ee19a46882b19d8b2700f622fcc57aadc42b6c3b6d49e5a788a18f8",
+    "openspec/changes/refine-physical-trajectory/design.md": "e73242a6f1d2453046f32f14e82c0906d3e2a5a2a8f18b0036c0a9dcde34f6ec",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "99c47c0a25ba99afe63881c1b26c8cc302e3b2c6805b6166e6d752171dec6e48",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "9972451596744268e3c8cb122a1476aa8ed359ed2803f2b34f3d5676899f0efb",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "b21dcdf6fa8b406eeaaa134d8169e46de049273e66ba9ace8311def0479afe26"
+  },
+  "archive_bytes_expanded_members_sizes_hashes_and_syntax": "PASS:21unique relative members match saved originals, JSON/JUnit/Python syntax valid",
+  "archive_sha256": "84a0f6a832d43def20befd1e40863431ffaa975cf5996a26ad2b7c5688039a63",
+  "qualification_sha256": "febd7dd60528cf5f809e5c00e7134f880820e7983cd14438edcb3ab34dc4dbfb",
+  "focused_passed": 124,
+  "required_passed": 8261,
+  "historical_skips": 42,
+  "runtime_sources_and_Git_status_frozen_files": 1540,
+  "diff_whitespace": "PASS",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "runtime_tests_ruff": "Required portable/live make test and full Ruff passed on pinned source/test bytes. Not repeated for later documentary-only edits.",
+  "scope": "F18.5 artificial preparation only. No new native import probe/F18.6/owner or physical episode; old F18.3 counts remain unknown. Existing live regression scope preserved.",
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "prompt_sha256": "e51b104e4543f6379acdced9d0d44dbfbc415d2ca554f80cb9114a113f3a9d85"
+  },
+  "finalized_utc": "2026-11-25T13:55:16.126077+00:00",
+  "local_links_including_final_receipt": 629,
+  "independent_documentary_review_sha256": "6c101930451f0eec4801cb4bf96e9bbe37dc35d793c1428522581a0d386139cd",
+  "independent_documentary_review": {
+    "schema": "ariadna.f18.import-probe-final-documentary-review.v1",
+    "status": "PASS",
+    "reviewed_utc": "2026-11-25T13:54:31.250795+00:00",
+    "scope": "Read-only documentary review of the eight named ADR/status/OpenSpec Markdown files, qualification JSON and saved21member regression archive. Standard-library hash/JSON/ZIP/JUnit/link inspection only; no tests, scientific/native/project-module imports, probes, SPICE, integration, retained-image reads, builds, CI or repository mutations performed.",
+    "findings": [],
+    "documents": {
+      "CURRENT_STATE.md": {
+        "bytes": 2420,
+        "sha256": "2dadcd64ba799d68923aac0c86eceed9003aa89a84a8adccdb73e13fd5709157"
+      },
+      "docs/adr/0271-qualify-artificial-import-probe.md": {
+        "bytes": 7736,
+        "sha256": "38011a10090d99a61a61b3b332f99581abd214d7968710f866ff3cabff3f27c2"
+      },
+      "docs/adr/README.md": {
+        "bytes": 47955,
+        "sha256": "a16423c36e3f75bb48bf2dc3feb1703e7113caa58d71393c22747b2e08e966cb"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 85912,
+        "sha256": "01af28374ee19a46882b19d8b2700f622fcc57aadc42b6c3b6d49e5a788a18f8"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 614353,
+        "sha256": "e73242a6f1d2453046f32f14e82c0906d3e2a5a2a8f18b0036c0a9dcde34f6ec"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 32108,
+        "sha256": "99c47c0a25ba99afe63881c1b26c8cc302e3b2c6805b6166e6d752171dec6e48"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 171798,
+        "sha256": "9972451596744268e3c8cb122a1476aa8ed359ed2803f2b34f3d5676899f0efb"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 501379,
+        "sha256": "b21dcdf6fa8b406eeaaa134d8169e46de049273e66ba9ace8311def0479afe26"
+      },
+      "docs/adr/experiments/0271-qualification.json": {
+        "bytes": 13392,
+        "sha256": "febd7dd60528cf5f809e5c00e7134f880820e7983cd14438edcb3ab34dc4dbfb"
+      }
+    },
+    "archive": {
+      "path": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0271-validation-evidence.zip",
+      "bytes": 207551,
+      "sha256": "84a0f6a832d43def20befd1e40863431ffaa975cf5996a26ad2b7c5688039a63",
+      "members": 21,
+      "expanded_bytes": 3973653
+    },
+    "verified_test_counts_from_saved_JUnit": {
+      "focused": {
+        "cases": 124,
+        "passed": 124,
+        "skipped": 0,
+        "failed": 0
+      },
+      "portable": {
+        "cases": 7890,
+        "passed": 7848,
+        "skipped": 42,
+        "failed": 0
+      },
+      "live": {
+        "cases": 413,
+        "passed": 413,
+        "skipped": 0,
+        "failed": 0
+      }
+    },
+    "checked": {
+      "all_archive_member_sizes_hashes_names_and_JSON_JUnit_syntax_match": true,
+      "124_focused_passes_included_in_portable_not_double_counted": true,
+      "7848_portable_413_live_42_skips_8261combined_zero_failures": true,
+      "portable_and_live_case_id_sets_disjoint": true,
+      "prior_case_and_skip_preservation_recorded_in_hash_bound_qualification": true,
+      "1540file_and_Git_status_freeze_pass_supported_by_saved_receipts": true,
+      "814_908220s_regression_under1800s_ceiling": true,
+      "source_pins_match_independent_final_code_review": true,
+      "Ruff_and_strict_pass_logs_and_current_parent_strict_receipt_supported": true,
+      "only_new_F18_5_checkbox_completed_F18_6_F18_3_F17_F17_1_stay_open": true,
+      "new_probe_used_only_artificial_inputs_while_existing_live_scope_remains_explicit": true,
+      "no_claim_all_native_operations_zero_or_new_causal_physical_qualification": true,
+      "caps_and_observer_fsync_exit_uncertainty_preserved": true,
+      "saved_record_parity_distinguished_from_future_full_runtime_resource_admission": true,
+      "same_clock_cold_parent_descendant_opaque_io_and_finalization_supervision_required": true,
+      "regression_archive_explicitly_separate_from2MiB_diagnostic_cap": true,
+      "original_review_wording_and_corrected_final_review_both_preserved": true,
+      "new_local_links_and_design_requirement_anchors_resolve_except_pending_parent_receipt": true,
+      "scheduler_PAUSED_in_status_and_parent_readback": true
+    },
+    "checked_links": [
+      {
+        "document": "CURRENT_STATE.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0271-qualify-artificial-import-probe.md",
+        "anchor": ""
+      },
+      {
+        "document": "CURRENT_STATE.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0271-qualification.json",
+        "anchor": ""
+      },
+      {
+        "document": "CURRENT_STATE.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "anchor": ""
+      },
+      {
+        "document": "CURRENT_STATE.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0269-record-owner-producer-timeout.md",
+        "anchor": ""
+      },
+      {
+        "document": "docs/adr/0271-qualify-artificial-import-probe.md",
+        "target": "/Users/agrudin/dev/my/ariadna/openspec/changes/refine-physical-trajectory/design.md",
+        "anchor": "f185-artificial-import-only-qualification-2026-11-25"
+      },
+      {
+        "document": "docs/adr/0271-qualify-artificial-import-probe.md",
+        "target": "/Users/agrudin/dev/my/ariadna/openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md",
+        "anchor": "requirement-qualify-actual-owner-readback-on-a-fixed-analytic-fixture"
+      },
+      {
+        "document": "docs/adr/0271-qualify-artificial-import-probe.md",
+        "target": "/Users/agrudin/dev/my/ariadna/openspec/changes/refine-physical-trajectory/tasks.md",
+        "anchor": ""
+      },
+      {
+        "document": "docs/adr/0271-qualify-artificial-import-probe.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "anchor": ""
+      },
+      {
+        "document": "docs/adr/0271-qualify-artificial-import-probe.md",
+        "target": "/Users/agrudin/dev/my/ariadna/src/space_nav/_import_probe.py",
+        "anchor": ""
+      },
+      {
+        "document": "docs/adr/0271-qualify-artificial-import-probe.md",
+        "target": "/Users/agrudin/dev/my/ariadna/src/space_nav/_import_probe_audit.py",
+        "anchor": ""
+      },
+      {
+        "document": "docs/adr/0271-qualify-artificial-import-probe.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0271-qualification.json",
+        "anchor": ""
+      },
+      {
+        "document": "docs/adr/0271-qualify-artificial-import-probe.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0271-validation-evidence.zip",
+        "anchor": ""
+      },
+      {
+        "document": "docs/adr/README.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0271-qualify-artificial-import-probe.md",
+        "anchor": ""
+      },
+      {
+        "document": "openspec/ROADMAP.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0271-qualify-artificial-import-probe.md",
+        "anchor": ""
+      },
+      {
+        "document": "openspec/changes/refine-physical-trajectory/design.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0271-qualify-artificial-import-probe.md",
+        "anchor": ""
+      },
+      {
+        "document": "openspec/changes/refine-physical-trajectory/proposal.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0271-qualify-artificial-import-probe.md",
+        "anchor": ""
+      }
+    ],
+    "parent_finalization_pending": [
+      {
+        "document": "docs/adr/0271-qualify-artificial-import-probe.md",
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0271-doc-verification.json",
+        "reason": "Final parent receipt intentionally pending after this review."
+      }
+    ],
+    "limitations": [
+      "Saved logs/receipts were inspected; this reviewer did not rerun tests, Ruff, strict validation or CI. Parent owns current strict/protected-history/final receipt/commit/push verification.",
+      "Qualification covers artificial diagnostic plumbing and the existing required live regression scope; the new probe native branch/F18.6 was not executed or admitted.",
+      "Profile/trace/selfhash parity does not establish full imported-prefix/kernel/resource/environment authenticity or replace supervised outer aggregate/process cleanup/final fsync.",
+      "No timeout cause, historical native operation counts, F18.3 owner qualification, physical F0/M3 closure,99-percent probability or mission-safety conclusion is established."
+    ]
+  },
+  "finalization": "Receipt created exclusively; JSON readback and formerly pending target verified before staging. Commit/push are subsequent operations, not claimed here."
+}

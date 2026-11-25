@@ -1,3 +1,9 @@
+[ADR0271](../../../docs/adr/0271-qualify-artificial-import-probe.md) completes
+F18.5 artificial import-only preparation:124new cases,7848portable+413live pass,
+42unchanged archival skips, frozen1540files, independent review/Ruff/strict pass.
+No new native probe, F18.3retry, owner or physical admission; F18.6 still needs
+separately explicit authority and complete pinned preflight. Automation PAUSED.
+
 [ADR0270](../../../docs/adr/0270-design-import-only-timeout-observation.md)
 completes saved/source timeout diagnosis and designs a narrower import-only
 observation. Cause unresolved; same warning in prior success and no phase trace.

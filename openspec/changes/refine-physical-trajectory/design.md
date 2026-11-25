@@ -1,5 +1,23 @@
 ## Context
 
+### F18.5 artificial import-only qualification (2026-11-25)
+
+[ADR0271](../../../docs/adr/0271-qualify-artificial-import-probe.md) qualifies
+only the minimal private probe/controller and independent stdlib saved-trace
+auditor. Reuse the pinned owner watcher/evidence/JSON helpers unchanged; no new
+public API, dependency, optimizer or scientific formula. Six fixed durable JSONL
+markers, strict identities/clocks/types/caps, childexit0 and finalization gates
+are checked on artificial files/hooks/processes. Failed partial traces are counted;
+oversized artificial trace retains only its4KiB prefix. A visible complete marker
+with stalled fsync fails under the existing external group watcher. Saved-record
+parity is not full runtime/prefix/resource authentication; F18.6 separately owes
+that preflight and same-clock cold-start/group/I/O/finalization supervision.
+124artificial cases are included in7848portable passes;413live/42unchanged
+archival skips,0failures. All1540files/Git status frozen; Ruff, independent review
+and strict validation pass. Existing live regression keeps its prior scope;
+no new native probe/owner/physical study ran. F18.5 alone complete; F18.6 not run
+or admitted, F18.3 consumed/unqualified and physical F0/M3 gates open. PAUSED.
+
 ### F18.4 saved/source timeout diagnosis (2026-11-25)
 
 [ADR0270](../../../docs/adr/0270-design-import-only-timeout-observation.md) records
