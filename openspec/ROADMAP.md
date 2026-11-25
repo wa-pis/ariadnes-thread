@@ -107,6 +107,13 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0269](../docs/adr/0269-record-owner-producer-timeout.md) records one explicitly
+authorized F18.3 packet after517.983s admission/526.507s consumed preflight<600.
+Producer45s deadline fails; final post-fsync45.035707s<60,7485B structured/64B logs.
+Independent saved-only failure/control accounting PASS; scientific output empty,
+no numerical audit, actual native counts unknown. F18.3/F17/F17.1 and physical
+gates stay open; no retry or causal inference from OMP179. All71459operational
+paths/old pins unchanged; readonly image detached; scheduler PAUSED.
 [ADR0268](../docs/adr/0268-qualify-artificial-owner-runner.md) implements F18.2
 private artificial owner producer/auditor/process controls;194focused cases pass.
 Required7724portable+413live pass/42archival skips;1525files/status frozen.

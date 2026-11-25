@@ -1,3 +1,9 @@
+[ADR0269](../../../docs/adr/0269-record-owner-producer-timeout.md) records one
+consumed F18.3 producer45s deadline failure after positive pinned preflight.
+Final45.035707s<60; saved-only failure/control accounting PASS, empty scientific
+output/no numerical audit/unknown native counts. No retry; F18.3 remains unchecked
+and all owner/physical gates stay open, automation PAUSED.
+
 [ADR0268](../../../docs/adr/0268-qualify-artificial-owner-runner.md) implements
 F18.2 private producer/auditor/controller;194focused artificial cases pass.
 Required7724portable+413live pass/42archival skips,1525files/status frozen;

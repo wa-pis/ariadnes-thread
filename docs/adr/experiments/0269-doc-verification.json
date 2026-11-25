@@ -1,0 +1,192 @@
+{
+  "schema": "ariadna.f18.owner-timeout-documentary-verification.v1",
+  "status": "PASS",
+  "checked_utc": "2026-11-25T12:24:46.035081+00:00",
+  "base_revision": "a6e89e3da46c4a05525f3cd72ef21347f0d0e5bf",
+  "protected_prior_non_markdown_blobs_unchanged": 1202,
+  "local_links_excluding_pending_receipt": 620,
+  "anchors": 5,
+  "current_state_lines": 39,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "a691fa3bbf0247dc08187f4fa3abcd77b6d72385793748710b336f7177884eed",
+    "docs/adr/0269-record-owner-producer-timeout.md": "80ba596f17ac0b2ba7e1dd954b9487e35677e2d7cef1102370b18a93c43f3840",
+    "docs/adr/README.md": "aaba5bf0a0265f762f0897adc8d13c80ce5fa61eb331d70b3aace30d232a1053",
+    "openspec/ROADMAP.md": "944019a435b9a06ac6d09050c5898d32fb49e91401727d2fe94f2d39bf622240",
+    "openspec/changes/refine-physical-trajectory/design.md": "c97f70891c3696b3ab7906458e008f84b30560c493757ccf691fd0bc59ad972f",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "2b42a5e0d958a484ac7b582f06ed82e6d8dd1c46b078be3c5a523052adc3ab62",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "325230fb5f1bcd981154944f81ad6d197074f5c6a5a52beb3a3450e06b30096e",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "7d9159d059c66b9078fd9a452772625564e7b227bb7aad9c3cd7486cc17ecfed"
+  },
+  "diff_whitespace": "PASS",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "archive_members_syntax_sizes_hashes": "PASS,44members;scientificproducer intentionallyempty,not validmeasurementJSON",
+  "archive_sha256": "c3c8cf46964ae93b9816074919d0c0f5e25083aa08ab85fe9724fb666240ed45",
+  "result_sha256": "1d4c4f271a096f7f6a2ff7ccb772b28f1d0516451c86742a43bd660cd44a8807",
+  "runtime_test_sources": "All9pins match passing0268qualification; all prior non-Markdown blobs unchanged.",
+  "runtime_tests_ruff_CI": "Not repeated for evidence-only change; reuse exact0268qualified source/testbytes.",
+  "actual_native_outcome": "OneconsumedFAILEDproducer45s attempt;emptyoutput,numericalauditunavailable,actualcountsUNKNOWN.",
+  "independent_reviews": "Admission,controls and saved-onlyfailure/controlaccounting retained; these are not numericalqualification.",
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "prompt_sha256": "4daf7b4f48f7224c9e3a9a7bf3ddd6ebe941cf16c46ed6d3d8d4fb147a99ea8a"
+  },
+  "preservation": "71459operationalpaths+alloldpins/resourcesclocks unchanged,groupsabsent,readonlyimage detached.",
+  "checker_setup_correction": "Initial expected prior blob count1196 omitted six new0268Pythonfiles; actualGitbaseline and independentreview both1202, allunchanged. No scientific gate/data changed.",
+  "finalized_utc": "2026-11-25T12:25:53.488497+00:00",
+  "independent_documentary_review": {
+    "bytes": 5609,
+    "sha256": "03a41329033251df4a94ee03618aa957e848b5762d9e30f8edd3e5f34435396a",
+    "receipt": {
+      "schema": "ariadna.f18.final-documentary-review.v1",
+      "status": "PASS",
+      "scope": "Documentation, immutable artifacts, saved receipts and unchanged historical project blobs only. No runtime tests, native imports, scientific formulas or numerical-auditor reruns.",
+      "base_revision": "a6e89e3da46c4a05525f3cd72ef21347f0d0e5bf",
+      "reviewed_files": {
+        "CURRENT_STATE.md": {
+          "bytes": 2520,
+          "sha256": "a691fa3bbf0247dc08187f4fa3abcd77b6d72385793748710b336f7177884eed"
+        },
+        "docs/adr/README.md": {
+          "bytes": 47560,
+          "sha256": "aaba5bf0a0265f762f0897adc8d13c80ce5fa61eb331d70b3aace30d232a1053"
+        },
+        "docs/adr/0269-record-owner-producer-timeout.md": {
+          "bytes": 6392,
+          "sha256": "80ba596f17ac0b2ba7e1dd954b9487e35677e2d7cef1102370b18a93c43f3840"
+        },
+        "docs/adr/experiments/0269-owner-timeout-result.json": {
+          "bytes": 11985,
+          "sha256": "1d4c4f271a096f7f6a2ff7ccb772b28f1d0516451c86742a43bd660cd44a8807"
+        },
+        "docs/adr/experiments/0269-owner-timeout-evidence.zip": {
+          "bytes": 42339,
+          "sha256": "c3c8cf46964ae93b9816074919d0c0f5e25083aa08ab85fe9724fb666240ed45"
+        },
+        "openspec/ROADMAP.md": {
+          "bytes": 84906,
+          "sha256": "944019a435b9a06ac6d09050c5898d32fb49e91401727d2fe94f2d39bf622240"
+        },
+        "openspec/changes/refine-physical-trajectory/proposal.md": {
+          "bytes": 31317,
+          "sha256": "2b42a5e0d958a484ac7b582f06ed82e6d8dd1c46b078be3c5a523052adc3ab62"
+        },
+        "openspec/changes/refine-physical-trajectory/design.md": {
+          "bytes": 611616,
+          "sha256": "c97f70891c3696b3ab7906458e008f84b30560c493757ccf691fd0bc59ad972f"
+        },
+        "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+          "bytes": 169452,
+          "sha256": "325230fb5f1bcd981154944f81ad6d197074f5c6a5a52beb3a3450e06b30096e"
+        },
+        "openspec/changes/refine-physical-trajectory/tasks.md": {
+          "bytes": 498628,
+          "sha256": "7d9159d059c66b9078fd9a452772625564e7b227bb7aad9c3cd7486cc17ecfed"
+        }
+      },
+      "archive_verification": {
+        "members": 44,
+        "compressed_bytes": 42339,
+        "expanded_bytes": 90627,
+        "sha256": "c3c8cf46964ae93b9816074919d0c0f5e25083aa08ab85fe9724fb666240ed45",
+        "unique_safe_member_paths": true,
+        "all_member_digests_match_result_manifest": true,
+        "all_member_bytes_equal_original_saved_files": true
+      },
+      "assertions_verified": {
+        "one_consumed_failed_attempt": true,
+        "preflight517_983_admission526_507_marker_below600": true,
+        "caller_after_finalization_fsync_s": 45.03570654196665,
+        "caller_below60": true,
+        "scientific_producer_empty": true,
+        "numerical_auditor_not_launched": true,
+        "native_counts_unknown_not_zero": true,
+        "configured_8_calls_2_arcs_are_not_verified_outcomes": true,
+        "failure_accounting_pass_is_not_numerical_qualification": true,
+        "OMP179_warning_is_not_causation_proof": true,
+        "7485_structured_64_log_bytes_exact": true,
+        "retained_local_resource_authentication_caveat": true,
+        "before_after_operational71459paths1646916124B_match": true,
+        "native_groups_absent_in_saved_root_snapshot": true,
+        "readonly_image_detached": true,
+        "F18_3_task_unchecked": true,
+        "F18_2_historical_complete": true,
+        "F17_F17_1_physical_F0_M3_gates_open": true,
+        "no_retry_no_new_native_or_diagnosis_authority": true,
+        "scheduler_PAUSED_preserved": true,
+        "runtime_tests_not_repeated_stated": true
+      },
+      "protected_project": {
+        "prior_non_markdown_blobs_compared_to_base": 1202,
+        "differences": [],
+        "runtime_and_tests_unchanged": true,
+        "prior_evidence_immutable": true,
+        "CURRENT_lines": 39
+      },
+      "new_ADR_links_and_anchors": [
+        {
+          "target": "../../openspec/changes/refine-physical-trajectory/design.md#f183-consumed-producer-timeout-2026-11-25",
+          "exists": true,
+          "anchor_matches": true,
+          "pending_parent_receipt": false
+        },
+        {
+          "target": "../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md#requirement-qualify-actual-owner-readback-on-a-fixed-analytic-fixture",
+          "exists": true,
+          "anchor_matches": true,
+          "pending_parent_receipt": false
+        },
+        {
+          "target": "../../openspec/changes/refine-physical-trajectory/tasks.md",
+          "exists": true,
+          "anchor_matches": null,
+          "pending_parent_receipt": false
+        },
+        {
+          "target": "0267-design-actual-owner-endpoint-qualification.md",
+          "exists": true,
+          "anchor_matches": null,
+          "pending_parent_receipt": false
+        },
+        {
+          "target": "0268-qualify-artificial-owner-runner.md",
+          "exists": true,
+          "anchor_matches": null,
+          "pending_parent_receipt": false
+        },
+        {
+          "target": "experiments/0269-owner-timeout-result.json",
+          "exists": true,
+          "anchor_matches": null,
+          "pending_parent_receipt": false
+        },
+        {
+          "target": "experiments/0269-owner-timeout-evidence.zip",
+          "exists": true,
+          "anchor_matches": null,
+          "pending_parent_receipt": false
+        },
+        {
+          "target": "experiments/0269-doc-verification.json",
+          "exists": false,
+          "anchor_matches": null,
+          "pending_parent_receipt": true
+        }
+      ],
+      "parent_completion_requirements": [
+        "Create0269-doc-verification.json after local links/anchors/syntax/diff/strict OpenSpec checks and include this independent review.",
+        "Finalreceipt must preserve failing/unavailable numerical result and checked runtime reuse; no native/test rerun."
+      ],
+      "reviewer_repo_edits": 0,
+      "reviewer_runtime_native_formula_auditor_reruns": 0,
+      "findings": []
+    }
+  },
+  "resolved_final_receipt_links": [
+    "experiments/0269-doc-verification.json"
+  ],
+  "local_links_including_final_receipt": 621
+}

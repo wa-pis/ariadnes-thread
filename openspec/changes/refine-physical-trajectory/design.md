@@ -1,5 +1,24 @@
 ## Context
 
+### F18.3 consumed producer timeout (2026-11-25)
+
+[ADR0269](../../../docs/adr/0269-record-owner-producer-timeout.md) records the user's
+explicit one-packet authority. Exact private kernel/source/5resources,10old
+clocks/ledgers and9qualified code pins match; read-only image and unchanged
+71459-path operational baseline. Independently reviewed fixed bootstrap/PGID
+shims and caller reuse qualified controls, shared60s clock and45/10/5 phases;
+fake success/deadline/live-dead-group checks pass. No runtime source edits,
+builds/newdata/SPICE studies/physical trajectory or changed scientific gates.
+Positive same-interpreter preflight admission517.983354s, consumed526.507489s<600.
+One attempt fails producer45s cutoff, final observed after caller fsync45.035707s.
+Scientific producer file empty; no numerical audit; actual native counts unknown.
+Independent saved-only failure/control accounting passes;64BOMP179stderr is not
+causal proof.7485B structured/64B logs remain within2MiB/64KiB. Native groups
+absent; before/after71459operational paths and all old pins/resources match,
+readonly image detached. F18.3 remains unchecked, consumed without retry;
+F17/F17.1/all physical gates open, scheduler PAUSED. Reuse verified unchanged
+0268regressions/Ruff; final docs require links/diff/strict and review only.
+
 ### F18.2 artificial owner runner (2026-11-25)
 
 [ADR0268](../../../docs/adr/0268-qualify-artificial-owner-runner.md) implements

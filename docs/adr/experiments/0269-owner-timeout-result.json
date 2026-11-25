@@ -1,0 +1,296 @@
+{
+  "schema": "ariadna.f18.native-owner-timeout-result.v1",
+  "decision_status": "accepted_one_attempt_only",
+  "episode_status": "consumed_failed_producer_deadline",
+  "native_owner_qualification": "unavailable",
+  "independent_failure_accounting": "PASS",
+  "numerical_audit": "unavailable:empty producer; cold numerical audit was not launched; no endpoint words to compare",
+  "recorded_utc": "2026-11-25T12:23:02.739655+00:00",
+  "base_revision": "a6e89e3da46c4a05525f3cd72ef21347f0d0e5bf",
+  "source_pins": {
+    "src/space_nav/_owner_endpoint_fixture.py": {
+      "bytes": 17390,
+      "sha256": "48c33d3388d9d780312da25666fae9726c53576d46eefd285ef97d20232c5ee0"
+    },
+    "src/space_nav/_owner_endpoint_audit.py": {
+      "bytes": 14638,
+      "sha256": "409c629c27efabccd96a6f0da85942b51f0a8bd79d2c943f5da09d9138f94eba"
+    },
+    "src/space_nav/_owner_endpoint_run.py": {
+      "bytes": 17901,
+      "sha256": "ba41c64e880b369ffc83844a3185fce40f2020d4a55e671b768cfd32f96988d4"
+    },
+    "src/space_nav/trajectory.py": {
+      "bytes": 126286,
+      "sha256": "029bd5f0d10802143aa87a75827f8cce4b97a1ff36c9da7fc479ad3e6d0f0790"
+    },
+    "src/space_nav/_coupled_benchmark_run.py": {
+      "bytes": 15346,
+      "sha256": "216ccd347c5a8025d24a54ffb55ab97a2267461907cb3e6ebae2a3e2b23e408d"
+    },
+    "src/space_nav/_native_arc_conformance.py": {
+      "bytes": 26863,
+      "sha256": "f144877186bab451a13378af22cf2f0ec528afb6fd3ed81abb009c7e999b8169"
+    },
+    "tests/test_owner_endpoint_fixture.py": {
+      "bytes": 20301,
+      "sha256": "aa38b40384a2bc34e29d6f9737493e4061dc721ebfd912c99d0178acbb575f51"
+    },
+    "tests/test_owner_endpoint_audit.py": {
+      "bytes": 17542,
+      "sha256": "97946d8a464f3b08d3331a9eef2773281c40fe8df173f5a5cb2a52ae0bd52084"
+    },
+    "tests/test_owner_endpoint_run.py": {
+      "bytes": 15838,
+      "sha256": "9f4d3f089a573724f5324c7b53e90e7c146a61f9ba8176111f158d7bd9309362"
+    }
+  },
+  "profile_sha256": "7736dcf75ccb61b24af4f7bb5e265b27711fe5302e0af60b44e7c4c115a4f020",
+  "preflight": {
+    "positive_parent_admission_s": 517.9833536250517,
+    "caller_start_s": 526.4278934169561,
+    "consumed_marker_s": 526.5074888747185,
+    "ceiling_s": 600,
+    "same_pinned_parent_interpreter": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python",
+    "independent_admission_and_control_reviews_precede_marker": true
+  },
+  "attempt": {
+    "packets_consumed": 1,
+    "retry": false,
+    "configured_limits": {
+      "packets": 1,
+      "preflight_s": 600,
+      "total_s": 60,
+      "producer_s": 45,
+      "audit_s": 10,
+      "finalization_reserve_s": 5,
+      "factory_attempts": 3,
+      "integration_attempts": 2,
+      "visitor_calls": 8,
+      "acceleration_callbacks": 100000,
+      "input_bytes": 65536,
+      "logs_bytes": 65536,
+      "structured_evidence_bytes": 2097152
+    },
+    "returncode": 2,
+    "producer_failure": "RunError:absolute deadline exhausted at producer45s",
+    "observed_after_caller_finalization_fsync_s": 45.03570654196665,
+    "outer_limit_s": 60,
+    "scientific_producer_bytes": 0,
+    "actual_factory_integration_visitor_callback_counts": null,
+    "unknown_counts_are_not_zero": true,
+    "partial_counter_telemetry": "unavailable; process killed before result packet",
+    "stderr_bytes": 64,
+    "stderr": "OMP: Warning #179: Function Can't set size of /tmp file failed:\n",
+    "cause": "Unproved; saved stderr does not locate the producer stall or establish causal mechanism.",
+    "parent_absolute_started_s": 3729351.844631208
+  },
+  "evidence_bytes": {
+    "packet_and_caller_structured": 7485,
+    "combined_logs": 64,
+    "structured_limit": 2097152,
+    "log_limit": 65536
+  },
+  "preservation": {
+    "operational_paths_unchanged": 71459,
+    "operational_regular_bytes": 1646916124,
+    "old_timers_ledgers_unchanged": 10,
+    "old_native_pins_unchanged": 10,
+    "resource_files_unchanged": 5,
+    "resource_bytes": 131662,
+    "aggregate_acquisition_bytes": 497045495,
+    "new_acquisition_bytes": 0,
+    "new_builds_dependency_changes": 0,
+    "image_read_only_then_detached": true,
+    "process_cleanup": "No rows in both recorded native groups; caller exited.",
+    "prior_project_non_markdown_blobs": "Final documentary receipt verifies unchanged."
+  },
+  "scope": "Two fixed synthetic analytic arcs/eight serial owner calls were the configured profile, not verified outcomes. F18.3/F17/F17.1 and all physicalF0/M3 obligations stay open; no 99percent, command pair,carry/concurrency/mission safety claim.",
+  "verification_reuse": "Runtime/tests unchanged from a6e89e3. Reuse0268 qualification194focused included7724portable+413live/42archival skips,Ruff; no repeated pytest/native experiment. External fixed launch orchestration has artificial success/deadline/live-dead-group checks and independent connected review.",
+  "scheduler": "ariadna-m3 PAUSED",
+  "next_authority": "No retry/newnativeimport/SPICE/integration/data/changedlimits or diagnosis experiment follows; separate bounded plan/user instruction required.",
+  "archive": {
+    "name": "0269-owner-timeout-evidence.zip",
+    "bytes": 42339,
+    "sha256": "c3c8cf46964ae93b9816074919d0c0f5e25083aa08ab85fe9724fb666240ed45",
+    "expanded_bytes": 90627,
+    "members": {
+      "preflight-start.json": {
+        "bytes": 758,
+        "sha256": "d210a175dc4d640cd3879dda7dc6ee49d27e0f2cfcc8c7108b21c7b75e48c50b"
+      },
+      "readonly-attach.plist": {
+        "bytes": 1831,
+        "sha256": "5a21860e2651573899fe7d4e8fc0d4f1ac408cf1554f81ab5ee21fb30a4e059a"
+      },
+      "check-preflight.py": {
+        "bytes": 3026,
+        "sha256": "448df3b28f6f2a148b5daa1e048123ce3c77078cb1b4ac2e35a1ec4853325128"
+      },
+      "root-preflight.json": {
+        "bytes": 7248,
+        "sha256": "0b1ca9e60765ad7fb622733df4bd5903cf9d192184efee27b47f32cc8f3c531e"
+      },
+      "check-preservation.py": {
+        "bytes": 1393,
+        "sha256": "af4ae6417783eddc0fc741a5bff020eeae60a18bb34f98fced9e7c91bd9a3884"
+      },
+      "operational-before.json": {
+        "bytes": 456,
+        "sha256": "7c8ae98f099b8951f18df093fcee8efbe475326648cafe64c053bfd28c69f701"
+      },
+      "operational-after.json": {
+        "bytes": 454,
+        "sha256": "ba07a07e778315bf83308ce283f68bce822df37fadaf25a0c1a417e0266e9002"
+      },
+      "independent-admission.json": {
+        "bytes": 12886,
+        "sha256": "65496609a43e10f97666b1bda45781dea2a93697df068e7b0a52a66c2aeb5dbc"
+      },
+      "independent-controls.json": {
+        "bytes": 4250,
+        "sha256": "21dae3af35a5d5cc39f5bc612448917d08ee010be7a17283bd4a0731f9834c90"
+      },
+      "profile-draft.json": {
+        "bytes": 3781,
+        "sha256": "bca9d80ae644a8d2522f15d42fc37d1598609db2ff5b46c10d344cf16652e536"
+      },
+      "profile.json": {
+        "bytes": 3980,
+        "sha256": "7736dcf75ccb61b24af4f7bb5e265b27711fe5302e0af60b44e7c4c115a4f020"
+      },
+      "native.sandbox": {
+        "bytes": 240,
+        "sha256": "1a8c0e2dd865b1409b68b75b3f7ed76640bdd5132468b90df4e6c2e6cfb92160"
+      },
+      "native-entry.py": {
+        "bytes": 2185,
+        "sha256": "bb0a44b7447f6ac53085f19b0e893152c1e6893f7a0229d0d2354c4b15925c6b"
+      },
+      "launch-once.py": {
+        "bytes": 6609,
+        "sha256": "b0a1c13f1cf0a733e4bfbdbe8b4ef8330dd8ef743cbdea3a9b17144085bb14ad"
+      },
+      "call-once.py": {
+        "bytes": 3846,
+        "sha256": "b984a4c427f144dea536e707f75aa3bbdde942d3d9ee43fb00d8c4b49d8dbf11"
+      },
+      "fake-cleanup-check.py": {
+        "bytes": 2864,
+        "sha256": "51504e8e2fc168257c652bcfa4e29a5d67607b9ffad001b1b6d6f595863a75a8"
+      },
+      "fake-cleanup-check.json": {
+        "bytes": 568,
+        "sha256": "f219d1357cf56fbf47a4cf3f7ed45f59df66debec361a25679fc1901104bafd8"
+      },
+      "caller-fake-qualification.json": {
+        "bytes": 692,
+        "sha256": "6ae314ac79d67bce939e5325654449bd45ce90f29fbdfe2f99689e93d3c64ab4"
+      },
+      "admit-launch.py": {
+        "bytes": 3041,
+        "sha256": "38b2f5af4941f0f5ff389c442771b00da1e650a63f99e250c1e5fb262acd565b"
+      },
+      "launch-admission.json": {
+        "bytes": 1471,
+        "sha256": "0d6c2dc9cd4d838a2b3a0cc297d71271362eca3cf0e13888b831f525db6e662c"
+      },
+      "episode-start.json": {
+        "bytes": 312,
+        "sha256": "ba2b281e70561c8620789ecfc035976a17fe27b397c31b3a0c9e83f623c20f78"
+      },
+      "caller-output.json": {
+        "bytes": 1562,
+        "sha256": "a5b9d965359407e0fb08a3fd0d3a1c5357feabd907886b12e713c91e982a4327"
+      },
+      "caller-finalization.json": {
+        "bytes": 265,
+        "sha256": "769f081310e69aa5779fa9e91930cca1cf64eb8c54fa923857851287ac274e92"
+      },
+      "caller-tool-output.json": {
+        "bytes": 382,
+        "sha256": "15a56061a51eb743fd3a31926cdc9486b6e37c9a3fb80a0ae93fef3c14d46046"
+      },
+      "caller-tool.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "independent-failure-accounting.json": {
+        "bytes": 11160,
+        "sha256": "55c7bb0ac3297defc8936a007c2d6d222abed465714c8aace59a6cfea09b3ebd"
+      },
+      "postpacket-control-review.json": {
+        "bytes": 9428,
+        "sha256": "0df614f512bbe128b709f73aac2d1ae8d46221ca8da6cd275829b171ee45016f"
+      },
+      "process-cleanup.json": {
+        "bytes": 252,
+        "sha256": "2009c82b0b75ff4f1c99e63bf8b704eacb9f48d19fff15603cbbb4fb5c0b9fcb"
+      },
+      "postpacket-pins.json": {
+        "bytes": 269,
+        "sha256": "da8ff93595fe28674dd7eeb0b004f7f3f4b71d0312255cbe01e757811075f87e"
+      },
+      "detach.json": {
+        "bytes": 390,
+        "sha256": "9ec3ce568f95069ba82ccbc7a24537e29375b055263dbdfb22b0e94548adcacd"
+      },
+      "execution/consumed.json": {
+        "bytes": 242,
+        "sha256": "327156cb1d01c37323e30adcfeaf1288af578a8e9adc09fc6ee3755ffc46686a"
+      },
+      "execution/native-packet/input.json": {
+        "bytes": 90,
+        "sha256": "71f40b74e5a6c29b0a8d2eaf8db60da3a01b4f8687d3e4a393d0c92050f3bf73"
+      },
+      "execution/native-packet/packet/input.json": {
+        "bytes": 90,
+        "sha256": "71f40b74e5a6c29b0a8d2eaf8db60da3a01b4f8687d3e4a393d0c92050f3bf73"
+      },
+      "execution/native-packet/packet/producer.json": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "execution/native-packet/packet/producer.stderr.log": {
+        "bytes": 64,
+        "sha256": "cac246557f41f69633f58d838e666821f128a69865a37bdf25e835258563db64"
+      },
+      "execution/native-packet/packet/receipt.json": {
+        "bytes": 568,
+        "sha256": "2f0c6265a1966388d24a6eaad260080cb5a03192791c8cabad8e50208a36c2a3"
+      },
+      "execution/native-packet/producer.json": {
+        "bytes": 633,
+        "sha256": "7f4b2e5effefb1538e8e41d902734453579cfa516a2df3bd2df2db76afbe6ed8"
+      },
+      "execution/native-packet/producer.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "execution/native-packet/receipt.json": {
+        "bytes": 909,
+        "sha256": "15e05af9e5195c40ef8569b94c96bc62460148bae9ca81780664961a80d724bf"
+      },
+      "execution/parent.pgid": {
+        "bytes": 6,
+        "sha256": "6f4853223cadbfaca1556fcb29c05a3e0fe566ebdf9768204c3516a6f2ac4615"
+      },
+      "execution/producer.json": {
+        "bytes": 949,
+        "sha256": "49bb7d6d0aa1ed5badfab41fa69afecf05599a32a71a5e7291554e62486e1a5d"
+      },
+      "execution/producer.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "execution/receipt.json": {
+        "bytes": 1471,
+        "sha256": "a0531270c40cc8e5fef71a9fb40f54c44a8ec6e14abd9cd9c220960a3f6ce2c7"
+      },
+      "execution/supervisor.pgid": {
+        "bytes": 6,
+        "sha256": "eea1d4c39659a1196c3569944e97b491bc72aca25f936d894d8fc5322e59b331"
+      }
+    }
+  }
+}

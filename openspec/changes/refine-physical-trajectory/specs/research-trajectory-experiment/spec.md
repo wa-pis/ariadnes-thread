@@ -118,6 +118,12 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **AND** tests SHALL demonstrate group cleanup after a dead leader, cold-parent receipt-fsync and streaming-I/O stalls with live inherited descendants, bounded reads before native imports, shared64KiB logs,2MiB structured evidence, inherited60s phases and immutable prefinal versus returned post-fsync observations
 - **AND** unchanged existing portable/live regression SHALL remain separate from the unexecuted F18.3 packet; no source-only lookup or artificial success SHALL qualify native ownership, concurrency, event carry or physical gates
 
+#### Scenario: Preserve an actual-owner timeout without inventing outcomes
+
+- **WHEN** the once-only F18.3 producer reaches its45s deadline before retaining a valid scientific packet
+- **THEN** the attempt SHALL remain consumed, numerical/owner qualification SHALL remain unavailable and unsupported native operation counts SHALL be recorded as unknown rather than zero
+- **AND** saved failure/control accounting, bounded logs, process cleanup and distinct prefinal/post-fsync observations SHALL be retained under the unchanged60s inclusive limit; no retry, added data, relaxed limit or causal inference from a warning SHALL follow
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence
