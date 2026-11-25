@@ -3,8 +3,8 @@
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
 ## Current preparation result
-[ADR0260](docs/adr/0260-bound-time-construction-export-domain.md) completes F14 no-op
-construction/copy domain; original-key pre-export basis remains missing.
+[ADR0261](docs/adr/0261-design-original-key-pre-export-admission.md) completes F15 design.
+[ADR0260](docs/adr/0260-bound-time-construction-export-domain.md): conditional domain only; original-key visitor proposed, unavailable.
 [ADR0259](docs/adr/0259-inspect-pinned-split-time-caster.md) completes F13:5HTTP200,
 215077raw/decoded bytes; pinned generic double route, actualreadback unavailable.
 [ADR0258](docs/adr/0258-lookup-exact-split-time-build-source.md): F12 attempt
@@ -31,11 +31,11 @@ native double-stop restriction. No actual native bound/adapter/profile is qualif
 
 ## Next action and scheduler
 Do not repeat successful local/CI runs or artifact downloads on unchanged code.
-Next: design one original-key pre-export admission path, preserving reference
-provenance/prior-arithmetic obligations; no HTTP/native/campaign by default.
+Next: user choice on one native-adapter build/interface before implementation.
+Existing Python reader checks after export; no native build/campaign admitted.
 No refetch/controller replay, framework/native campaign, changed target or old replay.
 Full-force seed/derivatives/guards/error bounds and73/76/228/300s remain open.
-User resumed `ariadna-m3` on2026-11-25: ACTIVE every5minutes, samechat.
+`ariadna-m3` PAUSED: required native-adapter choice in ADR0261; no auto successor.
 Pause for concrete required user choice/access/authorization or contract change,
 or independently verified agreed success. Existing F3/F5/F7 evidence is retained.
 

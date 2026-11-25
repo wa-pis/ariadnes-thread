@@ -1,5 +1,68 @@
 ## Context
 
+### F15: original-key pre-export admission design (2026-11-25)
+
+[ADR0261](../../../docs/adr/0261-design-original-key-pre-export-admission.md)
+asks whether the existing native-conformance producer/reader and installed history
+binding expose a usable original-key admission point before Time copying or
+floating narrowing. If not, specify the smallest missing primitive and the exact
+build/dependency/contract decision needed; do not disguise a Python observation
+or another synthetic checker as that primitive.
+
+Read only the call path in `src/space_nav/_native_arc_conformance.py`, its direct
+native-history accessors/binding definitions identified from those call sites,
+and already retained Time/pickle/caster declarations necessary to trace argument
+ownership/copy/export. Locate binding files without opening unrelated subsystems.
+Pin inspected source hashes and line anchors. No new collection or broad API/
+stop/integrator survey. The one source/design review is<=600s from its recorded
+first call-path read, including independent reasoning. No HTTP/downloads, native
+imports, tests, numerical/oracle/command/trajectory evaluations or integration.
+Documentation/hash/link/strict checks follow separately.
+
+Completion is a source-linked route/availability table and one minimal proposed
+admission interface with original-key/state/mass association, const-reference
+ownership/lifetime, pre-copy/pre-narrowing finite/range rejection, unchanged
+signed-word/enclosure semantics, prior-arithmetic/compiled-FP obligations and
+finite future qualification cases. Availability must distinguish current API,
+proposed native primitive and an actually qualified profile. Unknown or a failed
+precondition stays unavailable; no reconstructed/normalized substitute key,
+post-export flag or target change can repair the provenance obligation.
+
+Use existing capabilities first. Do not implement a helper/framework, modify or
+rebuild TudatPy, add a native extension/dependency, change the stack or launch a
+campaign in this design stage. If the necessary path requires a concrete user
+choice about a new native build/dependency or scientific contract, preserve the
+reviewed result, pause ariadna-m3 and present that choice. Ordinary reversible
+preparation requires no repeated approval. F0/F5/F7 data and all physical/budget
+gates remain fixed; source design is not readback/carry or physical admission.
+Verify independent source/scope review, protected history/CURRENT/links/diff/strict,
+then commit/push the documentary stage.
+
+#### F15 observed availability and proposed seam
+
+The298s review03:47:06Z–03:52:04Z and two independent reviews find that the named
+F7 reader checks already exported Python history. Its direct simulator property
+returns a C++const-map reference without a native original-row guard; the related
+results property calls a conversion that copies Time keys. Exact active STL
+ownership/copy policy remains unqualified. Time hashing adds native remainder
+arithmetic/integer conversion, so admission must precede mapping/hash export too.
+No global API impossibility or failure of retained F7 synthetic results is claimed.
+
+The minimal proposed visitor keeps the completed owner alive/unmutated, selects
+an original row by const iteration, binds const Time& and associated seven-state,
+and checks native finite/range before copying, normalization, hashing, narrowing
+or Python export. Only afterward may exact h/original y/state words be exported
+under F11 premises. A separate lifetime-safe native event carrier/actual carry
+qualification is required; current-field admission cannot validate earlier
+arithmetic or certify source/FP/physical gates. Finite future cases and failure/
+lifecycle/word/provenance obligations are in ADR0261; no implementation/run.
+
+A new native build/interface is necessary for this proposed seam: rebuilt TudatPy
+visitor or separately compatible extension. No route/dependency/modified package
+is adopted. Automation is PAUSED for the user's native-adapter authorization;
+Python/Conda, F0 data/model/tolerances and all resource gates stay fixed. No new
+HTTP, code, tests, native import/build or scientific work occurred.
+
 ### F14: narrow pre-export finite-domain review (2026-11-25)
 
 [ADR0260](../../../docs/adr/0260-bound-time-construction-export-domain.md) asks

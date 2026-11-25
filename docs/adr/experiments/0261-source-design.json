@@ -1,0 +1,714 @@
+{
+  "base_revision": "df44803a4e658d398077266a281c74b1d5a99708",
+  "finite_future_qualification_cases": [
+    "Instrumentation/source proof that original-row guard precedes copying, normalization, hashing and narrowing, with a zero-unsafe-operation rejection path.",
+    "Native-type scalar predicate boundaries: negative/zero/signedzero/interior/just-below3600/3600/out-of-range/nonfinite. Do not construct hazardous Time/nonfinite map histories merely to exercise predicate rejection.",
+    "Admitted original row stays bound to its actual state/mass and fixed selector, including direction, without node reset or label substitution.",
+    "Owner expiry/mutation, dangling/mixed contexts and copied/reconstructed input rejection; no physical admission from fake bools or synthetic-only tests.",
+    "Original exported words and finite-neighbour conditional enclosure; rounded3600 cannot enter an assumed no-op reconstruction path.",
+    "Prior-arithmetic/compiled-source/FP/carry/error-bound gaps remain unavailable; actual native carry and all physical gates require their independent qualification."
+  ],
+  "pre_read_contract": {
+    "base_revision": "df44803a4e658d398077266a281c74b1d5a99708",
+    "before_first_call_path_source_read": true,
+    "contract_sha256": {
+      "CURRENT_STATE.md": "9d224e913c3ffdc2f245dbb7e0f149fc608d99f41e4ff8ea0f00e9c17ea07580",
+      "docs/adr/0261-design-original-key-pre-export-admission.md": "c29974afbc3e65e87c2cc19ff7043dbdc348a3ef1dd0089a221718299efb95df",
+      "docs/adr/README.md": "49a34030dc6c55f42228340e42127ed198b9aa085b206f49ab53936c27e7a00a",
+      "openspec/ROADMAP.md": "c48449d1a4c10e58d8df1bc475e76a80a3120acf46564cb8b71538b97f660c55",
+      "openspec/changes/refine-physical-trajectory/design.md": "beb7b786e90c2b512dc10c5bb72c684b98f6ac7952363128e6cd0909e4a1432d",
+      "openspec/changes/refine-physical-trajectory/proposal.md": "1ce8adaedc4d85f52741f1eeafc42d18d44c135f7d1a4e5e4dea1a1f5fb8da3f",
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "0424294e601132432f1f40e44aaca68e580a12a48c47e7718dcfdd5f3cde6337",
+      "openspec/changes/refine-physical-trajectory/tasks.md": "42e012dd21a1934388d76fddd32e73ecce3e53a25d71d4fd6c37be1486f2b1b2"
+    }
+  },
+  "proposed_interface": {
+    "conceptual_name": "visit_original_endpoint(owner, selector) -> admitted_native_event_and_evidence",
+    "failure": "Stop without a usable event, fallback/retargeting or physical result; do not normalize/repair an inadmissible original key.",
+    "guard": "Read native remainder in its native type; require qualified native isfinite and0<=r<T before any narrowing, with valid integer h and selected constant/FP semantics. Missing/lawless prior object/operation provenance remains unavailable.",
+    "input": "Completed live native owner, fixed chronological endpoint/direction selector and immutable arc/model/command identities; no Python-exported map, reconstructed Time or caller guard flag.",
+    "limits": "This is design only:0HTTP/0build/0tests/0native/0scientific work. A future selected build/fixture needs separately fixed finite compile/runtime/native/byte/watchdog limits; existing F7 and F0 ceilings do not expand.",
+    "output": "Only after admission export exact h, original narrowed remainder word with signed zero/rounded3600 retained, unchanged associated seven-state words and conditional F11 enclosure basis; a separate lifetime-safe native event carrier is needed for actual cross-context carry. No dangling references or reconstruction from narrowed output.",
+    "ownership": "Hold the owner alive and exclude mutation while taking const_iterator/const Time& plus associated native state/mass from the same row. No Time key or map copy, hashing, reconstruction or narrowing before admission.",
+    "source_point": "Direct C++ const-map accessor before automatic Python map conversion.",
+    "status": "not implemented or qualified"
+  },
+  "route_findings": [
+    "F7 read_arc obtains a converted Python history before sorting/float/equality/subtraction checks.",
+    "Direct simulator binding calls a const-map-reference accessor with no original-row native finite/range admission.",
+    "propagation_results similarly named property calls a templated map conversion; staticCastMapKeys copies map entries and Time keys before returning a new map.",
+    "The exact active STL converter and Python ownership/copy policy are not established by retained stl headers; no original-key Python alias guarantee is claimed.",
+    "Exposed Time hashing performs remainder arithmetic/int64 conversion, so a guard must precede Python mapping/hash export as well as copying/narrowing."
+  ],
+  "schema": "ariadna-f15-original-key-admission-design-v1",
+  "scope": {
+    "F7_synthetic_evidence_invalidated": false,
+    "HTTP": 0,
+    "SPICE_queries": 0,
+    "actual_readback_and_physical_admission": "unavailable",
+    "integration": 0,
+    "native_builds": 0,
+    "native_imports": 0,
+    "original_F0_gates_unchanged": true,
+    "production_changes": false,
+    "runtime_tests": 0,
+    "scientific_evaluations": 0
+  },
+  "source_records": {
+    "map_key_conversion": {
+      "matching_exact_package_path": "include/tudat/basics/utilities.h",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/include/tudat/basics/utilities.h",
+      "selections": [
+        {
+          "line": 908,
+          "text": "    {"
+        },
+        {
+          "line": 909,
+          "text": "        castVector.push_back( static_cast< T >( originalVector.at( i ) ) );"
+        },
+        {
+          "line": 910,
+          "text": "    }"
+        },
+        {
+          "line": 911,
+          "text": "    return castVector;"
+        },
+        {
+          "line": 912,
+          "text": "}"
+        },
+        {
+          "line": 913,
+          "text": ""
+        },
+        {
+          "line": 914,
+          "text": "template< typename T, typename S, typename U >"
+        },
+        {
+          "line": 915,
+          "text": "std::map< T, U > staticCastMapKeys( const std::map< S, U >& originalMap )"
+        },
+        {
+          "line": 916,
+          "text": "{"
+        },
+        {
+          "line": 917,
+          "text": "    std::map< T, U > castMap;"
+        },
+        {
+          "line": 918,
+          "text": "    for( auto it: originalMap )"
+        },
+        {
+          "line": 919,
+          "text": "    {"
+        },
+        {
+          "line": 920,
+          "text": "        castMap[ static_cast< T >( it.first ) ] = it.second;"
+        },
+        {
+          "line": 921,
+          "text": "    }"
+        },
+        {
+          "line": 922,
+          "text": "    return castMap;"
+        },
+        {
+          "line": 923,
+          "text": "}"
+        },
+        {
+          "line": 924,
+          "text": ""
+        },
+        {
+          "line": 925,
+          "text": "template< typename T >"
+        }
+      ],
+      "sha256": "453747db3b4a758ee74917ffbea2edf4e20261636a32256409da35e72f9851f3"
+    },
+    "native_hash": {
+      "matching_exact_package_path": "include/tudat/basics/timeType.h",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/include/tudat/basics/timeType.h",
+      "selections": [
+        {
+          "line": 111,
+          "text": "    constexpr Time( const Time& otherTime ):"
+        },
+        {
+          "line": 112,
+          "text": "        fullPeriods_( otherTime.fullPeriods_ ), secondsIntoFullPeriod_( otherTime.secondsIntoFullPeriod_ ), daysToAdd( 0 )"
+        },
+        {
+          "line": 113,
+          "text": "    {"
+        },
+        {
+          "line": 114,
+          "text": "        normalizeMembers( );"
+        },
+        {
+          "line": 115,
+          "text": "    }"
+        },
+        {
+          "line": 116,
+          "text": ""
+        },
+        {
+          "line": 117,
+          "text": "    std::size_t hash() const"
+        },
+        {
+          "line": 118,
+          "text": "    {"
+        },
+        {
+          "line": 119,
+          "text": "        std::size_t h1 = std::hash<int>{}(fullPeriods_);"
+        },
+        {
+          "line": 120,
+          "text": ""
+        },
+        {
+          "line": 121,
+          "text": "        // Quantize to microseconds to avoid floating point instability"
+        },
+        {
+          "line": 122,
+          "text": "        long long quantized_seconds = static_cast<long long>(secondsIntoFullPeriod_ * 1e12);"
+        },
+        {
+          "line": 123,
+          "text": "        std::size_t h2 = std::hash<long long>{}(quantized_seconds);"
+        },
+        {
+          "line": 124,
+          "text": ""
+        },
+        {
+          "line": 125,
+          "text": "        return h1 ^ (h2 << 1);  // Combine the two hashes"
+        }
+      ],
+      "sha256": "215ef2ee0856a6d476580ec5a4c447a4403a4d51d11bde4cbdc410e423a316d6"
+    },
+    "reader": {
+      "path": "/Users/agrudin/dev/my/ariadna/src/space_nav/_native_arc_conformance.py",
+      "selections": [
+        {
+          "line": 179,
+          "text": "def _event_observation("
+        },
+        {
+          "line": 180,
+          "text": "    exact_s: Fraction, native_time: Any, time_factory: Callable[[float], Any],"
+        },
+        {
+          "line": 181,
+          "text": ") -> dict[str, object]:"
+        },
+        {
+          "line": 182,
+          "text": "    label = float(exact_s)"
+        },
+        {
+          "line": 183,
+          "text": "    expected_time = time_factory(label)"
+        },
+        {
+          "line": 184,
+          "text": "    return {"
+        },
+        {
+          "line": 185,
+          "text": "        \"requested\": [exact_s.numerator, exact_s.denominator], \"label_hex\": label.hex(),"
+        },
+        {
+          "line": 186,
+          "text": "        \"observed_label_s\": _number(native_time.to_float(), \"native label\"),"
+        },
+        {
+          "line": 187,
+          "text": "        \"native_equal\": bool(native_time == expected_time),"
+        },
+        {
+          "line": 188,
+          "text": "        \"residual_s\": _number((native_time - expected_time).to_float(), \"native residual\"),"
+        },
+        {
+          "line": 189,
+          "text": "    }"
+        },
+        {
+          "line": 190,
+          "text": ""
+        },
+        {
+          "line": 191,
+          "text": ""
+        },
+        {
+          "line": 192,
+          "text": "def read_arc("
+        },
+        {
+          "line": 193,
+          "text": "    simulator: Any, request: NativeRequest, time_factory: Callable[[float], Any],"
+        },
+        {
+          "line": 194,
+          "text": ") -> dict[str, object]:"
+        },
+        {
+          "line": 195,
+          "text": "    \"\"\"Read native keys by direction; near equality never creates exact identity.\"\"\""
+        },
+        {
+          "line": 196,
+          "text": "    admit_transport(request)"
+        },
+        {
+          "line": 197,
+          "text": "    try:"
+        },
+        {
+          "line": 198,
+          "text": "        if simulator.integration_completed_successfully is not True:"
+        },
+        {
+          "line": 199,
+          "text": "            raise ConformanceError(\"native integration incomplete\")"
+        },
+        {
+          "line": 200,
+          "text": "        history = simulator.state_history_time_object"
+        },
+        {
+          "line": 201,
+          "text": "        if not history or len(history) < 2:"
+        },
+        {
+          "line": 202,
+          "text": "            raise ConformanceError(\"native history missing start/end\")"
+        },
+        {
+          "line": 203,
+          "text": "        ordered = sorted(history, reverse=request.direction < 0)"
+        },
+        {
+          "line": 204,
+          "text": "        for key in ordered:"
+        },
+        {
+          "line": 205,
+          "text": "            _number(key.to_float(), \"native history epoch\")"
+        },
+        {
+          "line": 206,
+          "text": "            values = history[key]"
+        },
+        {
+          "line": 207,
+          "text": "            flatten = getattr(values, \"reshape\", None)"
+        },
+        {
+          "line": 208,
+          "text": "            _state(tuple(flatten(-1) if callable(flatten) else values))"
+        },
+        {
+          "line": 209,
+          "text": "        ends = []"
+        },
+        {
+          "line": 210,
+          "text": "        for exact, key in ((request.start_s, ordered[0]), (request.end_s, ordered[-1])):"
+        },
+        {
+          "line": 211,
+          "text": "            ends.append(_event_observation(exact, key, time_factory))"
+        },
+        {
+          "line": 212,
+          "text": "        start_raw, end_raw = history[ordered[0]], history[ordered[-1]]"
+        },
+        {
+          "line": 213,
+          "text": "        def values(raw: Any) -> list[float]:"
+        },
+        {
+          "line": 214,
+          "text": "            flatten = getattr(raw, \"reshape\", None)"
+        },
+        {
+          "line": 215,
+          "text": "            return list(_state(tuple(flatten(-1) if callable(flatten) else raw)))"
+        },
+        {
+          "line": 216,
+          "text": "        if [v.hex() for v in values(start_raw)] != [v.hex() for v in request.start_state]:"
+        },
+        {
+          "line": 217,
+          "text": "            raise ConformanceError(\"native initial state/mass was reset\")"
+        },
+        {
+          "line": 218,
+          "text": "        return {"
+        },
+        {
+          "line": 219,
+          "text": "            \"mode\": request.mode, \"direction\": request.direction,"
+        },
+        {
+          "line": 220,
+          "text": "            \"start_event\": ends[0], \"end_event\": ends[1],"
+        },
+        {
+          "line": 221,
+          "text": "            \"start_state\": values(start_raw), \"end_state\": values(end_raw),"
+        },
+        {
+          "line": 222,
+          "text": "            \"provider_attempts\": 0,"
+        },
+        {
+          "line": 223,
+          "text": "            \"native_reported_function_evaluations\": reported_functions("
+        },
+        {
+          "line": 224,
+          "text": "                simulator.cumulative_number_of_function_evaluations),"
+        },
+        {
+          "line": 225,
+          "text": "            \"samples_checked\": len(history),"
+        },
+        {
+          "line": 226,
+          "text": "        }"
+        },
+        {
+          "line": 227,
+          "text": "    except ConformanceError:"
+        },
+        {
+          "line": 228,
+          "text": "        raise"
+        },
+        {
+          "line": 229,
+          "text": "    except Exception as exc:"
+        },
+        {
+          "line": 230,
+          "text": "        raise ConformanceError(f\"native history read failed: {exc}\") from exc"
+        }
+      ],
+      "sha256": "f144877186bab451a13378af22cf2f0ec528afb6fd3ed81abb009c7e999b8169"
+    },
+    "results_accessor": {
+      "matching_exact_package_path": "include/tudat/simulation/propagation_setup/propagationResults.h",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/include/tudat/simulation/propagation_setup/propagationResults.h",
+      "selections": [
+        {
+          "line": 208,
+          "text": "                    \"Error when retrieving \" + dataToRetrieve +"
+        },
+        {
+          "line": 209,
+          "text": "                    \", propagation has been performed using other object; current object only holds equations of motion solution.\" );"
+        },
+        {
+          "line": 210,
+          "text": "        }"
+        },
+        {
+          "line": 211,
+          "text": "    }"
+        },
+        {
+          "line": 212,
+          "text": ""
+        },
+        {
+          "line": 213,
+          "text": "    std::map< TimeType, Eigen::Matrix< StateScalarType, Eigen::Dynamic, 1 > >& getEquationsOfMotionNumericalSolution( )"
+        },
+        {
+          "line": 214,
+          "text": "    {"
+        },
+        {
+          "line": 215,
+          "text": "        if( !onlyProcessedSolutionSet_ )"
+        },
+        {
+          "line": 216,
+          "text": "        {"
+        },
+        {
+          "line": 217,
+          "text": "            checkAvailabilityOfSolution( \"equations of motion numerical solution\", false );"
+        },
+        {
+          "line": 218,
+          "text": "        }"
+        },
+        {
+          "line": 219,
+          "text": "        return equationsOfMotionNumericalSolution_;"
+        },
+        {
+          "line": 220,
+          "text": "    }"
+        },
+        {
+          "line": 221,
+          "text": ""
+        },
+        {
+          "line": 222,
+          "text": "    template< typename OutputTimeType >"
+        },
+        {
+          "line": 223,
+          "text": "    std::map< OutputTimeType, Eigen::Matrix< StateScalarType, Eigen::Dynamic, 1 > > getEquationsOfMotionNumericalSolutionTemplated( )"
+        },
+        {
+          "line": 224,
+          "text": "    {"
+        },
+        {
+          "line": 225,
+          "text": "        return utilities::staticCastMapKeys<OutputTimeType, TimeType, Eigen::Matrix<StateScalarType, Eigen::Dynamic, 1> >("
+        },
+        {
+          "line": 226,
+          "text": "            getEquationsOfMotionNumericalSolution( ) );"
+        },
+        {
+          "line": 227,
+          "text": "    }"
+        }
+      ],
+      "sha256": "60ab8a97b3022309755a4c432951ed82101dc4034595cec42c9a0bec48d7df8a"
+    },
+    "results_binding": {
+      "matching_exact_package_path": "lib/python3.12/site-packages/tudatpy/dynamics/propagation/expose_propagation.cpp",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/dynamics/propagation/expose_propagation.cpp",
+      "selections": [
+        {
+          "line": 531,
+          "text": ""
+        },
+        {
+          "line": 532,
+          "text": ""
+        },
+        {
+          "line": 533,
+          "text": "         :type: dict[float, numpy.ndarray]"
+        },
+        {
+          "line": 534,
+          "text": "      )doc\" )"
+        },
+        {
+          "line": 535,
+          "text": "        .def_property_readonly("
+        },
+        {
+          "line": 536,
+          "text": "            \"state_history_time_object\","
+        },
+        {
+          "line": 537,
+          "text": "            &tp::SingleArcSimulationResults< STATE_SCALAR_TYPE, TIME_TYPE >::"
+        },
+        {
+          "line": 538,
+          "text": "            getEquationsOfMotionNumericalSolutionTemplated< Time >,"
+        },
+        {
+          "line": 539,
+          "text": "            R\"doc("
+        },
+        {
+          "line": 540,
+          "text": ""
+        },
+        {
+          "line": 541,
+          "text": "         **read-only**"
+        }
+      ],
+      "sha256": "9b0d6776e30a5202de053505ccabba5d6d2c17197da851944861f251f340c16f"
+    },
+    "simulator_accessor": {
+      "matching_exact_package_path": "include/tudat/simulation/propagation_setup/dynamicsSimulator.h",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/include/tudat/simulation/propagation_setup/dynamicsSimulator.h",
+      "selections": [
+        {
+          "line": 1140,
+          "text": "     * Function to return the map of state history of numerically integrated bodies."
+        },
+        {
+          "line": 1141,
+          "text": "     * \\return Map of state history of numerically integrated bodies."
+        },
+        {
+          "line": 1142,
+          "text": "     */"
+        },
+        {
+          "line": 1143,
+          "text": "    const std::map< TimeType, Eigen::Matrix< StateScalarType, Eigen::Dynamic, 1 > >& getEquationsOfMotionNumericalSolution( )"
+        },
+        {
+          "line": 1144,
+          "text": "    {"
+        },
+        {
+          "line": 1145,
+          "text": "        return propagationResults_->equationsOfMotionNumericalSolution_;"
+        },
+        {
+          "line": 1146,
+          "text": "    }"
+        },
+        {
+          "line": 1147,
+          "text": ""
+        },
+        {
+          "line": 1148,
+          "text": "    std::map< double, Eigen::Matrix< StateScalarType, Eigen::Dynamic, 1 > > getEquationsOfMotionNumericalSolutionDouble( )"
+        },
+        {
+          "line": 1149,
+          "text": "    {"
+        },
+        {
+          "line": 1150,
+          "text": "        return propagationResults_->template getEquationsOfMotionNumericalSolutionTemplated< double >( );"
+        },
+        {
+          "line": 1151,
+          "text": "    }"
+        },
+        {
+          "line": 1152,
+          "text": ""
+        }
+      ],
+      "sha256": "bcae93ae326c59219161b86e0dc977b608652b9ef499e997e70059aca1c47c3e"
+    },
+    "simulator_binding": {
+      "matching_exact_package_path": "lib/python3.12/site-packages/tudatpy/dynamics/simulator/expose_simulator.cpp",
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/dynamics/simulator/expose_simulator.cpp",
+      "selections": [
+        {
+          "line": 15,
+          "text": "#include <pybind11/functional.h>"
+        },
+        {
+          "line": 16,
+          "text": "#include <pybind11/numpy.h>"
+        },
+        {
+          "line": 17,
+          "text": "#include <pybind11/pybind11.h>"
+        },
+        {
+          "line": 18,
+          "text": "#include <pybind11/stl.h>"
+        },
+        {
+          "line": 19,
+          "text": ""
+        },
+        {
+          "line": 20,
+          "text": "#include \"scalarTypes.h\""
+        },
+        {
+          "line": 138,
+          "text": "         :type: SingleArcSimulationResults"
+        },
+        {
+          "line": 139,
+          "text": "      )doc\" )"
+        },
+        {
+          "line": 140,
+          "text": "        .def_property_readonly("
+        },
+        {
+          "line": 141,
+          "text": "            \"state_history_time_object\","
+        },
+        {
+          "line": 142,
+          "text": "            &tp::SingleArcDynamicsSimulator< STATE_SCALAR_TYPE, TIME_TYPE >::"
+        },
+        {
+          "line": 143,
+          "text": "            getEquationsOfMotionNumericalSolution,"
+        },
+        {
+          "line": 144,
+          "text": "            R\"doc("
+        },
+        {
+          "line": 145,
+          "text": "         **read-only**"
+        },
+        {
+          "line": 146,
+          "text": ""
+        },
+        {
+          "line": 147,
+          "text": "         Shorthand for propagation_results.state_history_time_object"
+        },
+        {
+          "line": 148,
+          "text": ""
+        },
+        {
+          "line": 149,
+          "text": "         :type: dict[astro.time_representation.Time, numpy.ndarray]"
+        },
+        {
+          "line": 150,
+          "text": "      )doc\" )"
+        }
+      ],
+      "sha256": "01380844570f64427bb51a1dc244730ff9b29160df251b98eb46a47bc2102fb2"
+    }
+  },
+  "source_review_window_UTC": {
+    "elapsed_s": 298,
+    "end": "2026-11-25 03:52:04 UTC",
+    "independent_reviews_completed": true,
+    "maximum_s": 600,
+    "start": "2026-11-25 03:47:06 UTC"
+  },
+  "status": "design reviewed; native-build choice required before implementation",
+  "user_choice": {
+    "automation_id": "ariadna-m3",
+    "no_build_before_decision": true,
+    "reason": "The reviewed existing Python/history paths do not provide the required guard before export; adding that native seam changes the currently pinned build/interface surface.",
+    "required": "Whether to extend the pinned native integration surface: a small visitor in a rebuilt TudatPy binding or a separately compatible native extension. No build route or dependency is adopted yet.",
+    "status": "PAUSED"
+  }
+}

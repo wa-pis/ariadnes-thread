@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0261 — Design original-key pre-export admission](0261-design-original-key-pre-export-admission.md)
 - [0260 — Bound the Time construction/export domain](0260-bound-time-construction-export-domain.md)
 - [0259 — Inspect the pinned split-Time caster source](0259-inspect-pinned-split-time-caster.md)
 - [0258 — Look up the exact split-Time build source](0258-lookup-exact-split-time-build-source.md): exactpy312 artifact/recipe/git declarations independently audited; controller EOF leaves the one attempt incomplete. Raw failure retained, no retry or physical qualification.

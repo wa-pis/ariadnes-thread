@@ -1,3 +1,8 @@
+[ADR0261](../../../docs/adr/0261-design-original-key-pre-export-admission.md)
+completes F15 design: existing checks follow export; a const-reference native
+visitor is proposed before copy/hash/narrowing. Automation is PAUSED for the user's
+native-build/interface choice; no implementation or scientific admission follows.
+
 [ADR0260](../../../docs/adr/0260-bound-time-construction-export-domain.md) completes
 F14 conditional source reasoning: finite0<=r<3600 gives a no-op through split
 construction and copying; original-key pre-export basis remains missing. No code,

@@ -44,6 +44,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 - **AND** finite output/roundtrip cannot supply pre-export safety; any missing primitive remains unavailable and the narrow route cannot qualify arbitrary propagated keys, native carry or physical gates
 - **AND** no new HTTP, code, tests, native import, SPICE, numerical/scientific evaluation or integration occurs
 
+#### Scenario: Design admission before original-key copying and narrowing
+
+- **WHEN** ADR0261 traces the existing F7 producer/reader and direct native-history binding
+- **THEN** distinguish an available original-key reference/guard from a proposed primitive and a qualified profile, with pinned route/lifetime/key-state-mass association and pre-copy/pre-narrowing finite/range obligations
+- **AND** no post-export reconstruction/flag, substitute normalized key or current-field check certifies original provenance or earlier arithmetic; unknown stays unavailable
+- **AND** source/design reasoning<=600s adds no HTTP, code, native build/dependency, tests, SPICE/scientific evaluation or integration; a necessary user build/dependency/scientific-contract decision pauses automation before implementation
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

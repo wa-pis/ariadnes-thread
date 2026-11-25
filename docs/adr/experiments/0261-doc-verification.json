@@ -1,0 +1,29 @@
+{
+  "F15": "original-row native visitor proposed; no build/profile adopted; automation PAUSED for user choice",
+  "HTTP": 0,
+  "actual_native_readback_and_physical_admission": "unavailable",
+  "anchors": 5,
+  "base_revision": "df44803a4e658d398077266a281c74b1d5a99708",
+  "changed_markdown_sha256": {
+    "CURRENT_STATE.md": "04563582dfb659bfe6611c691345673f87e50174e0cfc56ffbbc62cc5be64310",
+    "docs/adr/0261-design-original-key-pre-export-admission.md": "db7ba865107b74d71465782b64899417a253d064862c78bfdeb358438685f3dd",
+    "docs/adr/README.md": "49a34030dc6c55f42228340e42127ed198b9aa085b206f49ab53936c27e7a00a",
+    "openspec/ROADMAP.md": "2da0e25b26c8888eec3f3fc51cb718f655d8f22129e5ae1b72659731b2fb50a4",
+    "openspec/changes/refine-physical-trajectory/design.md": "c72a65fa08f16c01db8f10dee7d16fa11d40b2ec265b9345821c0ad399fe5226",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "cf5424dfb6b528a2ebb8374a321d8f768ccebf764f35c3fbf9dafab4e2a2a031",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "0424294e601132432f1f40e44aaca68e580a12a48c47e7718dcfdd5f3cde6337",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "4672318ee7946c7549c29fb6034f963506ca1a667915cfa5f1f870f700e75269"
+  },
+  "current_state_lines": 59,
+  "git_diff_check": "passed",
+  "independent_source_reviews": "Two source/design reviews completed within298s; final documentary review separate",
+  "local_links": 594,
+  "new_scientific_work": false,
+  "production_code_unchanged": true,
+  "runtime_tests_rerun": false,
+  "schema": "ariadna-f15-doc-verification-v1",
+  "source_review_sha256": "2df87e927ea4a38b81113f726a3724e941a87a14c1966c0297eba464fa2ba0fe",
+  "status": "passed: proposed native-admission design only; user build choice pending",
+  "strict_openspec": "passed",
+  "unchanged_prior_non_markdown_files": 1173
+}
