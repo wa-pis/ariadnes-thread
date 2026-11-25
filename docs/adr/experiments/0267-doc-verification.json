@@ -1,0 +1,83 @@
+{
+  "schema": "ariadna.f18.design-documentary-verification.v1",
+  "status": "passed_source_design_and_documentary_checks",
+  "checked_utc": "2026-11-25T11:05:33.740217+00:00",
+  "base_revision": "4a6f5d8275d8f53e1e0eaa7d2c7c4c6c9d717509",
+  "protected_prior_non_markdown_blobs_unchanged": 1190,
+  "local_links_excluding_pending_receipt": 610,
+  "anchors": 5,
+  "pending_receipt_links": "Resolved by exclusive create and existence/JSON readback below; no previous artifact overwritten.",
+  "current_state_lines": 43,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "dabb4de7c668a8846c06bbc55bdabe8a706fbe064f6836e6fdee5925e810b0fb",
+    "docs/adr/README.md": "21af7342c26da9be9300f64152143a3ee26f7a9ba7895e4480ec67f976abcb59",
+    "openspec/ROADMAP.md": "07a2229558c945582dd979108e2e3165d8d16d7d2a77aca60961dd1b53fea23b",
+    "openspec/changes/refine-physical-trajectory/design.md": "8c37237c2d2ea92ba553b8ca0c0259740055c3066644c60f1ed4fd17e1f9e41c",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "fda9605f228a00650e81080aa515119de9614baea17f84f35b83b820dcde9924",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "7028f15cba255c27f19bac8141455236c05fabeb77188ab2a406bf0366042e36",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "3da4b9be251394e9b9886b94a8d264e5bf3b420345bf268d49206607eef68075",
+    "docs/adr/0267-design-actual-owner-endpoint-qualification.md": "af5082b97ba5f16957ec0f3f1f9eaa968fb1fd078d1b1864319fdc207ecc98d5"
+  },
+  "diff_whitespace": "passed",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "archive_syntax_hashes_sizes": "passed",
+  "archive_sha256": "26fb772573b5195cf4393af7960a9ae088603e0e4bd6623bcf6d3853c416059e",
+  "result_sha256": "e79b54154c4dd0b3572beafbe56a1e418db4e7087bceb55aa5e28629997da4a9",
+  "source_design_seconds": 549.6568397078663,
+  "project_runtime_tests_ruff_ci": "Not repeated; code/tests unchanged. Zero new native calls/formula evaluations/SPICE/integration.",
+  "qualified_scope": "Source-backed serial-owner fixture design only; proposed native packet remains unexecuted/unqualified.",
+  "scheduler": "PAUSED",
+  "volume": "Read-only then detached, preserved image.",
+  "independent_documentary_review": {
+    "schema": "ariadna.f18.final-documentary-review.v1",
+    "status": "passed_no_concrete_documentary_blocker",
+    "completed_utc": "2026-11-25T11:04:49.460393+00:00",
+    "scope": "Documentary-only comparison against sealed0267reviews/receipts/archive; source-design episode stayed closed after549.6568397078663s. No detached-volume access or new source reasoning.",
+    "archive": {
+      "path": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0267-owner-readback-design-evidence.zip",
+      "sha256": "26fb772573b5195cf4393af7960a9ae088603e0e4bd6623bcf6d3853c416059e",
+      "bytes": 35553,
+      "members": 11,
+      "uncompressed_bytes": 100680,
+      "all_member_hashes_and_sizes_match_result_manifest": true,
+      "json_syntax_passed": true
+    },
+    "result_sha256": "e79b54154c4dd0b3572beafbe56a1e418db4e7087bceb55aa5e28629997da4a9",
+    "consistency": [
+      "Sealed parent elapsed549.6568397078663s<900 and corrected independent review529.6107437922619s agree.",
+      "Both initial review-summary errors and corrections remain explicit: F7 already has seven-state coupling; Euclidean position/velocity gates are preserved.",
+      "Design proposes3factories/2analytic arcs/8owner calls only; no native packet, integration, formula/oracle evaluation, tests or implementation occurred in0267.",
+      "Serial bound-method and cleared-result scope, own-start rational oracle, exact initial words/metadata, zero-sign record and absence of event identity/carry/concurrency/FP/physical qualification remain explicit.",
+      "F18.1 documentary design only complete; F18.2 private artificial implementation/qualification is next and F18.3 needs separate explicit authority. F17 and historical failedF17.1 remain unchecked; scheduler declaredPAUSED.",
+      "Prior0266full operational comparison is identified as prior evidence;0267does not claim a new whole-prefix scan.",
+      "Changed tracked files are the seven intended Markdown files; new ADR0267/result/archive are the only new artifacts before the pending receipt. No code or prior historical evidence change appears in git status/diff."
+    ],
+    "links": {
+      "local_checked": 611,
+      "markdown_anchors_checked": 5,
+      "errors": [],
+      "expected_pending": [
+        "docs/adr/experiments/0267-doc-verification.json"
+      ]
+    },
+    "current_state_lines": 43,
+    "diff_whitespace_passed": true,
+    "limitations": "Protected-history full hashes, strict OpenSpec and creation of the pending documentary receipt remain parent-owned checks; this verdict is not runtime or scientific qualification.",
+    "activity": {
+      "source_reasoning": 0,
+      "detached_volume_access": 0,
+      "native_imports_or_calls": 0,
+      "tests": 0,
+      "builds": 0,
+      "resource_copies": 0,
+      "repository_edits": 0
+    },
+    "handles": "No persistent open file/volume handles retained."
+  },
+  "independent_documentary_review_sha256": "7bd15b4f5d8b13326ee28c16f4a19a2a16f00034520b80738c5f611f5a97512f",
+  "source_design_scope": "Source/design only completed549.6568397078663s<900; all native/scientific/formula execution zero.",
+  "scheduler_confirmation": "Official automation_update succeeded; ariadna-m3 config readback PAUSED, prompt updated for completed0267design only."
+}

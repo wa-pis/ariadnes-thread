@@ -1,5 +1,36 @@
 ## Context
 
+### F18: actual-owner endpoint qualification (2026-11-25)
+
+[ADR0267](../../../docs/adr/0267-design-actual-owner-endpoint-qualification.md)
+selects the existing simulator method, not a results-object accessor or another
+native build. Source/design only<=900s including independent review; zero imports,
+tests, formulas evaluated, SPICE, HTTP, payload copies or integration.
+
+The proposed private fixture reuses F7 coupled translation/constant mass and
+tighter coast RKDP87 on0→1000s and1000→0s, with independently fixed seven-state
+literal starts, constant y-acceleration0.1word and mass2000kg. Spacecraft only;
+SSB/J2000 native labels carry SYNTHETIC_INERTIAL/elapsed metadata. Explicitly
+retain results, disable environment result installation, check successful
+condition termination and processed-state meaning before reading. Eight fixed
+calls cover never-run refusal, two forward selectors, wrong schema, retained
+bound method after original-name release, clear-data refusal and two reverse
+selectors. No state-history map export or native Time reconstruction. Retained
+primitive tuples survive clearing; no expiry/concurrency/destruction claim.
+
+Independent exact-rational own-start polynomial audit keeps0.001m/1e-6m/s/1e-9kg
+gates and exact initial words. Epoch0/1000 numeric agreement preserves zero sign
+without proving native event identity/carry/prior arithmetic. F18.2 first qualifies
+a private runner/auditor on injected data and required frozen regressions; no
+new private packet. F18.3 later needs explicit authority and pinned runnable
+profile: <=600s preflight,3factories/2analytic arcs/8visitor calls/100000uniform-
+acceleration callback entries (not all RHS),60s inclusive producer45/audit10/
+finalize5,64KiBinput/log,2MiB structured evidence, no retries or retuning.
+Reuse private kernel/local5files; no new acquisition/build/operational adoption.
+Original F17 zero-propagation packet and old clocks/ledgers are unchanged.
+Design acceptance is not execution authority or owner/physical qualification;
+F17/F17.1 and all physical gates stay open, scheduler PAUSED.
+
 ### F17: isolated native build (2026-11-25)
 
 [ADR0263](../../../docs/adr/0263-authorize-isolated-native-build.md) records the user's

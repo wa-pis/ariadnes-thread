@@ -1,3 +1,10 @@
+[ADR0267](../../../docs/adr/0267-design-actual-owner-endpoint-qualification.md)
+completes F18.1 source-backed design: the actual simulator owner method is
+reachable without rebuilding. Two fixed synthetic coast arcs/eight ordered calls
+and an independent polynomial audit are specified; nothing was executed.
+F18.2 private artificial implementation precedes any separately authorized F18.3
+native packet. All owner/physical qualifications stay open, automation PAUSED.
+
 [ADR0266](../../../docs/adr/0266-verify-provisioned-native-fixture.md) completes
 one explicitly authorized manufactured native packet after exact offline provision:
 all11cases and the independent offline audit pass in4.908203s inclusive through

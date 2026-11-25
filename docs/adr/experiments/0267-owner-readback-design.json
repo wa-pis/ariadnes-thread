@@ -1,0 +1,111 @@
+{
+  "schema": "ariadna.f18.owner-readback-design-result.v1",
+  "base_revision": "4a6f5d8275d8f53e1e0eaa7d2c7c4c6c9d717509",
+  "status": "source_backed_design_complete_no_native_execution",
+  "completed_source_design_elapsed_s": 549.6568397078663,
+  "ceiling_s": 900,
+  "source_route": "Existing SingleArcSimulator<double, Time>._ariadna_original_endpoint; not results-object method; no new build prerequisite.",
+  "fixture": "Proposed2independently-started synthetic constant-field coasts,3factories/8visitorcalls; separate exact-rational own-start polynomial auditor.",
+  "qualified_now": "Source/design and documentary consistency only. Actual owner/lifetime/native packet unexecuted.",
+  "future_authority": "F18.2 artificial runner/auditor qualification first; F18.3 requires explicit authority. No new execution from design acceptance.",
+  "source_reviews": "Initial owner summary correction (F7 already7state) and independent norm correction (Euclidean) preserved with original receipts; final draft PASS.",
+  "source_pins": [
+    {
+      "path": "/private/tmp/ariadna-f17-0263/volume/source/src/tudatpy/dynamics/simulator/expose_simulator.cpp",
+      "sha256": "4fe1f7e99468430461eb2add1170e4a4d4f0206f0f1b68378f777df1a94eefec",
+      "bytes": 40384,
+      "matches_prior": true
+    },
+    {
+      "path": "/private/tmp/ariadna-f17-0263/volume/fixture_runner.py",
+      "sha256": "d214fe29242233548248589bb816ba11130838780121033e07c6a7db15aba252",
+      "bytes": 13052,
+      "matches_prior": true
+    },
+    {
+      "path": "/private/tmp/ariadna-f17-0263/volume/env/lib/python3.12/site-packages/tudatpy/kernel.so",
+      "sha256": "04f7af4c8429c09aec9a21f50888e7e4a979e69184e8abc530e17e88e4cb4941",
+      "bytes": 41189000,
+      "matches_prior": true
+    }
+  ],
+  "no_new_work": {
+    "native_imports_calls": 0,
+    "runtime_tests": 0,
+    "builds": 0,
+    "http": 0,
+    "resource_payload_copies": 0,
+    "spice_queries": 0,
+    "integration": 0,
+    "scientific_oracle_formula_evaluations": 0
+  },
+  "preservation": {
+    "schema": "ariadna.f18.read-only-detach.v1",
+    "completed_utc": "2026-11-25T11:03:33.220152+00:00",
+    "command": [
+      "/usr/bin/hdiutil",
+      "detach",
+      "/private/tmp/ariadna-f17-0263/volume"
+    ],
+    "exit_code": 0,
+    "stdout": "\"disk4\" ejected.",
+    "mounted_environment_absent": true,
+    "image_preserved": true
+  },
+  "operational_manifest": "No new full scan; read-only image/pinned bytes checked. Original0266full71459path comparison is retained as prior actual observation.",
+  "limits": "All prior physical gates, build clocks/closed ledgers,8GiB scratch/2GiB acquisition and497045495B balance preserved.",
+  "scheduler": "ariadna-m3 PAUSED",
+  "archive": {
+    "name": "0267-owner-readback-design-evidence.zip",
+    "sha256": "26fb772573b5195cf4393af7960a9ae088603e0e4bd6623bcf6d3853c416059e",
+    "bytes": 35553,
+    "expanded_bytes": 100680,
+    "members": {
+      "profile.json": {
+        "bytes": 1084,
+        "sha256": "23f444997c4883d67d98fa2a54768b7b2ab69be38668cf2f30417db416b3d09b"
+      },
+      "parent-source.json": {
+        "bytes": 8050,
+        "sha256": "73740c8f1478c486e7bfa562679386d4de57614ca0defbb9f007a8beeef54c2a"
+      },
+      "owner-source-review-original.json": {
+        "bytes": 8854,
+        "sha256": "dcd63c00f86fd9ecfd052a1288e61d36b0ea8033aa4cd55ad4031eb3d85fac91"
+      },
+      "owner-source-review.json": {
+        "bytes": 11652,
+        "sha256": "c19b0a582e9040d20b3b7f3c0ccf9f0ef87e76a7ed4700660e75e607b31c2245"
+      },
+      "owner-source-review-correction.json": {
+        "bytes": 4788,
+        "sha256": "d5c96e02c67860cde8a668e96a563f170aa2230d7e2f867043d571ba4bf5d718"
+      },
+      "owner-source-excerpts.txt": {
+        "bytes": 33146,
+        "sha256": "7cce2e4fa4fe6e268b6fd80c1fed3ef6969f92c7ac78619b0eb07a65aa648bc7"
+      },
+      "independent-design-review.json": {
+        "bytes": 13307,
+        "sha256": "ae3feb8536d656dc1f457122c5e0f3e3897f2a18ff59034a4cf0f918ae49dc95"
+      },
+      "independent-design-review-corrected.json": {
+        "bytes": 15540,
+        "sha256": "a743a5218c8f9bfb3012708a9696b1616abb2cf5ccfdca83d75c720a70e06c84"
+      },
+      "read-only-pins.json": {
+        "bytes": 1296,
+        "sha256": "9346b9fc353a244bdfb4d80c8ca8dcff424df4a5322c078b97ecad6888dc394a"
+      },
+      "source-design-completion.json": {
+        "bytes": 2640,
+        "sha256": "9ff2d30b6303ab232bc5c92748b2b067b7077e2173ba9d06d1e2053667acfdbf"
+      },
+      "detach.json": {
+        "bytes": 323,
+        "sha256": "7022018025f3f37986292358ca4f2f616ff98f8e68a348ca420a10a3ddc5730d"
+      }
+    }
+  },
+  "runtime_pytest_ruff_ci": "Not rerun; no runtime/test code changes."
+}

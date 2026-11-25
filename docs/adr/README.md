@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0267 — Actual-owner endpoint design](0267-design-actual-owner-endpoint-qualification.md) — source-backed two-arc/eight-call proposal; no native execution or owner qualification.
 - [0266 — Provisioned native fixture](0266-verify-provisioned-native-fixture.md) — one11-case manufactured packet and independent audit pass; owner/physical gates open.
 - [0265 — Native import-resource inventory](0265-inventory-native-import-resources.md) — five source-derived files pinned; no provisioning/import, automation PAUSED.
 - [0264 — Prepared original-row fixture packet](0264-qualify-original-row-fixture-packet.md) — one resumed packet failed at import before fixture calls; independent failure audit, PAUSED.

@@ -87,6 +87,30 @@ qualification of the installed exporter, actual event carry and physical gates.
 - **AND** one exclusive fresh packet SHALL retain60s inclusive through fsynced completion,5s finalization reserve,11external calls/64KiBparameters/64KiBlogs/2MiB evidence/zero simulator or trajectory, reuse unchanged qualified controller/auditor logic and stop without native retry or new files on any drift/failure
 - **AND** an independent saved-word audit and separate resource/time/preservation receipts SHALL distinguish successful manufactured outcomes from production-owner/carry/prior-arithmetic/ABI/physical qualification; no build/install/HTTP/SPICE/integration or operational adoption SHALL occur, historical failed packets SHALL remain unchanged and scheduler SHALL remain PAUSED
 
+### Requirement: Qualify actual-owner readback on a fixed analytic fixture
+
+Actual-owner preparation SHALL follow ADR0267 and retain every existing F0 gate.
+Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
+
+#### Scenario: Establish the reachable owner route without native probing
+
+- **WHEN** F18.1 reviews the retained factory, private binding, result settings and F7 source
+- **THEN** within900s including independent source/design review it SHALL pin the actual simulator method/type, processed-row meaning and retention/clear route, or record a precise missing prerequisite
+- **AND** native imports/tests/builds, scientific/formula evaluations, payload copies, HTTP, SPICE and integration SHALL remain zero; automation SHALL remain PAUSED
+
+#### Scenario: Freeze an independently checkable serial owner packet
+
+- **WHEN** the proposed fixture is prepared for later implementation
+- **THEN** two fixed constant-acceleration/constant-mass analytic coast arcs with independent literal starts SHALL retain ADR0267's eight ordered owner calls, successful condition termination, seven-state metadata, exact initial words and own-start rational terminal gates0.001m/1e-6m/s/1e-9kg
+- **AND** max/min selectors SHALL be distinguished from propagation direction, retained bound ownership from expiry, performed from successful completion and signed exported zero from native Time identity; no history-map export, native carry or concurrency proof SHALL be inferred
+
+#### Scenario: Separate artificial qualification from a new analytic native attempt
+
+- **WHEN** F18.2 qualifies the private runner/auditor and artificial failure controls
+- **THEN** the eight calls, independent oracle, metadata/lifecycle errors, precharged counters and byte/time/watchdog limits SHALL be verified alongside required frozen regressions, Ruff, independent review and strict OpenSpec, without executing the new owner packet
+- **AND** only separately explicit F18.3 authority after qualification SHALL permit one pinned <=3factory/2analytic-integration/8visitor/100000acceleration-callback attempt under600s preflight,60s inclusive45/10/5 phases,64KiBinput/log and2MiB structured evidence
+- **AND** callback counts SHALL NOT be presented as all native RHS; failed/unavailable attempts SHALL consume authority without retry, added data, changed gates/build/dependencies/operational adoption or reset old clocks/ledgers; all physical obligations and historical F17 failures SHALL remain intact
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

@@ -107,6 +107,13 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0267](../docs/adr/0267-design-actual-owner-endpoint-qualification.md) completes
+F18.1 source-only design for the actual simulator owner route, with no new build
+or native execution. Two fixed synthetic coast arcs/eight ordered owner calls,
+independent own-start polynomial gates and separate artificial/native stages are
+specified. Proposed future packet3factories/2analytic arcs/8calls remains
+unexecuted and needs explicit authority after runner qualification. F17/F17.1,
+concurrency/carry/prior arithmetic and all physical gates remain open; PAUSED.
 [ADR0266](../docs/adr/0266-verify-provisioned-native-fixture.md) records that next
 explicit authorization and completes F17.3:58535B exact station provision, all5files
 verified, independent prelaunch reviews and one native packet/one offline audit.
