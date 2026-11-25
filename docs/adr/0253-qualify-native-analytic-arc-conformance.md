@@ -3,7 +3,7 @@
 Date: 2026-11-25 (Europe/Samara)
 Decision status: accepted (ADR0252 implementation, limited synthetic qualification)
 Implementation: complete fixed private native fixture and independent oracle/auditor; no physical adapter adoption
-Verification:147 focused,7436 portable and413 live passes; first six-arc fixture and independent analytic audit pass; documentation/strict receipt linked below
+Verification:147 focused,7436 portable and413 live passes; first six-arc fixture and independent analytic audit pass; documentation/strict receipt linked below; subsequent source-bound CI45519016007 verified
 Scope / milestone: F7 / M3 preparation in the sole active change
 Base revision: `ff2c5db657db90204ec5b2fb4c1402ee8cd1befb`, clean dev before four new files
 Related OpenSpec: [requirement](../../openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md#requirement-check-native-arcs-on-the-existing-analytic-witness), [contract](../../openspec/changes/refine-physical-trajectory/design.md#f6-native-analytic-arc-conformance-2026-11-25), [tasks](../../openspec/changes/refine-physical-trajectory/tasks.md)
@@ -87,6 +87,30 @@ records local links/anchors, prior non-Markdown byte preservation, diff and stri
 OpenSpec checks. CI is unobserved at this local qualification; a later source-bound
 CI result must use new evidence, preserving this receipt.
 No previous experiment artifact, scientific baseline or legacy model is changed.
+
+## Subsequent source-bound CI verification
+
+[CI45519016007](https://github.com/wa-pis/ariadnes-thread/actions/runs/45519016007)
+completes successfully on exact source commit
+`b5fc153416fe3f112306e334610a9b3e393d01da`. All7891 local/CI case IDs match,
+with7812 passes and79 skips, zero failures/errors and all148 new F7 cases passing,
+including the bounded native fixture. The exact per-lane skip ID/reason inventory
+is unchanged from ADR0251:42 archival and37 platform cases, all37 passing locally.
+Four source/test hashes match both the original qualification and the CI commit;
+the resolved CI environment retains Python3.12.14/TudatPy1.0.0/NumPy1.26.4.
+
+The new [CI receipt](experiments/0253-ci-verification.json) and original
+[JUnit/environment ZIP](experiments/0253-ci-validation-results.zip) preserve
+these checks, including the archive SHA-256 matched to GitHub's artifact digest.
+The uploaded ZIP contains JUnit and the resolved environment, including native
+producer/audit data in the `ariadna_f7_native_conformance` suite property of
+`live.xml`; separate raw child JSON files were not uploaded. The CI receipt binds
+that property and its three runtime source hashes; the original local raw fixture
+remains unchanged. An independent read-only inventory/hash review agrees. The historical
+local qualification and CI-unobserved JSON remain unchanged. This follow-up runs
+no tests, native propagation, SPICE or scientific calculation; documentation and
+strict checks are recorded in the new
+[CI documentation receipt](experiments/0253-ci-doc-verification.json).
 
 ## Consequences and revisit conditions
 

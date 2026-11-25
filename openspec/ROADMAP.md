@@ -41,6 +41,9 @@ status stay frozen. The first six-arc native fixture and separate analytic audit
 pass both original references and all12 producer-observed native-time checks.
 This qualifies only the existing synthetic integer-event seam. F0 event
 transport, full-force seed/derivatives/guards and endpoint bounds remain open.
+Source-bound CI45519016007 onb5fc153 passes7812cases/79skips; all148new
+pass and7891local/CI IDs match. The exact42archive+37platform skips remain
+unchanged; a separate receipt and original ZIP preserve source-bound evidence.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

@@ -2,6 +2,9 @@
 F7 fixed synthetic native conformance:147 focused/7436 portable/413 live pass,
 including six forward/reverse native arcs and independent analytic audit.
 This does not adopt a physical optimizer/adapter or establish F0 feasibility.
+Subsequent CI45519016007 on exactb5fc153 passes7812cases/79skips, including
+all148new F7 cases;7891local/CI IDs and unchanged skip reasons are verified
+against the original retained JUnit/environment ZIP and a new immutable receipt.
 
 F4 preparation is limited by [ADR0250](../../../docs/adr/0250-design-coupled-coordinate-bridge.md)
 to a private normalized-node/exact-event/artificial-arc bridge contract.

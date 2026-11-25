@@ -11,7 +11,9 @@ First bounded native fixture and independent dual-reference audit pass six arcs,
 6native/7436provider entries;12 native-time comparisons are producer-observed.
 Ruff/two reviews pass; immutable raw/JUnit/freeze and doc/strict evidence in ADR.
 Integer-event synthetic seam only; no physical/native adapter or optimizer adoption.
-CI for this source is unobserved at local qualification; preserve a separate receipt.
+Source-bound CI45519016007 onb5fc153 passes7812cases/79skips; all148new pass.
+All7891 local/CI IDs match,42archive+37platform skip inventory unchanged.
+Original JUnit/environment ZIP and new CI receipt preserve prior local evidence.
 [ADR0251](docs/adr/0251-qualify-coupled-coordinate-bridge.md) retains F5 interface
 qualification and successful source-bound CI45507393487 on7a1a1da; do not repeat.
 

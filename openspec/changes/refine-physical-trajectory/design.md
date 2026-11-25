@@ -132,6 +132,9 @@ Decimal auditor accepts both references; all12 native-time equality observations
 are producer-observed, not inferred from labels. Native/provider counts are
 6/7436. No physical adapter, arbitrary-event support, safe full-force seed or
 F0 witness is admitted by this result.
+Source-bound CI45519016007 onb5fc153 subsequently passes7812cases with79skips
+and all148new F7 cases;7891local/CI IDs and the exact prior skip inventory match.
+ADR0253 preserves the original artifact ZIP and a separate CI-verification receipt.
 
 #### Physical adoption remains separate
 

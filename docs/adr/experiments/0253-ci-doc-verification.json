@@ -1,0 +1,37 @@
+{
+  "anchors": 5,
+  "base_revision": "b5fc153416fe3f112306e334610a9b3e393d01da",
+  "changed_markdown_files": [
+    "CURRENT_STATE.md",
+    "docs/adr/0253-qualify-native-analytic-arc-conformance.md",
+    "docs/adr/README.md",
+    "openspec/ROADMAP.md",
+    "openspec/changes/refine-physical-trajectory/design.md",
+    "openspec/changes/refine-physical-trajectory/proposal.md",
+    "openspec/changes/refine-physical-trajectory/tasks.md"
+  ],
+  "ci_verification_sha256": "8be53df42673a9b3fe8939d05f3c85ecba43ddca57054d160028c285381505e5",
+  "combined_ci_case_ids_sha256": "1da86c89773ec173bacd158b07c20a1a3474316e0256d2e9919b316ea59cf25a",
+  "current_state_lines": 50,
+  "git_diff_check": "passed",
+  "independent_review": {
+    "checks": "Original ZIP digest, exact source revision and source/test hashes, all7891case IDs, all148new passes, per-lane unchanged79skip ID/reason inventory",
+    "new_scientific_work": false,
+    "status": "passed; no blockers"
+  },
+  "local_links": 563,
+  "new_integrations": 0,
+  "new_native_propagations": 0,
+  "new_optimizer_calls": 0,
+  "new_spice_queries": 0,
+  "runtime_tests_rerun": false,
+  "schema": "ariadna-f7-ci-doc-verification-v1",
+  "scope": "CI artifact/documentation verification; production code/tests unchanged",
+  "status": "passed",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1147
+}
