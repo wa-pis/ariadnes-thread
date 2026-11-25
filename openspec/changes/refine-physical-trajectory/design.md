@@ -1,5 +1,23 @@
 ## Context
 
+### F18.8 artificial never-run setup qualification (2026-11-25)
+
+[ADR0274](../../../docs/adr/0274-qualify-artificial-owner-setup.md) qualifies
+only new private setup probe/controller and independent stdlib auditor. Exact
+profile/source/mode/context/arguments/refusal/count gates, strict1/0/1scope,
+8durable markers/raw-report hash binding and qualified watcher/evidence helpers
+are checked using fake kernels/owners/hooks/processes. Native mode forbids injected
+callbacks/preloaded TudatPy; no new native default factory route ran.
+Independent review found producer.json durability claimed before fsync; corrected
+producer.json fsync now precedes the45s observation/audit gate. Failed, late and
+stalled report-fsync tests refuse success even with visible complete markers.
+Prefinal receipts remain separate from observed post-fsync; runtime/resource/
+source/bootstrap/PGID-before-import admission still belongs to future F18.9.
+215artificial cases included in8063portable passes;413live/42historical skips,
+all1555files/status frozen, Ruff/review/strict PASS. Existing live scope retained.
+Old sources/evidence and physical gates unchanged. F18.8 alone complete; PAUSED
+for distinct F18.9 decision, no new native setup/old packet replay or integration.
+
 ### F18.7 minimal never-run owner observation (2026-11-25)
 
 [ADR0273](../../../docs/adr/0273-design-never-run-owner-observation.md) accepts

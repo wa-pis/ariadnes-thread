@@ -1,3 +1,9 @@
+[ADR0274](../../../docs/adr/0274-qualify-artificial-owner-setup.md) qualifies
+F18.8 artificial implementation: 215new cases, 8063portable+413live pass,
+42unchanged archival skips, frozen1555files/Git status, Ruff/review/strict PASS.
+Report-fsync durability gap fixed and regression-checked before observation/audit.
+No new native setup or physical study; PAUSED for distinct F18.9 decision.
+
 [ADR0273](../../../docs/adr/0273-design-never-run-owner-observation.md) accepts
 only the minimal never-run setup observation design and artificial preparation.
 F18.7 source/design complete; F18.8 next, F18.9 native execution not authorized.

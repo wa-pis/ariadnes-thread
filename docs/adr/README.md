@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0274 — Artificial never-run setup diagnostic](0274-qualify-artificial-owner-setup.md) — F18.8 qualified; exact call/refusal and durability controls, no new native setup. PAUSED for F18.9.
 - [0273 — Never-run owner observation](0273-design-never-run-owner-observation.md) — minimal1factory/0integration/1visitor design; artificial preparation next, separate native decision. Automation resumed.
 - [0272 — Once-only cold import diagnostic](0272-record-cold-import-diagnostic.md) — F18.6 complete: six markers/audit/outer finalization in0.847950s; old timeout cause and owner/physical gates remain open.
 - [0271 — Artificial import-only diagnostic](0271-qualify-artificial-import-probe.md) — F18.5 complete:124artificial/7848portable+413live passes; F18.6 unexecuted, no owner or physical qualification.

@@ -1,0 +1,282 @@
+{
+  "schema": "ariadna.f18.owner-setup-artificial-qualification.v1",
+  "status": "passed_artificial_preparation_only",
+  "base_revision": "a1963db7bf7cbf8195d0dd94dababcbba17c6ca1",
+  "recorded_utc": "2026-11-25T15:56:47.644879+00:00",
+  "profile_sha256": "9c4a74410b88148a778f6acc89ecffba7ccd114da7bb471e7a8a1c0fbb406edd",
+  "new_sources": {
+    "src/space_nav/_owner_setup_probe.py": {
+      "bytes": 21853,
+      "sha256": "1d0e1d05d66b0fbbd91fa6c943772e2b62362c94620840df9c3a9100f4e0295b"
+    },
+    "src/space_nav/_owner_setup_audit.py": {
+      "bytes": 11542,
+      "sha256": "91f81ffa4dc37d05ed586a4871cc89a575e380cb4f577de71e128eecb53bffe3"
+    },
+    "tests/test_owner_setup_probe.py": {
+      "bytes": 36108,
+      "sha256": "087614f558efd0d8cdcb66b290f6cc3443f7198bbab3786de0c4f11a3d46c6f3"
+    },
+    "tests/test_owner_setup_audit.py": {
+      "bytes": 16779,
+      "sha256": "55e51c43c177cf00a12890723eaa15949459c43a63170207a6351573dc3843be"
+    }
+  },
+  "focused_producer": {
+    "cases": 74,
+    "passed": 74,
+    "failed": 0,
+    "skipped": {},
+    "new_setup_cases": 74,
+    "sha256": "3208d0c28d981a89cfc9ef1ad3cbcbba25b5fb3b9cb96e14433210c624079333",
+    "bytes": 76892
+  },
+  "focused_auditor": {
+    "cases": 141,
+    "passed": 141,
+    "failed": 0,
+    "skipped": {},
+    "new_setup_cases": 141,
+    "sha256": "d629c081d6ed63ff4d603fb1561ca907a65ea744f1dd06340ca9789cae52cdd5",
+    "bytes": 152162
+  },
+  "focused_passed": 215,
+  "portable": {
+    "cases": 8105,
+    "passed": 8063,
+    "failed": 0,
+    "skipped": {
+      "tests.test_bezier_local_targeting::test_retained_pinned_binding_selects_accepted_158_without_native_work": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[endpoint]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[residual]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[mass]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[seed]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[accepted]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[command]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_corrected_inputs::test_metadata_loader_matches_frozen_contract": "exact historical-environment check; enable with --run-archive",
+      "tests.test_corrected_inputs::test_clean_process_imports_no_scientific_package": "exact historical-environment check; enable with --run-archive",
+      "tests.test_corrected_integrator::test_pinned_controller_and_coefficients_without_native_setup[exact-runtime]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_earth_coast_study::test_saved_a_baselines_validate_without_physics": "exact historical-environment check; enable with --run-archive",
+      "tests.test_fixed_gravity_inputs::test_current_pinned_interpreter_identity": "exact historical-environment check; enable with --run-archive",
+      "tests.test_moving_inputs::test_hash_bound_input_loader_exposes_saved_zero_reference": "exact historical-environment check; enable with --run-archive",
+      "tests.test_moving_inputs::test_real_metadata_preflight_stays_stdlib_only": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[0]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[1]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[2]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[3]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[4]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[5]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[6]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[7]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[8]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[9]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[10]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[11]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[12]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[13]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[14]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[15]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[16]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[17]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[18]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[19]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[20]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[21]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[22]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[23]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[24]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[25]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[26]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[27]": "exact historical-environment check; enable with --run-archive"
+    },
+    "new_setup_cases": 215,
+    "sha256": "6c4697ee54d4d9af59b7575460306be011cb42baa3bd265730f081a1bab73fda",
+    "bytes": 3693358
+  },
+  "live": {
+    "cases": 413,
+    "passed": 413,
+    "failed": 0,
+    "skipped": {},
+    "new_setup_cases": 0,
+    "sha256": "54d6b95e5a60833e60e8e3996befe37769e74f6ab475cc296e9c42e136a5628c",
+    "bytes": 101714
+  },
+  "combined_passed": 8476,
+  "focused_not_double_counted": true,
+  "case_ids_disjoint": true,
+  "all_old_cases_and_skip_reasons_unchanged": true,
+  "frozen_files_unchanged": 1555,
+  "git_status_unchanged": true,
+  "regression_exit": {
+    "exit_code": 0,
+    "elapsed_s": 805.6723139169626,
+    "finished_utc": "2026-11-25T15:56:39.283477+00:00"
+  },
+  "independent_code_review": {
+    "status": "PASS",
+    "sha256": "eae3ef7b5d2d4d69a794de03443834314aebc0265450cecf6b4a2244eea9e612",
+    "report_fsync_finding_and_fix": "Initial code-review-initial.json preserved. Report is now fsynced before observation/audit, failed/stalled report-fsync artificial regressions added."
+  },
+  "ruff": {
+    "exit_code": 0,
+    "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  "strict_before_freeze": {
+    "exit_code": 0,
+    "log_sha256": "e100704efd79d707c2c8e21e8f643cd71afcf906342dc7ad0830859d153b0cf0"
+  },
+  "command": "make test RUN=/private/tmp/ariadna-f18-0274/test-runner; qualified Conda wrapper adds only external lane JUnit",
+  "scope": "F18.8 new branch uses artificial kernels/owners/hooks/processes only; existing live regressions retain prior scope. No native setup/F18.9, oldpacket retry, SPICE mission, integration or physical experiment.",
+  "limits": "Qualified strict1/0/1 scope, exact unavailable refusal,8markers/4KiBtrace/512Bmarker,45-10-5 clocks/64KiBinput-log/2MiB evidence, cold/descendant/I/O/receipt artificial controls; actual native external profile/admission remains F18.9 responsibility.",
+  "gates": "F18.8 only complete; F18.9 requires distinct decision. F18.3/F17/F17.1/owner/carry/physicalF0/M3/99percent/safety remain open.",
+  "archive": {
+    "name": "0274-owner-setup-evidence.zip",
+    "bytes": 215247,
+    "expanded_bytes": 4563917,
+    "sha256": "b9eca79bb3b8fc916fe7f2e2c2d137973a3f591f080101880e78ae56479f7be9",
+    "members": {
+      "profile.json": {
+        "bytes": 1561,
+        "sha256": "9c4a74410b88148a778f6acc89ecffba7ccd114da7bb471e7a8a1c0fbb406edd"
+      },
+      "interface.txt": {
+        "bytes": 4454,
+        "sha256": "e425bcde70ddbf016629315bf7e50e14cd7b7e362f3f094a131d73bf04e0259d"
+      },
+      "probe-focused.log": {
+        "bytes": 180,
+        "sha256": "9238ddb5fc2fe6a74166f5b6e9cb2fa66c6d724c37536ce7a9797e392b9eb3cf"
+      },
+      "probe-focused.xml": {
+        "bytes": 76456,
+        "sha256": "2b08bdef5a24daf70447ec60a1da17fc0e6cd59288bd91fdfc86b8e76f664281"
+      },
+      "probe-focused-exit.json": {
+        "bytes": 115,
+        "sha256": "bce526e489f4eedd8fd0524aa3d24a90fdc50957ae950734baef87dd81a6ee06"
+      },
+      "probe-focused-v2.log": {
+        "bytes": 180,
+        "sha256": "5ed868353151be69db09bf4928a004f1136196a6f60febf3aaf4ade8fdfebcb4"
+      },
+      "probe-focused-v2.xml": {
+        "bytes": 76456,
+        "sha256": "c345df9455ba4d16f0b08732ebdf19dbe097bc609b1b281c0d510c46685c752f"
+      },
+      "probe-focused-v2-exit.json": {
+        "bytes": 118,
+        "sha256": "afed8178dca799cf1460b06bd4a8ad98c7eda1d63dcf749d898e115cd4f73545"
+      },
+      "probe-focused-v3.log": {
+        "bytes": 260,
+        "sha256": "1a54c5b167efccc8f79ab870fc678dd41c366cc7e6d28bfdf8175090ef1bc3ec"
+      },
+      "probe-focused-v3.xml": {
+        "bytes": 76892,
+        "sha256": "3208d0c28d981a89cfc9ef1ad3cbcbba25b5fb3b9cb96e14433210c624079333"
+      },
+      "probe-focused-v3-exit.json": {
+        "bytes": 117,
+        "sha256": "7567599583d0dd7ed4ae5a6faebc97ab5657a23332a12101c4e2c5b10cf6e80b"
+      },
+      "probe-tests-qualification.json": {
+        "bytes": 550,
+        "sha256": "0d7041079086b15c20e820c10f5adfcc9b72fdcfeea510eccba6a54239e8fae4"
+      },
+      "probe-tests-qualification-v3.json": {
+        "bytes": 706,
+        "sha256": "5c4faec47dd1759554da9e4efe008c4237d649178d1c86f058808bb2630705cb"
+      },
+      "auditor-focused.log": {
+        "bytes": 261,
+        "sha256": "47ede9aec99d8f69b5955e39df6cd8858045c16216ec1f6b3c378b1eb5ad5647"
+      },
+      "auditor-focused.xml": {
+        "bytes": 152162,
+        "sha256": "7af46ea4a13ac1ad10c327eede68bec53e59f9c4539a47648ad1489b75401e90"
+      },
+      "auditor-focused-final.log": {
+        "bytes": 261,
+        "sha256": "f3e39f7a5a39f68f99811409832f8becda4e192223b63e8dea8f0b62973b542b"
+      },
+      "auditor-focused-final.xml": {
+        "bytes": 152162,
+        "sha256": "d629c081d6ed63ff4d603fb1561ca907a65ea744f1dd06340ca9789cae52cdd5"
+      },
+      "auditor-agent-qualification.json": {
+        "bytes": 818,
+        "sha256": "9e008db2bcb2fd92cfa3bf77383e1b203ba817b46e928885f2b19315bdcd9f01"
+      },
+      "code-review-initial.json": {
+        "bytes": 2200,
+        "sha256": "8b107705fb2c56ec841ac6fe9452bfe4f7bf29eb0665d35168bedeb11648ba54"
+      },
+      "code-review-final.json": {
+        "bytes": 5999,
+        "sha256": "eae3ef7b5d2d4d69a794de03443834314aebc0265450cecf6b4a2244eea9e612"
+      },
+      "ruff-initial.log": {
+        "bytes": 19,
+        "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+      },
+      "ruff.log": {
+        "bytes": 19,
+        "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+      },
+      "strict-before.log": {
+        "bytes": 45,
+        "sha256": "e100704efd79d707c2c8e21e8f643cd71afcf906342dc7ad0830859d153b0cf0"
+      },
+      "test-runner": {
+        "bytes": 427,
+        "sha256": "8164bc5b0990ddd372284b176766145ad339d217617ec95efc016eb79a0688c7"
+      },
+      "freeze-check.py": {
+        "bytes": 1466,
+        "sha256": "1dec296f90a4971cef6d90ba6f9e79d4d6b0a61ceb09382b6bcb6828bc8e7e3a"
+      },
+      "frozen-before.json": {
+        "bytes": 191692,
+        "sha256": "506b0e0b4dade7ae8350a767e769b1f1b6765a90ab7f69cace520ab447ab78f6"
+      },
+      "frozen-after.json": {
+        "bytes": 288,
+        "sha256": "ae1f6169ec96acaf6c6b445094e5094c3f6f3c9014b26e1c5ded4f98d2744552"
+      },
+      "run-regression.py": {
+        "bytes": 1062,
+        "sha256": "aa31540b6631ba4f44c4e6870bafbc1dd91ec96df8ce54d62501d191882715ec"
+      },
+      "regression-process.json": {
+        "bytes": 165,
+        "sha256": "25b75fbbcf89741591d7a8420605a41c54aa0769d720461ff86f6469984255cd"
+      },
+      "regression-exit.json": {
+        "bytes": 109,
+        "sha256": "63efacb5c9791a5cffda8be01639e46794801658b430d4f9365409f180cfe487"
+      },
+      "required-regression.log": {
+        "bytes": 11137,
+        "sha256": "2c7dff4bd8806c6ecdd57a8cc0be7efb9325b624590eeeeafdc9159ba9c25172"
+      },
+      "portable.xml": {
+        "bytes": 3693358,
+        "sha256": "6c4697ee54d4d9af59b7575460306be011cb42baa3bd265730f081a1bab73fda"
+      },
+      "live.xml": {
+        "bytes": 101714,
+        "sha256": "54d6b95e5a60833e60e8e3996befe37769e74f6ab475cc296e9c42e136a5628c"
+      },
+      "regression-qualification.json": {
+        "bytes": 9980,
+        "sha256": "a74a2d669f7d474697ac2f9013d2c23dccd2d2ad4269f23dd1bbc24112be1d18"
+      },
+      "scheduler-readback.json": {
+        "bytes": 528,
+        "sha256": "8002677e7917e41f092f949af5b4e88620a5635e7dc768ced182d500581bb3cc"
+      }
+    }
+  },
+  "archive_scope": "Full artificial regression qualification, distinct from2MiB per-native-packet cap."
+}

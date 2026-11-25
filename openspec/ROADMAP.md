@@ -107,6 +107,15 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0274](../docs/adr/0274-qualify-artificial-owner-setup.md) completes F18.8:
+215artificial cases included in8063portable passes;413live/42unchanged
+archival skips,0failures. All1555files/Git status frozen, Ruff/review/strict PASS.
+Fixed1factory(False)/0integration/1visitor/refusal and8marker diagnostic plus
+independent stdlib auditor qualify only artificial plumbing. Initial report-fsync
+finding fixed before observation/audit; failed/late/stalled fsync checks pass.
+No new native setup/F18.9, old replay or physical study; old protected files stay
+unchanged. Scheduler PAUSED for distinct F18.9 decision under unchanged profile/
+caps. All completed-owner/F18.3/F17/F17.1/physical gates remain open.
 [ADR0273](../docs/adr/0273-design-never-run-owner-observation.md) completes
 F18.7 source/design only: next artificial F18.8 prepares one minimal setup probe
 and independent auditor. New future native F18.9 stops after fixed never-run

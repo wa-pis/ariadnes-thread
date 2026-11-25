@@ -160,6 +160,12 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **THEN** only a distinct explicit F18.9 decision MAY permit one new setup attempt after<=600s independent source/kernel/resource/environment/control admission under unchanged0269roleflags/read-only profile and60s45/10/5,64KiBinput/logs,2MiBaggregate caps
 - **AND** no consumed owner/import packet SHALL be retried; factory markers SHALL bracket imports/settings/constructor and observer I/O without identifying a native cause, and success SHALL NOT close completed-owner or physical gates
 
+#### Scenario: Preserve report durability before setup audit
+
+- **WHEN** F18.8 qualifies the new primitive setup report on artificial data
+- **THEN** both report and trace SHALL be fsynced before a successful producer-phase observation and independent audit; failed, late or stalled report fsync SHALL NOT yield observation/audit success even with a complete visible trace
+- **AND** strict1/0/1 scope, exact refusal, eight-marker capacities, independent raw-report identity and supervised cleanup/post-fsync SHALL be verified by focused and frozen required regression checks; completing artificial preparation SHALL NOT authorize F18.9 or close owner/physical gates
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence
