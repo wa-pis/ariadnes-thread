@@ -70,11 +70,13 @@ No code, native experiment or physical admission follows.
 [ADR0261](../docs/adr/0261-design-original-key-pre-export-admission.md) completes
 F15's298s admission design: existing checks follow export; a native original-row
 visitor is proposed. F15 ended PAUSED for a native-build/interface choice.
-The user has resumed research every5minutes: next bound one source-only comparison
-of the two proposed routes, reconciling tasks/design/specs before the review.
-Reuse retained evidence; no build/dependency/profile or scientific admission is
-adopted by this restart. Pause with one concrete recommendation if a user choice
-is required; do not repeat F15 or start an open-ended diagnostic chain.
+The user's research restart led to [ADR0262](../docs/adr/0262-recommend-original-key-build-route.md):
+F16's172.099s source/independent review recommends one in-tree visitor in an
+isolated distinctly identified Conda build; ABI/toolchain/prefix isolation and
+qualification remain unverified. Proposed finite build/fixture ceilings are
+operator limits, not measured feasibility. Automation is PAUSED for the concrete
+isolated-build/dependency decision. No build/profile/scientific admission or
+automatic diagnostic successor follows; the operational environment is unchanged.
 [ADR0260](../docs/adr/0260-bound-time-construction-export-domain.md) completes F14
 source reasoning in208s: known finite0<=r<3600 makes construction/copy normalization
 inactive. Original-key pre-export validation/provenance remains missing; no new

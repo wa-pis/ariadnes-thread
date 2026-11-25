@@ -1,5 +1,45 @@
 ## Context
 
+### F16: native build-route selection (2026-11-25)
+
+[ADR0262](../../../docs/adr/0262-recommend-original-key-build-route.md) bounds one
+source-only comparison of an in-tree TudatPy visitor versus a separate extension.
+Use only F15's retained route facts, the named installed simulator binding/accessor,
+pinned Conda metadata, retained0258 recipe/build/paths, retained0259 root CMake,
+and project environment/package declarations; enumerate only related installed
+include/lib/CMake locations. Pin hashes/line anchors. No repeated F15 trace or
+broad survey. Source reasoning and independent review<=600s from first source read.
+No HTTP, new code, imports/native tools/build/install, tests, scientific evaluations
+or integration. Documentary checking follows separately.
+
+Completion is one justified recommendation or exact missing prerequisite, expected
+files/packages, native ownership/type/ABI constraints and a finite future
+qualification plan with explicit build/runtime/work/byte limits. No route/profile,
+dependency or physical admission is adopted. Preserve F0 data/gates and original
+row/state/mass semantics; pause with the concrete build/dependency decision needed
+from the user. Verify independent source/scope review, protected history/links/
+anchors/CURRENT/diff/strict before marking F16 complete and committing/pushing.
+
+#### F16 source-only result
+
+The172.099s review and independent source/scope check recommend one in-tree
+simulator-binding method in a separate distinctly identified Conda build. Existing
+shared_ptr type registration avoids adding an extra cross-module type/ABI boundary;
+a separate extension remains plausible but unqualified. Packaging exports/static
+archives are not a compiled compatibility proof. The original row is dynamic:
+require exactly seven Cartesian/mass values, held owner and mutation exclusion.
+Installed export hashes differ from the raw package's declared relocatable text;
+retain both statuses and reject operational-prefix fallback in isolation preflight.
+
+No route/build/profile is adopted. ADR0262 specifies expected changed files and
+finite proposed ceilings (one3600s/two-worker build;8GiB scratch/2GiB acquisition/
+16MiB logs, then12 visitor calls/60s/64KiB input/2MiB evidence/zero propagation).
+These are unmeasured operator limits requiring pinned/enforced preflight, not
+scientific allowances. Source completeness/toolchain/FP/carry/prior-arithmetic
+and physical gates remain open. Automation is PAUSED for authorization of the
+isolated build/dependencies; operational space-nav stays unchanged. No scientific
+run or automatic diagnostic successor follows.
+
 ### F15: original-key pre-export admission design (2026-11-25)
 
 [ADR0261](../../../docs/adr/0261-design-original-key-pre-export-admission.md)

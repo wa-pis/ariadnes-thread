@@ -51,6 +51,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 - **AND** no post-export reconstruction/flag, substitute normalized key or current-field check certifies original provenance or earlier arithmetic; unknown stays unavailable
 - **AND** source/design reasoning<=600s adds no HTTP, code, native build/dependency, tests, SPICE/scientific evaluation or integration; a necessary user build/dependency/scientific-contract decision pauses automation before implementation
 
+#### Scenario: Prepare one bounded native build-route decision
+
+- **WHEN** resumed source-only research under ADR0262 compares the two F15 build routes
+- **THEN** within600s of first source reading, including independent review, use only the named retained/installed source and packaging facts to recommend one minimal route or report its exact missing prerequisite, expected file/package changes, ownership/ABI constraints and finite future qualification limits
+- **AND** source/recipe declarations are not build/runtime qualification; no HTTP, new code, imports/native execution, compiler/build/install, tests, scientific evaluation or integration occurs, and every F0 input/model/tolerance/budget remains fixed
+- **AND** reconcile the contract before reading and pause automation with the concrete remaining build/dependency decision; no implementation, campaign or open-ended diagnostic successor follows
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

@@ -1,0 +1,332 @@
+{
+  "base_revision": "21eaccbda8b8faa968fb662b1a065f71f9ce9d66",
+  "exact_package_checks": [
+    {
+      "exact_package_sha_match": true,
+      "expected_sha256": "01380844570f64427bb51a1dc244730ff9b29160df251b98eb46a47bc2102fb2",
+      "installed_sha256": "01380844570f64427bb51a1dc244730ff9b29160df251b98eb46a47bc2102fb2",
+      "path": "lib/python3.12/site-packages/tudatpy/dynamics/simulator/expose_simulator.cpp"
+    },
+    {
+      "exact_package_sha_match": true,
+      "expected_sha256": "c8eb6ae11e727df3cad1f46a02d9de4d8304d709b116d48921d6a3f1913869f3",
+      "installed_sha256": "c8eb6ae11e727df3cad1f46a02d9de4d8304d709b116d48921d6a3f1913869f3",
+      "path": "lib/cmake/tudat-config.cmake"
+    },
+    {
+      "exact_package_sha_match": false,
+      "expected_sha256": "a064956f5a1f4bd33ebc5bcb0cf30b7cc2f095446611ca690b24ab019df6b2a2",
+      "installed_sha256": "0d10a406c84c9af66c21ccb115deb4dc32d6b0185a661f2b8753188df3588a73",
+      "path": "lib/cmake/tudat_export.cmake"
+    },
+    {
+      "exact_package_sha_match": false,
+      "expected_sha256": "eec2472266268fdf2d8b6c885f4b9bf2e43296bd3cf349f4c0000420d25525f2",
+      "installed_sha256": "fcf731c6cfae50cc4185d8cae0aa50d5aa90d4d017ebb345bf02bfe0d9533ace",
+      "path": "lib/cmake/tudat_export-release.cmake"
+    },
+    {
+      "exact_package_sha_match": true,
+      "expected_sha256": "db3cccc424d1a066c22ae0050ee350fe27da50b1a678208c7cfa7f756eeef219",
+      "installed_sha256": "db3cccc424d1a066c22ae0050ee350fe27da50b1a678208c7cfa7f756eeef219",
+      "path": "lib/python3.12/site-packages/tudatpy/dynamics/simulator/expose_simulator.h"
+    },
+    {
+      "exact_package_sha_match": true,
+      "expected_sha256": "6d7ab09180d4108ad554e579548c0f2d0f4816570b5d453a828a22c3516ec9ec",
+      "installed_sha256": "6d7ab09180d4108ad554e579548c0f2d0f4816570b5d453a828a22c3516ec9ec",
+      "path": "include/tudatpy/scalarTypes.h"
+    }
+  ],
+  "first_source_read_utc": "2026-11-25T04:10:45.883976+00:00",
+  "independent_review": {
+    "agent": "f16_build_route_review",
+    "findings_resolved": [
+      "dynamic native row requires exact seven-state schema validation",
+      "shared_ptr registration does not establish mutation exclusion",
+      "installed CMake exports have operational-prefix paths",
+      "package/recipe facts do not attest effective compiled flags or cross-module ABI",
+      "zero-trajectory fixtures cannot qualify prior arithmetic/carry/physical gates"
+    ],
+    "status": "complete"
+  },
+  "proposed_future_limits_not_adopted": {
+    "acquisition_bytes_max": 2147483648,
+    "basis": "operator containment proposals, not measured feasibility or mission tolerances; source/toolchain/prefix/resource-enforcement preflight required before any launch; missing preflight means no launch",
+    "build_attempts": 1,
+    "compiler_jobs_max": 2,
+    "fixture_calls_max": 12,
+    "fixture_evidence_bytes_max": 2097152,
+    "fixture_input_bytes_max": 65536,
+    "inclusive_build_seconds": 3600,
+    "inclusive_fixture_seconds": 60,
+    "logs_bytes_max": 16777216,
+    "scratch_bytes_max": 8589934592,
+    "trajectory_launches": 0
+  },
+  "read_only_package_records": {
+    "absence_scope": "only exact conda-meta package names; no machine-wide tool availability claim",
+    "boost-cpp": "1.84.0",
+    "exact_package_identity": "tudatpy-1.0.0-py312h2196d89_3",
+    "libcxx": "23.1.0",
+    "no_exact_conda_records_for": [
+      "pybind11",
+      "pybind11-global",
+      "cmake",
+      "make",
+      "ninja",
+      "clang",
+      "clangxx",
+      "clang_osx-arm64",
+      "clangxx_osx-arm64",
+      "eigen"
+    ],
+    "package_sha256": "fd5a9c1a98723cbf7af202352990e189c296b46d4b0adabe29344e7565925e01",
+    "python": "3.12.14"
+  },
+  "recommendation": {
+    "expected_changes": [
+      "upstream src/tudatpy/dynamics/simulator/expose_simulator.cpp and minimal helper only if needed",
+      "focused native qualification fixtures",
+      "isolated Conda recipe/build manifest and distinct package build identity"
+    ],
+    "operational_prefix_replaced": false,
+    "original_row": "const original Time and dynamic native state under held owner; require exactly seven values with explicit Cartesian/mass schema",
+    "prefix_isolation": "reject operational-prefix fallback/linkage; regenerate or qualify relocated CMake exports",
+    "prior_arithmetic_carry_and_physical_admission": "unavailable",
+    "route": "in-tree visitor in isolated distinctly identified TudatPy build",
+    "separate_extension": "plausible but unqualified type/holder/ABI/pybind-internals/static-link duplication and ownership",
+    "status": "recommendation_only_pending_user_build_choice"
+  },
+  "relocatable_exports": [
+    {
+      "_path": "lib/cmake/tudat_export-release.cmake",
+      "file_mode": "text",
+      "path_type": "hardlink",
+      "prefix_placeholder": "/Users/runner/miniforge3/conda-bld/tudatpy_1759302688662/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_p",
+      "sha256": "eec2472266268fdf2d8b6c885f4b9bf2e43296bd3cf349f4c0000420d25525f2",
+      "size_in_bytes": 37882
+    },
+    {
+      "_path": "lib/cmake/tudat_export.cmake",
+      "file_mode": "text",
+      "path_type": "hardlink",
+      "prefix_placeholder": "/Users/runner/miniforge3/conda-bld/tudatpy_1759302688662/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_p",
+      "sha256": "a064956f5a1f4bd33ebc5bcb0cf30b7cc2f095446611ca690b24ab019df6b2a2",
+      "size_in_bytes": 13715
+    }
+  ],
+  "schema": "ariadna.f16.source-route-review.v1",
+  "scope": {
+    "build_install": 0,
+    "claim": "source/design only, no native or physical qualification",
+    "http": 0,
+    "imports_native": 0,
+    "integrations": 0,
+    "new_code": 0,
+    "scientific_evaluations": 0,
+    "tests": 0
+  },
+  "source_review_closed_utc": "2026-11-25T04:13:37.984295+00:00",
+  "source_review_elapsed_seconds": 172.09867066610605,
+  "sources": [
+    {
+      "bytes": 776,
+      "path": "/private/tmp/ariadna-f12-0258/selected-info_recipe_build.sh",
+      "selected_lines": [
+        {
+          "first_line": 12,
+          "last_line": 24,
+          "text": "cmake \\\n    -DBoost_NO_BOOST_CMAKE=ON \\\n    -DCMAKE_BUILD_TYPE=Release \\\n    -DCMAKE_INSTALL_PREFIX=$PREFIX \\\n    -DCMAKE_PREFIX_PATH=$PREFIX \\\n    -DCMAKE_CXX_STANDARD=14 \\\n    -DTUDATPY_CONDA_BUILD=on \\\n    -D_GLIBCXX_USE_CXX11_ABI=1 \\\n    -DTUDAT_BUILD_TESTS=OFF \\\n    -DCMAKE_CXX_FLAGS_RELEASE=\"-Wno-macro-redefined\" \\\n    ..\n\nmake"
+        },
+        {
+          "first_line": 32,
+          "last_line": 36,
+          "text": "make install\n\n# Go back to source root to install pytrk234\necho \"Installing pytrk234...\"\n$PYTHON -m pip install git+https://github.com/NASA-PDS/PyTrk234.git --no-deps -vv"
+        }
+      ],
+      "sha256": "83f069092cf27dbd8e5680a4c7c1ca197bde634cc7149c70b1495c94d14c5215"
+    },
+    {
+      "bytes": 7792,
+      "path": "/private/tmp/ariadna-f12-0258/selected-info_recipe_meta.yaml",
+      "selected_lines": [
+        {
+          "first_line": 9,
+          "last_line": 11,
+          "text": "source:\n  git_url: https://github.com/tudat-team/tudatpy.git\n  git_rev: v1.0.0"
+        },
+        {
+          "first_line": 29,
+          "last_line": 36,
+          "text": "    - clang 18.1.8 default_h1323312_15\n    - clang-18 18.1.8 default_hc369343_15\n    - clang_impl_osx-arm64 18.1.8 hadf8e89_25\n    - clang_osx-arm64 18.1.8 h1728699_25\n    - clangxx 18.1.8 default_h1c12a56_15\n    - clangxx_impl_osx-arm64 18.1.8 hd2305f4_25\n    - clangxx_osx-arm64 18.1.8 h1728699_25\n    - cmake 4.1.2 h29fc008_0"
+        },
+        {
+          "first_line": 83,
+          "last_line": 86,
+          "text": "    - pybind11 3.0.1 pyh7a1b43c_0\n    - pybind11-global 3.0.1 pyhc7ab6ef_0\n    - python 3.12.11 h9ccd52b_0_cpython\n    - python_abi 3.12 8_cp312"
+        },
+        {
+          "first_line": 104,
+          "last_line": 105,
+          "text": "    - cspice 67 hc919400_12\n    - eigen 3.4.0 h1995070_0"
+        },
+        {
+          "first_line": 139,
+          "last_line": 142,
+          "text": "    - pybind11 3.0.1 pyh7a1b43c_0\n    - pybind11-global 3.0.1 pyhc7ab6ef_0\n    - python 3.12.11 hc22306f_0_cpython\n    - python_abi 3.12 8_cp312"
+        }
+      ],
+      "sha256": "abf8e5da21636372a3103f2e657758a6589729593f2e578c214f607c198ede53"
+    },
+    {
+      "bytes": 18636,
+      "path": "/private/tmp/ariadna-f13-0259/01.body",
+      "selected_lines": [
+        {
+          "first_line": 520,
+          "last_line": 535,
+          "text": "find_package(pybind11 CONFIG REQUIRED)\nset(pybind11_INCLUDE_DIRS ${pybind11_BUILD_INCLUDE_DIRS}) # TODO: Check\nset(pybind11_INCLUDE_DIR ${pybind11_BUILD_INCLUDE_DIRS})  # TODO: Check\n\n# Source directory for tudatpy\nset(TUDATPY_SOURCE_DIR ${BASE_DIRECTORY}/src/tudatpy)\n\n# Add docs to build directory\nfile(\n    COPY ${BASE_DIRECTORY}/docs/tudatpy\n    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/docs\n)\n\n# Include tudatpy CMake configuration\ninclude_directories(include/tudatpy)\nadd_subdirectory(src/tudatpy)"
+        }
+      ],
+      "sha256": "9b58fd72a5b2ca1cf3343a875188a96e479bc4eac14a07e4f42b19746f5530a3"
+    },
+    {
+      "bytes": 35113,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/dynamics/simulator/expose_simulator.cpp",
+      "selected_lines": [
+        {
+          "first_line": 45,
+          "last_line": 54,
+          "text": "    py::class_< tp::DynamicsSimulator< STATE_SCALAR_TYPE, TIME_TYPE >,\n                std::shared_ptr< tp::DynamicsSimulator< STATE_SCALAR_TYPE, TIME_TYPE > > >(\n            m,\n            \"DynamicsSimulator\",\n            R\"doc(Base class for propagation of dynamics (with derived classes implementing single-, multi- or hybrid-arc.)doc\" );\n\n    py::class_< tp::SingleArcDynamicsSimulator< STATE_SCALAR_TYPE, TIME_TYPE >,\n                std::shared_ptr< tp::SingleArcDynamicsSimulator< STATE_SCALAR_TYPE, TIME_TYPE > >,\n                tp::DynamicsSimulator< STATE_SCALAR_TYPE, TIME_TYPE > >(\n            m, \"SingleArcSimulator\", R\"doc("
+        }
+      ],
+      "sha256": "01380844570f64427bb51a1dc244730ff9b29160df251b98eb46a47bc2102fb2"
+    },
+    {
+      "bytes": 526585,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/tudatpy-1.0.0-py312h2196d89_3.json",
+      "sha256": "26b84d68ee96cc430a708bd90d42d574954abfa79145c6fe12aed517a4390cc9"
+    },
+    {
+      "bytes": 307,
+      "path": "environment.yml",
+      "sha256": "c2948772bfbe09677354f803d9ba79e4c78eb44c5916c98b8d58126832c0e4b7"
+    },
+    {
+      "bytes": 1040,
+      "path": "pyproject.toml",
+      "sha256": "95b324dd8d3a414e350c5ebf919cc63fa2e94b857bebe67f8a6b6f0a1e53f148"
+    },
+    {
+      "bytes": 3697,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/cmake/tudat-config.cmake",
+      "selected_lines": [
+        {
+          "first_line": 21,
+          "last_line": 34,
+          "text": "# Tell the user project where to find our headers and libraries\nset (Tudat_VERSION \"\")\nset (Tudat_INCLUDE_DIRS \"${CMAKE_CURRENT_LIST_DIR}/../../include\")\nset (Tudat_LIBRARY_DIRS \"${CMAKE_CURRENT_LIST_DIR}/../\")\nset (Tudat_DATA_DIRS \"${CMAKE_CURRENT_LIST_DIR}/../../data\")\n\n# Configure file path for tudat data loading.\n##configure_file(\n##        \"${CMAKE_CURRENT_LIST_DIR}/paths.hpp.in\"\n##        \"${Tudat_INCLUDE_DIRS}/tudat/paths.hpp\" @ONLY\n##)\n\n# List of compilation flags -DTOTO to export\nset (Tudat_DEFINITIONS \" -DTUDAT_BUILD_WITH_FILTERS=OFF -DTUDAT_BUILD_WITH_SOFA_INTERFACE=ON -DTUDAT_BUILD_WITH_FFTW3=OFF -DTUDAT_BUILD_WITH_JSON_INTERFACE=OFF -DTUDAT_BUILD_WITH_EXTENDED_PRECISION_PROPAGATION_TOOLS=ON -D_GLIBCXX_USE_CXX11_ABI=1\")"
+        },
+        {
+          "first_line": 42,
+          "last_line": 47,
+          "text": "# Our library dependencies (contains definitions for IMPORTED targets)\ninclude (\"${CMAKE_CURRENT_LIST_DIR}/tudat_export.cmake\")\n\n# These are IMPORTED targets created by tudat_targets.cmake\nset (Tudat_PROPAGATION_LIBRARIES \"Tudat::tudat_propagation_setup;Tudat::tudat_shape_based_methods;Tudat::tudat_low_thrust_trajectories;Tudat::tudat_environment_setup;Tudat::tudat_ground_stations;Tudat::tudat_aerodynamics;Tudat::tudat_system_models;Tudat::tudat_geometric_shapes;Tudat::tudat_relativity;Tudat::tudat_gravitation;Tudat::tudat_mission_segments;Tudat::tudat_electromagnetism;Tudat::tudat_propulsion;Tudat::tudat_ephemerides;Tudat::tudat_earth_orientation;Tudat::tudat_numerical_integrators;Tudat::tudat_reference_frames;Tudat::tudat_statistics;Tudat::tudat_propagators;Tudat::tudat_spice_interface;Tudat::tudat_sofa_interface;NRLMSISE00::nrlmsise00;Tudat::tudat_basic_astrodynamics;Tudat::tudat_numerical_quadrature;Tudat::tudat_interpolators;Tudat::tudat_root_finders;Tudat::tudat_basic_mathematics;Tudat::tudat_input_output;Tudat::tudat_basics;Tudat::tudat_data\")\nset (Tudat_ESTIMATION_LIBRARIES \"Tudat::tudat_estimation_setup;Tudat::tudat_propagation_setup;Tudat::tudat_shape_based_methods;Tudat::tudat_low_thrust_trajectories;Tudat::tudat_environment_setup;Tudat::tudat_observation_models;Tudat::tudat_ground_stations;Tudat::tudat_acceleration_partials;Tudat::tudat_torque_partials;Tudat::tudat_observation_partials;Tudat::tudat_orbit_determination;Tudat::tudat_estimatable_parameters;Tudat::tudat_aerodynamics;Tudat::tudat_system_models;Tudat::tudat_geometric_shapes;Tudat::tudat_relativity;Tudat::tudat_gravitation;Tudat::tudat_mission_segments;Tudat::tudat_electromagnetism;Tudat::tudat_propulsion;Tudat::tudat_ephemerides;Tudat::tudat_earth_orientation;Tudat::tudat_numerical_integrators;Tudat::tudat_reference_frames;Tudat::tudat_statistics;Tudat::tudat_propagators;Tudat::tudat_spice_interface;Tudat::tudat_sofa_interface;NRLMSISE00::nrlmsise00;Tudat::tudat_basic_astrodynamics;Tudat::tudat_numerical_quadrature;Tudat::tudat_interpolators;Tudat::tudat_root_finders;Tudat::tudat_basic_mathematics;Tudat::tudat_input_output;Tudat::tudat_basics;Tudat::tudat_data\")"
+        }
+      ],
+      "sha256": "c8eb6ae11e727df3cad1f46a02d9de4d8304d709b116d48921d6a3f1913869f3"
+    },
+    {
+      "bytes": 13512,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/cmake/tudat_export.cmake",
+      "selected_lines": [
+        {
+          "first_line": 174,
+          "last_line": 178,
+          "text": "add_library(Tudat::tudat_propagators STATIC IMPORTED)\n\nset_target_properties(Tudat::tudat_propagators PROPERTIES\n  INTERFACE_INCLUDE_DIRECTORIES \"${_IMPORT_PREFIX}/include\"\n)"
+        }
+      ],
+      "sha256": "0d10a406c84c9af66c21ccb115deb4dc32d6b0185a661f2b8753188df3588a73"
+    },
+    {
+      "bytes": 23266,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/cmake/tudat_export-release.cmake",
+      "selected_lines": [
+        {
+          "first_line": 179,
+          "last_line": 183,
+          "text": "set_property(TARGET Tudat::tudat_propagators APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)\nset_target_properties(Tudat::tudat_propagators PROPERTIES\n  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE \"CXX\"\n  IMPORTED_LOCATION_RELEASE \"/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/libtudat_propagators.a\"\n  )"
+        },
+        {
+          "first_line": 329,
+          "last_line": 333,
+          "text": "set_property(TARGET Tudat::tudat_propagation_setup APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)\nset_target_properties(Tudat::tudat_propagation_setup PROPERTIES\n  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE \"CXX\"\n  IMPORTED_LOCATION_RELEASE \"/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/libtudat_propagation_setup.a\"\n  )"
+        }
+      ],
+      "sha256": "fcf731c6cfae50cc4185d8cae0aa50d5aa90d4d017ebb345bf02bfe0d9533ace"
+    },
+    {
+      "bytes": 895,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/lib/python3.12/site-packages/tudatpy/dynamics/simulator/expose_simulator.h",
+      "selected_lines": [
+        {
+          "first_line": 14,
+          "last_line": 18,
+          "text": "#include <pybind11/eigen.h>\n#include <pybind11/functional.h>\n#include <pybind11/numpy.h>\n#include <pybind11/pybind11.h>\n#include <pybind11/stl.h>"
+        },
+        {
+          "first_line": 23,
+          "last_line": 30,
+          "text": "namespace tudatpy\n{\nnamespace dynamics\n{\nnamespace simulator\n{\n\nvoid expose_simulator( py::module &m );"
+        }
+      ],
+      "sha256": "db3cccc424d1a066c22ae0050ee350fe27da50b1a678208c7cfa7f756eeef219"
+    },
+    {
+      "bytes": 1175,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/boost-cpp-1.84.0-hca5e981_3.json",
+      "sha256": "177f5012573f8d3ce8f556769d0aad5130f1a516120c5c8edf15a8ffedb420e1"
+    },
+    {
+      "bytes": 257940,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/python-tzdata-2026.3-pyhd8ed1ab_0.json",
+      "sha256": "6b88ca6e47f285a3acbbcf8411cfbc586c868dee106893229cb66b4ae812d161"
+    },
+    {
+      "bytes": 745672,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/python-3.12.14-hd05a0c4_3_cpython.json",
+      "sha256": "1ac066bc02e3b470f5e7fa74b0f91f9cfe21a8c87d76417f2a8c7531f38e5201"
+    },
+    {
+      "bytes": 1079,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/python-gil-3.12.14-hd8ed1ab_3.json",
+      "sha256": "1fec0dec0f8cc6ef931bcf27485b693d15a4f84c3f01d483591fc3045d8fe008"
+    },
+    {
+      "bytes": 16929,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/python-dateutil-2.9.0.post0-pyhe01879c_2.json",
+      "sha256": "64a373ec608bc14a06cd8944cc52a22b1a538d59d684ca87f86870b95298b6e0"
+    },
+    {
+      "bytes": 2483,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/conda-meta/libcxx-23.1.0-h55c6f16_0.json",
+      "sha256": "633e8fb7078511b2b0243d8338a68c6f3b28fe2fed1357bfbfbb3a1b44c0b53b"
+    },
+    {
+      "bytes": 908,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/include/tudatpy/scalarTypes.h",
+      "selected_lines": [
+        {
+          "first_line": 14,
+          "last_line": 20,
+          "text": "#include \"tudat/basics/timeType.h\"\n\nusing tudat::Time;\n\n#define STATE_SCALAR_TYPE double  // long double\n#define TIME_TYPE Time\n#define INTERPOLATOR_TIME_TYPE Time"
+        }
+      ],
+      "sha256": "6d7ab09180d4108ad554e579548c0f2d0f4816570b5d453a828a22c3516ec9ec"
+    },
+    {
+      "bytes": 303961,
+      "path": "/private/tmp/ariadna-f12-0258/selected-info_paths.json",
+      "sha256": "fb915e978ca0de3b2b4e047f98d98d49bef3a1a5760139bc946422110299f66f"
+    }
+  ]
+}

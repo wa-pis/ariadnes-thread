@@ -1,0 +1,33 @@
+{
+  "base_revision": "21eaccbda8b8faa968fb662b1a065f71f9ce9d66",
+  "checked_utc": "2026-11-25T04:17:03.404536+00:00",
+  "current_state_lines": 51,
+  "diff_and_new_file_whitespace": "passed",
+  "independent_source_and_final_documentary_review": "f16_build_route_review: no substantive blockers",
+  "local_links": 597,
+  "markdown_anchors": 5,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "571705a4b0d33a0fdbf89552526c11d0f164e92799ecc424a452b94ef3f533e6",
+    "docs/adr/0262-recommend-original-key-build-route.md": "6c0108f62d7ae45d5e4bef3a3e66c85f8628b244d22123fe7703256785c685b3",
+    "docs/adr/README.md": "146ad62447bea5b89d77840ed76accc137f9a991dd35c280db23049c578dd3f2",
+    "openspec/ROADMAP.md": "d644618930dfdc77453a3452936e5a141dabaa36d6ea4f971c72184c7aa02645",
+    "openspec/changes/refine-physical-trajectory/design.md": "76b6a5ecd7448094f9e201272d8f5f6e47366e0f4b569e58651af29d5d53ac83",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "4800fda791d2953ceee687b3b9166f2191b6e208a80b847aad96d1e7138ee786",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "218431d12b5c34b450349313ac59ba772009b051843c4ba0f2de20211c6438a1",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "5fe0423f5745ad70b6e105cdd8779c06193d9521506a94746be520d895555d80"
+  },
+  "original_pair_and_physical_admission": "unavailable",
+  "protected_prior_non_markdown_blobs_unchanged": 1176,
+  "receipt_link_validation": "exclusive receipt created then link existence and JSON readback checked",
+  "runtime_tests": "not rerun: unchanged code; no native/scientific/build work",
+  "scheduler_status": "PAUSED",
+  "schema": "ariadna.f16.documentary-verification.v1",
+  "source_evidence_sha256": "9821802f799d006b6fe3a1fc9279eda83e5f6e68c086a7bcd5ed9f49da5144d7",
+  "source_records_rechecked": 19,
+  "source_review_seconds": 172.09867066610605,
+  "status": "passed_documentary_only",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  }
+}

@@ -1,3 +1,8 @@
+[ADR0262](../../../docs/adr/0262-recommend-original-key-build-route.md) bounds F16's
+source-only build-route recommendation after the user's scheduler restart.
+F16 recommends an isolated in-tree visitor build; automation is PAUSED for that
+concrete build/dependency choice. No native profile or scientific run is adopted.
+
 [ADR0261](../../../docs/adr/0261-design-original-key-pre-export-admission.md)
 completes F15 design: existing checks follow export; a const-reference native
 visitor is proposed before copy/hash/narrowing. Automation is PAUSED for the user's

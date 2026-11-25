@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0262 — Original-key build-route recommendation](0262-recommend-original-key-build-route.md) — F16 172.099s source/independent review; isolated in-tree visitor recommended, build choice pending.
 - [0261 — Design original-key pre-export admission](0261-design-original-key-pre-export-admission.md)
 - [0260 — Bound the Time construction/export domain](0260-bound-time-construction-export-domain.md)
 - [0259 — Inspect the pinned split-Time caster source](0259-inspect-pinned-split-time-caster.md)

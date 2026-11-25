@@ -3,41 +3,34 @@
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
 ## Current preparation result
-[ADR0261](docs/adr/0261-design-original-key-pre-export-admission.md) completes F15 design.
-[ADR0260](docs/adr/0260-bound-time-construction-export-domain.md): conditional domain only; original-key visitor proposed, unavailable.
-[ADR0259](docs/adr/0259-inspect-pinned-split-time-caster.md) completes F13:5HTTP200,
-215077raw/decoded bytes; pinned generic double route, actualreadback unavailable.
-[ADR0258](docs/adr/0258-lookup-exact-split-time-build-source.md): F12 attempt
-incomplete from controller EOF; exact py312 package/recipe/git declarations audited.
-No retry; raw metadata/failure retained. Compiled caster/domain/readback unavailable.
-[ADR0257](docs/adr/0257-design-conditional-split-time-enclosure.md) retains only a
-conditional enclosure, not actual readback. No native/code/scientific qualification.
-[ADR0256](docs/adr/0256-qualify-fabricated-clock-packet.md) completes F10 artificial
-packet checker: exact words/rationals, signed event/span intervals, shared
-actual-chain declarations, separate mass ledgers/floor/matching and gate outcomes.
-94focused/7530portable+42archive/413live pass;1469files/Gitstatus frozen.
-Parser/review/Ruff/strict pass; final EOF-only AST-preserving repair reuses full
-lanes with separate final hashes and94focused/Ruff rerun.
-Outer15s supervised pure harness and64KiB/2MiB limits pass; immutable report
-says pending-parent-check, separate observation confirms post-fsync completion.
-CI45530971440 on exact a9fa9cf passes7906cases/79skips; all94new pass.
-All7985local/CI IDs and unchanged42archive+37platform skip maps match.
-Every checker result retains unavailable physical/scientific admission.
-New checker/fixtures perform no native/SPICE/integration/real-archive work;
-existing required live regressions are separately scoped, not a new campaign.
-[ADR0255](docs/adr/0255-design-realized-clock-packet.md) remains the contract;
-[ADR0254](docs/adr/0254-record-native-event-transport-limits.md) records the direct
-native double-stop restriction. No actual native bound/adapter/profile is qualified.
+[ADR0262](docs/adr/0262-recommend-original-key-build-route.md) completes F16 source
+recommendation:172.099s and independent review. Prefer a small in-tree visitor in
+an isolated distinctly identified TudatPy/Conda build; no build/profile adopted.
+Existing owner registration avoids a new cross-module ABI boundary; a separate
+extension is plausible, unqualified. Dynamic native rows need explicit7state/schema
+validation; owner/mutation, compiled FP, carry and prior arithmetic stay open.
+Installed CMake exports reference operational-prefix archives; reject fallback
+and qualify/regenerate relocation before isolation. Source identity != compiled ABI.
+[ADR0261](docs/adr/0261-design-original-key-pre-export-admission.md) retains F15's
+original-row pre-copy/hash/narrowing admission; existing Python checks follow export.
+[ADR0260](docs/adr/0260-bound-time-construction-export-domain.md) is conditional only.
+[ADR0259](docs/adr/0259-inspect-pinned-split-time-caster.md) preserves F13 source capture;
+[ADR0258](docs/adr/0258-lookup-exact-split-time-build-source.md) stays consumed/incomplete,
+no retry/refetch. [ADR0257](docs/adr/0257-design-conditional-split-time-enclosure.md)
+provides a conditional enclosure, not actual readback or physical qualification.
+[ADR0256](docs/adr/0256-qualify-fabricated-clock-packet.md) qualifies only artificial
+checking:94focused/7530portable+42archive/413live; CI45530971440 exacta9fa9cf
+passes7906cases/79skips with7985matchingIDs. Historical source/evidence unchanged.
+F16 changes only docs/evidence; runtime tests/CI not rerun on unchanged code.
 
 ## Next action and scheduler
-Do not repeat successful local/CI runs or artifact downloads on unchanged code.
-Next: bound one source-only comparison of the two proposed native build routes.
-Existing Python checks follow export; implementation/build choice remains open.
-No refetch/controller replay, native campaign, changed target or old replay.
+`ariadna-m3` PAUSED: user choice on one isolated native build and pinned dependencies.
+Proposal: one in-tree visitor; operational space-nav and official package untouched.
+ADR0262 proposes finite build/fixture caps, not measured or admitted execution.
+Before any launch require source/toolchain/prefix/resource-enforcement preflight.
+No automatic diagnostic successor, native build/install, campaign or old replay.
+Do not repeat successful local/CI checks/downloads on unchanged code.
 Full-force seed/derivatives/guards/error bounds and73/76/228/300s remain open.
-`ariadna-m3` ACTIVE: user resumed every5minutes on2026-11-25 for solution research.
-Reconcile the finite preparation contract before review; pause for a concrete
-build/dependency/contract choice or verified success. Retain F3/F5/F7 evidence.
 
 ## Physical goal remains open
 The original admissible pair is unmet; fabricated F3/F5/F7/F10 are not that pair.
@@ -48,9 +41,8 @@ Free dates/phases/orbit-membership targeting remain unadopted proposals.
 No99% probability, physical closure, safe mission or certified error-bound claim.
 
 ## Preserved evidence and boundaries
-[ADR0246](docs/adr/0246-record-bounded-retained-inconclusive.md): P6 on33fea7c
-complete inconclusive/no witness;13points independently audited, no replay.
-Positive proposal fails floor; negative guarded;0243-p3-retained consumed.
+[ADR0246](docs/adr/0246-record-bounded-retained-inconclusive.md) retains consumed
+P6:13points audited, inconclusive/no witness, no replay of0243-p3-retained.
 [ADR0135](docs/adr/0135-fixed-orbit-boundary-contract.md)/
 [ADR0205](docs/adr/0205-design-fixed-command-physical-join.md) retain all fixed
 boundary/join/error-bound gates. No physical join or strictM3/task3.9 completion.
