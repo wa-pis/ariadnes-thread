@@ -58,6 +58,21 @@ qualification of the installed exporter, actual event carry and physical gates.
 - **AND** source/recipe declarations are not build/runtime qualification; no HTTP, new code, imports/native execution, compiler/build/install, tests, scientific evaluation or integration occurs, and every F0 input/model/tolerance/budget remains fixed
 - **AND** reconcile the contract before reading and pause automation with the concrete remaining build/dependency decision; no implementation, campaign or open-ended diagnostic successor follows
 
+#### Scenario: Execute only an admitted isolated native build
+
+- **WHEN** the user's ADR0263 authorization is applied
+- **THEN** prepare one distinctly identified in-tree kernel build only after exact source/toolchain/prefix isolation and resource enforcement are qualified, under3600s inclusive/2workers/8GiBaggregate scratch/2GiBaggregate acquisition/16MiBlogs
+- **AND** unavailable source/toolchain/isolation/resource preflight prevents compiler launch; record configuration/ABI compiler probes explicitly and preserve setup failures/corrections within the same episode/deadline, with at most one kernel-target attempt, no hidden retry/expanded ceiling or scientific conclusion
+- **AND** operational space-nav, historical evidence and all F0 scientific gates remain unchanged; any post-build original-row fixtures retain12calls/60s/64KiBinput/2MiBevidence and zero trajectory launches, without qualification of carry/prior arithmetic/physical feasibility
+
+#### Scenario: Preserve a failed import and its inclusive packet window
+
+- **WHEN** an authorized finite fixture packet aborts during native import before its first visitor call
+- **THEN** retain the failed process/log/elapsed time and zero observed calls without claiming native fixture qualification
+- **AND** pin any exact local runtime prerequisites separately from fixture-parameter bytes, charge their acquisition/storage, and prepare reversible isolated copies without another import
+- **AND** after the original inclusive wall window has passed, a new packet requires explicit authority and a fixed new profile; do not substitute summed active process durations, reset the build episode or repeat the kernel build
+- **AND** unchanged operational bytes, owner/carry/prior-arithmetic obligations and all physical F0 gates remain independently required
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

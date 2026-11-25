@@ -1,0 +1,53 @@
+{
+  "protected_prior_non_markdown_blobs_unchanged": 1178,
+  "local_links_excluding_pending_receipt": 598,
+  "anchors": 5,
+  "current_state_lines": 48,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "6f2666528852bff8e394cf9bbca7eb69616f2f7ba4d4b2f47ca33dfc174526ea",
+    "openspec/ROADMAP.md": "215dbd9e7c2060c6269573fd2f332502e43320756fb69fc42190cc04a423a687",
+    "docs/adr/README.md": "5bf963b97b41fcf14cf3ec4c0786e54f184988021161025ff534f3046accdc89",
+    "docs/adr/0263-authorize-isolated-native-build.md": "babbeec67653ee371014ddc13e9196a1daf8e640c6c58af52eef88d3c5fd112f",
+    "openspec/changes/refine-physical-trajectory/design.md": "a35f0417a4bf554e9ca977be73a2e63146f6dd5efae2fb301a9d1cb1b0fab47a",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "3e7f94c37865e5eb24c4fc861b44d1f72569ec6b8ee6e9e7324a0c656c25de8f",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "3bbe2fe7cbd697f9cc9c66b8742d38d78c37d2ec34a018e6a044c0b682b2f998",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "042392dafcd2ed4dbe29d13aae1a1eddb63b3b8159c5c388616917db999a730b"
+  },
+  "diff_whitespace": "passed",
+  "pending_receipt": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0263-doc-verification.json",
+  "schema": "ariadna.f17.documentary-verification.v1",
+  "status": "passed_documentary_preserves_incomplete_native_qualification",
+  "checked_utc": "2026-11-25T07:30:23.926407+00:00",
+  "base_revision": "e98329e282b99290964d533cd64f8218787ccea0",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "independent_review": {
+    "source_commands_links_resources": "f17_isolation_review: passed with explicit ABI/owner/carry/physical caveats",
+    "final_documentary": "f17_isolation_review: PASS, no concrete blocker before commit; all review handles closed",
+    "packet_clock": "f17_build_controls: preserve failed inclusive wall packet; do not substitute accumulated process time"
+  },
+  "native_build": "one kernel target passed in422.086s; three configure invocations including two preserved setup failures and actual ABI/pthread probes",
+  "native_fixture": "failed import after3.863s, returncode-6, zero visitor calls, no result packet, no retry",
+  "private_runner_pure_tests": "27passed, no native fixture calls",
+  "runtime_tests_and_ci": "not rerun: Ariadna runtime/test code unchanged; private build not qualified or adopted",
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "confirmed_by": "official automation_update tool"
+  },
+  "volume": {
+    "detach_exit_code": 0,
+    "detach_stdout": "\"disk4\" ejected.",
+    "image_path": "/private/tmp/ariadna-f17-0263/scratch.sparseimage",
+    "image_preserved": true,
+    "mounted_environment_absent": true,
+    "next_packet_requires_remount_and_hash_preflight": true
+  },
+  "original_pair_physical_admission": "unavailable",
+  "f17_task": "unchecked",
+  "build_evidence_sha256": "20c010f55a8ede3c6a4d48be1827fd3143305b6df57de92bfa5ef9ed7c2f482b",
+  "build_result_sha256": "07e29bcb11c947bb15c56ec8baf6c3d307687b513292e8e455efbaed5ad8bcaf",
+  "receipt_link_validation": "exclusively created, then JSON readback and pending local-link existence checked"
+}

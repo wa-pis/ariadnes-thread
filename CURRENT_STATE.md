@@ -2,50 +2,47 @@
 
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
-## Current preparation result
-[ADR0262](docs/adr/0262-recommend-original-key-build-route.md) completes F16 source
-recommendation:172.099s and independent review. Prefer a small in-tree visitor in
-an isolated distinctly identified TudatPy/Conda build; no build/profile adopted.
-Existing owner registration avoids a new cross-module ABI boundary; a separate
-extension is plausible, unqualified. Dynamic native rows need explicit7state/schema
-validation; owner/mutation, compiled FP, carry and prior arithmetic stay open.
-Installed CMake exports reference operational-prefix archives; reject fallback
-and qualify/regenerate relocation before isolation. Source identity != compiled ABI.
-[ADR0261](docs/adr/0261-design-original-key-pre-export-admission.md) retains F15's
-original-row pre-copy/hash/narrowing admission; existing Python checks follow export.
-[ADR0260](docs/adr/0260-bound-time-construction-export-domain.md) is conditional only.
-[ADR0259](docs/adr/0259-inspect-pinned-split-time-caster.md) preserves F13 source capture;
-[ADR0258](docs/adr/0258-lookup-exact-split-time-build-source.md) stays consumed/incomplete,
-no retry/refetch. [ADR0257](docs/adr/0257-design-conditional-split-time-enclosure.md)
-provides a conditional enclosure, not actual readback or physical qualification.
-[ADR0256](docs/adr/0256-qualify-fabricated-clock-packet.md) qualifies only artificial
-checking:94focused/7530portable+42archive/413live; CI45530971440 exacta9fa9cf
-passes7906cases/79skips with7985matchingIDs. Historical source/evidence unchanged.
-F16 changes only docs/evidence; runtime tests/CI not rerun on unchanged code.
+## Current result
+[ADR0263](docs/adr/0263-authorize-isolated-native-build.md): user authorized one
+isolated native build. Exactly one81-TU kernel build passed in422.086s after two
+preserved CMake setup failures; compiler ABI/pthread probes also occurred.
+Private variant04f7af4c…, Clang18.1.8/pybind11 3.0.1; no operational adoption.
+Linker visibility warnings/platform C++ and precompiled-core caveats remain.
+Independent source/command review and27 pure runner checks pass, not native tests.
+First fixture packet aborted at import in3.863s, returncode-6: missing isolated
+quadrature data. Zero visitor calls/native-context observations/trajectories;
+F17 remains unchecked. Exact local nodes/weights73127B are now hashed/copied
+into isolated HOME, without another import. Release-content identity unverified.
+All71459 operational paths/1646916124 regular bytes match original hashes.
+[Result](docs/adr/experiments/0263-build-result.json) retains resource measurements;
+[evidence ZIP](docs/adr/experiments/0263-build-evidence.zip) preserves failures,
+source/manifests/logs/proposal. No binaries/caches/environment committed.
+Ariadna runtime/test code unchanged; full pytest/Ruff/CI not repeated.
 
 ## Next action and scheduler
-`ariadna-m3` PAUSED: user choice on one isolated native build and pinned dependencies.
-Proposal: one in-tree visitor; operational space-nav and official package untouched.
-ADR0262 proposes finite build/fixture caps, not measured or admitted execution.
-Before any launch require source/toolchain/prefix/resource-enforcement preflight.
-No automatic diagnostic successor, native build/install, campaign or old replay.
-Do not repeat successful local/CI checks/downloads on unchanged code.
-Full-force seed/derivatives/guards/error bounds and73/76/228/300s remain open.
+ariadna-m3 PAUSED, confirmed by app. The original inclusive packet window passed;
+do not replace it with summed process time or silently retry/import/rebuild.
+Reviewable next proposal in ADR0263: one new11-call/60s inclusive/64KiBparameter/
+2MiBevidence manufactured packet on the same kernel/runner and two pinned math
+files. Explicit new packet authority is needed; no new compiler, dependency
+install, HTTP, SPICE, integration or simulator construction is proposed.
+Private capacity-limited image is retained under /private/tmp/ariadna-f17-0263;
+restore at the same mount path and verify source/artifact/resource hashes before
+any separately authorized packet. Original3600s build episode is never reset.
+Do not repeat successful project tests/CI or historical studies on unchanged code.
 
 ## Physical goal remains open
-The original admissible pair is unmet; fabricated F3/F5/F7/F10 are not that pair.
 [ADR0247](docs/adr/0247-formulate-coupled-moon-mars-problem.md) retains fixed F0
 six-states/epochs/planes/phases, hardware and six finite-burn controls.
-M2/excess vectors are seeds, not endpoint equalities; masses/times are derived.
-Free dates/phases/orbit-membership targeting remain unadopted proposals.
-No99% probability, physical closure, safe mission or certified error-bound claim.
-
-## Preserved evidence and boundaries
-[ADR0246](docs/adr/0246-record-bounded-retained-inconclusive.md) retains consumed
-P6:13points audited, inconclusive/no witness, no replay of0243-p3-retained.
+M2/excess vectors are seeds; masses/times are derived. No altered targets/free
+phases/dates, admissible pair,99% probability, physical closure or safe-mission claim.
+Owner lifecycle/concurrency, lawful prior arithmetic, native carry/full-force seed,
+derivatives/guards and independent endpoint bounds remain unqualified.
+[ADR0256](docs/adr/0256-qualify-fabricated-clock-packet.md) retains prior successful
+F10/local/source-bound CI; new private build cannot inherit its qualification.
+[ADR0246](docs/adr/0246-record-bounded-retained-inconclusive.md): P6 consumed,
+13points audited/inconclusive/no witness; no replay of0243-p3-retained.
 [ADR0135](docs/adr/0135-fixed-orbit-boundary-contract.md)/
-[ADR0205](docs/adr/0205-design-fixed-command-physical-join.md) retain all fixed
-boundary/join/error-bound gates. No physical join or strictM3/task3.9 completion.
-No changed inputs/caps/tolerances/physics, new real run, M4–M6/ML/UI/publication
-without accepted contract/authority. Preserve history and moon_to_mars.py;
-work on dev, commit/push each checked stage to existing origin/dev.
+[ADR0205](docs/adr/0205-design-fixed-command-physical-join.md) retain all gates.
+No physical join, strictM3/task3.9, M4–M6/ML/UI/publication authorization.
+Preserve history/moon_to_mars.py; dev only, commit/push checked stages to origin/dev.

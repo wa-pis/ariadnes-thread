@@ -1,0 +1,87 @@
+{
+  "schema": "ariadna.f17.isolated-build-result.v1",
+  "base_revision": "e98329e282b99290964d533cd64f8218787ccea0",
+  "status": "build_passed_fixture_incomplete",
+  "variant": {
+    "variant_id": "ariadna-original-key-0263",
+    "artifact_sha256": "04f7af4c8429c09aec9a21f50888e7e4a979e69184e8abc530e17e88e4cb4941",
+    "artifact_bytes": 41189000,
+    "isolated_installed_sha256": "04f7af4c8429c09aec9a21f50888e7e4a979e69184e8abc530e17e88e4cb4941",
+    "official_isolated_kernel_before_sha256": "531c1106dda0b60663f20ccc5dfd9230d6f5fceccb6b370eeca09740bed86433",
+    "path": "/private/tmp/ariadna-f17-0263/volume/env/lib/python3.12/site-packages/tudatpy/kernel.so",
+    "elapsed_at_install_seconds": 2237.331025416963,
+    "operational_write": false,
+    "adopted_as_official_package": false
+  },
+  "build": {
+    "kernel_target_attempts": 1,
+    "configure_invocations": 3,
+    "compiler_identification_abi_pthread_probes": "occurred; not zero compiler activity",
+    "status": "ok",
+    "elapsed_seconds": 422.086,
+    "translation_units": 81,
+    "link_warning_count": 34,
+    "warnings": "weak Boost.Math symbols with differing visibility; warnings retained, no blanket ABI qualification"
+  },
+  "fixture": {
+    "status": "failed_during_native_import",
+    "elapsed_seconds": 3.863,
+    "returncode": -6,
+    "visitor_calls": 0,
+    "evidence_packet_produced": false,
+    "trajectory_launches": 0,
+    "relaunches": 0,
+    "failure": "isolated HOME had no quadrature/gaussianNodes.txt; static initializer needs nodes and weights",
+    "packet_window": "original inclusive60s window not reset or reinterpreted as accumulated active process runtime"
+  },
+  "preparation": {
+    "source_records_rechecked": 123,
+    "source_drift": [],
+    "runtime_resource_files_prepared": 2,
+    "runtime_resource_bytes": 73127,
+    "upstream_release_resource_identity": "unverified; exact local baseline files pinned separately",
+    "runtime_resource_native_recheck": "not run"
+  },
+  "resource_measurements": {
+    "build_episode_elapsed_seconds": 2578.954451541882,
+    "original_episode_ceiling_seconds": 3600,
+    "compiler_workers": 2,
+    "aggregate_acquisition_bytes": 496986960,
+    "acquisition_ceiling_bytes": 2147483648,
+    "acquisition_measurement": "reused archive and local resource bytes plus upstream TCP read upper bound, not kernel wire bytes",
+    "captured_log_bytes": 169675,
+    "log_ceiling_bytes": 16777216,
+    "volume_capacity_bytes": 8380178432,
+    "volume_used_bytes": 5548802048,
+    "root_storage_allocated_bytes_excluding_mounted_tree": 5699117056,
+    "scratch_ceiling_bytes": 8589934592
+  },
+  "private_runner_pure_selftest": "27 checks passed; zero native fixture calls",
+  "independent_reviews": [
+    "f17_isolation_review source/commands/link/resources",
+    "f17_build_controls strict inclusive packet boundary"
+  ],
+  "decision": "Preserve failed packet and prepare exact two local dependencies. New finite packet is proposed, not launched. ariadna-m3 PAUSED for explicit new packet authority; no rebuild or mission execution.",
+  "operational_preservation": {
+    "status": "passed",
+    "prefix": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav",
+    "paths_compared": 71459,
+    "regular_bytes": 1646916124,
+    "differences": [],
+    "baseline_file_sha256": "4325cbeddd8d05604fc95b46520520f0a001c3a7af716bec2b58897bcc94cc56",
+    "manifest_equal": true,
+    "elapsed_seconds": 12.188238624949008,
+    "verified_utc": "2026-11-25T07:08:23.881038+00:00"
+  },
+  "physical_admission": "unavailable; owner/mutation/concurrency/nativecarry/priorarithmetic/physicalF0 unqualified",
+  "scientific_launches_after_build": 0,
+  "checked_utc": "2026-11-25T07:09:30.460933+00:00",
+  "retained_evidence": {
+    "path": "docs/adr/experiments/0263-build-evidence.zip",
+    "sha256": "20c010f55a8ede3c6a4d48be1827fd3143305b6df57de92bfa5ef9ed7c2f482b",
+    "bytes": 3780220,
+    "members": 99,
+    "compiled_binaries_caches_or_environment_committed": false,
+    "source_texts": "inert archival evidence only; not adopted runtime code"
+  }
+}

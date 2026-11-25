@@ -1,5 +1,41 @@
 ## Context
 
+### F17: isolated native build (2026-11-25)
+
+[ADR0263](../../../docs/adr/0263-authorize-isolated-native-build.md) records the user's
+explicit authorization of preparation and one isolated in-tree native build.
+Use a binding-only kernel target with copied pinned core archives, no separate
+extension or operational-prefix fallback. Require exact source/patch/toolchain/
+compile/link manifests and capacity-limited scratch plus qualified streaming
+acquisition/log and process-group deadline enforcement before compilation.
+The episode is<=3600s inclusive,<=2compiler workers/8GiB scratch/2GiB acquisition/
+16MiB logs. No compiler launch if a prerequisite is unavailable; preserve partials.
+A setup failure is not a scientific result or an expanded/repeated native attempt.
+The post-build packet remains bounded by12visitor calls/60s/64KiB input/2MiB evidence
+and zero trajectory launches; original-row,7value schema/owner/word obligations and
+all physical gates remain separate. Verify meaningful qualification for changed
+runtime code and independent review/protected bytes/links/anchors/diff/strict;
+commit/push verified units, then continue only within resolved authority.
+
+### F17 observed result and unlaunched successor
+
+ADR0263 retains one successful81-TU kernel build in422.086s, exact private variant
+hash and independent command/source review. Three CMake configure invocations
+include two preserved setup failures and actual ABI/pthread compiler probes;
+there was only one kernel-target attempt. Linker visibility warnings and platform
+C++/precompiled-core caveats remain. Source guards and27 fake-callable checks
+are not native owner qualification.
+The first packet aborted at import after3.863s because isolated HOME lacked its
+quadrature resource. Zero visitor calls/result packets/trajectories; F17 incomplete.
+Two exact local quadrature files73127B are now pinned/copied as runtime dependencies,
+separate from fixture-parameter bytes. No post-fix import occurred; release-content
+identity remains unverified. Preserve the original failed packet/inclusive clock;
+do not replace it with aggregate active process time. ariadna-m3 PAUSED for one
+new11-call/60s manufactured packet on the existing artifact, proposed only. No
+rebuild, dependency install, HTTP, SPICE, integration, owner/carry or physical claim.
+All71459 operational paths match the original manifest. No Ariadna runtime code,
+full regression rerun or official-package qualification is part of this evidence unit.
+
 ### F16: native build-route selection (2026-11-25)
 
 [ADR0262](../../../docs/adr/0262-recommend-original-key-build-route.md) bounds one

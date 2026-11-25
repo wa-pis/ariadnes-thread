@@ -77,6 +77,14 @@ qualification remain unverified. Proposed finite build/fixture ceilings are
 operator limits, not measured feasibility. Automation is PAUSED for the concrete
 isolated-build/dependency decision. No build/profile/scientific admission or
 automatic diagnostic successor follows; the operational environment is unchanged.
+[ADR0263](../docs/adr/0263-authorize-isolated-native-build.md) resolves the build
+authorization and records one isolated81-TU build in422.086s. F17 qualification
+is incomplete: native import aborted in3.863s before any visitor call because
+isolated runtime quadrature data were absent. Two exact local files are prepared,
+not re-imported;71459 operational paths match the original manifest. The original
+inclusive packet window is preserved; automation is PAUSED for one proposed new
+11-call/60s manufactured packet on the same artifact, with no rebuild or scientific
+execution. Owner/concurrency/carry/prior arithmetic and physical gates stay open.
 [ADR0260](../docs/adr/0260-bound-time-construction-export-domain.md) completes F14
 source reasoning in208s: known finite0<=r<3600 makes construction/copy normalization
 inactive. Original-key pre-export validation/provenance remains missing; no new

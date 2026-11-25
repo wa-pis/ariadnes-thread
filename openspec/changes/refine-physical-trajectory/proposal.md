@@ -1,3 +1,12 @@
+ADR0263 result: one isolated build passed; its finite packet aborted on missing
+runtime quadrature resources before any visitor call. Exact local prerequisites
+are prepared, but no import was repeated. F17 remains incomplete and automation
+is PAUSED for a separately authorized new packet; physical F0 gates remain open.
+
+[ADR0263](../../../docs/adr/0263-authorize-isolated-native-build.md) records the user's
+approval of one isolated native build; resource/source/prefix preflight precedes
+compilation. No package adoption or scientific experiment follows.
+
 [ADR0262](../../../docs/adr/0262-recommend-original-key-build-route.md) bounds F16's
 source-only build-route recommendation after the user's scheduler restart.
 F16 recommends an isolated in-tree visitor build; automation is PAUSED for that
