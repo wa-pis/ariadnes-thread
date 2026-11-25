@@ -1,0 +1,201 @@
+{
+  "schema": "ariadna.f18.import-only-design-documentary-verification.v1",
+  "status": "PASS_PARENT_AND_INDEPENDENT_DOCUMENTARY_CHECKS",
+  "checked_utc": "2026-11-25T13:19:23.893252+00:00",
+  "base_revision": "203a4f90726d139d970d85cca7be3bdc41770173",
+  "protected_prior_non_markdown_blobs_unchanged": 1205,
+  "local_links_excluding_pending_receipt": 623,
+  "anchors": 5,
+  "current_state_lines": 41,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "0ac68d5348c576ab6a397d17a40df31b84fa3e4fbcaf4e95c4dcf9da5f0406f8",
+    "docs/adr/0270-design-import-only-timeout-observation.md": "8ef3febf7d3dedf3ba868b4ee80109c9fdfadb2ad79413e6c18771d438060a87",
+    "docs/adr/README.md": "1ea1d65967b94652f5ddd2013950e7e7e666741d009254b9f2ccc0c423325ff2",
+    "openspec/ROADMAP.md": "3f47f2126fb6f522c95a355c6d3039dbd0222808e07bab85f5e286b437a40ab6",
+    "openspec/changes/refine-physical-trajectory/design.md": "8452765ec429ea5b3fb59772bcad8f50c430a13c3c7baab991743d27ddefc3de",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "2abb715aaba7188d23696faf1f3f191de8d552a5c44606cf702e68541536a0a0",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "cef7532efe1972ef6cac0d4c31d3d69d56c4546472edfdeba19609596d63b7c2",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "e137e43ba2f228a4aaf5ee261a8a42be95dd9a0d7c912af2493c124a046cc529"
+  },
+  "diff_whitespace": "PASS",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "archive_members_syntax_sizes_hashes": "PASS:10unique relative members,104862expanded bytes,38351archive bytes; saved originals match.",
+  "archive_sha256": "b07e2fa66c046694f40ba6883e73e104593e3e1f6eed9e22f9bbb1adfeccffc8",
+  "result_sha256": "1a854564fa43692577b465614becdf95208723fbb04d3e42f14d0c1c531a266f",
+  "source_review_timing_and_scope": "38named exact source/evidence pins and excerpts,379.127174s source/reviews,396.203576s including detach,600s ceiling; two independent design reviews PASS. Saved receipts retain pins for now-detached image; no remount or full operational-prefix rescan here.",
+  "current_repository_source_pins_rechecked": 6,
+  "runtime_tests_ruff_CI": "Not repeated: source/design-only stage; all prior non-Markdown blobs and qualified0268runtime/test bytes unchanged.",
+  "native_outcome": "No new native/scientific imports, probes, owner calls, factories, integrations, SPICE, builds, resource copies or scientific executions.0269remains consumed/unqualified with unknown actual counts.",
+  "open_tasks": [
+    "F17",
+    "F17.1",
+    "F18.3",
+    "F18.5",
+    "F18.6"
+  ],
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "prompt_sha256": "3ac13c880a440b10adebb3b17f8aee2bdf9952bb122cceac90b8bcfd52a12bc4"
+  },
+  "independent_documentary_review_sha256": "b77a3786a15a0aeff1b84c12535649cfac03e8a777ef594ea6c66c2c96ec8391",
+  "independent_documentary_review": {
+    "schema": "ariadna.f18.final-documentary-review.v1",
+    "status": "PASS",
+    "reviewed_utc": "2026-11-25T13:16:30.699551+00:00",
+    "scope": "Documentary-only review of named0270 ADR/status/OpenSpec/result/archive; no runtime or retained source-image reads, tests, native/scientific imports, probes or repository mutations. Standard-library read/hash/zip/link inspection only.",
+    "findings": [],
+    "checked": {
+      "archive_bytes_sha256_members_and_expanded_bytes_match": true,
+      "all10_member_sizes_and_hashes_match": true,
+      "archive_names_unique_and_relative": true,
+      "38_named_files_recorded_in_completion_receipt": true,
+      "two_independent_reviews_PASS": true,
+      "source_review_379_127174_s_and_detach396_203576_s_under600_consistent": true,
+      "old_native_resource_clock_preservation_claims_supported_by_saved_completion": true,
+      "causal_uncertainty_and_unknown_historical_counts_preserved": true,
+      "0266_success_warning_and0269_failure_not_causal_proof": true,
+      "F18_4_complete_only_F18_3_F18_5_F18_6_and_physical_gates_unqualified": true,
+      "F18_5_artificial_qualification_precedes_separately_authorized_F18_6": true,
+      "future_role_specific_flags_readonly_sameTMP_and_no_thread_tweaks_preserved": true,
+      "six_bounded_markers_and_same_time_byte_caps_preserved": true,
+      "sys_modules_identity_no_extra_import_context_owner_calls": true,
+      "observer_io_fsync_childexit_finalization_uncertainty_preserved": true,
+      "pytest_Ruff_CI_not_rerun_and_no_full_operational_rescan_claimed": true,
+      "scheduler_PAUSED": true
+    },
+    "documents": {
+      "docs/adr/0270-design-import-only-timeout-observation.md": {
+        "bytes": 7458,
+        "sha256": "8ef3febf7d3dedf3ba868b4ee80109c9fdfadb2ad79413e6c18771d438060a87"
+      },
+      "CURRENT_STATE.md": {
+        "bytes": 2661,
+        "sha256": "0ac68d5348c576ab6a397d17a40df31b84fa3e4fbcaf4e95c4dcf9da5f0406f8"
+      },
+      "docs/adr/README.md": {
+        "bytes": 47751,
+        "sha256": "1ea1d65967b94652f5ddd2013950e7e7e666741d009254b9f2ccc0c423325ff2"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 85441,
+        "sha256": "3f47f2126fb6f522c95a355c6d3039dbd0222808e07bab85f5e286b437a40ab6"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 31705,
+        "sha256": "2abb715aaba7188d23696faf1f3f191de8d552a5c44606cf702e68541536a0a0"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 613094,
+        "sha256": "8452765ec429ea5b3fb59772bcad8f50c430a13c3c7baab991743d27ddefc3de"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 171037,
+        "sha256": "cef7532efe1972ef6cac0d4c31d3d69d56c4546472edfdeba19609596d63b7c2"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 500906,
+        "sha256": "e137e43ba2f228a4aaf5ee261a8a42be95dd9a0d7c912af2493c124a046cc529"
+      },
+      "docs/adr/experiments/0270-timeout-diagnosis.json": {
+        "bytes": 5861,
+        "sha256": "1a854564fa43692577b465614becdf95208723fbb04d3e42f14d0c1c531a266f"
+      }
+    },
+    "archive": {
+      "path": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0270-timeout-diagnosis-evidence.zip",
+      "bytes": 38351,
+      "sha256": "b07e2fa66c046694f40ba6883e73e104593e3e1f6eed9e22f9bbb1adfeccffc8",
+      "members": 10,
+      "expanded_bytes": 104862
+    },
+    "checked_links": [
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "line": 8,
+        "target": "/Users/agrudin/dev/my/ariadna/openspec/changes/refine-physical-trajectory/design.md",
+        "anchor": "f184-savedsource-timeout-diagnosis-2026-11-25"
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "line": 8,
+        "target": "/Users/agrudin/dev/my/ariadna/openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md",
+        "anchor": "requirement-qualify-actual-owner-readback-on-a-fixed-analytic-fixture"
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "line": 8,
+        "target": "/Users/agrudin/dev/my/ariadna/openspec/changes/refine-physical-trajectory/tasks.md",
+        "anchor": ""
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "line": 13,
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0269-record-owner-producer-timeout.md",
+        "anchor": ""
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "line": 99,
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0270-timeout-diagnosis.json",
+        "anchor": ""
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "line": 100,
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0270-timeout-diagnosis-evidence.zip",
+        "anchor": ""
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/CURRENT_STATE.md",
+        "line": 6,
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "anchor": ""
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/CURRENT_STATE.md",
+        "line": 12,
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0270-timeout-diagnosis.json",
+        "anchor": ""
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/docs/adr/README.md",
+        "line": 67,
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "anchor": ""
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/openspec/ROADMAP.md",
+        "line": 110,
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "anchor": ""
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/openspec/changes/refine-physical-trajectory/proposal.md",
+        "line": 1,
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "anchor": ""
+      },
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/openspec/changes/refine-physical-trajectory/design.md",
+        "line": 5,
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "anchor": ""
+      }
+    ],
+    "parent_finalization_pending": [
+      {
+        "path": "/Users/agrudin/dev/my/ariadna/docs/adr/0270-design-import-only-timeout-observation.md",
+        "line": 110,
+        "target": "/Users/agrudin/dev/my/ariadna/docs/adr/experiments/0270-doc-verification.json",
+        "reason": "Parent final documentary receipt explicitly pending; expected before commit."
+      }
+    ],
+    "limitation": "PASS covers factual consistency and declared scopes of reviewed documentary artifacts. Parent must finish0270-doc-verification.json, current diff/strict validation and commit/push before claiming stage handoff complete; those checks are not represented as performed by this reviewer."
+  },
+  "finalization": "Final receipt created exclusively; JSON readback and formerly pending local target checked before staging. Commit/push are subsequent operations and are not claimed in this receipt.",
+  "local_links_including_final_receipt": 624
+}

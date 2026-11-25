@@ -1,5 +1,26 @@
 ## Context
 
+### F18.4 saved/source timeout diagnosis (2026-11-25)
+
+[ADR0270](../../../docs/adr/0270-design-import-only-timeout-observation.md) records
+38 named-file/hash/excerpt checks and two independent source/design reviews;
+396.204s including read-only detach <600s, with zero native imports/probes/tests.
+Identical64BOMPwarning in0266success/0269failure and absent phase telemetry do not
+identify cause. Never-run construction still performs native setup; imports
+precede produce. Read-only/temp/write-scope/role-specific flags are concrete
+profile differences but unproved explanations. F18.3 remains consumed/unqualified.
+Next F18.5 prepares only a private import-prefix probe and independent stdlib
+saved-trace auditor with injected tests and full frozen regression qualification.
+Only separately explicit F18.6 authority may execute one fixed cold import,
+zero explicit factories/integrations/owner/helper calls. Preserve exact0269
+role-specific flags/env/read-only image/resources/limits; stop before produce or
+native context access. Six bounded markers <=512B each/trace<=4KiB stay inside
+2MiB evidence and64KiB input/log, unchanged600s preflight/60s45-10-5 phases.
+Flush/fsync and successful child exit/finalization are required; an enter without
+return brackets import plus observer I/O, not cause or native instruction.
+Kernel identity comes from already-loaded sys.modules. No TMP/thread tweak,
+repeat, new data/build/dependency or physical gate closure; scheduler PAUSED.
+
 ### F18.3 consumed producer timeout (2026-11-25)
 
 [ADR0269](../../../docs/adr/0269-record-owner-producer-timeout.md) records the user's

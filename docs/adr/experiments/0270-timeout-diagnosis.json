@@ -1,0 +1,115 @@
+{
+  "schema": "ariadna.f18.timeout-source-diagnosis.v1",
+  "status": "complete_saved_source_diagnosis_and_design_only",
+  "recorded_utc": "2026-11-25T13:15:03.016891+00:00",
+  "base_revision": "203a4f90726d139d970d85cca7be3bdc41770173",
+  "source_budget": {
+    "source_and_independent_reviews_s": 379.12717429175973,
+    "including_readonly_detach_s": 396.20357566699386,
+    "ceiling_s": 600,
+    "interpreter": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python"
+  },
+  "verified": {
+    "named_source_evidence_files": 38,
+    "all_hashes_and_retained_line_excerpts_match": true,
+    "independent_source_design_review": "PASS",
+    "independent_environment_design_review": "PASS",
+    "original_runtime_test_sources_changed": false,
+    "old10nativepins_5resources_10clocks_ledgers_unchanged": true,
+    "readonly_image_detached": true
+  },
+  "facts": [
+    "Failure64BOMP179stderr is exactly the first64Bof successful0266log; it is not evidence of causal attribution.",
+    "0269imports interface.spice->kernel before produce(); producer stdout is emitted only after produce returns. No saved phase trace or packet identifies the stalled boundary.",
+    "Never-run factory still performs full native setup before returning; False skips only the integrate branch. Its completed owner visitor should refuse before accessing the map.",
+    "No deterministic source hang or local seam mutex/thread/GIL-release mechanism was established in the named bounded review. Absence of local mechanism does not rule out native/runtime failures.",
+    "Readonly0269image and stricter write allowance differ from writable0266profile while HOME/TMP/cache paths still name the retained image; role-specific Python flags/bootstrap differ too. Neither is a proven cause."
+  ],
+  "cause": "unresolved; consumed0269actual native counts stay unknown, not zero",
+  "selected_next_question": "Does the unchanged0269cold import-prefix return, observed by a bounded import-only trace and stopping before produce/context/factories/owner/helper?",
+  "proposed_preparation": "F18.5: minimal private probe/stdlib saved-trace auditor, artificial injection/failure/control checks and required frozen regressions before completion; not implemented here.",
+  "proposed_execution": "F18.6: only after qualification and separately explicit authority, one fixed import-only attempt; not authorized or run here.",
+  "future_limits": {
+    "preflight_s": 600,
+    "inclusive_s": 60,
+    "producer_s": 45,
+    "audit_s": 10,
+    "finalization_reserve_s": 5,
+    "explicit_import_attempts": 1,
+    "explicit_factories_integrations_owner_helper_calls": 0,
+    "input_and_combined_log_bytes_each": 65536,
+    "structured_evidence_bytes": 2097152,
+    "trace_markers_max": 6,
+    "marker_bytes_max": 512,
+    "trace_bytes_max": 4096
+  },
+  "future_markers": [
+    "bootstrap-ready",
+    "guards-ready",
+    "native-import-enter",
+    "native-import-return",
+    "spice-guard-ready",
+    "complete"
+  ],
+  "clarifications": [
+    "Obtain loaded kernel only via sys.modules registry, no additional explicit import/context/owner/helper call.",
+    "Flush+fsync each emitted marker inside fixed clock, but a visible lastline alone does not prove fsync/operation completed; require child exit0/finalization for completion.",
+    "Preserve process-role flags: nativeentry/coldparent -B, producer -m without-I/-B; bytecode/sourcebootstrap inherited from exact0269environment."
+  ],
+  "inference_limits": "Emitted last marker may precede blocked markerI/O; a saved enter without return brackets import and adjacent observerI/O, not a specific instruction/cause. A complete new probe does not retrospectively locate0269stall or qualify endpoints.",
+  "work_performed": {
+    "native_scientific_imports_or_probes": 0,
+    "factories_integrations_visitors_spice_builds_payloadcopies": 0,
+    "runtime_tests_ruff_CI": "Not repeated; source/design-only stage, runtime/test sources unchanged."
+  },
+  "gates": "F18.3 remains consumed/unqualified; F17/F17.1 and all physicalF0/M3/command/99percent/safety obligations stay open.",
+  "scheduler": "ariadna-m3 PAUSED",
+  "archive": {
+    "name": "0270-timeout-diagnosis-evidence.zip",
+    "bytes": 38351,
+    "sha256": "b07e2fa66c046694f40ba6883e73e104593e3e1f6eed9e22f9bbb1adfeccffc8",
+    "expanded_bytes": 104862,
+    "members": {
+      "source-profile.json": {
+        "bytes": 892,
+        "sha256": "5cfd6f69687f9c75303f8de71c6026647300b84bb0056c0c093c7b060f2b15a6"
+      },
+      "readonly-attach.plist": {
+        "bytes": 1831,
+        "sha256": "5a21860e2651573899fe7d4e8fc0d4f1ac408cf1554f81ab5ee21fb30a4e059a"
+      },
+      "native-source-diagnosis.json": {
+        "bytes": 10417,
+        "sha256": "cc2bc57c08cc130e8b4ac0539cea087e6220fc387d4bbde899495892eccf0978"
+      },
+      "environment-comparison.json": {
+        "bytes": 57670,
+        "sha256": "6e62ad244707e436303c317d033a30c55edae47931f42e7a9e3b975203569e41"
+      },
+      "diagnostic-contract.md": {
+        "bytes": 5059,
+        "sha256": "353d844137030579718231acf2b3318b2f92f779644ebd540e10d730f67f0841"
+      },
+      "source-design-review.json": {
+        "bytes": 6140,
+        "sha256": "d3a6ec6615d3d9c5ee1a154698b0df7192c1d7fc277e18a9807c6337a39de197"
+      },
+      "environment-design-review.json": {
+        "bytes": 9365,
+        "sha256": "a2b802a7bc16dd5dfb54e636ac389bd3f1a8c0318fedfa5cdbeb769124a6640c"
+      },
+      "finish-source.py": {
+        "bytes": 3642,
+        "sha256": "074d09fbd89c9f0625ceaa4889db1ed8ced55b99d2b1727518e33745ae9530af"
+      },
+      "source-completion.json": {
+        "bytes": 9467,
+        "sha256": "95070b0962db31bdc581fe963ffd7aebde2fd2d43675eaef9b0ec140eb23de04"
+      },
+      "detach.json": {
+        "bytes": 379,
+        "sha256": "52daadccb2cabb9a3c21ae1a845d7f503929b97b0806b3d0ac0a2eac0b60a31d"
+      }
+    }
+  }
+}

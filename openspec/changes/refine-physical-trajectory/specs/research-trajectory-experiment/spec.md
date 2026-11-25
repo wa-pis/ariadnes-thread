@@ -124,6 +124,18 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **THEN** the attempt SHALL remain consumed, numerical/owner qualification SHALL remain unavailable and unsupported native operation counts SHALL be recorded as unknown rather than zero
 - **AND** saved failure/control accounting, bounded logs, process cleanup and distinct prefinal/post-fsync observations SHALL be retained under the unchanged60s inclusive limit; no retry, added data, relaxed limit or causal inference from a warning SHALL follow
 
+#### Scenario: Design the next observation from saved facts without replay
+
+- **WHEN** ADR0270 investigates the consumed F18.3 timeout using saved evidence and named retained sources
+- **THEN** source/design review including independent review and read-only detach SHALL complete within600s with zero native imports/probes/SPICE/integration/builds/payload copies; environment differences and a warning shared with a success SHALL NOT be promoted to a causal explanation
+- **AND** F18.5 SHALL qualify the minimal private import-only probe/auditor on artificial data and required frozen regressions before separately explicit F18.6 authority can permit one import attempt; no earlier failed packet SHALL be repeated implicitly
+
+#### Scenario: Bound an import-only trace without inferring owner success
+
+- **WHEN** separately authorized F18.6 observes the exact0269cold import prefix after F18.5 qualification
+- **THEN** at most six ordered <=512B JSONL markers in a <=4KiB trace SHALL remain within unchanged2MiB evidence/64KiB input-log/60s inclusive45-10-5 phases and600s preflight; exact role-specific flags, environment, read-only resources and source/kernel pins SHALL be preserved with zero explicit produce/context/factory/integration/owner/helper calls
+- **AND** independent stdlib audit SHALL require marker sequence, bounded times/identity, successful child exit and finalization for import completion; a last enter without return SHALL bracket import and adjacent observer I/O without proving cause, a native instruction, old operation counts or F18.3/physical qualification
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

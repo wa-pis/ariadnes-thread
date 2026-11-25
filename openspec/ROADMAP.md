@@ -107,6 +107,13 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0270](../docs/adr/0270-design-import-only-timeout-observation.md) completes
+F18.4 saved/source diagnosis and import-only design in396.204s including review
+and read-only detach, below600s. The same64Bwarning occurs in0266success;
+no saved phase trace identifies the stall.38named files/excerpts verified;
+environment differences are hypotheses, not causes. F18.5 artificial preparation
+precedes any separately authorized F18.6 import-only probe; no new native work
+or F18.3 retry. All owner/physical gates open, automation PAUSED.
 [ADR0269](../docs/adr/0269-record-owner-producer-timeout.md) records one explicitly
 authorized F18.3 packet after517.983s admission/526.507s consumed preflight<600.
 Producer45s deadline fails; final post-fsync45.035707s<60,7485B structured/64B logs.

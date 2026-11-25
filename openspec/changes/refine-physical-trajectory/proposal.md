@@ -1,3 +1,9 @@
+[ADR0270](../../../docs/adr/0270-design-import-only-timeout-observation.md)
+completes saved/source timeout diagnosis and designs a narrower import-only
+observation. Cause unresolved; same warning in prior success and no phase trace.
+F18.5 artificial qualification precedes separately explicit F18.6 authority;
+no probe, native retry or scientific gate closure occurs. Automation PAUSED.
+
 [ADR0269](../../../docs/adr/0269-record-owner-producer-timeout.md) records one
 consumed F18.3 producer45s deadline failure after positive pinned preflight.
 Final45.035707s<60; saved-only failure/control accounting PASS, empty scientific
