@@ -67,6 +67,11 @@ conditional split-Time enclosure design: exact integer-hour plus adjacent-word
 rational enclosure under explicit conversion premises. Current caster/build and
 lawful finite-domain qualification are missing; actual readback stays unavailable.
 No code, native experiment or physical admission follows.
+[ADR0258](../docs/adr/0258-lookup-exact-split-time-build-source.md) retains F12
+incomplete from controller EOF after exactpy312 metadata capture: oneHTTP200,
+23975956byte package/532480byte metadata verified, recipe/git/source declarations
+audited. No primary caster fetch, retry, native or physical qualification. Reuse
+retained metadata/source identity before a separately bounded source continuation.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

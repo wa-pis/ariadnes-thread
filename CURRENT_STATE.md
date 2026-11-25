@@ -3,10 +3,11 @@
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
 ## Current preparation result
-[ADR0257](docs/adr/0257-design-conditional-split-time-enclosure.md) completes F11
-conditional source-level split-Time enclosure design, without half-ULP assumptions.
-Actual readback remains unavailable: exact py312 caster/build and lawful-domain
-basis are missing. No native/code/scientific work or physical qualification.
+[ADR0258](docs/adr/0258-lookup-exact-split-time-build-source.md): F12 attempt
+incomplete from controller EOF; exact py312 package/recipe/git declarations audited.
+No retry; raw metadata/failure retained. Compiled caster/domain/readback unavailable.
+[ADR0257](docs/adr/0257-design-conditional-split-time-enclosure.md) retains only a
+conditional enclosure, not actual readback. No native/code/scientific qualification.
 [ADR0256](docs/adr/0256-qualify-fabricated-clock-packet.md) completes F10 artificial
 packet checker: exact words/rationals, signed event/span intervals, shared
 actual-chain declarations, separate mass ledgers/floor/matching and gate outcomes.
@@ -28,9 +29,9 @@ native double-stop restriction. No actual native bound/adapter/profile is qualif
 ## Next action and scheduler
 F10 source-bound CI and original artifact are verified/retained in ADR0256.
 Do not repeat successful local/CI runs or artifact downloads on unchanged code.
-Next: bounded source-provenance lookup for the exact py312 caster/build route
-and lawful-domain basis under ADR0257. No generic framework or automatic native
-campaign, command/target change, old-study replay or R5.60 follows.
+Next: reuse captured exact-package metadata and archived source2300d7fe; define
+one bounded noninteractive missing-source step. No refetch/controller replay or
+generic framework/native campaign, changed target, old-study replay or R5.60.
 Full-force seed/derivatives/guards/error bounds and73/76/228/300s remain open.
 User resumed `ariadna-m3` on2026-11-25: ACTIVE every5minutes, samechat.
 Pause for concrete required user choice/access/authorization or contract change,

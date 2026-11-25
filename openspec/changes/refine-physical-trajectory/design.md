@@ -1,5 +1,74 @@
 ## Context
 
+### F12: exact-build source-provenance lookup (2026-11-25)
+
+[ADR0258](../../../docs/adr/0258-lookup-exact-split-time-build-source.md) bounds
+one read-only lookup, not another native diagnostic. Question: what exact build
+and caster evidence can be recovered for the installed py312 split-Time exporter?
+Completion is either an explicit artifact→recipe/source/caster evidence chain or
+a precise remaining gap, with each qualification layer labelled independently.
+
+Fixed artifact: `tudatpy-1.0.0-py312h2196d89_3.conda`, osx-arm64,
+`https://conda.anaconda.org/tudat-team/osx-arm64/tudatpy-1.0.0-py312h2196d89_3.conda`,
+SHA-256 `fd5a9c1a98723cbf7af202352990e189c296b46d4b0adabe29344e7565925e01`
+from the unchanged installed metadata pinned by ADR0257. No other Python ABI or
+package version substitutes. Original F0 inputs/model/gates stay fixed and
+unevaluated. Independent reference is the exact package's shipped build records
+and primary caster source; a dependency declaration is not compiled-byte proof.
+
+Before its first external request create one exclusive outside-repository lookup
+directory and inherited deadline. Caps:600s inclusive lookup/inspection time,
+eight HTTP responses including redirects,256MiB aggregate downloaded payload,
+60s per transfer,16MiB total decoded metadata/source stream and4MiB retained
+lookup evidence. One outer600s supervisor includes hashing, decoding, inspection
+and receipt finalization; each transfer has its own inclusive60s supervisor.
+Precharge/check each response, including redirects and failures and their bodies;
+disable implicit redirects/retries until HTTPS/host and remaining quotas are checked.
+No automatic retry or repeated session. Use only official Conda/Anaconda endpoints, their explicit artifact
+redirects and pinned official pybind11 source. Enforce aggregate caps while
+streaming and record failed/partial evidence; missing/expired sources remain gaps.
+
+Download at most one copy of the fixed package, verify its whole SHA-256 before
+interpreting archive metadata, and read only recipe/index/paths/build records. Decode the complete selected
+metadata component within16MiB before parsing; inspect at most256tar members,
+reject duplicate/unsafe names and links, and never decode the package payload
+component. No extraction outside the exclusive directory, unsafe archive paths, unbounded
+expansion, package installation, dependency replacement, build or execution of
+downloaded content. A primary source lookup must bind its precise declared
+revision/version and actual inspected bytes; never substitute current HEAD.
+Do not commit package binaries or execute/load their extensions. Source artifacts
+are separate from mission ephemeris/trajectory archives, which remain untouched.
+
+Report distinct outcomes: artifact identity; shipped recipe/dependency/source
+declarations; evidence for selected compiler/include/macro/caster configuration;
+and actual binary/finite-domain/readback qualification. Recipe/version/hash alone
+cannot establish which headers the compiled extension used. Neither recovered
+source nor a matching package identity supplies actual native event observations,
+lawful finite-domain proof, epoch enclosure or physical gate acceptance.
+
+No TudatPy/SPICE import, test, command/oracle/trajectory evaluation, integration,
+native propagation, optimizer, old-study replay or native campaign is authorized.
+After the bounded lookup independently review source/provenance and scientific
+scope, preserve partials and selected evidence digests, check links/protected
+history/CURRENT/diff/strict OpenSpec, and commit/push the verified documentary unit.
+Do not schedule a generic checker or experiment automatically from a source find.
+
+#### F12 observed partial result
+
+The one attempt verified the exact23975956byte package and recovered532480bytes
+of metadata (28safe members). Exact py312 recipe records declare pybind11/global
+3.0.1, Clang18.1.8/C++14 and feedstock7e891d1257b2ca0f1bede583cdeea2e2f01a8063;
+the saved Git record names source2300d7fe3d7db4db9a78dd4a9a4a713f614da22d.
+Three installed source/build files match the package paths inventory. These are
+artifact-specific declarations/source matches, not compiled-header/FP attestation.
+The controller failed on stdin EOF after ready: original lookup/outer receipts
+remain incomplete/exit2, with no primary caster fetch or successful finalization.
+No retry occurred. Independent saved-byte review supports those limited facts;
+it does not repair the missing whole-session supervisor/receipt outcome. Actual
+caster selection, lawful domain/readback and physical gates stay unavailable.
+Reuse retained data and archived source revision for any separately scoped
+noninteractive continuation; never redownload/restart the consumed attempt.
+
 ### F11: conditional split-Time readback enclosure (2026-11-25)
 
 [ADR0257](../../../docs/adr/0257-design-conditional-split-time-enclosure.md)

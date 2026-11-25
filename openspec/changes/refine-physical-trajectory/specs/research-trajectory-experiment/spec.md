@@ -24,6 +24,12 @@ qualification of the installed exporter, actual event carry and physical gates.
 - **THEN** requested Fraction events, actual native Time/state/mass carry, signed span errors, commanded/effective ledgers, unchanged floor/matching and independent clock/force/endpoint gates remain separate obligations under ADR0255/0205
 - **AND** the stage uses at most600s of scoped source review and zero native imports, tests, SPICE, command/trajectory/oracle evaluations, integration or optimizer calls; no native campaign or physical admission follows
 
+#### Scenario: Preserve a failed exact-build source lookup without promoting its records
+
+- **WHEN** the one ADR0258 source lookup ends incomplete after partial metadata capture
+- **THEN** preserve its original failure/partial and resource receipts, verify saved artifact/metadata facts separately, and retain missing caster/build/finite-domain qualification as unavailable
+- **AND** recipe/source declarations do not become compiled-header or physical proof; no hidden retry, artifact refetch, controller replay or native campaign follows, and any distinct missing-source continuation requires a finite scoped contract
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

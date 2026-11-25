@@ -1,0 +1,256 @@
+{
+  "artifact_identity": {
+    "artifact_bytes": 23975956,
+    "artifact_sha256": "fd5a9c1a98723cbf7af202352990e189c296b46d4b0adabe29344e7565925e01",
+    "artifact_url": "https://conda.anaconda.org/tudat-team/osx-arm64/tudatpy-1.0.0-py312h2196d89_3.conda",
+    "decoded_info_bytes": 532480,
+    "selected": {
+      "info/about.json": {
+        "bytes": 7118,
+        "file": "selected-info_about.json",
+        "sha256": "34de9e42f3b53b0e06545672aa4120f8d0afdc4eeeb11c7abaa5f41892c0b997"
+      },
+      "info/hash_input.json": {
+        "bytes": 400,
+        "file": "selected-info_hash_input.json",
+        "sha256": "d5c1736a3f2872fd7220c0d3aee224d76a63f0f6df14ded9ba27b8321718def2"
+      },
+      "info/index.json": {
+        "bytes": 671,
+        "file": "selected-info_index.json",
+        "sha256": "5a4fbe618512ed04c662125eca921a6e4f50a4bcbd77784c1f6374fbd94394e5"
+      },
+      "info/paths.json": {
+        "bytes": 303961,
+        "file": "selected-info_paths.json",
+        "sha256": "fb915e978ca0de3b2b4e047f98d98d49bef3a1a5760139bc946422110299f66f"
+      },
+      "info/recipe/build.sh": {
+        "bytes": 776,
+        "file": "selected-info_recipe_build.sh",
+        "sha256": "83f069092cf27dbd8e5680a4c7c1ca197bde634cc7149c70b1495c94d14c5215"
+      },
+      "info/recipe/conda_build_config.yaml": {
+        "bytes": 991,
+        "file": "selected-info_recipe_conda_build_config.yaml",
+        "sha256": "f71ff795993a5550a6cea85ef98a6cdbf085cb41a87ad8ec53102888bb6f09ee"
+      },
+      "info/recipe/meta.yaml": {
+        "bytes": 7792,
+        "file": "selected-info_recipe_meta.yaml",
+        "sha256": "abf8e5da21636372a3103f2e657758a6589729593f2e578c214f607c198ede53"
+      },
+      "info/recipe/meta.yaml.template": {
+        "bytes": 4972,
+        "file": "selected-info_recipe_meta.yaml.template",
+        "sha256": "0969ef3c4646c2a08729f2ecece5767d6e56a6213b406b073c6ac05d418e85ea"
+      }
+    },
+    "tar_members": [
+      "info/recipe/bld.bat",
+      "info/test/run_test.sh",
+      "info/test/tests/test_tudatpy/test_data_horizons.py",
+      "info/index.json",
+      "info/recipe/use_sysconfig_for_python_paths.patch",
+      "info/test/run_test.py",
+      "info/test/tests/test_tudatpy/test_interface_spice.py",
+      "info/test/tests/test_tudatpy/test_data_weights.py",
+      "info/test/tests/test_tudatpy/test_constants.py",
+      "info/test/tests/test_tudatpy/test_processTrk234.py",
+      "info/recipe/conda_build_config.yaml",
+      "info/test/test_time_dependencies.json",
+      "info/files",
+      "info/git",
+      "info/has_prefix",
+      "info/paths.json",
+      "info/recipe/meta.yaml.template",
+      "info/test/tests/test_tudatpy/test_data.py",
+      "info/recipe/build.sh",
+      "info/run_exports.json",
+      "info/test/tests/test_tudatpy/test_data_mpc.py",
+      "info/about.json",
+      "info/test/tests/test_tudatpy/test_time_conversions.py",
+      "info/hash_input.json",
+      "info/recipe/meta.yaml",
+      "info/test/tests/test_tudatpy/test_dependent_variable_dictionary.py",
+      "info/recipe/recipe-scripts-license.txt",
+      "info/test/tests/test_tudatpy/test_data_biases.py"
+    ],
+    "zip_members": [
+      "metadata.json",
+      "pkg-tudatpy-1.0.0-py312h2196d89_3.tar.zst",
+      "info-tudatpy-1.0.0-py312h2196d89_3.tar.zst"
+    ]
+  },
+  "base_revision": "9d82f85775f0b08bac47e61397a64f0bc07bf4c4",
+  "controller_outcome": {
+    "decoded_bytes": 532480,
+    "elapsed_s": 3.999749083071947,
+    "error": "EOFError: controller disconnected before finish",
+    "http_responses": [
+      {
+        "body_bytes": 23975956,
+        "body_sha256": "fd5a9c1a98723cbf7af202352990e189c296b46d4b0adabe29344e7565925e01",
+        "exit_code": 0,
+        "finished_elapsed_s": 3.9428912908770144,
+        "http_status": 200,
+        "request": 1,
+        "started_elapsed_s": 0.038792291190475225,
+        "url_without_query": "https://conda.anaconda.org/tudat-team/osx-arm64/tudatpy-1.0.0-py312h2196d89_3.conda"
+      }
+    ],
+    "payload_bytes": 23975956,
+    "status": "incomplete"
+  },
+  "date": "2026-11-25",
+  "declared_build_records": {
+    "archived_git_checkout": "2300d7fe3d7db4db9a78dd4a9a4a713f614da22d",
+    "declared_compiler": "Clang18.1.8",
+    "feedstock_commit": "7e891d1257b2ca0f1bede583cdeea2e2f01a8063",
+    "installed_shipped_cmake": "pybind11_INCLUDE_DIR and pybind11_DEFINITIONS variables; actual values not recovered",
+    "package": "tudatpy1.0.0/py312h2196d89_3/osx-arm64",
+    "pybind11_build_and_host": "3.0.1 pyh7a1b43c_0",
+    "pybind11_global_build_and_host": "3.0.1 pyhc7ab6ef_0",
+    "release_flags_record": "-Wno-macro-redefined; not proof of complete effective flags",
+    "requested_cxx_standard": "14",
+    "tudatpy_source_tag": "v1.0.0"
+  },
+  "failure_interpretation": "Noninteractive stdin EOF after ready, before primary caster-source fetch/finalization. Not an absent remote source, scientific failure or cap-exhaustion result. No retry or second capture.",
+  "independent_reviews": {
+    "retained_byte_and_recipe_audit": "passed: exactarchive/member/selectedhashes and package-specific declarations",
+    "scientific_scope_and_failure_audit": "passed: controllerincomplete/declarations vs compiledcaster/domain and no physicaladmission"
+  },
+  "limitations": [
+    "Retained ZIP holds raw metadata component/selectedrecords, not the wholepackage; wholepackageidentity/membership was observed at capture and independent audit, not a standalone cryptographic membership proof from ZIPdigest",
+    "Recipe and source records are declarations, not executed-source/binary/FP attestation",
+    "No primary caster-file acquisition occurred; do not infer which headers/macros generated binary",
+    "No native finite-domain, requested-event identity, actual carry, mass/force/error bounds or physical gate qualified"
+  ],
+  "lookup_attempt_consumed": true,
+  "new_scientific_work": {
+    "integrations": 0,
+    "native_propagations": 0,
+    "optimizer_calls": 0,
+    "package_install_build_execute": 0,
+    "scientific_or_oracle_evaluations": 0,
+    "spice_queries": 0,
+    "tudatpy_spice_imports": 0
+  },
+  "offline_git_supplement": {
+    "bytes": 458,
+    "checkout_declaration": "2300d7fe3d7db4db9a78dd4a9a4a713f614da22d",
+    "elapsed_from_original_lookup_start_s": 252.02409733319655,
+    "file": "selected-info_git",
+    "scope": "offline supplemental extraction from already captured metadata, not worker capture finalization",
+    "sha256": "bbfb97a101a936735201ef785c477edcffcfe987e8199dcf943798c45291fe18",
+    "tar_member": "info/git"
+  },
+  "outer_capture_receipt": {
+    "elapsed_inclusive_before_final_receipt_s": 4.048007249832153,
+    "exit_code": 2,
+    "physical_admission": "unavailable",
+    "status": "incomplete"
+  },
+  "package_matched_installed_source": {
+    "include/tudat/basics/timeType.h": {
+      "exact_package_path_sha256": "215ef2ee0856a6d476580ec5a4c447a4403a4d51d11bde4cbdc410e423a316d6",
+      "installed_sha256": "215ef2ee0856a6d476580ec5a4c447a4403a4d51d11bde4cbdc410e423a316d6"
+    },
+    "lib/python3.12/site-packages/tudatpy/CMakeLists.txt": {
+      "exact_package_path_sha256": "40ede2e2a1e477d3df80ffc5c76ed7552a0cf707d382f5f34263029c1e4deebc",
+      "installed_sha256": "40ede2e2a1e477d3df80ffc5c76ed7552a0cf707d382f5f34263029c1e4deebc"
+    },
+    "lib/python3.12/site-packages/tudatpy/astro/time_representation/expose_time_representation.cpp": {
+      "exact_package_path_sha256": "a70324509ecaec7359de2db3b9c888859a5230ee6aa0fb7c2b54495abb5287a3",
+      "installed_sha256": "a70324509ecaec7359de2db3b9c888859a5230ee6aa0fb7c2b54495abb5287a3"
+    }
+  },
+  "qualification_layers": {
+    "actual_binary_fp_domain_native_readback": "unavailable",
+    "artifact_declared_recipe_and_git_records": "verified as shipped declarations",
+    "exact_artifact_identity": "verified against installedmetadata SHA",
+    "physical_command_pair": "unavailable",
+    "selected_compiled_caster_include_macro_configuration": "unavailable; generic caster source/configuration not obtained"
+  },
+  "resource_interpretation": "One HTTP200/no redirects, fullbody23975956B; capture decoded532480B and28members. Original overallcontroller failed before inspection/final receipt; no successful full600s supervised-lookup claim. Separate offline audits verify bytes, not controller completion. Outer timing is before its final receipt, not post-fsync completion.",
+  "retained_archive": {
+    "bytes": 159699,
+    "file": "0258-source-lookup.zip",
+    "members": {
+      "http-01.json": {
+        "bytes": 369,
+        "sha256": "9ffb1981463a01ea4ecbdb831cad3c8866f5f03bf070e7387d236051816f17b2"
+      },
+      "info.tar.zst": {
+        "bytes": 80668,
+        "sha256": "a61b932b2cabf6515cc11e75edf33589e36a12623cb4c6d7ceacc03af6912e7e"
+      },
+      "lookup-failure.json": {
+        "bytes": 617,
+        "sha256": "4d0bbbd2b3175f6278793b4d81a432b81025c848fcbc62e5795d12b41a9c16e6"
+      },
+      "offline-git-record.json": {
+        "bytes": 400,
+        "sha256": "80b8c3b54eecca08a0bcef0b07dd33f1cd126878575ca9a7a168545463bf0f6f"
+      },
+      "outer-receipt.json": {
+        "bytes": 151,
+        "sha256": "a7f6ee3737a4b86c06df3ef548be7d78cfe5cab2ecbdc82942c611c82158f898"
+      },
+      "package-source-record.json": {
+        "bytes": 3102,
+        "sha256": "88e47fa5f4d49314382bde4151e0ba01ef1a6cb8110f3894894810e532134279"
+      },
+      "selected-info_about.json": {
+        "bytes": 7118,
+        "sha256": "34de9e42f3b53b0e06545672aa4120f8d0afdc4eeeb11c7abaa5f41892c0b997"
+      },
+      "selected-info_git": {
+        "bytes": 458,
+        "sha256": "bbfb97a101a936735201ef785c477edcffcfe987e8199dcf943798c45291fe18"
+      },
+      "selected-info_hash_input.json": {
+        "bytes": 400,
+        "sha256": "d5c1736a3f2872fd7220c0d3aee224d76a63f0f6df14ded9ba27b8321718def2"
+      },
+      "selected-info_index.json": {
+        "bytes": 671,
+        "sha256": "5a4fbe618512ed04c662125eca921a6e4f50a4bcbd77784c1f6374fbd94394e5"
+      },
+      "selected-info_paths.json": {
+        "bytes": 303961,
+        "sha256": "fb915e978ca0de3b2b4e047f98d98d49bef3a1a5760139bc946422110299f66f"
+      },
+      "selected-info_recipe_build.sh": {
+        "bytes": 776,
+        "sha256": "83f069092cf27dbd8e5680a4c7c1ca197bde634cc7149c70b1495c94d14c5215"
+      },
+      "selected-info_recipe_conda_build_config.yaml": {
+        "bytes": 991,
+        "sha256": "f71ff795993a5550a6cea85ef98a6cdbf085cb41a87ad8ec53102888bb6f09ee"
+      },
+      "selected-info_recipe_meta.yaml": {
+        "bytes": 7792,
+        "sha256": "abf8e5da21636372a3103f2e657758a6589729593f2e578c214f607c198ede53"
+      },
+      "selected-info_recipe_meta.yaml.template": {
+        "bytes": 4972,
+        "sha256": "0969ef3c4646c2a08729f2ecece5767d6e56a6213b406b073c6ac05d418e85ea"
+      },
+      "start.json": {
+        "bytes": 242,
+        "sha256": "76f377b71dfdc8100a23ee7d4ddbf1e55e960345e4b2d4f284d854dbc7b787c8"
+      }
+    },
+    "sha256": "b3466ca34f84e800d37a865ac5a9a16914f73f4cf54deeb641577ec5e2be8906"
+  },
+  "retention_limits": {
+    "cap_bytes": 4194304,
+    "outside_repository_package_copy": "/private/tmp/ariadna-f12-0258/http-01.body",
+    "selected_evidence_bytes": 412688,
+    "whole_package_not_committed": true
+  },
+  "schema": "ariadna-f12-source-lookup-verification-v1",
+  "source_invoker_sha256": "9f99e0f2a364a7454f00f582d3c7a0f4bc00b262ed6337df2defccc76a2e26f0",
+  "status": "retained facts verified; full lookup incomplete"
+}

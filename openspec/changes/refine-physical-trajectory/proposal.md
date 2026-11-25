@@ -1,3 +1,7 @@
+[ADR0258](../../../docs/adr/0258-lookup-exact-split-time-build-source.md) retains F12
+incomplete from controller EOF after exactpy312 metadata capture. Artifact/recipe/git
+records are independently audited; caster/domain and physical gates stay unavailable.
+
 [ADR0257](../../../docs/adr/0257-design-conditional-split-time-enclosure.md) completes F11
 conditional split-Time enclosure design. Exact caster/build and lawful finite-domain
 qualification remain missing; actual readback stays unavailable. No native run follows.

@@ -1,0 +1,33 @@
+{
+  "actual_native_readback_and_physical_admission": "unavailable",
+  "anchors": 5,
+  "base_revision": "9d82f85775f0b08bac47e61397a64f0bc07bf4c4",
+  "changed_markdown_sha256": {
+    "CURRENT_STATE.md": "30753506f49823f4800708deb38db13ae69ff92536bb87167a902375bb51961c",
+    "docs/adr/0258-lookup-exact-split-time-build-source.md": "1c0fabe1f1435556a7aa5432898a54b3f5dddea4bf135032c53186ef73a93aab",
+    "docs/adr/README.md": "47ac98e65051a33bcda3f5ee3efc2606b55f29f329d0769b36f3be1f53f59007",
+    "openspec/ROADMAP.md": "cfb47b7b9fa894f194a6552f5b39f31e4a527ff187104a313a3cc493305f2c30",
+    "openspec/changes/refine-physical-trajectory/design.md": "eddede08aea081bc29176bc89ef49d6d6001eb16bf2f4b2bb08e4eed42b417a3",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "72d4e409c3ab473c4753d3ac45470082f767b139fc8336cf057caf5803dceef5",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "029ca3fa5b4a94c4dbdb4ff7e15b0fd633a2c48c0b1bd841b8be0566a1b94eba",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "a3d7e7f90320c9c46bb69e5dc4e685bc94d09ff8b09d5e41062223694f3d6d5c"
+  },
+  "current_state_lines": 57,
+  "git_diff_check": "passed",
+  "independent_reviews": "Two saved-byte/source/scientific-scope reviews; final documentary review pending at receipt creation",
+  "local_links": 580,
+  "lookup_completion": "incomplete EOF; F12 unchecked, attempt consumed; no retry",
+  "lookup_verification_sha256": "e7dc33d184efd016e72491917ab52107cd8c5380ec4dbb81f160ce25af7f20f0",
+  "new_scientific_work": false,
+  "production_code_unchanged": true,
+  "retained_zip_sha256": "b3466ca34f84e800d37a865ac5a9a16914f73f4cf54deeb641577ec5e2be8906",
+  "runtime_tests_rerun": false,
+  "schema": "ariadna-f12-doc-verification-v1",
+  "status": "passed: documentary evidence only, lookup remains incomplete",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1165
+}
