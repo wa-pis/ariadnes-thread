@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0253 — Qualify the fixed synthetic native arc seam](0253-qualify-native-analytic-arc-conformance.md): F7 passes147 artificial/7436 portable/413 live checks, six native forward/reverse arcs and independent dual-reference audit; integer-event synthetic conformance only, no physical pair or adapter adoption.
+
 - [0252 — Check native arcs against the existing analytic witness](0252-design-native-analytic-arc-conformance.md): F6 fixes the smallest synthetic forward/reverse native contract, exact-request/observed-time distinction and bounded independent checking; source/design and documentation checks pass, no numerical run or physical adoption.
 
 - [0251 — Qualify the artificial coupled coordinate bridge](0251-qualify-coupled-coordinate-bridge.md): F5 private interface passes149 focused/7289 portable/412 live checks; source-bound CI passes7664cases with exact7743local/CI IDs. Native and physical F0 adoption remain unavailable.

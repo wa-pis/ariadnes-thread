@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "files": 1441,
+  "both_lanes": [
+    {
+      "lane": "portable",
+      "command": [
+        "/opt/homebrew/bin/conda",
+        "run",
+        "--no-capture-output",
+        "-n",
+        "space-nav",
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-ra",
+        "--offline",
+        "--junitxml=/private/tmp/ariadna-f7-20261125/portable.xml"
+      ],
+      "returncode": 0,
+      "elapsed_s": 200.4644543332979,
+      "checkout_unchanged": true,
+      "file_count": 1441
+    },
+    {
+      "lane": "live",
+      "command": [
+        "/opt/homebrew/bin/conda",
+        "run",
+        "--no-capture-output",
+        "-n",
+        "space-nav",
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "-ra",
+        "-m",
+        "live",
+        "--junitxml=/private/tmp/ariadna-f7-20261125/live.xml"
+      ],
+      "returncode": 0,
+      "elapsed_s": 583.2687162500806,
+      "checkout_unchanged": true,
+      "file_count": 1441
+    }
+  ],
+  "final_snapshot_matches": true
+}

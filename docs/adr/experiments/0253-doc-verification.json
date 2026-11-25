@@ -1,0 +1,36 @@
+{
+  "anchors": 5,
+  "base_revision": "ff2c5db657db90204ec5b2fb4c1402ee8cd1befb",
+  "changed_markdown_files": [
+    "CURRENT_STATE.md",
+    "docs/adr/0253-qualify-native-analytic-arc-conformance.md",
+    "docs/adr/README.md",
+    "openspec/ROADMAP.md",
+    "openspec/changes/refine-physical-trajectory/design.md",
+    "openspec/changes/refine-physical-trajectory/proposal.md",
+    "openspec/changes/refine-physical-trajectory/tasks.md"
+  ],
+  "current_state_lines": 48,
+  "git_diff_check": "passed",
+  "independent_reviews": [
+    "Pinned native API and fail-stop source review: no blockers",
+    "First-native raw evidence/independent closed form/scope review: no must-fix issues; timing and I/O limitations retained"
+  ],
+  "local_links": 560,
+  "new_source_test_sha256": {
+    "src/space_nav/_native_arc_conformance.py": "f144877186bab451a13378af22cf2f0ec528afb6fd3ed81abb009c7e999b8169",
+    "src/space_nav/_native_arc_oracle.py": "6d039c9e0e29969c3541dc0c5dc73f7e8bd569a471931b4e347c3114ae277568",
+    "tests/test_native_arc_conformance.py": "cc9b18834f0e51717e92e6af6ccb8250d3fd844f1b79edc58f9ed6196ecf3a2f",
+    "tests/test_native_arc_oracle.py": "6d675f49c7093208be091f5969f8d42092f058a9477e27b0cd62c895f03ac7d9"
+  },
+  "qualification_receipt_sha256": "bc1e627b566d342df972d3e90dd9ba5487f1259a6d3d427e4de6fe369e46c331",
+  "schema": "ariadna-f7-doc-verification-v1",
+  "scope": "Post-regression documentation/evidence verification only; no new scientific execution",
+  "status": "passed",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1127
+}

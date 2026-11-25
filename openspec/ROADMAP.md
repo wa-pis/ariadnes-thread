@@ -34,7 +34,13 @@ actual state/mass carry and independent analytic checks under finite limits.
 Source inspection distinguishes native Time from double termination endpoints;
 no native failure or numerical result is observed. F6 source/design review,
 557links/five anchors,1126 protected files and strict OpenSpec pass; F7 native
-qualification and all full-force/physical adoption gates remain open.
+qualification was pending at that design stage.
+[ADR0253](../docs/adr/0253-qualify-native-analytic-arc-conformance.md) completes F7:
+147 focused/7436 portable+42 archival skips/413 live pass;1441 files and Git
+status stay frozen. The first six-arc native fixture and separate analytic audit
+pass both original references and all12 producer-observed native-time checks.
+This qualifies only the existing synthetic integer-event seam. F0 event
+transport, full-force seed/derivatives/guards and endpoint bounds remain open.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

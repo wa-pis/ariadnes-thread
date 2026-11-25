@@ -3,36 +3,32 @@
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
 ## Current preparation result
-[ADR0251](docs/adr/0251-qualify-coupled-coordinate-bridge.md) completes F5 under
-[ADR0250](docs/adr/0250-design-coupled-coordinate-bridge.md): one private coordinate,
-exact-event/derived-mass/artificial-arc interface; no native adapter or optimizer.
-Verified149 focused,7289 portable+42archive skips,412live;1421 files/Gitstatus frozen.
-Ruff/review/links/protected history/strict pass. Source-bound CI45507393487 on
-7a1a1da passes7664cases/79skips, all149new;7743local/CI case IDs match exactly.
-CI skips42archive+37platform are unchanged; original receipts remain immutable.
-Measured basea89e322 plus3new source/test files; hashes/newCIreceipt in ADR.
-Cold affine fixture:73controls+3replays/228simulated slots,64KiB input/647B output,
-producer0.038593334s/external0.043013209s; no new scientific calls/integration.
-Zero-work claim applies to new guarded fixture; existing live regressions use SPICE.
-[ADR0249](docs/adr/0249-qualify-coupled-artificial-shooting.md) retains earlier F3
-manufactured coupled recovery and independent actual-command audit, plus verified CI.
+[ADR0253](docs/adr/0253-qualify-native-analytic-arc-conformance.md) completes F7 under
+[ADR0252](docs/adr/0252-design-native-analytic-arc-conformance.md): fixed synthetic
+uniform-g native witness, actual seven-state carry and independently seeded reverse.
+147 focused/7436 portable+42archive skips/413live pass;1441 files/Gitstatus frozen.
+First bounded native fixture and independent dual-reference audit pass six arcs,
+6native/7436provider entries;12 native-time comparisons are producer-observed.
+Ruff/two reviews pass; immutable raw/JUnit/freeze and doc/strict evidence in ADR.
+Integer-event synthetic seam only; no physical/native adapter or optimizer adoption.
+CI for this source is unobserved at local qualification; preserve a separate receipt.
+[ADR0251](docs/adr/0251-qualify-coupled-coordinate-bridge.md) retains F5 interface
+qualification and successful source-bound CI45507393487 on7a1a1da; do not repeat.
 
 ## Next action and scheduler
-F5 source-bound CI is verified; do not repeat successful tests or CI downloads.
-[ADR0252](docs/adr/0252-design-native-analytic-arc-conformance.md) specifies F6:
-existing synthetic analytic witness,6native forward/reverse arcs, actual state/mass,
-strict representable events and separate observed Time identity; design checks pass.
-F7 next implements/qualifies that private fixture; no mission search.
-Pinned source stores termination endpoints as double despite native Time; this is
-an untested transport risk, not observed trajectory error or physical infeasibility.
-F0 seed/derivatives/full-force/clock/error bounds and73/76/228/300s stay open.
+Do not repeat successful F7 fixture or full regression on unchanged code.
+Next resolve F0 event transport by bounded pinned-source/design review: preserve
+exact derived burn events and commanded durations despite double termination.
+Identify a supported path or precise limitation; no new experiment follows by default.
+If resolution requires changed dependencies or scientific contracts, pause for user.
+Full-force seed/derivatives/guards/clock/error bounds and73/76/228/300s stay open.
 User resumed `ariadna-m3` on2026-11-25: ACTIVE every5minutes, samechat.
 Continue ordinary reversible preparation with pinned Conda and ponytail.
 Pause on required user choice/access/authorization, contract-changing failure,
-or independently verified agreed success. No replay of consumed studies/R5.60.
+or independently verified agreed success. No consumed-study replay/R5.60.
 
 ## Physical goal remains open
-The original admissible pair is unmet; artificial F3/F5 are not that pair.
+The original admissible pair is unmet; synthetic F3/F5/F7 are not that pair.
 [ADR0247](docs/adr/0247-formulate-coupled-moon-mars-problem.md) retains fixed F0
 orbital six-states/epochs/planes/phases, hardware and six finite-burn controls.
 M2/excess vectors are seeds, not endpoint equalities; masses/times are derived.

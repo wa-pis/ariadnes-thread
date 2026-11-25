@@ -1,0 +1,217 @@
+{
+  "artifacts": {
+    "audit.json": {
+      "bytes": 27346,
+      "file": "0253-native-audit.json",
+      "sha256": "6be889871f72bff1609f787eb61d4037ec65c37bd0a765dabba8ad7ba094eced"
+    },
+    "first-native.log": {
+      "bytes": 101,
+      "file": "0253-first-native.log",
+      "sha256": "4f33547c957e19977e33c0792e33c1229dfe02325bd065fc25e2409793ad6586"
+    },
+    "first-native.xml": {
+      "bytes": 44701,
+      "file": "0253-first-native.xml",
+      "sha256": "64a4abc7d8f55a2d2826c46ca828752c677bf2de8429d41d1fd13d6447c2903e"
+    },
+    "focused.xml": {
+      "bytes": 22467,
+      "file": "0253-focused.xml",
+      "sha256": "a70f1d247ba7178a685c666a0de91548581cfc5976e46720072dc1a228dee63d"
+    },
+    "freeze-verification.json": {
+      "bytes": 1039,
+      "file": "0253-freeze-verification.json",
+      "sha256": "94f1900817df09a2b410dc0823f6ba8249d1ffbf9520cc62497bc921e63f048c"
+    },
+    "frozen-checkout.json": {
+      "bytes": 177730,
+      "file": "0253-frozen-checkout.json",
+      "sha256": "be1733fa2122120154ed41011942c4518674c79ab308ff545d9155594d062466"
+    },
+    "input.json": {
+      "bytes": 1004,
+      "file": "0253-native-input.json",
+      "sha256": "0c6ec1153cde90dcd1404b835413f9886a10ec028943be03a44a0280e4e7c553"
+    },
+    "live.log": {
+      "bytes": 610,
+      "file": "0253-live.log",
+      "sha256": "1892a45b3643cd08addc7d1a297bf49c7469e9a355bc358b2eaea15bd07d4cd2"
+    },
+    "live.xml": {
+      "bytes": 101714,
+      "file": "0253-live.xml",
+      "sha256": "7efbc3e5d7c13b0b4b7283d352896aca7de8ac8cfb7ca73ecf8e867a4430a114"
+    },
+    "portable.log": {
+      "bytes": 9657,
+      "file": "0253-portable.log",
+      "sha256": "ade0565a49c2697f9c00d348691a487fa9e5c6b671c7e2492ff35b85f7e9a532"
+    },
+    "portable.xml": {
+      "bytes": 3067244,
+      "file": "0253-portable.xml",
+      "sha256": "40f26115e2c95291b914979c614af6a9ea75865b0a93c51c935d3476c5446b1f"
+    },
+    "producer.json": {
+      "bytes": 5858,
+      "file": "0253-native-producer.json",
+      "sha256": "ed548adf6d1c654bc0bcb63e7e7abbd5dfbc40e78bb8fb4a157937120331ce88"
+    },
+    "receipt.json": {
+      "bytes": 33654,
+      "file": "0253-native-receipt.json",
+      "sha256": "527fc0ebe6d209fc3ae4d36adbd5e865018cf2ba6d1bdcd89c587d666be51cee"
+    },
+    "regression.py": {
+      "bytes": 1690,
+      "file": "0253-regression.py",
+      "sha256": "726d603b3f669edba4d47839d0cad2d459fbbf83aebfdfb9a83394ff15d98ba0"
+    }
+  },
+  "base_revision": "ff2c5db657db90204ec5b2fb4c1402ee8cd1befb",
+  "checks": {
+    "first-native": {
+      "cases": 1,
+      "errors": 0,
+      "failures": 0,
+      "passed": 1,
+      "skipped": 0
+    },
+    "focused": {
+      "cases": 147,
+      "errors": 0,
+      "failures": 0,
+      "passed": 147,
+      "skipped": 0
+    },
+    "live": {
+      "cases": 413,
+      "errors": 0,
+      "failures": 0,
+      "passed": 413,
+      "skipped": 0
+    },
+    "portable": {
+      "cases": 7478,
+      "errors": 0,
+      "failures": 0,
+      "passed": 7436,
+      "skipped": 42
+    }
+  },
+  "ci": {
+    "status": "unobserved at local qualification; subsequent verification requires a new immutable receipt"
+  },
+  "first_native": {
+    "counts": {
+      "contexts_closed": 6,
+      "contexts_created": 6,
+      "kernel_reads": 0,
+      "native_attempts": 6,
+      "native_reported_function_evaluations": [
+        1807,
+        91,
+        1807,
+        1820,
+        91,
+        1820
+      ],
+      "optimizer_entries": 0,
+      "provider_attempts": 7436,
+      "real_archive_reads": 0,
+      "spice_queries": 0
+    },
+    "durable_output_bytes": 66858,
+    "external_elapsed_before_receipt_s": 2.984904166776687,
+    "input_bytes": 1004,
+    "max_reference_event_errors": {
+      "mass_kg": 1.0396399643341289e-10,
+      "position_m": 1.6423941114122893e-07,
+      "velocity_m_s": 4.252323696171565e-11
+    },
+    "native_equality": "all true; producer-observed, not reconstructed by offline auditor",
+    "native_time_observations": 12,
+    "post_fsync_60s_check": "passed",
+    "residual_s": 0,
+    "status": "passed"
+  },
+  "frozen_checkout": {
+    "both_lanes": [
+      {
+        "checkout_unchanged": true,
+        "command": [
+          "/opt/homebrew/bin/conda",
+          "run",
+          "--no-capture-output",
+          "-n",
+          "space-nav",
+          "python",
+          "-m",
+          "pytest",
+          "-q",
+          "-ra",
+          "--offline",
+          "--junitxml=/private/tmp/ariadna-f7-20261125/portable.xml"
+        ],
+        "elapsed_s": 200.4644543332979,
+        "file_count": 1441,
+        "lane": "portable",
+        "returncode": 0
+      },
+      {
+        "checkout_unchanged": true,
+        "command": [
+          "/opt/homebrew/bin/conda",
+          "run",
+          "--no-capture-output",
+          "-n",
+          "space-nav",
+          "python",
+          "-m",
+          "pytest",
+          "-q",
+          "-ra",
+          "-m",
+          "live",
+          "--junitxml=/private/tmp/ariadna-f7-20261125/live.xml"
+        ],
+        "elapsed_s": 583.2687162500806,
+        "file_count": 1441,
+        "lane": "live",
+        "returncode": 0
+      }
+    ],
+    "files": 1441,
+    "final_snapshot_matches": true,
+    "status": "passed"
+  },
+  "limitations": [
+    "Synthetic integer-event conformance, not a physical admissible pair, F5 native adoption, or full-force accuracy",
+    "Logical context-scope exit counts do not prove C++ graph destruction",
+    "Python source/query guards do not certify opaque C++ I/O interception",
+    "Provider entries are distinct from total RHS; native cumulative counts are post-run telemetry",
+    "First-native external elapsed is measured before parent receipt write; post-fsync inclusive deadline checked separately"
+  ],
+  "reviews": [
+    {
+      "result": "no blockers after final source review",
+      "scope": "Pinned native API, signed step, origin cache, time/mass and fail-stop behavior"
+    },
+    {
+      "result": "no must-fix issues; pre-receipt timing and opaque C++ I/O limitations retained",
+      "scope": "Independent closed-form/mass/carry and first-native evidence/source binding"
+    }
+  ],
+  "ruff": "ruff check --no-cache src tests passed after final source/test changes",
+  "schema": "ariadna-f7-qualification-v1",
+  "scope": "Fixed synthetic native conformance only; physical F0 not established",
+  "source_test_sha256": {
+    "src/space_nav/_native_arc_conformance.py": "f144877186bab451a13378af22cf2f0ec528afb6fd3ed81abb009c7e999b8169",
+    "src/space_nav/_native_arc_oracle.py": "6d039c9e0e29969c3541dc0c5dc73f7e8bd569a471931b4e347c3114ae277568",
+    "tests/test_native_arc_conformance.py": "cc9b18834f0e51717e92e6af6ccb8250d3fd844f1b79edc58f9ed6196ecf3a2f",
+    "tests/test_native_arc_oracle.py": "6d675f49c7093208be091f5969f8d42092f058a9477e27b0cd62c895f03ac7d9"
+  }
+}

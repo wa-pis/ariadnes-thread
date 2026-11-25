@@ -121,6 +121,18 @@ conformance. Existing required live/CI regression may separately use SPICE/nativ
 resources. Neither admits replay of a consumed mission study. F6 completion
 alone records a contract and source review, not any numerical conformance pass.
 
+#### F7 qualification result (2026-11-25)
+
+[ADR0253](../../../docs/adr/0253-qualify-native-analytic-arc-conformance.md)
+qualifies the fixed integer-event synthetic seam:147 focused artificial tests,
+7436 portable with42 archival skips and413 live checks pass on the same1441-file
+frozen checkout. The separately bounded first fixture returns six arcs with actual
+state/mass carry and independently seeded reverse states. The independent
+Decimal auditor accepts both references; all12 native-time equality observations
+are producer-observed, not inferred from labels. Native/provider counts are
+6/7436. No physical adapter, arbitrary-event support, safe full-force seed or
+F0 witness is admitted by this result.
+
 #### Physical adoption remains separate
 
 Neither outcome adopts F5 native responses, an arbitrary-node optimizer, changed

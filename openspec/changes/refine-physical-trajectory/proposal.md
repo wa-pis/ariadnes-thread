@@ -1,3 +1,8 @@
+[ADR0253](../../../docs/adr/0253-qualify-native-analytic-arc-conformance.md) completes
+F7 fixed synthetic native conformance:147 focused/7436 portable/413 live pass,
+including six forward/reverse native arcs and independent analytic audit.
+This does not adopt a physical optimizer/adapter or establish F0 feasibility.
+
 F4 preparation is limited by [ADR0250](../../../docs/adr/0250-design-coupled-coordinate-bridge.md)
 to a private normalized-node/exact-event/artificial-arc bridge contract.
 [ADR0251](../../../docs/adr/0251-qualify-coupled-coordinate-bridge.md) completes
