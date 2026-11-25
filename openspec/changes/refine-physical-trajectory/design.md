@@ -1,5 +1,38 @@
 ## Context
 
+### F8: native event transport limits (2026-11-25)
+
+[ADR0254](../../../docs/adr/0254-record-native-event-transport-limits.md) closes
+one bounded pinned-source review after F7. No command/event values, oracle,
+force or trajectory are evaluated; no native import, SPICE or runtime test runs.
+The source evidence is restricted to the pinned Conda build, not a universal
+proof that every possible API or current F0 command is unsupported.
+
+| Inspected seam | Source fact and consequence |
+| --- | --- |
+| Native Time | `scalarTypes.h:18–19` chooses double state/native Time. `timeType.h:68/156/217/502/1035` stores normalized integer hours plus finite long-double remainder and compares native components. Binding `expose_time_representation.cpp:179/203/231/242` exposes constructors, split serialization and float reduction, not a Fraction-exact general transport contract. |
+| Fixed time termination | `propagationTerminationSettings.h:83/91/289` stores a double stop; `propagationTermination.h:172/179` returns it as double. `integrateEquations.h:303/305/307` rolls back and steps toward that represented stop. Exact-final-condition mode cannot restore discarded requested bits. |
+| Stop/custom conditions | `integrateEquations.h:621–622` passes double current time. Custom settings `propagationTerminationSettings.h:189/194/202` use double despite the public binding's Time wording. Exact custom termination at `integrateEquations.h:336–341` returns the post-violation state. A Boolean callback is not an exact Fraction landing method. |
+| Local elapsed-clock proposal | Burn durations may fit a useful restricted domain; the coast span and all absolute ephemeris/rotation/shadow/guidance/force reconstruction still need qualification. `expose_ephemeris.cpp:1107/1124` documents a double-time custom ephemeris callback. No complete transform is adopted. |
+| Existing physical allowance | ADR0205 and the physical-readiness requirement already distinguish commanded/effective spans, native event representation and clock/mass/force effects inside independently justified endpoint allowances. This does not relax the separate artificial F5 or fixed F7 exact-event interface. |
+
+Keep requested Fractions, duration words, labels and observed native events
+separate. The present exact adapter remains unavailable when its representability
+or observed-equality gate fails; never quantize commands or label that physical
+infeasibility. No current candidate's event values are tested by this review.
+
+F9 may design one distinct bounded-realized-clock physical packet under ADR0205:
+immutable requested events/commands, actual native representation/readback and
+its precision provenance, signed epoch/span discrepancy enclosures, commanded
+and effective-span dry-floor ledgers, propagated actual mass, and clock/mass/
+force contributions to the existing endpoint allowances. Missing independently
+justified bounds must remain unavailable/inconclusive. This is a preparation
+direction, not a complete packet, admitted adapter, bound or executable profile.
+Preserve the original F0 boundaries, six-control method,73/76/228/300s caps and
+all join/target/resource/safety gates. No implementation or campaign follows by
+default; pause only for a concrete needed contract/dependency/access change.
+
+
 ### F6: native analytic arc conformance (2026-11-25)
 
 [ADR0252](../../../docs/adr/0252-design-native-analytic-arc-conformance.md) selects

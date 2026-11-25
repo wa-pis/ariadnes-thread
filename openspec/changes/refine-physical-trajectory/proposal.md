@@ -1,3 +1,9 @@
+[ADR0254](../../../docs/adr/0254-record-native-event-transport-limits.md) completes
+F8 source/design review: direct fixed/custom stop paths do not qualify arbitrary
+exact Fraction events. A distinct realized-clock packet may be designed under
+ADR0205's existing allowances; F5/F7 exact semantics and all physical gates stay
+unchanged. No scientific evaluation, adapter adoption or new run follows.
+
 [ADR0253](../../../docs/adr/0253-qualify-native-analytic-arc-conformance.md) completes
 F7 fixed synthetic native conformance:147 focused/7436 portable/413 live pass,
 including six forward/reverse native arcs and independent analytic audit.

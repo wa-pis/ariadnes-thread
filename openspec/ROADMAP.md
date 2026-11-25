@@ -44,6 +44,11 @@ transport, full-force seed/derivatives/guards and endpoint bounds remain open.
 Source-bound CI45519016007 onb5fc153 passes7812cases/79skips; all148new
 pass and7891local/CI IDs match. The exact42archive+37platform skips remain
 unchanged; a separate receipt and original ZIP preserve source-bound evidence.
+[ADR0254](../docs/adr/0254-record-native-event-transport-limits.md) completes F8
+source/design review: fixed/custom double-stop paths do not establish arbitrary
+Fraction-event transport. Existing ADR0205 permits a distinct bounded-realized-
+clock design; F5/F7 exact semantics and every physical gate remain unchanged.
+F9 may specify that packet before implementation, with no new run by default.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

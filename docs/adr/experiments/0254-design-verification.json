@@ -1,0 +1,138 @@
+{
+  "anchors": 7,
+  "base_revision": "813f6e9f511a4b6a1fa22fab969e022c8e10603d",
+  "changed_markdown_files": [
+    "CURRENT_STATE.md",
+    "docs/adr/0254-record-native-event-transport-limits.md",
+    "docs/adr/README.md",
+    "openspec/ROADMAP.md",
+    "openspec/changes/refine-physical-trajectory/design.md",
+    "openspec/changes/refine-physical-trajectory/proposal.md",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md",
+    "openspec/changes/refine-physical-trajectory/tasks.md"
+  ],
+  "current_state_lines": 51,
+  "git_diff_check": "passed",
+  "independent_reviews": [
+    {
+      "result": "direct double endpoint limitation; no arbitrary exact Fraction restoration by custom stop",
+      "scope": "Termination settings/check/final-step/custom-condition source trace"
+    },
+    {
+      "result": "no blanket F0 impossibility; separate bounded-realized-clock design remains authorized under ADR0205; no user decision needed for this source restriction",
+      "scope": "Time representation/local-clock and original physical-contract scope"
+    }
+  ],
+  "interpretation": "The existing absolute-time direct/custom stop path supplies no general Fraction-exact landing guarantee; no candidate events were evaluated and no exhaustive API/physical impossibility was proved",
+  "local_links": 562,
+  "new_force_evaluations": 0,
+  "new_native_imports": 0,
+  "new_native_propagations": 0,
+  "new_optimizer_calls": 0,
+  "new_oracle_or_trajectory_evaluations": 0,
+  "new_spice_queries": 0,
+  "pinned_native_installation": {
+    "build": "py312h2196d89_3",
+    "environment": "space-nav",
+    "metadata_sha256": "26b84d68ee96cc430a708bd90d42d574954abfa79145c6fe12aed517a4390cc9",
+    "name": "tudatpy",
+    "sources": {
+      "include/tudat/astro/propagators/integrateEquations.h": {
+        "inspected_lines": [
+          303,
+          305,
+          307,
+          336,
+          337,
+          621,
+          622
+        ],
+        "sha256": "61f13679524b5f2a8e6353a434496bb86ef54548711f3a00e010194941465391"
+      },
+      "include/tudat/basics/timeType.h": {
+        "inspected_lines": [
+          68,
+          79,
+          89,
+          156,
+          217,
+          502,
+          938,
+          1035,
+          1048
+        ],
+        "sha256": "215ef2ee0856a6d476580ec5a4c447a4403a4d51d11bde4cbdc410e423a316d6"
+      },
+      "include/tudat/simulation/propagation_setup/propagationTermination.h": {
+        "inspected_lines": [
+          172,
+          179
+        ],
+        "sha256": "d158a2f6353687d9c47a0db0761a55738df337556fa0e9fdf38186e11ecf331f"
+      },
+      "include/tudat/simulation/propagation_setup/propagationTerminationSettings.h": {
+        "inspected_lines": [
+          83,
+          91,
+          189,
+          194,
+          202,
+          289
+        ],
+        "sha256": "06a20eb3f8d3010e883448de7e58d3dfcb64581e22289c1d60ffc759bf952190"
+      },
+      "include/tudatpy/scalarTypes.h": {
+        "inspected_lines": [
+          18,
+          19
+        ],
+        "sha256": "6d7ab09180d4108ad554e579548c0f2d0f4816570b5d453a828a22c3516ec9ec"
+      },
+      "lib/python3.12/site-packages/tudatpy/astro/time_representation/expose_time_representation.cpp": {
+        "inspected_lines": [
+          179,
+          203,
+          231,
+          242,
+          268
+        ],
+        "sha256": "a70324509ecaec7359de2db3b9c888859a5230ee6aa0fb7c2b54495abb5287a3"
+      },
+      "lib/python3.12/site-packages/tudatpy/dynamics/environment_setup/ephemeris/expose_ephemeris.cpp": {
+        "inspected_lines": [
+          1107,
+          1124
+        ],
+        "sha256": "a1239bb2270fb6b6429e8f947335b2be9ff2504b0dd9566aaaab1fa113b29fc3"
+      },
+      "lib/python3.12/site-packages/tudatpy/dynamics/propagation_setup/propagator/expose_propagator.cpp": {
+        "inspected_lines": [
+          1404,
+          1405,
+          1571,
+          1590
+        ],
+        "sha256": "998424ff48abdc89bf7737bcda1997cd8cd8292a08acb51c18870cde1d3bcea7"
+      }
+    },
+    "version": "1.0.0"
+  },
+  "preparation_direction": "A separate realized-clock physical packet may use existing ADR0205 allowances without modifying F5/F7 exact semantics; design only, no native execution admission",
+  "runtime_tests_rerun": false,
+  "schema": "ariadna-f8-design-verification-v1",
+  "scope": "Pinned source/design only; no event or command values evaluated",
+  "shared_source_hashes_equal_to_0252": true,
+  "source_review_window_utc": {
+    "last_source_read": "2026-11-25T01:17:09Z",
+    "root_last_source_read": "2026-11-25T01:14:44Z",
+    "source_read_budget_s": 600,
+    "start": "2026-11-25T01:11:42Z"
+  },
+  "status": "passed",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1150
+}

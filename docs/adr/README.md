@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0254 — Preserve requested events across native transport limits](0254-record-native-event-transport-limits.md): F8 pins the double-stop/custom-condition limitation without declaring F0 impossible; a distinct bounded-realized-clock design may use ADR0205, preserving F5/F7 exact semantics. Source/design only.
+
 - [0253 — Qualify the fixed synthetic native arc seam](0253-qualify-native-analytic-arc-conformance.md): F7 passes147 artificial/7436 portable/413 live checks, six native forward/reverse arcs and independent dual-reference audit; source-bound CI passes7812cases/79skips with all148new and exact7891local/CI IDs; integer-event synthetic conformance only, no physical pair or adapter adoption.
 
 - [0252 — Check native arcs against the existing analytic witness](0252-design-native-analytic-arc-conformance.md): F6 fixes the smallest synthetic forward/reverse native contract, exact-request/observed-time distinction and bounded independent checking; source/design and documentation checks pass, no numerical run or physical adoption.

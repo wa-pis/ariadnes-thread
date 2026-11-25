@@ -1,5 +1,32 @@
 ## ADDED Requirements
 
+### Requirement: Separate requested events from native transport
+
+Native preparation SHALL preserve exact requested event/control meaning separately
+from observed native representation and SHALL follow ADR0254's pinned-source
+limitation and ADR0205's pre-existing realized-clock allowance. It SHALL NOT
+fabricate the artificial F5 exact response, weaken F7 admission or infer physical
+infeasibility from unavailable transport.
+
+#### Scenario: Record the limited source conclusion
+
+- **WHEN** F8 source/design review closes
+- **THEN** it binds the installed build and source hashes/line anchors for Time, double fixed/custom stops and final-step logic, with source reading<=600s and zero native imports, SPICE, oracle/command/trajectory evaluations or tests
+- **AND** no current candidate event is evaluated and no blanket API impossibility, observed native error, physical command rejection or execution authority is claimed
+
+#### Scenario: Preserve exact and realized event scopes
+
+- **WHEN** an event is outside the present exact adapter's representability or observed-equality domain
+- **THEN** that adapter remains unavailable without rounding the requested command or manufacturing exact native identity from a1e-6s label tolerance
+- **AND** a future distinct realized-clock design retains immutable requested events/durations, actual native representation/readback and signed epoch/span discrepancy enclosures; it does not alter the existing F5/F7 contracts
+
+#### Scenario: Require a bounded physical contract before implementation
+
+- **WHEN** F9 proposes the separate physical packet under ADR0205
+- **THEN** its contract names commanded/effective-span dry-floor ledgers before mass rounding, actual propagated-mass checks, native/readback precision provenance, independent clock/mass/force contributions to endpoint error allowances and finite work/time limits
+- **AND** missing justified bounds remain unavailable/inconclusive rather than a pass; all original1e-6s/0.001m/1e-6m/s/1e-9kg join and1000m/0.01m/s target gates and73/76/228/300s production caps remain unchanged, with no implementation or run admitted by design completion
+
+
 ### Requirement: Check native arcs on the existing analytic witness
 
 Private native preparation SHALL follow ADR0252's fixed synthetic uniform-field
