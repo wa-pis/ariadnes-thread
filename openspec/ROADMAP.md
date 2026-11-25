@@ -62,6 +62,11 @@ source-bound CI45530971440 on exact a9fa9cf passes7906cases/79skips, all94new
 pass and7985local/CI IDs match. Unchanged42archive+37platform skip maps, final
 source hashes and original JUnit/environment ZIP are retained; no native profile
 is admitted.
+[ADR0257](../docs/adr/0257-design-conditional-split-time-enclosure.md) completes F11
+conditional split-Time enclosure design: exact integer-hour plus adjacent-word
+rational enclosure under explicit conversion premises. Current caster/build and
+lawful finite-domain qualification are missing; actual readback stays unavailable.
+No code, native experiment or physical admission follows.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

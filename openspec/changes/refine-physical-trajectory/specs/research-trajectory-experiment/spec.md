@@ -1,5 +1,29 @@
 ## ADDED Requirements
 
+### Requirement: Keep split-Time enclosures conditional on the conversion basis
+
+Split-Time readback preparation SHALL follow ADR0257's conditional adjacent-
+binary64 derivation. It SHALL distinguish a valid mathematical enclosure from
+qualification of the installed exporter, actual event carry and physical gates.
+
+#### Scenario: Enclose only under an established finite conversion route
+
+- **WHEN** exact native integer-hour export, finite in-range native remainder and the complete single-narrowing/CPython-storage route are independently qualified for the pinned build
+- **THEN** the stored epoch is enclosed by exact3600*h plus the rational values of prev64(y) and next64(y), without assuming nearest half-ULP rounding or a long-double mantissa
+- **AND** both neighbour endpoints must be finite; unqualified normalization is not used to clip the interval and the original h/y words, signed zero and a rounded3600 are retained
+
+#### Scenario: Keep the actual missing source basis unavailable
+
+- **WHEN** exact caster/build provenance or the lawful finite native-domain premise is missing, even if exported y is finite or reconstruction roundtrip succeeds
+- **THEN** actual readback remains unavailable; different Python-ABI recipes, type labels, hashes and flags cannot supply the missing premise
+- **AND** failed reconstruction roundtrip forbids exact serialization but does not itself refute a separately qualified conservative enclosure
+
+#### Scenario: Preserve physical obligations and finite preparation limits
+
+- **WHEN** the conditional source-level enclosure design is accepted
+- **THEN** requested Fraction events, actual native Time/state/mass carry, signed span errors, commanded/effective ledgers, unchanged floor/matching and independent clock/force/endpoint gates remain separate obligations under ADR0255/0205
+- **AND** the stage uses at most600s of scoped source review and zero native imports, tests, SPICE, command/trajectory/oracle evaluations, integration or optimizer calls; no native campaign or physical admission follows
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

@@ -1,0 +1,116 @@
+{
+  "actual_readback_qualification": "unavailable: exact compiled caster/build route and lawful finite-domain basis remain unqualified",
+  "anchors": 5,
+  "base_revision": "d670ff04bc2b989d9200fcdbb19591638c6ee6e6",
+  "caveats": [
+    "No half-ULP, mantissa or nearest-rounding assumption",
+    "Finite exported y alone does not establish finite in-range native r or lawful conversion",
+    "Normalization comments do not justify clipping; preserve h/y including signed zero or rounded3600",
+    "Failed roundtrip forbids exact serialization but may coexist with an independently justified conservative enclosure",
+    "No requested-Fraction identity, lossless carry, absolute-float reconstruction, mass/force/endpoint bound or physical admission inferred"
+  ],
+  "changed_markdown_sha256": {
+    "CURRENT_STATE.md": "05a815b0a9f66c27b0b61e264efaba56397f513fdfd90c6ddb5dbbf5d941da35",
+    "docs/adr/0257-design-conditional-split-time-enclosure.md": "666aafc2a391f88b39323062feccb463870df2201e2a37b37f0f85deae2b18ff",
+    "docs/adr/README.md": "177a915466b5081ca481e01de93620857a4bf92da4276a06fcbcb387d39112a6",
+    "openspec/ROADMAP.md": "c000fcbbf2ffe045d5d485bf90567d0c6a842a4e0d52013dfccb1657f76e0f1c",
+    "openspec/changes/refine-physical-trajectory/design.md": "724e3a3cc17bd9d98a2fc64fcb1a6639c06a76d78a6dd9fb6ed4eee1c03225ad",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "dad58cb32b9bbbf764e4b287cb11b9cdb2ca4342da2fa6b60bc5000a7a564b76",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "592102dca9399f1f0e8742312341199dc7f80c99b2a92149b67bc8a39c1d6791",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "9ed7c862b277d260406868bba33bffe837e13d569f88174919c8003456c3295c"
+  },
+  "conditional_lemma": "Given established original-key/exact integer export and defined single narrowing of finite in-range native remainder r to binary64 y, stored epoch is in exact-rational [3600*h+prev64(y),3600*h+next64(y)] when both neighbours finite",
+  "current_state_lines": 56,
+  "git_diff_check": "passed",
+  "independent_reviews": {
+    "scientific_and_scope": "passed: conditional conversion lemma and normalization/roundtrip/key/physical distinctions",
+    "source_and_provenance": "passed: installed getters/pickle/header/metadata facts, missing exactpy312 cache/caster, no substitute ABI recipe"
+  },
+  "local_links": 573,
+  "new_integrations": 0,
+  "new_native_imports": 0,
+  "new_native_propagations": 0,
+  "new_optimizer_calls": 0,
+  "new_scientific_or_oracle_evaluations": 0,
+  "new_spice_queries": 0,
+  "pinned_native_installation": {
+    "build": "py312h2196d89_3",
+    "environment": "space-nav",
+    "metadata_path": "conda-meta/tudatpy-1.0.0-py312h2196d89_3.json",
+    "metadata_sha256": "26b84d68ee96cc430a708bd90d42d574954abfa79145c6fe12aed517a4390cc9",
+    "name": "tudatpy",
+    "package_sha256_from_metadata": "fd5a9c1a98723cbf7af202352990e189c296b46d4b0adabe29344e7565925e01",
+    "package_url": "https://conda.anaconda.org/tudat-team/osx-arm64/tudatpy-1.0.0-py312h2196d89_3.conda",
+    "sources": {
+      "include/python3.12/cpython/floatobject.h": {
+        "inspected_line_anchors": [
+          5,
+          8
+        ],
+        "sha256": "f1c53f5b87f221db66004b836aa2fc9462aa46c2fbe46b417a8ddc803ce2f585"
+      },
+      "include/python3.12/pyconfig.h": {
+        "inspected_line_anchors": [
+          46,
+          1640,
+          1655
+        ],
+        "sha256": "e0e5909ae893dcc47c83b3d12d870158ce3270126b470e46255611cea30224c4"
+      },
+      "include/tudat/basics/timeType.h": {
+        "inspected_line_anchors": [
+          68,
+          105,
+          502,
+          938,
+          978,
+          988,
+          1035,
+          1048
+        ],
+        "sha256": "215ef2ee0856a6d476580ec5a4c447a4403a4d51d11bde4cbdc410e423a316d6"
+      },
+      "lib/python3.12/site-packages/tudatpy/astro/time_representation/expose_time_representation.cpp": {
+        "inspected_line_anchors": [
+          41,
+          78,
+          231,
+          235,
+          239,
+          268
+        ],
+        "sha256": "a70324509ecaec7359de2db3b9c888859a5230ee6aa0fb7c2b54495abb5287a3"
+      }
+    },
+    "version": "1.0.0"
+  },
+  "primary_references": [
+    "https://eel.is/c++draft/conv.double",
+    "https://docs.python.org/3.12/c-api/float.html"
+  ],
+  "runtime_tests_rerun": false,
+  "schema": "ariadna-f11-design-verification-v1",
+  "scope": "Conditional split-Time source/design review only; no implementation or actual native bound qualification",
+  "scoped_absence_checks": {
+    "different_python_abi_recipe_not_used_as_actual_build_evidence": true,
+    "exact_extracted_cache_exists": false,
+    "exact_extracted_cache_path": "/private/tmp/ariadna-conda-pkgs/tudatpy-1.0.0-py312h2196d89_3",
+    "installed_include_pybind11_exists": false,
+    "not_a_global_proof_of_no_source": true
+  },
+  "shared_time_binding_metadata_hashes_match_0254": true,
+  "source_review_window_utc": {
+    "budget_s": 600,
+    "elapsed_through_hash_check_s": 404.765043,
+    "last_source_analysis_no_later_than": "2026-11-25T02:50:08+00:00",
+    "source_hashing_finished": "2026-11-25T02:51:42.999043+00:00",
+    "start": "2026-11-25T02:44:58.234000+00:00"
+  },
+  "status": "passed",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1163
+}

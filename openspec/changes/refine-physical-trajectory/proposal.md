@@ -1,3 +1,7 @@
+[ADR0257](../../../docs/adr/0257-design-conditional-split-time-enclosure.md) completes F11
+conditional split-Time enclosure design. Exact caster/build and lawful finite-domain
+qualification remain missing; actual readback stays unavailable. No native run follows.
+
 [ADR0256](../../../docs/adr/0256-qualify-fabricated-clock-packet.md) completes F10
 fabricated arithmetic/limit qualification with94 focused/7530 portable/413 live
 passes and1469 frozen files. Physical/native qualification remains unavailable;

@@ -1,5 +1,84 @@
 ## Context
 
+### F11: conditional split-Time readback enclosure (2026-11-25)
+
+[ADR0257](../../../docs/adr/0257-design-conditional-split-time-enclosure.md)
+narrows the next readiness question to native split-Time readback. Can an exact
+hour integer and a narrowed remainder word enclose the stored native epoch
+without a half-ULP or long-double-mantissa assumption? This is a conditional
+source-level design, not a qualified native exporter or a physical clock bound.
+
+| Item | Fixed contract |
+| --- | --- |
+| Inputs | Original F0 boundaries, six controls, hardware, force inventory and budgets are unchanged and unevaluated. Symbolic h, r and y denote the stored hour, native remainder and exported binary64 word; no mission candidate is calculated. |
+| Conversion model | Exact integer hour export plus one established finite floating narrowing r→y followed by value-preserving CPython double storage. The complete installed caster/build/binary route must be pinned before applying this relation to observations. |
+| Independent reference | C++ floating-conversion rule plus the inspected Time getters/pickle path and CPython declarations, separately reviewed. No cross-solver agreement or observed roundtrip substitutes for the derivation. |
+| Tolerances | No new tolerance. Preserve 1e-6s/0.001m/1e-6m/s/1e-9kg join and1000m/0.01m/s target gates; the symbolic enclosure does not establish that any gate passes. |
+| Completion | State a valid conditional enclosure and its domain, pin what the inspected source actually establishes, identify a concrete missing qualification fact, and pass source/scientific review and documentary/strict checks. |
+| Budget | At most600s of scoped source/metadata/reference review from02:44:58.234Z; zero native imports, tests, SPICE, trajectory/oracle/command evaluations, integrations or optimizer calls. Documentation validation is separate and has no scientific work. |
+
+#### Conditional derivation and supported domain
+
+Let h be the unchanged stored integer hour, r the stored native remainder and
+y its actual exported finite binary64 word. If the qualified route establishes
+that finite r is in the destination conversion range and the single narrowing
+is exact or selects one of the adjacent bounding binary64 values, then
+
+`r ∈ [prev64(y), next64(y)]` and
+`t_stored ∈ [3600*h + exact(prev64(y)), 3600*h + exact(next64(y))]`.
+
+Here exact(word) is the rational value of that binary64 word; the integer product
+and interval additions are mathematical exact operations, not a float absolute-
+epoch reconstruction. The C++ [floating-conversion rule](https://eel.is/c++draft/conv.double)
+provides the conditional adjacent-result premise. [CPython's float API](https://docs.python.org/3.12/c-api/float.html)
+describes double-valued object construction; neither source identifies the
+missing exact extension caster/build. The enclosure intentionally uses both
+neighbours rather than an unproved nearest-rounding half-ULP cell.
+
+Require finite adjacent endpoints and an established lawful finite conversion
+domain. Nonfinite values, extreme words with an infinite neighbour, an unknown
+caster/conversion route, source/build mismatch or unqualified range/ABI/FP
+behaviour leave actual readback unavailable. A finite exported y alone cannot
+prove the native r was finite/in range or that undefined conversion did not occur.
+No precision/mantissa or rounding-mode assumption is inferred from a type name.
+
+Do not clip this interval to an asserted normalized remainder domain: Time's
+normalization comments alone do not prove a universal strict invariant for all
+floating inputs. A narrower domain may be intersected only after its separate
+qualification. Keep the original exported h/y pair, including signed zero and a
+y rounded to3600; never normalize the export first or claim a singleton because
+reconstructing it gives a nearby Time. Failed reconstruction roundtrip forbids
+lossless serialization claims but need not refute a separately justified
+conservative enclosure. Successful roundtrip alone does not supply its source
+basis or prove the requested Fraction was represented.
+
+#### What is established and what remains unavailable
+
+The pinned installed Time getter returns int hours and a long-double remainder;
+the bound pickle path calls py::make_tuple on those two values. CPython headers
+record double object storage, not the extension's long-double precision or its
+compiled caster. The exact py312 installation receipt identifies a package hash
+and an extracted-cache path; that cache is absent. Generic caster headers were
+not found in the inspected installed paths. A different Python-ABI recipe cannot
+substitute for this artifact. Actual native readback therefore stays unavailable.
+
+The next eligible preparation is a bounded source-provenance lookup for the exact
+py312 build/caster and its lawful finite-domain basis. Reuse its exact published
+artifact identity; fetching source/metadata is not a dependency replacement.
+Do not begin a native experiment, implement another generic packet framework or
+repeat F7/F10 because this conditional lemma was accepted. If the exact route
+cannot be established, retain unavailable and explicitly design a supported
+alternative before code or execution; pause only for a concrete needed user choice.
+
+Even a future qualified readback encloses the stored native epoch, not the
+requested Fraction or the physical trajectory. Actual Time/state/mass must still
+cross fresh contexts; shared JSON IDs and equal float labels do not prove carry.
+Signed span errors, both mass ledgers, floor/matching, full-force clock effects
+and independent endpoint/guard bounds remain separate ADR0255/0205 obligations.
+F10's fabricated-only basis and unavailable scientific/physical admissions remain
+unchanged. No native profile, physical certificate, command-pair witness or R5.60
+is admitted by F11.
+
 ### F9: bounded realized-clock packet (2026-11-25)
 
 [ADR0255](../../../docs/adr/0255-design-realized-clock-packet.md) specifies one

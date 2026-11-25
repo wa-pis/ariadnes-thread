@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0257 — Design a conditional split-Time readback enclosure](0257-design-conditional-split-time-enclosure.md): source-level adjacent-neighbour derivation without half-ULP/mantissa assumptions; exact py312 caster/build and lawful-domain basis remain unavailable. Design/review only, no native or scientific work.
 - [0256 — Qualify the fabricated realized-clock checker](0256-qualify-fabricated-clock-packet.md):94 focused/7530 portable+42 archival/413 live pass with1469 frozen files, independent review and bounded pure harness. CI45530971440 on a9fa9cf passes7906cases/79skips, all94new pass and7985local/CI IDs match with unchanged skips. Artificial consistency only; physical admission remains unavailable.
 
 - [0255 — Design a distinct bounded-realized-clock packet](0255-design-realized-clock-packet.md): F9 separates immutable requests, actual native handoffs, justified clock/mass/force enclosures and physical admission under ADR0205. Contract only; no native bound, implementation or execution.
