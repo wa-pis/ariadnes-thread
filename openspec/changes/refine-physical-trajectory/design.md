@@ -17,8 +17,37 @@ all physical gates remain separate. Verify meaningful qualification for changed
 runtime code and independent review/protected bytes/links/anchors/diff/strict;
 commit/push verified units, then continue only within resolved authority.
 
-### F17 observed result and unlaunched successor
+### F17 resumed fixture packet (2026-11-25)
 
+[ADR0264](../../../docs/adr/0264-qualify-original-row-fixture-packet.md) records
+resumed authority for exactly the prepared11-call/60s inclusive/64KiBparameter/
+2MiB structured evidence manufactured packet, after<=600s pinned preflight.
+Restore the same image/kernel/runner and two local math files, with no build,
+installation, HTTP, SPICE, simulator construction or integration. Reuse the
+qualified controls with a fresh independent episode root, unchanged volume and
+stricter64KiB logs; never reset the old build/failed-packet clock. Preserve setup
+failures, verify fake-subprocess guards, pin the profile before import, fsync/check
+inclusive completion and independently audit saved literal words without native
+replay. Stop on drift/failure. Parent F17/owner/concurrency/carry/prior arithmetic
+and physical F0 remain open.
+
+Observed terminal result:538.711s preflight/one packet, returncode-6 at import
+for absent isolated `station_locations/glo.sit`;0.294s process/0.341545s inclusive
+post-stage-fsync. Eleven cases did not run, no context/result JSON, zero visitor
+calls inferred from source ordering. Independent failure accounting passes;
+packet auditor refuses missing evidence. Independent control review finished
+**after** launch. Preserve the fake PID-parser setup failure and its bounded
+follow-up checks. All71459 operational paths match; no new runtime resources,
+SPICE, simulator or trajectory. F17/F17.1 stay unchecked and automation PAUSED.
+The named static initializer also reads `glo.vel` and `ns_codes.dat`, without
+proving full import dependency closure. Propose a complete minimal pinned offline
+runtime-data preflight before any separately authorized packet, not piecemeal
+import retries. Metadata-only whole-tree proposal would exceed the unchanged2GiB
+acquisition ceiling; no whole copy or ceiling increase is adopted.
+
+### F17 earlier build result and then-unlaunched successor
+
+This subsection preserves the ADR0263 boundary; ADR0264 above records its successor.
 ADR0263 retains one successful81-TU kernel build in422.086s, exact private variant
 hash and independent command/source review. Three CMake configure invocations
 include two preserved setup failures and actual ABI/pthread compiler probes;

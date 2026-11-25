@@ -3,49 +3,46 @@
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
 ## Current result
-[ADR0263](docs/adr/0263-authorize-isolated-native-build.md): user authorized one
-isolated native build. Exactly one81-TU kernel build passed in422.086s after two
-preserved CMake setup failures; compiler ABI/pthread probes also occurred.
-Private variant04f7af4c…, Clang18.1.8/pybind11 3.0.1; no operational adoption.
-Linker visibility warnings/platform C++ and precompiled-core caveats remain.
-Independent source/command review and27 pure runner checks pass, not native tests.
-First fixture packet aborted at import in3.863s, returncode-6: missing isolated
-quadrature data. Zero visitor calls/native-context observations/trajectories;
-F17 remains unchecked. Exact local nodes/weights73127B are now hashed/copied
-into isolated HOME, without another import. Release-content identity unverified.
-All71459 operational paths/1646916124 regular bytes match original hashes.
-[Result](docs/adr/experiments/0263-build-result.json) retains resource measurements;
-[evidence ZIP](docs/adr/experiments/0263-build-evidence.zip) preserves failures,
-source/manifests/logs/proposal. No binaries/caches/environment committed.
+[ADR0264](docs/adr/0264-qualify-original-row-fixture-packet.md): exactly one resumed
+manufactured packet consumed after538.711s pinned preflight. Native import aborts
+for missing isolated station_locations/glo.sit, rc-6/0.294s process/0.341545s
+inclusive after stage fsync. No result JSON/context/eleven-case outcomes.
+Zero visitor calls are source-order inference, not measured native counters.
+Independent offline failure accounting passes; packet auditor refuses missing
+JSON. Fake guard checks pass with initial PID-parser setup failure retained;
+independent control-source review completed after launch, not a prelaunch gate.
+All71459 operational paths/1646916124regular bytes still match original hashes.
+[Result](docs/adr/experiments/0264-fixture-failure-result.json) and
+[evidence ZIP](docs/adr/experiments/0264-fixture-failure-evidence.zip) retain failure.
+No native retry, new data copy/build/SPICE/simulator/integration occurred.
 Ariadna runtime/test code unchanged; full pytest/Ruff/CI not repeated.
 
 ## Next action and scheduler
-ariadna-m3 ACTIVE every5minutes, confirmed by app. The user subsequently said
-“включи автоматизацию обратно” after the concrete new-packet proposal; this
-resumes that exact prepared11-call/60s inclusive/64KiBparameter/2MiBevidence packet
-on the same kernel/runner and two pinned math files. Record its standalone
-profile/watchdog before import; preserve the failed packet and its original clock.
-No compiler, rebuild, dependency install, HTTP, SPICE, integration or simulator
-construction is authorized. Pause on prerequisite drift, packet failure or a
-needed user decision; no automatic import retry. Native execution is not part
-of this scheduler-update stage.
-Private capacity-limited image is retained under /private/tmp/ariadna-f17-0263;
-restore at the same mount path and verify source/artifact/resource hashes before
-any separately authorized packet. Original3600s build episode is never reset.
-Do not repeat successful project tests/CI or historical studies on unchanged code.
+ariadna-m3 PAUSED through the official app tool immediately after failed import.
+F17/F17.1 remain unchecked; successful build is not native-helper qualification.
+The same static initializer also reads glo.vel/ns_codes.dat; this does not prove
+complete import dependency closure. Propose a complete minimal source-derived
+pinned offline runtime-data/preflight profile before any separately authorized
+packet. Avoid one-file-at-a-time import retries. Whole local155file/2231646932B
+copy would exceed unchanged2GiB acquisition ceiling; no copy/cap change adopted.
+Local resource payload/release identity beyond two prior math files unverified.
+User decision is required before adopting new runtime resources or another packet.
+[ADR0263](docs/adr/0263-authorize-isolated-native-build.md) preserves the single
+81-TU build422.086s and first failed import3.863s; old clocks are never reset.
+Private variant04f7af4c…/runner retained in /private/tmp/ariadna-f17-0263 image;
+no operational package adoption. Platform ABI/core/FP caveats stay open.
+Do not repeat unchanged successful project tests/CI or historical studies.
 
 ## Physical goal remains open
 [ADR0247](docs/adr/0247-formulate-coupled-moon-mars-problem.md) retains fixed F0
 six-states/epochs/planes/phases, hardware and six finite-burn controls.
 M2/excess vectors are seeds; masses/times are derived. No altered targets/free
-phases/dates, admissible pair,99% probability, physical closure or safe-mission claim.
+phases/dates, admissible pair,99% probability, physical closure or safety claim.
 Owner lifecycle/concurrency, lawful prior arithmetic, native carry/full-force seed,
 derivatives/guards and independent endpoint bounds remain unqualified.
-[ADR0256](docs/adr/0256-qualify-fabricated-clock-packet.md) retains prior successful
-F10/local/source-bound CI; new private build cannot inherit its qualification.
+[ADR0256](docs/adr/0256-qualify-fabricated-clock-packet.md) preserves prior CI;
+the private build cannot inherit that qualification.
 [ADR0246](docs/adr/0246-record-bounded-retained-inconclusive.md): P6 consumed,
 13points audited/inconclusive/no witness; no replay of0243-p3-retained.
-[ADR0135](docs/adr/0135-fixed-orbit-boundary-contract.md)/
-[ADR0205](docs/adr/0205-design-fixed-command-physical-join.md) retain all gates.
 No physical join, strictM3/task3.9, M4–M6/ML/UI/publication authorization.
 Preserve history/moon_to_mars.py; dev only, commit/push checked stages to origin/dev.

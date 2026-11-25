@@ -1,0 +1,49 @@
+{
+  "status": "passed_documentary_preserves_failed_native_qualification",
+  "base_revision": "69d09b902d3fa02169cf8ea0304c3000c33fb2b5",
+  "protected_prior_non_markdown_blobs_unchanged": 1181,
+  "local_links_excluding_pending_receipt": 574,
+  "anchors": 5,
+  "current_state_lines": 48,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "64efd5222c1ee2a2569d371db6abdbe5260bdb2d7cad6411ca312ff45d8ba47d",
+    "docs/adr/README.md": "3aadcd706dbbf3ee7b0c5d9df4bb0d4e249730433dd8007c53391efc4dc541e4",
+    "openspec/ROADMAP.md": "369da6981a980f360395bc40668a2de936479d5a6f780dcfa152e4162ad514f9",
+    "docs/adr/0264-qualify-original-row-fixture-packet.md": "def0114e88607f556dbbe8a59ee9070d861c8164a0ef96200a98b5d51b7e7737",
+    "openspec/changes/refine-physical-trajectory/design.md": "737eeaaf7badf56786e54a037fd23b41bd2d4221519f18c4a18609a41a882298",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "0f73821dee2fd5f0261012046c4bfb06c5f24c95ae89d217f2409fc5dae3927a"
+  },
+  "diff_whitespace": "passed",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "archive_syntax_and_member_hashes": "passed",
+  "pending_receipt": null,
+  "runtime_tests_ruff_ci": "not repeated; no project runtime/test change",
+  "schema": "ariadna.f17.failed-packet-documentary-verification.v1",
+  "checked_utc": "2026-11-25T08:15:32.516211+00:00",
+  "independent_review": {
+    "failure_accounting": "f17_isolation_review passed saved failure-audit.json; no native helper qualification",
+    "control_source": "f17_build_controls passed; review finished after launch",
+    "final_documentary": "f17_isolation_review PASS, no concrete blocker; archive and new links checked; all volume handles closed"
+  },
+  "volume": {
+    "detach_exit_code": 0,
+    "detach_stdout": "\"disk4\" ejected.",
+    "image_path": "/private/tmp/ariadna-f17-0263/scratch.sparseimage",
+    "image_preserved": true,
+    "mounted_environment_absent": true
+  },
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "confirmed_by": "official automation_update then config readback"
+  },
+  "result_sha256": "96b55289aaa4181c07b1e213ce08b8f9474dbd7b21501827a219fbb11d16d475",
+  "evidence_archive_sha256": "3712b497c935ae94dd91e2a41b591179e6c304fb854598a932bae8fa4f733f80",
+  "f17_task": "unchecked",
+  "f17_1_task": "unchecked",
+  "physical_goal": "unmet",
+  "receipt_link_validation": "exclusively created then JSON readback and referenced existence checked"
+}

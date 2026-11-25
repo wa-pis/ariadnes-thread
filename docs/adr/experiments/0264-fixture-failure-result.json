@@ -1,0 +1,145 @@
+{
+  "schema": "ariadna.f17.failed-fixture-result.v1",
+  "status": "failed_import_no_native_helper_qualification",
+  "base_revision": "69d09b902d3fa02169cf8ea0304c3000c33fb2b5",
+  "captured_utc": "2026-11-25T08:11:04.883652+00:00",
+  "scope": "One user-resumed manufactured packet on the unchanged isolated kernel. No Ariadna runtime adoption or physical experiment.",
+  "profile_sha256": "8ee6c7f7dd1822f3901485c8b70115bbb5be305db90ace81443deb1ad04b85ca",
+  "preflight_seconds": 538.711207207758,
+  "preflight_ceiling_seconds": 600,
+  "native_packets_launched": 1,
+  "native_retry": false,
+  "returncode": -6,
+  "process_seconds": 0.294,
+  "inclusive_after_stage_fsync_seconds": 0.3415450002066791,
+  "packet_ceiling_seconds": 60,
+  "native_error": "Error when opening file: /private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/station_locations/glo.sit could not be opened.",
+  "visitor_calls": {
+    "value": 0,
+    "basis": "Source-order inference: import at pinned runner line215 aborts before fixture/case loop219; no native instrumentation counter."
+  },
+  "structured_packet_present": false,
+  "native_context_observed": false,
+  "manufactured_outcomes_observed": 0,
+  "new_builds": 0,
+  "new_dependencies_or_data_copies": 0,
+  "spice_queries": 0,
+  "simulator_or_trajectory_calls": 0,
+  "http_calls": 0,
+  "control_qualification": "Guard checks pass with initial PID-parser setup failure retained; follow-up checks do not repeat a native packet.",
+  "independent_control_review": "Passed static exact-three-line delta review AFTER launch, not an independent prelaunch gate.",
+  "independent_failure_audit": {
+    "status": "passed_failure_accounting_only",
+    "sha256": "df9d5872455c69e5596e6ab20d0cb863e8e2a20cca1e5458bbe2a739857fac40",
+    "packet_audit": "One offline attempt refused missing packet (FileNotFoundError); no successful fixture audit."
+  },
+  "auditor_selftest": {
+    "status": "reported_passed_in_independent_agent_tool_output",
+    "checks": 19,
+    "native_imports": 0,
+    "native_calls": 0,
+    "script_sha256": "de40ef808a65ee75cbc45f5665a3f1d79b209ccb7e069fd7977671d8d2d2ecad",
+    "script": "selftest_auditor.py.source.txt",
+    "raw_stdout_receipt_retained": false,
+    "limitation": "Original execution stdout exists only in the chat tool output and agent readiness report; not a retained standalone test receipt. No rerun performed to manufacture one."
+  },
+  "pinned_files": [
+    {
+      "role": "source",
+      "path": "/private/tmp/ariadna-f17-0263/volume/source/src/tudatpy/dynamics/simulator/expose_simulator.cpp",
+      "bytes": 40384,
+      "sha256": "4fe1f7e99468430461eb2add1170e4a4d4f0206f0f1b68378f777df1a94eefec"
+    },
+    {
+      "role": "runner",
+      "path": "/private/tmp/ariadna-f17-0263/volume/fixture_runner.py",
+      "bytes": 13052,
+      "sha256": "d214fe29242233548248589bb816ba11130838780121033e07c6a7db15aba252"
+    },
+    {
+      "role": "kernel",
+      "path": "/private/tmp/ariadna-f17-0263/volume/env/lib/python3.12/site-packages/tudatpy/kernel.so",
+      "bytes": 41189000,
+      "sha256": "04f7af4c8429c09aec9a21f50888e7e4a979e69184e8abc530e17e88e4cb4941"
+    },
+    {
+      "role": "artifact",
+      "path": "/private/tmp/ariadna-f17-0263/volume/artifact/kernel.so",
+      "bytes": 41189000,
+      "sha256": "04f7af4c8429c09aec9a21f50888e7e4a979e69184e8abc530e17e88e4cb4941"
+    },
+    {
+      "role": "gaussianNodes",
+      "path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/quadrature/gaussianNodes.txt",
+      "bytes": 36021,
+      "sha256": "efc979aeda2e60cc2198b4674807d6baf82350040275c7ed19a925cb8b1c2308"
+    },
+    {
+      "role": "gaussianWeights",
+      "path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/quadrature/gaussianWeights.txt",
+      "bytes": 37106,
+      "sha256": "39f67badb1a3ac7d4c38f4b156c3217cb13e81f9478c533dd684e56f88c582e3"
+    },
+    {
+      "role": "qualified_controls",
+      "path": "/private/tmp/ariadna-f17-0263/build_control.py",
+      "bytes": 11456,
+      "sha256": "54a53c49f3f3ae402c482d145c8e41e69e9b2232f9b24d5433d21eed12ad8f8e"
+    },
+    {
+      "role": "precompile_profile",
+      "path": "/private/tmp/ariadna-f17-0263/volume/precompile-profile.json",
+      "bytes": 29314,
+      "sha256": "dc4fa7f565ea3220597c47f1dd6fbec0f6e8f78755b951a9975fdfe961276bc8"
+    },
+    {
+      "role": "variant_manifest",
+      "path": "/private/tmp/ariadna-f17-0263/volume/variant-conda-manifest.json",
+      "bytes": 140632,
+      "sha256": "192ff48267b2d093194619f66a9dfa96f26b8d9df105d272d3bb89692ef6a7ed"
+    },
+    {
+      "role": "header_manifest",
+      "path": "/private/tmp/ariadna-f17-0263/volume/header-manifest.json",
+      "bytes": 240025,
+      "sha256": "6cc333b6fc1f62dc4bc5dacd6d90bcd962e5567d0b3fd026ab3288058b749506"
+    }
+  ],
+  "operational_preservation": {
+    "status": "passed",
+    "prefix": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav",
+    "paths_compared": 71459,
+    "regular_bytes": 1646916124,
+    "differences": [],
+    "baseline_file_sha256": "4325cbeddd8d05604fc95b46520520f0a001c3a7af716bec2b58897bcc94cc56",
+    "manifest_equal": true,
+    "elapsed_seconds": 11.219014291185886,
+    "verified_utc": "2026-11-25T08:09:31.741075+00:00"
+  },
+  "old_build_and_packet_clocks_reset": false,
+  "evidence_archive": {
+    "path": "0264-fixture-failure-evidence.zip",
+    "sha256": "3712b497c935ae94dd91e2a41b591179e6c304fb854598a932bae8fa4f733f80",
+    "bytes": 43800,
+    "members": 42,
+    "uncompressed_bytes": 171537
+  },
+  "next_proposal_not_authorized": {
+    "question": "Prepare a complete minimal offline import-time runtime-data manifest, pin existing local bytes and verify the whole prerequisite set before any separately authorized packet; avoid one-file-at-a-time import retries.",
+    "named_station_files_are_not_complete_manifest": true,
+    "whole_existing_tree_bytes": 2231646932,
+    "whole_copy_projected_aggregate_acquisition_bytes": 2728560765,
+    "unchanged_acquisition_ceiling_bytes": 2147483648,
+    "whole_tree_copy_fits_acquisition_ceiling": false,
+    "resource_payloads_or_upstream_identity_verified": false
+  },
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "confirmed_by": "official automation_update"
+  },
+  "f17_task": "unchecked",
+  "f17_1_task": "unchecked",
+  "pair_or_physical_admission": "unavailable",
+  "project_runtime_tests_ruff_ci": "Not repeated: project runtime/test code unchanged; negative private fixture evidence only."
+}

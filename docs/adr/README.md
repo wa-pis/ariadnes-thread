@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0264 — Prepared original-row fixture packet](0264-qualify-original-row-fixture-packet.md) — one resumed packet failed at import before fixture calls; independent failure audit, PAUSED.
 - [0263 — Authorized isolated native build](0263-authorize-isolated-native-build.md) — one isolated build passed; fixture import failed before0calls, two local prerequisites prepared; PAUSED for new packet.
 - [0262 — Original-key build-route recommendation](0262-recommend-original-key-build-route.md) — F16 172.099s source/independent review; isolated in-tree visitor recommended, build choice pending.
 - [0261 — Design original-key pre-export admission](0261-design-original-key-pre-export-admission.md)
