@@ -1,0 +1,227 @@
+{
+  "schema": "ariadna.f17.source-derived-import-resource-manifest.v1",
+  "status": "source_derived_inventory_complete_no_runtime_qualification",
+  "decision": "Preparation accepted; this candidate provisioning profile and another native packet are not authorized.",
+  "base_revision": "71d92362244b5953bd59431eaa2f3b44fd276b2b",
+  "source_review": {
+    "status": "source_derived_inventory_complete_no_runtime_qualification",
+    "completed_utc": "2026-11-25T08:39:10.262138+00:00",
+    "elapsed_seconds": 494.08152445824817,
+    "source_review_ceiling_seconds": 900,
+    "independent_source_review_sha256": "5c9ae0b6437d253959af6e3a46c25688f4be588bb7ee6cc54ad8fa2874fef5b2",
+    "core_review_sha256": "61d5d6d0d3b4e921c07103f1accbcb866f8cb55b37a477bcc255630d0bb61bd2",
+    "binding_review_sha256": "90ca7b5696c98d5663fc04ee9ca1680c8b6ee207eb6be0e3ee95bb6be80ee0f4",
+    "scope": "Reviewed eager core globals plus all81binding registrations and direct kernel import path; manual/textual source inventory, not a proof of all linked binary I/O.",
+    "resources": 5,
+    "local_payload_bytes_hashed": 131662,
+    "provisioning_or_native_calls": 0,
+    "all_volume_handles_closed_by_reviewers": true
+  },
+  "files": [
+    {
+      "relative_path": "quadrature/gaussianNodes.txt",
+      "source": "/Users/agrudin/.tudat/resource/quadrature/gaussianNodes.txt",
+      "bytes": 36021,
+      "sha256": "efc979aeda2e60cc2198b4674807d6baf82350040275c7ed19a925cb8b1c2308",
+      "regular_file": true,
+      "symlink": false,
+      "isolated_file_present": true,
+      "release_content_identity": "unverified existing local payload; not authenticated v2.4 upstream bytes",
+      "eager_source_call_chain": "gaussianQuadrature.h185-195 namespace static shared_ptr objects ->constructor71-74 ->readGaussianQuadratureNodes41-46 ->readStlVectorMapFromFile"
+    },
+    {
+      "relative_path": "quadrature/gaussianWeights.txt",
+      "source": "/Users/agrudin/.tudat/resource/quadrature/gaussianWeights.txt",
+      "bytes": 37106,
+      "sha256": "39f67badb1a3ac7d4c38f4b156c3217cb13e81f9478c533dd684e56f88c582e3",
+      "regular_file": true,
+      "symlink": false,
+      "isolated_file_present": true,
+      "release_content_identity": "unverified existing local payload; not authenticated v2.4 upstream bytes",
+      "eager_source_call_chain": "same namespace static objects ->constructor71-74 ->readGaussianQuadratureWeights56-61 ->readStlVectorMapFromFile"
+    },
+    {
+      "relative_path": "station_locations/glo.sit",
+      "source": "/Users/agrudin/.tudat/resource/station_locations/glo.sit",
+      "bytes": 20865,
+      "sha256": "8b2b4581afba85e6bbe963215830eeed7ad845bf7cc2af01beaa09a3057e9329",
+      "regular_file": true,
+      "symlink": false,
+      "isolated_file_present": false,
+      "release_content_identity": "unverified existing local payload; not authenticated v2.4 upstream bytes",
+      "eager_source_call_chain": "defaultBodies.cpp565/569-572 namespace static string/map readers ->utilities.cpp72-83, twice with skip0/skip3"
+    },
+    {
+      "relative_path": "station_locations/glo.vel",
+      "source": "/Users/agrudin/.tudat/resource/station_locations/glo.vel",
+      "bytes": 17756,
+      "sha256": "f0dba59765f511b16a504538c55411ea80a0c4775b752fe9a9f1cefd6ae7da6d",
+      "regular_file": true,
+      "symlink": false,
+      "isolated_file_present": false,
+      "release_content_identity": "unverified existing local payload; not authenticated v2.4 upstream bytes",
+      "eager_source_call_chain": "defaultBodies.cpp566/573-574 namespace static map reader ->utilities.cpp72-83"
+    },
+    {
+      "relative_path": "station_locations/ns_codes.dat",
+      "source": "/Users/agrudin/.tudat/resource/station_locations/ns_codes.dat",
+      "bytes": 19914,
+      "sha256": "68b245efea8ccb82bba8739c6901072816351a1c2cad4682c7c244e868f2ce03",
+      "regular_file": true,
+      "symlink": false,
+      "isolated_file_present": false,
+      "release_content_identity": "unverified existing local payload; not authenticated v2.4 upstream bytes",
+      "eager_source_call_chain": "defaultBodies.cpp567/575-576 namespace static map reader ->utilities.cpp121-133"
+    }
+  ],
+  "file_count": 5,
+  "total_payload_bytes": 131662,
+  "missing_isolated_files": [
+    "station_locations/glo.sit",
+    "station_locations/glo.vel",
+    "station_locations/ns_codes.dat"
+  ],
+  "additional_proposed_bytes": 58535,
+  "root_cause": {
+    "package": "tudat-resources2.4h947b425_5 metadata lists11installer/header/config/test paths, no runtime data payloads.",
+    "paths": "resource.h resolves runtime data from HOME/.tudat/resource, independent of installed prefix.",
+    "post_link": "Retained script would download the entire v2.4release tar withcurl. It was inspected, not executed. Package/version declarations are not payload authentication."
+  },
+  "exclusions": [
+    {
+      "category": "SPICE kernels",
+      "reason": "Loader and query functions are registered by pointer; frozen helper does not call them. Do not infer that future physical runs need no kernels."
+    },
+    {
+      "category": "space-weather/atmosphere tables",
+      "reason": "Bindings only register callable factories or path-string defaults. us76AtmosphereSettings helper body is not invoked at module registration."
+    },
+    {
+      "category": "EOP/UTC corrections",
+      "reason": "Default time-scale converter and GCRS/ITRS factory are registered by pointer; no factory is eagerly invoked."
+    },
+    {
+      "category": "other station catalogs",
+      "reason": "No binding-time reader for mpc.sit/mpc.vel/mpc_codes.dat identified; core-global scan remains separate."
+    },
+    {
+      "category": "gravity/deformation/approximate-planet/VMF3model payloads",
+      "reason": "Reviewed core readers are call-time model construction/explicit loaders, not eager on this frozen helper route."
+    }
+  ],
+  "conditional_eop_branch": "An invoked default time-converter factory would additionally need six Earth-orientation files including historicalDeltaT. Reviewed81binding registrations register its wrapper by pointer; old global converter is commented out. These six files are excluded only for this helper-import route, not for later time/physical models.",
+  "remaining_unknowns": [
+    "Textual/manual source reachability is not formal coverage of all compiled/linked static initializers or arbitrary shared-library accesses.",
+    "Precompiled core/source equivalence and full ABI/effective-FP qualification remain open.",
+    "Hashes establish existing local bytes only; upstream v2.4content authentication and actual native-parser compatibility remain unverified.",
+    "No successful import/context/visitor/owner/carry/prior-arithmetic/physical qualification exists."
+  ],
+  "provisioning_proposal": {
+    "schema": "ariadna.f17.offline-runtime-provisioning-proposal.v1",
+    "status": "proposed_not_authorized_or_executed",
+    "scope": "Provide all source-derived eager resource prerequisites before any separately authorized fixed manufactured packet; not mission-resource selection or operational-package adoption.",
+    "exact_files": [
+      {
+        "relative_path": "quadrature/gaussianNodes.txt",
+        "source": "/Users/agrudin/.tudat/resource/quadrature/gaussianNodes.txt",
+        "bytes": 36021,
+        "sha256": "efc979aeda2e60cc2198b4674807d6baf82350040275c7ed19a925cb8b1c2308",
+        "regular_file": true,
+        "symlink": false,
+        "isolated_file_present": true,
+        "release_content_identity": "unverified existing local payload; not authenticated v2.4 upstream bytes"
+      },
+      {
+        "relative_path": "quadrature/gaussianWeights.txt",
+        "source": "/Users/agrudin/.tudat/resource/quadrature/gaussianWeights.txt",
+        "bytes": 37106,
+        "sha256": "39f67badb1a3ac7d4c38f4b156c3217cb13e81f9478c533dd684e56f88c582e3",
+        "regular_file": true,
+        "symlink": false,
+        "isolated_file_present": true,
+        "release_content_identity": "unverified existing local payload; not authenticated v2.4 upstream bytes"
+      },
+      {
+        "relative_path": "station_locations/glo.sit",
+        "source": "/Users/agrudin/.tudat/resource/station_locations/glo.sit",
+        "bytes": 20865,
+        "sha256": "8b2b4581afba85e6bbe963215830eeed7ad845bf7cc2af01beaa09a3057e9329",
+        "regular_file": true,
+        "symlink": false,
+        "isolated_file_present": false,
+        "release_content_identity": "unverified existing local payload; not authenticated v2.4 upstream bytes"
+      },
+      {
+        "relative_path": "station_locations/glo.vel",
+        "source": "/Users/agrudin/.tudat/resource/station_locations/glo.vel",
+        "bytes": 17756,
+        "sha256": "f0dba59765f511b16a504538c55411ea80a0c4775b752fe9a9f1cefd6ae7da6d",
+        "regular_file": true,
+        "symlink": false,
+        "isolated_file_present": false,
+        "release_content_identity": "unverified existing local payload; not authenticated v2.4 upstream bytes"
+      },
+      {
+        "relative_path": "station_locations/ns_codes.dat",
+        "source": "/Users/agrudin/.tudat/resource/station_locations/ns_codes.dat",
+        "bytes": 19914,
+        "sha256": "68b245efea8ccb82bba8739c6901072816351a1c2cad4682c7c244e868f2ce03",
+        "regular_file": true,
+        "symlink": false,
+        "isolated_file_present": false,
+        "release_content_identity": "unverified existing local payload; not authenticated v2.4 upstream bytes"
+      }
+    ],
+    "isolated_destination_root": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource",
+    "home": "/private/tmp/ariadna-f17-0263/volume/home",
+    "regular_files_required": 5,
+    "total_payload_bytes": 131662,
+    "files_already_present": 2,
+    "missing_files_to_provision": 3,
+    "additional_payload_bytes": 58535,
+    "old_aggregate_acquisition_bytes": 496986960,
+    "projected_aggregate_acquisition_bytes": 497045495,
+    "unchanged_aggregate_acquisition_ceiling_bytes": 2147483648,
+    "unchanged_scratch_ceiling_bytes": 8589934592,
+    "old_ledger_sha256": "6281ce28b4635ff55aa79b9deccef6f34ef0b00247caa2acfea1c27a4037e5b7",
+    "offline_sequence": [
+      "Require explicit provisioning authority for this exact local experimental resource set; keep source-derived/observed/import/physical statuses separate.",
+      "Remount the retained image at the same path with the required write mode only after authority; verify immutable kernel/runner/source/helper/old-clock identities and isolated HOME.",
+      "Before copying, refuse symlink/nonregular/missing/changed source files; verify all five local byte sizes and exact SHA256 from the frozen manifest, and the two existing isolated math files.",
+      "Precharge exactly58535additional bytes in a new separately identified record carrying forward496986960previous aggregate bytes. Preserve the closed old ledger/build clock; do not reset the2GiB aggregate ceiling.",
+      "Copy only the three exact missing station files into an isolated staging directory, verify all staged bytes/hashes, and complete the entire prerequisite set before any native launch. Do not run Conda post-link/curl or acquire external data.",
+      "Verify the complete exact five-file isolated inventory, stable hashes and expected HOME-based paths; preserve a new offline preflight receipt and absence of a new packet output. No host-HOME fallback.",
+      "Stop on drift, missing coverage or budget/finalization failure without native import. A later separately authorized packet retains11calls/60s inclusive/64KiBparameters/2MiBevidence/64KiBlogs and no build/HTTP/SPICE/simulator/integration."
+    ],
+    "upstream_content_authentication": "Not established: installed tudat-resources2.4metadata and post-link URL do not authenticate the existing local payloads. This explicit local research fixture-only profile must not claim v2.4data identity or physical ephemeris validity.",
+    "not_authorized": [
+      "resource payload copying/provisioning",
+      "further native import or visitor packet",
+      "build/dependency/registry/operational environment change",
+      "SPICE, mission data selection or propagation"
+    ],
+    "old_attempts": "Both import failures and the one kernel-target attempt remain consumed and immutable."
+  },
+  "evidence": {
+    "path": "0265-import-resource-evidence.zip",
+    "sha256": "f217d61f88fc4c2204cd642181ae2cdbfe27231fbd37737f3bf81f73cd001cc5",
+    "bytes": 133228,
+    "members": 27,
+    "uncompressed_bytes": 1160711
+  },
+  "new_work": {
+    "source_review_only": true,
+    "native_imports": 0,
+    "builds": 0,
+    "resource_payload_copies": 0,
+    "http": 0,
+    "spice_queries": 0,
+    "simulator_or_trajectory_calls": 0,
+    "project_runtime_test_or_ci_runs": 0
+  },
+  "preservation": "Original build, failed packets, private source/kernel/runner/helper and old acquisition ledger are preserved; image mounted read-only.",
+  "scheduler": "ariadna-m3 PAUSED",
+  "f17_task": "unchecked",
+  "f17_1_task": "unchecked",
+  "f17_2_task": "documentary_source_inventory_only"
+}

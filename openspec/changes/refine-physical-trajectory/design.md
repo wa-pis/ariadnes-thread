@@ -17,6 +17,32 @@ all physical gates remain separate. Verify meaningful qualification for changed
 runtime code and independent review/protected bytes/links/anchors/diff/strict;
 commit/push verified units, then continue only within resolved authority.
 
+### F17.2 complete import-resource inventory (2026-11-25)
+
+[ADR0265](../../../docs/adr/0265-inventory-native-import-resources.md) records
+user-authorized preparation of a complete minimal source-derived runtime-resource
+list after the two preserved failed imports. Bound one retained-core/all81binding/
+package/source independent review to900s; mount the image read-only and hash at
+most32existing local candidate files/16MiB. Record eager call sites, local identity,
+lazy exclusions and unresolved binary/release premises, then one offline complete
+provisioning preflight proposal. No resource payload copies, installer/HTTP,
+build/dependency change, imports/native/SPICE/simulator/integration or packet.
+Keep automation PAUSED; no file-by-file probing or new execution authority.
+
+Observed inventory: five source-derived eager payloads total131662bytes; the two
+quadrature files are present, three station files58535bytes are missing and pinned
+locally. Namespace quadrature constructors/station maps and three observation
+registration defaults establish this route. All81bindings and1054core paths were
+reviewed; independent source review found no concrete omission. Source preparation
+completed494.082s<900s. Time-converter/EOP and other model/SPICE data are call-time
+for this route, not excluded from future physical models. Resource package metadata
+is not payload presence; local hashes are not upstream-release authentication.
+A future complete offline three-file provision would bring aggregate acquisition
+to497045495bytes, below unchanged2GiB; preserve the closed old ledger and use a new
+precharge record. No provision/import/packet is executed or authorized. Textual
+source coverage does not prove all linked-binary accesses or successful loading;
+F17/F17.1 and every physical gate remain open.
+
 ### F17 resumed fixture packet (2026-11-25)
 
 [ADR0264](../../../docs/adr/0264-qualify-original-row-fixture-packet.md) records

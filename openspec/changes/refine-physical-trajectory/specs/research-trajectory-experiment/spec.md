@@ -73,6 +73,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 - **AND** after the original inclusive wall window has passed, a new packet requires explicit authority and a fixed new profile; do not substitute summed active process durations, reset the build episode or repeat the kernel build
 - **AND** unchanged operational bytes, owner/carry/prior-arithmetic obligations and all physical F0 gates remain independently required
 
+#### Scenario: Inventory complete import prerequisites without probing the module
+
+- **WHEN** the user authorizes ADR0265's source-only preparation after the preserved import failures
+- **THEN** one <=900s retained-core/all81binding/package review including independent source review SHALL produce the source-derived minimal eager resource list, exact local names/sizes/hashes, lazy exclusions, unresolved binary/release premises and one complete offline provisioning preflight proposal, or report the precise missing coverage
+- **AND** at most32existing local payloads/16MiB SHALL be hashed with the retained image mounted read-only; new resource payload copies, installer/HTTP/build/dependency changes, native imports/calls, SPICE/simulators/integration and fixture packets SHALL remain zero
+- **AND** neither the list nor local hashes SHALL claim successful loading, authenticated upstream release data, native-helper qualification or new execution authority; both failed attempts, unchanged caps and all F0 gates SHALL be preserved, with automation PAUSED before separately authorized provisioning or another packet
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

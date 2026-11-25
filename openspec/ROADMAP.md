@@ -97,6 +97,16 @@ complete minimal pinned offline import-resource preparation before any separatel
 authorized packet. The named initializer is not a full dependency manifest; a
 metadata-only whole-tree copy proposal exceeds the unchanged acquisition ceiling.
 Owner/concurrency/carry/prior arithmetic and physical gates stay open.
+[ADR0265](../docs/adr/0265-inventory-native-import-resources.md) completes F17.2's
+source inventory in494.082s:1054core paths and all81binding units; independent
+review finds no concrete omission from five eager resource files/131662bytes.
+Two quadrature files are present; three station files58535bytes are missing and
+pinned locally. No provisioning/import/build/SPICE/integration; image read-only
+then detached. Full offline prerequisite/provisioning sequence is proposed only;
+its projected aggregate497045495B remains below2GiB. Resource package metadata is
+not payload presence/authentication; source coverage is not successful import or
+formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
+provisioning and separately authorized packet.
 [ADR0260](../docs/adr/0260-bound-time-construction-export-domain.md) completes F14
 source reasoning in208s: known finite0<=r<3600 makes construction/copy normalization
 inactive. Original-key pre-export validation/provenance remains missing; no new

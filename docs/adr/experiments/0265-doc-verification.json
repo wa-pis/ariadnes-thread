@@ -1,0 +1,60 @@
+{
+  "status": "passed_documentary_source_inventory_only",
+  "base_revision": "71d92362244b5953bd59431eaa2f3b44fd276b2b",
+  "protected_prior_non_markdown_blobs_unchanged": 1184,
+  "local_links_excluding_pending_receipt": 604,
+  "anchors": 5,
+  "current_state_lines": 49,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "ca99b3cebcc4ae8c44103542021e1d0329cca4b0f40170840f8e795dcda16aed",
+    "docs/adr/README.md": "fd620ace6a00644ef5ea2387b282337195a9b665d99d82fc61d54aacc147951a",
+    "openspec/ROADMAP.md": "680f30995e452692c120257dd96a1629ccd6a835b718320ed76b0bfdb8b7f0f9",
+    "docs/adr/0265-inventory-native-import-resources.md": "b25e8563d8e31bfe730ed8900b8c8bbf510bb1d8f199158dc773621f526f52a0",
+    "openspec/changes/refine-physical-trajectory/design.md": "10832333148ddf56365c899eac76c1caed8497b08621c50656f5db11139a65ea",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "ddfdaf182f1924b7208d3cd3a888ee65a153074d3091e946390e6ed4616cd005",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "dc1c32435c058d91f8de57655efbbe8ae8a55848ba26610d16cecb6187e5794f",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "b7dc76816a2f61352fda9784e6a72ce4e263f0dc716ce89e1953d83d88f2849d"
+  },
+  "diff_whitespace": "passed",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "archive_syntax_hashes_and_sizes": "passed",
+  "new_source_coverage": "bounded source-derived five-file candidate list, not linked-binary or import qualification",
+  "runtime_tests_ruff_ci": "Not repeated; project runtime/test code unchanged.",
+  "schema": "ariadna.f17.import-inventory-documentary-verification.v1",
+  "checked_utc": "2026-11-25T08:43:06.530754+00:00",
+  "independent_review": {
+    "source": "f17_isolation_review: no concrete omission in five-file candidate, completed429.788s<900; source/binary/parser/provenance limitations preserved",
+    "final_documentary": "f17_isolation_review: PASS, archive hashes/sizes/JSON/links/anchors, correct scope and open gates; all handles closed"
+  },
+  "source_review_elapsed_seconds": 494.08152445824817,
+  "source_review_ceiling_seconds": 900,
+  "resource_payload_files_hashed": 5,
+  "resource_payload_bytes_hashed": 131662,
+  "source_inventory_scope": "Only reviewed eager helper-import source route; no universal linked-binary dependency proof",
+  "resource_payload_copies": 0,
+  "native_imports_or_calls": 0,
+  "spice_queries_or_integrations": 0,
+  "volume": {
+    "mounted_read_only_during_source_work": true,
+    "detach_exit_code": 0,
+    "detach_stdout": "\"disk4\" ejected.",
+    "mounted_environment_absent": true,
+    "image_preserved": true
+  },
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "confirmed_by": "official automation_update plus config readback"
+  },
+  "manifest_sha256": "2fb3ed50602a2bcc44a34efeae631792aa82e3eca13db649aac2945219e6a0f1",
+  "evidence_archive_sha256": "f217d61f88fc4c2204cd642181ae2cdbfe27231fbd37737f3bf81f73cd001cc5",
+  "f17_task": "unchecked",
+  "f17_1_task": "unchecked",
+  "f17_2_task": "documentation-only source inventory checked",
+  "provisioning_and_new_packet": "not authorized or executed",
+  "physical_goal": "unmet",
+  "receipt_link_validation": "exclusive create, JSON readback and referenced existence checked"
+}

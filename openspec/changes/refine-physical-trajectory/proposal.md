@@ -1,7 +1,9 @@
-ADR0263 result: one isolated build passed; its finite packet aborted on missing
-runtime quadrature resources before any visitor call. Exact local prerequisites
-are prepared, but no import was repeated. F17 remains incomplete and automation
-is PAUSED for a separately authorized new packet; physical F0 gates remain open.
+[ADR0265](../../../docs/adr/0265-inventory-native-import-resources.md) completes
+source-only import-resource inventory after the two preserved failed packets:
+five pinned local files/131662bytes, with three station files58535bytes missing.
+No provisioning or new import occurred. The complete offline provision is proposed
+only; source-derived coverage does not prove successful linked-binary loading.
+F17/F17.1 and physical F0 gates remain open; automation PAUSED.
 
 [ADR0263](../../../docs/adr/0263-authorize-isolated-native-build.md) records the user's
 approval of one isolated native build; resource/source/prefix preflight precedes
