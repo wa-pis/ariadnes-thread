@@ -1,3 +1,11 @@
+[ADR0266](../../../docs/adr/0266-verify-provisioned-native-fixture.md) completes
+one explicitly authorized manufactured native packet after exact offline provision:
+all11cases and the independent offline audit pass in4.908203s inclusive through
+stage fsync. Actual context53/53/8 is observed; no simulator or trajectory ran.
+F17.3 qualifies only the private helper/scalars. Production-owner/carry/prior-Time
+arithmetic and physical F0 gates remain open; no operational adoption or further
+native run follows, automation PAUSED.
+
 [ADR0265](../../../docs/adr/0265-inventory-native-import-resources.md) completes
 source-only import-resource inventory after the two preserved failed packets:
 five pinned local files/131662bytes, with three station files58535bytes missing.

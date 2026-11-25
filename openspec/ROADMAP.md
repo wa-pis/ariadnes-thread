@@ -107,6 +107,15 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0266](../docs/adr/0266-verify-provisioned-native-fixture.md) records that next
+explicit authorization and completes F17.3:58535B exact station provision, all5files
+verified, independent prelaunch reviews and one native packet/one offline audit.
+All11literal cases pass (2accepted/9refused), actual context53/53/8;4.858s process/
+4.908203s post-stage-fsync<60s. Initial reviewer-clock incompatibility/correction
+and OMP179warning are retained without relaxing controls. All71459operational
+paths unchanged; image detached. Only private manufactured helper/scalar behavior
+is qualified. Production-owner F17/historical failed F17.1, carry/prior arithmetic,
+full ABI/FP/source basis and physical F0 remain open; scheduler PAUSED.
 [ADR0260](../docs/adr/0260-bound-time-construction-export-domain.md) completes F14
 source reasoning in208s: known finite0<=r<3600 makes construction/copy normalization
 inactive. Original-key pre-export validation/provenance remains missing; no new

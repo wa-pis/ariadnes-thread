@@ -80,6 +80,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 - **AND** at most32existing local payloads/16MiB SHALL be hashed with the retained image mounted read-only; new resource payload copies, installer/HTTP/build/dependency changes, native imports/calls, SPICE/simulators/integration and fixture packets SHALL remain zero
 - **AND** neither the list nor local hashes SHALL claim successful loading, authenticated upstream release data, native-helper qualification or new execution authority; both failed attempts, unchanged caps and all F0 gates SHALL be preserved, with automation PAUSED before separately authorized provisioning or another packet
 
+#### Scenario: Admit the complete provisioned fixture packet once
+
+- **WHEN** the user explicitly authorizes ADR0266's exact three-file provisioning and one eleven-call packet
+- **THEN** <=600s preflight SHALL verify all five pinned local files/131662bytes, precharge58535new bytes while preserving496986960old bytes and closed ledger/clocks, atomically complete the isolated station files, and obtain independent admission/control review before launch
+- **AND** one exclusive fresh packet SHALL retain60s inclusive through fsynced completion,5s finalization reserve,11external calls/64KiBparameters/64KiBlogs/2MiB evidence/zero simulator or trajectory, reuse unchanged qualified controller/auditor logic and stop without native retry or new files on any drift/failure
+- **AND** an independent saved-word audit and separate resource/time/preservation receipts SHALL distinguish successful manufactured outcomes from production-owner/carry/prior-arithmetic/ABI/physical qualification; no build/install/HTTP/SPICE/integration or operational adoption SHALL occur, historical failed packets SHALL remain unchanged and scheduler SHALL remain PAUSED
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

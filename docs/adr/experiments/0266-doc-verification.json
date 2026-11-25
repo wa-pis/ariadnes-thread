@@ -1,0 +1,66 @@
+{
+  "status": "passed_manufactured_qualification_documentary_checks",
+  "base_revision": "9dc1387b302a4000c2661b81183d6966a1a7492c",
+  "protected_prior_non_markdown_blobs_unchanged": 1187,
+  "local_links_excluding_pending_receipt": 609,
+  "anchors": 5,
+  "current_state_lines": 50,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "791164281c19832fedffa3ca902185cca92803c03f3a81cb4d241ae24b206034",
+    "docs/adr/README.md": "9890aebbfd44a4fe42c5c2c1bd07c19ce2e341555b6a1f8056e4bf83217f561c",
+    "openspec/ROADMAP.md": "7ae8b8e8f5fd1ecd7238de3e19132fdc4225f51eda14473ae5eb28936c8dad5b",
+    "docs/adr/0266-verify-provisioned-native-fixture.md": "045bc0165239cbffa67e9b53843ba09fcc92f2d0920e56fa3e61694df65a01e3",
+    "openspec/changes/refine-physical-trajectory/design.md": "70d215ae8d7423b3b0c82c8e182151d71bd2b21eb77ebaa5b16e048424669c4b",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "31d68240a4851820f98c83ce156ff54f92396377b57c406520021ec5ac8c695b",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "db30bb597914d2a6ba33cbceac86c6173dc763900f6432fb4f4accfe199dea19",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "6c8a0f35e4df7fadda7dd32e3ba8bd21411a5e148c48924938ec47146338d200"
+  },
+  "diff_whitespace": "passed",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "archive_syntax_hashes_sizes": "passed",
+  "project_runtime_tests_ruff_ci": "Not repeated; unchanged project code. One targeted native packet and one frozen offline audit performed.",
+  "qualified_scope": "Only manufactured helper/scalar outcomes, no production owner/carry/prior-Time/ABI-FP/physical admission.",
+  "schema": "ariadna.f17.provisioned-fixture-documentary-verification.v1",
+  "checked_utc": "2026-11-25T10:37:02.280951+00:00",
+  "independent_review": {
+    "prelaunch": "Exact file/resource/pin admission and static controller review completed before native marker; incomparable reviewer clock retained/corrected, positive same-interpreter parent timing supplies admission",
+    "offline_literal_audit": "One unchanged auditor invocation passed all11inputs/outcomes,2accept/9reject,53/53/8context and exported word checks; zero new native calls",
+    "postpacket_accounting": "One packet/one stage, limits/fsync/resource hashes/old clocks-ledger pins pass",
+    "final_documentary": "f17_isolation_review PASS after explicit exported-binary64-neighbour/shared-predicate scope correction; archive/JSON/links/anchors/diff correct; all handles closed"
+  },
+  "native_packet": {
+    "attempts": 1,
+    "visitor_calls_recorded": 11,
+    "accepted": 2,
+    "expected_rejections": 9,
+    "process_seconds": 4.858,
+    "after_stage_fsync_seconds": 4.908203208819032,
+    "native_retries": 0
+  },
+  "operational_preservation": {
+    "paths": 71459,
+    "regular_bytes": 1646916124,
+    "unchanged": true
+  },
+  "volume": {
+    "detach_exit_code": 0,
+    "detach_stdout": "\"disk4\" ejected.",
+    "mounted_environment_absent": true,
+    "image_preserved": true
+  },
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "confirmed_by": "official automation_update plus config readback"
+  },
+  "result_sha256": "f566b7faaa68e8321010efa63ba76ebcc2deef7a9b095c6dcd216b9725db6031",
+  "evidence_archive_sha256": "0ab6379d3ac65fbed79fda28db7d74152dfd4c9495c09bad9e9b6644d51b39d7",
+  "f17_task": "unchecked; production-owner route not exercised",
+  "f17_1_task": "unchecked; historical failure preserved",
+  "f17_3_task": "checked only for manufactured helper/scalar qualification",
+  "physical_goal": "unmet",
+  "receipt_link_validation": "exclusive create then JSON readback and referenced existence checked"
+}

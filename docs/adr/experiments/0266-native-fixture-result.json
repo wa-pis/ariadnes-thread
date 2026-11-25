@@ -1,0 +1,117 @@
+{
+  "schema": "ariadna.f17.provisioned-native-fixture-result.v1",
+  "status": "passed_manufactured_helper_only",
+  "base_revision": "9dc1387b302a4000c2661b81183d6966a1a7492c",
+  "captured_utc": "2026-11-25T10:32:07.732737+00:00",
+  "native_packet": {
+    "attempts": 1,
+    "returncode": 0,
+    "profile_sha256": "331fbbb51682529bd850f8ef73eb15715068dbccec7b6ef273ab429d6e6dfa62",
+    "packet_sha256": "38f3ec22c27b5f3fd6c9dbd6f4b92eeb83ef94fead02f9f0dca2f1991b6997d7",
+    "packet_bytes": 9479,
+    "parameter_bytes": 2429,
+    "process_seconds": 4.858,
+    "inclusive_seconds": 4.908064125105739,
+    "after_stage_fsync_seconds": 4.908203208819032,
+    "ceiling_seconds": 60,
+    "log_bytes": 222,
+    "visitor_calls_recorded": 11,
+    "native_context": [
+      53,
+      53,
+      8
+    ],
+    "accepted": 2,
+    "expected_rejections": 9,
+    "simulator_constructions": 0,
+    "trajectories": 0
+  },
+  "qualification_scope": "Manufactured const-map/helper and scalar rejection cases under unchanged private kernel. Source/runner/result-bound recorded counters, not independent native process instrumentation.",
+  "cases_verified": {
+    "accepted": 2,
+    "auditor_sha256": "baf80f8540989a0f9ef0721f11aaa1f93d38cfcc74185e84c39dd3d1651fd78e",
+    "checked_inputs": 11,
+    "checked_outcomes": 11,
+    "context": [
+      53,
+      53,
+      8
+    ],
+    "expected_rejections": 9,
+    "kernel_sha256": "04f7af4c8429c09aec9a21f50888e7e4a979e69184e8abc530e17e88e4cb4941",
+    "limitations": [
+      "Manufactured helper/scalar outcomes only; no live-owner lifecycle, concurrency, native carry, prior arithmetic, physical semantics or F0 qualification.",
+      "Recorded call counts are checked against unchanged source/runner hashes and saved outcomes; this auditor does not observe a native process.",
+      "Packet elapsed is before serialization; outer stage elapsed checks inclusive process completion."
+    ],
+    "new_native_calls": 0,
+    "outer_process_elapsed": 4.858,
+    "packet_bytes": 9479,
+    "packet_elapsed_before_write": 4.738685625139624,
+    "packet_path": "/private/tmp/ariadna-f17-0263/volume/finite-fixture-0266.json",
+    "packet_sha256": "38f3ec22c27b5f3fd6c9dbd6f4b92eeb83ef94fead02f9f0dca2f1991b6997d7",
+    "recorded_simulator_constructions": 0,
+    "recorded_trajectories": 0,
+    "recorded_visitor_calls": 11,
+    "runner_sha256": "d214fe29242233548248589bb816ba11130838780121033e07c6a7db15aba252",
+    "scope": "offline saved-packet audit; no native execution",
+    "source_sha256": "4fe1f7e99468430461eb2add1170e4a4d4f0206f0f1b68378f777df1a94eefec",
+    "stage_sha256": "5cfdd8d2421f93fc80c97e300045cc7f7a32a7954d12700c529c5b4512bc1f63",
+    "status": "passed"
+  },
+  "offline_audit_invocations": 1,
+  "offline_audit_sha256": "36348cc16f68bda1125fc3d5c8d05b0da4aa0bbe9f6a8437ee48f9746125b3e9",
+  "independent_postpacket_accounting_sha256": "562d444662be27f46e525559ea171c62f656faa5169cb51d88b2dd849af3807b",
+  "admission": {
+    "reviews_preceded_native_marker": true,
+    "preflight_seconds": 206.30808495823294,
+    "preflight_ceiling_seconds": 600,
+    "clock_interpreter": "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3",
+    "reviewer_clock_issue": "Initial control reviewer clock was not comparable; both original/corrected reviews retained, parent positive same-executable prelaunch clock check verified0<=elapsed<=600."
+  },
+  "provisioning": {
+    "files_copied": 3,
+    "bytes_copied": 58535,
+    "complete_pinned_files": 5,
+    "complete_file_bytes": 131662,
+    "old_acquisition_bytes": 496986960,
+    "new_aggregate_acquisition_bytes": 497045495,
+    "acquisition_ceiling_bytes": 2147483648,
+    "old_clocks_and_ledger_reset": false,
+    "local_payload_authentication": "Existing local manufactured-test-only profile; upstream2.4content identity not established."
+  },
+  "warning": "OMP Warning179 could not set size of /tmp file; exact222B log preserved. Isolation not relaxed; threading/performance not qualified.",
+  "operational_preservation": {
+    "status": "passed",
+    "prefix": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav",
+    "paths_compared": 71459,
+    "regular_bytes": 1646916124,
+    "differences": [],
+    "baseline_file_sha256": "4325cbeddd8d05604fc95b46520520f0a001c3a7af716bec2b58897bcc94cc56",
+    "manifest_equal": true,
+    "elapsed_seconds": 11.500677957665175,
+    "verified_utc": "2026-11-25T10:30:01.298184+00:00"
+  },
+  "project_runtime_test_changes": false,
+  "full_pytest_ruff_ci": "Not repeated on unchanged project code; one frozen targeted native packet plus one frozen independent offline audit performed.",
+  "new_builds_dependencies_http_spice_queries_integrations": 0,
+  "native_retries": 0,
+  "evidence": {
+    "path": "0266-native-fixture-evidence.zip",
+    "bytes": 30873,
+    "sha256": "0ab6379d3ac65fbed79fda28db7d74152dfd4c9495c09bad9e9b6644d51b39d7",
+    "members": 27,
+    "uncompressed_bytes": 74195
+  },
+  "scheduler": "ariadna-m3 PAUSED; bounded foreground instruction only",
+  "f17_3_task": "manufactured qualification only",
+  "f17_and_f17_1": "unchecked; production owner route not exercised and historical failure retained",
+  "physical_goal": "unmet",
+  "limitations": [
+    "No production-owner lifecycle/mutation/concurrency test.",
+    "No lawful prior-Time arithmetic/native carry qualification.",
+    "No full precompiled-core/source/ABI/effective-FP qualification.",
+    "No physical force/trajectory/command-pair/99percent probability/safety/M3 admission.",
+    "No operational kernel/resource adoption."
+  ]
+}

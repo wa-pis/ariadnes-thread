@@ -17,6 +17,31 @@ all physical gates remain separate. Verify meaningful qualification for changed
 runtime code and independent review/protected bytes/links/anchors/diff/strict;
 commit/push verified units, then continue only within resolved authority.
 
+### F17.3 provisioned native packet (2026-11-25)
+
+[ADR0266](../../../docs/adr/0266-verify-provisioned-native-fixture.md) records
+explicit authority to prepare the three58535B station files and execute exactly
+one frozen11-call manufactured packet after<=600s preflight. Carry forward the
+old496986960B acquisition in a new receipt (497045495B<2GiB), atomically complete
+station data and verify all five pinned local files, unchanged binary/source/
+runner/control and old clocks/ledgers. Reuse the qualified0264 controller/auditor;
+independent admission/control reviews precede launch. One exclusive standalone60s
+inclusive packet/5s reserve/64KiBparameter/64KiBlog/2MiBevidence, no retry/build/
+HTTP/SPICE/simulator/integration. Audit saved words without native replay and
+retain fsynced time/preservation evidence. Parent owner/carry/prior-arithmetic/
+physical gates remain open and scheduler PAUSED, irrespective of helper outcome.
+
+Observed outcome: exact three-file58535B provision/allfive131662B pinned; independent
+admission/control reviews precede one native packet. Comparable parent preflight
+206.308s<600s (incomparable reviewer-clock receipt preserved/corrected). Packet
+returns0,4.858s process/4.908203s after-stage-fsync,2429B parameters/9479B output/
+222B log. Context53/53/8 actually observed; all2accepted/9refused cases pass the
+unchanged offline literal audit once. OMP warning179 is retained without weakening
+isolation or claiming threading qualification. All71459operational paths and old
+clocks/ledger/resources match; image detached. F17.3 manufactured qualification
+passes; production-owner F17/historical failed F17.1 and all physical gates stay
+open. No further native study or operational adoption follows.
+
 ### F17.2 complete import-resource inventory (2026-11-25)
 
 [ADR0265](../../../docs/adr/0265-inventory-native-import-resources.md) records
