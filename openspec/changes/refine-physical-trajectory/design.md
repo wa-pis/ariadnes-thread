@@ -1,5 +1,77 @@
 ## Context
 
+### F13: bounded pinned-source continuation (2026-11-25)
+
+[ADR0259](../../../docs/adr/0259-inspect-pinned-split-time-caster.md) reuses
+ADR0258's saved exact-package recipe and Git record without refetching its
+package or restarting the failed controller. Question: what does the declared
+source version actually say about pybind11 selection and long-double export?
+Completion is one pinned primary-source chain with inspected line anchors, or a
+precisely retained gap. Source inspection is not compiled-header attestation.
+
+Fixed inputs: the unchanged0258 records, TudatPy checkout
+`2300d7fe3d7db4db9a78dd4a9a4a713f614da22d` and its root `CMakeLists.txt`, and
+the recipe-declared official pybind11 `v3.0.1`. Resolve that exact GitHub tag
+once; verify owner/repository/ref, object type and immutable40hex commit before
+reading `include/pybind11/cast.h` and `include/pybind11/pytypes.h`. An annotated
+tag may have one explicit Git-tag-object dereference; nested tags, unsupported
+objects or failed identity checks stop as gaps. No current HEAD substitution.
+The resolved commit pins the inspected upstream source, not the headers used in
+the2025 binary. Primary reference is these actual source bytes plus the retained
+package declarations and F11's conditional conversion argument.
+
+One exclusive noninteractive session has an outer600s process-tree watchdog
+covering startup, requests, hashing/UTF-8 inspection and durable finalization.
+Each response has a separate inclusive60s startup-through-cleanup watchdog.
+At most6 actual HTTP responses, including redirects/errors, are precharged;
+four planned objects are not a response count. Only explicit HTTPS requests to
+`raw.githubusercontent.com` and `api.github.com` for the fixed owner/repository
+paths are permitted. Disable redirects/retries and compression; a redirect or
+unexpected content encoding is a recorded gap, not an implicit follow/retry.
+
+Each body is capped at256KiB before reads/writes. Three separate aggregate
+ledgers each cap at2MiB: raw response bodies (including failures/partials), UTF-8
+decoded source/JSON bytes, and retained session evidence (bodies once, metadata,
+stdout/stderr and receipts). Six bounded bodies leave512KiB for bounded records
+and logs; reserve finalization space before writes. No archives/decompression or
+member extraction (zero new archive members). Enforce remaining capacity before
+streaming reads, not only after allocation. On timeout/error preserve partials,
+stop the process tree and perform no replacement attempt. Separate the durable
+child result, parent post-child observation and final receipt timing honestly;
+a pre-receipt timestamp is not inclusive final-completion evidence.
+
+The fixed private command reads no interactive stdin and exits after its finite
+sequence. Use the standard library/existing tools, no generic invocation framework.
+Do not install/build/execute downloaded content, change dependencies, import
+TudatPy/SPICE or run tests, native propagation, scientific/oracle/command/trajectory
+evaluations, integration, optimizers, real mission archives or consumed studies.
+F0 inputs/model/tolerances, F5/F7 semantics and production73/76/228/300s stay fixed.
+
+Retain distinct statuses for artifact/dependency declarations, inspected source
+selection/caster route, actual compiled selection/effective FP/domain, and native
+readback/physical admission. Finite output or roundtrip equality cannot establish
+that the original narrowing was lawful. No mantissa, half-ULP, strict universal
+normalization or offline native-identity assumption follows. Actual readback stays
+unavailable until its complete premises are independently qualified. Review source
+claims independently, verify hashes/links/protected bytes/CURRENT/diff/strict and
+commit/push this documentary stage; runtime regressions on unchanged code are not
+rerun. This source continuation does not authorize a native/mission campaign.
+
+#### F13 observed source result
+
+One completed session retains5HTTP200/215077raw-and-decoded bytes and230134bytes
+of original durable records; separate parent observation2.620360417s follows their
+fsync. One annotated tag resolves official pybind11v3.0.1 to source
+`f5fbe867d2d26e4a0a9177a51f6e568868ad3dc8`; the tag is unsigned. Root TudatPy
+CMake520–522 declares config-mode selection and include variables. Generic
+cast.h235/253–255/306/310–314 uses a double intermediary, Python-double load and
+one explicit C++double narrowing into CPython float creation; pytypes1906–1925
+corroborates the double API. Exact bodies/hashes and distinct timing receipts are
+retained in ADR0259 and independently reviewed. Actual compiled template/include
+selection, effectiveFP/lawful-domain/readback and physical admission stay
+unavailable. No replay, native import or scientific evaluation occurred; F12's
+incomplete historical outcome remains unchanged.
+
 ### F12: exact-build source-provenance lookup (2026-11-25)
 
 [ADR0258](../../../docs/adr/0258-lookup-exact-split-time-build-source.md) bounds

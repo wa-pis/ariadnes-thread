@@ -1,0 +1,30 @@
+{
+  "F12": "incomplete; consumed; unchanged unchecked",
+  "F13": "one pinned-source capture complete; no retry",
+  "actual_native_readback_and_physical_admission": "unavailable",
+  "anchors": 5,
+  "base_revision": "ebf24bd86acf9dffef31a7d2d7950a3535839f1d",
+  "changed_markdown_sha256": {
+    "CURRENT_STATE.md": "3c709bd4c3365e0f7d11a97f6188ae8f55d080b8273799d381bb2a9652f24199",
+    "docs/adr/0259-inspect-pinned-split-time-caster.md": "1baaf90172aa044bdea7b1a8d79af14a310d82a2e73ec3d43d8bda3da497dad6",
+    "docs/adr/README.md": "995eb354b4f557bd85337f28e909b9fb56632aed6b3e1d6668d4928f84b0c438",
+    "openspec/ROADMAP.md": "917a21c9b081e5305ac6f1cb5367542c2827b1639f857e59d392474d252bbd11",
+    "openspec/changes/refine-physical-trajectory/design.md": "29a75964af471f5ff6e9836e5cc419334aa054cfebbc2a653e0f22c9e5c75f32",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "803d9c53baec04851f765e08b32cd9bba2aeaf43a1b36b66fea37f0baa9cf965",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "a9b774123c5b4b02c310fa9f39fb6bb5933aa7ffb22504e167cd34c5a6e12876",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "985ee6b8349b823505db75f26abb2cbdd8e3783ea8ec629954b02999cef2be6e"
+  },
+  "current_state_lines": 59,
+  "git_diff_check": "passed",
+  "independent_source_reviews": "Two saved-byte/source/scientific-scope reviews passed; final Markdown review separate",
+  "local_links": 585,
+  "lookup_verification_sha256": "b0be9789bbe93ca5fcedbf4222545f742e0d364cdf3343dd1bde069be10473ac",
+  "new_scientific_work": false,
+  "production_code_unchanged": true,
+  "retained_zip_sha256": "1adabb6494bc217abba63576c43de66f2927c21593cfeb986df8e7276012edda",
+  "runtime_tests_rerun": false,
+  "schema": "ariadna-f13-doc-verification-v1",
+  "status": "passed: documentary source result only",
+  "strict_openspec": "passed",
+  "unchanged_prior_non_markdown_files": 1168
+}

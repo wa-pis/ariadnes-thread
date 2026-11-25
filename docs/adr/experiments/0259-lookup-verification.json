@@ -1,0 +1,165 @@
+{
+  "actual_http_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "base_revision": "ebf24bd86acf9dffef31a7d2d7950a3535839f1d",
+  "decoded_utf8_bytes": 215077,
+  "external_return": {
+    "exit_code": 0,
+    "external_elapsed_after_durable_records_s": 2.620360417291522,
+    "path": "/private/tmp/ariadna-f13-0259",
+    "retained_bytes": 230134,
+    "status": "completed"
+  },
+  "raw_body_bytes": 215077,
+  "resolved_pybind_commit": "f5fbe867d2d26e4a0a9177a51f6e568868ad3dc8",
+  "responses_precharged": 5,
+  "retained_archive": {
+    "bytes": 55282,
+    "members": {
+      "01.body": {
+        "bytes": 18636,
+        "sha256": "9b58fd72a5b2ca1cf3343a875188a96e479bc4eac14a07e4f42b19746f5530a3"
+      },
+      "01.response.json": {
+        "bytes": 376,
+        "sha256": "d48081fdada2c1cac5a6a06f93ab856560ecbd5f3d75170ce206ca8448ee57e2"
+      },
+      "01.start.json": {
+        "bytes": 202,
+        "sha256": "73724ceae067d3605333466ec22b9d0de7c1085037c99c6aa11d2e5604a16c7f"
+      },
+      "02.body": {
+        "bytes": 333,
+        "sha256": "401ca814d6d368c97a2a8926ba010c06e20febe46fff5ec7d75017311aba402b"
+      },
+      "02.response.json": {
+        "bytes": 331,
+        "sha256": "6f723e4b56153e13b2b57f7f53f2c433266782435d146eb1c0238bfd03ad6418"
+      },
+      "02.start.json": {
+        "bytes": 156,
+        "sha256": "8fe2ddf66a0ce3dd126a2df39e0fa41e8dd08de79cd97e39628bab2328a0ea3c"
+      },
+      "03.body": {
+        "bytes": 671,
+        "sha256": "2433df91902636b3110c2b6e123088c41906845e1fe2be0f47889af9830ff1f0"
+      },
+      "03.response.json": {
+        "bytes": 361,
+        "sha256": "fe15e2659fa18289eb89e85cf369023717515c9985eb312b6b601d3462c21216"
+      },
+      "03.start.json": {
+        "bytes": 192,
+        "sha256": "e6eed92c25c3132713ebdfd04ea353af3b1560e24c5df5bc2b0b2f470dccdf94"
+      },
+      "04.body": {
+        "bytes": 93239,
+        "sha256": "7d33db068e6cf32fb1384a05f18f7546f683312284c33ffee5546f3f8376c6c9"
+      },
+      "04.response.json": {
+        "bytes": 381,
+        "sha256": "9b7098cf8cb2c626c6dff871f7d4151399a46771bb253e89becc1fe3302fcb49"
+      },
+      "04.start.json": {
+        "bytes": 203,
+        "sha256": "b2555c8a4a5aaa43f73e93ccd905bf8a8f09caad6341ef9443ac1e77436c480c"
+      },
+      "05.body": {
+        "bytes": 102198,
+        "sha256": "c991e587c606292f0c43c1bab73601a59d13c50a2210e73d8b2eb7f49d4aeda1"
+      },
+      "05.response.json": {
+        "bytes": 387,
+        "sha256": "e7d8c5d6abaa1d994ed316c9e87dfc51fe42cb627f36e7e394f581c9aade0490"
+      },
+      "05.start.json": {
+        "bytes": 209,
+        "sha256": "7d9271a30690226c055f1048eb8611694e75bf90b3308b7204714173c2bd87d2"
+      },
+      "external-return.json": {
+        "bytes": 182,
+        "sha256": "30621bfa4963e022e8243b63fb6feb3938b240d2a268a0dc9cf8788648b1e0f9"
+      },
+      "lookup-result.json": {
+        "bytes": 10650,
+        "sha256": "65e5da9263a8a9f5cf5cbb501ff14388b64d7948b65862b618c0f9d98ecba870"
+      },
+      "outer-observation.json": {
+        "bytes": 220,
+        "sha256": "c20b28f98650acb1f642b4ad7d687ff6b7c2dade8396486cbddc7a6a105724a7"
+      },
+      "session-start.json": {
+        "bytes": 1389,
+        "sha256": "dd582d17ce81b168628b192d0b7e875131c02bea91de1fccfa01320c22996e5a"
+      }
+    },
+    "path": "docs/adr/experiments/0259-pinned-source-lookup.zip",
+    "sha256": "1adabb6494bc217abba63576c43de66f2927c21593cfeb986df8e7276012edda"
+  },
+  "retained_session_bytes": 230134,
+  "retained_with_external_return_bytes": 230316,
+  "reused_inputs": {
+    "git_sha256": "bbfb97a101a936735201ef785c477edcffcfe987e8199dcf943798c45291fe18",
+    "recipe_sha256": "abf8e5da21636372a3103f2e657758a6589729593f2e578c214f607c198ede53"
+  },
+  "schema": "ariadna-f13-pinned-source-verification-v1",
+  "scope_limits": {
+    "SPICE": false,
+    "actual_readback_and_physical_admission": "unavailable",
+    "archive_members_extracted": 0,
+    "compiled_header_selection": "unavailable",
+    "controller_replay": false,
+    "effective_FP_and_lawful_native_domain": "unavailable",
+    "native_imports": false,
+    "package_refetch": false,
+    "production_changes": false,
+    "runtime_tests_rerun": false,
+    "scientific_evaluations": false,
+    "tag_signature_attestation": false
+  },
+  "single_session_consumed": true,
+  "source_claims": {
+    "generic_cast": "cast.h235/253-255/306/310-314: floating double intermediary, Python double load and direct C++double narrowing before PyFloat_FromDouble",
+    "pytypes": "pytypes.h1906-1925: float wrapper uses double-valued CPython API",
+    "root_cmake": "lines520-522: find_package(pybind11 CONFIG REQUIRED), then pybind11_BUILD_INCLUDE_DIRS variables"
+  },
+  "source_records": {
+    "pybind_annotated_tag": {
+      "bytes": 671,
+      "number": 3,
+      "sha256": "2433df91902636b3110c2b6e123088c41906845e1fe2be0f47889af9830ff1f0",
+      "url": "https://api.github.com/repos/pybind/pybind11/git/tags/e86205cb2ba070755d582856430c0f83c0af6694"
+    },
+    "pybind_cast": {
+      "bytes": 93239,
+      "number": 4,
+      "sha256": "7d33db068e6cf32fb1384a05f18f7546f683312284c33ffee5546f3f8376c6c9",
+      "url": "https://raw.githubusercontent.com/pybind/pybind11/f5fbe867d2d26e4a0a9177a51f6e568868ad3dc8/include/pybind11/cast.h"
+    },
+    "pybind_pytypes": {
+      "bytes": 102198,
+      "number": 5,
+      "sha256": "c991e587c606292f0c43c1bab73601a59d13c50a2210e73d8b2eb7f49d4aeda1",
+      "url": "https://raw.githubusercontent.com/pybind/pybind11/f5fbe867d2d26e4a0a9177a51f6e568868ad3dc8/include/pybind11/pytypes.h"
+    },
+    "pybind_tag_ref": {
+      "bytes": 333,
+      "number": 2,
+      "sha256": "401ca814d6d368c97a2a8926ba010c06e20febe46fff5ec7d75017311aba402b",
+      "url": "https://api.github.com/repos/pybind/pybind11/git/ref/tags/v3.0.1"
+    },
+    "tudat_root_cmake": {
+      "bytes": 18636,
+      "number": 1,
+      "sha256": "9b58fd72a5b2ca1cf3343a875188a96e479bc4eac14a07e4f42b19746f5530a3",
+      "url": "https://raw.githubusercontent.com/tudat-team/tudatpy/2300d7fe3d7db4db9a78dd4a9a4a713f614da22d/CMakeLists.txt"
+    }
+  },
+  "status": "source capture and byte identities verified; compiled/domain/readback unavailable",
+  "timing_caveat": "Child result and outer-observation timestamps precede their own fsync; separate parent external return follows both durable records. No actual-native timing or physical bound is inferred."
+}

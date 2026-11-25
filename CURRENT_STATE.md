@@ -3,6 +3,8 @@
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
 ## Current preparation result
+[ADR0259](docs/adr/0259-inspect-pinned-split-time-caster.md) completes F13:5HTTP200,
+215077raw/decoded bytes; pinned generic double route, actualreadback unavailable.
 [ADR0258](docs/adr/0258-lookup-exact-split-time-build-source.md): F12 attempt
 incomplete from controller EOF; exact py312 package/recipe/git declarations audited.
 No retry; raw metadata/failure retained. Compiled caster/domain/readback unavailable.
@@ -27,11 +29,11 @@ existing required live regressions are separately scoped, not a new campaign.
 native double-stop restriction. No actual native bound/adapter/profile is qualified.
 
 ## Next action and scheduler
-F10 source-bound CI and original artifact are verified/retained in ADR0256.
 Do not repeat successful local/CI runs or artifact downloads on unchanged code.
-Next: reuse captured exact-package metadata and archived source2300d7fe; define
-one bounded noninteractive missing-source step. No refetch/controller replay or
-generic framework/native campaign, changed target, old-study replay or R5.60.
+Next: bound finite/range premises for narrow Time construction/copy/export from
+retained sources only; no new HTTP/native/scientific work by default.
+No refetch/controller replay, generic framework/native campaign, changed target,
+old-study replay or R5.60.
 Full-force seed/derivatives/guards/error bounds and73/76/228/300s remain open.
 User resumed `ariadna-m3` on2026-11-25: ACTIVE every5minutes, samechat.
 Pause for concrete required user choice/access/authorization or contract change,

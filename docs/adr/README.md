@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0259 — Inspect the pinned split-Time caster source](0259-inspect-pinned-split-time-caster.md)
 - [0258 — Look up the exact split-Time build source](0258-lookup-exact-split-time-build-source.md): exactpy312 artifact/recipe/git declarations independently audited; controller EOF leaves the one attempt incomplete. Raw failure retained, no retry or physical qualification.
 - [0257 — Design a conditional split-Time readback enclosure](0257-design-conditional-split-time-enclosure.md): source-level adjacent-neighbour derivation without half-ULP/mantissa assumptions; exact py312 caster/build and lawful-domain basis remain unavailable. Design/review only, no native or scientific work.
 - [0256 — Qualify the fabricated realized-clock checker](0256-qualify-fabricated-clock-packet.md):94 focused/7530 portable+42 archival/413 live pass with1469 frozen files, independent review and bounded pure harness. CI45530971440 on a9fa9cf passes7906cases/79skips, all94new pass and7985local/CI IDs match with unchanged skips. Artificial consistency only; physical admission remains unavailable.

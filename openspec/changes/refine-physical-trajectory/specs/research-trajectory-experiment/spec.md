@@ -30,6 +30,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 - **THEN** preserve its original failure/partial and resource receipts, verify saved artifact/metadata facts separately, and retain missing caster/build/finite-domain qualification as unavailable
 - **AND** recipe/source declarations do not become compiled-header or physical proof; no hidden retry, artifact refetch, controller replay or native campaign follows, and any distinct missing-source continuation requires a finite scoped contract
 
+#### Scenario: Continue only the missing pinned primary-source step
+
+- **WHEN** ADR0259 continues from the saved0258 recipe/Git declarations
+- **THEN** one noninteractive source session binds the fixed TudatPy checkout and exact pybind11 tag/immutable header commit, with at most one annotated-tag dereference and no current-HEAD substitution, package refetch or consumed-controller replay
+- **AND** outer600s/per-response60s watchdogs,6actual HTTP responses,256KiB per body and separate2MiB aggregate raw-body/decoded-source/retained-evidence ledgers cover errors, partials, logs and finalization; redirects/compression/unsupported chains fail closed with zero new archive members or runtime/scientific work
+- **AND** source/dependency declarations stay separate from compiled-header/effective-FP/lawful-domain evidence; missing premises keep actual readback and physical admission unavailable
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

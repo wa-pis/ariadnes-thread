@@ -1,3 +1,7 @@
+[ADR0259](../../../docs/adr/0259-inspect-pinned-split-time-caster.md) completes F13's
+source-only capture:5HTTP200 and215077bytes pin the declared generic caster.
+Actual compiled selection/domain/readback and physical gates stay unavailable.
+
 [ADR0258](../../../docs/adr/0258-lookup-exact-split-time-build-source.md) retains F12
 incomplete from controller EOF after exactpy312 metadata capture. Artifact/recipe/git
 records are independently audited; caster/domain and physical gates stay unavailable.

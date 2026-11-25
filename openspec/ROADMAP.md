@@ -67,6 +67,10 @@ conditional split-Time enclosure design: exact integer-hour plus adjacent-word
 rational enclosure under explicit conversion premises. Current caster/build and
 lawful finite-domain qualification are missing; actual readback stays unavailable.
 No code, native experiment or physical admission follows.
+[ADR0259](../docs/adr/0259-inspect-pinned-split-time-caster.md) completes F13's
+pinned-source capture:5HTTP200/215077bytes, one annotated tag and independently
+corroborated generic double route. Actual compiled/domain/readback remain unavailable;
+no package refetch/controller replay, native campaign or physical admission.
 [ADR0258](../docs/adr/0258-lookup-exact-split-time-build-source.md) retains F12
 incomplete from controller EOF after exactpy312 metadata capture: oneHTTP200,
 23975956byte package/532480byte metadata verified, recipe/git/source declarations
