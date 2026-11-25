@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0268 — Artificial owner runner](0268-qualify-artificial-owner-runner.md) — F18.2 complete:194artificial cases,7724portable+413live/42archival skips; no F18.3.
 - [0267 — Actual-owner endpoint design](0267-design-actual-owner-endpoint-qualification.md) — source-backed two-arc/eight-call proposal; no native execution or owner qualification.
 - [0266 — Provisioned native fixture](0266-verify-provisioned-native-fixture.md) — one11-case manufactured packet and independent audit pass; owner/physical gates open.
 - [0265 — Native import-resource inventory](0265-inventory-native-import-resources.md) — five source-derived files pinned; no provisioning/import, automation PAUSED.

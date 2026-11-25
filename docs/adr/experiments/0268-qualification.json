@@ -1,0 +1,333 @@
+{
+  "schema": "ariadna.f18.artificial-owner-qualification.v1",
+  "status": "passed_artificial_preparation_and_required_regression",
+  "recorded_utc": "2026-11-25T11:45:09.854302+00:00",
+  "base_revision": "f1761404835498a64015d2b7f2e04e7aa1459ec2",
+  "measured_checkout": "1525 tracked/untracked files and Git status frozen across both required lanes; final docs/evidence added after tests, runtime/test hashes unchanged.",
+  "new_tests": 194,
+  "required_tests": {
+    "portable_passed": 7724,
+    "live_passed": 413,
+    "combined_passed": 8137,
+    "archive_skipped": 42,
+    "zero_failures": true,
+    "case_ids_disjoint": true,
+    "new_tests_included_in_portable": 194
+  },
+  "source_pins": {
+    "src/space_nav/_owner_endpoint_fixture.py": {
+      "bytes": 17390,
+      "sha256": "48c33d3388d9d780312da25666fae9726c53576d46eefd285ef97d20232c5ee0"
+    },
+    "src/space_nav/_owner_endpoint_audit.py": {
+      "bytes": 14638,
+      "sha256": "409c629c27efabccd96a6f0da85942b51f0a8bd79d2c943f5da09d9138f94eba"
+    },
+    "src/space_nav/_owner_endpoint_run.py": {
+      "bytes": 17901,
+      "sha256": "ba41c64e880b369ffc83844a3185fce40f2020d4a55e671b768cfd32f96988d4"
+    },
+    "src/space_nav/trajectory.py": {
+      "bytes": 126286,
+      "sha256": "029bd5f0d10802143aa87a75827f8cce4b97a1ff36c9da7fc479ad3e6d0f0790"
+    },
+    "src/space_nav/_coupled_benchmark_run.py": {
+      "bytes": 15346,
+      "sha256": "216ccd347c5a8025d24a54ffb55ab97a2267461907cb3e6ebae2a3e2b23e408d"
+    },
+    "src/space_nav/_native_arc_conformance.py": {
+      "bytes": 26863,
+      "sha256": "f144877186bab451a13378af22cf2f0ec528afb6fd3ed81abb009c7e999b8169"
+    },
+    "tests/test_owner_endpoint_fixture.py": {
+      "bytes": 20301,
+      "sha256": "aa38b40384a2bc34e29d6f9737493e4061dc721ebfd912c99d0178acbb575f51"
+    },
+    "tests/test_owner_endpoint_audit.py": {
+      "bytes": 17542,
+      "sha256": "97946d8a464f3b08d3331a9eef2773281c40fe8df173f5a5cb2a52ae0bd52084"
+    },
+    "tests/test_owner_endpoint_run.py": {
+      "bytes": 15838,
+      "sha256": "9f4d3f089a573724f5324c7b53e90e7c146a61f9ba8176111f158d7bd9309362"
+    }
+  },
+  "ruff": {
+    "command": "conda run --no-capture-output -n space-nav ruff check --no-cache src tests",
+    "exit_code": 0,
+    "observed_tool_stdout": "All checks passed!",
+    "note": "Tool-observed before frozen make test; unchanged source bytes, no extra lint rerun."
+  },
+  "independent_review": {
+    "integrated_code": "PASS,8bc1da2a4adc5b5e8bc73ea91b60909ff1d2902a10b6973debef9bb12190a1b7",
+    "source_metadata": "Exact whole labels,123.83481779135764s<=300; independent check/readonlydetach.",
+    "documentary": "Separate final receipt after source/links/diff/strict checks."
+  },
+  "artificial_cold": {
+    "schema": "ariadna.f18.artificial-cold-qualification.v1",
+    "status": "passed",
+    "mode": "injected",
+    "actual_private_native_factories": 0,
+    "actual_private_native_integrations": 0,
+    "actual_private_owner_visitor_calls": 0,
+    "logical_simulated_counts": {
+      "factory_attempts": 3,
+      "integration_attempts": 2,
+      "visitor_calls": 8,
+      "acceleration_callbacks": 2,
+      "spice_queries": 0,
+      "kernel_reads": 0,
+      "real_archive_reads": 0,
+      "optimizer_entries": 0,
+      "native_reported_function_evaluations": [
+        15,
+        15
+      ]
+    },
+    "calls_checked": 8,
+    "saved_analytic_arcs_checked": 2,
+    "observed_after_supervisor_fsync_s": 0.10809562494978309,
+    "report": {
+      "schema": "ariadna-owner-supervisor-v1",
+      "status": "passed",
+      "failure": null,
+      "parent": {
+        "elapsed_at_last_valid_check_s": 0.10200041625648737,
+        "failure": null,
+        "finalization": "checked-after-fsync",
+        "limits": {
+          "audit_finish_s": 55,
+          "audit_s": 10,
+          "finalization_reserve_s": 5,
+          "input_bytes": 65536,
+          "logs_bytes": 65536,
+          "producer_finish_s": 45,
+          "structured_evidence_bytes": 2097152,
+          "total_s": 60
+        },
+        "log_bytes": 0,
+        "parent_started_s": 3726404.4467665,
+        "physical_admission": "unavailable",
+        "producer_mode": "injected",
+        "schema": "ariadna-owner-run-v1",
+        "startup_elapsed_s": 0.043289000168442726,
+        "status": "passed",
+        "structured_bytes": 8406,
+        "structured_bytes_before_receipt": 7727,
+        "workers": [
+          {
+            "elapsed_s": 0.008228457998484373,
+            "exit_code": 0,
+            "kind": "produce"
+          },
+          {
+            "elapsed_s": 0.04946400038897991,
+            "exit_code": 0,
+            "kind": "audit"
+          }
+        ]
+      },
+      "physical_admission": "unavailable",
+      "finalization": "checked-after-fsync",
+      "worker": {
+        "exit_code": 0,
+        "elapsed_s": 0.10723270801827312
+      },
+      "elapsed_at_last_valid_check_s": 0.10800100024789572
+    },
+    "raw_files": {
+      "artificial-cold-packet/input.json": {
+        "bytes": 89,
+        "sha256": "bc7525c8a1b282479186e0c67ac3d66ecc399ec242cb90e72903ac98057ce117"
+      },
+      "artificial-cold-packet/producer.json": {
+        "bytes": 747,
+        "sha256": "b0edc4afc9aa7eba3ad850bc599a49dfb27fbe723b7a1dfc819dbe6d174e0654"
+      },
+      "artificial-cold-packet/producer.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "artificial-cold-packet/receipt.json": {
+        "bytes": 987,
+        "sha256": "d0a409b5536c9c3691318a78e26ed5a06faa20244132d166eeebe440a7675d57"
+      },
+      "artificial-cold-packet/packet/audit.json": {
+        "bytes": 933,
+        "sha256": "b0bec0b4a1f8782ab1fef45f82948389a23b226835874709caf4661da8c625b8"
+      },
+      "artificial-cold-packet/packet/input.json": {
+        "bytes": 89,
+        "sha256": "bc7525c8a1b282479186e0c67ac3d66ecc399ec242cb90e72903ac98057ce117"
+      },
+      "artificial-cold-packet/packet/producer.json": {
+        "bytes": 6705,
+        "sha256": "7cd11148ac6873535eb3bc61dfd9695527189fe9f20572a7e16eaead73c93ddb"
+      },
+      "artificial-cold-packet/packet/audit.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "artificial-cold-packet/packet/producer.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "artificial-cold-packet/packet/receipt.json": {
+        "bytes": 679,
+        "sha256": "c8a3e6fed76d6f6ba0359bb369300fed826401479a7b16b72ba40e04b96d0ef6"
+      }
+    }
+  },
+  "scope": "Injected owners/fake process qualification only. Budget integration/factory/visitor counts are logical simulated slots, not actual private native observations. Existing live tests separately exercise their unchanged TudatPy/SPICE scope.",
+  "native_F18_3": {
+    "executed": false,
+    "authorized": false,
+    "new_private_native_factory_calls": 0,
+    "new_private_native_integrations": 0,
+    "new_private_native_owner_calls": 0
+  },
+  "physical_goal": "Open: no actual owner packet, carrier/carry/prior arithmetic/ABI-FP/full-force endpoint qualification, F0 command witness,99percent or M3 closure.",
+  "scheduler": "ariadna-m3 PAUSED",
+  "preservation": "All prior non-Markdown project blobs will be checked in final documentary receipt; original evidence/image/privatekernel/closed clocks and ledgers preserved. No new deps/builds/resources/acquisition or operational adoption.",
+  "archive": {
+    "name": "0268-validation-evidence.zip",
+    "bytes": 217598,
+    "sha256": "c102a9037d8ed8ee16d1548ebad18681e3ba27106bbd84920c4a0268b1204371",
+    "expanded_bytes": 3789231,
+    "members": {
+      "contract.md": {
+        "bytes": 5100,
+        "sha256": "7837af8d9aa5abf3a2665c2debd03571beb813eb02c42a57f6fda5342addbf6b"
+      },
+      "metadata-source-profile.json": {
+        "bytes": 759,
+        "sha256": "fe4276b727556f6c97b80221b9c46ac088c42fe988de4b19541007453f2831b3"
+      },
+      "metadata-readonly-attach.plist": {
+        "bytes": 1831,
+        "sha256": "5a21860e2651573899fe7d4e8fc0d4f1ac408cf1554f81ab5ee21fb30a4e059a"
+      },
+      "metadata-literal-source-review.json": {
+        "bytes": 19029,
+        "sha256": "80576b95ba5ceab8ae25e3c662f7888b7500579cabcbc11ad8c34fceb7730bfd"
+      },
+      "metadata-parent-source-check.json": {
+        "bytes": 8253,
+        "sha256": "5d53fdc0563513769d2cc4e1018f8a9f3d91ffbdcbe08a49b0d8c322b641b037"
+      },
+      "metadata-source-completion.json": {
+        "bytes": 635,
+        "sha256": "567d0ab7edf4f54a499702be88638f3bc22d89029b7c54465d251e76e83d277f"
+      },
+      "metadata-detach.json": {
+        "bytes": 387,
+        "sha256": "c1df7f86709f184efaf61fd4d85c8c5b814bdc0158057817f743662cc922e6d5"
+      },
+      "control-reuse-review.json": {
+        "bytes": 2677,
+        "sha256": "1e4af5af5c90b71b99453cc2a285da2c8409b75560ce08b556d98a2673c125a4"
+      },
+      "integrated-code-review.json": {
+        "bytes": 3759,
+        "sha256": "8bc1da2a4adc5b5e8bc73ea91b60909ff1d2902a10b6973debef9bb12190a1b7"
+      },
+      "combined-focused-initial.log": {
+        "bytes": 343,
+        "sha256": "b975ecc5b7e7ae4c11d2a673ef39c22b127dbbcd6c3ec406c95894ef966a0b3b"
+      },
+      "combined-focused-initial.xml": {
+        "bytes": 95757,
+        "sha256": "ebb13c796d982bb001a67cc295a4855e45590bbd6ed29bf0dc71c8fce7198d8b"
+      },
+      "portable.xml": {
+        "bytes": 3316500,
+        "sha256": "1860ce15c1db49344c814b14b0c6bb0f385bfbf0822441bf81ba5f66939ac010"
+      },
+      "live.xml": {
+        "bytes": 101717,
+        "sha256": "5b7609ce60f63146057ff9e705e9d24d9138db9665f78d57c4fdd35706450c7a"
+      },
+      "required-regression.log": {
+        "bytes": 10737,
+        "sha256": "3c3ceeff2a5c6d021f353f8cdfe23f98b237c233894a23c9f8f57b59f65f6bf1"
+      },
+      "frozen-before.json": {
+        "bytes": 188513,
+        "sha256": "a6bcd8de25ef4fb4044f9f9b45d29665983b54fa77a6dc17799dc08c4f0ce4eb"
+      },
+      "frozen-after.json": {
+        "bytes": 288,
+        "sha256": "9094025e4b7ca10b6db526ff33636f1eb383bd0c8223a45557049273a45c9621"
+      },
+      "regression-qualification.json": {
+        "bytes": 12500,
+        "sha256": "1c48f16d5ec9f4a9789c0e869045d0bb5ff94fda00f2141edec7dde225bfe334"
+      },
+      "environment.json": {
+        "bytes": 2319,
+        "sha256": "076f76a73fef4b2cad2cbaa3ca8b624dd7c01f48d01480723b58cd9183d56430"
+      },
+      "test-runner": {
+        "bytes": 405,
+        "sha256": "52569b8277cfe3028f353fcd5164a229dca04e1bb47b9fde550daf3c2150d0b0"
+      },
+      "freeze-check.py": {
+        "bytes": 1466,
+        "sha256": "b8fc52f5135ed778288bdc43384b0e01cdd3faa7753340bdf883f3813c35fe36"
+      },
+      "qualify-artificial.py": {
+        "bytes": 2207,
+        "sha256": "8053bdd12d43d4a817466750666f05719214e3e4b1e85425c9ced5245022ee1b"
+      },
+      "artificial-cold-qualification.log": {
+        "bytes": 160,
+        "sha256": "524b14eeb8b9899aa7694ff5a204369374aacebece551f25d37d61bd4e9b004a"
+      },
+      "artificial-cold-qualification.json": {
+        "bytes": 3660,
+        "sha256": "9a0d76f953ebe73431a8c565ea5808f2d4442b5a7f97c3870f26093db0480e1c"
+      },
+      "artificial-cold-packet/input.json": {
+        "bytes": 89,
+        "sha256": "bc7525c8a1b282479186e0c67ac3d66ecc399ec242cb90e72903ac98057ce117"
+      },
+      "artificial-cold-packet/packet/audit.json": {
+        "bytes": 933,
+        "sha256": "b0bec0b4a1f8782ab1fef45f82948389a23b226835874709caf4661da8c625b8"
+      },
+      "artificial-cold-packet/packet/audit.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "artificial-cold-packet/packet/input.json": {
+        "bytes": 89,
+        "sha256": "bc7525c8a1b282479186e0c67ac3d66ecc399ec242cb90e72903ac98057ce117"
+      },
+      "artificial-cold-packet/packet/producer.json": {
+        "bytes": 6705,
+        "sha256": "7cd11148ac6873535eb3bc61dfd9695527189fe9f20572a7e16eaead73c93ddb"
+      },
+      "artificial-cold-packet/packet/producer.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "artificial-cold-packet/packet/receipt.json": {
+        "bytes": 679,
+        "sha256": "c8a3e6fed76d6f6ba0359bb369300fed826401479a7b16b72ba40e04b96d0ef6"
+      },
+      "artificial-cold-packet/producer.json": {
+        "bytes": 747,
+        "sha256": "b0edc4afc9aa7eba3ad850bc599a49dfb27fbe723b7a1dfc819dbe6d174e0654"
+      },
+      "artificial-cold-packet/producer.stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "artificial-cold-packet/receipt.json": {
+        "bytes": 987,
+        "sha256": "d0a409b5536c9c3691318a78e26ed5a06faa20244132d166eeebe440a7675d57"
+      }
+    }
+  },
+  "artifact_budget_scope": "Full regression/source validation archive is separate from bounded artificial/native packet evidence; no per-packet cap is expanded."
+}

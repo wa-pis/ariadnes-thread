@@ -1,0 +1,173 @@
+{
+  "schema": "ariadna.f18.artificial-documentary-verification.v1",
+  "status": "passed",
+  "checked_utc": "2026-11-25T11:47:27.731501+00:00",
+  "base_revision": "f1761404835498a64015d2b7f2e04e7aa1459ec2",
+  "protected_prior_non_markdown_blobs_unchanged": 1193,
+  "local_links_excluding_pending_receipt": 618,
+  "anchors": 5,
+  "current_state_lines": 38,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "450c6bfadc1e04c8815fff549a2757afa1a31859a172d5232b315a4e5bbb1a3b",
+    "docs/adr/0268-qualify-artificial-owner-runner.md": "4a27493b53841a4be7061ef335336b98b456c991b024758ffc2a5676a54545f8",
+    "docs/adr/README.md": "3f8b70ba857c51a06bea4bee0de71db6cefe24f1bc15b3a9d3e014806d11f9bf",
+    "openspec/ROADMAP.md": "be148dd0fc5bb6f1e28cff25b70b6b4ccdee4a200d7a929f3d5fb67deea09d38",
+    "openspec/changes/refine-physical-trajectory/design.md": "cc81338c3438ebe37b75593929759c389540276f5413839eef8abdec506bec2f",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "8f7a5db61b8c3b6ee71eca4face8d9d46d507827cf7df95c50e4eb80bf69d62b",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "c45bfe7d965f3720d9a250ad41930e0a512550aa5f238af6497c347bf912bc62",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "4ab62b6b505787a8b53057d25ae584cc87d46bbf08260a622703519b51008499"
+  },
+  "diff_whitespace": "passed",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "archive_syntax_hashes_sizes": "passed",
+  "archive_sha256": "c102a9037d8ed8ee16d1548ebad18681e3ba27106bbd84920c4a0268b1204371",
+  "result_sha256": "97eb60e13cb56c74ec8e79908a7f5e655963a09dd7bbcaad8a5b414ff64da4a7",
+  "new_source_test_files": [
+    "src/space_nav/_owner_endpoint_audit.py",
+    "src/space_nav/_owner_endpoint_fixture.py",
+    "src/space_nav/_owner_endpoint_run.py",
+    "tests/test_owner_endpoint_audit.py",
+    "tests/test_owner_endpoint_fixture.py",
+    "tests/test_owner_endpoint_run.py"
+  ],
+  "measured_source_pins": "All9exactly match frozen passing required regressions;6new source/test files also match independent code review.",
+  "test_result": "194focused included in7724portable;413live;8137combined/42legitimate archival skips/0failures;1525files/status unchanged throughout full run.",
+  "runtime_tests_after_documentary_edits": "Not repeated; no runtime/test bytes changed after successful full regression.",
+  "scope": "F18.2 artificial preparation complete; actual new private native calls0/F18.3unexecuted and unauthorized. Existing live regression remains separate.",
+  "scheduler": "PAUSED",
+  "volume": "Source-only read-only lookup then detached; preserved image; no full operational-prefix rescan claimed.",
+  "finalized_utc": "2026-11-25T11:49:48.938078+00:00",
+  "independent_documentary_review": {
+    "bytes": 4442,
+    "sha256": "4bfbb2792720d52cf6468805a12ac160b043c8c5fa1c5146b5ef583cf4ad0325",
+    "receipt": {
+      "schema": "ariadna.f18.final-documentary-review.v1",
+      "status": "passed_no_concrete_documentary_blocker",
+      "checked_utc": "2026-11-25T11:49:07.861179+00:00",
+      "base_revision": "f1761404835498a64015d2b7f2e04e7aa1459ec2",
+      "reviewed_files": {
+        "AGENTS.md": {
+          "bytes": 11562,
+          "sha256": "aa83966e395f3fdeb8078dec17ad950abec199886a8e6184a5c3863cef7c18ed"
+        },
+        "CURRENT_STATE.md": {
+          "bytes": 2399,
+          "sha256": "450c6bfadc1e04c8815fff549a2757afa1a31859a172d5232b315a4e5bbb1a3b"
+        },
+        "README.md": {
+          "bytes": 5791,
+          "sha256": "a1e03fae9d4f7c72c54d8b4811a00e934adba8d961f0344e58666c7003e1be39"
+        },
+        "docs/adr/README.md": {
+          "bytes": 47355,
+          "sha256": "3f8b70ba857c51a06bea4bee0de71db6cefe24f1bc15b3a9d3e014806d11f9bf"
+        },
+        "docs/adr/0267-design-actual-owner-endpoint-qualification.md": {
+          "bytes": 11549,
+          "sha256": "af5082b97ba5f16957ec0f3f1f9eaa968fb1fd078d1b1864319fdc207ecc98d5"
+        },
+        "docs/adr/0268-qualify-artificial-owner-runner.md": {
+          "bytes": 8245,
+          "sha256": "4a27493b53841a4be7061ef335336b98b456c991b024758ffc2a5676a54545f8"
+        },
+        "openspec/ROADMAP.md": {
+          "bytes": 84348,
+          "sha256": "be148dd0fc5bb6f1e28cff25b70b6b4ccdee4a200d7a929f3d5fb67deea09d38"
+        },
+        "openspec/changes/refine-physical-trajectory/proposal.md": {
+          "bytes": 30937,
+          "sha256": "8f7a5db61b8c3b6ee71eca4face8d9d46d507827cf7df95c50e4eb80bf69d62b"
+        },
+        "openspec/changes/refine-physical-trajectory/design.md": {
+          "bytes": 610307,
+          "sha256": "cc81338c3438ebe37b75593929759c389540276f5413839eef8abdec506bec2f"
+        },
+        "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+          "bytes": 168819,
+          "sha256": "c45bfe7d965f3720d9a250ad41930e0a512550aa5f238af6497c347bf912bc62"
+        },
+        "openspec/changes/refine-physical-trajectory/tasks.md": {
+          "bytes": 498096,
+          "sha256": "4ab62b6b505787a8b53057d25ae584cc87d46bbf08260a622703519b51008499"
+        },
+        "docs/adr/experiments/0268-qualification.json": {
+          "bytes": 13093,
+          "sha256": "97eb60e13cb56c74ec8e79908a7f5e655963a09dd7bbcaad8a5b414ff64da4a7"
+        },
+        "docs/adr/experiments/0268-validation-evidence.zip": {
+          "bytes": 217598,
+          "sha256": "c102a9037d8ed8ee16d1548ebad18681e3ba27106bbd84920c4a0268b1204371"
+        }
+      },
+      "assertions": {
+        "source_pins_match_current_bytes": true,
+        "portable_live_counts_and_disjoint_identities_match_raw_junit": true,
+        "focused_194_cases_subset_of_portable_not_double_counted": true,
+        "combined_passes": 8137,
+        "only_F18_2_newly_checked_F18_3_F17_F17_1_still_open": true,
+        "actual_private_native_work_explicitly_zero": true,
+        "native_owner_physical_and_scientific_goals_explicitly_open": true,
+        "current_state_under_60_lines": true,
+        "full_archive_separate_from_per_packet_cap": true,
+        "historical_failures_not_promoted": true
+      },
+      "observed_junit": {
+        "combined-focused-initial.xml": {
+          "cases": 194,
+          "passed": 194,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "portable.xml": {
+          "cases": 7766,
+          "passed": 7724,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 42
+        },
+        "live.xml": {
+          "cases": 413,
+          "passed": 413,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      },
+      "archive_checks": {
+        "members": 33,
+        "all_member_bytes_and_sha256_match": true,
+        "expanded_bytes": 3789231,
+        "no_duplicate_absolute_or_parent_traversal_members": true,
+        "all_10_cold_raw_files_match": true,
+        "saved_cold_qualification_matches": true,
+        "metadata_review_and_independent_check_digests_match": true,
+        "metadata_elapsed_s": 123.83481779135764,
+        "read_only_detach_receipt_pass": true,
+        "six_reviewed_source_test_hashes_match_current_and_regression": true,
+        "frozen_1525_files_and_git_status_receipt_pass": true
+      },
+      "finalization_note": "Parent final 0268-doc-verification.json is intentionally pending its protected-prior-bytes/local-link-anchor/diff/strict checks and incorporation of this independent review. Provisional completion claims are accurate only after those parent-owned checks pass; this receipt does not substitute for them.",
+      "work": {
+        "reviewer_runtime_tests": 0,
+        "native_imports_or_calls": 0,
+        "SPICE_queries": 0,
+        "integrations": 0,
+        "scientific_evaluations": 0,
+        "repository_edits": 0
+      }
+    }
+  },
+  "automation_readback": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "prompt_sha256": "2e0fe52820fba4c43172cd132e224fb05d379a0fbb6ca079576c377dda6dd807"
+  },
+  "resolved_final_receipt_links": [
+    "experiments/0268-doc-verification.json"
+  ],
+  "local_links_including_final_receipt": 619
+}

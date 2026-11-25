@@ -107,6 +107,12 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0268](../docs/adr/0268-qualify-artificial-owner-runner.md) implements F18.2
+private artificial owner producer/auditor/process controls;194focused cases pass.
+Required7724portable+413live pass/42archival skips;1525files/status frozen.
+Independent code/source/documentary review, Ruff and strict OpenSpec pass;
+source pins, raw evidence and final checks are retained in0268artifacts.
+No F18.3, private native owner run or physical/M3 result; scheduler PAUSED.
 [ADR0267](../docs/adr/0267-design-actual-owner-endpoint-qualification.md) completes
 F18.1 source-only design for the actual simulator owner route, with no new build
 or native execution. Two fixed synthetic coast arcs/eight ordered owner calls,

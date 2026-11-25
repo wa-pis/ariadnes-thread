@@ -111,6 +111,13 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **AND** only separately explicit F18.3 authority after qualification SHALL permit one pinned <=3factory/2analytic-integration/8visitor/100000acceleration-callback attempt under600s preflight,60s inclusive45/10/5 phases,64KiBinput/log and2MiB structured evidence
 - **AND** callback counts SHALL NOT be presented as all native RHS; failed/unavailable attempts SHALL consume authority without retry, added data, changed gates/build/dependencies/operational adoption or reset old clocks/ledgers; all physical obligations and historical F17 failures SHALL remain intact
 
+#### Scenario: Qualify the cold parent and exact metadata without native probing
+
+- **WHEN** F18.2 qualifies ADR0268's private producer/auditor/controller on artificial owners and subprocesses
+- **THEN** exact pinned translation/Cowell/mass state labels, typed settings and original initial words SHALL be checked independently of caller schema; the auditor SHALL compare actual source hashes without importing producer/native libraries
+- **AND** tests SHALL demonstrate group cleanup after a dead leader, cold-parent receipt-fsync and streaming-I/O stalls with live inherited descendants, bounded reads before native imports, shared64KiB logs,2MiB structured evidence, inherited60s phases and immutable prefinal versus returned post-fsync observations
+- **AND** unchanged existing portable/live regression SHALL remain separate from the unexecuted F18.3 packet; no source-only lookup or artificial success SHALL qualify native ownership, concurrency, event carry or physical gates
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

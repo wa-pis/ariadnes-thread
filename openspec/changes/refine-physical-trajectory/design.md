@@ -1,5 +1,27 @@
 ## Context
 
+### F18.2 artificial owner runner (2026-11-25)
+
+[ADR0268](../../../docs/adr/0268-qualify-artificial-owner-runner.md) implements
+private producer/independent Fraction auditor/process controls without F18.3.
+Exact source-backed state labels and typed translation/mass settings replace
+suffix-only metadata admission;123.835s read-only naming-source check includes
+independent review and ends detached, with no native probe or data acquisition.
+The kernel context is read through the verified kernel's private simulator module.
+Cold audit imports are guarded; source digests checked without producer imports.
+Outer cleanup kills the supervised parent/inherited worker group, including an
+exited leader; partial failures and prefinal versus post-fsync observations stay
+separate. Bounded supervisor overhead fits2MiB structured evidence;63488B parent
+plus2048B outer logs fit64KiB. Direct run components still require external
+supervision for opaque I/O; no general concurrency/hostile-worker claim.
+194focused artificial tests pass and are included in7724portable passes;
+413live pass separately,42historical replay skips,0failures,1525files/status
+frozen through both lanes. Full Ruff, independent code/source/documentary review
+and strict OpenSpec pass.0268qualification/archive/documentary receipts retain
+raw logs, JUnit and source pins. The standalone cold artificial packet checks
+8calls/2saved analytic arcs in0.108096s; actual private native operations zero.
+All native/physical gates remain open, PAUSED; no F18.3 execution.
+
 ### F18: actual-owner endpoint qualification (2026-11-25)
 
 [ADR0267](../../../docs/adr/0267-design-actual-owner-endpoint-qualification.md)

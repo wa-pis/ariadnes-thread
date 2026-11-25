@@ -1,3 +1,9 @@
+[ADR0268](../../../docs/adr/0268-qualify-artificial-owner-runner.md) implements
+F18.2 private producer/auditor/controller;194focused artificial cases pass.
+Required7724portable+413live pass/42archival skips,1525files/status frozen;
+independent review, full Ruff and strict OpenSpec pass with0268evidence. F18.3 is not run;
+no actual private owner/physical qualification, scheduler remains PAUSED.
+
 [ADR0267](../../../docs/adr/0267-design-actual-owner-endpoint-qualification.md)
 completes F18.1 source-backed design: the actual simulator owner method is
 reachable without rebuilding. Two fixed synthetic coast arcs/eight ordered calls
