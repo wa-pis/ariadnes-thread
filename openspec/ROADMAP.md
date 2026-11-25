@@ -58,7 +58,10 @@ physical certificate acceptance, implementation of native wiring and runs stay c
 checker qualification:94 focused/7530 portable+42 archival/413 live pass with1469
 frozen files, unchanged physical gates, independent arithmetic/review and bounded
 outer-watchdog evidence. Scientific/physical admission stays unavailable;
-source-bound CI is pending observation and no native profile is admitted.
+source-bound CI45530971440 on exact a9fa9cf passes7906cases/79skips, all94new
+pass and7985local/CI IDs match. Unchanged42archive+37platform skip maps, final
+source hashes and original JUnit/environment ZIP are retained; no native profile
+is admitted.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

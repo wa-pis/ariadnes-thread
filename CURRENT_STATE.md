@@ -12,6 +12,8 @@ Final test-only EOF normalization preserves the exact AST;94focused/Ruff pass
 again. Original full frozen lanes are reused; final hashes have a separate receipt.
 Outer15s supervised pure harness and64KiB/2MiB limits pass; immutable report
 says pending-parent-check, separate observation confirms post-fsync completion.
+CI45530971440 on exact a9fa9cf passes7906cases/79skips; all94new pass.
+All7985local/CI IDs and unchanged42archive+37platform skip maps match.
 Every checker result retains unavailable physical/scientific admission.
 New checker/fixtures perform no native/SPICE/integration/real-archive work;
 existing required live regressions are separately scoped, not a new campaign.
@@ -20,10 +22,9 @@ existing required live regressions are separately scoped, not a new campaign.
 native double-stop restriction. No actual native bound/adapter/profile is qualified.
 
 ## Next action and scheduler
-Observe source-bound CI for the F10 implementation push, retain evidence once,
-and compare cases/sources/skips with qualified local JUnit. CI is unobserved here;
-do not repeat successful local/F7 runs or old CI downloads on unchanged code.
-After CI, select the smallest already-authorized preparation that resolves actual
+F10 source-bound CI and original artifact are verified/retained in ADR0256.
+Do not repeat successful local/CI runs or artifact downloads on unchanged code.
+Select the smallest already-authorized preparation that resolves actual
 readback readiness under ADR0255; no generic framework or automatic diagnostic
 chain. No native profile, command/target change, old-study replay or R5.60 follows.
 Full-force seed/derivatives/guards/error bounds and73/76/228/300s remain open.

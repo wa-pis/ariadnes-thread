@@ -1,0 +1,36 @@
+{
+  "anchors": 3,
+  "base_revision": "a9fa9cfa1b2edb3e124e64cef97d5051f3070536",
+  "changed_markdown_files": [
+    "CURRENT_STATE.md",
+    "docs/adr/0256-qualify-fabricated-clock-packet.md",
+    "docs/adr/README.md",
+    "openspec/ROADMAP.md",
+    "openspec/changes/refine-physical-trajectory/proposal.md",
+    "openspec/changes/refine-physical-trajectory/tasks.md"
+  ],
+  "ci_verification_sha256": "30b1c7abeeabf286933259dbfb3729c473259bb6c10e6408a8f68c6ee247f17e",
+  "combined_ci_case_ids_sha256": "b2be283718141eb3fc5d85664c49da51e34ebe2aca3ab78bda3f6a96c70eb1ca",
+  "current_state_lines": 52,
+  "git_diff_check": "passed",
+  "independent_review": {
+    "checks": "Original ZIP digest, exact source revision and source/test hashes, all7985case IDs, all94new passes, per-lane unchanged79skip ID/reason inventory",
+    "new_scientific_work": false,
+    "status": "passed; no blockers"
+  },
+  "local_links": 424,
+  "new_integrations": 0,
+  "new_native_propagations": 0,
+  "new_optimizer_calls": 0,
+  "new_spice_queries": 0,
+  "runtime_tests_rerun": false,
+  "schema": "ariadna-f10-ci-doc-verification-v1",
+  "scope": "CI artifact/documentation verification; production code/tests unchanged",
+  "status": "passed",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1160
+}
