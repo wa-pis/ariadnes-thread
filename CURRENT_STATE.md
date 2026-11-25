@@ -20,12 +20,15 @@ source/manifests/logs/proposal. No binaries/caches/environment committed.
 Ariadna runtime/test code unchanged; full pytest/Ruff/CI not repeated.
 
 ## Next action and scheduler
-ariadna-m3 PAUSED, confirmed by app. The original inclusive packet window passed;
-do not replace it with summed process time or silently retry/import/rebuild.
-Reviewable next proposal in ADR0263: one new11-call/60s inclusive/64KiBparameter/
-2MiBevidence manufactured packet on the same kernel/runner and two pinned math
-files. Explicit new packet authority is needed; no new compiler, dependency
-install, HTTP, SPICE, integration or simulator construction is proposed.
+ariadna-m3 ACTIVE every5minutes, confirmed by app. The user subsequently said
+“включи автоматизацию обратно” after the concrete new-packet proposal; this
+resumes that exact prepared11-call/60s inclusive/64KiBparameter/2MiBevidence packet
+on the same kernel/runner and two pinned math files. Record its standalone
+profile/watchdog before import; preserve the failed packet and its original clock.
+No compiler, rebuild, dependency install, HTTP, SPICE, integration or simulator
+construction is authorized. Pause on prerequisite drift, packet failure or a
+needed user decision; no automatic import retry. Native execution is not part
+of this scheduler-update stage.
 Private capacity-limited image is retained under /private/tmp/ariadna-f17-0263;
 restore at the same mount path and verify source/artifact/resource hashes before
 any separately authorized packet. Original3600s build episode is never reset.
