@@ -1,5 +1,152 @@
 ## Context
 
+### F9: bounded realized-clock packet (2026-11-25)
+
+[ADR0255](../../../docs/adr/0255-design-realized-clock-packet.md) specifies one
+private evidence packet for one unreset three-arc path. This is a data/admission
+contract under ADR0205, not an F5 ArcResponse, native adapter, clock transform,
+physical bound or executable profile. No numeric values are evaluated in F9.
+
+#### Fixed packet and provenance
+
+Use SI, TDB seconds since J2000, SSB origin and J2000 orientation. A packet has
+four chronological requested event IDs E0/E1/E2/E3, three arc rows, six native
+start/end observations and four seven-state nodes. A direction selects traversal
+only; requested IDs remain chronological. A reverse path needs its separately
+qualified original boundary/declared-mass anchor, not a forward output seed.
+The full-force reverse path remains unqualified. No free time or mass is added.
+
+| Group | Required evidence |
+| --- | --- |
+| Identity | Schema/version, explicit synthetic/physical scope, F0 boundary/command/source/runtime/model/kernel-manifest digests and immutable six control words. References do not trigger implicit file reads or acquire trust by having a hash. |
+| Requested events | Reduced exact Fraction t0/t1/t2/tf, original endpoint and duration words, display labels and signed conversion errors. t1=t0+tau_d, t2=tf−tau_a and strict ordering remain command definitions; labels do not replace them. |
+| Native observations | Arc/mode/direction, native-key endpoint selection, native comparison target, Time-Time comparison and subtraction-before-float residual; split-export route, returned Python component types/words, runtime/source/ABI/rounding/normalization basis and reconstruction-roundtrip observation. Preserve native representation separately from labels. |
+| Actual chain | Actual endpoint key or qualified lossless copy passed into the next fresh context, shared event token, producer-observed Time-Time start/end equality and exact seven-state input/output word binding. Do not independently rebuild a next start from its requested label or overwrite native mass. |
+| Clock enclosure | A justified finite closed enclosure of each actual native epoch and its provenance; signed epoch and elapsed-span discrepancy intervals derived from the same event chain, with shared identities/correlations retained. Unknown/unverified enclosures are null with a reason. |
+| Mass and errors | Frozen binary64 rate b, commanded and effective-span global/local ledgers, actual propagated mass, separate dry-floor and ledger-match outcomes, state/mass/clock-to-force endpoint allowances and independently checked evidence basis. |
+| Completion and limits | Per-arc completion/domain observations, first failure/partial reason, distinct native/provider/reported-RHS counters, monotonic deadline/byte receipt, structural/gate outcomes and explicit physical admission status. |
+
+Numbers must be finite and nonboolean. Scientific binary64 inputs/observations
+retain their exact words; exact quantities and closed interval endpoints use
+reduced rational pairs with positive denominators. Each interval identifies
+units, domain, derivation/qualification evidence and unknown status. A supplied
+interval, digest, equality flag or 'verified' string is not a bound certificate.
+No bounds become trusted merely through this packet's structural validation.
+
+#### Private serialization and pure-consumer boundary
+
+The planned JSON root uses `schema="ariadna-realized-clock-v1"`, explicit
+`scope` (`fabricated` or `physical-unqualified`), `direction` (+1/−1), `identity`,
+`controls_hex[6]`, `requested_events[4]`, `native_observations[6]`, `arcs[3]`,
+`nodes[4]`, `bounds`, `counts` and `outcome`. Event IDs are E0/E1/E2/E3; arc rows
+name departure-burn/coast/arrival-burn and point to start/end event IDs and
+observation indices. Node states have exactly seven finite binary64 words.
+Every rational is `[numerator,denominator]` in lowest terms; an interval is
+`{lower,upper,unit,basis}` with rational ends, or null plus an unavailable reason.
+A basis identifies a fixed domain/derivation/evidence source and qualification
+scope, never a caller-granted verification privilege.
+
+F10 is deliberately a fabricated-only consumer of this fixed schema. Its known
+rational intervals/word expectations come from independent artificial test
+construction. Physical-unqualified inputs cannot become accepted physical
+certificates or qualified native readback; they retain unavailable scientific
+status even if their structure is valid. A future physical checker/producer
+needs a separately qualified basis and implementation contract. F10 may choose
+routine private field encodings consistent with these named fields, documenting
+any necessary clarification before implementation; no public API is introduced.
+
+#### Readback and actual handoff
+
+F8's pinned Time serialization returns integer hours and a long-double remainder
+through py::make_tuple; Python export is not automatically lossless. Preserve the
+returned component types/words and the route used. A future producer may compare
+Time(hours, exported remainder) with the original native key in the same process;
+that is instance/runtime-specific producer-observed roundtrip evidence. Neither
+it nor equality with Time(label) is an offline proof of requested Fraction identity.
+
+A finite native-epoch enclosure needs a separately justified representation and
+conversion basis, including normalization and any Python export/reconstruction
+loss. No bare half-ULP cell around to_float is admitted without bounding the
+preceding absolute reconstruction/conversion. Missing basis or failed roundtrip
+leaves exact readback unavailable; other conservative enclosures require their
+own qualification. F9 supplies no such native enclosure or independent certificate.
+
+Hold the actual endpoint key without in-place modification across fresh native
+contexts; a copy is usable only through a qualified lossless route. Check the
+next native start against that key before accepting the arc. A shared JSON ID,
+matching label or overlapping intervals alone cannot establish continuity.
+Actual state AND mass words cross the same handoff. This must be qualified before
+native wiring; existing float-start helpers and F7 readers are not adopted unchanged.
+
+#### Signed discrepancy and mass rules
+
+For requested event E_i and justified native enclosure N_i, retain the signed
+interval N_i−E_i. For traversal i→j, retain realized span N_j−N_i and its signed
+difference from exact E_j−E_i; preserve dependencies or use explicitly conservative
+outward enclosures. Reverse spans are negative; physical thrust and negative
+mass-rate RHS do not change sign. Never infer exact timing from a close label.
+
+Keep the original b=F/float(g0*Isp) word. The commanded ledger uses exact input
+words m1=m0−b*tau_d and mf=m1−b*tau_a. A distinct effective ledger uses the same b
+and the actual burn-span enclosures. Each local ledger starts at the actual
+returned mass; coast predicts no consumption. Reverse uses the same signed-span
+formula. Compare actual native mass separately against global/local ledgers;
+do not replace it with either ledger or reset it at a node.
+
+Dry-floor acceptance requires the lower edge of each applicable commanded,
+effective and qualified actual-mass enclosure to be at least500kg, before mass
+rounding. A definite shortfall fails this command; straddling stays inconclusive.
+Equality is allowed only when established. The separate1e-9kg matching tolerance
+cannot excuse a dry deficit. Node checks do not establish continuous force/safety
+coverage; all pre-existing whole-path guard obligations remain outside this packet.
+
+A1e-6s epoch allowance does not establish the mass or state gates. Account for
+b times elapsed-span discrepancy, numerical mass/serialization error, time-dependent
+ephemerides/rotations/shadows/guidance, mass/SRP and event/source branches inside
+independently justified endpoint allowances. No unsupported speed-times-dt,
+controller tolerance, solver spread or guessed sensitivity replaces a bound.
+The Mars endpoint remains bound to its original fixed target epoch/state;
+a reverse traversal terminates at the original departure boundary. Neither is
+retargeted at a realized time. F9 calculates no such allowances.
+
+#### Outcomes and unchanged admission
+
+Keep structural validity and each scientific gate separate. Malformed/inconsistent
+or wrongly bound evidence is invalid. Unsupported readback or an absent/unverified
+bound is unavailable; an unresolved overlap with a gate is inconclusive. Retain
+any independently established failure as failure for this command only. For the
+existing outward interval decision, accept only if the whole applicable norm/error
+interval is within its unchanged limit, reject if its lower edge exceeds it,
+otherwise remain inconclusive. Missing bounds are never [0,0]; a zero term needs
+a justified identity and explicit evidence scope.
+
+Packet consistency may pass while physical execution remains unavailable. Even
+all local packet gates passing cannot certify the full-force trajectory, safe
+seed, derivative/resource/guard readiness, independent DOP853/reverse or endpoint
+bounds. Original joins1e-6s/0.001m/1e-6m/s/1e-9kg, target1000m/0.01m/s and
+production FD/lstsq method/73controls/76evaluations/228native/300s stay unchanged.
+F5/F7's exact admission is neither weakened nor manufactured by this new packet.
+
+#### Finite preparation limits
+
+A future pure artificial packet checker has exactly the fixed shape above,
+64KiB maximum input before decoding,2MiB combined evidence/log ceiling and a
+parent15s inclusive startup-through-finalization watchdog, without clock reset,
+retry, implicit reference loading, native imports, SPICE or integration. It may
+validate internal interval/word arithmetic and refusal using fabricated evidence;
+it cannot qualify an actual native readback or accept a physical certificate.
+These are engineering caps for that distinct pure unit, not production allowances.
+
+Any separately admitted synthetic native follow-up would retain F7's ceilings:
+six precharged native attempts,100000 precharged uniform-g provider entries,
+60s inclusive with45s producer/10s audit/5s reserve,64KiB input and2MiB combined
+output/logs. Provider entries remain distinct from reported-RHS telemetry. This
+contract admits no such run, native adapter, physical profile or new campaign.
+Production validation must share its existing parent300s and work counters rather
+than reset a per-packet allowance. Stop at the first unavailable/failure before
+additional producer work and retain safe partial evidence without a physical pass.
+
+
 ### F8: native event transport limits (2026-11-25)
 
 [ADR0254](../../../docs/adr/0254-record-native-event-transport-limits.md) closes

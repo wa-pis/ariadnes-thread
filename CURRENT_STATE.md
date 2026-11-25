@@ -3,31 +3,32 @@
 Updated: 2026-11-25. Keep under60lines; durable evidence in ADRs.
 
 ## Current preparation result
-[ADR0254](docs/adr/0254-record-native-event-transport-limits.md) completes F8:
-pinned-source review traces native Time but double fixed/custom stop paths.
-No general Fraction-event landing is qualified; no F0 command is evaluated or
-proved impossible. Source reading01:11:42Z–01:17:09Z fits600s; no scientific work.
-Existing ADR0205 allows separately retained commanded/effective spans and justified
-clock/mass/force endpoint allowances. F5/F7 exact admission remains unchanged.
-Source/scope reviews and documentary/strict evidence are retained in the ADR.
+[ADR0255](docs/adr/0255-design-realized-clock-packet.md) completes F9 contract-only:
+fixed4event/3arc/6observation/4node packet, immutable requested time/commands,
+actual native event/state/mass handoffs, justified readback/discrepancy bounds,
+commanded/effective ledgers and independent clock/mass/force endpoint allowances.
+Unknown bounds remain unavailable/inconclusive; packet validity is not physical
+admission. No native bound, adapter, clock transform or executable profile exists.
+Scientific/source/scope reviews and doc/strict evidence are retained in the ADR.
+[ADR0254](docs/adr/0254-record-native-event-transport-limits.md) retains the pinned
+double-stop limitation. ADR0205 already allows the distinct realized-clock path;
+F5/F7 exact semantics remain unchanged. No current candidate event is evaluated.
 [ADR0253](docs/adr/0253-qualify-native-analytic-arc-conformance.md) retains F7:
-147 focused/7436 portable+42archive skips/413live pass;1441files/Gitstatus frozen.
-First six-arc synthetic native fixture and dual-reference audit pass; time
-identity remains producer-observed. Source-bound CI45519016007 onb5fc153 passes
-7812cases/79skips, all148new;7891local/CI IDs and prior skip reasons match.
-Original raw/JUnit/CI ZIP and receipts remain immutable. Do not repeat these runs.
+147focused/7436portable+42archive/413live pass;1441files/Gitstatus frozen.
+CI45519016007 onb5fc153 passes7812cases/79skips, all148new;7891local/CI IDs
+and prior skips match. Raw/JUnit/CI receipts immutable; do not repeat these runs.
 
 ## Next action and scheduler
-F9: documentation-only design of a distinct bounded-realized-clock physical
-packet under ADR0205, with requested/native/readback separation, signed discrepancy
-enclosures, commanded/effective mass ledgers and independent endpoint allowances.
-Missing justified bounds stay unavailable/inconclusive; no implementation or
-native/mission experiment follows by default. No repeated diagnostic fixture.
-Pause if concrete design needs changed scientific gates/dependencies or access.
+F10: minimal pure fabricated packet checker under ADR0255, with independent
+rational expectations for exact words, signed intervals, shared chain, unknown
+bounds, floor/match outcomes and15s/64KiB/2MiB fail-stop limits.
+Its native/SPICE/integration/real-archive/optimizer budget is zero. It cannot
+accept physical certificates or qualify actual native observations. No F7 replay.
+At code completion run focused/frozen portable+live, Ruff/review/strict; existing
+required live regressions are separately authorized, not new checker work.
 Full-force seed/derivatives/guards/error bounds and73/76/228/300s stay open.
 User resumed `ariadna-m3` on2026-11-25: ACTIVE every5minutes, samechat.
-Continue ordinary reversible preparation with pinned Conda and ponytail.
-Pause on required user choice/access/authorization, contract-changing failure,
+Pause for concrete required user choice/access/authorization or contract change,
 or independently verified agreed success. No consumed-study replay/R5.60.
 
 ## Physical goal remains open

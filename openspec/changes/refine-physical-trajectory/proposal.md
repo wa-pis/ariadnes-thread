@@ -1,3 +1,9 @@
+[ADR0255](../../../docs/adr/0255-design-realized-clock-packet.md) completes F9:
+one distinct realized-clock evidence contract, actual time/state/mass handoffs,
+commanded/effective ledgers and justified endpoint-error obligations. Missing
+bounds stay unavailable/inconclusive; F5/F7 exact admission and physical gates
+remain unchanged. No calculation, adapter or native campaign is adopted.
+
 [ADR0254](../../../docs/adr/0254-record-native-event-transport-limits.md) completes
 F8 source/design review: direct fixed/custom stop paths do not qualify arbitrary
 exact Fraction events. A distinct realized-clock packet may be designed under

@@ -49,6 +49,11 @@ source/design review: fixed/custom double-stop paths do not establish arbitrary
 Fraction-event transport. Existing ADR0205 permits a distinct bounded-realized-
 clock design; F5/F7 exact semantics and every physical gate remain unchanged.
 F9 may specify that packet before implementation, with no new run by default.
+[ADR0255](../docs/adr/0255-design-realized-clock-packet.md) completes F9
+contract-only: actual native event/state/mass chain, separate requested/effective
+ledgers and independently justified discrepancy/endpoint allowances. No bounds
+or native adapter are supplied. A pure fabricated checker may be prepared next;
+physical certificate acceptance, implementation of native wiring and runs stay closed.
 On2026-11-25 the user resumed `ariadna-m3` every5minutes for authorized preparation.
 No changed boundaries, old-study replay or R5.60 admission follows;
 pause on required user participation or independently verified agreed success.

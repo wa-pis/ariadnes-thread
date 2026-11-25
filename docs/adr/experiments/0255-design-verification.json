@@ -1,0 +1,77 @@
+{
+  "anchors": 5,
+  "base_revision": "193e7f2c28da62544ca6d8be3e38ea4d565d782a",
+  "caps_are_design_limits_not_measured_performance": true,
+  "changed_markdown_files": [
+    "CURRENT_STATE.md",
+    "docs/adr/0255-design-realized-clock-packet.md",
+    "docs/adr/README.md",
+    "openspec/ROADMAP.md",
+    "openspec/changes/refine-physical-trajectory/design.md",
+    "openspec/changes/refine-physical-trajectory/proposal.md",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md",
+    "openspec/changes/refine-physical-trajectory/tasks.md"
+  ],
+  "checked_at_utc": "2026-11-25T01:33:23.447269+00:00",
+  "current_state_lines": 52,
+  "future_pure_checker_accepts_physical_certificates": false,
+  "future_pure_checker_caps": {
+    "combined_evidence_log_bytes": 2097152,
+    "inclusive_watchdog_s": 15,
+    "input_bytes_before_decode": 65536
+  },
+  "git_diff_check": "passed",
+  "independent_reviews": [
+    {
+      "result": "No blocker; all requested/effective and producer-observed/qualified-bound distinctions preserved; F10 fabricated-only and no native admission",
+      "reviewer": "autonomous_scope_review",
+      "scope": "Scientific admission, actual event/state/mass handoff, ledger/floor/interval/error and autonomous scope"
+    },
+    {
+      "result": "No remaining blocker after clarifying fixed Mars target versus reverse departure terminal; no retargeting or physical qualification",
+      "reviewer": "f2_reuse_review",
+      "scope": "Pinned serialization/equality distinction and fabricated consumer authority"
+    }
+  ],
+  "local_links": 567,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "d8462b65896f60df49b28dc3cab7f40543cfae5ad0480f046c06c0315550570e",
+    "docs/adr/0255-design-realized-clock-packet.md": "9d45f5e19a1b852daaffcbc337e9e3edb387349db59b3af5afbae524f5700836",
+    "docs/adr/README.md": "179152c06be0557e7347645c2ea8fd278f5909c7917444fefc403711f19e19d4",
+    "openspec/ROADMAP.md": "1fc9e78d7d65843cb344b2ecb728063c58813c9eb55ecc8b79f808d91ad9b47b",
+    "openspec/changes/refine-physical-trajectory/design.md": "f57f8565f83b28e17d10db792ef7fd8ccf2888d6952d28e21f37119a5c273340",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "425e341c68f108a67fd0b3eb6f4e680792181d254c37da59c0b72e06a747a864",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "400e51cdbf8c876ae1a5f83e74b8194ec0bc2a7f1813aa9ecb671be029a6c710",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "863bbff6ef1e9a9ca5a944ab7b2153f75408fb49b9dd4a33dbd8746ed1599e50"
+  },
+  "new_force_evaluations": 0,
+  "new_native_imports": 0,
+  "new_native_propagations": 0,
+  "new_optimizer_calls": 0,
+  "new_oracle_or_command_or_trajectory_evaluations": 0,
+  "new_spice_queries": 0,
+  "original_f0_f5_f7_gates_preserved": true,
+  "packet_shape": {
+    "arcs": 3,
+    "native_endpoint_observations": 6,
+    "requested_events": 4,
+    "seven_state_nodes": 4
+  },
+  "preparation_direction": "One minimal fabricated-only pure packet checker; actual native readback, full-force adapter/seed and independent endpoint bounds remain unqualified",
+  "runtime_tests_rerun": false,
+  "schema": "ariadna-f9-design-verification-v1",
+  "scope": "Documentation-only fixed realized-clock packet under existing ADR0205; no physical bound, implementation, adapter or execution profile qualified",
+  "source_basis": {
+    "new_source_or_runtime_qualification": false,
+    "path": "docs/adr/experiments/0254-design-verification.json",
+    "sha256": "a94b0c9a5af5552959782eac5378b1a99301aa4ce70dbe78b32d89ae30190be6"
+  },
+  "status": "passed",
+  "strict_openspec": {
+    "command": "openspec validate refine-physical-trajectory --strict",
+    "output": "Change 'refine-physical-trajectory' is valid\n",
+    "returncode": 0
+  },
+  "unchanged_prior_non_markdown_files": 1151,
+  "unqualified_native_or_physical_bounds_supplied": false
+}

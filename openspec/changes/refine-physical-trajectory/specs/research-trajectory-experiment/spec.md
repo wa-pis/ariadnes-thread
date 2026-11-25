@@ -1,5 +1,43 @@
 ## ADDED Requirements
 
+### Requirement: Bound realized-clock evidence without changing commands
+
+Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence
+contract under ADR0205. Structural/interval consistency SHALL remain separate
+from qualified native readback and physical trajectory admission. F5/F7 exact
+semantics and all F0 data, gates and production budgets SHALL remain unchanged.
+
+#### Scenario: Retain the actual event and seven-state chain
+
+- **WHEN** one fixed three-arc path is represented
+- **THEN** it contains exactly four chronological requested events, three arc rows, six native endpoint observations and four seven-state nodes with SI/TDB-J2000/SSB/J2000 metadata and fixed boundary/command/source/model identities
+- **AND** each fresh-context native start consumes the prior actual endpoint event and exact state/mass words; independent start-label rounding, matching labels or overlapping intervals cannot establish actual continuity
+
+#### Scenario: Refuse unqualified readback and false exact identity
+
+- **WHEN** native observations are serialized or audited
+- **THEN** producer-only Time identity/roundtrip evidence and export types/words remain labelled separately from justified native-value enclosures and exact requested Fractions
+- **AND** absent precision/conversion/normalization basis stays unavailable; a hash, caller verified flag, float label or bare half-ULP assumption cannot certify native identity, and no F5 exact ArcResponse is manufactured
+
+#### Scenario: Preserve both ledgers and conservative dry-floor decisions
+
+- **WHEN** clock and mass evidence is assessed
+- **THEN** signed epoch/span intervals derive from the same actual event chain, the original binary64 rate and duration words define the commanded ledger, and a distinct effective-span ledger and actual carried mass remain separate
+- **AND** a500kg floor passes only when every applicable lower mass bound is>=500kg before rounding; straddling is inconclusive and a definite shortfall fails this command, without repair by the separate1e-9kg matching tolerance
+
+#### Scenario: Keep missing bounds and physical admission explicit
+
+- **WHEN** packet arithmetic is consistent but an applicable readback, clock/mass/force, source/event-branch or endpoint bound is missing or unverified
+- **THEN** the scientific gate remains unavailable/inconclusive, never a zero-error pass; the original target epoch/state is retained and physical execution stays unavailable
+- **AND** complete justified interval decisions retain1e-6s/0.001m/1e-6m/s/1e-9kg join and1000m/0.01m/s target gates; no packet-only success certifies full-force safety, a physical command pair or endpoint bounds
+
+#### Scenario: Bound pure preparation separately from native execution
+
+- **WHEN** a future pure fabricated checker is qualified
+- **THEN** the fixed shape,64KiB-before-decode input,2MiB combined evidence/log cap, first-failure retention and15s inclusive watchdog are verified with zero new native imports, SPICE, integration, real-archive or optimizer work
+- **AND** pure consistency cannot accept physical certificates or independently qualify actual native observations; design completion grants no native run, preserves F7's separately admitted6attempt/100000provider/60s ceilings and original73/76/228/300s production limits
+
+
 ### Requirement: Separate requested events from native transport
 
 Native preparation SHALL preserve exact requested event/control meaning separately
