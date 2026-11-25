@@ -107,6 +107,15 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0273](../docs/adr/0273-design-never-run-owner-observation.md) completes
+F18.7 source/design only: next artificial F18.8 prepares one minimal setup probe
+and independent auditor. New future native F18.9 stops after fixed never-run
+factory(False) and exact first-visitor unavailable refusal, before any forward
+work:1factory/0integration/1visitor,8bounded markers, unchanged profile/caps.
+No code/native/test/SPICE/integration/mount/build/data work in this design stage.
+Automation resumed ACTIVE every5minutes for preparation; separate qualified
+F18.9decision still needed. Consumed F18.3/F18.6 and all owner/physical gates stay
+open; a factory marker covers imports/settings/constructor and observer I/O.
 [ADR0272](../docs/adr/0272-record-cold-import-diagnostic.md) completes F18.6:
 one explicitly authorized cold import passes all6markers/childexit0/independent
 trace audit and outer cleanup/post-fsync in0.847950292s<60s45/10/5. Preflight

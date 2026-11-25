@@ -1,5 +1,36 @@
 ## Context
 
+### F18.7 minimal never-run owner observation (2026-11-25)
+
+[ADR0273](../../../docs/adr/0273-design-never-run-owner-observation.md) accepts
+source/design and artificial preparation only. Source order is worker guard/
+import, produce provenance/context, never-run factory(False), expected first
+refusal, then forward integration. Do not call produce(): directly reuse original
+provenance/context/factory/Budget plus qualified prefix/watch/evidence helpers.
+One never-run factory, callable bound method and one visitor(True,originalSCHEMA)
+must yield exact RuntimeError('completed original results unavailable'), then
+stop before forward/metadata/history/GC/clear work. Keep original literal
+initial row/settings/context/kernel/resources. Precharge1factory/0integration/
+1visitor with stricter call-site guards and exact complete-transcript counts;
+reused Budget maxima3/2/8 do not admit this smaller scope. Retain the100000
+acceleration-callback ceiling and record actual callbacks
+without assuming zero internal setup activity. Native attempts are not completed
+operation counts; aborts preserve partial/unknown actual outcomes.
+Eight markers bootstrap-ready/import-ready/context-ready/factory-enter/
+factory-return/visitor-enter/visitor-refused/complete, each<=512B and trace<=4096B.
+Flush/fsync before continuing; childexit0, stdlib independent saved-record audit
+and observed outer cleanup/post-fsync are all required. Factory markers bracket
+imports/version/settings/constructor plus observer I/O, not a native instruction.
+New fixed private scope/schema only, no generic framework/oldrunner mutation.
+F18.8 may implement artificial probe/auditor checks, then frozen required portable/
+live make test, Ruff/review/strict. Existing live tests retain their old scope.
+Only separately authorized future F18.9 may consume one setup attempt after<=600s
+independent pinned admission, exact0269env/roleflags/read-only profile and unchanged
+60s45/10/5,64KiBinput/log,2MiBaggregate/4KiBtrace caps. No new data/build or F18.3/
+F18.6retry. F18.7 launches no code/test/native/SPICE/integration/mount work; all
+completed-owner/carry/physical gates stay open. Automation resumed ACTIVE for
+ordinary preparation and pauses for the distinct native decision.
+
 ### F18.6 cold import-only result (2026-11-25)
 
 [ADR0272](../../../docs/adr/0272-record-cold-import-diagnostic.md) consumes the

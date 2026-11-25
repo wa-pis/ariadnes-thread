@@ -148,6 +148,18 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **THEN** only this import observation MAY be marked complete; durable prefinal receipts SHALL remain distinct from observed post-fsync returns, and saved-only postpacket review SHALL NOT be counted as a new native episode
 - **AND** a warning shared with the old failure SHALL NOT establish its cause or earlier import completion; F18.3 remains consumed/unqualified, historical counts unknown, owner/physical gates open and a new native observation requires its own explicit decision
 
+#### Scenario: Prepare only the smallest never-run setup observation
+
+- **WHEN** the user resumes preparation after0272's successful import and ADR0273 reviews the next owner boundary
+- **THEN** source/design and independent review SHALL complete within600s without native imports/tests/SPICE/integration/mount/build/acquisition; F18.8 MAY qualify artificial1factory(False)/0integration/1visitor dispatch and exact RuntimeError unavailable refusal under a new fixed private scope
+- **AND** the probe SHALL stop before forward/metadata/history/lifecycle work, preserve original functions/settings/context/schema and100000callback ceiling without assuming zero constructor callbacks; strict pre-work1/0/1 limits and exact complete-transcript counts SHALL be enforced beyond the reused Budget maxima3/2/8; eight<=512B durable markers SHALL fit a4KiB trace and require independent saved-record plus outer cleanup/post-fsync admission
+
+#### Scenario: Separate preparation from the new setup attempt
+
+- **WHEN** artificial F18.8 qualification is complete
+- **THEN** only a distinct explicit F18.9 decision MAY permit one new setup attempt after<=600s independent source/kernel/resource/environment/control admission under unchanged0269roleflags/read-only profile and60s45/10/5,64KiBinput/logs,2MiBaggregate caps
+- **AND** no consumed owner/import packet SHALL be retried; factory markers SHALL bracket imports/settings/constructor and observer I/O without identifying a native cause, and success SHALL NOT close completed-owner or physical gates
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

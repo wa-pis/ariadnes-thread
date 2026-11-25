@@ -1,0 +1,82 @@
+{
+  "schema": "ariadna.f18.never-run-design-doc-verification.v1",
+  "status": "PASS",
+  "base_revision": "7aaf0b2b07e1b9c746febd0448b01cf7a7c48986",
+  "checked_utc": "2026-11-25T15:29:55.129173+00:00",
+  "protected_prior_blobs_unchanged": 1541,
+  "protected_prior_non_markdown_blobs_unchanged": 1218,
+  "local_links_excluding_pending_receipt": 633,
+  "anchors": 5,
+  "current_state_lines": 37,
+  "pending_receipt_links_resolved_at_completion": [
+    "experiments/0273-doc-verification.json"
+  ],
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "fa38aedbf45d775c2cd7b122bc9eb13fb5bdabd5d4f799627baa27d828b08bb8",
+    "docs/adr/0273-design-never-run-owner-observation.md": "ac5d9af3f793cf9112fe30cd1464326e4d9cfa9ac38b133e98d9de90a36a65b3",
+    "docs/adr/README.md": "5ccd3cec5dda142ba4079646d6c5295c423722233db3472b941f58965f5c3036",
+    "openspec/ROADMAP.md": "1b11c0cfb2c426144f7137dcebb1b751003f06dbd67aa378223e9fca292666b2",
+    "openspec/changes/refine-physical-trajectory/design.md": "adab82cbfd67bd6fb48cb4f58c8828140929979947e07bb09812eea2afb547d8",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "d9e82df29e25be4f146d81eaf99c76abe88b7de2c9090b301f6ced95955ab19c",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "e19dce0bbe503939b7f60edc4f2f310b37423bee3733038d3aa923ceadf93a6b",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "0c92df1d144e914e31f46f01a367b06a94c077d8987762cb60f76f2b26898fdd"
+  },
+  "design_record_sha256": "32d5d51bc470ffb6a6bd3462d6943d098e77527de2858561f8082273b645bf08",
+  "source_design_elapsed_s": 478.1704568332061,
+  "source_pins_and_excerpts": "PASS",
+  "independent_design_review": {
+    "schema": "ariadna.f18.postimport-independent-design-review.v1",
+    "status": "PASS",
+    "findings": [],
+    "checked_utc": "2026-11-25T15:27:11.663967+00:00",
+    "elapsed_s": 389.8275275831111,
+    "base_revision": "7aaf0b2b07e1b9c746febd0448b01cf7a7c48986",
+    "draft_sha256": "ac5d9af3f793cf9112fe30cd1464326e4d9cfa9ac38b133e98d9de90a36a65b3",
+    "draft_bytes": 11050,
+    "source_review_sha256": "3299b0d9c7dbd080a2644fa2013f2b6292e94bf63bbaea25020682cce4f577a4",
+    "checked": {
+      "source_order_and_stop_before_forward": true,
+      "fixed_never_run_inputs_factoryFalse_and_exact_RuntimeError": true,
+      "underlying_native_context_tuple_vs_exported_list": true,
+      "new_callsite_prework_1_0_1_ceiling_and_exact_complete_counts_despite_old_Budget_3_2_8": true,
+      "actual_callback_count_not_assumed_zero_with_cap100000": true,
+      "eight_512byte_markers_fit4096byte_trace_including_newlines": true,
+      "original_inherited600preflight_60inclusive45_10_5_and_byte_caps": true,
+      "native_factory_boundary_includes_imports_settings_constructor_and_adjacent_observer_IO": true,
+      "audit_source_identity_independent_saved_records_child_status_outer_postfsync": true,
+      "partial_precharges_do_not_prove_completed_calls_or_oldcounts": true,
+      "F18_8_artificial_preparation_scope_and_required_checks": true,
+      "F18_9_requires_distinct_explicit_decision_after_qualification": true,
+      "no_runtime_native_import_SPICE_test_integration_build_mount_in_design": true
+    },
+    "resolved_wording": [
+      "Native tuple(53,53,8) checked by _native_context(), whose Python return islist[53,53,8].",
+      "SPICE kernel/data loading excluded; native sharedobject import/hash isintended.",
+      "Separate scoped callsite maxima exact1/0/1 areenforced beforework; oldBudget widermaxima are notnewauthority."
+    ],
+    "import_count_caveat": "My originalsource review recommendedscope.calls.explicit_imports=1 means oneinitialcoldSPICEwrapperprefix attempt only. It doesnotmean totalPythonimportstatements=1: unchanged_native_context/_native_factory contain additional cached/wrapper/NumPy imports. Draft doesnotmake that strongerclaim.",
+    "scope": "Source/design acceptance only, no nativepacket or physicalqualification; old0269cause/counts remainunknown. No repoedits or nativework byreviewer."
+  },
+  "independent_source_review_sha256": "3299b0d9c7dbd080a2644fa2013f2b6292e94bf63bbaea25020682cce4f577a4",
+  "all_old_task_states_unchanged": true,
+  "new_task_states": {
+    "F18.7": "x",
+    "F18.8": " ",
+    "F18.9": " "
+  },
+  "diff_whitespace": "PASS",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "tests_ruff_native": "Not rerun: no runtime/test changes or native work in this design-only stage; ADR0271 successful qualification preserved.",
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "ACTIVE",
+    "rrule": "FREQ=MINUTELY;INTERVAL=5",
+    "target_thread_id": "01a06901-f960-72e2-841b-672deb3eb02d",
+    "prompt_sha256": "3c2b73766940c68f8eb08e1dfec705d189be0277b861272015d5b65587e69d03",
+    "updated_via": "official automation_update and configuration readback"
+  },
+  "scope": "F18.7 design only; F18.8 artificial preparation next. F18.9 not authorized, F18.3/F18.6 consumed; all completed-owner/physical gates remain open."
+}

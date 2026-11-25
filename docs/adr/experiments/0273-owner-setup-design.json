@@ -1,0 +1,534 @@
+{
+  "schema": "ariadna.f18.never-run-setup-design.v1",
+  "status": "passed_source_design_only",
+  "base_revision": "7aaf0b2b07e1b9c746febd0448b01cf7a7c48986",
+  "checked_utc": "2026-11-25T15:28:40.011735+00:00",
+  "bounded_review": {
+    "start": {
+      "schema": "ariadna.f18.postimport-design-start.v1",
+      "started_s": 3739467.861491,
+      "started_utc": "2026-11-25T15:05:29.572215+00:00",
+      "base_revision": "7aaf0b2b07e1b9c746febd0448b01cf7a7c48986",
+      "ceiling_s": 600,
+      "question": "What smallest source/saved-only phase observation can distinguish work after import before repeating any owner packet?",
+      "scope": "Design only, no native imports/SPICE/integration/tests/build/data or old replay; automation ACTIVE for ordinary preparation, later native execution needs distinct decision.",
+      "scheduler_status": "ACTIVE"
+    },
+    "root_completion_elapsed_s": 478.1704568332061,
+    "ceiling_s": 600,
+    "clock_interpreter": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python"
+  },
+  "question": "What smallest source/saved-only phase observation can distinguish work after import before repeating any owner packet?",
+  "source_pins": {
+    "src/space_nav/_owner_endpoint_fixture.py": {
+      "bytes": 17390,
+      "sha256": "48c33d3388d9d780312da25666fae9726c53576d46eefd285ef97d20232c5ee0"
+    },
+    "src/space_nav/_owner_endpoint_run.py": {
+      "bytes": 17901,
+      "sha256": "ba41c64e880b369ffc83844a3185fce40f2020d4a55e671b768cfd32f96988d4"
+    },
+    "src/space_nav/_import_probe.py": {
+      "bytes": 13657,
+      "sha256": "ffcc586d948ea7aa05036faada10910fccf28721deadaf7a2e7d7bb00b912a61"
+    },
+    "src/space_nav/_import_probe_audit.py": {
+      "bytes": 8536,
+      "sha256": "2ce1f87b7575ddf03a733e15a45e59dc0403fb4e06c5f47db4e30ba8443f3d82"
+    },
+    "docs/adr/0272-record-cold-import-diagnostic.md": {
+      "bytes": 7646,
+      "sha256": "43957f2caf304f99f09aefa973c83ad4fb3104462cb79d476c3efb90af8866d0"
+    },
+    "docs/adr/experiments/0272-cold-import-result.json": {
+      "bytes": 24764,
+      "sha256": "14a588b7546ce9c17882d239cb0f2e867ca16ca001db22a1728a0d51e9bc27eb"
+    },
+    "docs/adr/0267-design-actual-owner-endpoint-qualification.md": {
+      "bytes": 11549,
+      "sha256": "af5082b97ba5f16957ec0f3f1f9eaa968fb1fd078d1b1864319fdc207ecc98d5"
+    }
+  },
+  "source_excerpts": [
+    {
+      "path": "src/space_nav/_owner_endpoint_fixture.py",
+      "first_line": 42,
+      "last_line": 97,
+      "lines": [
+        "class Budget:",
+        "    started_s: float",
+        "    clock: Callable[[], float] = time.monotonic",
+        "    factory_attempts: int = 0",
+        "    integration_attempts: int = 0",
+        "    visitor_calls: int = 0",
+        "    acceleration_callbacks: int = 0",
+        "    spice_queries: int = 0",
+        "    kernel_reads: int = 0",
+        "    real_archive_reads: int = 0",
+        "    failed: bool = False",
+        "    previous_s: float | None = None",
+        "",
+        "    def check(self) -> None:",
+        "        if self.failed:",
+        "            raise FixtureError(\"fixture already failed\")",
+        "        try:",
+        "            now = _number(self.clock(), \"monotonic clock\")",
+        "            started = _number(self.started_s, \"started_s\")",
+        "            if now < started or (self.previous_s is not None and now < self.previous_s):",
+        "                raise FixtureError(\"monotonic clock moved backwards\")",
+        "            self.previous_s = now",
+        "            if now - started >= 45.0:",
+        "                raise FixtureError(\"producer45s deadline exhausted\")",
+        "        except (FixtureError, OSError, ValueError, TypeError, RuntimeError):",
+        "            self.failed = True",
+        "            raise",
+        "",
+        "    def _charge(self, name: str, maximum: int) -> None:",
+        "        self.check()",
+        "        count = getattr(self, name)",
+        "        if type(count) is not int or not 0 <= count < maximum:",
+        "            self.failed = True",
+        "            raise FixtureError(f\"{name} cap{maximum}\")",
+        "        setattr(self, name, count + 1)",
+        "",
+        "    def charge_factory(self, simulate: bool) -> None:",
+        "        if type(simulate) is not bool:",
+        "            self.failed = True",
+        "            raise FixtureError(\"simulate: boolean required\")",
+        "        self._charge(\"factory_attempts\", 3)",
+        "        if simulate:",
+        "            self._charge(\"integration_attempts\", 2)",
+        "",
+        "    def charge_visitor(self) -> None:",
+        "        self._charge(\"visitor_calls\", 8)",
+        "",
+        "    def charge_acceleration(self) -> None:",
+        "        self._charge(\"acceleration_callbacks\", 100000)",
+        "",
+        "    def snapshot(self) -> dict[str, object]:",
+        "        return {name: getattr(self, name) for name in (",
+        "            \"factory_attempts\", \"integration_attempts\", \"visitor_calls\",",
+        "            \"acceleration_callbacks\", \"spice_queries\", \"kernel_reads\", \"real_archive_reads\",",
+        "        )} | {\"optimizer_entries\": 0, \"native_reported_function_evaluations\": []}",
+        ""
+      ]
+    },
+    {
+      "path": "src/space_nav/_owner_endpoint_fixture.py",
+      "first_line": 111,
+      "last_line": 174,
+      "lines": [
+        "def _native_context() -> list[int]:",
+        "    from tudatpy import kernel",
+        "    if hashlib.sha256(Path(kernel.__file__).read_bytes()).hexdigest() != _KERNEL_SHA256:",
+        "        raise FixtureError(\"private kernel identity mismatch; no operational fallback\")",
+        "    context = kernel.dynamics.simulator._ariadna_endpoint_native_context",
+        "    if type(context) is not tuple or context != (53, 53, 8):",
+        "        raise FixtureError(\"private native context mismatch\")",
+        "    return list(context)",
+        "",
+        "",
+        "def _native_factory(arc_id: str, simulate: bool, budget: Budget) -> object:",
+        "    \"\"\"Build only the fixed coast settings; never called by artificial tests.\"\"\"",
+        "    import numpy as np",
+        "    import tudatpy",
+        "    from tudatpy.dynamics import environment_setup, propagation_setup, simulator",
+        "    from . import trajectory",
+        "    if tudatpy.__version__ != \"1.0.0\" or np.__version__ != \"1.26.4\":",
+        "        raise FixtureError(\"pinned native runtime mismatch\")",
+        "    reverse = arc_id == \"reverse\"",
+        "    start_s, stop_s = (1000.0, 0.0) if reverse else (0.0, 1000.0)",
+        "    initial = _REVERSE if reverse else _INITIAL",
+        "    settings = environment_setup.BodyListSettings(\"SSB\", \"J2000\")",
+        "    settings.add_empty_settings(\"Spacecraft\")",
+        "    settings.get(\"Spacecraft\").constant_mass = 2000.0",
+        "    bodies = environment_setup.create_system_of_bodies(settings)",
+        "    if bodies.global_frame_origin() != \"SSB\" or bodies.global_frame_orientation() != \"J2000\":",
+        "        raise FixtureError(\"actual native body frame mismatch\")",
+        "",
+        "    def acceleration(epoch_s: float) -> Any:",
+        "        budget.charge_acceleration()",
+        "        _number(epoch_s, \"acceleration epoch\")",
+        "        return np.asarray((0.0, 0.1, 0.0))",
+        "",
+        "    forces = [propagation_setup.acceleration.custom_acceleration(acceleration)]",
+        "    accelerations = propagation_setup.create_acceleration_models(",
+        "        bodies, {\"Spacecraft\": {\"Spacecraft\": forces}}, [\"Spacecraft\"], [\"SSB\"])",
+        "    integrator = trajectory._build_integrator_from_profile(",
+        "        \"owner-endpoint-fixture\", \"coast\", integrator_profile(arc_id))",
+        "    termination = propagation_setup.propagator.time_termination(",
+        "        stop_s, terminate_exactly_on_final_condition=True)",
+        "    coupled = trajectory._build_coupled_arc_settings(",
+        "        \"owner-endpoint-fixture\", bodies, accelerations, initial[:6], initial[6],",
+        "        start_s, integrator, termination, thrust_enabled=False)",
+        "    types = coupled.propagator_settings_per_type",
+        "    expected_types = {propagation_setup.propagator.translational_type: initial[:6],",
+        "                      propagation_setup.propagator.mass_type: (initial[6],)}",
+        "    if not isinstance(types, Mapping) or set(types) != set(expected_types):",
+        "        raise FixtureError(\"actual native translation/mass settings types mismatch\")",
+        "    for state_type, expected in expected_types.items():",
+        "        entries = types[state_type]",
+        "        if type(entries) is not list or len(entries) != 1:",
+        "            raise FixtureError(\"actual native settings require one entry per type\")",
+        "        values = np.asarray(entries[0].initial_states).reshape(-1)",
+        "        words = [float(v).hex() for v in values]",
+        "        if words != [v.hex() for v in expected]:",
+        "            raise FixtureError(\"actual native typed initial state words mismatch\")",
+        "    processing = coupled.processing_settings",
+        "    processing.clear_numerical_solution = False",
+        "    processing.set_integrated_result = False",
+        "    if processing.clear_numerical_solution is not False or processing.set_integrated_result is not False:",
+        "        raise FixtureError(\"actual native processing retention mismatch\")",
+        "    return simulator.create_dynamics_simulator(",
+        "        bodies, coupled, simulate_dynamics_on_creation=simulate)",
+        ""
+      ]
+    },
+    {
+      "path": "src/space_nav/_owner_endpoint_fixture.py",
+      "first_line": 245,
+      "last_line": 276,
+      "lines": [
+        "def produce(*, factory: Callable[[str, bool, Budget], object] | None = None,",
+        "            budget: Budget | None = None) -> dict[str, object]:",
+        "    \"\"\"Retain one fixed serial owner chain, or its first failed partial chain.",
+        "",
+        "    A supplied factory is explicitly injected evidence, never native qualification.",
+        "    The default native route requires the exact private kernel and separate F18.3 authority.",
+        "    \"\"\"",
+        "    budget = Budget(time.monotonic()) if budget is None else budget",
+        "    packet: dict[str, Any] = {",
+        "        \"schema\": \"ariadna-owner-fixture-v1\", \"scope\": \"synthetic-owner-conformance-only\",",
+        "        \"frame\": \"SYNTHETIC_INERTIAL\", \"time_scale\": \"elapsed_seconds\",",
+        "        \"mode\": \"native\" if factory is None else \"injected\", \"status\": \"failed\", \"failure\": None,",
+        "        \"native_context\": [], \"calls\": [], \"arcs\": [], \"retained_rows_after_clear\": {},",
+        "        \"counts\": budget.snapshot(), \"provenance\": {},",
+        "    }",
+        "    selected = _native_factory if factory is None else factory",
+        "",
+        "    def make(arc_id: str, simulate: bool) -> Any:",
+        "        budget.charge_factory(simulate)",
+        "        try:",
+        "            owner = selected(arc_id, simulate, budget)",
+        "            if not callable(owner._ariadna_original_endpoint):",
+        "                raise FixtureError(\"actual owner method unavailable\")",
+        "        except Exception as exc:  # Untyped third-party/injected owner boundary only.",
+        "            raise FixtureError(f\"{arc_id} factory failed: {type(exc).__name__}: {exc}\") from exc",
+        "        budget.check()",
+        "        return owner",
+        "",
+        "    def visit(method: Callable[[bool, str], object], call_id: str, owner_id: str,",
+        "              selector: bool, *, rejection: tuple[type[Exception], str] | None = None) -> object:",
+        "        budget.charge_visitor()",
+        "        schema = \"invalid\" if call_id == \"wrong-schema\" else SCHEMA"
+      ]
+    },
+    {
+      "path": "src/space_nav/_owner_endpoint_fixture.py",
+      "first_line": 310,
+      "last_line": 318,
+      "lines": [
+        "    try:",
+        "        budget.check()",
+        "        packet[\"provenance\"] = _provenance()",
+        "        packet[\"native_context\"] = [53, 53, 8] if factory is not None else _native_context()",
+        "        never_run = make(\"never-run\", False)",
+        "        visit(never_run._ariadna_original_endpoint, \"never-run\", \"never-run\", True,",
+        "              rejection=(RuntimeError, _UNAVAILABLE))",
+        "        del never_run",
+        "        forward = make(\"forward\", True)"
+      ]
+    },
+    {
+      "path": "src/space_nav/_owner_endpoint_run.py",
+      "first_line": 338,
+      "last_line": 351,
+      "lines": [
+        "def _worker(kind: str, source: Path, started_s: float, deadline_s: float) -> int:",
+        "    _check(deadline_s, started_s)",
+        "    if kind == \"produce\":",
+        "        if deadline_s > started_s + 45.0:",
+        "            raise RunError(\"producer deadline exceeds fixed phase\")",
+        "        if _read(source, INPUT_BYTES) != _INPUT:",
+        "            raise RunError(\"fixed input mismatch\")",
+        "        from ._owner_endpoint_fixture import Budget, produce",
+        "        budget = Budget(started_s)",
+        "        from ._native_arc_conformance import _guard_spice, _source_guard",
+        "        sys.addaudithook(lambda event, args: _source_guard(budget, event, args))",
+        "        from tudatpy.interface import spice",
+        "        _guard_spice(budget, spice)",
+        "        result = produce(budget=budget)"
+      ]
+    },
+    {
+      "path": "src/space_nav/_import_probe.py",
+      "first_line": 73,
+      "last_line": 91,
+      "lines": [
+        "    return marker",
+        "",
+        "",
+        "def _prepare(started_s: float) -> object:",
+        "    from ._owner_endpoint_fixture import Budget",
+        "    budget = Budget(started_s)",
+        "    from ._native_arc_conformance import _source_guard",
+        "    sys.addaudithook(lambda event, args: _source_guard(budget, event, args))",
+        "    return budget",
+        "",
+        "",
+        "def _import_spice() -> object:",
+        "    from tudatpy.interface import spice",
+        "    return spice",
+        "",
+        "",
+        "def _guard_spice(budget: object, spice: object) -> None:",
+        "    from ._native_arc_conformance import _guard_spice as install",
+        "    install(budget, spice)"
+      ]
+    }
+  ],
+  "independent_source_review": {
+    "schema": "ariadna.f18.postimport-independent-source-review.v1",
+    "status": "PASS_SOURCE_RECOMMENDATION_ONLY",
+    "checked_utc": "2026-11-25T15:07:34.142886+00:00",
+    "elapsed_s": 124.56895187497139,
+    "base_revision": "7aaf0b2b07e1b9c746febd0448b01cf7a7c48986",
+    "source_pins": {
+      "src/space_nav/_owner_endpoint_fixture.py": {
+        "bytes": 17390,
+        "sha256": "48c33d3388d9d780312da25666fae9726c53576d46eefd285ef97d20232c5ee0"
+      },
+      "src/space_nav/_owner_endpoint_run.py": {
+        "bytes": 17901,
+        "sha256": "ba41c64e880b369ffc83844a3185fce40f2020d4a55e671b768cfd32f96988d4"
+      },
+      "src/space_nav/_import_probe.py": {
+        "bytes": 13657,
+        "sha256": "ffcc586d948ea7aa05036faada10910fccf28721deadaf7a2e7d7bb00b912a61"
+      },
+      "src/space_nav/_native_arc_conformance.py": {
+        "bytes": 26863,
+        "sha256": "f144877186bab451a13378af22cf2f0ec528afb6fd3ed81abb009c7e999b8169"
+      },
+      "docs/adr/0267-design-actual-owner-endpoint-qualification.md": {
+        "bytes": 11549,
+        "sha256": "af5082b97ba5f16957ec0f3f1f9eaa968fb1fd078d1b1864319fdc207ecc98d5"
+      },
+      "docs/adr/0270-design-import-only-timeout-observation.md": {
+        "bytes": 7458,
+        "sha256": "8ef3febf7d3dedf3ba868b4ee80109c9fdfadb2ad79413e6c18771d438060a87"
+      },
+      "docs/adr/0272-record-cold-import-diagnostic.md": {
+        "bytes": 7646,
+        "sha256": "43957f2caf304f99f09aefa973c83ad4fb3104462cb79d476c3efb90af8866d0"
+      }
+    },
+    "anchors": {
+      "src/space_nav/_owner_endpoint_run.py": [
+        [
+          162,
+          164
+        ],
+        [
+          338,
+          367
+        ]
+      ],
+      "src/space_nav/_owner_endpoint_fixture.py": [
+        [
+          55,
+          96
+        ],
+        [
+          111,
+          118
+        ],
+        [
+          121,
+          173
+        ],
+        [
+          245,
+          271
+        ],
+        [
+          273,
+          295
+        ],
+        [
+          309,
+          345
+        ]
+      ],
+      "src/space_nav/_import_probe.py": [
+        [
+          76,
+          91
+        ],
+        [
+          94,
+          147
+        ]
+      ]
+    },
+    "observed_source_order": [
+      "worker verifies fixedinput, imports fixtureBudget/produce, installs sourceguard, importsSPICE, installsSPICEguard, then callsproduce",
+      "produce checksbudget/provenance/nativecontext before first never-run factory",
+      "never-run constructor uses fixedsyntheticsettings and simulateFalse; setup still executes",
+      "firstvisitor expects exactunavailable RuntimeError; forwardfactory/integration follows immediately ifproduce continues",
+      "worker writes scientificJSON only afterproduce returns, so empty0269output gives no lastcompletedstage"
+    ],
+    "recommended_scope": {
+      "name": "never-run owner construction and first refusal observation",
+      "reuse": "unchanged _native_factory never-runFalse and exact valid schema, existing Budget/source/SPICE guards and qualified boundedgroup controls",
+      "calls": {
+        "explicit_imports": 1,
+        "native_context_read": 1,
+        "factory_attempts": 1,
+        "integration_attempts": 0,
+        "visitor_calls": 1,
+        "acceleration_callback_cap": 100000,
+        "spice_queries": 0,
+        "real_archive_reads": 0
+      },
+      "stop": "After exactRuntimeError(completed original results unavailable), before any forward/reverse factory or integration. Do not callproduce().",
+      "markers": [
+        "bootstrap-ready",
+        "import-ready",
+        "context-ready",
+        "factory-enter",
+        "factory-return",
+        "visitor-enter",
+        "visitor-refused",
+        "complete"
+      ],
+      "marker_bytes_including_newline": 512,
+      "trace_bytes": 4096,
+      "complete_marker_requires": "childexit0, bounded independent saved-record audit and nestedouterpostfsync/cleanup observations, notvisiblelinealone",
+      "clock_caps": "original comparable preflight600s; inclusive60s45producer/10audit/5finalization, sameinheritedclock",
+      "byte_caps": "64KiBinput/combinedlogs,2MiBaggregatestructured includingexternalrecords and trace",
+      "native_execution_authority": "NOT supplied by this source review or scheduler resume; distinct userdecision after artificial qualification"
+    },
+    "pitfalls": [
+      "Do not monkeypatch _owner_endpoint_fixture globals or mutateoldproducer: a private diagnostic can directlyinvoke the unchanged fixed factory and scoped checks.",
+      "Budget maxima remainold3factory/2integration/8visitors, so new diagnostic must separately enforce exact1/0/1 path and independentauditor reject overuse; prechargedattempts are notcompletionproof.",
+      "simulateFalse skipsintegration, notenvironment/derivative/resultsconstruction. Keep acceleration callbackcounts/100000cap and report actualcallbacks; do not assert universalzero nativeinternalwork.",
+      "A failure beforeimport-ready spanspureprefix/import/guard/kernelidentity andobserverI/O, not a provedimporthang. Missingfactory-return spansconstructor andadjacentobserverI/O.",
+      "Do not read/exportfullhistory or metadata completion from never-run owner; expectedfirstvisitorrefusal is notsuccessfulresults qualification.",
+      "Capture exactexceptiontype/message, no returnedtuple or alternateexception accepted; failuresconsumeonefutureattempt without retry.",
+      "Keep same0269env/flags/read-onlyresources/TMP/thread/deadline, no fullowner replay and nohistoricalcounts inference.",
+      "Injected fakefactory/visitor qualifyonlyplumbing; independently auditable scope and source/kernelpins remainseparate nativeadmission prerequisites."
+    ],
+    "alternatives": [
+      {
+        "option": "contextonly",
+        "assessment": "smaller but does not test firstactualowner setup; leaves next centralopaqueconstructor unobserved"
+      },
+      {
+        "option": "fullownerpacket with broadmarkers",
+        "assessment": "unnecessary replay/integration/lifecycle work; notselected"
+      }
+    ],
+    "limits": "No runtime or scientific result, nativeimport,SPICEquery,test,integration,HTTP,build,mount,data/dependency change or repoedit by reviewer. Nativeimage remainsunmounted; futureexactnative/source/resourcepin admission required.",
+    "findings": []
+  },
+  "independent_design_review": {
+    "schema": "ariadna.f18.postimport-independent-design-review.v1",
+    "status": "PASS",
+    "findings": [],
+    "checked_utc": "2026-11-25T15:27:11.663967+00:00",
+    "elapsed_s": 389.8275275831111,
+    "base_revision": "7aaf0b2b07e1b9c746febd0448b01cf7a7c48986",
+    "draft_sha256": "ac5d9af3f793cf9112fe30cd1464326e4d9cfa9ac38b133e98d9de90a36a65b3",
+    "draft_bytes": 11050,
+    "source_review_sha256": "3299b0d9c7dbd080a2644fa2013f2b6292e94bf63bbaea25020682cce4f577a4",
+    "checked": {
+      "source_order_and_stop_before_forward": true,
+      "fixed_never_run_inputs_factoryFalse_and_exact_RuntimeError": true,
+      "underlying_native_context_tuple_vs_exported_list": true,
+      "new_callsite_prework_1_0_1_ceiling_and_exact_complete_counts_despite_old_Budget_3_2_8": true,
+      "actual_callback_count_not_assumed_zero_with_cap100000": true,
+      "eight_512byte_markers_fit4096byte_trace_including_newlines": true,
+      "original_inherited600preflight_60inclusive45_10_5_and_byte_caps": true,
+      "native_factory_boundary_includes_imports_settings_constructor_and_adjacent_observer_IO": true,
+      "audit_source_identity_independent_saved_records_child_status_outer_postfsync": true,
+      "partial_precharges_do_not_prove_completed_calls_or_oldcounts": true,
+      "F18_8_artificial_preparation_scope_and_required_checks": true,
+      "F18_9_requires_distinct_explicit_decision_after_qualification": true,
+      "no_runtime_native_import_SPICE_test_integration_build_mount_in_design": true
+    },
+    "resolved_wording": [
+      "Native tuple(53,53,8) checked by _native_context(), whose Python return islist[53,53,8].",
+      "SPICE kernel/data loading excluded; native sharedobject import/hash isintended.",
+      "Separate scoped callsite maxima exact1/0/1 areenforced beforework; oldBudget widermaxima are notnewauthority."
+    ],
+    "import_count_caveat": "My originalsource review recommendedscope.calls.explicit_imports=1 means oneinitialcoldSPICEwrapperprefix attempt only. It doesnotmean totalPythonimportstatements=1: unchanged_native_context/_native_factory contain additional cached/wrapper/NumPy imports. Draft doesnotmake that strongerclaim.",
+    "scope": "Source/design acceptance only, no nativepacket or physicalqualification; old0269cause/counts remainunknown. No repoedits or nativework byreviewer."
+  },
+  "adr_draft_sha256": "ac5d9af3f793cf9112fe30cd1464326e4d9cfa9ac38b133e98d9de90a36a65b3",
+  "future_contract": {
+    "native_authorized": false,
+    "context_checks": 1,
+    "factory_attempts": 1,
+    "integration_attempts": 0,
+    "visitor_attempts": 1,
+    "simulate_dynamics_on_creation": false,
+    "arc_id": "never-run",
+    "selector": true,
+    "schema": "cartesian-position-m_velocity-m-s_mass-kg",
+    "refusal": {
+      "exact_type": "RuntimeError",
+      "exact_message": "completed original results unavailable"
+    },
+    "native_context_tuple": [
+      53,
+      53,
+      8
+    ],
+    "helper_context_encoding": "Python list, distinct from underlying tuple",
+    "strict_scope": "new pre-work1/0/1 ceiling plus exact complete counts, beyond old Budget3/2/8",
+    "callbacks_cap": 100000,
+    "callbacks_zero_assumed": false,
+    "phases": [
+      "bootstrap-ready",
+      "import-ready",
+      "context-ready",
+      "factory-enter",
+      "factory-return",
+      "visitor-enter",
+      "visitor-refused",
+      "complete"
+    ],
+    "marker_bytes": 512,
+    "trace_bytes": 4096,
+    "preflight_s": 600,
+    "total_s": 60,
+    "producer_s": 45,
+    "audit_s": 10,
+    "finalization_s": 5,
+    "input_bytes": 65536,
+    "combined_logs_bytes": 65536,
+    "aggregate_structured_bytes": 2097152,
+    "fixed_profile": "exact0269env/roleflags/read-only image/source/kernel/five resources; no new acquisition/build/data",
+    "native_execution_task": "F18.9 requires distinct explicit decision after F18.8"
+  },
+  "stage_work": {
+    "native_imports": 0,
+    "spice_queries": 0,
+    "integrations": 0,
+    "tests": 0,
+    "mounts": 0,
+    "builds": 0,
+    "new_acquisition_bytes": 0,
+    "runtime_or_test_source_changes": false
+  },
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "ACTIVE",
+    "rrule": "FREQ=MINUTELY;INTERVAL=5",
+    "target_thread_id": "01a06901-f960-72e2-841b-672deb3eb02d",
+    "prompt_sha256": "3c2b73766940c68f8eb08e1dfec705d189be0277b861272015d5b65587e69d03",
+    "updated_via": "official automation_update and configuration readback"
+  },
+  "scope": "F18.7 design only; F18.8 artificial preparation next. F18.9 not authorized, F18.3/F18.6 consumed; all completed-owner/physical gates remain open."
+}

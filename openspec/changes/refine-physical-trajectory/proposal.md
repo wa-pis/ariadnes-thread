@@ -1,3 +1,10 @@
+[ADR0273](../../../docs/adr/0273-design-never-run-owner-observation.md) accepts
+only the minimal never-run setup observation design and artificial preparation.
+F18.7 source/design complete; F18.8 next, F18.9 native execution not authorized.
+One factory(False)/zero integration/one exact unavailable-results refusal,
+8markers under unchanged4KiB/60s/profile caps; no full-owner packet replay.
+User resumed automation ACTIVE for bounded preparation; pause for native decision.
+
 [ADR0272](../../../docs/adr/0272-record-cold-import-diagnostic.md) completes
 only the separately authorized F18.6 cold import:6markers, childexit0, independent
 trace/control audits and outer cleanup/finalfsync PASS in0.847950292s. Exact
