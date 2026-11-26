@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0280 — Verify supplemented never-run setup](0280-verify-supplemented-never-run-setup.md) — F18.13 once PASS:8markers, factory1/integration0/visitor1, callbacks/SPICE0;57.157760s preflight/3.367521s native, independent saved audit PASS; seven new artificial checks, preservation/detach PASS. Completed-owner/physical gates open.
 - [0279 — Once-only supplemented execution gate](0279-qualify-once-only-execution-gate.md) —30/30 artificial checks/review PASS; conditional oneF18.13 choice, fresh actual admission still required. No native qualification.
 - [0278 — Artificial six-file provision/admission](0278-qualify-artificial-provision-admission.md) — F18.12:94/94 artificial checks, independent code/reuse review PASS; no real provision/native qualification. Automation ACTIVE.
 - [0277 — Supplemented setup-test contract](0277-design-supplemented-setup-test.md) — F18.11 design; exactsix local files, isolated no-replace transaction/read-only admission, reused controls. Artificial preparation next; no provision/native result.

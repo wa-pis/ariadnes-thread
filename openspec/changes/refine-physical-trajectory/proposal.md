@@ -1,3 +1,11 @@
+[ADR0280](../../../docs/adr/0280-verify-supplemented-never-run-setup.md) completes
+F18.13 once: exact8marker native setup/refusal PASS, factory1/integration0/visitor1,
+callbacks/SPICE0; consumption57.157760s<600, packetpostfsync3.367521s<60. Separate
+canonical saved audit PASS0.046423s<10; independent envelopes/preservation PASS,
+image detached. Seven new artificial operator cases pass; prior30/94/8476 not
+repeated. Automation ACTIVE only for next bounded source/saved design, no replay,
+new native episode or physical qualification. Older entries below retain history.
+
 [ADR0279](../../../docs/adr/0279-qualify-once-only-execution-gate.md) completes
 F18.12a outergate:30/30 artificial checks,0.925944s<120 and independent review PASS.
 It records conditional oneF18.13 choice under continued-tests authorization, only

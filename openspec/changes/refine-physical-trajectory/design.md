@@ -1,5 +1,31 @@
 ## Context
 
+### F18.13 supplemented setup result (2026-11-27)
+
+[ADR0280](../../../docs/adr/0280-verify-supplemented-never-run-setup.md) completes
+one new exact supplemented setup/refusal under0277/0279. Fresh preflight starts
+before first write; six no-replace resources/carried precharge, all11readback and
+ROremount, independent49/10/25/9pin/proof/base/clock review precede distinct final
+decision and direct once-only gate dispatch. Consumption57.157760s<600. Native
+context53/53/8, factoryFalse1/integration0/visitorTrue1 and exact expected refusal
+pass with8markers1316B; finalcallbacks/SPICE0, packetpostfsync3.367521s<60. Separate
+guarded saved audit passes0.046423s<10; independent envelope/provenance review PASS.
+All protected groups/11resources/71459operationalpaths unchanged; groups absent,
+image detached. Five outer-operator source findings fixed before first7/7 fake
+wiring campaign0.156990s<120; initial bytes/findings retained. Package/tests/deps
+unchanged; old30/94/8476/Ruff not rerun. Post-result preservation/detach is separate
+from the measured packet observation and cannot extend its60s. Prefinal disk
+receipts remain pending; actual observed continuation supplies completion.
+
+F18.13 is consumed, not permission to replay it or the full-owner packet. Next
+F18.14 may only inspect saved/source evidence within600s/2MiB including independent
+review, and specify the minimum completed-owner diagnostic with fixed inputs,
+arguments, counts, clocks, audit and future prerequisites. No new native episode,
+SPICE, integration, acquisition, changed dependency/profile/scientific contract or
+physical admission is authorized by that design step. All completed-owner/carry/
+concurrency/ABI-FP/prior arithmetic/F0/M3/99-percent/safety gates remain open.
+Older dated sections below describe their own historical scope.
+
 ### F18.12a once-only execution gate (2026-11-27)
 
 [ADR0279](../../../docs/adr/0279-qualify-once-only-execution-gate.md) records the

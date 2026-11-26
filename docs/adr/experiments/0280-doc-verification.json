@@ -1,0 +1,129 @@
+{
+  "schema": "ariadna.f18.supplemented-setup-doc-verification.v1",
+  "status": "PASS",
+  "base_revision": "fa726f953935e4cdad8e1ee74bcbf5b34fb6dbd4",
+  "checked_utc": "2026-11-26T22:41:54.697240+00:00",
+  "protected_prior_blobs_unchanged": 1574,
+  "protected_prior_non_markdown_blobs_unchanged": 1243,
+  "local_links_excluding_pending_receipt": 661,
+  "anchors": 5,
+  "current_state_lines": 35,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "928fb6ffb46a0d857b697943af1e0b6bedee0d4df15c6a649b3e64e6f502871a",
+    "docs/adr/0280-verify-supplemented-never-run-setup.md": "8c59a10161816b604d152adc9ed9c32cf39b13c7a64a32e3c9dbabfacc70eca3",
+    "docs/adr/README.md": "98985758c7ff20be1dc13699a9b16da2e7bbdcb7f74740c70ee74ccbf8da002c",
+    "openspec/ROADMAP.md": "d55e1e70c91e5e15df2d8ddc4916e598da4ccfb0433e77bc0ae8b3becf996d37",
+    "openspec/changes/refine-physical-trajectory/design.md": "ab6292dbbd236af53d3d660b6fffd6c82e54f0f9defe400626772b8fc4387ed8",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "38c8b52913e09437a9471ebb7ab4582c70c2b153f19453566966e0360e88eb8e",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "766d8903e7a3b6b703893aa6a8ea58bc1da3ba0c4233c824c1d85b9167b2ebbc"
+  },
+  "artifacts": {
+    "docs/adr/experiments/0280-supplemented-setup-result.json": {
+      "bytes": 20018,
+      "sha256": "c4b8c0f81e97dc6e13f1e4b3c4cfe57dc749d05962c22506092740568ce976e9"
+    },
+    "docs/adr/experiments/0280-supplemented-setup-evidence.zip": {
+      "bytes": 112529,
+      "sha256": "12bcc6f1c2ce60d2eeff69f466d7d5e0213b28325fb1b19493923661090af242"
+    }
+  },
+  "archive_members": 86,
+  "archive_expanded_bytes": 268660,
+  "runtime_source_test_dependency_changes": 0,
+  "runtime_tests": "Not repeated on unchanged package/tests/deps; new7operatorwiring and one actual setup plus one saved canonical audit are separately retained.",
+  "diff_whitespace": "PASS",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "ACTIVE",
+    "prompt_sha256": "cedc91f811e644c1b10882187d7ade30bab00ad4945c50a7f7364b36535f02c4"
+  },
+  "image_unmounted": true,
+  "independent_documentary_review": {
+    "checked_utc": "2026-11-26T22:43:54.514851+00:00",
+    "findings": [],
+    "limitations": [
+      "Source/native/resource preservation for actual mounted data was independently checked at actualpreflight and retained postcheck; image is now detached and no resource reread was performed during documentaryreview.",
+      "No new scientific or runtime qualification was executed. Canonical saved-audit and envelope findings are checked against their retained observed receipts, not rerun.",
+      "Parent protectedblob/link/strict checks are separately pinned and not redundantly repeated. SchedulerACTIVE promptcedc91f8... permits only stated next design scope, not another native episode."
+    ],
+    "parent_doc_check": {
+      "anchors": 5,
+      "bytes": 2267,
+      "current_state_lines": 35,
+      "diff_whitespace": "PASS",
+      "local_links_excluding_pending_receipt": 661,
+      "path": "/private/tmp/ariadna-f18-0280/doc-checks.json",
+      "protected_prior_blobs_unchanged": 1574,
+      "protected_prior_non_markdown_blobs_unchanged": 1243,
+      "sha256": "872649f52138feee4621cec41fc3fa84f388277945e1bc2aaa1a675002a7dea8",
+      "strict_openspec_exit_code": 0
+    },
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2166,
+        "sha256": "928fb6ffb46a0d857b697943af1e0b6bedee0d4df15c6a649b3e64e6f502871a"
+      },
+      "docs/adr/0280-verify-supplemented-never-run-setup.md": {
+        "bytes": 6803,
+        "sha256": "8c59a10161816b604d152adc9ed9c32cf39b13c7a64a32e3c9dbabfacc70eca3"
+      },
+      "docs/adr/README.md": {
+        "bytes": 50067,
+        "sha256": "98985758c7ff20be1dc13699a9b16da2e7bbdcb7f74740c70ee74ccbf8da002c"
+      },
+      "docs/adr/experiments/0280-supplemented-setup-evidence.zip": {
+        "bytes": 112529,
+        "sha256": "12bcc6f1c2ce60d2eeff69f466d7d5e0213b28325fb1b19493923661090af242"
+      },
+      "docs/adr/experiments/0280-supplemented-setup-result.json": {
+        "bytes": 20018,
+        "sha256": "c4b8c0f81e97dc6e13f1e4b3c4cfe57dc749d05962c22506092740568ce976e9"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 91289,
+        "sha256": "d55e1e70c91e5e15df2d8ddc4916e598da4ccfb0433e77bc0ae8b3becf996d37"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 629004,
+        "sha256": "ab6292dbbd236af53d3d660b6fffd6c82e54f0f9defe400626772b8fc4387ed8"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 36016,
+        "sha256": "38c8b52913e09437a9471ebb7ab4582c70c2b153f19453566966e0360e88eb8e"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 513403,
+        "sha256": "766d8903e7a3b6b703893aa6a8ea58bc1da3ba0c4233c824c1d85b9167b2ebbc"
+      }
+    },
+    "schema": "ariadna.f18.supplemented-setup-independent-documentary-review.v1",
+    "scope": "Bounded read-only final review of actual current diff, newADR0280, result/archive and relevant retained proofs. No runtime tests, scientific/native imports, mounts or real resource rereads; saved archive/stdlb inspection only.",
+    "status": "PASS",
+    "verified_facts": [
+      "Exactly86 unique archive members match manifest names/bytes/SHA and original saved files. Archive112529B,expanded268660B; result20018B; aggregate retained evidence below2MiB. Archived Python AST and JSON/JSONL parse without execution.",
+      "ADR/result/currentOpenSpec agree on one consumed F18.13 setup/refusal, original unchanged False factory/True visitor/SCHEMA, context53/53/8, exact RuntimeError, eightorderedmarkers1316B, factory1/integration0/visitor1 and observed callback/SPICE0. No completed-owner or trajectory claim.",
+      "Exact observed independent preflight35.650361166801304s is bound to review85b547... and copied actual exit0/stdout rather than disk-prefinal35.64983975002542s. Final decision differs from pendingdraft only by permitted status transition, pinned profile remains unchanged.",
+      "Consumption57.157760416623205s<600; producer3.308783416170627s and packet observation3.36752116587013s<60 retain original45/10/5 controls. Native packet observation is explicitly distinct from later operator preservation/detach/tool-return normalization/packaging; no clock extension.",
+      "Pending admission/caller/collector disk candidates are not promoted to terminal evidence alone. Nested returned finalized reports, actual observed packet stdout and independent saved-envelope review support final PASS.",
+      "Separate one guarded saved canonical audit reports eight markers and PASS at0.046423207968473434s<10 after externalreceipt fsync; its separate clock does not extend native episode.",
+      "Six fixed local payloads3578887B added via qualified no-replace transaction; all11resources3710549B and carried acquisition500624382B<2GiB retained. Independent actual readback and savedpostcheck preserve49source/10native/25ledger/9control/11resources, ROidentity,71459operationalpaths/1646916124B, absent groups and successful detach.",
+      "Five operator findings plus exact initial sources remain archived. Seven new artificial wiring cases pass once,0fail/error/skip,observed0.1569900424219668s<120 and4007B. Qualified30/94/8476/Ruff campaigns not repeated; no package/tests/dependency change.",
+      "Current taskF18.13 is checked/consumed, F18.14 unchecked. Next automation scope is source/saved-only minimum completed-owner diagnostic design600s/2MiB with independent review; no new native/mount/resource acquisition/SPICE/integration or full-owner replay authority.",
+      "Actualdiff changes only currentstatus/planning and adds newADR/artifacts; prior dated sections and protected historical evidence remain intact. F18.9 stays consumed/unqualified with unknown partialcounts. All physicalF0/M3/completed-owner/carry/concurrency/ABI-FP/arithmetic/99percent/safety gates remain open.",
+      "CURRENT35lines<60, parent661links/5anchors/diff/strictPASS acknowledged. Only pending0280-doc-verification.json link awaits final receipt embedding. RawUTCNov26 and clientNov27 Europe/Samara are consistent."
+    ]
+  },
+  "doc_checker": {
+    "sha256": "f03137b9dc02c4b0682106f9c3003a02a4cdefca65cc825b0d1a201d1ab9211e",
+    "parent_receipt_sha256": "872649f52138feee4621cec41fc3fa84f388277945e1bc2aaa1a675002a7dea8"
+  },
+  "local_links_including_final_receipt": 662,
+  "pending_receipt_links_resolved": [
+    "experiments/0280-doc-verification.json"
+  ],
+  "completed_utc": "2026-11-26T22:44:31.870128+00:00"
+}

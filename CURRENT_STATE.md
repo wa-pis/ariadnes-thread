@@ -3,37 +3,33 @@
 Updated: 2026-11-27. Keep under60lines; durable evidence in ADRs.
 
 ## Current result
-[ADR0279](docs/adr/0279-qualify-once-only-execution-gate.md): F18.12a temporary
-once-only outer gate qualified artificially:30/30,0failures/errors/skips,
-post-outer-fsync0.925943792s<120,10190Binvocation evidence, total evidence<2MiB.
-Independent source/saved review PASS;2harness issues fixed before first run,
-initial source/findings retained. Direct0278admit→durablegate/rechecks→dispatch;
-exclusive marker rejects leftovers/retry; artificialARTIFICIAL_READY/authfalse.
-Nativeexec/positiveimage admission unexercised. No package/test/dependency change.
-[Result](docs/adr/experiments/0279-once-only-execution-gate-result.json).
+[ADR0280](docs/adr/0280-verify-supplemented-never-run-setup.md): F18.13 completed
+once on clean fa726f9. Six fixed resources provisioned without replacement;
+11files3710549B verified, carried acquisition500624382B<2GiB, ROremount.
+Independent actual preflight PASS35.650361s; consumption57.157760s<600.
+Native setup/refusal PASS:context53/53/8, factoryFalse1/integration0/visitorTrue1,
+exact RuntimeError,8markers1316B, callbacks/SPICE0, packetpostfsync3.367521s<60.
+Separate guarded canonical saved audit PASS0.046423s<10; independent envelope/
+provenance review PASS. Source49/native10/oldledger25/control9/resource11 pins and
+71459operational paths unchanged; groups absent, image detached.
+Seven new artificial operator cases PASS0.156990s<120; five source findings fixed
+before first invocation, exact initial bytes retained. Package/tests/deps unchanged;
+prior30/94/8476passes/42archival skips/Ruff retained without rerun.
+[Result](docs/adr/experiments/0280-supplemented-setup-result.json).
 
 ## Next action and scheduler
-ariadna-m3 ACTIVE every5minutes; user requested continued tests2026-11-27.
-ADR0279 records conditional choice of one F18.13 under standing authorization,
-not a live admission. Next fresh600s actualpreflight from before RWmount/write:
-clean committeddev/pins/6localfiles/precharge/no-replace/11readback/ROremount/
-independent review→distinctADMITTED_ONCEproof→newgate only. No directlegacylaunch.
-[ADR0277](docs/adr/0277-design-supplemented-setup-test.md) fixes original env/code/
-kernel/settings/60s45-10-5/count/byte caps; no extraresources/retry/clockreset.
-[ADR0278](docs/adr/0278-qualify-artificial-provision-admission.md):94/94 transaction/
-admission checks retained;4corebyteidentical/3outernamespace-only,9controls remain.
-Prior8476passes/42archival skips/Ruff retained; unchanged campaigns not repeated.
-No realpayload/mount/provision/Tudat/kernel/SPICE/integration in F18.12a.
-Image unmounted; future episode namespace absent. Old evidence/moon unchanged.
-[ADR0275](docs/adr/0275-record-failed-never-run-setup.md): F18.9 consumed/unqualified,
-4markers/factory-enter/missingEOP/childexit2; partialcounts UNKNOWN, failure audit
-PASS/fullsuccess REJECT. No replay or0269cause claim.
+ariadna-m3 ACTIVE every5minutes under user's continued-tests instruction.
+F18.14: only bounded600s/2MiB source/saved design, including independent review,
+of the minimum unresolved completed-owner diagnostic and its exact future contract.
+No mount/native import/SPICE/integration/resource acquisition or oldpacket replay.
+F18.13 is consumed; never rerun from saved permits. ADR0275 F18.9 remains
+consumed/unqualified, its partial counts UNKNOWN; new success does not rewrite it.
+Pause automation if actual user decision/data/access/action is required.
 
 ## Physical goal remains open
-[ADR0247](docs/adr/0247-formulate-coupled-moon-mars-problem.md): fixed F0 states,
-epochs/planes/phases, hardware and six finite-burn controls.
-F17/F17.1/F18.3/F18.9/completed-owner/carry/concurrency/core-source ABI-FP/prior
-arithmetic/full-force seed/derivatives/guards/endpoint bounds remain open.
-No admissible pair,99%probability, physical closure or safety claim.
-No strictM3/task3.9,M4–M6/ML/UI/publication authority or historical study replay.
-Preserve history; dev only, commit/push checked stages origin/dev.
+ADR0247 fixes F0 states/epochs/planes/phases, hardware and six finite-burn controls.
+Completed-owner/carry/concurrency/full-core ABI-FP/prior arithmetic/full-force
+seed/derivatives/guards/endpoint bounds remain open. No admissible pair,
+99-percent probability, physical closure or mission-safety claim.
+StrictM3/task3.9,M4–M6/ML/UI/publication gates unchanged. Preserve history and
+moon_to_mars.py; dev only, commit/push verified stages to origin/dev.
