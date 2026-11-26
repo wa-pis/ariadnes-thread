@@ -1,0 +1,145 @@
+{
+  "independent_doc_review": {
+    "base_revision": "9feb1c12ef9045ce449302bd14b41a27368e61c2",
+    "checked_utc": "2026-11-26T23:42:41.548952+00:00",
+    "factual_checks": {
+      "classification": "8 active =2 byte-identical+2 namespace-only+4 logic-changed; changed external gate separately counted; provision historical retired.",
+      "corrections": "Preserved first builder source/assertion correction and initial independent NEEDS_FIX. run-once v2 classified logic-changed and requires bounded bottom-up enclosing-directory fsync before terminal original60s; initial/final design receipts preserved and final/source-review aliases byte-identical.",
+      "diff": "Only7 existing current/index/OpenSpec markdown changes plus new ADR/result/archive; historical entries remain in actual diff and no runtime/source/test changes.",
+      "evidence": "23 exact members,76999 compressed/204983 expanded bytes;20 published source-member hashes match raw archive and original temp bytes. Contractv2 SHA20397decfe63f978648cfb220778e962410f3a26cab7690449183aae33e52dd8; published result adds only archive metadata to sealed mapping-result.",
+      "inherited_identity": "49 old+4 qualified sources,10native,11 retained-resource metadata,25oldledger and86saved0280 member identities documented; no live resource validation or authority inferred from historical timestamps.",
+      "parent_checks": "Parent PASS1589 protected prior blobs/1256non-Markdown,676links/3anchors,diff/strict;37-line CURRENT. Accepted reviewed10 pins match current bytes.",
+      "scheduler": "Parent confirms ariadna-m3 ACTIVE; continued preparation only. No expanded execution authority.",
+      "scope_and_authority": "Only F18.15a.1 accepted. WholeF18.15a artificial control qualification remains unchecked; F18.16 not admitted; no actual namespace or native diagnostic executed and physical gates remain open.",
+      "source_phase": "Saved prefinal559.282634541858s distinguished from observed post-result file/directory fsync559.2839432079345s<600;197272B<2097152. Documentary packaging later.",
+      "unchanged_regression": "Prior212focused/8688required passes cited as historical; no tests repeated for source-only mapping."
+    },
+    "findings": [],
+    "parent_documentary_check": {
+      "bytes": 2481,
+      "sha256": "bc3027775cd048a644552aab2417ed9cc80bf3c4f626397695e0f86f200c85df"
+    },
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2440,
+        "sha256": "cd4da91fff854b32cede4a129dc15ee11fad464fa3414e32c5e9a9ef0c30a66e"
+      },
+      "docs/adr/0283-map-completed-owner-controls.md": {
+        "bytes": 6804,
+        "sha256": "76f6f7f6341d57db11cf22250e70b4b2cf376745181fd61c09d1f19448dfffee"
+      },
+      "docs/adr/README.md": {
+        "bytes": 50885,
+        "sha256": "d6c6b76d4407f20f55bce6c141b4e44e6b617be9a5358e8746fdf86d2a393413"
+      },
+      "docs/adr/experiments/0283-completed-control-mapping-evidence.zip": {
+        "bytes": 76999,
+        "sha256": "67bce8cf47c25d2f2c933f6ec37b243d22955c902ca43a3865c87ad42f29374b"
+      },
+      "docs/adr/experiments/0283-completed-control-mapping.json": {
+        "bytes": 4949,
+        "sha256": "9023be16a1ecf173a17b8c9aea66e417cc3fb517e0ecdcacd1c2d01be5b94523"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 93040,
+        "sha256": "f453690fddc5e09970b3d1e8220e85bf593f5d7eabc426b646192f1192c20fb9"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 631996,
+        "sha256": "ffaff181472f90f2731d1c022c136e286d13ee6e085f4e9b184ef8456fcb6c7b"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 37818,
+        "sha256": "9bc7d314830eef6eb729ce0df391e5a7c69b485767c70ee3957b886ca42d1f11"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 183181,
+        "sha256": "9eeaef73d0458c94a3a52b4b0082196eb59e748258918ccb3f8c479e5402d8a6"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 518857,
+        "sha256": "cac0e663c4241af18eb02bb0675d2263560c0fd5fa15a7583eed37dd312628ec"
+      }
+    },
+    "schema": "ariadna.f18.completed-control-mapping-independent-documentary-review.v1",
+    "scope": "Read-only final diff, ADR0283, accepted mapping result and preserved raw23-member archive; documentary phase separate from closed source600s. No tests, scientific/project/native imports, SPICE, mounts, live payload reads or repository edits.",
+    "status": "PASS"
+  },
+  "independent_review_pin": {
+    "bytes": 4387,
+    "sha256": "7ba351e3a7a880c115e4a324bdce985b470fcf0839390352a4b6ba31fb4109b4"
+  },
+  "retained_check_sources": {
+    "check-docs.py": {
+      "bytes": 6472,
+      "sha256": "92c0f2535e918b4dd55e2e5f932424dd49cb5a50cfdd35d130032b3e4a7b4c73",
+      "text": "from pathlib import Path,PurePosixPath\nfrom urllib.parse import unquote\nimport ast,hashlib,json,os,re,subprocess,zipfile,tomllib\nr=Path('/Users/agrudin/dev/my/ariadna');p=Path('/private/tmp/ariadna-f18-0283');base='9feb1c12ef9045ce449302bd14b41a27368e61c2';sha=lambda b:hashlib.sha256(b).hexdigest();g=lambda *a:subprocess.check_output(['git',*a],cwd=r,text=True).strip()\nchanged={'CURRENT_STATE.md','docs/adr/README.md','openspec/ROADMAP.md',*[f'openspec/changes/refine-physical-trajectory/{n}.md' for n in ('proposal','design','tasks')],'openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md'}\nnew={'docs/adr/0283-map-completed-owner-controls.md','docs/adr/experiments/0283-completed-control-mapping.json','docs/adr/experiments/0283-completed-control-mapping-evidence.zip'}\nassert g('rev-parse','HEAD')==base and g('branch','--show-current')=='dev' and not g('diff','--cached','--name-only')\nassert set(g('diff','--name-only').splitlines())==changed\nassert set(g('ls-files','--others','--exclude-standard').splitlines())==new\nprotected=nonmd=0\nfor row in subprocess.check_output(['git','ls-tree','-rz',base],cwd=r).split(b'\\0'):\n if not row:continue\n meta,name=row.split(b'\\t',1);name=name.decode()\n if name in changed:continue\n b=(r/name).read_bytes();assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\\0'+b).hexdigest()==meta.split()[2].decode(),name\n protected+=1;nonmd+=not name.endswith('.md')\nx=json.loads((r/'docs/adr/experiments/0283-completed-control-mapping.json').read_text());a=x['evidence_archive'];arc=r/a['path'];assert {'bytes':arc.stat().st_size,'sha256':sha(arc.read_bytes())}=={k:a[k]for k in ('bytes','sha256')}\nassert x['status']=='accepted-design' and x['actual_episode_admitted'] is False and x['source_phase_elapsed_s']<600 and x['source_phase_evidence_bytes']<2097152\nwith zipfile.ZipFile(arc) as z:\n assert z.testzip() is None and len(z.namelist())==len(set(z.namelist()))==a['member_count']\n assert sum(v.file_size for v in z.infolist())==a['expanded_bytes']<2097152\n for n in z.namelist():\n  assert not PurePosixPath(n).is_absolute() and '..'not in PurePosixPath(n).parts\n  b=z.read(n);assert b==(p/n).read_bytes(),n\n  if n.endswith('.json'):json.loads(b)\n  if n.endswith('.py'):ast.parse(b)\n for n,v in x['source_members'].items():assert v=={'bytes':len(z.read(n)),'sha256':sha(z.read(n))},n\n for field in ('contract','independent_review'):\n  v=x[field];b=z.read(v['archive_member']);assert v['bytes']==len(b)and v['sha256']==sha(b)\n m=json.loads(z.read(x['contract']['archive_member']));review=json.loads(z.read(x['independent_review']['archive_member']));assert review['status']=='PASS'\n assert m['active_control_count']==8 and m['external_gate_count']==1 and m['source_count']==53 and len(m['old_source_pins'])==49 and len(m['appended_source_pins'])==4\n assert m['native_count']==len(m['native_pins'])==10 and m['retained_resource_count']==len(m['retained_resources'])==11\n assert m['historical_ledger_count']==len(m['historical_ledger_pins'])==25 and len(m['historical_0280_member_pins'])==86\n assert len(m['protocol']['markers'])==10 and m['protocol']['integration_attempts']==1\n assert next(v for v in m['control_mapping']if v['name']=='run-once.py')['classification']=='logic-changed'\n assert 'original60s' in next(v for v in m['control_mapping']if v['name']=='run-once.py')['role']\n for n,v in {**m['old_source_pins'],**m['appended_source_pins']}.items():\n  q=Path(n)if Path(n).is_absolute()else r/n;b=q.read_bytes();assert v=={'bytes':len(b),'sha256':sha(b)},n\n oldarc=r/m['reference_archive']['path'];assert sha(oldarc.read_bytes())==m['reference_archive']['sha256']\n with zipfile.ZipFile(oldarc) as old:\n  for n,v in m['historical_0280_member_pins'].items():b=old.read(n);assert v=={'bytes':len(b),'sha256':sha(b)},n\n c=json.loads(z.read('source-completion.json'));assert c['status']=='PASS'and c['observed_after_result_file_directory_fsync_s']<600\n assert sha(z.read('mapping-result.json'))==c['result_sha256']\ndef slugs(raw):\n counts={};out=set()\n for title in re.findall(r'^#{1,6}\\s+(.+?)\\s*$',raw,re.M):\n  k=re.sub(r'[^\\w\\- ]','',title.strip().rstrip('#').strip().lower().replace('`','')).replace(' ','-');v=counts.get(k,0);counts[k]=v+1;out.add(k if not v else k+'-'+str(v))\n return out\nlinks=anchors=0\nfor n in sorted(changed|{v for v in new if v.endswith('.md')}):\n for dest in re.findall(r'\\[[^\\]]*\\]\\(([^)]+)\\)',(r/n).read_text()):\n  dest=dest.strip('<>')\n  if '://'in dest or dest.startswith(('mailto:','data:')):continue\n  name,_,frag=dest.partition('#');q=((r/n).parent/unquote(name)).resolve()if name else(r/n).resolve();assert q.exists(),(n,dest);links+=1\n  if frag and q.suffix=='.md':assert unquote(frag)in slugs(q.read_text()),(n,dest);anchors+=1\ns=(r/'openspec/changes/refine-physical-trajectory/tasks.md').read_text();assert '- [x] F18.15a.1 'in s and '- [ ] F18.15a 'in s and '- [ ] F18.16 'in s\nassert len((r/'CURRENT_STATE.md').read_text().splitlines())<60 and not os.path.ismount('/private/tmp/ariadna-f17-0263/volume')\nsubprocess.run(['git','diff','--check'],cwd=r,check=True)\nv=subprocess.run(['openspec','validate','refine-physical-trajectory','--strict'],cwd=r,capture_output=True,text=True,timeout=60);assert v.returncode==0,v.stdout+v.stderr\nc=tomllib.loads(Path('/Users/agrudin/.codex/automations/ariadna-m3/automation.toml').read_text());assert c['id']=='ariadna-m3'and c['status']=='ACTIVE'\nresult={'schema':'ariadna.f18.completed-control-mapping-doc-check.v1','status':'PASS','base_revision':base,'protected_prior_blobs_unchanged':protected,'protected_prior_non_markdown_blobs_unchanged':nonmd,'local_links':links,'anchors':anchors,'current_state_lines':len((r/'CURRENT_STATE.md').read_text().splitlines()),'checked_files':{n:{'bytes':(r/n).stat().st_size,'sha256':sha((r/n).read_bytes())}for n in sorted(changed|new)},'strict_openspec':{'exit_code':v.returncode,'output':v.stdout.strip()},'diff_check':'PASS','scheduler':{'id':c['id'],'status':c['status'],'prompt_sha256':c['model_prompt_sha256']},'runtime_tests':'Not rerun: documentation/source mapping only; prior212focused/8688full passes unchanged. No new diagnostic/native/mount/SPICE/integration.'}\nwith(p/'doc-checks.json').open('x')as f:json.dump(result,f,indent=2,sort_keys=True);f.write('\\n');f.flush();os.fsync(f.fileno())\nprint(json.dumps({k:result[k]for k in('status','protected_prior_blobs_unchanged','protected_prior_non_markdown_blobs_unchanged','local_links','anchors','strict_openspec')}))\n"
+    }
+  },
+  "root_checks": {
+    "anchors": 3,
+    "base_revision": "9feb1c12ef9045ce449302bd14b41a27368e61c2",
+    "checked_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2440,
+        "sha256": "cd4da91fff854b32cede4a129dc15ee11fad464fa3414e32c5e9a9ef0c30a66e"
+      },
+      "docs/adr/0283-map-completed-owner-controls.md": {
+        "bytes": 6804,
+        "sha256": "76f6f7f6341d57db11cf22250e70b4b2cf376745181fd61c09d1f19448dfffee"
+      },
+      "docs/adr/README.md": {
+        "bytes": 50885,
+        "sha256": "d6c6b76d4407f20f55bce6c141b4e44e6b617be9a5358e8746fdf86d2a393413"
+      },
+      "docs/adr/experiments/0283-completed-control-mapping-evidence.zip": {
+        "bytes": 76999,
+        "sha256": "67bce8cf47c25d2f2c933f6ec37b243d22955c902ca43a3865c87ad42f29374b"
+      },
+      "docs/adr/experiments/0283-completed-control-mapping.json": {
+        "bytes": 4949,
+        "sha256": "9023be16a1ecf173a17b8c9aea66e417cc3fb517e0ecdcacd1c2d01be5b94523"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 93040,
+        "sha256": "f453690fddc5e09970b3d1e8220e85bf593f5d7eabc426b646192f1192c20fb9"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 631996,
+        "sha256": "ffaff181472f90f2731d1c022c136e286d13ee6e085f4e9b184ef8456fcb6c7b"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 37818,
+        "sha256": "9bc7d314830eef6eb729ce0df391e5a7c69b485767c70ee3957b886ca42d1f11"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 183181,
+        "sha256": "9eeaef73d0458c94a3a52b4b0082196eb59e748258918ccb3f8c479e5402d8a6"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 518857,
+        "sha256": "cac0e663c4241af18eb02bb0675d2263560c0fd5fa15a7583eed37dd312628ec"
+      }
+    },
+    "current_state_lines": 37,
+    "diff_check": "PASS",
+    "local_links": 676,
+    "protected_prior_blobs_unchanged": 1589,
+    "protected_prior_non_markdown_blobs_unchanged": 1256,
+    "runtime_tests": "Not rerun: documentation/source mapping only; prior212focused/8688full passes unchanged. No new diagnostic/native/mount/SPICE/integration.",
+    "scheduler": {
+      "id": "ariadna-m3",
+      "prompt_sha256": "436b77790bd82a8a49d180ab6c00c5943160bf0e865e404423122c838d5088ae",
+      "status": "ACTIVE"
+    },
+    "schema": "ariadna.f18.completed-control-mapping-doc-check.v1",
+    "status": "PASS",
+    "strict_openspec": {
+      "exit_code": 0,
+      "output": "Change 'refine-physical-trajectory' is valid"
+    }
+  },
+  "schema": "ariadna.f18.completed-control-mapping-final-verification.v1",
+  "scope": "Separate documentary phase only; no runtime tests or native admission",
+  "status": "PASS"
+}

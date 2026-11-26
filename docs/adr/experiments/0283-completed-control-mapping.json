@@ -1,0 +1,147 @@
+{
+  "active_controls": 8,
+  "actual_episode_admitted": false,
+  "actual_namespace_created": false,
+  "additional_saved0280_members": 86,
+  "appended_source_pins_checked": 4,
+  "base_revision": "9feb1c12ef9045ce449302bd14b41a27368e61c2",
+  "contract": {
+    "archive_member": "mapping-v2.json",
+    "bytes": 44840,
+    "sha256": "20397decfe63f978648cfb220778e962410f3a26cab7690449183aae33e52dd8"
+  },
+  "control_classes": {
+    "byte_identical": [
+      "call-once.py",
+      "launch-once.py"
+    ],
+    "external_logic_changed": [
+      "dispatch-once.py"
+    ],
+    "historical_retired": [
+      "provision.py"
+    ],
+    "logic_changed": [
+      "run-once.py",
+      "native-entry.py",
+      "supervisor-adapter.py",
+      "admission.py"
+    ],
+    "namespace_only": [
+      "native.sandbox",
+      "check-preservation.py"
+    ]
+  },
+  "documentary_phase": "Packaging/links/pins/strict/diff/protected-blob verification follows separately; not part of source600s.",
+  "evidence_archive": {
+    "bytes": 76999,
+    "expanded_bytes": 204983,
+    "member_count": 23,
+    "path": "docs/adr/experiments/0283-completed-control-mapping-evidence.zip",
+    "sha256": "67bce8cf47c25d2f2c933f6ec37b243d22955c902ca43a3865c87ad42f29374b"
+  },
+  "external_gate_count": 1,
+  "implementation": "Not started; wholeF18.15a remains open",
+  "independent_review": {
+    "archive_member": "independent-review-final.json",
+    "bytes": 6124,
+    "sha256": "c00d3af7291ff84f545310d21d78824423422abd94a8a8dac78391d3d11e7e30"
+  },
+  "live_resource_payloads_read": false,
+  "mount_native_import_spice_integration": false,
+  "native_count": 10,
+  "old_ledger_count": 25,
+  "old_source_pins_checked": 49,
+  "retained_resource_count": 11,
+  "runtime_tests_rerun": false,
+  "schema": "ariadna.f18.completed-control-mapping-result.v1",
+  "source_count": 53,
+  "source_members": {
+    "adr-draft.md": {
+      "bytes": 6804,
+      "sha256": "76f6f7f6341d57db11cf22250e70b4b2cf376745181fd61c09d1f19448dfffee"
+    },
+    "build-mapping-initial.py": {
+      "bytes": 11791,
+      "sha256": "43f45c17a1131df54a6a9e794fc152dfdd4c35610365dc5f0fb965e4fa5f0ae3"
+    },
+    "build-mapping.py": {
+      "bytes": 11886,
+      "sha256": "1e344db179612b2488a80e0ce08a6173495553580a520f9432f693dd8139e75a"
+    },
+    "builder-correction.json": {
+      "bytes": 300,
+      "sha256": "e0f0d6218fd118638501c9f774983108d38a9967492d463794237b4ab2588bd2"
+    },
+    "independent-review-final.json": {
+      "bytes": 6124,
+      "sha256": "c00d3af7291ff84f545310d21d78824423422abd94a8a8dac78391d3d11e7e30"
+    },
+    "independent-review-initial.json": {
+      "bytes": 1510,
+      "sha256": "a97921a94154376499230719e5e10d83125aaf05c52418d21c5bbc10a17cf83b"
+    },
+    "independent-source-review.json": {
+      "bytes": 6124,
+      "sha256": "c00d3af7291ff84f545310d21d78824423422abd94a8a8dac78391d3d11e7e30"
+    },
+    "mapping-draft.json": {
+      "bytes": 44306,
+      "sha256": "291aa6f8b2238ce06ef71aa6632f5fde4ba1c3b3d5945960773d7511973eb165"
+    },
+    "mapping-v2.json": {
+      "bytes": 44840,
+      "sha256": "20397decfe63f978648cfb220778e962410f3a26cab7690449183aae33e52dd8"
+    },
+    "package-stage.py": {
+      "bytes": 7566,
+      "sha256": "c01b9fc9b6952828013d7cfb955af0723e41c19412b328635d78038f9fbf905b"
+    },
+    "reference-admission.py": {
+      "bytes": 19584,
+      "sha256": "37e30013b68bc3cf141a339145b68c8f9e2b9e40ea5ba321db3652c23eebfa4f"
+    },
+    "reference-call-once.py": {
+      "bytes": 3846,
+      "sha256": "b984a4c427f144dea536e707f75aa3bbdde942d3d9ee43fb00d8c4b49d8dbf11"
+    },
+    "reference-check-preservation.py": {
+      "bytes": 1410,
+      "sha256": "b989f83f9c01c5a2e56afd9cbb8f21487380c5397470bf568cfe618dabab957c"
+    },
+    "reference-dispatch-once.py": {
+      "bytes": 14154,
+      "sha256": "c6900033e49502487bda9af79eb1f6b08a38ae6b70478ae0ec5689263c2a6f68"
+    },
+    "reference-launch-once.py": {
+      "bytes": 6821,
+      "sha256": "57e95d12f572c23e8e39c644998f0490818555d3862a8595c8049977974dde01"
+    },
+    "reference-native-entry.py": {
+      "bytes": 2503,
+      "sha256": "aa83050a2cf99e4e5dcff4d0f76f01ae2c65cdb56d07cdf984626090a4b02bf3"
+    },
+    "reference-native.sandbox": {
+      "bytes": 257,
+      "sha256": "29b52caaf729847d8fb93df2d216dec9b3f8bdc566fb88e15d98a04cd4958163"
+    },
+    "reference-run-once.py": {
+      "bytes": 3334,
+      "sha256": "9ed5d92df182b0b2bf9f72bc11c3f87ccdf8e957b36c98b1f897f88830846488"
+    },
+    "reference-supervisor-adapter.py": {
+      "bytes": 3582,
+      "sha256": "7378cae9d8518918ef2790374828a12a06d8d0e1bb8f7d67f4c87060c2297d94"
+    },
+    "start.json": {
+      "bytes": 530,
+      "sha256": "459cac0ee74ad554700e7bc70c9327169fc512935830171c509d8ce2a5cb1336"
+    }
+  },
+  "source_phase_elapsed_s": 559.282634541858,
+  "source_phase_evidence_bytes": 197272,
+  "source_phase_evidence_limit_bytes": 2097152,
+  "source_phase_limit_s": 600,
+  "stage": "F18.15a.1",
+  "status": "accepted-design"
+}

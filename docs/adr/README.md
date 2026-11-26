@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0283 — Completed-owner outer-control mapping](0283-map-completed-owner-controls.md) — F18.15a.1 source design/review only; exact reuse, single-group cleanup and outer directory durability. Changed-control artificial qualification remains open; no native admission.
+
 - [0282 — Artificial completed-owner qualification](0282-qualify-artificial-completed-owner.md) — F18.15:212newcases;8275portable+413live passes/42unchanged archival skips. Frozen checkout, independent review/Ruff; outer admission and actual native diagnostic remain unqualified.
 
 - [0281 — One completed forward-owner observation](0281-design-single-completed-owner.md) — F18.14 source/design accepted; independent review PASS, unchanged single forward/metadata/endpoint contract and gates. Artificial preparation next; no native run.

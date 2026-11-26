@@ -1,3 +1,13 @@
+[ADR0283](../../../docs/adr/0283-map-completed-owner-controls.md) completes only
+F18.15a.1 source/saved mapping: 8activecontrols +1externalgate;2byte-identical,
+2namespace-only,4logic-changed plus changed gate; provision historical only.
+Single entry group/2inherited children, explicit enclosing directory durability;
+53source/10native/11retained/25oldledger +86saved0280member identities preserved.
+Independent source review PASS within original600s/2MiB; no runtime tests/native.
+F18.15a changed-control artificial implementation/qualification remains open;
+actualF18.16 remains unadmitted. Next: fixed temporary controls and bounded
+artificial wiring tests only, unchanged science/resources/gates.
+
 [ADR0282](../../../docs/adr/0282-qualify-artificial-completed-owner.md) completes
 F18.15 artificial probe/audit qualification:212newcases,8275portable+413live passes,
 42unchanged archival skips; frozen checkout/status, independent review and Ruff.

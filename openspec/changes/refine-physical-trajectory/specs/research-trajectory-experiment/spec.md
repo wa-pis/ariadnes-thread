@@ -208,6 +208,14 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **AND** F18.15 SHALL qualify artificial probe/audit arguments, counts, oracle and failure/clock/fsync/byte boundaries with focused300s and frozen required portable/live1800s/Ruff/strict checks; old integration0 schema/admission SHALL NOT be retagged, and changed outer controls SHALL require separately pinned artificial qualification before native use
 - **AND** actual F18.16 SHALL require a distinct recorded choice and fresh independent actual600s admission, unchanged60s45/10/5,64KiB input/logs,2MiB structured and4KiB trace caps, retained11resources/no acquisition and no retry; partial counts remain UNKNOWN, prior failures/full-owner/physical gates unchanged
 
+#### Scenario: Qualify exact completed-owner outer controls without native authority
+
+- **WHEN** F18.15a.1 maps saved0280controls and the qualified0282producer/auditor within600s/2MiB including independent review
+- **THEN** the mapping SHALL name8activecontrols plus1externalgate, reuse caller/launcher byte-identically and sandbox/preservation by namespace only, classify entry/collector/admission/run-once/gate as changed logic, and retire active provisioning
+- **AND** qualification SHALL retain one entry process group with two inherited child processes, whole-group cleanup even after leader exit, ten exact completed markers/schemas/counts, original60s45/10/5 and final enclosing-directory durability; partial failure or pending/saved PASS alone SHALL NOT establish completion
+- **AND** only an explicit harmless artificial harness MAY override child commands; its real probe uses all six fake hooks and mode=injected, its actual guarded auditor runs separately, and native CLI/profile SHALL reject replacements before live reads with artificial native authority always false
+- **AND** all49old plus4newsource pins,10native,11retained resources,25oldledger and all86saved0280members SHALL be preserved; fresh actual readback/admission cannot inherit historical timestamps, new acquisition SHALL be0, changed-control artificial checks SHALL finish within300s, and F18.16 SHALL remain unadmitted pending its distinct choice and fresh independent actual600s preflight
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

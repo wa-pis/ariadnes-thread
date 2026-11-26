@@ -3,34 +3,35 @@
 Updated: 2026-11-27. Keep under60lines; durable evidence in ADRs.
 
 ## Current result
-[ADR0282](docs/adr/0282-qualify-artificial-completed-owner.md): F18.15 complete,
-artificial probe/audit only, basee9fed9c+4pinnednewfiles.212focused passed in
-0.862225042s<300. Required make test8275portable+413live=8688passes,
-42unchanged archival skips/0failures, 806.282230s<1800;
-1592checkout files/status frozen. Independent code review/Ruff PASS.
-Old test IDs/skip reasons unchanged; all212newcases portable. Original fixture/
-science/oldtests/deps preserved. No new completed-owner diagnostic or real replay.
-[Result](docs/adr/experiments/0282-completed-owner-qualification.json).
-[ADR0281](docs/adr/0281-design-single-completed-owner.md) fixed forwardTrue→original
-metadata→same-owner endpointTrue, synthetic elapsed0–1000s and original SI gates.
-F18.13/ADR0280 setup/refusal PASS remains consumed; original image detached.
+[ADR0283](docs/adr/0283-map-completed-owner-controls.md): F18.15a.1 mapping accepted,
+source/saved review only.8activecontrols+1externalgate:2byte-identical,
+2namespace-only,4logic-changed+gate; no activeprovision. Singleentrygroup/2children
+and final enclosing-directory durability explicit; independent review PASS
+within original600s/2MiB.53source/10native/11resources/25oldledger+86saved0280members.
+[Result](docs/adr/experiments/0283-completed-control-mapping.json).
+[ADR0282](docs/adr/0282-qualify-artificial-completed-owner.md): F18.15 artificial
+probe/audit complete;212focused,8275portable+413live=8688passes,
+42unchangedarchival skips/0failures, frozen1592files/status; review/Ruff PASS.
+No new diagnostic/tests/native runtime this mapping; passed campaigns not repeated.
+ADR0281 fixes single forwardTrue/metadata/same-owner endpointTrue, synthetic
+elapsed0–1000s and original SI gates.0280episode consumed; image detached.
 
 ## Next action and scheduler
-ariadna-m3 ACTIVE every5minutes, continued-tests instruction persists.
-F18.15a: smallest outer completed profile/control/admission mapping and artificial
-qualification only, explicit unchanged-versus-changed pins/ten-marker/count scope.
-Do not retag old integration0 setup authority or duplicate a general framework.
-Use original guard/evidence/watchdog primitives; protect old episodes/resources.
-F18.16 remains unadmitted: distinct recorded choice, clean committed base and
-fresh independently observed actual600s preflight. Original60s45/10/5 and byte/
-resource caps unchanged. No new actual diagnostic/mount/resources/real-data run
-from artificial PASS. Existing required live regressions remain permitted.
-Pause only for actual user decision/data/access/action. No repeated successful
-campaigns on unchanged code; no checkout mutations while required tests run.
+ariadna-m3 ACTIVE every5minutes. F18.15a changed-control artificial preparation
+and bounded qualification only, per0283exactmatrix; wholeF18.15a remains open.
+Use existing guards/evidence/watchdogs, fixed temporary controls; pin changed bytes
+before tests. Harmless explicit harness: outerartificial→probeinjected sixfakehooks,
+separate real guarded auditor; native rejects overrides beforelive reads.
+300s focused checks include originalclock/fsync/bytes/groupcleanup/refusal/noretry;
+independent review/links/diff/strict/commit/push. Package/test changes require frozen
+fullmake test1800s/Ruff; do not repeat unchanged8688regressions for temporary controls.
+F18.16 remains unadmitted: distinct choice, clean committed base, fresh independently
+observed actual600s preflight, original60s45/10/5 and byte/resource caps unchanged.
+No actualnamespace/mount/resources/SPICE/integration diagnostic from artificialPASS.
+Pause only for actual user decision/data/access/action; protect consumed history.
 
 ## Physical goal remains open
-ADR0247 F0 boundaries/hardware/six controls unchanged. Full0267owner/lifetime,
-carry/concurrency/full-coreABI-FP/prior arithmetic/full-force seed/derivatives/
-guards/endpoint bounds remain open. No admissible pair,99-percent probability,
-physical closure or safety claim; strictM3/task3.9,M4–M6/ML/UI gates unchanged.
-Preserve history/moon_to_mars.py; dev only, commit/push verified stages to origin/dev.
+ADR0247 F0/hardware/sixcontrols unchanged. Full0267owner/lifetime,carry/concurrency/
+fullcoreABI-FP/priorarithmetic/fullforce seed/derivatives/guards/endpointbounds open.
+No admissiblepair,99percentprobability,physicalclosure/safety; strictM3/task3.9 and
+M4–M6/ML/UI gates unchanged. Preserve moon_to_mars.py/main/remotes/history; devonly.
