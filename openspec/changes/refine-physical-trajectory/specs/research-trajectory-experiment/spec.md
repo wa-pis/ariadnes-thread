@@ -185,6 +185,13 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **AND** F18.12 MAY qualify only temporary transaction/admission logic on fabricated full-volume data within120s/2MiB including failed/racing publication, fsync and stale-proof refusals; four runtime controls SHALL stay byte-identical, exact10-key probe input and old env/settings/600s-preflight/60s45-10-5/64KiB/2MiB gates SHALL remain unchanged
 - **AND** a future F18.13 provision/new setup SHALL require its separately recorded decision and independent admission, preserve F18.9consumed failure, stop after original1context/1factoryFalse/0integration/1visitorTrue exact RuntimeError refusal and retain partial failure without retry; this preparation SHALL NOT imply provision/native/physical qualification
 
+#### Scenario: Keep artificial admission separate from native launch authority
+
+- **WHEN** F18.12 tests full six-file fabricated volume with five fake old files and hash-rebound stale/finalization failures
+- **THEN** the recorded qualification SHALL require zero failures within120s including child startup/asserts/outer receipt fsync and an observed completion, with retained evidence below2MiB; exact four unchanged controls and three namespace-only controls SHALL be independently checked
+- **AND** provision/admission disk candidates SHALL remain pending and SHALL NOT authorize launch; artificial return SHALL explicitly deny native authority, while a future native caller SHALL bind a successfully observed post-fsync admission result to a fresh durable final launch gate before dispatch, rejecting stale leftovers and late/failed finalization
+- **AND** artificial positive checks SHALL NOT imply actual read-only image/native-positive qualification or F18.13 execution; the separate decision and independent fresh original preflight SHALL remain required
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

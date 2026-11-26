@@ -1,0 +1,182 @@
+{
+  "schema": "ariadna.f18.supplemented-artificial-preparation-result.v1",
+  "stage": "F18.12",
+  "adr": "0278",
+  "base_revision": "d6534c567ecbeb0dc96364915a6c8a6abe5ceddc",
+  "client_date": "2026-11-27",
+  "timezone": "Europe/Samara",
+  "packaged_utc": "2026-11-26T21:42:40.491786+00:00",
+  "status": "PASS_ARTIFICIAL_PREPARATION_ONLY",
+  "qualification": {
+    "invocations": 1,
+    "test_count": 94,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "observed_after_fsync_s": 1.1421269583515823,
+    "limit_s": 120,
+    "clock_scope": "Before qualification child startup through external receipt file/directory fsync and observed return; later source review/packaging/docs separate.",
+    "qualification_saved_bytes_including_outer_receipt": 20982,
+    "full_new_fake_payload_bytes": 3578887,
+    "fake_resource_file_count": 11,
+    "fake_old_file_sizes": "Five fabricated files for exact-count readback; not a claim to reproduce all131662oldpayloadbytes.",
+    "carried_bytes": 497045495,
+    "additional_bytes": 3578887,
+    "aggregate_bytes": 500624382,
+    "acquisition_limit_bytes": 2147483648,
+    "real_acquisition_bytes": 0
+  },
+  "review": {
+    "initial_findings": 3,
+    "followup_finalization_finding": 1,
+    "corrected_before_first_qualification": true,
+    "remaining_findings": 0,
+    "source_and_control_review": "PASS",
+    "historical_source_note": "60632 followup source is an exact hash-verified reconstruction, not an asserted pre-fix capture."
+  },
+  "controls": {
+    "core_byte_identical": 4,
+    "outer_namespace_only": 3,
+    "executed_reused_controls": 0,
+    "admission_disk_state": "PENDING_DURABLE_ADMISSION with false launch authority; no launch-admission.json from module",
+    "artificial_return": "PASS_ARTIFICIAL_ADMISSION_ONLY; no native authorization",
+    "native_positive_tested": false
+  },
+  "archive": {
+    "name": "0278-artificial-provision-admission-evidence.zip",
+    "bytes": 54054,
+    "sha256": "76b2c10d5a35054fe0c16c8c2411132988e048f13c33ea75fcf6dff1e24387d8",
+    "expanded_bytes": 171660,
+    "members": {
+      "admission-before-finalization-review.py": {
+        "bytes": 18869,
+        "sha256": "60632ddd25759c4579effa8fc63c7e38f9a0a9d913a39a7ec92f93718bb79172"
+      },
+      "admission-before-independent-review.py": {
+        "bytes": 15960,
+        "sha256": "375ab115357750b7981a27bc38e559cc5b296e63344f2190e39b49ae1f744355"
+      },
+      "admission.py": {
+        "bytes": 19584,
+        "sha256": "37e30013b68bc3cf141a339145b68c8f9e2b9e40ea5ba321db3652c23eebfa4f"
+      },
+      "control-preparation.json": {
+        "bytes": 2657,
+        "sha256": "ef15a93a4401cca246d2360de79dbf2f0eb31a4387889bfaa28df6ba133c8e32"
+      },
+      "independent-code-review-completion.json": {
+        "bytes": 7040,
+        "sha256": "906e623ae05d52e008cb40e2c7801f226bc0a93bb4e78f19fabe49185710bdfb"
+      },
+      "independent-code-review-initial.json": {
+        "bytes": 2270,
+        "sha256": "a5823a930fdbfda05bf193a69c88ff6063f1bdd3a8f37e719fd366ee6fc2b62e"
+      },
+      "independent-code-review.json": {
+        "bytes": 7314,
+        "sha256": "a7c8128cca0f4977a7511601a80d8f5f89ba77f25c0824b86b1057839cda3e75"
+      },
+      "preparation-start.json": {
+        "bytes": 598,
+        "sha256": "773d19f253dd5889bda233b3b92b932a2a799b5dfb7c97ee169155196fcd6909"
+      },
+      "prepared-controls/call-once.py": {
+        "bytes": 3846,
+        "sha256": "b984a4c427f144dea536e707f75aa3bbdde942d3d9ee43fb00d8c4b49d8dbf11"
+      },
+      "prepared-controls/check-preservation.py": {
+        "bytes": 1410,
+        "sha256": "b989f83f9c01c5a2e56afd9cbb8f21487380c5397470bf568cfe618dabab957c"
+      },
+      "prepared-controls/launch-once.py": {
+        "bytes": 6821,
+        "sha256": "57e95d12f572c23e8e39c644998f0490818555d3862a8595c8049977974dde01"
+      },
+      "prepared-controls/native-entry.py": {
+        "bytes": 2503,
+        "sha256": "aa83050a2cf99e4e5dcff4d0f76f01ae2c65cdb56d07cdf984626090a4b02bf3"
+      },
+      "prepared-controls/native.sandbox": {
+        "bytes": 257,
+        "sha256": "29b52caaf729847d8fb93df2d216dec9b3f8bdc566fb88e15d98a04cd4958163"
+      },
+      "prepared-controls/run-once.py": {
+        "bytes": 3334,
+        "sha256": "9ed5d92df182b0b2bf9f72bc11c3f87ccdf8e957b36c98b1f897f88830846488"
+      },
+      "prepared-controls/supervisor-adapter.py": {
+        "bytes": 3582,
+        "sha256": "7378cae9d8518918ef2790374828a12a06d8d0e1bb8f7d67f4c87060c2297d94"
+      },
+      "provision.py": {
+        "bytes": 10750,
+        "sha256": "a31b2655627ca0a81f5d729d187c7bada7a7789ffaf93c8492157be55e726439"
+      },
+      "qualification-observed-return.json": {
+        "bytes": 496,
+        "sha256": "7985994578ec3b3594ff005946e83a8769e4a19b7eb1266d41b27b46f51d0a87"
+      },
+      "qualification-v1/artificial-a2c0d24d7be44a3fb41f33a9e46ef160/qualification.json": {
+        "bytes": 1041,
+        "sha256": "93ff4e905bd4813bfc874ea0adfdf55327a1028f81267009e20f391aa7e88582"
+      },
+      "qualification-v1/artificial-a2c0d24d7be44a3fb41f33a9e46ef160/unittest.log": {
+        "bytes": 9471,
+        "sha256": "3a0cb48f3c542ee4f6e07f42c54afb54195df5cbd6753a11f0afc077cf95ba98"
+      },
+      "qualification-v1/external-receipt.json": {
+        "bytes": 796,
+        "sha256": "76c787652e0c44870ccd77a7d9c5247fe5fab0f1f6c861152440c695faee9dd8"
+      },
+      "qualification-v1/stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "qualification-v1/stdout.log": {
+        "bytes": 9674,
+        "sha256": "bf57b2819d2171af2d1061c03fc2c7c24632f01b75fb32b25adc13438be17350"
+      },
+      "qualify-once.py": {
+        "bytes": 3745,
+        "sha256": "7904669aa3f1a1e6dfbbecd548421aa85e6035f2ac2930978a789409a5812ffd"
+      },
+      "qualify.py": {
+        "bytes": 39317,
+        "sha256": "b2d3047d6548214be6e456ed7cf7199578bd2ea16af3c8edced3da79b801d4bf"
+      },
+      "scheduler-readback.json": {
+        "bytes": 325,
+        "sha256": "2fc2c36d59f578047c51884429cd93542ca0b01e3d1f4a4d31468bb7db5e6312"
+      }
+    }
+  },
+  "evidence_limit_bytes": 2097152,
+  "repository_runtime_test_dependency_changes": 0,
+  "prior_runtime_checks": "ADR0274:8476passes/42unchangedarchive skips/Ruff retained; not rerun on unchanged package/tests/dependencies. Newtemporarylogic qualified through94cases/review.",
+  "image_observed_unmounted": true,
+  "not_performed": [
+    "real resource payload reads/copies",
+    "real provision",
+    "mount",
+    "Tudat/kernel imports",
+    "SPICE",
+    "integration",
+    "F18.13",
+    "old F18.9 replay"
+  ],
+  "remaining": [
+    "Separate concrete F18.13 execution/admission decision.",
+    "Fresh original600s preflight including actual source/native/resource/oldledger pins, isolatedexact6file provision, ROremount and independent admission.",
+    "Future final durable launch gate must bind successfully observed returned proof; no launch from leftover candidate or file alone. Nativepositive/mountidentity branch unexercised.",
+    "Owner/carry/concurrency/ABI-FP/priorarithmetic/physicalF0/M3/99percent/safety gates remain open."
+  ],
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "ACTIVE",
+    "rrule": "FREQ=MINUTELY;INTERVAL=5",
+    "target_thread_id": "01a06901-f960-72e2-841b-672deb3eb02d",
+    "prompt_sha256": "fd4edc8c74d4ad2f1b8d192e4ea8f0bfcd9f11edf098249f88f3bcf2a2623059",
+    "checked_utc": "2026-11-26T21:41:32.414655+00:00",
+    "runtime_native_admission": false
+  }
+}

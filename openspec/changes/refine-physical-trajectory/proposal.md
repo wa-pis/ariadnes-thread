@@ -1,7 +1,13 @@
+[ADR0278](../../../docs/adr/0278-qualify-artificial-provision-admission.md) completes
+F18.12 artificial six-file transaction/admission:94/94, post-fsync1.142127s<120,
+independent code/reuse review PASS, evidence<2MiB. No realpayload/mount/native work.
+Next: distinct F18.13 execution/admission decision and final outer launch gate;
+actual independent preflight/nativepositive remain unqualified. Automation ACTIVE.
+
 [ADR0277](../../../docs/adr/0277-design-supplemented-setup-test.md) specifies the
 exact distinct six-file setup-test contract: isolated atomic no-replace provision,
 11file/RO/precharge admission and unchanged qualified runtime/caps. F18.11 design
-only; F18.12 temporary artificial preparation next, no real copies/native run.
+only; F18.12 artificial preparation now qualified by0278, no real copies/native run.
 F18.13 remains separately admitted; F18.9 and all physical gates stay open.
 
 [ADR0276](../../../docs/adr/0276-inventory-fixed-setup-resources.md) completes

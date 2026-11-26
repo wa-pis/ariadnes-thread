@@ -107,10 +107,16 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0278](../docs/adr/0278-qualify-artificial-provision-admission.md) completes F18.12:
+94/94 artificial transaction/admission checks, observed post-fsync1.142127s<120,
+independent code/reuse review PASS. Four controls unchanged, three namespace-only;
+full newfakevolume3578887B/exact11files, evidence<2MiB. No realpayload/mount/native
+or physical qualification. Automation ACTIVE; next distinct F18.13 decision/final
+outer gate and independent actual preflight remain prerequisites, no current launch.
 [ADR0277](../docs/adr/0277-design-supplemented-setup-test.md) completes F18.11's
 six-file supplemented setup contract: isolated no-replace transaction, exact11file
-ROreadback/fresh admission and unchanged runtime/caps. F18.12 temporary artificial
-preparation next; no current provision/native work or consumedF18.9retry.
+ROreadback/fresh admission and unchanged runtime/caps. Its artificial preparation
+is now qualified by0278; no current provision/native work or consumedF18.9retry.
 [ADR0276](../docs/adr/0276-inventory-fixed-setup-resources.md) completes F18.10
 source-only inventory:44anchors/40edges, independent review PASS, six eager local
 files3578887B absent image. No copies/native/tests; protected bytes unchanged,

@@ -1,5 +1,23 @@
 ## Context
 
+### F18.12 artificial transaction and admission result (2026-11-27)
+
+[ADR0278](../../../docs/adr/0278-qualify-artificial-provision-admission.md) qualifies
+only temporary fixed-six provision/admission on fabricated full newvolume3578887B
+with five fake oldfiles for exact11readback. One94/94 invocation, observed after
+outer receipt fsync1.142126958s<120;20982B saved invocation records, total retained
+evidence<2MiB. Independent connected-source/reuse review PASS. Four0275runtime
+controls byte-identical, three outercontrols exactnamespace-only; none executed.
+Initial proof/control/finalization findings corrected before testing and retained.
+Provision disk receipt and admission candidate remain pending; only observed
+post-fsync return may feed a future fresh durable launch gate. No leftover file
+alone authorizes launch. Artificial mode can never confer native authority.
+Nativepositive/actualimageROidentity and final livegate remain unexercised. F18.13
+needs separate concrete decision and independent actual preflight, not inferred
+from artificial success. No realpayload reads/copies/mount/native/SPICE/integration;
+package/test/dependencies unchanged, prior8476passes/Ruff retained without replay.
+Automation ACTIVE for next minimal decision/gate preparation; physical gates open.
+
 ### F18.11 six-file supplemented setup contract (2026-11-27)
 
 [ADR0277](../../../docs/adr/0277-design-supplemented-setup-test.md) defines the
