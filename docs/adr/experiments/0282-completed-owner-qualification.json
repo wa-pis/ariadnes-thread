@@ -1,0 +1,124 @@
+{
+  "schema": "ariadna.f18.completed-owner-artificial-qualification.v1",
+  "stage": "F18.15",
+  "status": "PASS_ARTIFICIAL_PREPARATION_ONLY",
+  "base_revision": "e9fed9caf1c1269b95a9c35327bd8fafa761f967",
+  "recorded_utc": "2026-11-26T23:25:05.275886+00:00",
+  "sources": {
+    "src/space_nav/_owner_completed_probe.py": {
+      "bytes": 11443,
+      "sha256": "64d5460c922bd4153b78e7771da2f8166b74a14251f9eb9693070de211993ac0"
+    },
+    "src/space_nav/_owner_completed_audit.py": {
+      "bytes": 12363,
+      "sha256": "3213558068c7ddf0b55b215cd22aee9729878700066665c07781d2739fcd3bd0"
+    },
+    "tests/test_owner_completed_probe.py": {
+      "bytes": 22586,
+      "sha256": "30b63f1de8dccfd9c82039036fcf7260f9a96aa8440dfe485dbe5040bf7c6736"
+    },
+    "tests/test_owner_completed_audit.py": {
+      "bytes": 16880,
+      "sha256": "504c73e31c66dbb0410f25c9588627449adfe2dd1cd4c28c59c66cde50579425"
+    }
+  },
+  "focused": {
+    "cases": 212,
+    "passed": 212,
+    "failed": [],
+    "skipped": {},
+    "new_cases": 212,
+    "sha256": "4ca85a696575fb09ef344044bb90b4a1ab86b8112713ef167ec33a19ddcc6f74",
+    "bytes": 163772
+  },
+  "focused_seconds": 0.8622250417247415,
+  "portable": {
+    "cases": 8317,
+    "passed": 8275,
+    "failed": [],
+    "skipped": {
+      "tests.test_bezier_local_targeting::test_retained_pinned_binding_selects_accepted_158_without_native_work": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[endpoint]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[residual]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[mass]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[seed]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[accepted]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_bezier_local_targeting::test_pure_binder_rejects_inconsistent_retained_evidence[command]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_corrected_inputs::test_metadata_loader_matches_frozen_contract": "exact historical-environment check; enable with --run-archive",
+      "tests.test_corrected_inputs::test_clean_process_imports_no_scientific_package": "exact historical-environment check; enable with --run-archive",
+      "tests.test_corrected_integrator::test_pinned_controller_and_coefficients_without_native_setup[exact-runtime]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_earth_coast_study::test_saved_a_baselines_validate_without_physics": "exact historical-environment check; enable with --run-archive",
+      "tests.test_fixed_gravity_inputs::test_current_pinned_interpreter_identity": "exact historical-environment check; enable with --run-archive",
+      "tests.test_moving_inputs::test_hash_bound_input_loader_exposes_saved_zero_reference": "exact historical-environment check; enable with --run-archive",
+      "tests.test_moving_inputs::test_real_metadata_preflight_stays_stdlib_only": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[0]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[1]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[2]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[3]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[4]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[5]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[6]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[7]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[8]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[9]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[10]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[11]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[12]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[13]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[14]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[15]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[16]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[17]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[18]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[19]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[20]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[21]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[22]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[23]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[24]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[25]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[26]": "exact historical-environment check; enable with --run-archive",
+      "tests.test_split_coast_study::test_split_path_replays_archived_bits[27]": "exact historical-environment check; enable with --run-archive"
+    },
+    "new_cases": 212,
+    "sha256": "c4ce852bdbf4b05d2f46b4bfb91956584b75f6594d7b288e64a9486fa4e6d2ca",
+    "bytes": 3856878
+  },
+  "live": {
+    "cases": 413,
+    "passed": 413,
+    "failed": [],
+    "skipped": {},
+    "new_cases": 0,
+    "sha256": "08d0eae60e3dc25c399faf6df51fbe1b12e326a1c27499a28be41875dc6bee54",
+    "bytes": 101714
+  },
+  "combined_passed": 8688,
+  "new_cases": 212,
+  "focused_not_double_counted": true,
+  "lanes_disjoint": true,
+  "prior_case_ids_and_skips_unchanged": true,
+  "baseline_identity_sha256": "f5eaeeeadfdf053a12169b5651ec387229385cf56d0ea70dbe1b85573098ffa9",
+  "full_regression": {
+    "exit_code": 0,
+    "elapsed_s": 806.2822295003571,
+    "finished_utc": "2026-11-26T23:24:59.018552+00:00"
+  },
+  "checkout_frozen": {
+    "status": "passed",
+    "files_unchanged": 1592,
+    "base_revision": "e9fed9caf1c1269b95a9c35327bd8fafa761f967",
+    "git_status_unchanged": true,
+    "finished_utc": "2026-11-26T23:25:05.121524+00:00",
+    "before_sha256": "8246fec4c8e5f78179c0b4e27b9295b3de73b43bd749e86fb2788d6b6bc69b0e"
+  },
+  "protected_base_blobs_unchanged_before_documentary_phase": 1588,
+  "independent_code_review": {
+    "status": "PASS",
+    "sha256": "e130e3978aaa1747068907f49f6778e0bb61139d4e92817b78ddcb5009d76eff"
+  },
+  "ruff": "PASS; --no-cache to avoid initial sandbox cache-write refusal; no code change",
+  "scope": "Original fixture/science/oldtests/dependencies unchanged; two minimal private modules+two artificialtest files only. New diagnostic native/SPICE/integration episode count0. Existing required live regressions retain their native/SPICE/integration scope.",
+  "unqualified": "Changed outer profile/control/admission and native completed-owner positive remain unqualified; full0267 owner/lifetime/carry/concurrency/full-coreABI-FP/priorarithmetic/full-force/physicalF0/M3/99percent/safety unchanged.",
+  "future_execution_authorized": false
+}

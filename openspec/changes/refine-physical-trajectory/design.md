@@ -1,5 +1,15 @@
 ## Context
 
+### Artificial completed-owner qualification (2026-11-27)
+
+[ADR0282](../../../docs/adr/0282-qualify-artificial-completed-owner.md) completes
+F18.15 artificial probe/audit qualification:212newcases,8275portable+413live passes,
+42unchanged archival skips; frozen checkout/status, independent review and Ruff.
+No actual completed-owner diagnostic or physical qualification. Next is minimal
+separately qualified outer control/profile/admission mapping on artificial data;
+F18.16 remains unadmitted pending distinct choice and fresh actual preflight.
+
+
 ### Single completed-owner design (2026-11-27)
 
 [ADR0281](../../../docs/adr/0281-design-single-completed-owner.md) accepts F18.14:

@@ -1,3 +1,10 @@
+[ADR0282](../../../docs/adr/0282-qualify-artificial-completed-owner.md) completes
+F18.15 artificial probe/audit qualification:212newcases,8275portable+413live passes,
+42unchanged archival skips; frozen checkout/status, independent review and Ruff.
+No actual completed-owner diagnostic or physical qualification. Next is minimal
+separately qualified outer control/profile/admission mapping on artificial data;
+F18.16 remains unadmitted pending distinct choice and fresh actual preflight.
+
 [ADR0281](../../../docs/adr/0281-design-single-completed-owner.md) accepts F18.14:
 one original forward(True), original completion/row metadata, same-owner last
 endpoint; ten markers, fixed synthetic elapsed0–1000s and original SI gates.

@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0282 — Artificial completed-owner qualification](0282-qualify-artificial-completed-owner.md) — F18.15:212newcases;8275portable+413live passes/42unchanged archival skips. Frozen checkout, independent review/Ruff; outer admission and actual native diagnostic remain unqualified.
+
 - [0281 — One completed forward-owner observation](0281-design-single-completed-owner.md) — F18.14 source/design accepted; independent review PASS, unchanged single forward/metadata/endpoint contract and gates. Artificial preparation next; no native run.
 
 - [0280 — Verify supplemented never-run setup](0280-verify-supplemented-never-run-setup.md) — F18.13 once PASS:8markers, factory1/integration0/visitor1, callbacks/SPICE0;57.157760s preflight/3.367521s native, independent saved audit PASS; seven new artificial checks, preservation/detach PASS. Completed-owner/physical gates open.

@@ -1,0 +1,413 @@
+{
+  "schema": "ariadna.f18.completed-owner-final-verification.v1",
+  "status": "PASS_ARTIFICIAL_QUALIFICATION_ONLY",
+  "checks": {
+    "schema": "ariadna.f18.completed-owner-qualification-doc-check.v1",
+    "status": "PASS",
+    "base_revision": "e9fed9caf1c1269b95a9c35327bd8fafa761f967",
+    "protected_prior_blobs_unchanged": 1582,
+    "protected_prior_non_markdown_blobs_unchanged": 1249,
+    "local_links": 672,
+    "anchors": 3,
+    "current_state_lines": 36,
+    "checked_sources": {
+      "src/space_nav/_owner_completed_probe.py": {
+        "bytes": 11443,
+        "sha256": "64d5460c922bd4153b78e7771da2f8166b74a14251f9eb9693070de211993ac0"
+      },
+      "src/space_nav/_owner_completed_audit.py": {
+        "bytes": 12363,
+        "sha256": "3213558068c7ddf0b55b215cd22aee9729878700066665c07781d2739fcd3bd0"
+      },
+      "tests/test_owner_completed_probe.py": {
+        "bytes": 22586,
+        "sha256": "30b63f1de8dccfd9c82039036fcf7260f9a96aa8440dfe485dbe5040bf7c6736"
+      },
+      "tests/test_owner_completed_audit.py": {
+        "bytes": 16880,
+        "sha256": "504c73e31c66dbb0410f25c9588627449adfe2dd1cd4c28c59c66cde50579425"
+      }
+    },
+    "checked_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2275,
+        "sha256": "c332530c1ca6bd8657ff5e5ac1d1d2791d269a1dcf848ce9d39f28393a351205"
+      },
+      "docs/adr/0282-qualify-artificial-completed-owner.md": {
+        "bytes": 5335,
+        "sha256": "bdd4501aaa48e54e715673d9d7a5dc5c2c4c615a614af8ff802b60cfca260826"
+      },
+      "docs/adr/README.md": {
+        "bytes": 50612,
+        "sha256": "7c8a9ed442ebc86ead790ee63a9d0ba4d98e7650a13641129f850dc84985058c"
+      },
+      "docs/adr/experiments/0282-completed-owner-qualification-evidence.zip": {
+        "bytes": 223152,
+        "sha256": "2c5462840cd8599b8ec8624612d4d2a187cba1cf5008db0ed835c8a29fdc912d"
+      },
+      "docs/adr/experiments/0282-completed-owner-qualification.json": {
+        "bytes": 9564,
+        "sha256": "1e5e5bdd66c0305996734ec317a247ccdd1ff6c3a6f3a09abb4071c0f051216d"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 92343,
+        "sha256": "e74b6e1d406d00fa7823f6194db02d3c89fc49419001e89e70cf275bb6787569"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 631293,
+        "sha256": "afee7e61478759651c1efae025b37b55632a08eb30744d13c27d9fc7a13b187b"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 37115,
+        "sha256": "f85b9b7fc1156640baef8258fc0b076209a5ac6c61a6c1b3d5f641e82d94ce00"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 517643,
+        "sha256": "63dbb54c0e2c90b058077a3f3c9cd0a89c59b8113c4369fa980b11bcddfced3e"
+      },
+      "src/space_nav/_owner_completed_audit.py": {
+        "bytes": 12363,
+        "sha256": "3213558068c7ddf0b55b215cd22aee9729878700066665c07781d2739fcd3bd0"
+      },
+      "src/space_nav/_owner_completed_probe.py": {
+        "bytes": 11443,
+        "sha256": "64d5460c922bd4153b78e7771da2f8166b74a14251f9eb9693070de211993ac0"
+      },
+      "tests/test_owner_completed_audit.py": {
+        "bytes": 16880,
+        "sha256": "504c73e31c66dbb0410f25c9588627449adfe2dd1cd4c28c59c66cde50579425"
+      },
+      "tests/test_owner_completed_probe.py": {
+        "bytes": 22586,
+        "sha256": "30b63f1de8dccfd9c82039036fcf7260f9a96aa8440dfe485dbe5040bf7c6736"
+      }
+    },
+    "evidence_index": {
+      "schema": "ariadna.f18.completed-owner-qualification-evidence-index.v1",
+      "archive_bytes": 223152,
+      "archive_sha256": "2c5462840cd8599b8ec8624612d4d2a187cba1cf5008db0ed835c8a29fdc912d",
+      "expanded_bytes": 4378057,
+      "members": {
+        "profile.json": {
+          "bytes": 1254,
+          "sha256": "8a2b2f2e44f6a2f08d3e0d5982d82a6b2fc87467860ae0033fc7360c290fba46"
+        },
+        "focused.log": {
+          "bytes": 341,
+          "sha256": "581a38a3d2260d0598e679eeb5316495fa5349462fcf0afaafffb808a3c64386"
+        },
+        "focused.xml": {
+          "bytes": 163772,
+          "sha256": "4ca85a696575fb09ef344044bb90b4a1ab86b8112713ef167ec33a19ddcc6f74"
+        },
+        "focused-exit.json": {
+          "bytes": 1084,
+          "sha256": "4c575304f3f7537ba432f0fa7d1b9f68a437db507b90198488f986d013f10291"
+        },
+        "ruff.log": {
+          "bytes": 19,
+          "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+        },
+        "ruff-command.json": {
+          "bytes": 197,
+          "sha256": "f631f9fc7b7bb5636b548724f016700612a3089ec935495393da37c255947f98"
+        },
+        "independent-code-review.json": {
+          "bytes": 7047,
+          "sha256": "e130e3978aaa1747068907f49f6778e0bb61139d4e92817b78ddcb5009d76eff"
+        },
+        "baseline-identity.json": {
+          "bytes": 660,
+          "sha256": "f5eaeeeadfdf053a12169b5651ec387229385cf56d0ea70dbe1b85573098ffa9"
+        },
+        "regression-control-reuse.json": {
+          "bytes": 681,
+          "sha256": "da82540f1a95065369f859779ae755f3667f05ea9af324eda18a17731770acbf"
+        },
+        "test-runner": {
+          "bytes": 427,
+          "sha256": "93d61bd2b8d115757dc3ed8c96e1bb7dca3882b55646ea866c4e5bf4a09074e6"
+        },
+        "freeze-check.py": {
+          "bytes": 1466,
+          "sha256": "a9fef98cc166af4b746b8240fe129c96e942ab00c3de66b192836f5dcc189e14"
+        },
+        "run-regression.py": {
+          "bytes": 1062,
+          "sha256": "e1ebd987769a2ae0dddf06b00235bbd83d0361ed6ee57f888ee18cda8595ebfc"
+        },
+        "run-focused.py": {
+          "bytes": 2132,
+          "sha256": "6fe89c2491d2e22004e3b4b46c5f56c51765d2957ff11620049dcb06f6f262c6"
+        },
+        "frozen-before.json": {
+          "bytes": 196450,
+          "sha256": "8246fec4c8e5f78179c0b4e27b9295b3de73b43bd749e86fb2788d6b6bc69b0e"
+        },
+        "frozen-after.json": {
+          "bytes": 288,
+          "sha256": "4a6b8c1ad849173d1b319fdda1d7699ea27f0ccc54e0958eccb1f712b2dc7e0b"
+        },
+        "regression-process.json": {
+          "bytes": 165,
+          "sha256": "eb1f077eb068d4dce081d97de8528239e696fa46d3e3ee27fd34f94eff1c975b"
+        },
+        "regression-exit.json": {
+          "bytes": 109,
+          "sha256": "9553d52a66168a67489aabf551258eba38fec726bcd21cbdc4b3562dcee1eb03"
+        },
+        "required-regression.log": {
+          "bytes": 11377,
+          "sha256": "d456ed19aa0c9816328fa8e6d7aaf35bd851f2141b6a7d76d50edda01145990f"
+        },
+        "portable.xml": {
+          "bytes": 3856878,
+          "sha256": "c4ce852bdbf4b05d2f46b4bfb91956584b75f6594d7b288e64a9486fa4e6d2ca"
+        },
+        "live.xml": {
+          "bytes": 101714,
+          "sha256": "08d0eae60e3dc25c399faf6df51fbe1b12e326a1c27499a28be41875dc6bee54"
+        },
+        "qualification.json": {
+          "bytes": 9564,
+          "sha256": "1e5e5bdd66c0305996734ec317a247ccdd1ff6c3a6f3a09abb4071c0f051216d"
+        },
+        "summarize-qualification.py": {
+          "bytes": 4670,
+          "sha256": "ca8c10057790883e8816c0624579944ef19593169e41a057d36cc3c3899596de"
+        },
+        "probe/source-review-correction.json": {
+          "bytes": 617,
+          "sha256": "5c903245c35615b0b5feff2d68fe8e6b626f1255e310258d47a483e724dacfd8"
+        },
+        "probe/_owner_completed_probe.pre-context-check.py": {
+          "bytes": 11413,
+          "sha256": "4703193f131c712eb81cbafbf1438aeb4518ee18e2d5ed737f2b3ad6c3550153"
+        },
+        "summarize-qualification.pre-baseline-review.py": {
+          "bytes": 4240,
+          "sha256": "de505d190c782e47f52146e80da4a631335a07bf6cac796b27ce0cfdb46aaee2"
+        },
+        "qualification-script-review-correction.json": {
+          "bytes": 430,
+          "sha256": "3754301df435f5bec54076ee5beddd57ce3982f483eadcb1b5dde63e6892dfbf"
+        }
+      },
+      "qualification_sources": {
+        "src/space_nav/_owner_completed_probe.py": {
+          "bytes": 11443,
+          "sha256": "64d5460c922bd4153b78e7771da2f8166b74a14251f9eb9693070de211993ac0"
+        },
+        "src/space_nav/_owner_completed_audit.py": {
+          "bytes": 12363,
+          "sha256": "3213558068c7ddf0b55b215cd22aee9729878700066665c07781d2739fcd3bd0"
+        },
+        "tests/test_owner_completed_probe.py": {
+          "bytes": 22586,
+          "sha256": "30b63f1de8dccfd9c82039036fcf7260f9a96aa8440dfe485dbe5040bf7c6736"
+        },
+        "tests/test_owner_completed_audit.py": {
+          "bytes": 16880,
+          "sha256": "504c73e31c66dbb0410f25c9588627449adfe2dd1cd4c28c59c66cde50579425"
+        }
+      },
+      "note": "Full regression JUnit/log evidence is distinct from the future native episode2MiB structured cap; no new diagnostic episode occurred."
+    },
+    "strict_openspec": {
+      "exit_code": 0,
+      "output": "Change 'refine-physical-trajectory' is valid"
+    },
+    "diff_check": "PASS",
+    "scheduler": {
+      "id": "ariadna-m3",
+      "status": "ACTIVE",
+      "prompt_sha256": "436b77790bd82a8a49d180ab6c00c5943160bf0e865e404423122c838d5088ae"
+    },
+    "runtime_tests": "Full required portable/live and Ruff passed on unchanged frozen sources; not repeated after documentary edits. New diagnostic not executed."
+  },
+  "independent_final_review": {
+    "base_revision": "e9fed9caf1c1269b95a9c35327bd8fafa761f967",
+    "checked_utc": "2026-11-26T23:27:32.836876+00:00",
+    "evidence_checks": {
+      "all_members_match_original_saved_bytes_and_index": true,
+      "archive_members": 26,
+      "baseline_identity": {
+        "bytes": 660,
+        "sha256": "f5eaeeeadfdf053a12169b5651ec387229385cf56d0ea70dbe1b85573098ffa9"
+      },
+      "compressed_bytes": 223152,
+      "expanded_bytes": 4378057,
+      "full_junit_logs_separate_from_future_native_2MiB_episode_cap": true,
+      "json_xml_ast_checks": "PASS",
+      "parent_documentary_checks": {
+        "bytes": 8622,
+        "sha256": "001d184ac6fb4c2855c671f88f794815d5317e22ec28697a276118838311e100"
+      },
+      "prior_code_review": {
+        "bytes": 7047,
+        "sha256": "e130e3978aaa1747068907f49f6778e0bb61139d4e92817b78ddcb5009d76eff"
+      },
+      "published_result_matches_saved_qualification": true,
+      "qualification_checker_correction": {
+        "bytes": 430,
+        "sha256": "3754301df435f5bec54076ee5beddd57ce3982f483eadcb1b5dde63e6892dfbf"
+      }
+    },
+    "factual_checks": [
+      "Independently parsed focused/portable/live and old0274rawJUnit:212focused,8275portable+413live=8688passes,42unchanged archive skips,zero failures/errors; all212newIDs are portable, lanes disjoint and focused not added twice.",
+      "Old0274actualJUnit byte/SHA pins independently match baseline-identity and immutable0274qualification, with baselinePASS/empty package-change list. New source pins match focused/full profile, prior independent review and current four repo files.",
+      "Frozen-before contains1592file hashes and is hash-bound by successful frozen-after with unchanged Git status. Full make test exit0 record806.2822295003571s<1800 agrees with qualification; six-decimal806.282230 and focused nine-decimal0.862225042 are correct roundings.",
+      "All26ZIPmembers exactly match original saved files/hash index, including initial checker and correction plus honest inverse-reconstructed producer version. RawJSON/AST/XML validation succeeds; no hidden failed runtime/scientific attempt is represented as a pass.",
+      "Actual documentary diff updates current status/index/roadmap/proposal/design/tasks and adds ADR0282/result/archive plus only the four qualified source/test files. Old scientific helpers, fixtures, tests, dependencies and prior artifacts remain unchanged.",
+      "F18.15 complete, F18.15a reversible artificial outer mapping/preparation next, F18.16unchecked/unadmitted. Old setup-only integration0 authority is not reused; changed controls require explicit pins/qualification and a distinct future actual choice/preflight.",
+      "Existing required live regression native/SPICE/integration scope is distinguished from the new completed-owner diagnostic, which has never executed. Actual native-positive completed-owner, original full-owner/lifetime/carry/concurrency/ABI-FP/prior arithmetic/full-force/F0/M3/99percent/safety gates remain open.",
+      "Archive expanded4,378,057B is full regression evidence, explicitly distinct from any future2MiBnative episode cap. No native episode cap compliance is falsely inferred from compressed ZIP size.",
+      "NewADR/CURRENT local links independently resolve; parent672links/3anchors/strict/diff/protected1582priorblobs1249nonMD PASS pinned. CURRENT36lines<60. Automation ACTIVE parentreadback targets only artificial F18.15a."
+    ],
+    "findings": [],
+    "future_execution_authorized": false,
+    "native_completed_owner_status": "UNQUALIFIED_AND_NOT_ADMITTED",
+    "parent_documentary_checks": {
+      "anchors": 3,
+      "diff_check": "PASS",
+      "local_links": 672,
+      "protected_prior_blobs_unchanged": 1582,
+      "protected_prior_non_markdown_blobs_unchanged": 1249,
+      "scheduler": {
+        "id": "ariadna-m3",
+        "prompt_sha256": "436b77790bd82a8a49d180ab6c00c5943160bf0e865e404423122c838d5088ae",
+        "status": "ACTIVE"
+      },
+      "status": "PASS",
+      "strict_openspec": {
+        "exit_code": 0,
+        "output": "Change 'refine-physical-trajectory' is valid"
+      }
+    },
+    "resolved_findings": [
+      {
+        "after_sha256": "ca8c10057790883e8816c0624579944ef19593169e41a057d36cc3c3899596de",
+        "before_sha256": "de505d190c782e47f52146e80da4a631335a07bf6cac796b27ce0cfdb46aaee2",
+        "location": "Temporary summarize-qualification.py baseline admission",
+        "observed_problem": "Initial checker read baseline-identity but did not assert baseline status/change list or pin retained0274rawJUnit before comparing IDs.",
+        "resolution": "Pre-use correction now asserts baselinePASS/empty prior package-change list and actual oldJUnit byte/SHA equality to both baseline record and immutable0274qualification. Initial source and correction retained in evidence.",
+        "runtime_source_or_tests_changed": false,
+        "status": "RESOLVED_BEFORE_QUALIFICATION_SUMMARY",
+        "tests_rerun": false
+      },
+      {
+        "location": "Completed producer provenance/context seam",
+        "resolution": "Prior independent-code receipt retains pre-context strict Budget check recommendation/resolution and truthful inverse reconstruction; no additional primitive code change after focused/full qualification.",
+        "status": "PREVIOUSLY_RESOLVED_AND_PRESERVED"
+      }
+    ],
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2275,
+        "sha256": "c332530c1ca6bd8657ff5e5ac1d1d2791d269a1dcf848ce9d39f28393a351205"
+      },
+      "docs/adr/0282-qualify-artificial-completed-owner.md": {
+        "bytes": 5335,
+        "sha256": "bdd4501aaa48e54e715673d9d7a5dc5c2c4c615a614af8ff802b60cfca260826"
+      },
+      "docs/adr/README.md": {
+        "bytes": 50612,
+        "sha256": "7c8a9ed442ebc86ead790ee63a9d0ba4d98e7650a13641129f850dc84985058c"
+      },
+      "docs/adr/experiments/0282-completed-owner-qualification-evidence.zip": {
+        "bytes": 223152,
+        "sha256": "2c5462840cd8599b8ec8624612d4d2a187cba1cf5008db0ed835c8a29fdc912d"
+      },
+      "docs/adr/experiments/0282-completed-owner-qualification.json": {
+        "bytes": 9564,
+        "sha256": "1e5e5bdd66c0305996734ec317a247ccdd1ff6c3a6f3a09abb4071c0f051216d"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 92343,
+        "sha256": "e74b6e1d406d00fa7823f6194db02d3c89fc49419001e89e70cf275bb6787569"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 631293,
+        "sha256": "afee7e61478759651c1efae025b37b55632a08eb30744d13c27d9fc7a13b187b"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 37115,
+        "sha256": "f85b9b7fc1156640baef8258fc0b076209a5ac6c61a6c1b3d5f641e82d94ce00"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 517643,
+        "sha256": "63dbb54c0e2c90b058077a3f3c9cd0a89c59b8113c4369fa980b11bcddfced3e"
+      },
+      "src/space_nav/_owner_completed_audit.py": {
+        "bytes": 12363,
+        "sha256": "3213558068c7ddf0b55b215cd22aee9729878700066665c07781d2739fcd3bd0"
+      },
+      "src/space_nav/_owner_completed_probe.py": {
+        "bytes": 11443,
+        "sha256": "64d5460c922bd4153b78e7771da2f8166b74a14251f9eb9693070de211993ac0"
+      },
+      "tests/test_owner_completed_audit.py": {
+        "bytes": 16880,
+        "sha256": "504c73e31c66dbb0410f25c9588627449adfe2dd1cd4c28c59c66cde50579425"
+      },
+      "tests/test_owner_completed_probe.py": {
+        "bytes": 22586,
+        "sha256": "30b63f1de8dccfd9c82039036fcf7260f9a96aa8440dfe485dbe5040bf7c6736"
+      }
+    },
+    "reviewer_activity": {
+      "integrations": 0,
+      "mounts": 0,
+      "project_native_scientific_imports": 0,
+      "repository_edits": 0,
+      "resource_payload_reads": 0,
+      "spice_queries": 0,
+      "tests_executed": 0
+    },
+    "saved_qualification_checks": {
+      "all_prior_case_ids_and_skip_reasons_match_pinned_0274": true,
+      "checkout_files_frozen": 1592,
+      "combined_passed": 8688,
+      "focused": {
+        "budget_s": 300,
+        "elapsed_s": 0.8622250417247415,
+        "errors": 0,
+        "failures": 0,
+        "passed": 212,
+        "skipped": 0
+      },
+      "focused_not_double_counted": true,
+      "frozen_before_sha256": "8246fec4c8e5f78179c0b4e27b9295b3de73b43bd749e86fb2788d6b6bc69b0e",
+      "full_budget_s": 1800,
+      "full_make_test": {
+        "elapsed_s": 806.2822295003571,
+        "exit_code": 0,
+        "finished_utc": "2026-11-26T23:24:59.018552+00:00"
+      },
+      "git_status_frozen": true,
+      "lane_case_ids_disjoint": true,
+      "live": {
+        "cases": 413,
+        "errors": 0,
+        "failures": 0,
+        "new_cases": 0,
+        "passed": 413,
+        "skipped": 0
+      },
+      "portable": {
+        "archival_skips": 42,
+        "cases": 8317,
+        "errors": 0,
+        "failures": 0,
+        "new_cases": 212,
+        "passed": 8275
+      },
+      "primitive_code_and_four_source_test_pins_unchanged": true,
+      "prior_tracked_blobs_verified_before_packaging": 1588
+    },
+    "schema": "ariadna.f18.completed-owner-independent-final-qualification-documentary-review.v1",
+    "scope": "Independent saved-qualification and actual documentary diff review only. Prior connected-code receipt is retained; no tests/native/scientific episode was rerun by reviewer.",
+    "status": "PASS"
+  },
+  "note": "Original numerical criteria and physical gates unchanged; actual completed-owner episode not executed/admitted."
+}

@@ -107,6 +107,13 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0282](../docs/adr/0282-qualify-artificial-completed-owner.md) completes
+F18.15 artificial probe/audit qualification:212newcases,8275portable+413live passes,
+42unchanged archival skips; frozen checkout/status, independent review and Ruff.
+No actual completed-owner diagnostic or physical qualification. Next is minimal
+separately qualified outer control/profile/admission mapping on artificial data;
+F18.16 remains unadmitted pending distinct choice and fresh actual preflight.
+
 [ADR0281](../docs/adr/0281-design-single-completed-owner.md) accepts F18.14:
 source/design review PASS, one forwardTrue→original metadata→same-owner last
 endpoint, unchanged fixed synthetic inputs/SI gates and finite caps. Source phase
