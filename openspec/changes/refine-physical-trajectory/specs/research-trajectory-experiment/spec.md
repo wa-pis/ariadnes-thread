@@ -200,6 +200,14 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **AND** an artificial invocation SHALL complete within120s/2MiB, reach actual fabricated provision/admission and semantic mutations, write only ARTIFICIAL_READY with native authority false, and dispatch its explicit harmless callback once on success or zero times on refusal; native replacement callbacks SHALL be rejected before live reads
 - **AND** this qualification SHALL leave actual read-only image/native-positive/exec unverified; the conditional choice SHALL require a fresh independently reviewed actual600s preflight through consumption before one native episode, followed by original60s45/10/5 rather than a reset or additional parent phase, with all other0277caps and physical gates unchanged
 
+#### Scenario: Isolate one completed forward owner without replaying the full packet
+
+- **WHEN** F18.14 reviews saved evidence and original sources within600s/2MiB including independent review without runtime/native imports/tests/mount/SPICE/integration
+- **THEN** the contract SHALL preserve original forward(True) elapsed0–1000s synthetic inputs/settings, call original completion/row metadata once and the same owner's chronological-last visitor once, precharging1context/1factory/1integration attempt/1metadata/1visitor with ten bounded fsynced markers
+- **AND** the independent stdlib audit SHALL require successful exact termination/seven-state IDs, primitive finite words and specifically hour0/remainder1000, using an independent Fraction(binary64 literal) polynomial with unchanged0.001m/1e-6m/s/1e-9kg gates; callback0..100000 and one nonnegative native function count SHALL remain separate
+- **AND** F18.15 SHALL qualify artificial probe/audit arguments, counts, oracle and failure/clock/fsync/byte boundaries with focused300s and frozen required portable/live1800s/Ruff/strict checks; old integration0 schema/admission SHALL NOT be retagged, and changed outer controls SHALL require separately pinned artificial qualification before native use
+- **AND** actual F18.16 SHALL require a distinct recorded choice and fresh independent actual600s admission, unchanged60s45/10/5,64KiB input/logs,2MiB structured and4KiB trace caps, retained11resources/no acquisition and no retry; partial counts remain UNKNOWN, prior failures/full-owner/physical gates unchanged
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

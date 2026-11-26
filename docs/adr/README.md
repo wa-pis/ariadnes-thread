@@ -64,6 +64,8 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0281 — One completed forward-owner observation](0281-design-single-completed-owner.md) — F18.14 source/design accepted; independent review PASS, unchanged single forward/metadata/endpoint contract and gates. Artificial preparation next; no native run.
+
 - [0280 — Verify supplemented never-run setup](0280-verify-supplemented-never-run-setup.md) — F18.13 once PASS:8markers, factory1/integration0/visitor1, callbacks/SPICE0;57.157760s preflight/3.367521s native, independent saved audit PASS; seven new artificial checks, preservation/detach PASS. Completed-owner/physical gates open.
 - [0279 — Once-only supplemented execution gate](0279-qualify-once-only-execution-gate.md) —30/30 artificial checks/review PASS; conditional oneF18.13 choice, fresh actual admission still required. No native qualification.
 - [0278 — Artificial six-file provision/admission](0278-qualify-artificial-provision-admission.md) — F18.12:94/94 artificial checks, independent code/reuse review PASS; no real provision/native qualification. Automation ACTIVE.

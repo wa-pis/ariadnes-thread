@@ -1,0 +1,192 @@
+{
+  "schema": "ariadna.f18.completed-owner-document-verification.v1",
+  "status": "PASS",
+  "checks": {
+    "schema": "ariadna.f18.completed-owner-doc-check.v1",
+    "status": "PASS",
+    "base_revision": "f39b2f6ec85dd1fa7ba3d06c034ea998a09b89f2",
+    "scope": "source/design/documentary verification only; no runtime tests/native mounts or formula evaluations",
+    "protected_prior_blobs_unchanged": 1577,
+    "protected_prior_non_markdown_blobs_unchanged": 1246,
+    "local_links": 666,
+    "anchors": 3,
+    "source_pins_verified": 49,
+    "reference_pins_verified": 5,
+    "source_anchor_count": 9,
+    "archive_expanded_bytes": 72754,
+    "archive_members": {
+      "build-design.py": {
+        "bytes": 12806,
+        "sha256": "f8215c0063868e07e66025bd5466076afe0c48558bb5d02ea8a0aa78faec532e"
+      },
+      "complete-source.py": {
+        "bytes": 1846,
+        "sha256": "fab1bbd7d149174584b754f9f43fae9df8c7e06c2855a39368c430ef30d6e1bd"
+      },
+      "completed-owner-design-draft.json": {
+        "bytes": 49955,
+        "sha256": "5ccd33e73cf13966989339cebceacfe45ca4a2674a2f50b67f13de3c06111193"
+      },
+      "design-start.json": {
+        "bytes": 379,
+        "sha256": "5e3ebaf3c756236eb208b1f2e5e9ed8ea040614eced62d5c76c2418a2a14fb24"
+      },
+      "independent-design-review.json": {
+        "bytes": 6846,
+        "sha256": "e947808669ba5a5446df71669f433b348004b6298134174eac3ef238472a4e97"
+      },
+      "source-completion-observed.json": {
+        "bytes": 169,
+        "sha256": "c1eea1cc0e600e15eeaaf376a0047231f604b222a5d0d48666b549bc745218ae"
+      },
+      "source-completion.json": {
+        "bytes": 753,
+        "sha256": "0bb82f5e148bdf7b19baff4472c0e67c443df3146cd25d7b48ea5bf4a62b800a"
+      }
+    },
+    "document_pins": {
+      "CURRENT_STATE.md": {
+        "bytes": 2219,
+        "sha256": "8aae70df4994b62c38584e3009d53ed7c786df4d6098254b425c54e7563213d2"
+      },
+      "docs/adr/0281-design-single-completed-owner.md": {
+        "bytes": 6174,
+        "sha256": "2d111f2a7ac19f35ebd82303deb14975e1d67311f038ce257fb7274c82d2eee4"
+      },
+      "docs/adr/README.md": {
+        "bytes": 50327,
+        "sha256": "f228394eb1dc4a8f5463ea67df12b2a908134648ac58d9d9322bfa3656a654e9"
+      },
+      "docs/adr/experiments/0281-completed-owner-design-evidence.zip": {
+        "bytes": 26494,
+        "sha256": "f129d1077d5a6d0d8706640c798175a027ce346b098619c10d8a76ef099b076c"
+      },
+      "docs/adr/experiments/0281-completed-owner-design.json": {
+        "bytes": 49955,
+        "sha256": "5ccd33e73cf13966989339cebceacfe45ca4a2674a2f50b67f13de3c06111193"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 91861,
+        "sha256": "7f321c8561756debbf1595984e2263d2f83830fcff247f86fc4f6256cb5a0d55"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 630745,
+        "sha256": "4b54d8769f99e579c7d0c6b9482067d1fad61d4205eaad52e1e0da5551243be7"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 36627,
+        "sha256": "c1a205de58e8baf53a284968870b2981b37a502850324f1da76030779d2b32ae"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 181709,
+        "sha256": "d57ca1ee0188eda53a6cc00aff1ff85b067dc1b7a775f20855bd164978ed4bbe"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 515805,
+        "sha256": "358f2ff2a0860d5cffda69a0a8c8f423c04c59213bddf388cff83b005263bafe"
+      }
+    },
+    "strict_openspec": "Change 'refine-physical-trajectory' is valid",
+    "diff_check": "PASS",
+    "current_state_lines": 34,
+    "scheduler": {
+      "id": "ariadna-m3",
+      "status": "ACTIVE",
+      "prompt_sha256": "741ea494ec0dce3fc47c6cc2df0b8d1bf79fd204630acd4f617206c5301763f9"
+    },
+    "runtime_tests": "Not repeated on unchanged source/test/dependencies. Existing required live regressions explicitly permitted for next implementation."
+  },
+  "independent_documentary_review": {
+    "base_revision": "f39b2f6ec85dd1fa7ba3d06c034ea998a09b89f2",
+    "checked_utc": "2026-11-26T23:06:07.608800+00:00",
+    "factual_checks": [
+      "Published contract is byte-identical to reviewed49955B draft; retained draft status is explicitly explained as review chronology, not execution authority.",
+      "Archive exact7members and every original saved byte/hash verified independently;72754expandedB/26494compressedB. Source phase actualpost-fsync428.921197374817s<600 is distinct from prefinal428.92092658393085s and later documentary packaging.",
+      "Independent source reviewpost-fsync405.55718662496656s and49source/5referencepins/9anchors are accurately summarized without claiming runtime/native/formula success.",
+      "Exactly one original forward factoryTrue, one original successful-completion/row metadata helper and one same-owner chronological-last visitorTrue; separate attempts/completed/internal-unknown accounting,10markers and original rational binary64 oracle/tolerances preserved.",
+      "F18.14 complete;F18.15 artificial implementation and required portable/live regression preparation next;F18.16 unchecked/unadmitted and requires distinct future choice/qualified controls/fresh actual600s admission.",
+      "Old setup-only integration0 authority is not reused as integration1 admission; no native episode or physical/F0/M3/99percent/safety gate closure is claimed.",
+      "Actual diff contains seven current Markdown changes only, plus newADR/contract/archive. Existing historical artifacts/runtime/tests/dependencies are unmodified; historical scheduling wording is contextualized rather than silently replaced.",
+      "Local links in newADR and CURRENT independently checked; parent666links/3anchors/strict/protected-history receipt pinned. CURRENT34lines<60.",
+      "Official scheduler parentreadback ACTIVE every5minutes with F18.15 next scope; no automatic native decision. Runtime/Ruff campaigns correctly not rerun on unchanged source in this documentary stage."
+    ],
+    "findings": [],
+    "parent_checks": {
+      "anchors": 3,
+      "bytes": 3698,
+      "diff_check": "PASS",
+      "local_links": 666,
+      "path": "/private/tmp/ariadna-f18-0281/doc-checks.json",
+      "protected_prior_blobs_unchanged": 1577,
+      "protected_prior_non_markdown_blobs_unchanged": 1246,
+      "sha256": "852a2d541a6669a9f1fa77868e14812dd6195be6ca6208155dd28bcd697f7119",
+      "status": "PASS",
+      "strict_openspec": "Change 'refine-physical-trajectory' is valid"
+    },
+    "resolved_findings": [
+      {
+        "location": "F18.15 task, ADR0281 and CURRENT_STATE next-action text",
+        "observed_problem": "Initial wording combined required make test portable/live with a prohibition on new SPICE/integration/real-data runs, creating avoidable ambiguity for the existing required live lane.",
+        "resolution": "Final text explicitly permits existing required live regressions including their SPICE/integration fixtures, while keeping new scientific diagnostics/native episodes unadmitted. Historical captured artifact bytes were not changed.",
+        "status": "RESOLVED_BEFORE_FINAL_DOCUMENTARY_PINS"
+      }
+    ],
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2219,
+        "sha256": "8aae70df4994b62c38584e3009d53ed7c786df4d6098254b425c54e7563213d2"
+      },
+      "docs/adr/0281-design-single-completed-owner.md": {
+        "bytes": 6174,
+        "sha256": "2d111f2a7ac19f35ebd82303deb14975e1d67311f038ce257fb7274c82d2eee4"
+      },
+      "docs/adr/README.md": {
+        "bytes": 50327,
+        "sha256": "f228394eb1dc4a8f5463ea67df12b2a908134648ac58d9d9322bfa3656a654e9"
+      },
+      "docs/adr/experiments/0281-completed-owner-design-evidence.zip": {
+        "bytes": 26494,
+        "sha256": "f129d1077d5a6d0d8706640c798175a027ce346b098619c10d8a76ef099b076c"
+      },
+      "docs/adr/experiments/0281-completed-owner-design.json": {
+        "bytes": 49955,
+        "sha256": "5ccd33e73cf13966989339cebceacfe45ca4a2674a2f50b67f13de3c06111193"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 91861,
+        "sha256": "7f321c8561756debbf1595984e2263d2f83830fcff247f86fc4f6256cb5a0d55"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 630745,
+        "sha256": "4b54d8769f99e579c7d0c6b9482067d1fad61d4205eaad52e1e0da5551243be7"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 36627,
+        "sha256": "c1a205de58e8baf53a284968870b2981b37a502850324f1da76030779d2b32ae"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 181709,
+        "sha256": "d57ca1ee0188eda53a6cc00aff1ff85b067dc1b7a775f20855bd164978ed4bbe"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 515805,
+        "sha256": "358f2ff2a0860d5cffda69a0a8c8f423c04c59213bddf388cff83b005263bafe"
+      }
+    },
+    "reviewer_activity": {
+      "integrations": 0,
+      "mounts": 0,
+      "native_or_scientific_imports": 0,
+      "read_only_source_saved_documentary_checks": true,
+      "real_resource_payload_reads": 0,
+      "repository_edits": 0,
+      "runtime_tests": 0,
+      "scientific_formula_evaluations": 0,
+      "spice_queries": 0
+    },
+    "schema": "ariadna.f18.completed-owner-independent-documentary-review.v1",
+    "scope": "Independent read-only review of actual documentary diff, ADR0281, exact reviewed contract and seven-member saved evidence package; separate from closed source600s clock. No runtime or scientific qualification.",
+    "status": "PASS"
+  },
+  "note": "Design/source accepted only; next artificial implementation separately checked. No new native episode."
+}

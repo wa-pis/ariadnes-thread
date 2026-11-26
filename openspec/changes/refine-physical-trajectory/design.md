@@ -1,5 +1,31 @@
 ## Context
 
+### Single completed-owner design (2026-11-27)
+
+[ADR0281](../../../docs/adr/0281-design-single-completed-owner.md) accepts F18.14:
+one original forward(True), original completion/row metadata, same-owner last
+endpoint; ten markers, fixed synthetic elapsed0–1000s and original SI gates.
+Independent source/design review PASS; no runtime/scientific execution.
+F18.15 artificial probe/audit preparation is next. Changed outer controls need
+new pins/qualification; old integration0 admission cannot authorize integration1.
+F18.16 needs a separate recorded choice and fresh actual admission; consumed
+packets and all full-owner/physical gates remain unchanged.
+
+The exact [contract](../../../docs/adr/experiments/0281-completed-owner-design.json)
+fixes the original forward factory, metadata and chronological-last schema/epoch.
+Audit successful exact completion and seven-state IDs before accepting primitive
+finite words. Independently use Fraction(binary64float(0.1)), not decimal1/10;
+retain0.001m/1e-6m/s/1e-9kg gates. One attempted integration is not completed work.
+Preserve existing science helpers, context53/53/8, retained11resources, no acquisition,
+600s preflight/60s45-10-5,64KiB/2MiB/4KiB caps and partial UNKNOWN accounting.
+F18.15 qualifies minimal private producer/audit only, with artificial focused300s,
+frozen required make test portable/live1800s, Ruff and strict. Before any native use,
+a separately qualified narrow profile/admission and explicit changed-control pins
+are required. Neither original0278/0279 nor design acceptance grants native authority.
+The source phase ended428.921197375s<600 including independent review; document
+packaging is separate. No performance prediction or scientific closure is inferred.
+
+
 ### F18.13 supplemented setup result (2026-11-27)
 
 [ADR0280](../../../docs/adr/0280-verify-supplemented-never-run-setup.md) completes

@@ -107,14 +107,21 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0281](../docs/adr/0281-design-single-completed-owner.md) accepts F18.14:
+source/design review PASS, one forwardTrue→original metadata→same-owner last
+endpoint, unchanged fixed synthetic inputs/SI gates and finite caps. Source phase
+428.921197375s<600; no runtime/formula execution. Automation ACTIVE for F18.15
+artificial probe/audit preparation and required tests. Changed outer controls need
+separate qualification; F18.16 actual execution remains unadmitted. Earlier entries
+below retain their own historical scheduling state, not current launch authority.
 [ADR0280](../docs/adr/0280-verify-supplemented-never-run-setup.md) completes F18.13:
 one actual supplemented setup/refusal PASS,8markers/factory1/integration0/visitor1,
 callbacks/SPICE0, consumption57.157760s<600, packetpostfsync3.367521s<60. Separate
 canonical saved audit0.046423s<10 and independent envelopes/preservation PASS;
 all pins/11resources/71459operationalpaths unchanged, groups absent/image detached.
 Seven new artificial operator cases pass; prior30/94/8476 retained without rerun.
-Automation ACTIVE only for bounded F18.14 source/saved design of the minimum
-completed-owner diagnostic. No new native episode, replay or physical gate closure.
+At0280 capture automation permitted only F18.14 source/saved design;0281 now
+permits artificial preparation. No new native episode, replay or physical gate closure.
 Earlier dated entries below preserve their own historical state.
 [ADR0279](../docs/adr/0279-qualify-once-only-execution-gate.md) completes F18.12a:
 30/30 new artificial outergate checks, postfsync0.925944s<120, independent review

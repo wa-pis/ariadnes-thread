@@ -1,3 +1,12 @@
+[ADR0281](../../../docs/adr/0281-design-single-completed-owner.md) accepts F18.14:
+one original forward(True), original completion/row metadata, same-owner last
+endpoint; ten markers, fixed synthetic elapsed0–1000s and original SI gates.
+Independent source/design review PASS; no runtime/scientific execution.
+F18.15 artificial probe/audit preparation is next. Changed outer controls need
+new pins/qualification; old integration0 admission cannot authorize integration1.
+F18.16 needs a separate recorded choice and fresh actual admission; consumed
+packets and all full-owner/physical gates remain unchanged.
+
 [ADR0280](../../../docs/adr/0280-verify-supplemented-never-run-setup.md) completes
 F18.13 once: exact8marker native setup/refusal PASS, factory1/integration0/visitor1,
 callbacks/SPICE0; consumption57.157760s<600, packetpostfsync3.367521s<60. Separate
