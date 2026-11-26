@@ -1,0 +1,120 @@
+{
+  "schema": "ariadna.f18.resource-inventory-doc-verification.v1",
+  "status": "PASS",
+  "base_revision": "2e831190a35cee5b0c3fee55f3352f24d7de0f70",
+  "client_date": "2026-11-27",
+  "checked_utc": "2026-11-26T21:06:29.040164+00:00",
+  "protected_prior_blobs_unchanged": 1556,
+  "protected_prior_non_markdown_blobs_unchanged": 1230,
+  "local_links_excluding_pending_receipt": 647,
+  "anchors": 5,
+  "current_state_lines": 38,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "d676f4e5f934184c4b7265f029ab30ba19909b3df9f8f8a5be8cc3764c9fc0ac",
+    "docs/adr/0276-inventory-fixed-setup-resources.md": "7bcfda0fe241453b8e74b0f98ed6300a1fd6b0e5a6dd7295114305bf44964360",
+    "docs/adr/README.md": "53d1e02a0a959a4e3637f5a18b57b331d884cd382d5236a53661de37714a904b",
+    "openspec/ROADMAP.md": "3ffe1583e0ee25fcbf9fca4ec3f98ada7aaa4da9cc4852447fa90c40db364f59",
+    "openspec/changes/refine-physical-trajectory/design.md": "7c2afae45d750785764e11a9419b53adc95830a7ed23fd44fe2c1954c74ca6ab",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "1bf0dc0d667ea4be57ce6c70f2928123ce86806be46fbe2cc9eb50458a3f42e6",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "61cc45ee60341ec7fd6276ac3558ee77b91b92324065c90a4b28e790cfeaed56",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "efddf1880b093625f343ba66ee60c6399a42938501cdc1e57faebc3cf12e878d"
+  },
+  "artifact_pins": {
+    "docs/adr/experiments/0276-setup-resource-inventory-evidence.zip": {
+      "bytes": 44595,
+      "sha256": "d317c2a69d1e5d176478a3f1731c22eae8614c8598296653081e7706fa24e009"
+    },
+    "docs/adr/experiments/0276-setup-resource-inventory-result.json": {
+      "bytes": 7950,
+      "sha256": "774340155bc859cc15cd55e863d2818a208f69425bab0c8e85112c0d5db80063"
+    }
+  },
+  "archive_members": 12,
+  "runtime_source_test_dependency_changes": 0,
+  "runtime_tests": "Not repeated: repository source/test/dependency unchanged; ADR0274 successful8476passes/Ruff retained. No native/scientific/source-inventory runtime tests.",
+  "outcome": "Scoped source inventory PASS only; proposal not provisioned/executed, F18.9 consumed/unqualified and all physical gates open.",
+  "diff_whitespace": "PASS",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "ACTIVE",
+    "prompt_sha256": "e305dc57e0273276c4dd19c34253d7e585bbb429458d50d5e362f416bbb6616f"
+  },
+  "image_observed_unmounted": true,
+  "finalized_utc": "2026-11-26T21:09:39.693847+00:00",
+  "parent_check_sha256": "f2cbbc290715e05d020e2c777a355fe74adfe8ba2d73f54b0d7d54ee4ce2137c",
+  "independent_documentary_review": {
+    "sha256": "f48043ec6ea45c40268abee9a9db26f409b03c7a59cb71c8d0ff39d4d9fae454",
+    "report": {
+      "schema": "ariadna.f18.resource-inventory-independent-documentary-review.v1",
+      "status": "PASS",
+      "findings": [],
+      "checked_utc": "2026-11-26T21:09:25.472466+00:00",
+      "scope": "Read-only independent review of eight current Markdown files and two packaged artifacts for ADR0276/F18.10; saved evidence only. No native/project imports, tests, SPICE, integration, remount, copies, provisioning, staging or checkout mutation.",
+      "base_revision": "2e831190a35cee5b0c3fee55f3352f24d7de0f70",
+      "reviewed_files": {
+        "CURRENT_STATE.md": {
+          "bytes": 2469,
+          "sha256": "d676f4e5f934184c4b7265f029ab30ba19909b3df9f8f8a5be8cc3764c9fc0ac"
+        },
+        "docs/adr/0276-inventory-fixed-setup-resources.md": {
+          "bytes": 7898,
+          "sha256": "7bcfda0fe241453b8e74b0f98ed6300a1fd6b0e5a6dd7295114305bf44964360"
+        },
+        "docs/adr/README.md": {
+          "bytes": 49019,
+          "sha256": "53d1e02a0a959a4e3637f5a18b57b331d884cd382d5236a53661de37714a904b"
+        },
+        "openspec/ROADMAP.md": {
+          "bytes": 89249,
+          "sha256": "3ffe1583e0ee25fcbf9fca4ec3f98ada7aaa4da9cc4852447fa90c40db364f59"
+        },
+        "openspec/changes/refine-physical-trajectory/design.md": {
+          "bytes": 622407,
+          "sha256": "7c2afae45d750785764e11a9419b53adc95830a7ed23fd44fe2c1954c74ca6ab"
+        },
+        "openspec/changes/refine-physical-trajectory/proposal.md": {
+          "bytes": 34210,
+          "sha256": "1bf0dc0d667ea4be57ce6c70f2928123ce86806be46fbe2cc9eb50458a3f42e6"
+        },
+        "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+          "bytes": 176240,
+          "sha256": "61cc45ee60341ec7fd6276ac3558ee77b91b92324065c90a4b28e790cfeaed56"
+        },
+        "openspec/changes/refine-physical-trajectory/tasks.md": {
+          "bytes": 507332,
+          "sha256": "efddf1880b093625f343ba66ee60c6399a42938501cdc1e57faebc3cf12e878d"
+        },
+        "docs/adr/experiments/0276-setup-resource-inventory-evidence.zip": {
+          "bytes": 44595,
+          "sha256": "d317c2a69d1e5d176478a3f1731c22eae8614c8598296653081e7706fa24e009"
+        },
+        "docs/adr/experiments/0276-setup-resource-inventory-result.json": {
+          "bytes": 7950,
+          "sha256": "774340155bc859cc15cd55e863d2818a208f69425bab0c8e85112c0d5db80063"
+        }
+      },
+      "factual_checks": {
+        "actual_diff": "All seven tracked Markdown diffs inspected. Roadmap is additive; earlier paragraphs preserved. Only short CURRENT and current tasks heading replace prior present-state text; durable history remains. New ADR inspected.",
+        "archive": "12 unique safe members, each digest/size and exact bytes match result manifest and saved originals; JSON and Python AST syntax valid; 44595 compressed/162552 expanded bytes.",
+        "source_evidence": "44 anchors/40 edges and prior independent source PASS retained. Six source-visible eager payloads3578887B; no native closure/parser/upstream sufficiency claim. Existing five resources and scoped seven nonselected candidates distinguished.",
+        "clock_and_failure": "Initial denied filesystem detach retained and hash-linked to successful same-clock detach557.625779250171s<900; source review508.9458250408061s. No native retry.",
+        "preservation": "Saved operational receipt reports71459paths/1646916124regular bytes unchanged; parent documentary checker verifies1556prior blobs/1230nonMarkdown preserved,647links/5anchors and strict validation. No repeated runtime tests claimed.",
+        "scheduler_and_gates": "ACTIVE readback/prompt hash matches; next step concrete distinct six-file contract preparation only. Proposal500624382B is not provisioned; F18.9 remains unchecked/consumed/unqualified and physical gates OPEN.",
+        "links": "Current ADR/OpenSpec/result/evidence cross-links inspected; sole intentional pending0276-doc-verification.json final parent receipt excluded by checker.",
+        "dates": "Client2026-11-27 Europe/Samara and rawUTC2026-11-26 explicitly distinguished."
+      },
+      "parent_doc_checks_pin": {
+        "bytes": 2654,
+        "sha256": "f2cbbc290715e05d020e2c777a355fe74adfe8ba2d73f54b0d7d54ee4ce2137c"
+      },
+      "new_runtime_qualification": false
+    }
+  },
+  "receipt_links_resolved_by_this_file": [
+    "experiments/0276-doc-verification.json"
+  ]
+}

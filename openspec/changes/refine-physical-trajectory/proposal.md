@@ -1,3 +1,9 @@
+[ADR0276](../../../docs/adr/0276-inventory-fixed-setup-resources.md) completes
+source-only F18.10 inventory under ACTIVE automation: six eager local payloads
+identified, independent source review PASS, no copies/native/runtime tests.
+Next concrete test-profile preparation only; no new native episode/provision or
+physical qualification follows from inventory.
+
 [ADR0275](../../../docs/adr/0275-record-failed-never-run-setup.md) retains the
 once-only F18.9 failed setup: missing Earth-orientation EOP file, four partial
 markers, childexit2,6.641288042s<60. Failure accounting audited; full success

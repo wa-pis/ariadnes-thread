@@ -1,0 +1,158 @@
+{
+  "schema": "ariadna.f18.setup-resource-inventory-result.v1",
+  "status": "PASS_SCOPED_SOURCE_INVENTORY_ONLY",
+  "client_date": "2026-11-27",
+  "timezone": "Europe/Samara",
+  "base_revision": "2e831190a35cee5b0c3fee55f3352f24d7de0f70",
+  "independent_source_review": "PASS",
+  "source_anchors": 44,
+  "source_edges": 40,
+  "required_extra_count": 6,
+  "required_extra_bytes": 3578887,
+  "all_local_candidate_count": 13,
+  "all_local_candidate_bytes": 6789176,
+  "other7_classification": "Not selected by this inspected converter route; not globally unused.",
+  "selected_files": [
+    {
+      "name": "eopc04_14_IAU2000.62-now.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/eopc04_14_IAU2000.62-now.txt",
+      "bytes": 3572052,
+      "sha256": "cc838b27572e89ff6d36ee7cbeb6a8f104f1f8e59ddf769e8c93e6515276cd32",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/eopc04_14_IAU2000.62-now.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    },
+    {
+      "name": "historicalDeltaT.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/historicalDeltaT.txt",
+      "bytes": 3627,
+      "sha256": "4a2d068df1cdb5f39ac0e7efa04aafeea5be585afd1c9e2e4380cf8872e1f78e",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/historicalDeltaT.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    },
+    {
+      "name": "utcLibrationAmplitudes.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/utcLibrationAmplitudes.txt",
+      "bytes": 120,
+      "sha256": "43e945689ae30f7200d87df1adba1571d912671679ecd06ef27603c147f4bca7",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/utcLibrationAmplitudes.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    },
+    {
+      "name": "utcLibrationFundamentalArgumentMultipliers.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/utcLibrationFundamentalArgumentMultipliers.txt",
+      "bytes": 319,
+      "sha256": "901564789b3e7478d856dd9c0f37644d41810e8ef288039b59e7d52bf038c9c5",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/utcLibrationFundamentalArgumentMultipliers.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    },
+    {
+      "name": "utcOceanTidesAmplitudes.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/utcOceanTidesAmplitudes.txt",
+      "bytes": 1136,
+      "sha256": "e5a638ccddc614670804ee85d60e3c0a541ce40ad4758a71af5ce680aa615829",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/utcOceanTidesAmplitudes.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    },
+    {
+      "name": "utcOceanTidesFundamentalArgumentMultipliers.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/utcOceanTidesFundamentalArgumentMultipliers.txt",
+      "bytes": 1633,
+      "sha256": "eb2ae730afe18e42b75f201f087057e13a99d632f0217fbef9d520084ac3c863",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/utcOceanTidesFundamentalArgumentMultipliers.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    }
+  ],
+  "import_route": "dynamics -> environment_setup.gravity_field.sbdb_wrapper -> data.processTrk234 -> converters.radioBase -> eager RadioBase.time_scale_converter -> EOP/default UT1/historicalDeltaT readers",
+  "historical_failure_interpretation": "Consistent eager source route before body creation, not an observed exact native stack or cause of0269. No claim all six were read in0275.",
+  "existing5_reader_classification": "Two Gaussian tables and three station map statics are earlier kernel-load requirements. RadioBase.stationDict calls a literal DSN map; no additional file read from that call.",
+  "source_inventory_limit_s": 900,
+  "source_review_elapsed_s": 508.9458250408061,
+  "final_detach_elapsed_s": 557.625779250171,
+  "image_detached": true,
+  "initial_detach": "Default sandbox unmount denied at538.357s; original failed receipt retained; authorized filesystem escalation detached at557.626s on same clock, no scientific retry.",
+  "source_pins_unchanged": 49,
+  "native_pins_unchanged": 10,
+  "resource_pins_unchanged": 5,
+  "old_ledgers_unchanged": 25,
+  "operational_paths_unchanged": 71459,
+  "operational_regular_bytes_unchanged": 1646916124,
+  "new_acquisition_bytes": 0,
+  "carried_acquisition_bytes": 497045495,
+  "proposed_acquisition_bytes_not_executed": 500624382,
+  "native_imports": 0,
+  "project_runtime_imports": 0,
+  "runtime_tests": 0,
+  "factory_calls": 0,
+  "spice_queries": 0,
+  "integrations": 0,
+  "resource_copies": 0,
+  "provisions": 0,
+  "builds": 0,
+  "dependency_changes": 0,
+  "payload_identity_limits": "Local size/hash identity only; no upstream authentication, native parser/data coverage qualification or full source-to-linked-binary closure.",
+  "native_setup_and_physical_gates": "OPEN; F18.9 consumed/unqualified; no owner/carry/concurrency/ABI-FP/prior-arithmetic or physicalF0/M3/99percent/safety qualification.",
+  "runtime_regression_reuse": "ADR0274:8063portable+413live passes/42unchanged archival skips and Ruff; not repeated on unchanged code.",
+  "scheduler": "ACTIVE every5minutes; next action prepare concrete distinct six-file resource/setup contract before provision or execution.",
+  "archive": {
+    "name": "0276-setup-resource-inventory-evidence.zip",
+    "bytes": 44595,
+    "expanded_bytes": 162552,
+    "sha256": "d317c2a69d1e5d176478a3f1731c22eae8614c8598296653081e7706fa24e009",
+    "members": {
+      "inventory-start.json": {
+        "bytes": 1242,
+        "sha256": "18ebc37c0f9710fc73e2524a028732574342531169c6d408944f70e5fb7d19ff"
+      },
+      "inventory-local.py": {
+        "bytes": 3047,
+        "sha256": "e102f71c3158030158d523a2296d46a46c11f551495e6c1f53e4e24d025ef070"
+      },
+      "local-inventory.json": {
+        "bytes": 22813,
+        "sha256": "bf752e73bdc58bd56ce59ee0d6fceb53d380cc9b083a47b2414ba4d1feb41a23"
+      },
+      "build-source-callgraph.py": {
+        "bytes": 15788,
+        "sha256": "389fbd96fdd00b5ed2b98bd0ec6cd182f1518c029a8dc7fd4b8daaf63673b5f4"
+      },
+      "source-callgraph.json": {
+        "bytes": 73344,
+        "sha256": "223c3d036ec9f8314c41b8a42d57175c5a96ad7f8d878d7246a4631b2391e488"
+      },
+      "independent-source-review.json": {
+        "bytes": 18180,
+        "sha256": "3ca566a958ba8a2f93d73a6f43b0ab660124ef06a03f991c054dfef6085d86c1"
+      },
+      "resource-supplement-proposal.json": {
+        "bytes": 8963,
+        "sha256": "11a62d9d972a8aa857f85c96683d1b9d09785872c6f3596ac093ab04ad6448b7"
+      },
+      "check-preservation.py": {
+        "bytes": 1393,
+        "sha256": "d163b0559dc0d3a7c13d88e665e8207154acafad2147f159de39199a0c9f9e33"
+      },
+      "operational-after.json": {
+        "bytes": 455,
+        "sha256": "e79ac74afefce98145ab78b71894ab63718b25f02d540fa9eaee43412c4b1aa0"
+      },
+      "source-phase-finalization.json": {
+        "bytes": 823,
+        "sha256": "0481ef040a48c198738286f11162ce5bddcec4ee811fd2551fe618bbea68f560"
+      },
+      "source-phase-finalization-escalated.json": {
+        "bytes": 1068,
+        "sha256": "bad426571da2b2ba9388edeed9beb020df0d15ea8f8d7295b9970bea965fe9a4"
+      },
+      "scheduler-readback.json": {
+        "bytes": 15436,
+        "sha256": "f7355ba637e439abffb86f6fd271800caf702bd7a20237fb2d723656ac9e5008"
+      }
+    }
+  }
+}

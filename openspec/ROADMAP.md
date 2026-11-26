@@ -107,6 +107,12 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0276](../docs/adr/0276-inventory-fixed-setup-resources.md) completes F18.10
+source-only inventory:44anchors/40edges, independent review PASS, six eager local
+files3578887B absent image. No copies/native/tests; protected bytes unchanged,
+image detached557.625779s<900. Automation ACTIVE for concrete distinct six-file
+test-profile preparation; local identities do not establish runtime completeness.
+Old600s/60s caps, consumed F18.9 failure and every physical gate remain unchanged.
 [ADR0275](../docs/adr/0275-record-failed-never-run-setup.md) retains one F18.9
 CONSUMED/UNQUALIFIED:6.641288042s, four markers through factory-enter, childexit2
 reports absent Earth-orientation EOP resource. No factory-return/visitor/report;

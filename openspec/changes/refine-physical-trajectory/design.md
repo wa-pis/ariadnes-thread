@@ -1,5 +1,30 @@
 ## Context
 
+### F18.10 fixed setup resource inventory (2026-11-27)
+
+[ADR0276](../../../docs/adr/0276-inventory-fixed-setup-resources.md) accepts the
+resumed source/saved-only check: fixed _native_factory('never-run', False) path,
+eager/lazy/unused/unresolved resource readers, source anchors and existing local
+payload identity/availability. One900s reading clock includes independent source
+review and read-only detach; prior600s preflight/60s native profile unchanged.
+No native import/test/episode, SPICE, integration, provision/copy/download/build
+or changed dependencies/scientific gates. Source conditionality and unresolved
+branches must remain explicit; no runtime qualification claim follows. Ordinary
+later artificial preparation requires concrete OpenSpec reconciliation first.
+
+F18.10 outcome:44 exact source/hash/line anchors and40 edges, independent source
+review PASS, six eager local Earth-orientation payloads3578887B absent from image.
+The Python RadioBase class attribute constructs the default time converter during
+dynamics import, before empty-body setup; EOP/default UT1/historicalDeltaT readers
+are conditional on earlier imports succeeding. Other7local candidates are scoped
+nonselected. Existing5resources remain earlier kernel-load statics; literal DSN
+map adds no reader. Local identity is not parser/upstream/full-linked-binary or
+runtime qualification. Image detached557.625779s<900, protected pins/operational
+bytes unchanged, zero new native/runtime/tests/SPICE/integration/copies/provision.
+Next: prepare a distinct six-file resource/setup contract using qualified controls;
+the archived list/projected500624382Bacquisition is proposed only. Preserve old
+600s/60s profile, consumed failures and every physical gate.
+
 ### F18.9 consumed setup failure (2026-11-27)
 
 [ADR0275](../../../docs/adr/0275-record-failed-never-run-setup.md) retains the

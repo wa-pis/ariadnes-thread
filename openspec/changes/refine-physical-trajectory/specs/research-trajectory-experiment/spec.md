@@ -172,6 +172,12 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **THEN** the attempt SHALL remain consumed and full setup qualification SHALL be rejected; partial markers, raw errors, child status, prefinal/post-fsync observations and unchanged time/byte caps SHALL be independently accounted for without inventing internal counters or factory completion
 - **AND** resource supplementation, another native attempt or a revised experiment contract SHALL require a new explicit decision; protected prior data SHALL be checked and the read-only image detached, while F18.9 and physical gates remain open
 
+#### Scenario: Resume only bounded setup-resource preparation
+
+- **WHEN** the user resumes automation and continued checks after0275's missing-resource failure
+- **THEN** F18.10 MAY trace the fixed never-run setup source/resource path within900s including independent review and read-only detach, classifying source-visible eager/lazy/unused/unresolved readers and pinning existing local payload availability without runtime imports, copies, downloads, SPICE or integration
+- **AND** prior600s preflight/60s native caps, consumed attempts and physical gates SHALL remain unchanged; inventory SHALL NOT authorize provisioning or another native episode, and unknown dependency closure SHALL remain explicit
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence
