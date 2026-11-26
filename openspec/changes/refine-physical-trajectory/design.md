@@ -1,5 +1,28 @@
 ## Context
 
+### F18.11 six-file supplemented setup contract (2026-11-27)
+
+[ADR0277](../../../docs/adr/0277-design-supplemented-setup-test.md) defines the
+smallest distinct future resource/setup profile: exactly six0276local files,
+3578887B added to unchanged old5,11files3710549B, carried acquisition500624382B
+under2GiB and8GiB scratch. IsolatedHOME only; exclusive immutable precharge,
+symlink/ancestor/absenttarget guards, same-filesystem six-file fsynced staging,
+atomic no-replace publication, exact11file readback, then detach/remount read-only
+and fresh independent proof before launch. Old600s preflight and60s45/10/5 caps,
+64KiB input/logs/2MiB evidence, env/role flags/kernel/initial settings stay fixed.
+Four0275runtime controls remain byte-identical; collector/sandbox/preservation
+allow namespace-only diffs. New narrow admission logic binds fresh resources/
+RO/precharge/provision/source/native/control/ledger/profile; exact10-key probe
+input unchanged. Never mechanically replay oldprepare.py/five-file admission.
+F18.11 is <=600s saved-source/design review only, no mounts/runtime/tests/copies.
+F18.12 may qualify temporary transaction/admission on artificial full-volume data
+within120s/2MiB, including no-replace race/fsync/stale-proof/clock refusals; no
+new harness or unchanged fullregression replay. F18.13 needs a distinct recorded
+execution/admission decision after preparation, with one new namespace,1context/
+1factoryFalse/0integration/1visitorTrue,exact RuntimeError refusal/8markers and
+100000callback ceiling; firstfailure retained without retry. No current provision/
+native admission or F18.9 replay; owner/physical gates remain open.
+
 ### F18.10 fixed setup resource inventory (2026-11-27)
 
 [ADR0276](../../../docs/adr/0276-inventory-fixed-setup-resources.md) accepts the

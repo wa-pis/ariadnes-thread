@@ -1,0 +1,163 @@
+{
+  "schema": "ariadna.f18.supplemented-setup-design-doc-verification.v1",
+  "status": "PASS",
+  "base_revision": "62ba9878eca62e2b2242223c505a0f269546871c",
+  "client_date": "2026-11-27",
+  "checked_utc": "2026-11-26T21:21:51.071228+00:00",
+  "protected_prior_blobs_unchanged": 1560,
+  "protected_prior_non_markdown_blobs_unchanged": 1233,
+  "local_links_excluding_pending_receipt": 653,
+  "anchors": 5,
+  "current_state_lines": 39,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "02ed2d575989fab36c3f3f20e29085a58ae072eb5f68859d677737c72e6dde3c",
+    "docs/adr/0277-design-supplemented-setup-test.md": "60ad9764da2e26f4ddd58fbd0fbe9323fa168e71d4e0d02356b51dabd52e2252",
+    "docs/adr/README.md": "f97739c8df77defc31b47b84544d19290ac46d685fe86954ee0c2e980baca31d",
+    "openspec/ROADMAP.md": "8bd2057df457d4015f735b48f48708e5af168566eb73c157056a58c9db0757b7",
+    "openspec/changes/refine-physical-trajectory/design.md": "4f807809dfd3b90e857c77dab2e10e3b9d654e01d23422bca94020fbf5720bac",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "27ac34275666851ddf782f048234f457cda38bf9b2ea3f2b3d3bb01e0a9961fe",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "67ae14bcc0661b9460153e8e14232cf9393ce50223874dab12e6228baa82b6bf",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "178c8ee773171d35099a7c9790d3223f6c1068f26eb7d0948dbef3f9c784b6f5"
+  },
+  "artifact_pins": {
+    "docs/adr/experiments/0277-supplemented-setup-design-evidence.zip": {
+      "bytes": 26771,
+      "sha256": "50d38b0b70820f8dbdce4bf69c5f290ccc9bdc6d29cff19d43722359c1fda292"
+    },
+    "docs/adr/experiments/0277-supplemented-setup-contract.json": {
+      "bytes": 14563,
+      "sha256": "6c2c80e441c9b08fc8de48b21bfed2c506e11d3a32b106277ead897bca3c7714"
+    }
+  },
+  "archive": {
+    "name": "0277-supplemented-setup-design-evidence.zip",
+    "bytes": 26771,
+    "sha256": "50d38b0b70820f8dbdce4bf69c5f290ccc9bdc6d29cff19d43722359c1fda292",
+    "expanded_bytes": 72113,
+    "members": {
+      "design-start.json": {
+        "bytes": 1106,
+        "sha256": "c684c9d772fd2f49fde4ffaf700cbb42749d6cbdeb584ce7a33dd525e46db957"
+      },
+      "contract-initial.json": {
+        "bytes": 14474,
+        "sha256": "5c938885358239040abb2cf8e099bca2c3c66cf688329a20ff5ac2a28b623582"
+      },
+      "contract-correction.json": {
+        "bytes": 616,
+        "sha256": "3ed5f44aa6eba85998cad22c7b54e1dada20d4010f50c85404a2e62a018c9ef0"
+      },
+      "contract.json": {
+        "bytes": 14563,
+        "sha256": "6c2c80e441c9b08fc8de48b21bfed2c506e11d3a32b106277ead897bca3c7714"
+      },
+      "reuse-review.json": {
+        "bytes": 12507,
+        "sha256": "941a8c67c0740717d5660c2ba47d78109bf5f6d3b2abefc9ba63357297a4b668"
+      },
+      "reuse-review-pin-clarification.json": {
+        "bytes": 5489,
+        "sha256": "4ae62bff9c62c778b0800d09761d76e556683fc94410d6a32351d74172fe313a"
+      },
+      "independent-design-review.json": {
+        "bytes": 8528,
+        "sha256": "0b6b1fee121a8b63cf2842f57d6eaeb89b33d55c142b687a3cc099f1abb52a03"
+      },
+      "design-phase-finalization.json": {
+        "bytes": 889,
+        "sha256": "e0c490f82af4d2e56cf6b0272770476743e258e3e03b98a420f2fb9cb71e390d"
+      },
+      "scheduler-readback.json": {
+        "bytes": 13941,
+        "sha256": "2943bfd348ab8f773257723b01644a468d6e52730258aa37617c53e6159e03d8"
+      }
+    }
+  },
+  "runtime_source_test_dependency_changes": 0,
+  "runtime_tests": "Not repeated: no repository source/test/dependency change, no new runtime test or provisioning; ADR0274 successful8476passes/Ruff and qualified controls retained.",
+  "outcome": "F18.11 concrete design/reuse/source review PASS only; F18.12 artificial preparation next. No actual provision/native execution or physical qualification; F18.9 consumed/unqualified.",
+  "diff_whitespace": "PASS",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "ACTIVE",
+    "prompt_sha256": "8a4b6b99e65b8e8cfa89484263f1ea2e84f59a1a0ce181fd864e98bc06bd634d"
+  },
+  "image_observed_unmounted": true,
+  "finalized_utc": "2026-11-26T21:23:43.286117+00:00",
+  "parent_check_sha256": "1dd6cb5ee028d9bbae1815f860fd3aa4df3693c7bb51bed9bf08603b477997ea",
+  "independent_documentary_review": {
+    "sha256": "6613b5c2252c22410004f607e1b17ddf3e48da24860feafdc593a8bf7cc64007",
+    "report": {
+      "schema": "ariadna.f18.supplemented-setup-independent-documentary-review.v1",
+      "status": "PASS",
+      "findings": [],
+      "checked_utc": "2026-11-26T21:23:29.397911+00:00",
+      "scope": "Final read-only documentary review of eight Markdown files, contract JSON and nine-member evidence archive for ADR0277/F18.11; actual seven tracked diffs and final ADR inspected. Saved artifacts only, no continuation of closed source phase, imports, tests, mount, copies, provision, native/SPICE/integration, staging or checkout edits.",
+      "base_revision": "62ba9878eca62e2b2242223c505a0f269546871c",
+      "reviewed_files": {
+        "CURRENT_STATE.md": {
+          "bytes": 2569,
+          "sha256": "02ed2d575989fab36c3f3f20e29085a58ae072eb5f68859d677737c72e6dde3c"
+        },
+        "docs/adr/0277-design-supplemented-setup-test.md": {
+          "bytes": 10871,
+          "sha256": "60ad9764da2e26f4ddd58fbd0fbe9323fa168e71d4e0d02356b51dabd52e2252"
+        },
+        "docs/adr/README.md": {
+          "bytes": 49273,
+          "sha256": "f97739c8df77defc31b47b84544d19290ac46d685fe86954ee0c2e980baca31d"
+        },
+        "openspec/ROADMAP.md": {
+          "bytes": 89570,
+          "sha256": "8bd2057df457d4015f735b48f48708e5af168566eb73c157056a58c9db0757b7"
+        },
+        "openspec/changes/refine-physical-trajectory/design.md": {
+          "bytes": 624062,
+          "sha256": "4f807809dfd3b90e857c77dab2e10e3b9d654e01d23422bca94020fbf5720bac"
+        },
+        "openspec/changes/refine-physical-trajectory/proposal.md": {
+          "bytes": 34613,
+          "sha256": "27ac34275666851ddf782f048234f457cda38bf9b2ea3f2b3d3bb01e0a9961fe"
+        },
+        "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+          "bytes": 177515,
+          "sha256": "67ae14bcc0661b9460153e8e14232cf9393ce50223874dab12e6228baa82b6bf"
+        },
+        "openspec/changes/refine-physical-trajectory/tasks.md": {
+          "bytes": 510280,
+          "sha256": "178c8ee773171d35099a7c9790d3223f6c1068f26eb7d0948dbef3f9c784b6f5"
+        },
+        "docs/adr/experiments/0277-supplemented-setup-design-evidence.zip": {
+          "bytes": 26771,
+          "sha256": "50d38b0b70820f8dbdce4bf69c5f290ccc9bdc6d29cff19d43722359c1fda292"
+        },
+        "docs/adr/experiments/0277-supplemented-setup-contract.json": {
+          "bytes": 14563,
+          "sha256": "6c2c80e441c9b08fc8de48b21bfed2c506e11d3a32b106277ead897bca3c7714"
+        }
+      },
+      "checks": {
+        "archive": "Nine unique safe JSON members; each size/SHA matches manifest and exact retained original bytes.26771compressed/72113expanded bytes. Packaged contract equals archive contract.",
+        "corrected_provenance": "Initial contract, one-field admission-label correction, original reuse receipt and14archive-pin clarification all retained. Corrected contractSHA6c2c80e441c9b08fc8de48b21bfed2c506e11d3a32b106277ead897bca3c7714 remains independently reviewed.",
+        "clock": "Independent review410.8327052076347s and source-phase finalization443.1332096247934s completed on same original clock before600. Documentary work explicitly separate from closed source phase; no future preflight or native episode started.",
+        "history_and_claims": "Roadmap/design/proposal/spec additions preserve historical text. ShortCURRENT/currenttasks heading updates present status; old F18.9 remains unchecked/consumed/unqualified. No runtime/test/provision/physical result claim.",
+        "authority": "F18.11 design completed; F18.12 unchecked, only fabricated full-volume temporary transaction/admission preparation<=120s/2MiB next. F18.13 unchecked and needs distinct recorded execution/admission; ACTIVE scheduler readback/prompt hash matches.",
+        "frozen_contract": "Six exact proposed local files3578887B; proposed total11files3710549B and500624382B carried acquisition. No-replace atomic transaction/RO proof/new admission; four exact control reuse distinguished from new admission logic. Old caps/env/source/kernel/physical gates unchanged.",
+        "parent_checks": "Parent receipt records1560prior blobs/1233nonMarkdown preserved,653local links/5anchors, strictOpenSpecPASS, no runtime source/test/dependency changes. No redundant runtime qualification repeated.",
+        "pending_link": "Only intentional0277-doc-verification.json final parent verification link remains pending until this receipt is embedded."
+      },
+      "parent_doc_checks_pin": {
+        "bytes": 4301,
+        "sha256": "1dd6cb5ee028d9bbae1815f860fd3aa4df3693c7bb51bed9bf08603b477997ea"
+      },
+      "new_runtime_or_scientific_qualification": false
+    }
+  },
+  "receipt_links_resolved_by_this_file": [
+    "experiments/0277-doc-verification.json"
+  ]
+}

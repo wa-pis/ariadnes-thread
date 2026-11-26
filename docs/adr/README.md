@@ -64,6 +64,7 @@ linking the old one and mark the old one superseded; do not erase earlier outcom
 
 ## Records
 
+- [0277 — Supplemented setup-test contract](0277-design-supplemented-setup-test.md) — F18.11 design; exactsix local files, isolated no-replace transaction/read-only admission, reused controls. Artificial preparation next; no provision/native result.
 - [0276 — Fixed setup-resource inventory](0276-inventory-fixed-setup-resources.md) — F18.10 scoped source review PASS; six eager local payloads identified, no copies/native run. Automation ACTIVE for next concrete preparation.
 - [0275 — Failed never-run setup observation](0275-record-failed-never-run-setup.md) — one F18.9 consumed/unqualified; missing Earth-orientation resource, four partial markers, failure accounting audited. PAUSED.
 - [0274 — Artificial never-run setup diagnostic](0274-qualify-artificial-owner-setup.md) — F18.8 qualified; exact call/refusal and durability controls, no new native setup. PAUSED for F18.9.

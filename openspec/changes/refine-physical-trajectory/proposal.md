@@ -1,3 +1,9 @@
+[ADR0277](../../../docs/adr/0277-design-supplemented-setup-test.md) specifies the
+exact distinct six-file setup-test contract: isolated atomic no-replace provision,
+11file/RO/precharge admission and unchanged qualified runtime/caps. F18.11 design
+only; F18.12 temporary artificial preparation next, no real copies/native run.
+F18.13 remains separately admitted; F18.9 and all physical gates stay open.
+
 [ADR0276](../../../docs/adr/0276-inventory-fixed-setup-resources.md) completes
 source-only F18.10 inventory under ACTIVE automation: six eager local payloads
 identified, independent source review PASS, no copies/native/runtime tests.

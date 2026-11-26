@@ -178,6 +178,13 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **THEN** F18.10 MAY trace the fixed never-run setup source/resource path within900s including independent review and read-only detach, classifying source-visible eager/lazy/unused/unresolved readers and pinning existing local payload availability without runtime imports, copies, downloads, SPICE or integration
 - **AND** prior600s preflight/60s native caps, consumed attempts and physical gates SHALL remain unchanged; inventory SHALL NOT authorize provisioning or another native episode, and unknown dependency closure SHALL remain explicit
 
+#### Scenario: Prepare one exact supplemented setup profile without executing it
+
+- **WHEN** F18.10 identifies the six locally pinned eager resources and the user continues ordinary diagnostic preparation
+- **THEN** F18.11 SHALL define the isolated six-file3578887B transaction/exact11file3710549B readback, carried acquisition500624382B<2GiB, atomic no-replace and symlink/occupied-target guards, ROremount and fresh resource/precharge/profile/source/native/control/ledger admission within600s saved-source/design review without mount/runtime/test/copy/provision
+- **AND** F18.12 MAY qualify only temporary transaction/admission logic on fabricated full-volume data within120s/2MiB including failed/racing publication, fsync and stale-proof refusals; four runtime controls SHALL stay byte-identical, exact10-key probe input and old env/settings/600s-preflight/60s45-10-5/64KiB/2MiB gates SHALL remain unchanged
+- **AND** a future F18.13 provision/new setup SHALL require its separately recorded decision and independent admission, preserve F18.9consumed failure, stop after original1context/1factoryFalse/0integration/1visitorTrue exact RuntimeError refusal and retain partial failure without retry; this preparation SHALL NOT imply provision/native/physical qualification
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

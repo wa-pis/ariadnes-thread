@@ -1,0 +1,236 @@
+{
+  "schema": "ariadna.f18.supplemented-setup-contract.v1",
+  "status": "ACCEPTED_DESIGN_ONLY_NOT_EXECUTED",
+  "client_date": "2026-11-27",
+  "timezone": "Europe/Samara",
+  "base_revision": "62ba9878eca62e2b2242223c505a0f269546871c",
+  "stages": {
+    "F18.11": "This source/saved-only concrete design; no mounts/copies/native/test.",
+    "F18.12": "Next authorized ordinary temporary stdlib transaction/admission preparation and artificial checks only. No real resource payload reads/copies, mount, native or SPICE.",
+    "F18.13": "Future one provision/setup observation only after a separate recorded execution/admission decision and completed F18.12. No current execution authority; never reuse consumedF18.9."
+  },
+  "authority": "User resumed automation and asked to continue tests; ordinary reversible preparation is authorized. Design acceptance is not a real provision/native admission. Pause only if actual user access/data/action or a scientific-contract choice is required.",
+  "future_episode_root": "/private/tmp/ariadna-f18-supplemented-setup-v1",
+  "future_image": "/private/tmp/ariadna-f17-0263/scratch.sparseimage",
+  "future_mount": "/private/tmp/ariadna-f17-0263/volume",
+  "supplement": [
+    {
+      "name": "eopc04_14_IAU2000.62-now.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/eopc04_14_IAU2000.62-now.txt",
+      "bytes": 3572052,
+      "sha256": "cc838b27572e89ff6d36ee7cbeb6a8f104f1f8e59ddf769e8c93e6515276cd32",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/eopc04_14_IAU2000.62-now.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    },
+    {
+      "name": "historicalDeltaT.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/historicalDeltaT.txt",
+      "bytes": 3627,
+      "sha256": "4a2d068df1cdb5f39ac0e7efa04aafeea5be585afd1c9e2e4380cf8872e1f78e",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/historicalDeltaT.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    },
+    {
+      "name": "utcLibrationAmplitudes.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/utcLibrationAmplitudes.txt",
+      "bytes": 120,
+      "sha256": "43e945689ae30f7200d87df1adba1571d912671679ecd06ef27603c147f4bca7",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/utcLibrationAmplitudes.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    },
+    {
+      "name": "utcLibrationFundamentalArgumentMultipliers.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/utcLibrationFundamentalArgumentMultipliers.txt",
+      "bytes": 319,
+      "sha256": "901564789b3e7478d856dd9c0f37644d41810e8ef288039b59e7d52bf038c9c5",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/utcLibrationFundamentalArgumentMultipliers.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    },
+    {
+      "name": "utcOceanTidesAmplitudes.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/utcOceanTidesAmplitudes.txt",
+      "bytes": 1136,
+      "sha256": "e5a638ccddc614670804ee85d60e3c0a541ce40ad4758a71af5ce680aa615829",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/utcOceanTidesAmplitudes.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    },
+    {
+      "name": "utcOceanTidesFundamentalArgumentMultipliers.txt",
+      "local_path": "/Users/agrudin/.tudat/resource/earth_orientation/utcOceanTidesFundamentalArgumentMultipliers.txt",
+      "bytes": 1633,
+      "sha256": "eb2ae730afe18e42b75f201f087057e13a99d632f0217fbef9d520084ac3c863",
+      "image_path": "/private/tmp/ariadna-f17-0263/volume/home/.tudat/resource/earth_orientation/utcOceanTidesFundamentalArgumentMultipliers.txt",
+      "image_exists": false,
+      "classification": "source-visible eager converter payload; local identity only"
+    }
+  ],
+  "extra_bytes": 3578887,
+  "old_five_bytes": 131662,
+  "total_resource_count": 11,
+  "total_resource_bytes": 3710549,
+  "carried_acquisition_bytes": 497045495,
+  "proposed_aggregate_acquisition_bytes": 500624382,
+  "acquisition_ceiling_bytes": 2147483648,
+  "scratch_ceiling_bytes": 8589934592,
+  "controls": {
+    "admit-launch.py": {
+      "bytes": 2592,
+      "reuse": "Reference only. New narrow admission checker binds/rechecks six-file precharge/provision/freshRO11file proofs and must be independently qualified; not a namespace-only adaptation.",
+      "sha256": "aac6f0b92725de56d2552735639f79e37aeff828436a014b08998d7c7057d1df",
+      "source_path": "/private/tmp/ariadna-f18-0275/admit-launch.py"
+    },
+    "call-once.py": {
+      "bytes": 3846,
+      "reuse": "byte-for-byte",
+      "sha256": "b984a4c427f144dea536e707f75aa3bbdde942d3d9ee43fb00d8c4b49d8dbf11",
+      "source_path": "/private/tmp/ariadna-f18-0275/call-once.py"
+    },
+    "check-preservation.py": {
+      "bytes": 1393,
+      "reuse": "new-stage namespace/profile metadata substitution only; independent normalized-diff review",
+      "sha256": "5acea29e7ff7862e358524ae28984fa46c7b12db1dc8b3f8cf3387f07fcb7922",
+      "source_path": "/private/tmp/ariadna-f18-0275/check-preservation.py"
+    },
+    "launch-once.py": {
+      "bytes": 6821,
+      "reuse": "byte-for-byte",
+      "sha256": "57e95d12f572c23e8e39c644998f0490818555d3862a8595c8049977974dde01",
+      "source_path": "/private/tmp/ariadna-f18-0275/launch-once.py"
+    },
+    "native-entry.py": {
+      "bytes": 2503,
+      "reuse": "byte-for-byte",
+      "sha256": "aa83050a2cf99e4e5dcff4d0f76f01ae2c65cdb56d07cdf984626090a4b02bf3",
+      "source_path": "/private/tmp/ariadna-f18-0275/native-entry.py"
+    },
+    "native.sandbox": {
+      "bytes": 240,
+      "reuse": "new-stage namespace/profile metadata substitution only; independent normalized-diff review",
+      "sha256": "62ee8cd3432e8d88c0d508b68526eb9242ae84888e18eb385e60e2051d53b359",
+      "source_path": "/private/tmp/ariadna-f18-0275/native.sandbox"
+    },
+    "run-once.py": {
+      "bytes": 3317,
+      "reuse": "new-stage namespace/profile metadata substitution only; independent normalized-diff review",
+      "sha256": "00dbbecf48cfb61692f63be998bf7762c93dd1772f80573908b305baa51a2010",
+      "source_path": "/private/tmp/ariadna-f18-0275/run-once.py"
+    },
+    "supervisor-adapter.py": {
+      "bytes": 3582,
+      "reuse": "byte-for-byte",
+      "sha256": "7378cae9d8518918ef2790374828a12a06d8d0e1bb8f7d67f4c87060c2297d94",
+      "source_path": "/private/tmp/ariadna-f18-0275/supervisor-adapter.py"
+    }
+  },
+  "environment_unchanged": {
+    "PATH": "/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONSAFEPATH": "1",
+    "PYTHONPATH": "/Users/agrudin/dev/my/ariadna/src",
+    "HOME": "/private/tmp/ariadna-f17-0263/volume/home",
+    "TMPDIR": "/private/tmp/ariadna-f17-0263/volume/tmp",
+    "TMP": "/private/tmp/ariadna-f17-0263/volume/tmp",
+    "TEMP": "/private/tmp/ariadna-f17-0263/volume/tmp",
+    "CONDA_PKGS_DIRS": "/private/tmp/ariadna-f17-0263/volume/pkgs",
+    "CONDA_ENVS_PATH": "/private/tmp/ariadna-f17-0263/volume/envs",
+    "XDG_CACHE_HOME": "/private/tmp/ariadna-f17-0263/volume/cache",
+    "XDG_CONFIG_HOME": "/private/tmp/ariadna-f17-0263/volume/config",
+    "CONDARC": "/private/tmp/ariadna-f17-0263/volume/condarc"
+  },
+  "kernel_sha256": "04f7af4c8429c09aec9a21f50888e7e4a979e69184e8abc530e17e88e4cb4941",
+  "source_pin_count": 49,
+  "native_pin_count": 10,
+  "old_resource_count": 5,
+  "old_ledger_pin_count": 25,
+  "resource_manifest_rule": "Exact11regular files with exact relative names/lengths/SHA, no extra files, symlinks or changed old5; preserve all old pins/history plus0275 and0276 records.",
+  "transaction_rule": "Fresh preflight clock before RW mount/precharge; exclusive immutable acquisition precharge carrying old balance. Verify regular non-symlink local sources and real nonsymlink parents, absent target by lstat/lexists. Open exactly6 bounded outputs exclusively in a new same-filesystem sibling stage; fsync/readback files and exactname set/stage directory. Recheck destination absence then atomic exclusive no-replace directory publication, fsync parent and immutable receipt. Failure keeps precharge/partial evidence, forbids native launch; no overwrite, individual retry or hostHOME change.",
+  "exclusive_publication_basis": {
+    "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/stdio.h",
+    "pin": {
+      "bytes": 2415,
+      "sha256": "a8078ae1cba1a46a66d0de6fe7f13bbc969cdb7e78fc2d4b9a5c5cdaaf16126b"
+    },
+    "lines37_39": [
+      "#define RENAME_EXCL                     0x00000004",
+      "#define RENAME_RESERVED1                0x00000008",
+      "#define RENAME_NOFOLLOW_ANY             0x00000010"
+    ],
+    "lines52_53": [
+      "int renamex_np(const char *, const char *, unsigned int) __OSX_AVAILABLE(10.12) __IOS_AVAILABLE(10.0) __TVOS_AVAILABLE(10.0) __WATCHOS_AVAILABLE(3.0);",
+      "int renameatx_np(int, const char *, int, const char *, unsigned int) __OSX_AVAILABLE(10.12) __IOS_AVAILABLE(10.0) __TVOS_AVAILABLE(10.0) __WATCHOS_AVAILABLE(3.0);"
+    ],
+    "meaning": "LocalSDK declares RENAME_EXCL0x4 and renameatx_np; future temporaryfilesystem use must be artificially qualified, unsupported calls failclosed. No filesystem call performed here."
+  },
+  "remount_rule": "After complete provision and11file readback, detach RW and remount RO at originalpath; fresh ST_RDONLY/capacity/11resource/native/source/oldledger proof before admission. No native operation under RW image. Anyfailedprovision/remount/admission means no launch and controlleddetach/evidence.",
+  "admission_rule": "Separate narrow temporary admission check, not unchanged oldadmit-launch. Bind/recheck provision+precharge+freshRO11file readback+profile/source/control/ledger/native identities and newnamespace to PASS launch-admission.json. Preserve exact10-key probe_input; resource proofs belong to outerprofile/admission. Qualify stale/missing/tamperedprovision/RO/name/hash/count/clock records on artificial inputs.",
+  "runtime_scope": {
+    "arc_id": "never-run",
+    "context_checks": 1,
+    "expected_refusal": {
+      "message": "completed original results unavailable",
+      "type": "RuntimeError"
+    },
+    "factory_calls": 1,
+    "integration_calls": 0,
+    "markers": [
+      "bootstrap-ready",
+      "import-ready",
+      "context-ready",
+      "factory-enter",
+      "factory-return",
+      "visitor-enter",
+      "visitor-refused",
+      "complete"
+    ],
+    "native_source_runtime_api": "unchanged _owner_setup_probe/_owner_setup_audit and _owner_endpoint_fixture/_owner_endpoint_run/trajectory; preserve qualified hashes and original8markers",
+    "simulate": false,
+    "visitor_args": [
+      true,
+      "cartesian-position-m_velocity-m-s_mass-kg"
+    ],
+    "visitor_calls": 1
+  },
+  "limits": {
+    "acceleration_callbacks": 100000,
+    "aggregate_acquisition_ceiling_bytes": 2147483648,
+    "audit_s": 10,
+    "context_checks": 1,
+    "factory_attempts": 1,
+    "finalization_s": 5,
+    "input_report_or_log_partition_bytes": 65536,
+    "integration_attempts": 0,
+    "marker_bytes": 512,
+    "outer65s_failsafe": "failure-only containment; cannot turn elapsed>=60 into success",
+    "preflight_s": 600,
+    "producer_s": 45,
+    "scratch_ceiling_bytes": 8589934592,
+    "structured_bytes": 2097152,
+    "total_s": 60,
+    "trace_bytes": 4096,
+    "visitor_calls": 1
+  },
+  "clocks": "Current600s saved-source design/review is separate from future600s preflight beginning before first RWmount/write and including provision/ROrestore/review through consumption. Original60s(45/10/5) episode begins before cold import; outer65s failsafe only failurecontainment, never success extension. Do not reset/relabel oldclocks. Post-result preservation/detach remains required; no new native work during saved-only audit.",
+  "new_preparation_only": "Small temporary fixedsix manifest transaction and narrow admission logic plus namespace-only collector/sandbox/preservation adaptation. Four runtime controls staybyteidentical; oldprepare.py must not be rerun/regenerateadapter. No genericframework or newrepository runtime/test code expected.",
+  "artificial_checks": {
+    "budget_s": 120,
+    "one_invocation": "Pinned outerPython-I-B, startup/producer/test/asserts/durable receipts inclusive; hosttempfiles only; no actualresourcefile reads/nativeimports/mounts.",
+    "groups": [
+      "Exact6file success, exact11 readback using5fabricated oldfiles, full3,578,887B newpayload shape and carried-byte arithmetic.",
+      "Reject badsize/hash, symlink/nonregular input or ancestor, existingfinal including dangling symlink and race-createdemptydir; failclosed unsupportedexclusivepublish.",
+      "Interruptedcopy/shortread/fsync/stagerename/parentfsync and overflow/deadline refusals, partialevidence retained, no finalsuccess/admission or precharge rollback.",
+      "Admission rejects missing/stale/tamperedprovision/precharge/RO/source/native/profile/control/oldledger proofs and exhausted/incomparable clock; unchanged normalizedcollector paths preserve qualified behavior."
+    ],
+    "evidence_ceiling_bytes": 2097152,
+    "payloads": "Fabricated files are testfixtures not scientificacquisition; never insert actuallocalpayloadhashes into artificialsuccess as a nativeproof."
+  },
+  "verification": "Independent saved-source/scope/reuse review <=600s, source pins/header anchors, unchanged protectedpriorblobs, local links/artifact JSON/AST/digests/diff, shortCURRENT, strict OpenSpec; separate stagecommit/push. No repeated8476successfultests/Ruff on unchanged runtime. If repositoryruntime/test/dependency behavior changes, requiredfocused+frozenmake test portable/live+Ruff apply.",
+  "failure_and_claims": "First complete/partial newattempt retained. F18.9 remainsconsumed/unqualified; no secondsetup/extraresource/changedcaps/env/kernel/deps/scientificgate automatically. Exactrefusal setupseam only; owner/carry/concurrency/ABI-FP/priorarithmetic/physicalF0/M3/99percent/safety remainopen."
+}

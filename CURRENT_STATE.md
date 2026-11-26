@@ -16,17 +16,18 @@ Zero native/runtime imports/tests/SPICE/integration/copies/provision/acquisition
 
 ## Next action and scheduler
 ariadna-m3 ACTIVE every5minutes, user resumed continued checks2026-11-27.
-Prepare concrete distinct six-file supplementation/setup-test contract, reusing
-qualified0274controls/audit and preserving original600s/60s45-10-5 caps/env/inputs.
-Projected acquisition500624382B/11resources3710549B is proposed only, not executed.
-No copies/new native observation before that reconciled reviewed contract.
-Do not create another harness or rerun successful regressions on unchanged code.
+[ADR0277](docs/adr/0277-design-supplemented-setup-test.md) completes F18.11 design: six-file
+isolated setup-test contract: no-replace atomic transaction, exact11file/ROremount/
+precharge/freshadmission, unchanged code/kernel/env/600s/60s45-10-5 caps.
+Next F18.12 temporary transaction/admission preparation with fabricated full-volume
+files and120s/2MiB artificial checks only; reuse four0275runtime controls bytewise.
+No realpayload reads/copies, mount/native/SPICE/integration or F18.13 yet.
+Actual provision/new setup requires its separately recorded execution/admission.
 [ADR0275](docs/adr/0275-record-failed-never-run-setup.md): F18.9 CONSUMED/UNQUALIFIED,
-4markers/factory-enter/childexit2, missing EOP;6.641288042s<60, actual partial counts
-UNKNOWN, failure accounting audited/full success REJECT. No replay or cause claim
-for0269. [ADR0274](docs/adr/0274-qualify-artificial-owner-setup.md):215new artificial
-cases in8063portable+413live passes/42unchanged archival skips, Ruff/review/strict
-PASS; runtime unchanged, successful checks not repeated for0276.
+4markers/factory-enter/childexit2, missing EOP;6.641288042s<60, partialcounts UNKNOWN,
+failure accounting audited/fullsuccess REJECT. No replay or0269cause claim.
+[ADR0274](docs/adr/0274-qualify-artificial-owner-setup.md):8063portable+413live passes/
+42unchanged archival skips and Ruff retained; unchangedcode tests not repeated.
 
 ## Physical goal remains open
 [ADR0247](docs/adr/0247-formulate-coupled-moon-mars-problem.md): fixed F0 states,
