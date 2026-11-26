@@ -1,0 +1,162 @@
+{
+  "schema": "ariadna.f18.supplemented-execution-gate-result.v1",
+  "stage": "F18.12a / conditionalF18.13decision",
+  "adr": "0279",
+  "base_revision": "1dcdb85d3654608f65b31247aa93beed9be10091",
+  "client_date": "2026-11-27",
+  "timezone": "Europe/Samara",
+  "packaged_utc": "2026-11-26T22:06:54.313417+00:00",
+  "status": "PASS_ARTIFICIAL_GATE_ONLY_CONDITIONAL_FUTURE_EXECUTION",
+  "test_count": 30,
+  "invocations": 1,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "observed_after_fsync_s": 0.9259437923319638,
+  "limit_s": 120,
+  "clock_scope": "Before qualification child startup through external receipt fsync and observed return. Later normalized copy/review/packaging/documentation separate; gate artificialelapsed isdispatch-entry only.",
+  "saved_invocation_bytes": 10190,
+  "full_new_fake_payload_bytes": 3578887,
+  "fake_file_count": 11,
+  "old94campaign_repeated": false,
+  "native_positive_tested": false,
+  "initial_harness_findings": 2,
+  "findings_fixed_before_first_run": true,
+  "source_and_saved_review": "PASS",
+  "remaining_findings": 0,
+  "qualified_gate": {
+    "bytes": 14154,
+    "sha256": "c6900033e49502487bda9af79eb1f6b08a38ae6b70478ae0ec5689263c2a6f68"
+  },
+  "controls": "Preserve0278fourcore/three namespace-only and exact9control/10nativegroup. Newgate/outerPythonpins separately bound by profile+executiondecision.",
+  "actual_preflight_or_native_execution": false,
+  "future_authority": "Conditional choice for one fixed supplementedF18.13 under standing continued-testsinstruction, only after fresh independent actualpreflight/ADMITTED_ONCEproof on clean committeddev. No actualproof generated here. No oldF18.9retry.",
+  "archive": {
+    "name": "0279-once-only-execution-gate-evidence.zip",
+    "bytes": 54090,
+    "sha256": "3f73a181eebd3b98743d1c0011e44e2d3a4db8932777edf1399e3388b5b77f43",
+    "expanded_bytes": 171540,
+    "members": {
+      "0279-supplemented-execution-gate-contract.json": {
+        "bytes": 7766,
+        "sha256": "19aedf2ef83e0b3d055ffb4ab5a045fa5d99fb08f4b49515686424ce33d76954"
+      },
+      "admission.py": {
+        "bytes": 19584,
+        "sha256": "37e30013b68bc3cf141a339145b68c8f9e2b9e40ea5ba321db3652c23eebfa4f"
+      },
+      "dispatch-once.py": {
+        "bytes": 14154,
+        "sha256": "c6900033e49502487bda9af79eb1f6b08a38ae6b70478ae0ec5689263c2a6f68"
+      },
+      "fixture-reuse.py": {
+        "bytes": 39317,
+        "sha256": "b2d3047d6548214be6e456ed7cf7199578bd2ea16af3c8edced3da79b801d4bf"
+      },
+      "gate-plan-initial.json": {
+        "bytes": 4962,
+        "sha256": "6115908814e675c5856625d7d0a7496069fe6c37c7bd457a4a7d9cecc3790c63"
+      },
+      "gate-plan.json": {
+        "bytes": 5915,
+        "sha256": "b62349f044f0ccc74e3dffa8ec9928e954c978bad7383d24fe76537d352f0aa1"
+      },
+      "helper-reuse.json": {
+        "bytes": 735,
+        "sha256": "ce8829402f287b22a385e0d48fb9d47de621211592ab4da6276a8eae3839f7d0"
+      },
+      "independent-code-review-completion.json": {
+        "bytes": 5887,
+        "sha256": "0b9df465e745ed365ff3ba7796a000e9b8f67428fb696152bde7de04406d3304"
+      },
+      "independent-code-review-initial.json": {
+        "bytes": 1879,
+        "sha256": "5086044b2cd46562dbf1f560a4cd8e443b295f28eaccb8579d4cb3314166287f"
+      },
+      "outer-controller-reuse.json": {
+        "bytes": 438,
+        "sha256": "bc9476c9d096c5191e14100f784028ace4b0b6e8dd16b3a73fda2e241d0d703b"
+      },
+      "pre-run-source-review.json": {
+        "bytes": 4836,
+        "sha256": "8f5e11704818e3a8fb272d45ca302805c01577113737d38f2ccb49f493fb03e4"
+      },
+      "preparation-start.json": {
+        "bytes": 695,
+        "sha256": "b466f521a5ac71c3d1fb744109a50b60ab658f342c657d83b3267fe924f79873"
+      },
+      "provision.py": {
+        "bytes": 10750,
+        "sha256": "a31b2655627ca0a81f5d729d187c7bada7a7789ffaf93c8492157be55e726439"
+      },
+      "qualification-observed-return.json": {
+        "bytes": 478,
+        "sha256": "5ff88eb439ac34d3070c05cf1e1bd7811997da10fbf177c1de0c308274181bb6"
+      },
+      "qualification-v1/artificial-e276290c6f834a38a2e21d943438664c/qualification.json": {
+        "bytes": 1265,
+        "sha256": "9737efc5d83d7e63b8001a1aa06b4a1469f3cfa33d03ede0fe193b81f3156493"
+      },
+      "qualification-v1/artificial-e276290c6f834a38a2e21d943438664c/unittest.log": {
+        "bytes": 3845,
+        "sha256": "59bf2c94b37e7c90806de6cc32109a873b47fc6d716a26ff4eaf72622738e59d"
+      },
+      "qualification-v1/external-receipt.json": {
+        "bytes": 1033,
+        "sha256": "bd5f4158a2a7a45bfb67b5984927a40901620006a4eb4cdd23a7835196aa02f0"
+      },
+      "qualification-v1/stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "qualification-v1/stdout.log": {
+        "bytes": 4047,
+        "sha256": "e9444e990ab7947ff037ca7c7b46d00b0bd4424b111aac0a7ddb852721e3c07a"
+      },
+      "qualify-gate-observed-initial-review.py": {
+        "bytes": 17944,
+        "sha256": "07afb1000caa4a62b2fab9e4f3f5087073b46ecd1d2a527912e969751c359c30"
+      },
+      "qualify-gate.py": {
+        "bytes": 21891,
+        "sha256": "44eba9fd9f2b2640db7e8db530f73e794a68b0ebc0e92b65cd6ac420b3b88f5a"
+      },
+      "qualify-once.py": {
+        "bytes": 3795,
+        "sha256": "e1a9a04628ffa079a17b70263e4e21a46cee2c0701ea0664a132561be50161fc"
+      },
+      "scheduler-readback.json": {
+        "bytes": 324,
+        "sha256": "0fca565878e133709beec77b81d66048d09f49a720fec711637c8c36bd1f31a5"
+      }
+    }
+  },
+  "evidence_limit_bytes": 2097152,
+  "repository_runtime_test_dependency_changes": 0,
+  "prior_checks": "Retain0278:94/94 and0274:8476passes/42archiveskips/Ruff. No repeatunchangedcampaigns;30newtargetedcases+independentreview only.",
+  "not_performed": [
+    "realresourcepayloadread/copy",
+    "mount/provision",
+    "Tudat/kernel imports",
+    "SPICE",
+    "integration",
+    "nativecollector/nativeexec",
+    "actualF18.13"
+  ],
+  "image_unmounted": true,
+  "future_episode_absent": true,
+  "remaining": [
+    "Fresh actual600s preflight from before RWmount/write including exactsixfile precharge/provision/11fileROremount/independentreview throughconsumption.",
+    "Actualpositiveimage/nativeadmission/onefactoryFalse andexactvisitorrefusal remainunqualified.",
+    "Original60s45/10/5/100000callback/64KiB/2MiB andallphysicalgates unchanged; no admissiblecommandpair/99percent/safetyclaim."
+  ],
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "ACTIVE",
+    "rrule": "FREQ=MINUTELY;INTERVAL=5",
+    "target_thread_id": "01a06901-f960-72e2-841b-672deb3eb02d",
+    "prompt_sha256": "d18f0b80fae2954aab8b333910a62b536a36d5995fa83239215e29ed62e89be6",
+    "checked_utc": "2026-11-26T22:06:05.620565+00:00",
+    "actual_native_admission": false
+  }
+}

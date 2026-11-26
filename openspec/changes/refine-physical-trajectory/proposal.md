@@ -1,7 +1,13 @@
+[ADR0279](../../../docs/adr/0279-qualify-once-only-execution-gate.md) completes
+F18.12a outergate:30/30 artificial checks,0.925944s<120 and independent review PASS.
+It records conditional oneF18.13 choice under continued-tests authorization, only
+after fresh independent actualpreflight/ROadmission. No realpayload/mount/native
+result; unchanged oldcontrols/caps and physical gates retained. Automation ACTIVE.
+
 [ADR0278](../../../docs/adr/0278-qualify-artificial-provision-admission.md) completes
 F18.12 artificial six-file transaction/admission:94/94, post-fsync1.142127s<120,
 independent code/reuse review PASS, evidence<2MiB. No realpayload/mount/native work.
-Next: distinct F18.13 execution/admission decision and final outer launch gate;
+Those decision/outergate prerequisites are now recorded/qualified by0279;
 actual independent preflight/nativepositive remain unqualified. Automation ACTIVE.
 
 [ADR0277](../../../docs/adr/0277-design-supplemented-setup-test.md) specifies the

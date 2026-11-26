@@ -1,0 +1,75 @@
+{
+  "schema": "ariadna.f18.supplemented-execution-gate-contract.v1",
+  "stage": "F18.12a / conditional F18.13 decision",
+  "decision": "Conditional once-only execution authority under the user's standing continued-tests instruction; no actual execution until final artificial gate qualification and independent fresh actual preflight. No real resource/mount/native work during preparation.",
+  "base_revision": "1dcdb85d3654608f65b31247aa93beed9be10091",
+  "unchanged_contract_sha256": "6c2c80e441c9b08fc8de48b21bfed2c506e11d3a32b106277ead897bca3c7714",
+  "qualification": "New outer gate logic only: fabricated tempfile inputs, <=120s per invocation through startup/asserts/durable receipt/observed return and <=2MiB retained evidence. Reuse qualified 0278fixture helpers without running94oldcases. No repeated8476runtime tests/Ruff unless package/tests/deps change.",
+  "gate_api": "gate(profile_path, contract_path, *, mode, started_s, now=time.monotonic, observe=None, dispatch=None). Native forbids replacement clock/observer/dispatch; artificial requires explicit fake observer and dispatch and can never write PASS or invoke os.exec. Standalone native __main__ takes fixed profile/contract/start paths only.",
+  "gate_rules": [
+    "Use fixed pinned0278admission.py bytes and invoke admit directly in current process; never accept a saved returned-admission as authority. Artificial route calls actual admission.admit with fabricated fixture/proofs/ROobserver; no syntheticnativePASS injection.",
+    "Native fixednamespace /private/tmp/ariadna-f18-supplemented-setup-v1 and official0277contract; verify separate executiondecision proof and its outer_gate_pin for this script. Keep existing exact9control group unchanged; outergate pin belongs separately to decision.",
+    "Refuse any preexisting gate-start marker, admission-check candidate, launch-admission, episode-start or execution path including dangling symlinks. Create/fsync exclusive gate-start before direct admission; failure retains consumed preparation marker, no resume/retry.",
+    "Verify returned admission mode/status/nativeauthorization/check-after-fsync/finiteclock/profile/contract/receipt hashes, read pending disk candidate independently and match all inherited fields except returned status/authority/finalization/elapsed/receipt hash; typed numbers, no bool alias.",
+    "One direct full admit binds the preserved source/native/resource/ledger groups. Immediately before dispatch recheck exact profile/contract/pendingcandidate, outer gate/outer interpreter and collector pins. No concurrent writer is permitted; image stays read-only. Do not call admit twice or widen the exact9control/10native groups.",
+    "Write exclusive launch-admission.json, statusPASS onlynative or ARTIFICIAL_READY onlyartificial, binding profile/contract/returnedreceipt/decision/startclock. Fsyncfile+parent then observe original600spreflight and re-read pins before continuation. Failure never dispatches; diskPASS alone cannot resume because gate-start/candidate/launch leftovers are occupied.",
+    "Native successful continuation os.execv pinned outerPython -I -B unchanged run-once.py, so no added subprocess/audit interval after coldimport; artificial calls only explicit fake dispatch. No new resultPASS is printed before exec; original collector owns60s outcome/groupcleanup. Existing600s bound ends at consumption, not at end of60sepisode.",
+    "No externally invoked old run-once.py or leftover gate alone is admitted by this contract. Native exec failure retains partialfailure and forbids retry. This is a bounded controlled-workflow rule, not tamperproof security against arbitrary external commands."
+  ],
+  "artificial_cases": [
+    "Connected actualqualifiedprovision -> actualartificialadmission -> durableARTIFICIAL_READY -> fake dispatch once; no PASSgate/nativeexec.",
+    "All occupied/dangling candidate/launch/episode/work/start leftovers refuse and never dispatch; secondcall refuses.",
+    "Reject native mode with injected observer/clock/dispatch before actual fixedpaths/payloads; artificial without observers/dispatch refuses.",
+    "Reject pending/unfinalized/wrongscope/clock/bool/nonfinite/stale returnedproof, unchangedprofile/contract/candidate/control drift, missing orwronggatepin/executiondecision, adversefsync and lateclock; semantic mutations bound so not merely stalehash checks.",
+    "Injected dispatch refusal remains consumed and no automatic retry; nativepositive/mount/exec stay unexercised."
+  ],
+  "future_actual": "Separate generated executiondecision statusADMITTED_ONCE after clean committedbase and independent actualpreflight; original600s begins before RWmount/write, exact6resources/carriedprecharge/11fileROremount, one unchanged60s45/10/5 setup/refusal. No real mount/copy/native now. Any failure retains evidence, no automaticretry/extraresources/changedcaps. All physical gates remainopen.",
+  "outer_fields": {
+    "outer_gate": "profile.outer_gate == execution_decision.outer_gate_pin: {path,bytes,sha256}.",
+    "outer_python": "profile.outer_python == execution_decision.outer_python_pin: {resolvedpath,bytes,sha256}, key path; pinned operational Conda outer interpreter. No symlink alias accepted as regular file.",
+    "decision": "execution_decision proof {path,sha256}; stage F18.13/mode/base_revision/contract_sha256 bound. status ADMITTED_ONCE(native) or ARTIFICIAL_EXECUTION_DECISION(artificial).",
+    "collector": "run-once.py is pinned in existingcontrolgroup, not imported: its module top level executes. Native continuation uses os.execv only; artificial callback cannot invoke it."
+  },
+  "authority_note": "This recorded choice permits one future fixed F18.13 under standing user authorization only after new gate qualification and independent actual admission; no native-positive result or actual resource operation has occurred. It does not replay F18.9 or change scientific boundaries.",
+  "return_clock_note": "Artificial returned gate elapsed_s is the admission/dispatch-entry clock. Callback completion/asserts/final receipt are measured by the external120s qualification, not by that returned field. Native continuation execs and never returns a native PASS.",
+  "status": "ACCEPTED_CONDITIONAL_ONE_SETUP_NOT_EXECUTED",
+  "client_date": "2026-11-27",
+  "timezone": "Europe/Samara",
+  "qualified_source_pins": {
+    "dispatch-once.py": {
+      "bytes": 14154,
+      "sha256": "c6900033e49502487bda9af79eb1f6b08a38ae6b70478ae0ec5689263c2a6f68"
+    },
+    "admission.py": {
+      "bytes": 19584,
+      "sha256": "37e30013b68bc3cf141a339145b68c8f9e2b9e40ea5ba321db3652c23eebfa4f"
+    },
+    "provision.py": {
+      "bytes": 10750,
+      "sha256": "a31b2655627ca0a81f5d729d187c7bada7a7789ffaf93c8492157be55e726439"
+    },
+    "qualify-gate.py": {
+      "bytes": 21891,
+      "sha256": "44eba9fd9f2b2640db7e8db530f73e794a68b0ebc0e92b65cd6ac420b3b88f5a"
+    },
+    "qualify-once.py": {
+      "bytes": 3795,
+      "sha256": "e1a9a04628ffa079a17b70263e4e21a46cee2c0701ea0664a132561be50161fc"
+    },
+    "fixture-reuse.py": {
+      "bytes": 39317,
+      "sha256": "b2d3047d6548214be6e456ed7cf7199578bd2ea16af3c8edced3da79b801d4bf"
+    }
+  },
+  "qualification_result": {
+    "test_count": 30,
+    "invocations": 1,
+    "failures": 0,
+    "errors": 0,
+    "observed_after_fsync_s": 0.9259437923319638,
+    "limit_s": 120,
+    "saved_invocation_bytes": 10190,
+    "native_positive_tested": false
+  },
+  "future_execution_decision_creation": "Only during a new complete actual preflight on the subsequently clean committed dev revision: generate fixed-stage native ADMITTED_ONCE proof after independent review. This document is conditional authority, not that live proof. Never generate or reuse a fake/native PASS record here."
+}

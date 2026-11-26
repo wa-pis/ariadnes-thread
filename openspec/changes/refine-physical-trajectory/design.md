@@ -1,5 +1,30 @@
 ## Context
 
+### F18.12a once-only execution gate (2026-11-27)
+
+[ADR0279](../../../docs/adr/0279-qualify-once-only-execution-gate.md) records the
+conditional choice of exactly one fixed supplementedF18.13 after independent
+actual admission; current preparation remains artificial only. New temporarygate
+owns one direct byte-pinned0278admit, observed return versus pendingdiskcandidate,
+exclusive gate-start, fsynced finalpermit and immediate source/profile/clock
+rechecks before nativeexec into unchangedcollector. No collector import. Leftover
+start/candidate/permit/episode/work refuses any resume. Gate/outerPythonpins are
+separately bound by immutableprofile+executiondecision, outside exact9controls/
+10nativegroup. Artificial mode never writesPASS or callsnativeexec: only
+ARTIFICIAL_READY/authfalse and explicitfakecallback. DisknativepermitPASS alone
+cannot authorize a resume; manuallegacybypass is outside this controlled contract.
+Thirty targetedcases PASS in one externally observed postfsync0.925943792s<120,
+10190B invocation records/evidence<2MiB, independent source/saved review PASS.
+Initialharness helper-hiding/pinshape findings corrected before first run and
+preserved. Tests reach actualadmit+semanticmutations, directoryfsync and postseal
+profile/collector drift. Artificial elapsed marks dispatchentry; outer120s observer
+includes callback/asserts/finalreceipt. Actualnativepositive/F18.13 unexecuted.
+Next fresh600spreflight includes realprovision/ROrestore/review throughconsumption;
+originalcoldimport60s45/10/5 thereafter, no resets or extraresources/retry. Newgate
+usesprocessreplacement, no additionalparent phase aftercoldimport. Old4core/3outer
+controls/qualifiedhelperbytes remain unchanged. No package/tests/deps change;
+8476/94campaigns retained without rerun; all physical gates open, automationACTIVE.
+
 ### F18.12 artificial transaction and admission result (2026-11-27)
 
 [ADR0278](../../../docs/adr/0278-qualify-artificial-provision-admission.md) qualifies

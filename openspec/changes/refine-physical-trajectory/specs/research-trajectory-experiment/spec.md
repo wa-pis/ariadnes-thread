@@ -192,6 +192,14 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **AND** provision/admission disk candidates SHALL remain pending and SHALL NOT authorize launch; artificial return SHALL explicitly deny native authority, while a future native caller SHALL bind a successfully observed post-fsync admission result to a fresh durable final launch gate before dispatch, rejecting stale leftovers and late/failed finalization
 - **AND** artificial positive checks SHALL NOT imply actual read-only image/native-positive qualification or F18.13 execution; the separate decision and independent fresh original preflight SHALL remain required
 
+#### Scenario: Continue one observed admission through a qualified execution gate
+
+- **WHEN** the standing continued-tests instruction is reconciled with a distinct conditional one-F18.13 decision and a temporary outer gate is prepared
+- **THEN** the gate SHALL call the qualified admission directly once, bind its observed post-fsync return to the exact pending candidate/profile/contract/proofs and separately pinned outer gate/interpreter, and retain an exclusive start marker that makes every pre-existing candidate/permit/episode/work or second entry refuse dispatch
+- **AND** final file and directory fsync plus immediate pin/namespace/original600s-clock checks SHALL precede native process replacement into the unchanged collector; failed or late sealing/drift SHALL dispatch zero times, and a leftover PASS file alone SHALL NOT admit a resume
+- **AND** an artificial invocation SHALL complete within120s/2MiB, reach actual fabricated provision/admission and semantic mutations, write only ARTIFICIAL_READY with native authority false, and dispatch its explicit harmless callback once on success or zero times on refusal; native replacement callbacks SHALL be rejected before live reads
+- **AND** this qualification SHALL leave actual read-only image/native-positive/exec unverified; the conditional choice SHALL require a fresh independently reviewed actual600s preflight through consumption before one native episode, followed by original60s45/10/5 rather than a reset or additional parent phase, with all other0277caps and physical gates unchanged
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence

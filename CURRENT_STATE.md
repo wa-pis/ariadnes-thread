@@ -3,31 +3,31 @@
 Updated: 2026-11-27. Keep under60lines; durable evidence in ADRs.
 
 ## Current result
-[ADR0278](docs/adr/0278-qualify-artificial-provision-admission.md): F18.12 temporary
-fixed-six provision/admission qualified artificially:94/94, no failures/errors/skips,
-observed post-fsync1.142126958s<120s. Full newfakevolume3578887B/exact11fakefiles;
-20982B invocation evidence;171660B expanded archive+7515B result<2MiB.
-Independent code/reuse review PASS; initial proof/durability findings fixed before
-qualification, retained. Four runtime controls byte-identical; three outer paths
-namespace-only. No package/test/dependency change; prior8476passes/Ruff retained.
-[Result](docs/adr/experiments/0278-artificial-provision-admission-result.json).
+[ADR0279](docs/adr/0279-qualify-once-only-execution-gate.md): F18.12a temporary
+once-only outer gate qualified artificially:30/30,0failures/errors/skips,
+post-outer-fsync0.925943792s<120,10190Binvocation evidence, total evidence<2MiB.
+Independent source/saved review PASS;2harness issues fixed before first run,
+initial source/findings retained. Direct0278admit→durablegate/rechecks→dispatch;
+exclusive marker rejects leftovers/retry; artificialARTIFICIAL_READY/authfalse.
+Nativeexec/positiveimage admission unexercised. No package/test/dependency change.
+[Result](docs/adr/experiments/0279-once-only-execution-gate-result.json).
 
 ## Next action and scheduler
 ariadna-m3 ACTIVE every5minutes; user requested continued tests2026-11-27.
-Next: separately record concrete F18.13 execution/admission decision and prepare
-minimal final outer gate binding observed admission return to once-only dispatch.
-F18.12 disk candidates stay pending, never authorize launch alone. Nativepositive/
-actualROidentity/final livegate unexercised; no actual provision/native admission.
-[ADR0277](docs/adr/0277-design-supplemented-setup-test.md): exact6localfiles, exclusive
-precharge/no-replace publication, exact11file/ROremount/fresh600s preflight;
-unchanged env/code/kernel/60s45-10-5 caps. Real execution needs independent admission.
-No realresourcepayload reads/copies/mount/native/SPICE/integration in F18.12.
-[ADR0276](docs/adr/0276-inventory-fixed-setup-resources.md): six source-visible local
-files3578887B absent image; local identity/source reasoning only, no runtime proof.
-[ADR0275](docs/adr/0275-record-failed-never-run-setup.md): F18.9 CONSUMED/UNQUALIFIED,
-4markers/factory-enter/childexit2/missingEOP,6.641288042s<60, partialcounts UNKNOWN;
-failure accounting audited/fullsuccess REJECT. No replay or0269cause claim.
-Image remains unmounted. Old evidence/moon_to_mars.py unchanged.
+ADR0279 records conditional choice of one F18.13 under standing authorization,
+not a live admission. Next fresh600s actualpreflight from before RWmount/write:
+clean committeddev/pins/6localfiles/precharge/no-replace/11readback/ROremount/
+independent review→distinctADMITTED_ONCEproof→newgate only. No directlegacylaunch.
+[ADR0277](docs/adr/0277-design-supplemented-setup-test.md) fixes original env/code/
+kernel/settings/60s45-10-5/count/byte caps; no extraresources/retry/clockreset.
+[ADR0278](docs/adr/0278-qualify-artificial-provision-admission.md):94/94 transaction/
+admission checks retained;4corebyteidentical/3outernamespace-only,9controls remain.
+Prior8476passes/42archival skips/Ruff retained; unchanged campaigns not repeated.
+No realpayload/mount/provision/Tudat/kernel/SPICE/integration in F18.12a.
+Image unmounted; future episode namespace absent. Old evidence/moon unchanged.
+[ADR0275](docs/adr/0275-record-failed-never-run-setup.md): F18.9 consumed/unqualified,
+4markers/factory-enter/missingEOP/childexit2; partialcounts UNKNOWN, failure audit
+PASS/fullsuccess REJECT. No replay or0269cause claim.
 
 ## Physical goal remains open
 [ADR0247](docs/adr/0247-formulate-coupled-moon-mars-problem.md): fixed F0 states,

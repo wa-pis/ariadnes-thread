@@ -1,0 +1,248 @@
+{
+  "schema": "ariadna.f18.supplemented-execution-gate-doc-verification.v1",
+  "status": "PASS",
+  "base_revision": "1dcdb85d3654608f65b31247aa93beed9be10091",
+  "client_date": "2026-11-27",
+  "checked_utc": "2026-11-26T22:10:24.386961+00:00",
+  "protected_prior_blobs_unchanged": 1568,
+  "protected_prior_non_markdown_blobs_unchanged": 1239,
+  "local_links_excluding_pending_receipt": 660,
+  "anchors": 5,
+  "current_state_lines": 39,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "fd6698315b926c2a76af40e67f854f73b3e54d07c211c491803551535bfc5c47",
+    "docs/adr/0279-qualify-once-only-execution-gate.md": "8a1ee7274ff407b31a7331012c7c84354dc74f3c2286d67cf330931259208bb8",
+    "docs/adr/README.md": "03ed07543398e803ee09f1f7033b455cfb11a2a297fe8856a64a08c1bf84fb04",
+    "openspec/ROADMAP.md": "d2c8c1748e36e38cda53ab1581e77be5e5b263c6b6fae4b8be46835f7ef42299",
+    "openspec/changes/refine-physical-trajectory/design.md": "df510862bb26570810ee2f5cb2ad71bcfd1455a201dc73dc49a502285c2b7853",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "a8e55fafb2e33bb27e71f7bc944a1e761a87c12a82a806ce25a4a0629e1f362b",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "8f13e0aa8907ea623f4acd033d1dbccf3b8c31ffd52c5015174cd4143e6ef8c4",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "c5985c4e3fa47d9d8ee17d3205e946cb611b53856e1b4645f270b6474eae6b06"
+  },
+  "artifact_pins": {
+    "docs/adr/experiments/0279-once-only-execution-gate-result.json": {
+      "bytes": 6791,
+      "sha256": "6214785fe3f49f7226699d1d80b395dee520dcc5a7ed323dd8f86f9163f7d115"
+    },
+    "docs/adr/experiments/0279-supplemented-execution-gate-contract.json": {
+      "bytes": 7766,
+      "sha256": "19aedf2ef83e0b3d055ffb4ab5a045fa5d99fb08f4b49515686424ce33d76954"
+    },
+    "docs/adr/experiments/0279-once-only-execution-gate-evidence.zip": {
+      "bytes": 54090,
+      "sha256": "3f73a181eebd3b98743d1c0011e44e2d3a4db8932777edf1399e3388b5b77f43"
+    }
+  },
+  "archive": {
+    "name": "0279-once-only-execution-gate-evidence.zip",
+    "bytes": 54090,
+    "sha256": "3f73a181eebd3b98743d1c0011e44e2d3a4db8932777edf1399e3388b5b77f43",
+    "expanded_bytes": 171540,
+    "members": {
+      "0279-supplemented-execution-gate-contract.json": {
+        "bytes": 7766,
+        "sha256": "19aedf2ef83e0b3d055ffb4ab5a045fa5d99fb08f4b49515686424ce33d76954"
+      },
+      "admission.py": {
+        "bytes": 19584,
+        "sha256": "37e30013b68bc3cf141a339145b68c8f9e2b9e40ea5ba321db3652c23eebfa4f"
+      },
+      "dispatch-once.py": {
+        "bytes": 14154,
+        "sha256": "c6900033e49502487bda9af79eb1f6b08a38ae6b70478ae0ec5689263c2a6f68"
+      },
+      "fixture-reuse.py": {
+        "bytes": 39317,
+        "sha256": "b2d3047d6548214be6e456ed7cf7199578bd2ea16af3c8edced3da79b801d4bf"
+      },
+      "gate-plan-initial.json": {
+        "bytes": 4962,
+        "sha256": "6115908814e675c5856625d7d0a7496069fe6c37c7bd457a4a7d9cecc3790c63"
+      },
+      "gate-plan.json": {
+        "bytes": 5915,
+        "sha256": "b62349f044f0ccc74e3dffa8ec9928e954c978bad7383d24fe76537d352f0aa1"
+      },
+      "helper-reuse.json": {
+        "bytes": 735,
+        "sha256": "ce8829402f287b22a385e0d48fb9d47de621211592ab4da6276a8eae3839f7d0"
+      },
+      "independent-code-review-completion.json": {
+        "bytes": 5887,
+        "sha256": "0b9df465e745ed365ff3ba7796a000e9b8f67428fb696152bde7de04406d3304"
+      },
+      "independent-code-review-initial.json": {
+        "bytes": 1879,
+        "sha256": "5086044b2cd46562dbf1f560a4cd8e443b295f28eaccb8579d4cb3314166287f"
+      },
+      "outer-controller-reuse.json": {
+        "bytes": 438,
+        "sha256": "bc9476c9d096c5191e14100f784028ace4b0b6e8dd16b3a73fda2e241d0d703b"
+      },
+      "pre-run-source-review.json": {
+        "bytes": 4836,
+        "sha256": "8f5e11704818e3a8fb272d45ca302805c01577113737d38f2ccb49f493fb03e4"
+      },
+      "preparation-start.json": {
+        "bytes": 695,
+        "sha256": "b466f521a5ac71c3d1fb744109a50b60ab658f342c657d83b3267fe924f79873"
+      },
+      "provision.py": {
+        "bytes": 10750,
+        "sha256": "a31b2655627ca0a81f5d729d187c7bada7a7789ffaf93c8492157be55e726439"
+      },
+      "qualification-observed-return.json": {
+        "bytes": 478,
+        "sha256": "5ff88eb439ac34d3070c05cf1e1bd7811997da10fbf177c1de0c308274181bb6"
+      },
+      "qualification-v1/artificial-e276290c6f834a38a2e21d943438664c/qualification.json": {
+        "bytes": 1265,
+        "sha256": "9737efc5d83d7e63b8001a1aa06b4a1469f3cfa33d03ede0fe193b81f3156493"
+      },
+      "qualification-v1/artificial-e276290c6f834a38a2e21d943438664c/unittest.log": {
+        "bytes": 3845,
+        "sha256": "59bf2c94b37e7c90806de6cc32109a873b47fc6d716a26ff4eaf72622738e59d"
+      },
+      "qualification-v1/external-receipt.json": {
+        "bytes": 1033,
+        "sha256": "bd5f4158a2a7a45bfb67b5984927a40901620006a4eb4cdd23a7835196aa02f0"
+      },
+      "qualification-v1/stderr.log": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "qualification-v1/stdout.log": {
+        "bytes": 4047,
+        "sha256": "e9444e990ab7947ff037ca7c7b46d00b0bd4424b111aac0a7ddb852721e3c07a"
+      },
+      "qualify-gate-observed-initial-review.py": {
+        "bytes": 17944,
+        "sha256": "07afb1000caa4a62b2fab9e4f3f5087073b46ecd1d2a527912e969751c359c30"
+      },
+      "qualify-gate.py": {
+        "bytes": 21891,
+        "sha256": "44eba9fd9f2b2640db7e8db530f73e794a68b0ebc0e92b65cd6ac420b3b88f5a"
+      },
+      "qualify-once.py": {
+        "bytes": 3795,
+        "sha256": "e1a9a04628ffa079a17b70263e4e21a46cee2c0701ea0664a132561be50161fc"
+      },
+      "scheduler-readback.json": {
+        "bytes": 324,
+        "sha256": "0fca565878e133709beec77b81d66048d09f49a720fec711637c8c36bd1f31a5"
+      }
+    }
+  },
+  "runtime_source_test_dependency_changes": 0,
+  "runtime_tests": "No repeated8476passes/Ruff/94cases; unchanged package/tests/deps/helper campaigns retained. Newtemporaryoutergate qualified30/30artificial cases and independent source/saved review.",
+  "outcome": "F18.12a artificial outergate PASS and conditional oneF18.13 choice; fresh independent actualpreflight/ADMITTED_ONCEproof required. No actualmount/provision/nativepositive/exec/physical qualification, F18.9consumed.",
+  "diff_whitespace": "PASS",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "ACTIVE",
+    "prompt_sha256": "d18f0b80fae2954aab8b333910a62b536a36d5995fa83239215e29ed62e89be6"
+  },
+  "image_observed_unmounted": true,
+  "future_episode_namespace_absent": true,
+  "completed_utc": "2026-11-26T22:11:45.868430+00:00",
+  "independent_documentary_review": {
+    "checked_utc": "2026-11-26T22:11:03.435896+00:00",
+    "findings": [],
+    "limitations": [
+      "Native-positive branch and os.exec continuation were statically reviewed, not exercised; no actual F18.13 occurs in these artifacts.",
+      "Parentprotectedblob/link/strict checks are separately pinned evidence rather than repeated expensive checks by reviewer.",
+      "Future actual resource/setup attempt requires new independently reviewed admission under the fixed contract; no extra resource, retry, widened limit or scientific conclusion is approved by artificial PASS."
+    ],
+    "parent_check": {
+      "anchors": 5,
+      "bytes": 6857,
+      "diff_whitespace": "PASS",
+      "local_links_excluding_pending_receipt": 660,
+      "path": "/private/tmp/ariadna-f18-0279/doc-checks.json",
+      "protected_prior_blobs_unchanged": 1568,
+      "protected_prior_non_markdown_blobs_unchanged": 1239,
+      "sha256": "dcf3ebc816040b7373e2920a7d66bce787cb0892e0ae7b8038dc8f59be1933e1",
+      "strict_validation_exit_code": 0
+    },
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2509,
+        "sha256": "fd6698315b926c2a76af40e67f854f73b3e54d07c211c491803551535bfc5c47"
+      },
+      "docs/adr/0279-qualify-once-only-execution-gate.md": {
+        "bytes": 8019,
+        "sha256": "8a1ee7274ff407b31a7331012c7c84354dc74f3c2286d67cf330931259208bb8"
+      },
+      "docs/adr/README.md": {
+        "bytes": 49732,
+        "sha256": "03ed07543398e803ee09f1f7033b455cfb11a2a297fe8856a64a08c1bf84fb04"
+      },
+      "docs/adr/experiments/0279-once-only-execution-gate-evidence.zip": {
+        "bytes": 54090,
+        "sha256": "3f73a181eebd3b98743d1c0011e44e2d3a4db8932777edf1399e3388b5b77f43"
+      },
+      "docs/adr/experiments/0279-once-only-execution-gate-result.json": {
+        "bytes": 6791,
+        "sha256": "6214785fe3f49f7226699d1d80b395dee520dcc5a7ed323dd8f86f9163f7d115"
+      },
+      "docs/adr/experiments/0279-supplemented-execution-gate-contract.json": {
+        "bytes": 7766,
+        "sha256": "19aedf2ef83e0b3d055ffb4ab5a045fa5d99fb08f4b49515686424ce33d76954"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 90566,
+        "sha256": "d2c8c1748e36e38cda53ab1581e77be5e5b263c6b6fae4b8be46835f7ef42299"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 627182,
+        "sha256": "df510862bb26570810ee2f5cb2ad71bcfd1455a201dc73dc49a502285c2b7853"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 35441,
+        "sha256": "a8e55fafb2e33bb27e71f7bc944a1e761a87c12a82a806ce25a4a0629e1f362b"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 180137,
+        "sha256": "8f13e0aa8907ea623f4acd033d1dbccf3b8c31ffd52c5015174cd4143e6ef8c4"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 512290,
+        "sha256": "c5985c4e3fa47d9d8ee17d3205e946cb611b53856e1b4645f270b6474eae6b06"
+      }
+    },
+    "saved_independent_code_review": {
+      "path": "/private/tmp/ariadna-f18-0279/independent-code-review-completion.json",
+      "sha256": "0b9df465e745ed365ff3ba7796a000e9b8f67428fb696152bde7de04406d3304"
+    },
+    "schema": "ariadna.f18.supplemented-gate-independent-documentary-review.v1",
+    "scope": "Read-only final documentary review of eight current Markdown files plus contract/result/archive. Reviewed actual diff and saved evidence, no runtime tests, scientific/native imports, actual resource operations, repo edits or staging.",
+    "status": "PASS",
+    "verified_facts": [
+      "ADR0279/result/contract/OpenSpec/current state agree on exactly one artificial invocation:30/30,zero failure/error/skip,observed post-outer-file-and-directory-fsync0.9259437923319638s<120 and10190B saved invocation records.",
+      "Independent archive verification:exact23 unique members,54090B compressed,171540B expanded; every manifest size/SHA and every retained source/log/receipt byte matches original saved file; all archived Python parses with AST and JSON parses without executing code.",
+      "Exact initial qualifier07afb100 and two actual pre-run findings remain archived. Corrected44eba9fd wrapper reaches actual admission and intended semantic mutation; source map shape matches unchanged external controller. No failed native or artificial run is hidden.",
+      "Raw pending packet/external receipt are distinguished from normalized actual observed return saved afterward. Gate artificial elapsed is dispatch-entry only; external qualification includes harmless callback/assertions/durable final receipt. No timing phase or raw-byte identity claim is overstated.",
+      "Qualified gate c6900033 and exact0278helpers remain bound by contract/result/archive/source reviews. Four core and three namespace-only controls are retained; separately pinned new gate/interpreter does not broaden exact9control/10native groups.",
+      "Conditional future one-F18.13 decision is explicitly not actual ADMITTED_ONCE/native-positive or execution; fresh original600s actual preflight/independent admission and original60s45/10/5 remain required. Leftover/nativePASS-file-only bypass does not authorize resume.",
+      "TaskF18.12a is checked and F18.13 remains unchecked; historical0275consumed/unqualified outcome and all priorADR/artifact blobs protected. Diff changes only current status/planning sections and adds currentADR/artifacts, without erasing historical evidence.",
+      "CURRENT has39lines<60. Parent reports660local links/5anchors/strict/diffPASS; sole pending document-verification link is intentional until this review is embedded.",
+      "No package/test/dependency change or repeated8476/Ruff/94campaign. This stage makes no actual payload/mount/provision/Tudat/kernel/SPICE/integration/nativeexec claim. Actual native-positive and every physical/owner/M3/99percent/safety gate remain open. SchedulerACTIVE is separate from live native admission.",
+      "Client date2026-11-27 Europe/Samara and rawUTC2026-11-26 timestamps are consistent."
+    ]
+  },
+  "parent_checker": {
+    "sha256": "cb3917dff0d0c296ea354b229921f92369299049d328c17b7d325c712201d64e",
+    "status": "PASS first invocation"
+  },
+  "process_check": {
+    "result": "Qualification invocation finishedexit0, no actualnativeexec/mount and futureepisode absent. Initial heartbeat filteredps found no relevant competing jobs."
+  },
+  "pending_receipt_links_resolved": [
+    "experiments/0279-doc-verification.json"
+  ],
+  "local_links_including_final_receipt": 661
+}

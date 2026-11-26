@@ -107,12 +107,18 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0279](../docs/adr/0279-qualify-once-only-execution-gate.md) completes F18.12a:
+30/30 new artificial outergate checks, postfsync0.925944s<120, independent review
+PASS; no realpayload/mount/native. Conditional choice of one F18.13 is recorded;
+fresh complete actual600s preflight/ROadmission remains required. ACTIVE automation
+may progress only through new direct-admit/durablegate/once-only dispatch, never
+legacyfile-only launch or oldretry. Every physical gate remains open.
 [ADR0278](../docs/adr/0278-qualify-artificial-provision-admission.md) completes F18.12:
 94/94 artificial transaction/admission checks, observed post-fsync1.142127s<120,
 independent code/reuse review PASS. Four controls unchanged, three namespace-only;
 full newfakevolume3578887B/exact11files, evidence<2MiB. No realpayload/mount/native
-or physical qualification. Automation ACTIVE; next distinct F18.13 decision/final
-outer gate and independent actual preflight remain prerequisites, no current launch.
+or physical qualification. Automation ACTIVE; decision/gate prerequisites are now
+recorded/qualified by0279; independent actual preflight still required, no current launch.
 [ADR0277](../docs/adr/0277-design-supplemented-setup-test.md) completes F18.11's
 six-file supplemented setup contract: isolated no-replace transaction, exact11file
 ROreadback/fresh admission and unchanged runtime/caps. Its artificial preparation
