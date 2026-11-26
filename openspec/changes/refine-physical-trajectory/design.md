@@ -1,5 +1,23 @@
 ## Context
 
+### F18.9 consumed setup failure (2026-11-27)
+
+[ADR0275](../../../docs/adr/0275-record-failed-never-run-setup.md) retains the
+single explicitly authorized setup observation. Import/context checks reach
+factory-enter, then childexit2 reports absent earth_orientation/eopc04_14_IAU2000.62-now.txt.
+Four617Bmarkers, no factory-return/visitor/complete/producer report or counter
+snapshot. Actual internal native counts remain UNKNOWN; no explicit integration
+or visitor reached. Independent saved-only failure accounting PASS rejects full
+setup success. Original preflight admission443.030s/consumption450.258s<600 and
+observed6.641288042s<60s45/10/5;12079structured/213logB within unchanged caps.
+Initial temporary preparation/collector findings are preserved; corrected wiring
+qualified artificially and independently before native consumption. All prior
+pins/operational bytes unchanged, image detached and acquisition0. The five
+admitted import-resource files do not prove complete model-setup resource coverage.
+No further inventory/provisioning/new execution authority follows from this record.
+F18.9 remains unchecked CONSUMED/UNQUALIFIED; scheduler PAUSED and all owner/
+physical gates open. Runtime source/tests unchanged; prior successful checks reused.
+
 ### F18.8 artificial never-run setup qualification (2026-11-25)
 
 [ADR0274](../../../docs/adr/0274-qualify-artificial-owner-setup.md) qualifies

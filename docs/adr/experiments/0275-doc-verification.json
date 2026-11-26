@@ -1,0 +1,148 @@
+{
+  "schema": "ariadna.f18.failed-setup-doc-verification.v1",
+  "status": "PASS",
+  "base_revision": "ab72085349bfc1a660219b8ed2c0f947e1454e42",
+  "client_date": "2026-11-27",
+  "checked_utc": "2026-11-26T20:42:29.008239+00:00",
+  "protected_prior_blobs_unchanged": 1552,
+  "protected_prior_non_markdown_blobs_unchanged": 1227,
+  "local_links_excluding_pending_receipt": 642,
+  "anchors": 5,
+  "current_state_lines": 36,
+  "markdown_sha256": {
+    "CURRENT_STATE.md": "b1222d78b0f75b8825bfb7ed87cbec4cff2a4a01cdac8a1c783247ec01fceb7b",
+    "docs/adr/0275-record-failed-never-run-setup.md": "ae901b6d9ca223aaa46f451be752e3d042bb3a22b1ea5fcd08da5f148c7c54a7",
+    "docs/adr/README.md": "e7deddf79d64ebbf32b06a37a2f0f6b71bc08c3758ecd4c92e51f03e633d8b04",
+    "openspec/ROADMAP.md": "bd41a15bb48605476e35ae19d544a956f899b657336b62e2b47244d0ddd1cb32",
+    "openspec/changes/refine-physical-trajectory/design.md": "2bce55bc526b2d7e5d17733b79de10afa7d828ab2a400b11a48dc17a2cc77c89",
+    "openspec/changes/refine-physical-trajectory/proposal.md": "27dab01f0827b7c9dab45b186449e3766a3bb0c81a17d75991f764cb9389e727",
+    "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": "a543e9b4e9645323a1d4eee5597b3b61a8de96bcf61c329f6b65b5f74818a209",
+    "openspec/changes/refine-physical-trajectory/tasks.md": "c03756936781631b53daa8963e75e5af69d35d562a7b14e6511b922a005a6d20"
+  },
+  "artifact_pins": {
+    "docs/adr/experiments/0275-never-run-setup-evidence.zip": {
+      "bytes": 98640,
+      "sha256": "fc7cb349728ae6304eb3619b291d84fda9da13d69e03e5a519caed9383b8db70"
+    },
+    "docs/adr/experiments/0275-never-run-setup-result.json": {
+      "bytes": 25086,
+      "sha256": "ebefecd0aa5888c1dc52014e1b388e7fcbd34d361ce8b8d097066355c4db7a4b"
+    }
+  },
+  "archive_members": 126,
+  "retained_partial_json_artifacts": [
+    {
+      "name": "artificial-collector/no-episode/caller-tool-output.json",
+      "bytes": 14,
+      "reason": "authentic empty failed producer or artificial early/timeout partial output; not a success report"
+    },
+    {
+      "name": "artificial-collector/timeout/caller-tool-output.json",
+      "bytes": 16,
+      "reason": "authentic empty failed producer or artificial early/timeout partial output; not a success report"
+    },
+    {
+      "name": "artificial-wiring-v2/stall/work/native-packet/producer.json",
+      "bytes": 0,
+      "reason": "authentic empty failed producer or artificial early/timeout partial output; not a success report"
+    },
+    {
+      "name": "execution/native-packet/packet/producer.json",
+      "bytes": 0,
+      "reason": "authentic empty failed producer or artificial early/timeout partial output; not a success report"
+    }
+  ],
+  "runtime_source_test_dependency_changes": 0,
+  "runtime_tests": "Not repeated: no repository source/test/dependency change; ADR0274 successful8476passes/Ruff retained. Temporary actual entry/collector artificial checks pass.",
+  "scientific_outcome": "F18.9 consumed/unqualified, fullsuccessREJECT, failureaccountingaudited; no physical qualification.",
+  "diff_whitespace": "PASS",
+  "strict_openspec": {
+    "exit_code": 0,
+    "output": "Change 'refine-physical-trajectory' is valid"
+  },
+  "scheduler": {
+    "id": "ariadna-m3",
+    "status": "PAUSED",
+    "prompt_sha256": "daf2cf948d458a1da17c593ed790bfda4a905a243d26cf37eb3c7a3b90dd4a10"
+  },
+  "image_observed_unmounted": true,
+  "finalized_utc": "2026-11-26T20:44:29.228952+00:00",
+  "parent_check_sha256": "c0b156696fc2389788d604e2287f22ee7749b39eff3e8886c1685bd922256b16",
+  "independent_documentary_review": {
+    "sha256": "2481d98780551eb4d681279a8a13610db0d3b2b92ee9e93571c2d517af64ad1e",
+    "report": {
+      "schema": "ariadna.f18.failed-setup-documentary-review.v1",
+      "status": "PASS",
+      "findings": [],
+      "checked_utc": "2026-11-26T20:44:13.600554+00:00",
+      "base_revision": "ab72085349bfc1a660219b8ed2c0f947e1454e42",
+      "scope": "Read-only final documentary review of exactly eight Markdown files and two artifact files. Independent checks used saved bytes/manifest/JSON/AST/time conversion/link targets only. No source inventory, code edits, tests/native/SPICE/integration/new data, staging or commit.",
+      "reviewed_files": {
+        "CURRENT_STATE.md": {
+          "bytes": 2287,
+          "sha256": "b1222d78b0f75b8825bfb7ed87cbec4cff2a4a01cdac8a1c783247ec01fceb7b"
+        },
+        "docs/adr/0275-record-failed-never-run-setup.md": {
+          "bytes": 7846,
+          "sha256": "ae901b6d9ca223aaa46f451be752e3d042bb3a22b1ea5fcd08da5f148c7c54a7"
+        },
+        "docs/adr/README.md": {
+          "bytes": 48788,
+          "sha256": "e7deddf79d64ebbf32b06a37a2f0f6b71bc08c3758ecd4c92e51f03e633d8b04"
+        },
+        "openspec/ROADMAP.md": {
+          "bytes": 88763,
+          "sha256": "bd41a15bb48605476e35ae19d544a956f899b657336b62e2b47244d0ddd1cb32"
+        },
+        "openspec/changes/refine-physical-trajectory/design.md": {
+          "bytes": 620669,
+          "sha256": "2bce55bc526b2d7e5d17733b79de10afa7d828ab2a400b11a48dc17a2cc77c89"
+        },
+        "openspec/changes/refine-physical-trajectory/proposal.md": {
+          "bytes": 33848,
+          "sha256": "27dab01f0827b7c9dab45b186449e3766a3bb0c81a17d75991f764cb9389e727"
+        },
+        "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+          "bytes": 175534,
+          "sha256": "a543e9b4e9645323a1d4eee5597b3b61a8de96bcf61c329f6b65b5f74818a209"
+        },
+        "openspec/changes/refine-physical-trajectory/tasks.md": {
+          "bytes": 505988,
+          "sha256": "c03756936781631b53daa8963e75e5af69d35d562a7b14e6511b922a005a6d20"
+        },
+        "docs/adr/experiments/0275-never-run-setup-evidence.zip": {
+          "bytes": 98640,
+          "sha256": "fc7cb349728ae6304eb3619b291d84fda9da13d69e03e5a519caed9383b8db70"
+        },
+        "docs/adr/experiments/0275-never-run-setup-result.json": {
+          "bytes": 25086,
+          "sha256": "ebefecd0aa5888c1dc52014e1b388e7fcbd34d361ce8b8d097066355c4db7a4b"
+        }
+      },
+      "checked": {
+        "archive_126_unique_safe_members_match_manifest_and_original_bytes": true,
+        "archive_expanded_bytes": 195087,
+        "four_declared_authentic_partial_JSONs_preserved_and_all_others_parse": true,
+        "independent_failure_audit_immutable_exact_hash_and_status_PASS_ACCOUNTED_FAILURE_fullsuccess_REJECT": true,
+        "four_markers617B_childexit2_empty_producer_no_full_auditor_match": true,
+        "permission_consumed_no_retry_and_internal_counts_unknown": true,
+        "native60s_and_original600s_admission_consumption_preserved": true,
+        "structured_bytes": 12079,
+        "logs_bytes": 213,
+        "normalized_collector_return_explicitly_not_verbatim_tool_stdout": true,
+        "client_Nov27_Samara_matches_raw_Nov26_UTC_episode": true,
+        "original_collector_findings_scripts_profiles_and_three_plus_four_fakecases_preserved": true,
+        "saved49source_10native_5resources_25ledgers_and71459operational_paths_preserved": true,
+        "resource_absence_saved_before_detach_no_supplementation": true,
+        "saved_groups_absent_readonly_image_detached_scheduler_PAUSED": true,
+        "F18_9_unchecked_and_all_owner_physical_gates_open": true,
+        "local_links_excluding_only_pending_doc_receipt": 642,
+        "anchors": 5
+      },
+      "not_repeated": "Parent records1552 protected prior blobs/1227nonMarkdown, clean diff and strict OpenSpec PASS; this independent documentary review verifies their published scope and archive identities without repeating runtime checks or a new source inventory. One declared0275-doc-verification.json link intentionally waits for the final parent receipt."
+    }
+  },
+  "receipt_links_resolved_by_this_file": [
+    "experiments/0275-doc-verification.json"
+  ]
+}

@@ -107,6 +107,15 @@ its projected aggregate497045495B remains below2GiB. Resource package metadata i
 not payload presence/authentication; source coverage is not successful import or
 formal linked-binary closure. F17/F17.1 stay open, automation PAUSED before explicit
 provisioning and separately authorized packet.
+[ADR0275](../docs/adr/0275-record-failed-never-run-setup.md) retains one F18.9
+CONSUMED/UNQUALIFIED:6.641288042s, four markers through factory-enter, childexit2
+reports absent Earth-orientation EOP resource. No factory-return/visitor/report;
+actual internal counts UNKNOWN. Failure accounting audited, full success REJECT.
+Original preflight consumption450.258s<600,12079structured/213logB;49source/test,
+10native/5resources/25old ledgers and71459operational paths unchanged; image detached.
+No retry, acquisition, SPICEquery or integration. Scheduler PAUSED for user choice
+before source-only inventory of setup dependencies/provisioning/new native work.
+F18.9 remains unchecked, all completed-owner and physical gates open.
 [ADR0274](../docs/adr/0274-qualify-artificial-owner-setup.md) completes F18.8:
 215artificial cases included in8063portable passes;413live/42unchanged
 archival skips,0failures. All1555files/Git status frozen, Ruff/review/strict PASS.

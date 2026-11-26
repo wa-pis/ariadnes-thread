@@ -1,3 +1,9 @@
+[ADR0275](../../../docs/adr/0275-record-failed-never-run-setup.md) retains the
+once-only F18.9 failed setup: missing Earth-orientation EOP file, four partial
+markers, childexit2,6.641288042s<60. Failure accounting audited; full success
+rejected, permission consumed and F18.9 unchecked. No automatic retry/resource
+supplementation. Protected files unchanged/image detached; scheduler PAUSED.
+
 [ADR0274](../../../docs/adr/0274-qualify-artificial-owner-setup.md) qualifies
 F18.8 artificial implementation: 215new cases, 8063portable+413live pass,
 42unchanged archival skips, frozen1555files/Git status, Ruff/review/strict PASS.

@@ -166,6 +166,12 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **THEN** both report and trace SHALL be fsynced before a successful producer-phase observation and independent audit; failed, late or stalled report fsync SHALL NOT yield observation/audit success even with a complete visible trace
 - **AND** strict1/0/1 scope, exact refusal, eight-marker capacities, independent raw-report identity and supervised cleanup/post-fsync SHALL be verified by focused and frozen required regression checks; completing artificial preparation SHALL NOT authorize F18.9 or close owner/physical gates
 
+#### Scenario: Retain a consumed setup failure without supplementing resources
+
+- **WHEN** the once-authorized F18.9 child exits unsuccessfully after factory-enter with a reported missing resource and no completed report
+- **THEN** the attempt SHALL remain consumed and full setup qualification SHALL be rejected; partial markers, raw errors, child status, prefinal/post-fsync observations and unchanged time/byte caps SHALL be independently accounted for without inventing internal counters or factory completion
+- **AND** resource supplementation, another native attempt or a revised experiment contract SHALL require a new explicit decision; protected prior data SHALL be checked and the read-only image detached, while F18.9 and physical gates remain open
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence
