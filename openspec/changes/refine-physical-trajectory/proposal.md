@@ -1,3 +1,12 @@
+[ADR0284](../../../docs/adr/0284-qualify-completed-owner-controls.md) completes
+F18.15a artificial qualification only:57distinct cases satisfied across59method
+executions; initial56pass/1EPERMerror and unchanged target1error preserved, then
+only revised failure-path oracle1pass with independent known-PID inactivity proof.
+Nine controls and other56methods unchanged;1600checkout files/status frozen.
+Two raw real-probe/fake-owner→guarded-audit positive packets independently reviewed.
+No native-positive/reaping/physical qualification. Scheduler PAUSED pending the
+separate F18.16 execution choice; original actual600s/60s45-10-5 limits unchanged.
+
 [ADR0283](../../../docs/adr/0283-map-completed-owner-controls.md) completes only
 F18.15a.1 source/saved mapping: 8activecontrols +1externalgate;2byte-identical,
 2namespace-only,4logic-changed plus changed gate; provision historical only.

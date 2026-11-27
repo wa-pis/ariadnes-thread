@@ -1,0 +1,168 @@
+{
+  "base_revision": "8d7532d20827d691b93043b90d1ef8aa8664122e",
+  "independent_review": {
+    "base_revision": "8d7532d20827d691b93043b90d1ef8aa8664122e",
+    "checked_utc": "2026-11-27T00:28:53.671546+00:00",
+    "factual_checks": {
+      "archive_integrity": "Exact122unique members/392115compressed/1158592expanded bytes. Every member matches declared length/SHA and original temp bytes. Published result equals archived qualification-summary plus archive metadata.",
+      "artificial_positive_scope": "Two retained actual probe/sixfakehook\u2192separate guarded-auditor packets,12+16files/85399B, independently validated. Launcher exact native command was asserted then harmless execution substituted; translated run-once and caller tested at named seams, not full native packet.",
+      "attempt_accounting": "57unique current cases satisfied over59method executions: first57=56pass/1EPERMerror, unchanged target1error, corrected oracle target1pass. Both original FAILs preserved;56successfulmethods not repeated. No all-green initial campaign claim.",
+      "clock_provenance": "Terminal2.5769033753313124 FAIL2,0.2206037905998528 FAIL2,0.2385552078485489 PASS0 are exact normalized copies after actual root-visible tool returns; disk outer receipts remain prefinal, explicitly distinguished. No reconstructed timing.",
+      "failure_oracle": "Unchanged caller still raises EPERM. Revised test requires actual first SIGKILL success plus strict independent known-PID/PGID/UID inactivity witness. Saved sample shows both known PIDs absent; no successful caller return, reaping, sandbox-cause or physical qualification claimed.",
+      "history_and_package": "Actual seven-MD diff adds current stage/status/spec and F18.15a completion while preserving earlier history. No package/oldtests/CI/dependency/science changes; prior8688/Ruff not rerun. Documentary enum assertion correction accurately retained without runtime change.",
+      "native_authority": "F18.15a checked complete only for temporary artificial scope. Native CLI/sandbox/nativepositive unverified; F18.16 remains unchecked and requires distinct choice plus fresh strict<600 actual admission. Scheduler PAUSED and image detached; physical gates open.",
+      "parent_checks": "PASS1593 protected prior blobs/1259non-MD unchanged,682local links/3anchors,diff/strict OpenSpec. CURRENT34lines; reviewed10file pins match current bytes.",
+      "scheduler": "Parent check records ariadna-m3 PAUSED pending distinct F18.16 choice; no changed execution authority.",
+      "source_manifest_mapping": "All9 controls unchanged across invocations; one test method changed and other56 methods unchanged. Initial17source manifest maps old tests_outer pin to preserved tests_outer-before-oracle-correction.py; current17 maps final actual files. Both full manifests/raw copies verified independently."
+    },
+    "findings": [],
+    "native_admission": false,
+    "parent_documentary_check": {
+      "bytes": 2597,
+      "sha256": "d2254fe3c7c2b703d9e33e3d17e1470533760e0e7c6cabb76f1c9f951824dd20"
+    },
+    "physical_admission": "unavailable",
+    "prior_saved_qualification_reviews": {
+      "review-final-qualification.json": {
+        "bytes": 8335,
+        "sha256": "90b988182614ad534f7bb7816f56a44095c22343b851bf0664ceac21ef3d862b"
+      },
+      "review-final-tool-observations.json": {
+        "bytes": 2487,
+        "sha256": "e05a963145c4238c7224a0139c4aaae58dc092c242064d51964cf546e986420d"
+      }
+    },
+    "resolved_documentary_finding": {
+      "issue": "New ADR/CURRENT initially used <=600s prose, while admitted clock is strictly<600.",
+      "resolution": "Current ADR and CURRENT now say<600s; immutable archived ADRdraft retains pre-review prose and parent checker identifies this chronology. No contract/control/runtime/gate changed."
+    },
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2206,
+        "sha256": "56bb78e8114d36baf0078ffa7e272fdc0912d15d9ed8cefddda33c99139f3a00"
+      },
+      "docs/adr/0284-qualify-completed-owner-controls.md": {
+        "bytes": 7638,
+        "sha256": "70ac7f5544deb9ec116041c073dc5a348b1538baf439400b52cf16a08813cff7"
+      },
+      "docs/adr/README.md": {
+        "bytes": 51205,
+        "sha256": "051bd6ef77dfbc93e51b3645f089df8a9dc807d466f21e3132bd61875191cc66"
+      },
+      "docs/adr/experiments/0284-completed-control-qualification-evidence.zip": {
+        "bytes": 392115,
+        "sha256": "ce42d3dee1f176fa0f7efe62ba4b7f9a836e7487ae0bda356a2813abbfc7ff1b"
+      },
+      "docs/adr/experiments/0284-completed-control-qualification.json": {
+        "bytes": 27355,
+        "sha256": "f6701f0f6ef8a73cb54d6fdaf4d923b16a8e855a9483f411eee3bcfe654e547c"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 93686,
+        "sha256": "75c60167c96ab9ccecf15e061ecb66ee75ec7d07cb0177860a884d35f36d43c5"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 632648,
+        "sha256": "e9c2a7b093ad8e025e10c118b2d7d3c9436665b336c785a4e10dfe6421e14c58"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 38470,
+        "sha256": "1bbd840915a1dad1cb9b90e4427bff31d58e8f20920c049a6929ce6d183fd1b4"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 184332,
+        "sha256": "b0878efc08fa8ec6699ca0ad1644d84f3f9723d8c9f91de5e9aac44d4d97f9c8"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 519925,
+        "sha256": "14f2243494c7ba87ef1d3edc53bf11f9dbd8ef55d1fa7d62c98ff76c9cb68803"
+      }
+    },
+    "scheduler": {
+      "id": "ariadna-m3",
+      "prompt_sha256": "fbf02a4f0e72d450f4bbb97cf4481a9797386f51168cfde71226e49c16be0b54",
+      "status": "PAUSED"
+    },
+    "schema": "ariadna.f18.completed-controls-independent-final-documentary-review.v1",
+    "scope": "Read-only final seven-MD diff, ADR0284, published result and122-member raw archive consistency; no runtime tests/replay/control imports/native/SPICE/mount/integration/live payload reads or repository edits.",
+    "status": "PASS"
+  },
+  "retained_check_sources": {
+    "check-docs.py": {
+      "bytes": 8254,
+      "sha256": "f1e1332533db85f123d5c228c54ac2754d7d8c01cb7cc04726eeae9dbd29d081",
+      "text": "from pathlib import Path,PurePosixPath\nfrom urllib.parse import unquote\nimport ast,hashlib,json,os,re,subprocess,tomllib,zipfile\nr=Path('/Users/agrudin/dev/my/ariadna');p=Path('/private/tmp/ariadna-f18-0284');base='8d7532d20827d691b93043b90d1ef8aa8664122e';sha=lambda b:hashlib.sha256(b).hexdigest();g=lambda *a:subprocess.check_output(['git',*a],cwd=r,text=True).strip()\nchanged={'CURRENT_STATE.md','docs/adr/README.md','openspec/ROADMAP.md',*[f'openspec/changes/refine-physical-trajectory/{n}.md'for n in('proposal','design','tasks')],'openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md'}\nnew={'docs/adr/0284-qualify-completed-owner-controls.md','docs/adr/experiments/0284-completed-control-qualification.json','docs/adr/experiments/0284-completed-control-qualification-evidence.zip'}\nassert g('rev-parse','HEAD')==base and g('branch','--show-current')=='dev'and not g('diff','--cached','--name-only')\nassert set(g('diff','--name-only').splitlines())==changed\nassert set(g('ls-files','--others','--exclude-standard').splitlines())==new\nprotected=nonmd=0\nfor row in subprocess.check_output(['git','ls-tree','-rz',base],cwd=r).split(b'\\0'):\n if not row:continue\n meta,name=row.split(b'\\t',1);name=name.decode()\n if name in changed:continue\n b=(r/name).read_bytes();assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\\0'+b).hexdigest()==meta.split()[2].decode(),name\n protected+=1;nonmd+=not name.endswith('.md')\nx=json.loads((r/'docs/adr/experiments/0284-completed-control-qualification.json').read_text());a=x['evidence_archive'];arc=r/a['path'];assert arc.stat().st_size==a['bytes']and sha(arc.read_bytes())==a['sha256']\nassert x['status']=='PASS_ARTIFICIAL_QUALIFICATION_ONLY'and x['unique_cases_satisfied']==57 and x['method_executions']==59 and x['successful_cases_repeated']==0 and x['actual_native_episode']is False and x['native_positive_qualified']is False\nwith zipfile.ZipFile(arc)as z:\n assert z.testzip()is None and len(z.namelist())==len(set(z.namelist()))==a['member_count']==len(a['members'])\n assert sum(v.file_size for v in z.infolist())==a['expanded_bytes']<2097152\n for n,pin in a['members'].items():\n  assert not PurePosixPath(n).is_absolute()and'..'not in PurePosixPath(n).parts\n  b=z.read(n);assert pin=={'bytes':len(b),'sha256':sha(b)}and b==(p/n).read_bytes(),n\n  if n.endswith('.json'):json.loads(b)\n  if n.endswith('.py'):ast.parse(b)\n initial=json.loads(z.read('qualification.json'));oldtarget=json.loads(z.read('targeted-cleanup.json'));target=json.loads(z.read('cleanup-oracle.json'))\n assert initial['status']==oldtarget['status']=='FAIL'and initial['tests_run']==57 and initial['errors']==1 and oldtarget['tests_run']==1 and oldtarget['errors']==1\n assert initial['failures']==oldtarget['failures']==0 and target['status']=='PASS'and target['tests_run']==1 and target['errors']==target['failures']==target['skips']==0\n passed={v['id']for v in initial['records']if v['status']=='passed'};failed={v['id']for v in initial['records']if v['status']!='passed'};assert len(passed)==56 and failed=={target['test_id']}and not(passed&failed)\n before=json.loads(z.read('qualified-sources.json'));after=json.loads(z.read('qualified-cleanup-oracle-sources.json'))\n assert set(before['files'])==set(after['files'])and len(after['files'])==17\n assert[n for n in before['files']if before['files'][n]!=after['files'][n]]==[str(p/'tests_outer.py')]\n for n,pin in after['files'].items():\n  name=str(Path(n).relative_to(p));b=z.read(name);assert pin=={'bytes':len(b),'sha256':sha(b)},n\n b=z.read('tests_outer-before-oracle-correction.py');assert before['files'][str(p/'tests_outer.py')]=={'bytes':len(b),'sha256':sha(b)}\n methods=lambda b:{n.name:ast.dump(n,include_attributes=False)for n in ast.walk(ast.parse(b))if isinstance(n,ast.FunctionDef)and n.name.startswith('test_')}\n old,newmethods=methods(b),methods(z.read('tests_outer.py'));assert old.keys()==newmethods.keys()and[n for n in old if old[n]!=newmethods[n]]==['test_unchanged_caller_supervise_cleans_whole_group_after_leader_exit']\n for label,row in initial['retained_positives'].items():\n  for n,pin in row['files'].items():\n   b=z.read('retained/'+label+'/'+n);assert pin=={'bytes':len(b),'sha256':sha(b)}\n witness=json.loads(z.read('retained/group-cleanup-oracle.json'));assert witness['inactive_owned_group']is True and witness['reaping_qualified']is False and witness['kill_calls'][0]['returned']is True and witness['refusal']['errno']==1 and witness['ps_returncode']==1 and witness['ps_stdout']==witness['ps_stderr']==''\n for n,status,code in(('qualification-tool-return.json','FAIL',2),('targeted-tool-return.json','FAIL',2),('cleanup-oracle-tool-return.json','PASS',0)):\n  value=json.loads(z.read(n));assert value['exit_code']==code and value['actual_returned_stdout']['status']==status and value['actual_returned_stdout']['observed_after_outer_fsync_s']<300\n assert json.loads(z.read('review-final-qualification.json'))['status']=='PASS_ARTIFICIAL_QUALIFICATION'\n assert json.loads(z.read('frozen-final.json'))['tracked_files_unchanged']==1600\n with zipfile.ZipFile(r/'docs/adr/experiments/0280-supplemented-setup-evidence.zip')as old:\n  for n in('call-once.py','launch-once.py'):assert z.read('controls/'+n)==old.read(n)\n  for n in('native.sandbox','check-preservation.py'):assert z.read('controls/'+n)==old.read(n).replace(b'/private/tmp/ariadna-f18-supplemented-setup-v1',b'/private/tmp/ariadna-f18-forward-completed-v1')\ndef slugs(raw):\n counts={};out=set()\n for title in re.findall(r'^#{1,6}\\s+(.+?)\\s*$',raw,re.M):\n  k=re.sub(r'[^\\w\\- ]','',title.strip().rstrip('#').strip().lower().replace('`','')).replace(' ','-');v=counts.get(k,0);counts[k]=v+1;out.add(k if not v else k+'-'+str(v))\n return out\nlinks=anchors=0\nfor n in sorted(changed|{v for v in new if v.endswith('.md')}):\n for dest in re.findall(r'\\[[^\\]]*\\]\\(([^)]+)\\)',(r/n).read_text()):\n  dest=dest.strip('<>')\n  if '://'in dest or dest.startswith(('mailto:','data:')):continue\n  name,_,frag=dest.partition('#');q=((r/n).parent/unquote(name)).resolve()if name else(r/n).resolve();assert q.exists(),(n,dest);links+=1\n  if frag and q.suffix=='.md':assert unquote(frag)in slugs(q.read_text()),(n,dest);anchors+=1\ns=(r/'openspec/changes/refine-physical-trajectory/tasks.md').read_text();assert '- [x] F18.15a Prepare'in s and'- [ ] F18.16 'in s\nassert len((r/'CURRENT_STATE.md').read_text().splitlines())<60 and not os.path.ismount('/private/tmp/ariadna-f17-0263/volume')and not os.path.lexists('/private/tmp/ariadna-f18-forward-completed-v1')\nassert '<=600s'not in(r/'CURRENT_STATE.md').read_text()and'<=600s'not in(r/'docs/adr/0284-qualify-completed-owner-controls.md').read_text()\nsubprocess.run(['git','diff','--check'],cwd=r,check=True)\nv=subprocess.run(['openspec','validate','refine-physical-trajectory','--strict'],cwd=r,capture_output=True,text=True,timeout=60);assert v.returncode==0,v.stdout+v.stderr\nc=tomllib.loads(Path('/Users/agrudin/.codex/automations/ariadna-m3/automation.toml').read_text());assert c['id']=='ariadna-m3'and c['status']=='PAUSED'and'ADR0284'in c['prompt']\nresult={'schema':'ariadna.f18.completed-control-qualification-doc-check.v1','status':'PASS','base_revision':base,'protected_prior_blobs_unchanged':protected,'protected_prior_non_markdown_blobs_unchanged':nonmd,'local_links':links,'anchors':anchors,'current_state_lines':len((r/'CURRENT_STATE.md').read_text().splitlines()),'checked_files':{n:{'bytes':(r/n).stat().st_size,'sha256':sha((r/n).read_bytes())}for n in sorted(changed|new)},'strict_openspec':{'exit_code':v.returncode,'output':v.stdout.strip()},'diff_check':'PASS','scheduler':{'id':c['id'],'status':c['status'],'prompt_sha256':c['model_prompt_sha256']},'runtime':'Onlynewartificialcases57unique/59executions; no newnative/SPICE/integration. Prior8688/Ruff unchanged notrerun. Archived ADRdraft has pre-review<=600 prose; current ADR/CURRENT clarify original strict<600 gate, no artifact/code changed.'}\nwith(p/'doc-checks.json').open('x')as f:json.dump(result,f,indent=2,sort_keys=True);f.write('\\n');f.flush();os.fsync(f.fileno())\nprint(json.dumps({k:result[k]for k in('status','protected_prior_blobs_unchanged','protected_prior_non_markdown_blobs_unchanged','local_links','anchors','strict_openspec','scheduler')}))\n"
+    },
+    "review-final-doc.json": {
+      "bytes": 5881,
+      "sha256": "a312feb6a11480fb61f65693bf424e267bd1ef988f929000a4de6bacef7339ad",
+      "text": "{\n  \"base_revision\": \"8d7532d20827d691b93043b90d1ef8aa8664122e\",\n  \"checked_utc\": \"2026-11-27T00:28:53.671546+00:00\",\n  \"factual_checks\": {\n    \"archive_integrity\": \"Exact122unique members/392115compressed/1158592expanded bytes. Every member matches declared length/SHA and original temp bytes. Published result equals archived qualification-summary plus archive metadata.\",\n    \"artificial_positive_scope\": \"Two retained actual probe/sixfakehook\\u2192separate guarded-auditor packets,12+16files/85399B, independently validated. Launcher exact native command was asserted then harmless execution substituted; translated run-once and caller tested at named seams, not full native packet.\",\n    \"attempt_accounting\": \"57unique current cases satisfied over59method executions: first57=56pass/1EPERMerror, unchanged target1error, corrected oracle target1pass. Both original FAILs preserved;56successfulmethods not repeated. No all-green initial campaign claim.\",\n    \"clock_provenance\": \"Terminal2.5769033753313124 FAIL2,0.2206037905998528 FAIL2,0.2385552078485489 PASS0 are exact normalized copies after actual root-visible tool returns; disk outer receipts remain prefinal, explicitly distinguished. No reconstructed timing.\",\n    \"failure_oracle\": \"Unchanged caller still raises EPERM. Revised test requires actual first SIGKILL success plus strict independent known-PID/PGID/UID inactivity witness. Saved sample shows both known PIDs absent; no successful caller return, reaping, sandbox-cause or physical qualification claimed.\",\n    \"history_and_package\": \"Actual seven-MD diff adds current stage/status/spec and F18.15a completion while preserving earlier history. No package/oldtests/CI/dependency/science changes; prior8688/Ruff not rerun. Documentary enum assertion correction accurately retained without runtime change.\",\n    \"native_authority\": \"F18.15a checked complete only for temporary artificial scope. Native CLI/sandbox/nativepositive unverified; F18.16 remains unchecked and requires distinct choice plus fresh strict<600 actual admission. Scheduler PAUSED and image detached; physical gates open.\",\n    \"parent_checks\": \"PASS1593 protected prior blobs/1259non-MD unchanged,682local links/3anchors,diff/strict OpenSpec. CURRENT34lines; reviewed10file pins match current bytes.\",\n    \"scheduler\": \"Parent check records ariadna-m3 PAUSED pending distinct F18.16 choice; no changed execution authority.\",\n    \"source_manifest_mapping\": \"All9 controls unchanged across invocations; one test method changed and other56 methods unchanged. Initial17source manifest maps old tests_outer pin to preserved tests_outer-before-oracle-correction.py; current17 maps final actual files. Both full manifests/raw copies verified independently.\"\n  },\n  \"findings\": [],\n  \"native_admission\": false,\n  \"parent_documentary_check\": {\n    \"bytes\": 2597,\n    \"sha256\": \"d2254fe3c7c2b703d9e33e3d17e1470533760e0e7c6cabb76f1c9f951824dd20\"\n  },\n  \"physical_admission\": \"unavailable\",\n  \"prior_saved_qualification_reviews\": {\n    \"review-final-qualification.json\": {\n      \"bytes\": 8335,\n      \"sha256\": \"90b988182614ad534f7bb7816f56a44095c22343b851bf0664ceac21ef3d862b\"\n    },\n    \"review-final-tool-observations.json\": {\n      \"bytes\": 2487,\n      \"sha256\": \"e05a963145c4238c7224a0139c4aaae58dc092c242064d51964cf546e986420d\"\n    }\n  },\n  \"resolved_documentary_finding\": {\n    \"issue\": \"New ADR/CURRENT initially used <=600s prose, while admitted clock is strictly<600.\",\n    \"resolution\": \"Current ADR and CURRENT now say<600s; immutable archived ADRdraft retains pre-review prose and parent checker identifies this chronology. No contract/control/runtime/gate changed.\"\n  },\n  \"reviewed_files\": {\n    \"CURRENT_STATE.md\": {\n      \"bytes\": 2206,\n      \"sha256\": \"56bb78e8114d36baf0078ffa7e272fdc0912d15d9ed8cefddda33c99139f3a00\"\n    },\n    \"docs/adr/0284-qualify-completed-owner-controls.md\": {\n      \"bytes\": 7638,\n      \"sha256\": \"70ac7f5544deb9ec116041c073dc5a348b1538baf439400b52cf16a08813cff7\"\n    },\n    \"docs/adr/README.md\": {\n      \"bytes\": 51205,\n      \"sha256\": \"051bd6ef77dfbc93e51b3645f089df8a9dc807d466f21e3132bd61875191cc66\"\n    },\n    \"docs/adr/experiments/0284-completed-control-qualification-evidence.zip\": {\n      \"bytes\": 392115,\n      \"sha256\": \"ce42d3dee1f176fa0f7efe62ba4b7f9a836e7487ae0bda356a2813abbfc7ff1b\"\n    },\n    \"docs/adr/experiments/0284-completed-control-qualification.json\": {\n      \"bytes\": 27355,\n      \"sha256\": \"f6701f0f6ef8a73cb54d6fdaf4d923b16a8e855a9483f411eee3bcfe654e547c\"\n    },\n    \"openspec/ROADMAP.md\": {\n      \"bytes\": 93686,\n      \"sha256\": \"75c60167c96ab9ccecf15e061ecb66ee75ec7d07cb0177860a884d35f36d43c5\"\n    },\n    \"openspec/changes/refine-physical-trajectory/design.md\": {\n      \"bytes\": 632648,\n      \"sha256\": \"e9c2a7b093ad8e025e10c118b2d7d3c9436665b336c785a4e10dfe6421e14c58\"\n    },\n    \"openspec/changes/refine-physical-trajectory/proposal.md\": {\n      \"bytes\": 38470,\n      \"sha256\": \"1bbd840915a1dad1cb9b90e4427bff31d58e8f20920c049a6929ce6d183fd1b4\"\n    },\n    \"openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md\": {\n      \"bytes\": 184332,\n      \"sha256\": \"b0878efc08fa8ec6699ca0ad1644d84f3f9723d8c9f91de5e9aac44d4d97f9c8\"\n    },\n    \"openspec/changes/refine-physical-trajectory/tasks.md\": {\n      \"bytes\": 519925,\n      \"sha256\": \"14f2243494c7ba87ef1d3edc53bf11f9dbd8ef55d1fa7d62c98ff76c9cb68803\"\n    }\n  },\n  \"scheduler\": {\n    \"id\": \"ariadna-m3\",\n    \"prompt_sha256\": \"fbf02a4f0e72d450f4bbb97cf4481a9797386f51168cfde71226e49c16be0b54\",\n    \"status\": \"PAUSED\"\n  },\n  \"schema\": \"ariadna.f18.completed-controls-independent-final-documentary-review.v1\",\n  \"scope\": \"Read-only final seven-MD diff, ADR0284, published result and122-member raw archive consistency; no runtime tests/replay/control imports/native/SPICE/mount/integration/live payload reads or repository edits.\",\n  \"status\": \"PASS\"\n}\n"
+    }
+  },
+  "root_check": {
+    "anchors": 3,
+    "base_revision": "8d7532d20827d691b93043b90d1ef8aa8664122e",
+    "checked_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2206,
+        "sha256": "56bb78e8114d36baf0078ffa7e272fdc0912d15d9ed8cefddda33c99139f3a00"
+      },
+      "docs/adr/0284-qualify-completed-owner-controls.md": {
+        "bytes": 7638,
+        "sha256": "70ac7f5544deb9ec116041c073dc5a348b1538baf439400b52cf16a08813cff7"
+      },
+      "docs/adr/README.md": {
+        "bytes": 51205,
+        "sha256": "051bd6ef77dfbc93e51b3645f089df8a9dc807d466f21e3132bd61875191cc66"
+      },
+      "docs/adr/experiments/0284-completed-control-qualification-evidence.zip": {
+        "bytes": 392115,
+        "sha256": "ce42d3dee1f176fa0f7efe62ba4b7f9a836e7487ae0bda356a2813abbfc7ff1b"
+      },
+      "docs/adr/experiments/0284-completed-control-qualification.json": {
+        "bytes": 27355,
+        "sha256": "f6701f0f6ef8a73cb54d6fdaf4d923b16a8e855a9483f411eee3bcfe654e547c"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 93686,
+        "sha256": "75c60167c96ab9ccecf15e061ecb66ee75ec7d07cb0177860a884d35f36d43c5"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 632648,
+        "sha256": "e9c2a7b093ad8e025e10c118b2d7d3c9436665b336c785a4e10dfe6421e14c58"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 38470,
+        "sha256": "1bbd840915a1dad1cb9b90e4427bff31d58e8f20920c049a6929ce6d183fd1b4"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 184332,
+        "sha256": "b0878efc08fa8ec6699ca0ad1644d84f3f9723d8c9f91de5e9aac44d4d97f9c8"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 519925,
+        "sha256": "14f2243494c7ba87ef1d3edc53bf11f9dbd8ef55d1fa7d62c98ff76c9cb68803"
+      }
+    },
+    "current_state_lines": 34,
+    "diff_check": "PASS",
+    "local_links": 682,
+    "protected_prior_blobs_unchanged": 1593,
+    "protected_prior_non_markdown_blobs_unchanged": 1259,
+    "runtime": "Onlynewartificialcases57unique/59executions; no newnative/SPICE/integration. Prior8688/Ruff unchanged notrerun. Archived ADRdraft has pre-review<=600 prose; current ADR/CURRENT clarify original strict<600 gate, no artifact/code changed.",
+    "scheduler": {
+      "id": "ariadna-m3",
+      "prompt_sha256": "fbf02a4f0e72d450f4bbb97cf4481a9797386f51168cfde71226e49c16be0b54",
+      "status": "PAUSED"
+    },
+    "schema": "ariadna.f18.completed-control-qualification-doc-check.v1",
+    "status": "PASS",
+    "strict_openspec": {
+      "exit_code": 0,
+      "output": "Change 'refine-physical-trajectory' is valid"
+    }
+  },
+  "runtime_scope": "No runtime checks repeated during documentary finalization; native F18.16 still unadmitted.",
+  "schema": "ariadna.f18.completed-control-qualification-documentary-verification.v1",
+  "status": "PASS"
+}

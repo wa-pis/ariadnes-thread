@@ -216,6 +216,13 @@ Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 - **AND** only an explicit harmless artificial harness MAY override child commands; its real probe uses all six fake hooks and mode=injected, its actual guarded auditor runs separately, and native CLI/profile SHALL reject replacements before live reads with artificial native authority always false
 - **AND** all49old plus4newsource pins,10native,11retained resources,25oldledger and all86saved0280members SHALL be preserved; fresh actual readback/admission cannot inherit historical timestamps, new acquisition SHALL be0, changed-control artificial checks SHALL finish within300s, and F18.16 SHALL remain unadmitted pending its distinct choice and fresh independent actual600s preflight
 
+#### Scenario: Independently witness cleanup refusal without masking it
+
+- **WHEN** an artificial leader-exit cleanup case raises EPERM instead of returning a failure object
+- **THEN** qualification SHALL preserve the original failure and SHALL NOT suppress that runtime exception or infer its cause; a revised failure-path oracle MAY accept refusal only after recording the actual first successful group SIGKILL, the exact owned PID/PGID/UID identities and a bounded independent raw process witness proving no running owned member
+- **AND** malformed/unknown identity, failed first kill, unexpected exception, live member or failed witness SHALL fail qualification; verified absence or a non-running zombie SHALL NOT imply general reaping, native caller success or physical qualification
+- **AND** the revised test/source pins and prior successes SHALL remain separately attributable, passed unchanged cases SHALL NOT be repeated without reason, and raw positive producer/auditor/outer observations SHALL be retained and independently reviewed before F18.15a completion; F18.16 still requires its distinct recorded choice and fresh actual admission
+
 ### Requirement: Bound realized-clock evidence without changing commands
 
 Private realized-clock preparation SHALL follow ADR0255's distinct fixed evidence
