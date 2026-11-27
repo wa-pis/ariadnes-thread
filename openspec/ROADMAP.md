@@ -1,3 +1,10 @@
+[ADR0287](../docs/adr/0287-identify-owner-carry-prerequisite.md) completes F18.17 source readiness only:0267reverse is deliberately
+independent, not an interarc carry test. Existing artificial replay already carries
+state/mass; original-key endpoint-to-production-handoff association remains open.
+Independent review and durable source closure281.532454s<600; no tests/native or
+scientific work. Next F18.18 is bounded SOURCE/SAVED interface mapping only,
+not adapter implementation or new native authority. PhysicalF0/full0267/M3 remain open.
+
 [ADR0286](../docs/adr/0286-verify-single-completed-owner.md) completes one
 F18.16 synthetic completed-owner episode: fresh actual consumption49.032074083s<600,
 original packet3.524682125s<60 and separate canonical saved audit0.076664125s<10.

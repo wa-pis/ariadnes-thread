@@ -1,0 +1,119 @@
+{
+  "independent_doc_review": {
+    "checked_utc": "2026-11-27T06:53:57.231988+00:00",
+    "facts": [
+      "Generic Markdown ADR/status/spec additions match independent source conclusion and exact sourceanchors; no runtime/scientific qualification is claimed.",
+      "Original0267forward/reverse literals remain independent; existing artificial replaycarry/fullrunner tests are not repeated or recast as a native carry defect.",
+      "F18.17checked onlysource readiness; F18.18unchecked boundedSOURCE/SAVED mapping600s/2MiB, one interface table or exactmissingpremise; no adapterimplementation/newnative authority.",
+      "Exactword association, exactevent identity and existing1e-6s labels are distinguished from conditional independent own-start Fraction oracle Euclidean0.001m/1e-6m/s/scalarmass1e-9kg gates; none evaluated.",
+      "Source closure281.5322038340382 then observedclosure-receipt directoryfsync281.5324538340792<600 agrees retained result; documentary phase explicitly separate.",
+      "Result pins original independentreview96f9f8375913a475e58b74992f51d361e4b92f9db715ae6c556cd060af4db2e6 and sixmember archive22091compressed/58165expanded SHA41826e31fbf29f871e83bfc36787f42012a611c8ecae3f0d738b008bc12a15d5.",
+      "Currentdiff preserves historicalADR/source records; CURRENT intentionallysummarizes nextscope and retained0286result. Full0267/F0/M3/99percent/safety remainopen."
+    ],
+    "findings": [],
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2075,
+        "sha256": "0387b5c93fd2b4c8dd6ec939f5dddf50f8f99f721bcb3ef1b7cbbf536c8b4236"
+      },
+      "docs/adr/0287-identify-owner-carry-prerequisite.md": {
+        "bytes": 5834,
+        "sha256": "d9a4ffb5f0ab3b105f81febb8f1d2a0391ceb3a18e051b0acc396720ea4077a6"
+      },
+      "docs/adr/README.md": {
+        "bytes": 51711,
+        "sha256": "e1b7318a637a2a78e73d93bbdec9ea348efcbe203d963e9c2b9462b2c5243362"
+      },
+      "docs/adr/experiments/0287-owner-handoff-readiness-evidence.zip": {
+        "bytes": 22091,
+        "sha256": "41826e31fbf29f871e83bfc36787f42012a611c8ecae3f0d738b008bc12a15d5"
+      },
+      "docs/adr/experiments/0287-owner-handoff-readiness.json": {
+        "bytes": 1892,
+        "sha256": "97daa7eb9cb8567ddde4e166f15a0ac5eedf236f41ac36a0dbf3b3997e95d412"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 95278,
+        "sha256": "a4ab69999938f87269bd7723fe0d1af6b36f096ef04649bfb84980c460d81754"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 635002,
+        "sha256": "6826e30de75b8d98076d3149b88019087f655cad2f1b0e457e9c0b3ffb37bb49"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 185371,
+        "sha256": "0e6912af6a8e46acc511583841ebfeb8d2e80536952e7549cbe2d815f2d21bb4"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 522935,
+        "sha256": "077fd52373cc9ec2472905b044f59b427a0c88e91f11030a011ede472fd17017"
+      }
+    },
+    "schema": "ariadna.f18.owner-handoff-final-documentary-review.v1",
+    "scope": "Finaldocumentary consistency and exact9current file hashes only. Prior sourcephase remainsclosed; no newsource/archivebroadscan/test/native/scientific recalculation/livepayload/postpin/mount/repository edits. Parentprotectedhistory/link/strict checks remain separately owned by root.",
+    "status": "PASS"
+  },
+  "retained_root_checker": "from pathlib import Path\nfrom urllib.parse import unquote\nimport hashlib,json,re,subprocess,zipfile,os\nr=Path('/Users/agrudin/dev/my/ariadna');p=Path('/private/tmp/ariadna-f18-0287');base='13f53fb663c7614b9d662beeddb7799d9d076ef3'\nchanged={'CURRENT_STATE.md','docs/adr/README.md','openspec/ROADMAP.md','openspec/changes/refine-physical-trajectory/design.md','openspec/changes/refine-physical-trajectory/tasks.md','openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md'}\nnew={'docs/adr/0287-identify-owner-carry-prerequisite.md','docs/adr/experiments/0287-owner-handoff-readiness.json','docs/adr/experiments/0287-owner-handoff-readiness-evidence.zip'}\ndef git(*args):return subprocess.check_output(['git',*args],cwd=r,text=True).strip()\ndef pin(raw):return {'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}\nassert git('rev-parse','HEAD')==base and git('branch','--show-current')=='dev'\nassert not git('diff','--cached','--name-only')\nassert set(git('diff','--name-only').splitlines())==changed\nassert set(git('ls-files','--others','--exclude-standard').splitlines())==new\nprotected=0\nfor row in subprocess.check_output(['git','ls-tree','-rz','--full-tree',base],cwd=r).split(b'\\0'):\n if not row:continue\n metadata,name=row.split(b'\\t',1);name=name.decode()\n if name in changed:continue\n raw=(r/name).read_bytes();obj=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\\0'+raw).hexdigest()\n assert obj==metadata.decode().split()[2],name\n protected+=1\nx=json.loads((r/'docs/adr/experiments/0287-owner-handoff-readiness.json').read_text())\na=r/'docs/adr/experiments'/x['archive']['name'];raw=a.read_bytes()\nassert pin(raw)=={k:x['archive'][k]for k in('bytes','sha256')}\nwith zipfile.ZipFile(a)as z:\n assert len(z.namelist())==6 and len(set(z.namelist()))==6\n assert z.testzip()is None\n expanded=sum(i.file_size for i in z.infolist());assert expanded<2097152\n data={n:json.loads(z.read(n))for n in z.namelist()if n.endswith('.json')}\n note=data['root-source-note.json'];review=data['reviewer.json'];scope=data['scope.json'];closure=data['source-closure.json']\n assert scope['base_revision']==base and scope['free_scientific_variables']==[]\n assert review['status']=='PASS'and not review['findings']\n assert hashlib.sha256(z.read('reviewer.json')).hexdigest()==x['independent_review_sha256']\n assert closure==x['closure'] and closure['observed_after_source_files_and_directory_fsync_s']<600\n observed=json.loads(data['source-actual-tool-return.json']['output'])\n assert observed['closure']==closure\n assert observed['tool_child_observed_after_closure_receipt_directory_fsync_s']<600\n assert x['actual_tool_return']==data['source-actual-tool-return.json']\n for name,record in note['source_pins'].items():\n  content=(r/name).read_bytes();assert pin(content)=={k:record[k]for k in('bytes','sha256')},name\n  lines=content.decode().splitlines()\n  for v in record['anchors']:assert '\\n'.join(lines[v['first']-1:v['last']])==v['text'],name\n for name,record in review['reviewed_files'].items():\n  content=subprocess.check_output(['git','show',base+':'+name],cwd=r)\n  assert pin(content)==record,name\n assert x['status']=='SOURCE_READINESS_COMPLETE'and x['native_episode_authorized']is False and x['runtime_tests_rerun']is False and x['physical_qualification']=='OPEN'\nlinks=anchors=0\nfor name in sorted(changed|{n for n in new if n.endswith('.md')}):\n for dest in re.findall(r'\\[[^\\]]*\\]\\(([^)]+)\\)',(r/name).read_text()):\n  dest=dest.strip('<>')\n  if '://'in dest or dest.startswith(('mailto:','data:')):continue\n  file,_,frag=dest.partition('#');q=((r/name).parent/unquote(file)).resolve()if file else r/name\n  if not q.exists():\n   assert q==r/'docs/adr/experiments/0287-doc-verification.json',(name,dest)\n  links+=1\n  if frag and q.suffix=='.md':\n   titles=re.findall(r'^#{1,6}\\s+(.+?)\\s*$',q.read_text(),re.M)\n   slugs={re.sub(r'[^\\w\\- ]','',t.strip().lower().replace('`','')).replace(' ','-')for t in titles}\n   assert unquote(frag)in slugs,(name,dest);anchors+=1\nassert len((r/'CURRENT_STATE.md').read_text().splitlines())<60\nassert '- [x] F18.17 'in(r/'openspec/changes/refine-physical-trajectory/tasks.md').read_text()\nassert '- [ ] F18.18 'in(r/'openspec/changes/refine-physical-trajectory/tasks.md').read_text()\nsubprocess.run(['git','diff','--check'],cwd=r,check=True)\nv=subprocess.run(['openspec','validate','refine-physical-trajectory','--strict'],cwd=r,capture_output=True,text=True,timeout=60)\nassert v.returncode==0,v.stdout+v.stderr\nout={'schema':'ariadna.f18.owner-handoff-doc-check.v1','status':'PASS','base_revision':base,'protected_prior_blobs':protected,'local_links':links,'anchors':anchors,'archive_members':6,'archive_expanded_bytes':expanded,'archive_compressed_bytes':len(raw),'strict_openspec':{'exit_code':v.returncode,'stdout':v.stdout,'stderr':v.stderr},'checked_files':{n:pin((r/n).read_bytes())for n in sorted(changed|new)},'runtime_tests_rerun':False,'native_scientific_work':False,'scope':'Documentary/source-pin verification only; source phase previously closed; no oracle or scientific imports/evaluations'}\nwith(p/'doc-checks.json').open('x')as f:json.dump(out,f,indent=2,sort_keys=True);f.write('\\n');f.flush();os.fsync(f.fileno())\nprint(json.dumps({k:v for k,v in out.items()if k!='checked_files'}))\n",
+  "root_checks": {
+    "anchors": 4,
+    "archive_compressed_bytes": 22091,
+    "archive_expanded_bytes": 58165,
+    "archive_members": 6,
+    "base_revision": "13f53fb663c7614b9d662beeddb7799d9d076ef3",
+    "checked_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2075,
+        "sha256": "0387b5c93fd2b4c8dd6ec939f5dddf50f8f99f721bcb3ef1b7cbbf536c8b4236"
+      },
+      "docs/adr/0287-identify-owner-carry-prerequisite.md": {
+        "bytes": 5834,
+        "sha256": "d9a4ffb5f0ab3b105f81febb8f1d2a0391ceb3a18e051b0acc396720ea4077a6"
+      },
+      "docs/adr/README.md": {
+        "bytes": 51711,
+        "sha256": "e1b7318a637a2a78e73d93bbdec9ea348efcbe203d963e9c2b9462b2c5243362"
+      },
+      "docs/adr/experiments/0287-owner-handoff-readiness-evidence.zip": {
+        "bytes": 22091,
+        "sha256": "41826e31fbf29f871e83bfc36787f42012a611c8ecae3f0d738b008bc12a15d5"
+      },
+      "docs/adr/experiments/0287-owner-handoff-readiness.json": {
+        "bytes": 1892,
+        "sha256": "97daa7eb9cb8567ddde4e166f15a0ac5eedf236f41ac36a0dbf3b3997e95d412"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 95278,
+        "sha256": "a4ab69999938f87269bd7723fe0d1af6b36f096ef04649bfb84980c460d81754"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 635002,
+        "sha256": "6826e30de75b8d98076d3149b88019087f655cad2f1b0e457e9c0b3ffb37bb49"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 185371,
+        "sha256": "0e6912af6a8e46acc511583841ebfeb8d2e80536952e7549cbe2d815f2d21bb4"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 522935,
+        "sha256": "077fd52373cc9ec2472905b044f59b427a0c88e91f11030a011ede472fd17017"
+      }
+    },
+    "local_links": 648,
+    "native_scientific_work": false,
+    "protected_prior_blobs": 1605,
+    "runtime_tests_rerun": false,
+    "schema": "ariadna.f18.owner-handoff-doc-check.v1",
+    "scope": "Documentary/source-pin verification only; source phase previously closed; no oracle or scientific imports/evaluations",
+    "status": "PASS",
+    "strict_openspec": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "Change 'refine-physical-trajectory' is valid\n"
+    }
+  },
+  "runtime_tests_repeated": false,
+  "schema": "ariadna.f18.owner-handoff-documentary-verification.v1",
+  "scientific_native_episode_or_oracle_repeated": false,
+  "scope": "Documentation/source-pin/evidence checks only; source phase and original episode immutable. No new runtime or physical qualification.",
+  "status": "PASS"
+}

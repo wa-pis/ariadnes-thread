@@ -1,3 +1,20 @@
+### Owner handoff source readiness (2026-11-27)
+
+[ADR0287](../../../docs/adr/0287-identify-owner-carry-prerequisite.md) completes F18.17 source readiness only:0267reverse is deliberately
+independent, not an interarc carry test. Existing artificial replay already carries
+state/mass; original-key endpoint-to-production-handoff association remains open.
+Independent review and durable source closure281.532454s<600; no tests/native or
+scientific work. Next F18.18 is bounded SOURCE/SAVED interface mapping only,
+not adapter implementation or new native authority. PhysicalF0/full0267/M3 remain open.
+
+F18.18 maps requested/observed original key and selector, processed seven-state
+metadata, completion/upstream safety, primitive snapshot lifetime/error behavior,
+and receiving state/mass words using existing source. Exact word association is
+separate from numerical oracle gates; integer synthetic epochs cannot establish
+arbitrary native-Time or physical TDB identity. At most600s including independent
+review/2MiB; zero evaluation/tests/imports/native/SPICE/integration/mount/acquisition.
+Produce one interface table or precise missing premise; no implementation authority.
+
 ### Completed single-owner native result (2026-11-27)
 
 [ADR0286](../../../docs/adr/0286-verify-single-completed-owner.md) completes one

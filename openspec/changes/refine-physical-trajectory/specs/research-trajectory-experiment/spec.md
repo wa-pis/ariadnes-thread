@@ -92,6 +92,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 Actual-owner preparation SHALL follow ADR0267 and retain every existing F0 gate.
 Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 
+#### Scenario: Distinguish independent readback arcs from production carry
+
+- **WHEN** F18.17 reviews0286single-forward success against0267and existing carry callers
+- **THEN** it SHALL retain independent forward/reverse literals, identify the original-key endpoint-to-handoff association separately from already artificial-qualified carry, and preserve all remaining owner/physical gates
+- **AND** F18.18 MAY map only source/saved interface premises for key/event association, metadata, completion/upstream safety, owned snapshot/errors and exact seven-word handoff within600s including independent review/2MiB, with pinned source anchors and one interface table or precise missing prerequisite
+- **AND** scientific/oracle/command/trajectory evaluations, tests/scientific imports/native/SPICE/integration/mount/acquisition/builds SHALL remain zero; original0267/0247inputs and numerical gates SHALL NOT change, no adapter implementation or new native authority SHALL follow, and unsupported exact-event identity SHALL remain unavailable
+
 #### Scenario: Establish the reachable owner route without native probing
 
 - **WHEN** F18.1 reviews the retained factory, private binding, result settings and F7 source
