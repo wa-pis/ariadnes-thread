@@ -1,5 +1,7 @@
 # Architecture Decision Records (ADRs)
 
+- [0286 — Verify one synthetic completed owner](0286-verify-single-completed-owner.md) — accepted fixed-scope result; physical/full0267 qualification open.
+
 - [0285 — Record one completed-owner execution choice](0285-authorize-one-completed-owner.md) — accepted user choice; fresh admission/execution pending.
 
 Record consequential choices, not every command. OpenSpec remains authoritative

@@ -1,3 +1,12 @@
+[ADR0286](../docs/adr/0286-verify-single-completed-owner.md) completes one
+F18.16 synthetic completed-owner episode: fresh actual consumption49.032074083s<600,
+original packet3.524682125s<60 and separate canonical saved audit0.076664125s<10.
+Independent review accepts one context/factory/integration/metadata/visitor,
+52callbacks/native evaluations[39],10markers and unchanged SI gates. Eight new
+artificial operator cases passed;1607files/status and71459operational paths frozen.
+Image detached, namespace consumed/no retry. Automation ACTIVE for source/saved
+follow-up only; full0267/physicalF0/strictM3 and99-percent claims remain open.
+
 [ADR0285](../docs/adr/0285-authorize-one-completed-owner.md) records the user's
 2026-11-27 explicit choice for one conditional F18.16 and resumed five-minute
 automation. Operator wiring and fresh actual read-only admission remain required;
