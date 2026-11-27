@@ -1,0 +1,190 @@
+{
+  "automation": {
+    "id": "ariadna-m3",
+    "reason": "Required distinct native execution choice; goal not achieved",
+    "status": "PAUSED"
+  },
+  "base_revision": "d2f37e724b4a36751c39cd62fc9931dca38e651f",
+  "checker": {
+    "pin": {
+      "bytes": 8753,
+      "sha256": "a41d3a35b7dba7bdfccff7051709ac189bd841e62ec91f1a4e3c06eadc20c6a8"
+    },
+    "source": "\"\"\"Saved-result/links/protected-history checks only; no runtime or test execution.\"\"\"\nfrom pathlib import Path\nfrom urllib.parse import unquote\nimport hashlib\nimport json\nimport os\nimport re\nimport subprocess\nimport zipfile\n\nR=Path('/Users/agrudin/dev/my/ariadna');P=Path('/private/tmp/ariadna-f18-0294')\nBASE='d2f37e724b4a36751c39cd62fc9931dca38e651f';NAME='0294-full-owner-binding-qualification'\nchanged={'CURRENT_STATE.md','docs/adr/README.md','openspec/ROADMAP.md','openspec/changes/refine-physical-trajectory/tasks.md','openspec/changes/refine-physical-trajectory/design.md','openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md'}\nnew={'docs/adr/0294-qualify-full-owner-bindings.md','docs/adr/experiments/'+NAME+'.json','docs/adr/experiments/'+NAME+'-evidence.zip'}\nproof='docs/adr/experiments/0294-doc-verification.json'\ndef pin(raw):return {'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}\ndef git(*argv):return subprocess.check_output(['git',*argv],cwd=R,text=True).strip()\nassert git('rev-parse','HEAD')==BASE and git('branch','--show-current')=='dev'\nassert not git('diff','--cached','--name-only')\nassert set(git('diff','--name-only').splitlines())==changed\nassert set(git('ls-files','--others','--exclude-standard').splitlines())==new\nprotected=0\nfor row in subprocess.check_output(['git','ls-tree','-rz','--full-tree',BASE],cwd=R).split(b'\\0'):\n if not row:continue\n metadata,name=row.split(b'\\t',1);name=name.decode()\n if name in changed:continue\n raw=(R/name).read_bytes()\n assert hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\\0'+raw).hexdigest()==metadata.decode().split()[2],name\n protected+=1\nresult=json.loads((R/'docs/adr/experiments'/ (NAME+'.json')).read_bytes());archive=R/'docs/adr/experiments'/result['archive']['name']\nassert pin(archive.read_bytes())=={k:result['archive'][k] for k in ('bytes','sha256')}\nwith zipfile.ZipFile(archive) as z:\n names=z.namelist();assert len(names)==len(set(names))==result['archive']['members'] and z.testzip() is None\n assert all(not Path(n).is_absolute() and '..' not in Path(n).parts for n in names)\n expanded=sum(i.file_size for i in z.infolist());assert expanded==result['archive']['expanded_bytes']<=2097152\n d={}\n for n in names:\n  raw=z.read(n)\n  if not n.endswith('.json') or not raw:continue\n  try:d[n]=json.loads(raw)\n  except ValueError:\n   assert n=='artificial/connected/gate-identity.input.json',n\n   assert raw==z.read('candidates/dispatch-once.py')+b'\\n'\n\n scope,freeze,review,post=(d[n] for n in ('scope.json','candidate-source-pins.json','candidate-code-review-final.json','post-run-evidence-review.json'))\n assert scope['stage']=='F18.24' and scope['base_revision']==BASE and scope['scientific_free_variables']==[]\n assert review['status']==post['status']=='PASS' and not review['findings'] and not post['findings']\n assert len(freeze['files'])==18 and review['file_pins']==freeze['files']\n for path,expected in freeze['files'].items():assert pin(z.read(str(Path(path).relative_to(P))))==expected,path\n assert set(freeze['files'])=={str(P/n) for n in names if n.startswith('candidates/')}\n assert pin(z.read('candidate-code-review-final.json'))=={k:freeze['source_review_pin'][k] for k in ('bytes','sha256')}\n assert pin(z.read('run-qualified-harness.py'))=={k:freeze['external_wrapper_pin'][k] for k in ('bytes','sha256')}\n assert pin(z.read('candidates/runtime-contract.json'))==result['runtime_mapping_pin']\n transforms=d['control-transformations.json'];old='inputs/retained-0286/episode/'\n for name in ('call-once.py','launch-once.py','run-once.py','native.sandbox','check-preservation.py'):\n  before=z.read(old+name);after=z.read('candidates/controls/'+name)\n  assert pin(before)==transforms[name]['old'] and pin(after)==transforms[name]['new']\n  if name in ('call-once.py','launch-once.py'):assert after==before\n  else:\n   expected=before.replace(b'/private/tmp/ariadna-f18-forward-completed-v1',b'/private/tmp/ariadna-f18-full-owner-v1')\n   if name=='run-once.py':expected=expected.replace(b'ariadna.f18.completed-caller-tool-observation.v1',b'ariadna.f18.full-owner-caller-tool-observation.v1')\n   assert after==expected,name\n runtime=d['candidates/runtime-contract.json'];assert runtime['schema']=='ariadna.f18.full-owner-control-mapping.v1'\n assert [len(runtime[k]) for k in ('old_source_pins','appended_source_pins','native_pins','retained_resources','historical_ledger_pins','historical_0280_member_pins')]==[49,4,10,11,25,86]\n assert runtime['fixture_input']=={'schema':'ariadna-owner-fixture-input-v1','scope':'synthetic-owner-conformance-only'}\n for name in ('_owner_endpoint_run.py','_owner_endpoint_fixture.py','_owner_endpoint_audit.py'):\n  expected=runtime['old_source_pins'][str(R/'src/space_nav'/name)]\n  assert pin(z.read('inputs/original-source/'+name))==expected\n  assert pin((R/'src/space_nav'/name).read_bytes())==expected\n tool=d['tool-result.json'];obs=json.loads(tool['output']);ext=d['external-invocation.json'];q=d['qualification-result.json']\n assert result['actual_tool_return']==tool and tool['exit_code']==ext['exit_code']==0\n assert obs['status']=='PASS' and obs['observed_after_external_receipt_fsync_s']==1.079061333090067<120\n assert ext['failure'] is None and ext['stderr_bytes']==0 and not ext['cleanup']['errors']\n assert ext['status']=='PENDING_EXTERNAL_OBSERVATION_FSYNC' and q['status']=='PENDING_DURABLE_READBACK'\n assert obs['stdout']['tests_run']==q['tests_run']==10 and obs['stdout']['failures']==q['failures']==0 and obs['stdout']['errors']==q['errors']==0\n assert q['test_success_observed'] is True and q['previous194case_and3helper_tests_repeated'] is False\n assert pin(z.read('qualification-result.json'))=={k:obs['stdout']['report_pin'][k] for k in ('bytes','sha256')}\n assert obs['whole_root']=={'files':419,'structured_bytes':1958289,'log_bytes':1560}\n assert len(q['case_observed_returns'])==16\n assert all(0<=row['elapsed_after_final_fsync_s']<(60 if row['accepted_injected'] else 65) for row in q['case_observed_returns'])\n log=z.read('artificial/unittest.log');assert log.count(b'... ok')==10 and b'Ran 10 tests' in log and b'\\nOK\\n' in log\n a=d['artificial/connected/episode/execution/native-packet/audit.json']\n assert (a['status'],a['mode'],a['calls_checked'],a['analytic_arcs_checked'],a['physical_admission'])==('passed','injected',8,2,'unavailable')\n terminal=d['artificial/connected/episode/artificial-operator-terminal.json']\n assert terminal['status']=='PENDING_DURABLE_ARTIFICIAL_FINALIZATION' and terminal['finalization']=='pending-outer-readback'\n assert terminal['gate_return']['native_launch_authorized'] is False\n assert result['temporary_artificial_bindings_qualified'] is True and result['new_native_authority'] is False\n assert result['physical_admission']=='unavailable' and not result['runtime_tests_ci_dependencies_changed']\n assert d['static-closure-observed-return.json']['elapsed_after_closure_fsync_s']==1413.7336331247352<1800\nlinks=anchors=0\nfor name in sorted(changed|{n for n in new if n.endswith('.md')}):\n for dest in re.findall(r'\\[[^\\]]*\\]\\(([^)]+)\\)',(R/name).read_text()):\n  dest=dest.strip('<>')\n  if '://' in dest or dest.startswith(('mailto:','data:')):continue\n  file,_,frag=dest.partition('#');target=((R/name).parent/unquote(file)).resolve() if file else R/name\n  if not target.exists():assert target==R/proof,(name,dest)\n  links+=1\n  if frag and target.suffix=='.md':\n   titles=re.findall(r'^#{1,6}\\s+(.+?)\\s*$',target.read_text(),re.M)\n   slugs={re.sub(r'[^\\w\\- ]','',t.strip().lower().replace('`','')).replace(' ','-') for t in titles}\n   assert unquote(frag) in slugs,(name,dest);anchors+=1\nassert len((R/'CURRENT_STATE.md').read_text().splitlines())<60\nassert '- [x] F18.24 ' in (R/'openspec/changes/refine-physical-trajectory/tasks.md').read_text()\nsubprocess.run(['git','diff','--check'],cwd=R,check=True)\nv=subprocess.run(['openspec','validate','refine-physical-trajectory','--strict'],cwd=R,capture_output=True,text=True,timeout=60)\nassert v.returncode==0,v.stdout+v.stderr\nout={'schema':'ariadna.f18.full-owner-binding-documentary-check.v1','status':'PASS','base_revision':BASE,\n 'protected_prior_blobs':protected,'local_links':links,'anchors':anchors,'archive_members':len(names),'archive_expanded_bytes':expanded,\n 'strict_openspec':{'exit_code':v.returncode,'stdout':v.stdout,'stderr':v.stderr},\n 'checked_files':{name:pin((R/name).read_bytes()) for name in sorted(changed|new)},\n 'unchanged_full_suite_repeated':False,'new_scientific_native_work':False,'native_admission':'DEFERRED; artificial qualification only'}\nwith(P/'doc-checks.json').open('x') as f:json.dump(out,f,indent=2,sort_keys=True);f.write('\\n');f.flush();os.fsync(f.fileno())\nprint(json.dumps({k:v for k,v in out.items() if k!='checked_files'}))\n"
+  },
+  "independent_final_documentary_review": {
+    "archive_selected_original_pins": {
+      "candidate-code-review-final.json": {
+        "bytes": 9724,
+        "sha256": "4839be7a14b6704064434f9570c219be29e5393237f7c556c526f1b41b4b2733"
+      },
+      "candidate-source-pins.json": {
+        "bytes": 4173,
+        "sha256": "586c346eaab82fa7c072bf0e8b9f847fdca5ebbf443788e54daba005af79cfa7"
+      },
+      "check-docs.py": {
+        "bytes": 8753,
+        "sha256": "a41d3a35b7dba7bdfccff7051709ac189bd841e62ec91f1a4e3c06eadc20c6a8"
+      },
+      "external-invocation.json": {
+        "bytes": 1779,
+        "sha256": "3651aca3a0b184dd943a4c06eed85ec1ebb78a0916e13ac44bd4e8548dd3f83b"
+      },
+      "post-run-evidence-review.json": {
+        "bytes": 22565,
+        "sha256": "bffbbf239e398496e21fd0592e1a81ea72bbe00d2871bf1ac1534b5f45008184"
+      },
+      "publish.py": {
+        "bytes": 16236,
+        "sha256": "3bd2e30295fde35f27f34cb29582ed4a2da27fbc0987deef23935664c44ae964"
+      },
+      "qualification-result.json": {
+        "bytes": 3361,
+        "sha256": "df1d36e38fa0617a7ccb94ad5ec2f2bb7f2368573772a719189146e8c9e39889"
+      },
+      "tool-result.json": {
+        "bytes": 895,
+        "sha256": "3d4785d0d8531b7887b94ff0e89af8cecb1edc8f8ed167386e94531f037597db"
+      }
+    },
+    "checked_utc": "2026-11-27T09:59:23.025578+00:00",
+    "factual_checks": [
+      "Exactly nine current file pins match parent checked_files; CURRENT under60lines. Existing-doc changes update current status and add scope/scenario/task statements; no unrelated runtime or historical ADR deletion observed.",
+      "One artificial invocation:10 methods/0 failures/errors,16 case observations,18 frozen files, unchanged original fixture/run/audit,8 outcomes/2 independent arcs. Static closure1413.7336331247352s<1800; actual external post-receipt-fsync1.079061333090067s<120.",
+      "Terminal419 files/1958289B includes1560B logs; later publication archive423 members/2006738 expandedB/683322 compressedB. Selected eight top-level proofs/recipes are byte-identical to originals.",
+      "Pending disk receipts distinct from observed returns. Collection seal0.113699667s is not complete invoke final time; exact returned invoke terminal elapsed was not separately retained. Complete external observation bounds the continuation.",
+      "Visitor10 reaches actual independent auditor and refuses; partial2factory/1attempt/1visitor retains no audit; adapter finalization remains failed; unknown native counts and saved cleanup limitations preserved.",
+      "Compact artificial entry metadata explicitly unadmitted; full fake53/10/11/25/86 connected and eight-group checks remain complete. No promotion to native identities or adoption.",
+      "Native choice/material/qualification proof deferred; no actual profile/new native authority. Positive native CLI/OS sandbox/actual RO resources remain unqualified. Scheduler PAUSED based on parent-confirmed automation tool status, not replayed here.",
+      "Full native0267, carry/concurrency/physical readback/F0/M3/admissible pair/99-percent/safety remain open. Runtime/tests/CI/dependencies unchanged; full suite/live/Ruff not repeated."
+    ],
+    "findings": [],
+    "notes": [
+      "Pending doc-verification link intentionally finalized by parent after this receipt.",
+      "ADR1.079062s is a conservative microsecond upper bound; exact measured1.079061333090067s remains in ADR/result.",
+      "Offline documentary receipt writer initially rejected ambiguous basename lookup because archive also retains prior0292 candidate-source-pins.json. Corrected only to exact top-level member names; stopped before receipt creation, no experiment/audit/test/source replay or mutation."
+    ],
+    "parent_check_pin": {
+      "bytes": 2110,
+      "path": "/private/tmp/ariadna-f18-0294/doc-checks.json",
+      "sha256": "79b559d460ad01253500fd52f80fdefcdf764ab28362f280e3df6e7338d18282"
+    },
+    "parent_mechanical_results": {
+      "anchors": 4,
+      "archive_members": 423,
+      "local_links": 667,
+      "protected_prior_blobs": 1633,
+      "strict_openspec_exit_code": 0
+    },
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 1979,
+        "sha256": "7da5d4ade87af2b08728dc52723802452de7d57334e99033d7347f02fb2a83ca"
+      },
+      "docs/adr/0294-qualify-full-owner-bindings.md": {
+        "bytes": 7057,
+        "sha256": "afab008de37795df77f06b6a3731de62ca588f94d12109426a1d8ad087a913bc"
+      },
+      "docs/adr/README.md": {
+        "bytes": 52997,
+        "sha256": "b881d6cf0771ab4c2120c5010a8a8b54722cb985d04c566b0e40ff645beeb538"
+      },
+      "docs/adr/experiments/0294-full-owner-binding-qualification-evidence.zip": {
+        "bytes": 683322,
+        "sha256": "114fdda25fd2f67cd486cde6add32b95041c239b3c5bea1863e1ffbdd6be2c00"
+      },
+      "docs/adr/experiments/0294-full-owner-binding-qualification.json": {
+        "bytes": 3152,
+        "sha256": "e0ede7273a0a2c45af4a698baa0b29d4f79e393bc38c937b9b3b4cf559bffd24"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 99526,
+        "sha256": "4e0b9a1bcce97e0679ec2a5c66e4fd91b2fcff078dffda932151cb1cccf6d417"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 641645,
+        "sha256": "c46696e31704a52d305b3c7e18cc71dd734f3ef19da8e808eaa7ea29064e0693"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 194271,
+        "sha256": "a7b0f3bbc6bedf9cea07244e3dc845e7c9fda10b101280e2bb2b7fb507bcdb33"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 531183,
+        "sha256": "c3eea5f2727d64e41f4b763c9a97fce7e3c2845afa833abe85b950cdee652e39"
+      }
+    },
+    "saved_review_pin": {
+      "bytes": 22565,
+      "path": "/private/tmp/ariadna-f18-0294/post-run-evidence-review.json",
+      "sha256": "bffbbf239e398496e21fd0592e1a81ea72bbe00d2871bf1ac1534b5f45008184"
+    },
+    "schema": "ariadna.f18.full-owner-binding-final-documentary-review.v1",
+    "scope": "Final documentary-only independent review: six existing-document diffs, new ADR0294/result, archive metadata and selected top-level proofs against accepted saved qualification. No tests, validator rerun, scientific audit replay, native, mount or repository edits.",
+    "status": "PASS"
+  },
+  "native_admission": "DEFERRED; distinct explicit native choice, material/proof binding and fresh actual independent admission required",
+  "new_native_authority": false,
+  "new_scientific_native_work": false,
+  "root_checks": {
+    "anchors": 4,
+    "archive_expanded_bytes": 2006738,
+    "archive_members": 423,
+    "base_revision": "d2f37e724b4a36751c39cd62fc9931dca38e651f",
+    "checked_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 1979,
+        "sha256": "7da5d4ade87af2b08728dc52723802452de7d57334e99033d7347f02fb2a83ca"
+      },
+      "docs/adr/0294-qualify-full-owner-bindings.md": {
+        "bytes": 7057,
+        "sha256": "afab008de37795df77f06b6a3731de62ca588f94d12109426a1d8ad087a913bc"
+      },
+      "docs/adr/README.md": {
+        "bytes": 52997,
+        "sha256": "b881d6cf0771ab4c2120c5010a8a8b54722cb985d04c566b0e40ff645beeb538"
+      },
+      "docs/adr/experiments/0294-full-owner-binding-qualification-evidence.zip": {
+        "bytes": 683322,
+        "sha256": "114fdda25fd2f67cd486cde6add32b95041c239b3c5bea1863e1ffbdd6be2c00"
+      },
+      "docs/adr/experiments/0294-full-owner-binding-qualification.json": {
+        "bytes": 3152,
+        "sha256": "e0ede7273a0a2c45af4a698baa0b29d4f79e393bc38c937b9b3b4cf559bffd24"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 99526,
+        "sha256": "4e0b9a1bcce97e0679ec2a5c66e4fd91b2fcff078dffda932151cb1cccf6d417"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 641645,
+        "sha256": "c46696e31704a52d305b3c7e18cc71dd734f3ef19da8e808eaa7ea29064e0693"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 194271,
+        "sha256": "a7b0f3bbc6bedf9cea07244e3dc845e7c9fda10b101280e2bb2b7fb507bcdb33"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 531183,
+        "sha256": "c3eea5f2727d64e41f4b763c9a97fce7e3c2845afa833abe85b950cdee652e39"
+      }
+    },
+    "local_links": 667,
+    "native_admission": "DEFERRED; artificial qualification only",
+    "new_scientific_native_work": false,
+    "protected_prior_blobs": 1633,
+    "schema": "ariadna.f18.full-owner-binding-documentary-check.v1",
+    "status": "PASS",
+    "strict_openspec": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "Change 'refine-physical-trajectory' is valid\n"
+    },
+    "unchanged_full_suite_repeated": false
+  },
+  "schema": "ariadna.f18.full-owner-binding-documentary-verification.v1",
+  "stage": "F18.24",
+  "status": "PASS",
+  "temporary_artificial_bindings_qualified": true,
+  "unchanged_full_suite_repeated": false
+}

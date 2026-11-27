@@ -3,33 +3,30 @@
 Updated: 2026-11-27 (Europe/Samara). Keep under60lines.
 
 ## Current result
-[ADR0293](docs/adr/0293-full-owner-binding-design.md): F18.23 design complete.
-Frozen concrete8control/separategate/3operator field/argv contract and NOT_ADMITTED
-profile/decision templates; independent SOURCE/SAVED review PASS.
-Actual sourceclosure552.120347s<600;528904B pre-receipt/no logs; zero tests/native/
-SPICE/integration/mount. Four documentary findings resolved before finalfreeze.
-Original fixture/run/audit already in retained53cohort; no cohort enlargement.
-[Result](docs/adr/experiments/0293-full-owner-binding-design.json).
-0292corrected artificial slice remains PASS10methods;0291failedrun immutable,
-its3helperpasses retained separately. No actual full-owner qualification yet.
+[ADR0294](docs/adr/0294-qualify-full-owner-bindings.md): F18.24 ARTIFICIAL bindings
+qualified:18frozen files/10methods,0failures/errors; actual prepare/cold independent
+review/invoke/gate/admit/isolatedentry/unchanged guarded audit accepts8outcomes2arcs.
+Staticclosure1413.733633s<1800; one cold/durable1.079061s<120;1958289B/1560logs;
+independent saved audit PASS. Original fixture/run/audit unchanged.
+Full fake53/10/11/25/86 admission; compact ENTRY_ONLY_ARTIFICIAL negatives explicitly
+unadmitted. Pending disk receipts remain separate from actual observed returns.
+[Result](docs/adr/experiments/0294-full-owner-binding-qualification.json).
 
-## Next authorized action and scheduler
-ariadna-m3 ACTIVE every5minutes. F18.24 per ADR0293: minimal temporary binding
-implementation/static review<=1800s; exactcandidate/template/argv freeze+review,
-then one focused<=120s cold/durable artificial qualification and independent audit.
-Reuse originalrunner/auditor/controller/helpers; original2keyinput/8outcomes2arcs,
-clock/byte/oracle/counter/preservation/cleanup gates unchanged. Fresh artificial
-namespace only; no unchanged194case/3helper repeat or generalframework.
-No nativeimport/SPICE/integration/mount/resourcepayload/acquisition/build/profile
-adoption/actualauthority. Required repo-runtimechecks only if correspondingdiff.
-Update evidence/ADR/OpenSpec, protectedhistory/docs/strict, commit/push.
-Actual native episode still needs distinct userchoice and fresh actual admission;
-original strict<600s preflight starts before namespace/mount and includes all prep.
+## Next prerequisite and scheduler
+ariadna-m3 PAUSED for distinct explicit native choice under ADR0293/0294.
+Reviewable next scope: one original0267 synthetic full-owner fixture, independent
+0/1000s literals/8outcomes2arcs; unchanged gates/retained environment/resources,
+60s45/10/by55/5 packet,65failure-only,2MiB/64KiBlogs. Before execution separately
+bind actual native material/qualification proof and obtain fresh independent
+admission: originalstrict<600s starts before namespace/mount and includes allprep.
+No actual namespace/profile adoption/nativeauthority here; native material/choice
+is DEFERRED, positive native CLI/OSsandbox/actualresources unqualified.
+No automatic native run or reuse of consumed0285authority.
 
 ## Preserved results and physical limits
-0286oneforward nativeowner only;0285authority consumed/image detached. Preserve all
-old namespaces/resources/failures;0269cause/countsUNKNOWN.0267reverse independent.
-0289general export basis conditional; no general header/ABI campaign required.
-Full0267native lifecycle/carry/concurrency/physical chain/bounds/F0/M3/99%/safety
-open. NoM4–M6/ML/UI. Production/tests/CI/deps unchanged; fullsuite/Ruffnot repeated.
+0286oneforward nativeowner only;0285consumed/image detached. Preserve historical
+namespaces/resources/failures;0269cause/countsUNKNOWN;0267reverse is independent.
+Native lifecycle/carry/concurrency/generalABI-FP and physicalclock/force/endpoint
+bounds/F0/strictM3/admissiblepair/99%/mission safety remain open. NoM4–M6/ML/UI.
+Runtime/tests/CI/deps unchanged; fullsuite/live/Ruff not repeated; strict/docs checked.
 Preserve moon_to_mars.py/main/remotes/history; devonly.

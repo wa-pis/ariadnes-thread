@@ -1,0 +1,51 @@
+{
+  "active_controls": 8,
+  "actual_tool_return": {
+    "chunk_id": "c4e24e",
+    "exit_code": 0,
+    "original_token_count": 177,
+    "output": "{\"status\": \"PASS\", \"observed_after_external_receipt_fsync_s\": 1.079061333090067, \"external_record\": \"external-invocation.json\", \"exit_code\": 0, \"stdout\": {\"byte_counters\": {\"files\": 416, \"log_bytes\": 1560, \"structured_bytes\": 1954494, \"total_bytes\": 1956054}, \"elapsed_after_report_directory_fsync_s\": 1.057379042264074, \"errors\": 0, \"failures\": 0, \"native_authority\": false, \"report_pin\": {\"bytes\": 3361, \"path\": \"/private/tmp/ariadna-f18-0294/qualification-result.json\", \"sha256\": \"df1d36e38fa0617a7ccb94ad5ec2f2bb7f2368573772a719189146e8c9e39889\"}, \"status\": \"PASS_INJECTED_QUALIFICATION\", \"tests_run\": 10}, \"failure\": null, \"whole_root\": {\"files\": 419, \"structured_bytes\": 1958289, \"log_bytes\": 1560}}\n",
+    "wall_time_seconds": 0.961975792
+  },
+  "archive": {
+    "bytes": 683322,
+    "expanded_bytes": 2006738,
+    "members": 423,
+    "name": "0294-full-owner-binding-qualification-evidence.zip",
+    "sha256": "114fdda25fd2f67cd486cde6add32b95041c239b3c5bea1863e1ffbdd6be2c00"
+  },
+  "artificial_cohorts": "Full explicit fake53/10/11/25/86 for connected admission. Compact unadmitted ENTRY_ONLY_ARTIFICIAL metadata for direct-entry refusal/fault cases; actual executing3 source pins separately checked.",
+  "base_revision": "d2f37e724b4a36751c39cd62fc9931dca38e651f",
+  "candidate_files": 18,
+  "external_gate_separate": true,
+  "independent_saved_review": "PASS",
+  "independent_source_review": "PASS; final18file cohort, earlier review preserved separately",
+  "native_cli_positive_or_os_sandbox_qualified": false,
+  "native_material_binding": "DEFERRED; missing future user choice and frozen actual qualification proof",
+  "new_native_authority": false,
+  "new_spice_native_integration_or_mount": false,
+  "next_prerequisite": "Distinct explicit user choice for the unchanged full-owner native fixture, then separately fixed native material/proof binding and fresh independent actual admission; no automatic native episode",
+  "observed_packet_cases": 16,
+  "operators": 3,
+  "physical_admission": "unavailable",
+  "runtime_mapping_pin": {
+    "bytes": 29690,
+    "sha256": "843a5a76f6c0ad4f01759960e4e2d8db8d14876367613fa38758c4c364cc9505"
+  },
+  "runtime_tests_ci_dependencies_changed": false,
+  "schema": "ariadna.f18.full-owner-binding-qualification-result.v1",
+  "source_cohort": "Original fixture/run/audit already in retained53; native10/resources11/ledgers25/history86 unchanged in prospective native mapping",
+  "stage": "F18.24",
+  "static_closure_observed_return": {
+    "candidate_files": 18,
+    "elapsed_after_closure_fsync_s": 1413.7336331247352,
+    "source": "Observed actual static-closure tool stdout; receipt itself remains pending-final-observation",
+    "status": "PASS_STATIC_CLOSURE",
+    "tests_run": false,
+    "whole_root_bytes": 713832
+  },
+  "status": "PASS_ARTIFICIAL_BINDINGS_ONLY",
+  "targeted_methods": 10,
+  "temporary_artificial_bindings_qualified": true,
+  "unchanged_full_suite_repeated": false
+}

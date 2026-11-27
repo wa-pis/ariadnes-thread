@@ -92,6 +92,14 @@ qualification of the installed exporter, actual event carry and physical gates.
 Actual-owner preparation SHALL follow ADR0267 and retain every existing F0 gate.
 Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 
+#### Scenario: Keep qualified artificial bindings separate from a native episode
+
+- **WHEN** F18.24 freezes and independently reviews its exact18candidate files within1800s, then one artificial invocation passes10methods/all8outcomes2arcs with actual guarded audit and external post-fsync observation below120s, independently checked from saved evidence
+- **THEN** only the temporary artificial bindings MAY be marked qualified; pending disk receipts SHALL remain distinct from actual observed successful returns and all original clock/byte/source/oracle/counter gates SHALL remain unchanged
+- **AND** complete artificial admission metadata SHALL remain distinct from compact explicitly unadmitted direct-entry test metadata; prospective native53/10/11/25/86 identities SHALL NOT be replaced by fabricated metadata
+- **AND** missing native choice/material/proof SHALL refuse before actual access; native CLI positive/OS sandbox/resource observation, actual profile adoption and execution SHALL remain deferred until distinct explicit choice and fresh independently reviewed actual admission
+- **AND** physicalF0/M3/admissible command pair/probability/safety SHALL NOT follow from artificial software qualification
+
 #### Scenario: Bind the full-owner controls without adopting a native profile
 
 - **WHEN** F18.23 closes its concrete retained-source binding contract within600s/2MiB including independent review and durable observation

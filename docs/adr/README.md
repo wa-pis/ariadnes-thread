@@ -1,5 +1,7 @@
 # Architecture Decision Records (ADRs)
 
+- [0294 — Qualify temporary full-owner bindings](0294-qualify-full-owner-bindings.md) — ten artificial methods and independent saved audit pass; native choice/material deferred.
+
 - [0293 — Fix remaining full-owner bindings](0293-full-owner-binding-design.md) — concrete eight-control/gate/operator contract; design only, native admission deferred.
 - [0292 — Qualify corrected artificial owner slice](0292-correct-artificial-interpreter-pin.md) — ten targeted methods pass; retained three helper passes remain separate; native admission deferred.
 - [0291 — Preserve failed artificial owner slice](0291-qualify-artificial-owner-slice.md) — setup pin reader failed before entry; bounded fresh software correction accepted.
