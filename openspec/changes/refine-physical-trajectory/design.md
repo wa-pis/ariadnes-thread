@@ -1,3 +1,21 @@
+### Original conversion premise ledger (2026-11-27)
+
+[ADR0289](../../../docs/adr/0289-check-original-conversion-premises.md) completes F18.19 retained premise lookup: selected strict compiler
+flags, build/artifact identity and0286context are linked; relevant DOUBLE-export/
+Python-storage bodies are not in the named receipts, so general conversion basis
+remains conditional. No calculation/native work. This does not block the existing
+0267fixed0/1000s synthetic fixture or require a new interface/build. Next F18.20
+is a bounded SOURCE-only0268runner↔0286outer-control mapping, no profile/adoption
+or native authority. PhysicalF0/full0267/M3 remain open.
+
+F18.20 fixes original0267independent literals, eight ordered outcomes, metadata/
+oracle gates,3factory/2analytic-attempt/8visitor/100000callback ceilings and all
+first-failure/clock/byte/admission obligations. Within600s source/saved review
+including independent review/2MiB, produce one payload/control/admission change
+map or exact missing prerequisite; no test/import/native/SPICE/integration/mount/
+acquisition/build/scientific evaluation, execution-profile adoption or implementation.
+Existing successful artificial campaigns are not repeated by this mapping.
+
 ### Original endpoint handoff map (2026-11-27)
 
 [ADR0288](../../../docs/adr/0288-map-original-endpoint-handoff.md) completes F18.18 source mapping only. Original iterator→same

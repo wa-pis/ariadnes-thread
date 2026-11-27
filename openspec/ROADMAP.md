@@ -1,3 +1,11 @@
+[ADR0289](../docs/adr/0289-check-original-conversion-premises.md) completes F18.19 retained premise lookup: selected strict compiler
+flags, build/artifact identity and0286context are linked; relevant DOUBLE-export/
+Python-storage bodies are not in the named receipts, so general conversion basis
+remains conditional. No calculation/native work. This does not block the existing
+0267fixed0/1000s synthetic fixture or require a new interface/build. Next F18.20
+is a bounded SOURCE-only0268runner↔0286outer-control mapping, no profile/adoption
+or native authority. PhysicalF0/full0267/M3 remain open.
+
 [ADR0288](../docs/adr/0288-map-original-endpoint-handoff.md) completes F18.18 source mapping only. Original iterator→same
 seven state words is source-supported; explicit pre-narrow-checked C++double
 conversion differs from the older generic caster route. Exact artificial events

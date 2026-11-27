@@ -1,0 +1,126 @@
+{
+  "independent_doc_review": {
+    "archive": {
+      "compressed_bytes": 41948,
+      "expanded_bytes": 290773,
+      "members": 18
+    },
+    "checked_utc": "2026-11-27T07:35:35.931958+00:00",
+    "factual_checks": [
+      "Positive generated compiler flags, retained successful build, selected source/artifact identity and0286saved native context are distinguished from full end-to-end conversion qualification.",
+      "Narrowed remainder uses the DOUBLE tuple caster; explicit py::float_(double) applies to state words. Missing relevant header bodies are not conflated with the old generic LONG-DOUBLE caster gap.",
+      "No nearest-rounding requirement, universal ABI/FP guarantee, exact physicalF5identity requirement or new interface/build necessity is inferred.",
+      "Source closure exact418.390336625278s<600 and288037B<2MiB match saved records; documentary publication is separate.",
+      "F18.19 alone is checked; F18.20 is SOURCE/SAVED-only0268runner to0286outer-control mapping for original fixed0267synthetic fixture,600s inclusive independent review/2MiB/zero execution. General export-basis gap does not block fixed-fixture preparation.",
+      "Original literals/eight outcomes/metadata/oracle/counter/admission obligations and consumed0285authority are preserved; no profile/operator/adapter implementation or native/physical authority is granted.",
+      "Reviewed diff changes only current documentation and adds ADR/evidence; historical records remain in place. Root retains13member-pin union, including kernel-link-inspection separately in retained-build-members.json; broader preservation is delegated to parent mechanical checks."
+    ],
+    "findings": [],
+    "pending_publication_record": "docs/adr/experiments/0289-doc-verification.json is intentionally created by parent after this review.",
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2293,
+        "sha256": "8c89845fedd5d51f11de998048dff1644ba173f59a51fa1242b910293a09498a"
+      },
+      "docs/adr/0289-check-original-conversion-premises.md": {
+        "bytes": 7497,
+        "sha256": "d8695089e7e59121a0c3d7b3c8c7dd27975a58de59250126d3dd2ff8bba3c3ea"
+      },
+      "docs/adr/README.md": {
+        "bytes": 52080,
+        "sha256": "e6d741ab141239815b7c1fe6c8d7da1d9fff6ff8fac69fbb0c34e819fdf03a8c"
+      },
+      "docs/adr/experiments/0289-original-conversion-premises-evidence.zip": {
+        "bytes": 41948,
+        "sha256": "775d00fec464b52005a7bd1c216b7c7090587e99ca767aadc5e6b5a7d3686a28"
+      },
+      "docs/adr/experiments/0289-original-conversion-premises.json": {
+        "bytes": 2251,
+        "sha256": "8d93319b395d72bc99d8243b525bd2e1fd011c70abf893c7c9995ec8e83a6c43"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 96476,
+        "sha256": "2d40e0b638ac60179191f258d8af2c941d6714c7687f669ed7480e39b55b0ff1"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 637364,
+        "sha256": "520ca0517b02563d61227f4bf9265d69a36e98c7170f6a4b85d9d55706ad5d8a"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 187738,
+        "sha256": "ac2e388ea19bf37b76607eb30e24db6aa661ea7c64fa6c4cc0f1b18961f263c2"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 524887,
+        "sha256": "d817c22c5468b9835aa03fb312e280da9698cd87abbfee33175f01f78dbe65d3"
+      }
+    },
+    "schema": "ariadna.f18.original-conversion-final-documentary-review.v1",
+    "scope": "Separate final documentary review of current six-file diff, ADR0289/result and18-member archive metadata. Compared archived independent source/scope reviews and closure with retained bytes. No new source sweep, runtime/scientific work, native/resource operation, implementation or repository edit. Parent protected-history/link/strict checks remain separately recorded.",
+    "status": "PASS"
+  },
+  "retained_root_checker": "from pathlib import Path\nfrom urllib.parse import unquote\nimport hashlib,json,re,subprocess,zipfile,os\nr=Path('/Users/agrudin/dev/my/ariadna');p=Path('/private/tmp/ariadna-f18-0289');base='bbab11a296cbf9c758b22110e3817476c7ba5e9f'\nchanged={'CURRENT_STATE.md','docs/adr/README.md','openspec/ROADMAP.md','openspec/changes/refine-physical-trajectory/design.md','openspec/changes/refine-physical-trajectory/tasks.md','openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md'}\nnew={'docs/adr/0289-check-original-conversion-premises.md','docs/adr/experiments/0289-original-conversion-premises.json','docs/adr/experiments/0289-original-conversion-premises-evidence.zip'}\ndef git(*args):return subprocess.check_output(['git',*args],cwd=r,text=True).strip()\ndef pin(raw):return {'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}\nassert git('rev-parse','HEAD')==base and git('branch','--show-current')=='dev'and not git('diff','--cached','--name-only')\nassert set(git('diff','--name-only').splitlines())==changed\nassert set(git('ls-files','--others','--exclude-standard').splitlines())==new\nprotected=0\nfor row in subprocess.check_output(['git','ls-tree','-rz','--full-tree',base],cwd=r).split(b'\\0'):\n if not row:continue\n metadata,name=row.split(b'\\t',1);name=name.decode()\n if name in changed:continue\n raw=(r/name).read_bytes();obj=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\\0'+raw).hexdigest();assert obj==metadata.decode().split()[2],name;protected+=1\nx=json.loads((r/'docs/adr/experiments/0289-original-conversion-premises.json').read_text());a=r/'docs/adr/experiments'/x['archive']['name'];raw=a.read_bytes();assert pin(raw)=={k:x['archive'][k]for k in('bytes','sha256')}\nwith zipfile.ZipFile(a)as z:\n assert len(z.namelist())==len(set(z.namelist()))==x['archive']['members']==18 and z.testzip()is None\n expanded=sum(i.file_size for i in z.infolist());assert expanded<2097152\n data={n:json.loads(z.read(n))for n in z.namelist()if n.endswith('.json')}\n note=data['root-premise-ledger.json'];review=data['reviewer.json'];scope=data['scope.json'];closure=data['source-closure.json'];nextreview=data['next-scope-review.json']\n assert scope['base_revision']==base and note['free_scientific_variables']==[]\n assert review['status']==nextreview['status']=='PASS'and not review['findings']and not nextreview['findings']\n assert closure==x['closure']and closure['observed_after_source_files_directory_fsync_s']<600 and closure['evidence_bytes']<2097152\n observed=json.loads(data['source-actual-tool-return.json']['output']);assert observed['closure']==closure and observed['observed_after_closure_receipt_directory_fsync_s']<600 and x['actual_tool_return']==data['source-actual-tool-return.json']\n for name,record in note['source_pins'].items():\n  content=(r/name).read_bytes();assert pin(content)=={k:record[k]for k in('bytes','sha256')},name\n  lines=content.decode().splitlines()\n  for v in record['anchors']:assert '\\n'.join(lines[v['first']-1:v['last']])==v['text'],name\n for name,record in review['file_pins'].items():assert pin(subprocess.check_output(['git','show',base+':'+name],cwd=r))==record,name\n for name,record in review['member_pins'].items():\n  name,member=name.split('!',1)\n  with zipfile.ZipFile(r/name)as prior:assert pin(prior.read(member))==record,(name,member)\n union={}\n for name,records in note['retained_member_pins'].items():\n  with zipfile.ZipFile(r/'docs/adr/experiments'/name)as prior:\n   assert pin((r/'docs/adr/experiments'/name).read_bytes())==note['retained_archive_pins'][name]\n   for member,record in records.items():assert pin(prior.read(member))==record;union[(name,member)]=record\n saved=data['retained-build-members.json']\n with zipfile.ZipFile(r/saved['archive'])as prior:\n  for item in saved['members']:\n   member=item['member'];record={k:item[k]for k in('bytes','sha256')};assert pin(prior.read(member))==record\n   assert pin(z.read(Path(member).name))==record;union[(Path(saved['archive']).name,member)]=record\n assert len(union)==13 and len(note['source_pins'])==6 and len(note['premise_ledger'])==7\n assert x['status']=='SOURCE_PREMISE_LOOKUP_COMPLETE'and x['new_native_or_adapter_authority']is False and x['runtime_tests_repeated']is False and x['physical_qualification']=='OPEN'\nlinks=anchors=0\nfor name in sorted(changed|{n for n in new if n.endswith('.md')}):\n for dest in re.findall(r'\\[[^\\]]*\\]\\(([^)]+)\\)',(r/name).read_text()):\n  dest=dest.strip('<>')\n  if '://'in dest or dest.startswith(('mailto:','data:')):continue\n  file,_,frag=dest.partition('#');q=((r/name).parent/unquote(file)).resolve()if file else r/name\n  if not q.exists():assert q==r/'docs/adr/experiments/0289-doc-verification.json',(name,dest)\n  links+=1\n  if frag and q.suffix=='.md':\n   titles=re.findall(r'^#{1,6}\\s+(.+?)\\s*$',q.read_text(),re.M);slugs={re.sub(r'[^\\w\\- ]','',t.strip().lower().replace('`','')).replace(' ','-')for t in titles};assert unquote(frag)in slugs,(name,dest);anchors+=1\nassert len((r/'CURRENT_STATE.md').read_text().splitlines())<60\nassert '- [x] F18.19 'in(r/'openspec/changes/refine-physical-trajectory/tasks.md').read_text()\nassert '- [ ] F18.20 'in(r/'openspec/changes/refine-physical-trajectory/tasks.md').read_text()\nsubprocess.run(['git','diff','--check'],cwd=r,check=True)\nv=subprocess.run(['openspec','validate','refine-physical-trajectory','--strict'],cwd=r,capture_output=True,text=True,timeout=60);assert v.returncode==0,v.stdout+v.stderr\nout={'schema':'ariadna.f18.conversion-premise-documentary-check.v1','status':'PASS','base_revision':base,'protected_prior_blobs':protected,'local_links':links,'anchors':anchors,'archive_members':18,'archive_expanded_bytes':expanded,'archive_compressed_bytes':len(raw),'selected_root_member_union':13,'strict_openspec':{'exit_code':v.returncode,'stdout':v.stdout,'stderr':v.stderr},'checked_files':{n:pin((r/n).read_bytes())for n in sorted(changed|new)},'runtime_tests_rerun':False,'native_scientific_work':False,'scope':'Documentary/source-pin verification only; source phase previously closed; no oracle or scientific/native evaluation'}\nwith(p/'doc-checks.json').open('x')as f:json.dump(out,f,indent=2,sort_keys=True);f.write('\\n');f.flush();os.fsync(f.fileno())\nprint(json.dumps({k:v for k,v in out.items()if k!='checked_files'}))\n",
+  "root_checks": {
+    "anchors": 4,
+    "archive_compressed_bytes": 41948,
+    "archive_expanded_bytes": 290773,
+    "archive_members": 18,
+    "base_revision": "bbab11a296cbf9c758b22110e3817476c7ba5e9f",
+    "checked_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2293,
+        "sha256": "8c89845fedd5d51f11de998048dff1644ba173f59a51fa1242b910293a09498a"
+      },
+      "docs/adr/0289-check-original-conversion-premises.md": {
+        "bytes": 7497,
+        "sha256": "d8695089e7e59121a0c3d7b3c8c7dd27975a58de59250126d3dd2ff8bba3c3ea"
+      },
+      "docs/adr/README.md": {
+        "bytes": 52080,
+        "sha256": "e6d741ab141239815b7c1fe6c8d7da1d9fff6ff8fac69fbb0c34e819fdf03a8c"
+      },
+      "docs/adr/experiments/0289-original-conversion-premises-evidence.zip": {
+        "bytes": 41948,
+        "sha256": "775d00fec464b52005a7bd1c216b7c7090587e99ca767aadc5e6b5a7d3686a28"
+      },
+      "docs/adr/experiments/0289-original-conversion-premises.json": {
+        "bytes": 2251,
+        "sha256": "8d93319b395d72bc99d8243b525bd2e1fd011c70abf893c7c9995ec8e83a6c43"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 96476,
+        "sha256": "2d40e0b638ac60179191f258d8af2c941d6714c7687f669ed7480e39b55b0ff1"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 637364,
+        "sha256": "520ca0517b02563d61227f4bf9265d69a36e98c7170f6a4b85d9d55706ad5d8a"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 187738,
+        "sha256": "ac2e388ea19bf37b76607eb30e24db6aa661ea7c64fa6c4cc0f1b18961f263c2"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 524887,
+        "sha256": "d817c22c5468b9835aa03fb312e280da9698cd87abbfee33175f01f78dbe65d3"
+      }
+    },
+    "local_links": 652,
+    "native_scientific_work": false,
+    "protected_prior_blobs": 1613,
+    "runtime_tests_rerun": false,
+    "schema": "ariadna.f18.conversion-premise-documentary-check.v1",
+    "scope": "Documentary/source-pin verification only; source phase previously closed; no oracle or scientific/native evaluation",
+    "selected_root_member_union": 13,
+    "status": "PASS",
+    "strict_openspec": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "Change 'refine-physical-trajectory' is valid\n"
+    }
+  },
+  "runtime_tests_repeated": false,
+  "schema": "ariadna.f18.original-conversion-premise-documentary-verification.v1",
+  "scientific_native_episode_or_oracle_repeated": false,
+  "scope": "Documentary/source-member-pin checks only; prior phase/episodes immutable. No new runtime/native/physical qualification.",
+  "status": "PASS"
+}

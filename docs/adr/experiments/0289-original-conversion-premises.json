@@ -1,0 +1,35 @@
+{
+  "actual_tool_return": {
+    "chunk_id": "01a85e",
+    "exit_code": 0,
+    "original_token_count": 102,
+    "output": "{\"closure\": {\"schema\": \"ariadna.f18.conversion-premise-source-closure.v1\", \"observed_after_source_files_directory_fsync_s\": 418.39011758426204, \"source_limit_s\": 600, \"evidence_bytes\": 288037, \"independent_source_and_next_scope_reviews\": \"PASS\", \"scientific_native_execution\": false, \"documentary_publication_follows_separately\": true}, \"observed_after_closure_receipt_directory_fsync_s\": 418.390336625278}\n",
+    "wall_time_seconds": 8.5e-06
+  },
+  "archive": {
+    "bytes": 41948,
+    "members": 18,
+    "name": "0289-original-conversion-premises-evidence.zip",
+    "sha256": "775d00fec464b52005a7bd1c216b7c7090587e99ca767aadc5e6b5a7d3686a28"
+  },
+  "base_revision": "bbab11a296cbf9c758b22110e3817476c7ba5e9f",
+  "closure": {
+    "documentary_publication_follows_separately": true,
+    "evidence_bytes": 288037,
+    "independent_source_and_next_scope_reviews": "PASS",
+    "observed_after_source_files_directory_fsync_s": 418.39011758426204,
+    "schema": "ariadna.f18.conversion-premise-source-closure.v1",
+    "scientific_native_execution": false,
+    "source_limit_s": 600
+  },
+  "new_native_or_adapter_authority": false,
+  "new_scientific_native_work": false,
+  "next_scope": "F18.20SOURCE-only mapping of0268fullowner runner to0286outercontrols, original0267fixedfixture; no adoption/implementation/nativeauthority,600s/2MiB zeroexecution. Do not require general physical exportproof before fixedfixture preparation.",
+  "physical_qualification": "OPEN",
+  "runtime_tests_repeated": false,
+  "schema": "ariadna.f18.original-conversion-premise-result.v1",
+  "stage": "F18.19",
+  "status": "SOURCE_PREMISE_LOOKUP_COMPLETE",
+  "supported": "Selected original-row precheck/explicit double route, generated strict compiler flags, retained successful build/artifact identity and0286single observed context are linked. No old generic-long-double caster gap transferred.",
+  "unavailable": "Named receipts pin but do not contain relevant selected DOUBLE caster/constructor/Python-float storage bodies; complete export format/domain relation stays conditional. No numerical/native/physical qualification."
+}

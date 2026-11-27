@@ -92,6 +92,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 Actual-owner preparation SHALL follow ADR0267 and retain every existing F0 gate.
 Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 
+#### Scenario: Separate retained conversion premises from fixed-fixture preparation
+
+- **WHEN** F18.19 checks selected retained compiler/build/artifact/context evidence against0257premises
+- **THEN** generated strict-FP commands and source-associated finite original-row checks SHALL remain distinct from qualified end-to-end DOUBLE-export/storage and physical bounds; missing header bodies SHALL remain unavailable without transferring the old LONG-DOUBLE-caster gap or demanding nearest rounding
+- **AND** F18.20 MAY only map0268full-runner payload/control/admission to0286outer controls within600s including independent review/2MiB, preserving0267independent literals/eight outcomes/metadata/oracles/gates and3factory/2analytic-attempt/8visitor/100000callback ceilings, with exact source/control pins and changed-versus-unchanged obligations
+- **AND** tests/scientific imports/native/SPICE/integration/mount/acquisition/build/scientific-oracle-command-trajectory evaluation SHALL remain zero; no profile/operator/adapter implementation/native authority or physical qualification SHALL follow, and existing successful artificial campaigns SHALL NOT be repeated by this source mapping
+
 #### Scenario: Preserve conditional provenance of the original conversion route
 
 - **WHEN** F18.18 maps the retained original endpoint into existing callers and the realized-clock packet
