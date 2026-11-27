@@ -3,26 +3,26 @@
 Updated: 2026-11-27 (Europe/Samara). Keep under60lines.
 
 ## Current result
-[ADR0291](docs/adr/0291-qualify-artificial-owner-slice.md): F18.21 INCOMPLETE.
-One artificial invocation on9d55df2ad416a916c55bb3a26e6b17b2c02d7b12:
-12methods,3helper passes/9setup errors; no entry/original worker/audit dispatch.
-Pure injected packets were generated; no native/scientific integration occurred.
-Source freeze170.363677s<600; actual post-external-fsync0.674372s<120.
-Cause: interpreter6829984B exceeds harness generic2MiBread; adapter already allows
-16MiB identity input. Evidence151782B/15083B logs within2MiB/64KiB.
-[Failed evidence](docs/adr/experiments/0291-artificial-owner-slice.json).
+[ADR0292](docs/adr/0292-correct-artificial-interpreter-pin.md): F18.22 PASS.
+One corrected artificial invocation:9previously blocked methods+1pin-refusal,
+10passes/0failures/0errors; actual post-external-fsync0.674844667s<120.
+Known interpreter streamed under existing16MiB identity-input bound; generic2MiB
+reader and scientific gates unchanged. Independent code/saved-evidence review PASS.
+Positive injected packet reaches unchanged audit:8outcomes/2arcs,3/2/8counts.
+Root pre-final360843Bstructured/1586Blogs; all observed clocks/caps pass.
+[Result](docs/adr/experiments/0292-correct-artificial-interpreter-pin.json).
+Corrected artificial slice complete;3helper passes retained separately from0291.
+Original0291run remains FAILED/immutable, not an all-green12method run.
 
 ## Next authorized action and scheduler
-ariadna-m3 ACTIVE every5minutes. F18.22 per ADR0291: dedicated bounded streaming
-pin for known interpreter/retainedSHA under unchanged16MiBidentity-input bound;
-all scientific/evidence/packet caps unchanged. Fresh /private/tmp/ariadna-f18-0292;
-do not rerun/clear0291. Two controls namespace-only transformed; original runner/
-fixture/auditor unchanged. Review/freeze3sources/recipes; one<=120s cold/durable
-artificial invocation targets9blocked methods+focusedpinrefusals, reuses3passed
-helpers. Keep real-original-clock binding and dynamic witnesses before dispatch.
-Independent code/saved-evidence review, protectedhistory/docs/strict, commit/push.
-No native/SPICE/integration/mount/acquisition/build or scientific retry. Ordinary
-reversible fix authorized; distinct actual native choice/admission still required.
+ariadna-m3 ACTIVE every5minutes. F18.23 per ADR0292: specify minimal remaining
+native control/profile/admission binding and focused artificial qualification
+contract using existing0290map/corrected0292slice, within600s/2MiB including review.
+Concrete change/reuse list, unchanged clock/cleanup/resource/preservation gates,
+focused refusals, completion criteria and implementation/test budgets; design only.
+No tests/source campaign/native/SPICE/integration/mount/acquisition/build/profile
+adoption in that unit. Verify docs/protectedhistory/strict, ADR, commit/push.
+Actual native episode still requires distinct user choice/fresh actual admission.
 
 ## Preserved results and physical limits
 0286oneforward nativeowner only;0285authority consumed/image detached. Preserve all

@@ -1,3 +1,12 @@
+[ADR0292](../docs/adr/0292-correct-artificial-interpreter-pin.md) records F18.22 PASS: nine formerly blocked artificial methods plus one
+pin-refusal method, zero failures/errors, actual post-external-fsync 0.674845s<120.
+The generic2MiB reader and all gates are unchanged; known interpreter pin streams
+under the existing16MiB input bound. Three helper passes remain retained from0291;
+the original failed invocation is immutable, not an all-green12-method run.
+Corrected artificial slice complete; actual native/profile/admission still open.
+Next F18.23 specifies minimal remaining bindings and focused artificial checks
+within600s/2MiB including review; design only, no execution or source campaign.
+
 [ADR0291](../docs/adr/0291-qualify-artificial-owner-slice.md) records F18.21 FAILED:3of12artificial methods passed;9errored
 before entry/worker dispatch because the6.83MB interpreter exceeded the harness's
 2MiB generic read default. No scientific/native failure or tolerance change.

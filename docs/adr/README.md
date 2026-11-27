@@ -1,5 +1,6 @@
 # Architecture Decision Records (ADRs)
 
+- [0292 — Qualify corrected artificial owner slice](0292-correct-artificial-interpreter-pin.md) — ten targeted methods pass; retained three helper passes remain separate; native admission deferred.
 - [0291 — Preserve failed artificial owner slice](0291-qualify-artificial-owner-slice.md) — setup pin reader failed before entry; bounded fresh software correction accepted.
 
 - [0290 — Map full-owner controls](0290-map-full-owner-controls.md) — source mapping complete; minimal unchanged-runner delegation, changed outer bindings need qualification.

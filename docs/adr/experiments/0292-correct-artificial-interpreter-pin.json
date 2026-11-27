@@ -1,0 +1,43 @@
+{
+  "actual_tool_return": {
+    "chunk_id": "cad33b",
+    "exit_code": 0,
+    "original_token_count": 150,
+    "output": "{\"status\": \"PASS\", \"observed_after_external_receipt_fsync_s\": 0.6748446668498218, \"external_record\": \"external-invocation.json\", \"exit_code\": 0, \"stdout\": {\"byte_counters\": {\"files\": 160, \"log_bytes\": 1586, \"structured_bytes\": 360843}, \"elapsed_after_report_readback_s\": 0.6575985420495272, \"errors\": 0, \"failures\": 0, \"native_authority\": false, \"report_pin\": {\"bytes\": 5116, \"path\": \"/private/tmp/ariadna-f18-0292/qualification-result.json\", \"sha256\": \"3fbd3d2418c7e0d649c88593799e1a5ffb644bc919fc0d659973a8ba9b4ec497\"}, \"status\": \"PASS_INJECTED_QUALIFICATION\", \"tests_run\": 10}, \"failure\": null}\n",
+    "wall_time_seconds": 0.558949667
+  },
+  "archive": {
+    "bytes": 141391,
+    "expanded_bytes": 404969,
+    "members": 165,
+    "name": "0292-correct-artificial-interpreter-pin-evidence.zip",
+    "sha256": "8a8cff64fc77b24a537c99dc0dda4b295138b8e46ce00a6681cc8fb425c91861"
+  },
+  "artificial_slice_completion": true,
+  "base_revision": "86c9c68039a3d7b19eb6b5d7942f8d774b96b514",
+  "candidate_static_review": "PASS",
+  "controls_change": "Only fixed qualification namespace0291-to-0292; byte transformation independently verified",
+  "correction": "Dedicated exact known-interpreter streaming pin within existing16MiB input bound; generic2MiB reader unchanged",
+  "independent_saved_evidence_review": "PASS",
+  "new_methods": {
+    "errors": 0,
+    "failures": 0,
+    "focused_interpreter_refusal": 1,
+    "passed": 10,
+    "previously_blocked": 9
+  },
+  "new_native_authority": false,
+  "next": "Specify minimal remaining control/profile/admission binding and artificial qualification contract; actual native work still requires distinct choice",
+  "original_0291_invocation": "FAILED; immutable; not one all-green twelve-method invocation",
+  "physical_admission": "unavailable",
+  "retained_helper_results": {
+    "adr": "0291",
+    "passed": 3,
+    "repeated_here": false
+  },
+  "runtime_tests_ci_dependencies_changed": false,
+  "schema": "ariadna.f18.corrected-artificial-slice-result.v1",
+  "stage": "F18.22",
+  "status": "PASS_INJECTED_QUALIFICATION",
+  "unchanged_full_suite_repeated": false
+}

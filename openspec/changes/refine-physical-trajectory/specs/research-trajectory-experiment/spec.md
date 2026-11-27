@@ -92,6 +92,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 Actual-owner preparation SHALL follow ADR0267 and retain every existing F0 gate.
 Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 
+#### Scenario: Qualify the corrected artificial slice without transferring native authority
+
+- **WHEN** one frozen/reviewed F18.22 invocation passes the nine blocked methods and focused interpreter refusals within120s including cold start and durable external observation
+- **THEN** only the corrected artificial adapter/entry scope MAY be completed after independent saved-evidence review; the three retained0291helper passes SHALL remain separately attributed and the original failed invocation SHALL remain immutable
+- **AND** generic2MiB evidence reads, existing16MiB interpreter identity input, all original clocks/oracles/counters/source/byte gates and unchanged repository fixture/run/audit SHALL remain fixed; native/profile/admission and physical qualification SHALL remain unavailable
+- **AND** F18.23 MAY specify only a concrete minimal remaining binding/artificial-check contract from the existing map within600s/2MiB including independent review, with no tests, scientific/native execution, profile adoption or repeated general source campaign; any actual native episode SHALL still require distinct explicit choice and fresh independent admission
+
 #### Scenario: Preserve setup failure without changing scientific or evidence gates
 
 - **WHEN** F18.21 reports9setup errors while its generic2MiB read attempts to hash the known6829984B interpreter, before entry/original-worker dispatch
