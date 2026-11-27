@@ -1,0 +1,51 @@
+{
+  "automatic_retry_authorized": false,
+  "automation": "Resume existing five-minute heartbeat for authorized preparation, the single admitted episode and ordinary follow-up; pause when user participation is needed.",
+  "caps": {
+    "aggregate_structured_bytes": 2097152,
+    "audit_s": 10,
+    "callback_max": 100000,
+    "context_attempts": 1,
+    "factory_attempts": 1,
+    "failure_only_failsafe_s": 65,
+    "finalization_s": 5,
+    "input_combined_logs_bytes": 65536,
+    "integration_attempts": 1,
+    "marker_bytes": 512,
+    "metadata_attempts": 1,
+    "native_inclusive_s_exclusive": 60,
+    "new_acquisition_bytes": 0,
+    "preflight_s_exclusive": 600,
+    "producer_s": 45,
+    "trace_bytes": 4096,
+    "visitor_attempts": 1
+  },
+  "conditional_prerequisites": [
+    "Exact qualified eight controls plus external gate; separately checked operator wiring",
+    "Clean committed dev base and fresh independent actual read-only admission",
+    "Original preflight clock starts before first new episode write or mount; all review/sealing/consumption strictly below 600 seconds",
+    "Exactly one forward(True), original metadata, same-owner last endpoint at synthetic elapsed 1000 seconds"
+  ],
+  "date": "2026-11-27",
+  "decision": "AUTHORIZE_ONE_CONDITIONAL_EPISODE",
+  "execution_status": "NOT_STARTED",
+  "mission_feasibility_claim_authorized": false,
+  "native_admission": "NOT_ESTABLISHED_BY_THIS_CHOICE",
+  "qualification_archive": {
+    "bytes": 392115,
+    "path": "docs/adr/experiments/0284-completed-control-qualification-evidence.zip",
+    "sha256": "ce42d3dee1f176fa0f7efe62ba4b7f9a836e7487ae0bda356a2813abbfc7ff1b"
+  },
+  "qualification_revision": "24d4982985b8160a1f650e18bb599b63f56e70de",
+  "question_answered": "Permit one F18.16 synthetic episode with the actual kernel, a 60-second limit and independent audit, then continue automation.",
+  "schema": "ariadna.f18.completed-owner-user-choice.v1",
+  "scientific_contract_change_authorized": false,
+  "stage": "F18.16",
+  "timezone": "Europe/Samara",
+  "unchanged_gates": {
+    "mass_kg": 1e-09,
+    "position_m": 0.001,
+    "velocity_m_s": 1e-06
+  },
+  "user_reply": "разрешаю"
+}

@@ -1,5 +1,7 @@
 # Architecture Decision Records (ADRs)
 
+- [0285 — Record one completed-owner execution choice](0285-authorize-one-completed-owner.md) — accepted user choice; fresh admission/execution pending.
+
 Record consequential choices, not every command. OpenSpec remains authoritative
 for requirements, milestone order and acceptance gates; these records explain why.
 Use English, stable numbered filenames and links to evidence rather than copied logs.

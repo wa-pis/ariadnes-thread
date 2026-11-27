@@ -1,34 +1,31 @@
 # Current State
 
-Updated: 2026-11-27. Keep under60lines; durable evidence in ADRs.
+Updated: 2026-11-27 (Europe/Samara). Keep under60lines.
 
-## Current result
-[ADR0284](docs/adr/0284-qualify-completed-owner-controls.md): F18.15a artificial
-outer-control qualification complete.57distinct cases satisfied across59executions:
-initial56pass/1EPERMerror, unchangedtarget1error, revisedfailureoracle1pass.
-BothFAILs retained;56successfulmethods not repeated; ninecontrol bytes unchanged.
-Revisedtest requires actual firstSIGKILL success, visible secondEPERM refusal and
-independent bounded known-PID inactivity proof. No nativecaller-success/reaping claim.
-Two raw actualprobe/sixfakehooks→separate guarded-auditor positive packets saved
-and independently reviewed.1600trackedfiles/status frozen; image detached.
-[Result](docs/adr/experiments/0284-completed-control-qualification.json).
-Original source/science/oldtests/CI/deps preserved. Prior0282required8688passes/
-42archivalskips/Ruff unchanged; no repeat and no new native/SPICE/integration.
+## Current decision
+[ADR0285](docs/adr/0285-authorize-one-completed-owner.md) records explicit user
+“разрешаю” for one conditional F18.16 synthetic actual-kernel diagnostic and
+resumed five-minute automation. Fresh native admission is still pending.
+[ADR0284](docs/adr/0284-qualify-completed-owner-controls.md), commit24d4982:
+57distinct artificial cases satisfied across59executions; bothEPERMfailures retained,
+56successes not repeated, revisedfailureoracle1pass; independent audit accepted.
+Exact9control bytes unchanged. Prior0282required8688passes/Ruff not repeated.
 
-## Next action and scheduler
-ariadna-m3 PAUSED pending distinct F18.16 execution choice required by OpenSpec.
-Concrete proposal: one original synthetic forwardTrue→metadata→same-owner endpoint
-at elapsed1000s; fresh independently observed actualpreflight<600s, then60s
-inclusive45/10/5, unchanged SI gates/53source/10native/11resources/25oldledger/
-86history identities and exact qualified8controls+externalgate. No retry/acquisition.
-Actualnamespace /private/tmp/ariadna-f18-forward-completed-v1 not created.
-Artificial PASS never admits native; sandbox/private-native-CLI positive unverified.
-If chosen, record choice first and bind qualified bytes to clean committeddev before
-fresh readonly admission/once-only consumption. Preserve consumed0280namespace;
-F18.9unqualified and0269cause/countsUNKNOWN. Do not repeat successful campaigns.
+## Next authorized action
+Prepare minimal actual operator and independent readback using qualified controls;
+check new wiring on fabricated data, pin/review it and bind clean committeddev.
+Then one fresh readonly preflight<600s before any newnamespacewrite/mount,
+independent actual review and one original60s45/10/5 packet, no retry/acquisition.
+Exact53source/10native/11resources/25oldledger/86history identities preserved.
+One forwardTrue→originalmetadata→same-owner endpoint at synthetic elapsed1000s;
+unchanged0.001m/1e-6m/s/1e-9kg gates and1context/factory/integration/metadata/visitor.
+Actualnamespace /private/tmp/ariadna-f18-forward-completed-v1 absent; image detached
+at choice recording. Actual execution/outer completion remain unverified.
+Scheduler is being resumed for this authorized scope; avoid competing work.
+Pause only when user participation is actually needed; preserve consumed0280.
 
 ## Physical goal remains open
 ADR0247 F0/hardware/sixcontrols unchanged. Full0267owner/lifetime/carry/concurrency/
-fullcoreABI-FP/priorarithmetic/fullforce seed/derivatives/guards/endpointbounds open.
-No admissiblepair,99percentprobability,physicalclosure/safety; strictM3/task3.9 and
-M4–M6/ML/UI gates unchanged. Preserve moon_to_mars.py/main/remotes/history; devonly.
+fullcoreABI-FP/arithmetic/fullforce seed/derivatives/guards/endpointbounds open.
+No admissiblepair/99percent/physicalclosure/safety; strictM3/task3.9 andM4–M6/ML/UI
+remain gated. Preserve moon_to_mars.py/main/remotes/history; devonly.

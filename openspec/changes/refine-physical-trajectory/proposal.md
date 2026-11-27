@@ -1,3 +1,9 @@
+[ADR0285](../../../docs/adr/0285-authorize-one-completed-owner.md) records the user's
+2026-11-27 explicit choice for one conditional F18.16 and resumed five-minute
+automation. Operator wiring and fresh actual read-only admission remain required;
+original strict600s/60s45-10-5, pins/resources/gates and no-retry scope are unchanged.
+No native episode or physical qualification follows from this documentation.
+
 [ADR0284](../../../docs/adr/0284-qualify-completed-owner-controls.md) completes
 F18.15a artificial qualification only:57distinct cases satisfied across59method
 executions; initial56pass/1EPERMerror and unchanged target1error preserved, then

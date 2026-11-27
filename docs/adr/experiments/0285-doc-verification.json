@@ -1,0 +1,120 @@
+{
+  "checker": {
+    "bytes": 3772,
+    "sha256": "770b9d5e0dd7eb5060eb6ac2c2097ac67520177a39291a2f7f91bf2b58fe8510",
+    "source": "from pathlib import Path\nfrom urllib.parse import unquote\nimport hashlib,json,os,re,subprocess,zipfile\nr=Path('/Users/agrudin/dev/my/ariadna');p=Path('/private/tmp/ariadna-f18-0285');base='24d4982985b8160a1f650e18bb599b63f56e70de'\nchanged={'CURRENT_STATE.md','docs/adr/README.md','openspec/ROADMAP.md',*[f'openspec/changes/refine-physical-trajectory/{n}.md'for n in('proposal','design','tasks')]}\nnew={'docs/adr/0285-authorize-one-completed-owner.md','docs/adr/experiments/0285-completed-owner-user-choice.json'}\ndef git(*a):return subprocess.check_output(['git',*a],cwd=r,text=True).strip()\ndef pin(b):return {'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}\nassert git('rev-parse','HEAD')==base and git('branch','--show-current')=='dev' and not git('diff','--cached','--name-only')\nassert set(git('diff','--name-only').splitlines())==changed\nassert set(git('ls-files','--others','--exclude-standard').splitlines())==new\nprotected=0\nfor row in subprocess.check_output(['git','ls-tree','-rz',base],cwd=r).split(b'\\0'):\n if not row:continue\n meta,n=row.split(b'\\t',1);name=n.decode()\n if name in changed:continue\n raw=(r/name).read_bytes();assert hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\\0'+raw).hexdigest()==meta.split()[2].decode(),name\n protected+=1\nx=json.loads((r/'docs/adr/experiments/0285-completed-owner-user-choice.json').read_text());assert x['user_reply']=='\u0440\u0430\u0437\u0440\u0435\u0448\u0430\u044e'and x['decision']=='AUTHORIZE_ONE_CONDITIONAL_EPISODE'and x['stage']=='F18.16'and x['native_admission']=='NOT_ESTABLISHED_BY_THIS_CHOICE'and x['execution_status']=='NOT_STARTED'\nassert x['caps']=={'preflight_s_exclusive':600,'native_inclusive_s_exclusive':60,'producer_s':45,'audit_s':10,'finalization_s':5,'failure_only_failsafe_s':65,'input_combined_logs_bytes':65536,'aggregate_structured_bytes':2097152,'trace_bytes':4096,'marker_bytes':512,'context_attempts':1,'factory_attempts':1,'integration_attempts':1,'metadata_attempts':1,'visitor_attempts':1,'callback_max':100000,'new_acquisition_bytes':0}\nassert x['unchanged_gates']=={'position_m':.001,'velocity_m_s':1e-6,'mass_kg':1e-9}and not x['automatic_retry_authorized']and not x['scientific_contract_change_authorized']\na=x['qualification_archive'];assert pin((r/a['path']).read_bytes())=={k:a[k]for k in('bytes','sha256')}\nwith zipfile.ZipFile(r/a['path'])as z:assert z.testzip()is None and len(z.namelist())==122\nlinks=0\nfor name in sorted(changed|{n for n in new if n.endswith('.md')}):\n for d in re.findall(r'\\[[^\\]]*\\]\\(([^)]+)\\)',(r/name).read_text()):\n  d=d.strip('<>')\n  if '://'in d or d.startswith(('mailto:','data:')):continue\n  path,_,frag=d.partition('#');dest=((r/name).parent/unquote(path)).resolve()if path else r/name;assert dest.exists(),(name,d);links+=1\nassert '- [ ] F18.16 'in(r/'openspec/changes/refine-physical-trajectory/tasks.md').read_text()\nassert len((r/'CURRENT_STATE.md').read_text().splitlines())<60\nassert not os.path.lexists('/private/tmp/ariadna-f18-forward-completed-v1')and not os.path.ismount('/private/tmp/ariadna-f17-0263/volume')\nsubprocess.run(['git','diff','--check'],cwd=r,check=True)\nv=subprocess.run(['openspec','validate','refine-physical-trajectory','--strict'],cwd=r,capture_output=True,text=True,timeout=60);assert v.returncode==0,v.stdout+v.stderr\nres={'schema':'ariadna.f18.user-choice-documentation-check.v1','status':'PASS','base_revision':base,'protected_prior_blobs':protected,'local_links':links,'strict_openspec':{'exit_code':0,'output':v.stdout.strip()},'checked_files':{n:pin((r/n).read_bytes())for n in sorted(changed|new)},'native_admission':False,'runtime_tests_rerun':False}\nwith(p/'authorization-doc-checks.json').open('x')as f:json.dump(res,f,indent=2,sort_keys=True);f.write('\\n')\nprint(json.dumps({k:v for k,v in res.items()if k!='checked_files'}))\n"
+  },
+  "independent_review": {
+    "checked_utc": "2026-11-27T06:11:26.748542+00:00",
+    "facts": [
+      "Explicit user reply authorizes one conditional F18.16 synthetic actual-kernel episode and automation; fresh native admission remains pending and task unchecked.",
+      "Original strict preflight<600s begins before namespace/mount, original packet<60s 45/10/5 and65s failure-only bound preserved.",
+      "53source/10native/11retainedresources/25oldledgers/86history identities, exact qualified8controls+externalgate and unchanged endpoint gates preserved.",
+      "No retry, acquisition or physical/mission qualification authorized. Current diff adds authority/status notes and preserves historical records.",
+      "Prior0284qualified archive bytes/SHA match choice binding. Parent685links/protected1598/strict/diff PASS reviewed without repeating runtime checks."
+    ],
+    "findings": [],
+    "operator_assessment": {
+      "critical_adaptations": [
+        "Current dispatch CLI accepts only profile.json, unlike0280three-argument call.",
+        "New profile exact keys and path+bytes+SHA pins; exact decision9keys/8expected-pin groups.",
+        "Retained11resources require only ROmount/readback; no provision/RW/remount.",
+        "Independent actual review must not consume exclusive admission.admit; gate performs direct admission once.",
+        "Preserve separate packet post-fsync observation and later operator cleanup/preservation/detach result; fsync operational manifests."
+      ],
+      "verdict": "NO_CONTROL_SOURCE_BLOCKER_OPERATOR_ADAPTATION_AND_FABRICATED_WIRING_QUALIFICATION_REQUIRED"
+    },
+    "parent_checks_pin": {
+      "bytes": 1690,
+      "sha256": "5014c254a8efb11b6d38f88304d86804d9ee4ae55e8f1fca6239cfa142afddd7"
+    },
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 1922,
+        "sha256": "04ee91212f0aeb27ed88827d411a3833f679c0e373505cda953a81ba05b00e11"
+      },
+      "docs/adr/0285-authorize-one-completed-owner.md": {
+        "bytes": 4290,
+        "sha256": "4d936e7d9f52ca26d10692cd061eefda5057347892a2832be5cbda784a60189f"
+      },
+      "docs/adr/README.md": {
+        "bytes": 51363,
+        "sha256": "a9171d50ea11bacb9e30b1349cb42fa739de3217abc4ca07e2a47c27a8f0a354"
+      },
+      "docs/adr/experiments/0285-completed-owner-user-choice.json": {
+        "bytes": 2166,
+        "sha256": "dc308cb3beb4cfabca1eecf89b9156938c062b1399b18bb92a02f84b85251ef9"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 94091,
+        "sha256": "45877c51927e5d6ae6b8cb88d6704b2516b2dc73445ea5bd058f6ff87ed75a07"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 633122,
+        "sha256": "a2bfc5e4a8f2d03a477b82bafd2dbc91efd04cbc5336e4dc22710b031159a97e"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 38881,
+        "sha256": "0bd4ac0a04175ee11ae74c0d1964ba39afaeb1203d658e4d4876ce086270169e"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 520478,
+        "sha256": "a61d68a082dfc3b3953fcd103198c5627a402b7f00a9699e490307dbfbd06ae4"
+      }
+    },
+    "schema": "ariadna.f18.completed-owner-authorization-independent-review.v1",
+    "scope": "Read-only authorization documentation and current diff; source-only operator-sequence review. No actual namespace/mount/native/import/control execution/resource reads/tests or repository edits by reviewer.",
+    "status": "PASS"
+  },
+  "native_admission": false,
+  "root_checks": {
+    "base_revision": "24d4982985b8160a1f650e18bb599b63f56e70de",
+    "checked_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 1922,
+        "sha256": "04ee91212f0aeb27ed88827d411a3833f679c0e373505cda953a81ba05b00e11"
+      },
+      "docs/adr/0285-authorize-one-completed-owner.md": {
+        "bytes": 4290,
+        "sha256": "4d936e7d9f52ca26d10692cd061eefda5057347892a2832be5cbda784a60189f"
+      },
+      "docs/adr/README.md": {
+        "bytes": 51363,
+        "sha256": "a9171d50ea11bacb9e30b1349cb42fa739de3217abc4ca07e2a47c27a8f0a354"
+      },
+      "docs/adr/experiments/0285-completed-owner-user-choice.json": {
+        "bytes": 2166,
+        "sha256": "dc308cb3beb4cfabca1eecf89b9156938c062b1399b18bb92a02f84b85251ef9"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 94091,
+        "sha256": "45877c51927e5d6ae6b8cb88d6704b2516b2dc73445ea5bd058f6ff87ed75a07"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 633122,
+        "sha256": "a2bfc5e4a8f2d03a477b82bafd2dbc91efd04cbc5336e4dc22710b031159a97e"
+      },
+      "openspec/changes/refine-physical-trajectory/proposal.md": {
+        "bytes": 38881,
+        "sha256": "0bd4ac0a04175ee11ae74c0d1964ba39afaeb1203d658e4d4876ce086270169e"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 520478,
+        "sha256": "a61d68a082dfc3b3953fcd103198c5627a402b7f00a9699e490307dbfbd06ae4"
+      }
+    },
+    "local_links": 685,
+    "native_admission": false,
+    "protected_prior_blobs": 1598,
+    "runtime_tests_rerun": false,
+    "schema": "ariadna.f18.user-choice-documentation-check.v1",
+    "status": "PASS",
+    "strict_openspec": {
+      "exit_code": 0,
+      "output": "Change 'refine-physical-trajectory' is valid"
+    }
+  },
+  "runtime_tests_rerun": false,
+  "schema": "ariadna.f18.execution-choice-documentary-verification.v1",
+  "status": "PASS"
+}
