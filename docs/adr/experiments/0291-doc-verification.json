@@ -1,0 +1,249 @@
+{
+  "base_revision": "9d55df2ad416a916c55bb3a26e6b17b2c02d7b12",
+  "checker": {
+    "pin": {
+      "bytes": 7276,
+      "sha256": "70fe2643e4b90c9757b099213829cba473b939d8530194a244d0a25152db0e8e"
+    },
+    "source": "from pathlib import Path\nfrom urllib.parse import unquote\nimport hashlib,json,re,subprocess,zipfile,os\nr=Path('/Users/agrudin/dev/my/ariadna');p=Path('/private/tmp/ariadna-f18-0291');base='9d55df2ad416a916c55bb3a26e6b17b2c02d7b12'\nchanged={'CURRENT_STATE.md','docs/adr/README.md','openspec/ROADMAP.md','openspec/changes/refine-physical-trajectory/design.md','openspec/changes/refine-physical-trajectory/tasks.md','openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md'}\nnew={'docs/adr/0291-qualify-artificial-owner-slice.md','docs/adr/experiments/0291-artificial-owner-slice.json','docs/adr/experiments/0291-artificial-owner-slice-evidence.zip'}\ndef git(*args):return subprocess.check_output(['git',*args],cwd=r,text=True).strip()\ndef pin(raw):return {'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}\nassert git('rev-parse','HEAD')==base and git('branch','--show-current')=='dev'and not git('diff','--cached','--name-only')\nassert set(git('diff','--name-only').splitlines())==changed\nassert set(git('ls-files','--others','--exclude-standard').splitlines())==new\nprotected=0\nfor row in subprocess.check_output(['git','ls-tree','-rz','--full-tree',base],cwd=r).split(b'\\0'):\n if not row:continue\n metadata,name=row.split(b'\\t',1);name=name.decode()\n if name in changed:continue\n raw=(r/name).read_bytes();obj=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\\0'+raw).hexdigest();assert obj==metadata.decode().split()[2],name;protected+=1\nx=json.loads((r/'docs/adr/experiments/0291-artificial-owner-slice.json').read_text());a=r/'docs/adr/experiments'/x['archive']['name'];raw=a.read_bytes();assert pin(raw)=={k:x['archive'][k]for k in('bytes','sha256')}\nwith zipfile.ZipFile(a)as z:\n assert len(z.namelist())==len(set(z.namelist()))==x['archive']['members']==46 and z.testzip()is None\n expanded=sum(i.file_size for i in z.infolist());assert expanded<2097152\n data={n:json.loads(z.read(n))for n in z.namelist()if n.endswith('.json')}\n scope=data['scope.json'];source=data['source-seam-review.json'];closure=data['source-closure.json'];review=data['candidate-code-review.json'];frozen=data['candidate-source-pins.json'];post=data['post-run-evidence-review.json']\n assert scope['base_revision']==base and scope['free_scientific_variables']==[]\n assert source['status']==review['status']==post['status']=='PASS'and not source['findings']and not review['findings']and not post['findings']and post['experiment_status']=='FAILED'\n actualtool=data['actual-invocation-tool-return.json'];actual=json.loads(actualtool['output']);assert actualtool==x['actual_tool_return'] and actualtool['exit_code']==2 and actual['status']=='FAILED'and actual['observed_after_external_receipt_fsync_s']<120\n outcome=actual['stdout'];assert outcome['tests_run']==12 and outcome['failures']==0 and outcome['errors']==9 and outcome['native_authority']is False\n report=data['qualification-result.json'];assert report['test_success_observed']is False and report['tests_run']==12 and report['errors']==9\n assert data['external-invocation.json']['exit_code']==2 and not data['external-invocation.json']['cleanup']['errors']\n for path,record in frozen['files'].items():\n  member=str(Path(path).relative_to(p));assert pin(z.read(member))==record==review['file_pins'][path]\n assert len(frozen['files'])==3 and {n for n in z.namelist()if n.startswith('controls/')}=={'controls/native-entry.py','controls/supervisor-adapter.py'}\n assert closure['source_phase_passed']and closure['elapsed_after_source_fsync_s']<600 and closure['evidence_bytes_before_receipt']<2097152\n actualsource=json.loads(data['source-actual-tool-return.json']['output']);assert actualsource['closure']==closure and actualsource['observed_after_closure_fsync_s']<600\n for path,record in source['file_pins'].items():\n  q=Path(path)\n  if q.is_relative_to(r):assert pin(subprocess.check_output(['git','show',base+':'+str(q.relative_to(r))],cwd=r))==record,path\n  else:\n   member=str(q.relative_to('/private/tmp/ariadna-f18-0290/retained-0286'))\n   with zipfile.ZipFile(r/'docs/adr/experiments/0286-single-completed-owner-evidence.zip')as previous:assert pin(previous.read(member))==record,path\n casefiles=[i for i in z.infolist()if i.filename.startswith('qualification/')and not i.is_dir()];case_logs=sum(i.file_size for i in casefiles if i.filename.endswith('.log'));case_structured=sum(i.file_size for i in casefiles if not i.filename.endswith('.log'))\n assert(len(casefiles),case_structured,case_logs)==(24,57973,15083)\n assert post['accounting']['case_inventory']=={'files':24,'structured_bytes':57973,'log_bytes':15083}\n assert not any('/execution/'in n for n in z.namelist())and not any(n.endswith('/slice.json')for n in z.namelist())\n log=z.read('qualification/unittest.log');assert log.count(b'... ERROR')==9 and log.count(b'... ok')==3 and b'FAILED (errors=9)'in log\n diagnosis=data['interpreter-pin-diagnosis.json'];assert diagnosis['observed_interpreter_bytes']==diagnosis['saved0286outer_python']['bytes']==6829984 and diagnosis['harness_default_read_cap']==2097152 and diagnosis['adapter_outer_interpreter_cap']==16777216\n assert x['status']=='FAILED_ARTIFICIAL_QUALIFICATION'and x['implementation_completion']is False and x['new_native_authority']is False\nlinks=anchors=0\nfor name in sorted(changed|{n for n in new if n.endswith('.md')}):\n for dest in re.findall(r'\\[[^\\]]*\\]\\(([^)]+)\\)',(r/name).read_text()):\n  dest=dest.strip('<>')\n  if '://'in dest or dest.startswith(('mailto:','data:')):continue\n  file,_,frag=dest.partition('#');q=((r/name).parent/unquote(file)).resolve()if file else r/name\n  if not q.exists():assert q==r/'docs/adr/experiments/0291-doc-verification.json',(name,dest)\n  links+=1\n  if frag and q.suffix=='.md':\n   titles=re.findall(r'^#{1,6}\\s+(.+?)\\s*$',q.read_text(),re.M);slugs={re.sub(r'[^\\w\\- ]','',t.strip().lower().replace('`','')).replace(' ','-')for t in titles};assert unquote(frag)in slugs,(name,dest);anchors+=1\nassert len((r/'CURRENT_STATE.md').read_text().splitlines())<60\ns=(r/'openspec/changes/refine-physical-trajectory/tasks.md').read_text();assert '- [ ] F18.21 'in s and '- [x] F18.21a 'in s and '- [ ] F18.22 'in s\nsubprocess.run(['git','diff','--check'],cwd=r,check=True)\nv=subprocess.run(['openspec','validate','refine-physical-trajectory','--strict'],cwd=r,capture_output=True,text=True,timeout=60);assert v.returncode==0,v.stdout+v.stderr\nout={'schema':'ariadna.f18.failed-slice-documentary-check.v1','status':'PASS','experiment_status':'FAILED','base_revision':base,'protected_prior_blobs':protected,'local_links':links,'anchors':anchors,'archive_members':46,'archive_expanded_bytes':expanded,'archive_compressed_bytes':len(raw),'case_files':24,'case_structured_bytes':case_structured,'case_log_bytes':case_logs,'strict_openspec':{'exit_code':v.returncode,'stdout':v.stdout,'stderr':v.stderr},'checked_files':{n:pin((r/n).read_bytes())for n in sorted(changed|new)},'unchanged_full_suite_repeated':False,'new_scientific_native_work':False,'scope':'Failed evidence accuracy/documentary preservation, not implementation or scientific qualification'}\nwith(p/'doc-checks.json').open('x')as f:json.dump(out,f,indent=2,sort_keys=True);f.write('\\n');f.flush();os.fsync(f.fileno())\nprint(json.dumps({k:v for k,v in out.items()if k!='checked_files'}))\n"
+  },
+  "experiment_status": "FAILED",
+  "implementation_complete": false,
+  "independent_final_documentary_review": {
+    "archived_relevant_records": {
+      "actual-invocation-tool-return.json": {
+        "bytes": 778,
+        "sha256": "e2241a8d52a100a1452b3dfb96bb54e246fcccd88e8999fbc6eabbc88bee8b87"
+      },
+      "candidate-code-review.json": {
+        "bytes": 5435,
+        "sha256": "b00dd30bdf882bdfebdf8718912ee927b61d25655d3b38979be4beb834224b36"
+      },
+      "candidate-source-pins.json": {
+        "bytes": 852,
+        "sha256": "41c284a8249a73eb3ff9857d516f58bd6bf246f070e4d254b7514ad10b2ef839"
+      },
+      "controls/native-entry.py": {
+        "bytes": 5013,
+        "sha256": "2ffb3df588899635182c5d5ce96996c3565257eaf1dae7f3eaeb76d6b1423654"
+      },
+      "controls/supervisor-adapter.py": {
+        "bytes": 13465,
+        "sha256": "e5a054b614a7a0a61f080c6d83af583a2e583304fefc059e1d534f4c0d054928"
+      },
+      "external-invocation.json": {
+        "bytes": 1287,
+        "sha256": "89a858ab5970e85f5affee7820ab57d69e6f26778aa8ad7524d8d0fdf38ae896"
+      },
+      "post-run-evidence-review.json": {
+        "bytes": 9739,
+        "sha256": "f5b14e02b22a74b143fffa977fa2ff3123057ea60310ae0a256a840534af7d90"
+      },
+      "qualification-result.json": {
+        "bytes": 1466,
+        "sha256": "5d52aa7c14ee8f1b7a486913b32bc69bf5df45f66bdb9fad31e471e2a38b4a85"
+      },
+      "source-closure.json": {
+        "bytes": 537,
+        "sha256": "2f552e826f998169c609bc1df8ce0c9f69854e0f66090b43254dad3ceb0aad5c"
+      },
+      "test-slice.py": {
+        "bytes": 28692,
+        "sha256": "8c4047c8128953ce8ce3f7e10896a4043a05d8eb18718c447886ca146cb83dd6"
+      }
+    },
+    "checked_utc": "2026-11-27T08:44:19.645861+00:00",
+    "facts": [
+      "F18.21 remains incomplete: one consumed invocation, 12 methods, 3 helper passes, 9 identical pre-entry setup errors, zero assertion failures; fixture packet generation occurred before errors.",
+      "Actual post-external-file+directory-fsync FAILED return is 0.67437216732651 s <120; source closure is separately reported 170.363677 s <600. Pending disk observations are not terminal return proofs.",
+      "Root inventory 40 files /151782 structured B /15083 log B differs from saved case subtree 24 files /57973 structured B /15083 log B.",
+      "Known 6829984 B interpreter exceeded generic 2 MiB reader; diagnosis uses stat/saved metadata without a new binary hash or native/scientific inference.",
+      "Frozen 0291 records remain immutable; initial unsaved source versions are not claimed preserved.",
+      "Accepted F18.22 uses fresh 0292 namespace, dedicated known-interpreter bounded stream under existing 16 MiB identity bound and retained exact expectation; controls namespace/derived pins only. Original evidence/log/gates/caps unchanged.",
+      "Future invocation targets nine blocked methods plus focused synthetic interpreter refusals, retaining the three helper results without claiming one original twelve-method green run. No native/profile/admission/gate/operator/physics authority.",
+      "Archive has 46 members, 179788 expanded bytes, 63178 archive bytes; published SHA matches result and ten relevant original records compare byte-for-byte.",
+      "Diff changes only six current/index/OpenSpec documents plus three new documentary/evidence artifacts; historical old task text remains retained."
+    ],
+    "findings": [],
+    "parent_documentary_checks_available_at_review": [
+      {
+        "path": "/private/tmp/ariadna-f18-0291/doc-checks.json",
+        "pin": {
+          "bytes": 2282,
+          "sha256": "ff0b880a78f52cc02cc26833e4a93bab284ee4698e737af344538a853aa40f16"
+        },
+        "record": {
+          "anchors": 4,
+          "archive_compressed_bytes": 63178,
+          "archive_expanded_bytes": 179788,
+          "archive_members": 46,
+          "base_revision": "9d55df2ad416a916c55bb3a26e6b17b2c02d7b12",
+          "case_files": 24,
+          "case_log_bytes": 15083,
+          "case_structured_bytes": 57973,
+          "checked_files": {
+            "CURRENT_STATE.md": {
+              "bytes": 2070,
+              "sha256": "3d80794b9ba904a2ee5eb595aac6dc0ef1caf48be3a288ff6767c682ec321da0"
+            },
+            "docs/adr/0291-qualify-artificial-owner-slice.md": {
+              "bytes": 7131,
+              "sha256": "bf5d1882a05d831ca01408d5667d886b15e2ed62bf14f027e6497f0b6283f106"
+            },
+            "docs/adr/README.md": {
+              "bytes": 52439,
+              "sha256": "6654fd9667402326b1083d6d031d042bc6f35ec44532655e864d890c5365cb01"
+            },
+            "docs/adr/experiments/0291-artificial-owner-slice-evidence.zip": {
+              "bytes": 63178,
+              "sha256": "d40066bc0a4a8fdad136ef12f172d3edbdd7e5d835187f415e7fe85d78cb3269"
+            },
+            "docs/adr/experiments/0291-artificial-owner-slice.json": {
+              "bytes": 2714,
+              "sha256": "9fe5e871e930bc4e2487a6d32686806d40b5155b9fd810b54fec7dad14f46a96"
+            },
+            "openspec/ROADMAP.md": {
+              "bytes": 97519,
+              "sha256": "0acc6d7dd680ef32fe54573fe59c303caa60577dd909df3d59406faaf05a67b4"
+            },
+            "openspec/changes/refine-physical-trajectory/design.md": {
+              "bytes": 639620,
+              "sha256": "ddad53ac1389dc425d93186f72b96bb92bd0c1e6bdbcf44d21c4ac8ecfa1ec54"
+            },
+            "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+              "bytes": 190659,
+              "sha256": "6c6271ae0e8fc36d1ec64c2a0f332063eb9154574199f314eb34008aba15135e"
+            },
+            "openspec/changes/refine-physical-trajectory/tasks.md": {
+              "bytes": 528247,
+              "sha256": "9143404b7cf4fbb862152390830a3884e5df5ccbe42ce18a79a3739ea2f35459"
+            }
+          },
+          "experiment_status": "FAILED",
+          "local_links": 658,
+          "new_scientific_native_work": false,
+          "protected_prior_blobs": 1621,
+          "schema": "ariadna.f18.failed-slice-documentary-check.v1",
+          "scope": "Failed evidence accuracy/documentary preservation, not implementation or scientific qualification",
+          "status": "PASS",
+          "strict_openspec": {
+            "exit_code": 0,
+            "stderr": "",
+            "stdout": "Change 'refine-physical-trajectory' is valid\n"
+          },
+          "unchanged_full_suite_repeated": false
+        }
+      }
+    ],
+    "pending_receipt_link": "experiments/0291-doc-verification.json intentionally to be created by parent after this independent review",
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2070,
+        "sha256": "3d80794b9ba904a2ee5eb595aac6dc0ef1caf48be3a288ff6767c682ec321da0"
+      },
+      "docs/adr/0291-qualify-artificial-owner-slice.md": {
+        "bytes": 7131,
+        "sha256": "bf5d1882a05d831ca01408d5667d886b15e2ed62bf14f027e6497f0b6283f106"
+      },
+      "docs/adr/README.md": {
+        "bytes": 52439,
+        "sha256": "6654fd9667402326b1083d6d031d042bc6f35ec44532655e864d890c5365cb01"
+      },
+      "docs/adr/experiments/0291-artificial-owner-slice-evidence.zip": {
+        "bytes": 63178,
+        "sha256": "d40066bc0a4a8fdad136ef12f172d3edbdd7e5d835187f415e7fe85d78cb3269"
+      },
+      "docs/adr/experiments/0291-artificial-owner-slice.json": {
+        "bytes": 2714,
+        "sha256": "9fe5e871e930bc4e2487a6d32686806d40b5155b9fd810b54fec7dad14f46a96"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 97519,
+        "sha256": "0acc6d7dd680ef32fe54573fe59c303caa60577dd909df3d59406faaf05a67b4"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 639620,
+        "sha256": "ddad53ac1389dc425d93186f72b96bb92bd0c1e6bdbcf44d21c4ac8ecfa1ec54"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 190659,
+        "sha256": "6c6271ae0e8fc36d1ec64c2a0f332063eb9154574199f314eb34008aba15135e"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 528247,
+        "sha256": "9143404b7cf4fbb862152390830a3884e5df5ccbe42ce18a79a3739ea2f35459"
+      }
+    },
+    "schema": "ariadna.f18.artificial-owner-slice-final-documentary-review.v1",
+    "scope": "Separate documentary-only review after closed source phase and consumed failed artificial invocation. Read current nine publication files/diff and ten relevant archived records; no runtime/test/native/scientific/resource/source campaign or repository edits. Independent PASS concerns accurate failed evidence and bounded future correction, not F18.21 implementation qualification.",
+    "status": "PASS"
+  },
+  "new_native_authority": false,
+  "new_scientific_native_work": false,
+  "next_contract": "ADR0291F18.22 known-interpreter streaming-pin software correction, fresh0292namespace,9blocked methods, reuse3passedhelpers; no scientific/native retry or cap relaxation",
+  "root_checks": {
+    "anchors": 4,
+    "archive_compressed_bytes": 63178,
+    "archive_expanded_bytes": 179788,
+    "archive_members": 46,
+    "base_revision": "9d55df2ad416a916c55bb3a26e6b17b2c02d7b12",
+    "case_files": 24,
+    "case_log_bytes": 15083,
+    "case_structured_bytes": 57973,
+    "checked_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2070,
+        "sha256": "3d80794b9ba904a2ee5eb595aac6dc0ef1caf48be3a288ff6767c682ec321da0"
+      },
+      "docs/adr/0291-qualify-artificial-owner-slice.md": {
+        "bytes": 7131,
+        "sha256": "bf5d1882a05d831ca01408d5667d886b15e2ed62bf14f027e6497f0b6283f106"
+      },
+      "docs/adr/README.md": {
+        "bytes": 52439,
+        "sha256": "6654fd9667402326b1083d6d031d042bc6f35ec44532655e864d890c5365cb01"
+      },
+      "docs/adr/experiments/0291-artificial-owner-slice-evidence.zip": {
+        "bytes": 63178,
+        "sha256": "d40066bc0a4a8fdad136ef12f172d3edbdd7e5d835187f415e7fe85d78cb3269"
+      },
+      "docs/adr/experiments/0291-artificial-owner-slice.json": {
+        "bytes": 2714,
+        "sha256": "9fe5e871e930bc4e2487a6d32686806d40b5155b9fd810b54fec7dad14f46a96"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 97519,
+        "sha256": "0acc6d7dd680ef32fe54573fe59c303caa60577dd909df3d59406faaf05a67b4"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 639620,
+        "sha256": "ddad53ac1389dc425d93186f72b96bb92bd0c1e6bdbcf44d21c4ac8ecfa1ec54"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 190659,
+        "sha256": "6c6271ae0e8fc36d1ec64c2a0f332063eb9154574199f314eb34008aba15135e"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 528247,
+        "sha256": "9143404b7cf4fbb862152390830a3884e5df5ccbe42ce18a79a3739ea2f35459"
+      }
+    },
+    "experiment_status": "FAILED",
+    "local_links": 658,
+    "new_scientific_native_work": false,
+    "protected_prior_blobs": 1621,
+    "schema": "ariadna.f18.failed-slice-documentary-check.v1",
+    "scope": "Failed evidence accuracy/documentary preservation, not implementation or scientific qualification",
+    "status": "PASS",
+    "strict_openspec": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "Change 'refine-physical-trajectory' is valid\n"
+    },
+    "unchanged_full_suite_repeated": false
+  },
+  "schema": "ariadna.f18.failed-slice-documentary-verification.v1",
+  "stage": "F18.21",
+  "status": "PASS",
+  "unchanged_full_suite_repeated": false
+}

@@ -1,5 +1,7 @@
 # Architecture Decision Records (ADRs)
 
+- [0291 — Preserve failed artificial owner slice](0291-qualify-artificial-owner-slice.md) — setup pin reader failed before entry; bounded fresh software correction accepted.
+
 - [0290 — Map full-owner controls](0290-map-full-owner-controls.md) — source mapping complete; minimal unchanged-runner delegation, changed outer bindings need qualification.
 
 - [0289 — Check original conversion premises](0289-check-original-conversion-premises.md) — retained source/build ledger complete; next fixed-fixture control mapping only.

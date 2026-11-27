@@ -1,3 +1,18 @@
+### Artificial interpreter-pin setup failure (2026-11-27)
+
+[ADR0291](../../../docs/adr/0291-qualify-artificial-owner-slice.md) records F18.21 FAILED:3of12artificial methods passed;9errored
+before entry/worker dispatch because the6.83MB interpreter exceeded the harness's
+2MiB generic read default. No scientific/native failure or tolerance change.
+F18.21 remains incomplete; F18.22 permits only a fresh bounded interpreter-pin
+software correction and the9blocked methods. Consumed0291evidence is immutable.
+
+Artifact/evidence capacity remains2MiB; interpreter identity is a separate bounded
+input, already16MiB in the adapter. Use a dedicated known-file streaming pin;
+never loosen scientific or evidence caps. New controls change namespace only,
+with byte transformation checked. Candidate recipes are frozen before the single
+new invocation; dynamic clock/packet/argv witnesses precede worker dispatch.
+No actual native episode/profile/admission/gate/operator rollout is authorized.
+
 ### Fixed full-owner control mapping (2026-11-27)
 
 [ADR0290](../../../docs/adr/0290-map-full-owner-controls.md) completes F18.20 source mapping: keep0268full-owner fixture/auditor/

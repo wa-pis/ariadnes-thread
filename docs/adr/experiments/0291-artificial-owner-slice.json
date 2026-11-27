@@ -1,0 +1,47 @@
+{
+  "actual_tool_return": {
+    "chunk_id": "0d01dc",
+    "exit_code": 2,
+    "original_token_count": 150,
+    "output": "{\"status\": \"FAILED\", \"observed_after_external_receipt_fsync_s\": 0.67437216732651, \"external_record\": \"external-invocation.json\", \"exit_code\": 2, \"stdout\": {\"byte_counters\": {\"files\": 40, \"log_bytes\": 15083, \"structured_bytes\": 151782}, \"elapsed_after_report_readback_s\": 0.643455708399415, \"errors\": 9, \"failures\": 0, \"native_authority\": false, \"report_pin\": {\"bytes\": 1466, \"path\": \"/private/tmp/ariadna-f18-0291/qualification-result.json\", \"sha256\": \"5d52aa7c14ee8f1b7a486913b32bc69bf5df45f66bdb9fad31e471e2a38b4a85\"}, \"status\": \"FAILED_INJECTED_QUALIFICATION\", \"tests_run\": 12}, \"failure\": null}\n",
+    "wall_time_seconds": 0.556574292
+  },
+  "archive": {
+    "bytes": 63178,
+    "members": 46,
+    "name": "0291-artificial-owner-slice-evidence.zip",
+    "sha256": "d40066bc0a4a8fdad136ef12f172d3edbdd7e5d835187f415e7fe85d78cb3269"
+  },
+  "base_revision": "9d55df2ad416a916c55bb3a26e6b17b2c02d7b12",
+  "blocked_harness_methods": 9,
+  "candidate_static_review": "PASS; does not imply execution qualification",
+  "diagnosis": {
+    "adapter_outer_interpreter_cap": 16777216,
+    "harness_default_read_cap": 2097152,
+    "observed_interpreter_bytes": 6829984,
+    "observed_interpreter_path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python3.12",
+    "qualification_status": "FAILED before entry",
+    "saved0286outer_python": {
+      "bytes": 6829984,
+      "path": "/opt/homebrew/Caskroom/miniforge/base/envs/space-nav/bin/python3.12",
+      "sha256": "795d8316b7dabff1c64e56d5f5787caf0fe1b1e18580d34fc3a4956d501475c2"
+    },
+    "schema": "ariadna.f18.artificial-interpreter-pin-failure-diagnosis.v1",
+    "scope": "Read-only executable stat and already saved profile metadata; no new hash/native import/experiment/retry"
+  },
+  "implementation_completion": false,
+  "independent_saved_evidence_review": "PASS for accurate failed evidence; not a qualified slice",
+  "methods_run": 12,
+  "new_native_authority": false,
+  "next_contract": "ADR0291F18.22 dedicated known-interpreter streaming pin; fresh namespace and9blocked methods only; no science/native retry",
+  "no_entry_or_original_worker_dispatch": true,
+  "physical_admission": "unavailable",
+  "pure_injected_fixture_generation_occurred": true,
+  "qualified_harness_methods": 3,
+  "runtime_tests_ci_dependencies_changed": false,
+  "schema": "ariadna.f18.artificial-owner-slice-result.v1",
+  "source_prerequisite": "PASS; closed170.3636769168079s<600",
+  "stage": "F18.21",
+  "status": "FAILED_ARTIFICIAL_QUALIFICATION",
+  "unchanged_full_suite_repeated": false
+}

@@ -92,6 +92,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 Actual-owner preparation SHALL follow ADR0267 and retain every existing F0 gate.
 Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 
+#### Scenario: Preserve setup failure without changing scientific or evidence gates
+
+- **WHEN** F18.21 reports9setup errors while its generic2MiB read attempts to hash the known6829984B interpreter, before entry/original-worker dispatch
+- **THEN** implementation SHALL remain incomplete and only3passed helper methods SHALL be recorded as passed; pure injected fixture generation SHALL remain distinct from zero native/scientific work, and all failed records/consumed namespace SHALL be immutable
+- **AND** F18.22 MAY use only a fresh namespace, namespace-only control copies and a dedicated known-interpreter streaming pin under the existing16MiB identity-input bound;2MiBstructured evidence/64KiBlogs and original60/45/10/5/65failure/source/input/oracle/physical gates SHALL remain unchanged
+- **AND** one newly frozen/reviewed<=120s cold/durable artificial invocation MAY target9blocked methods plus focused interpreter refusals, reusing3passed helper results; actual return/cleanup evidence and independent offline audit SHALL precede completion, without native/SPICE/integration/profile/admission authority or a repeated unchanged full campaign
+
 #### Scenario: Map full-owner payload onto changed outer controls without transferring authority
 
 - **WHEN** F18.20 completes its pinned source/saved map of0268full-owner runner and0286outer controls within600s including independent review and2MiB evidence

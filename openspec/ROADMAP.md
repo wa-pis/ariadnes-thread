@@ -1,3 +1,9 @@
+[ADR0291](../docs/adr/0291-qualify-artificial-owner-slice.md) records F18.21 FAILED:3of12artificial methods passed;9errored
+before entry/worker dispatch because the6.83MB interpreter exceeded the harness's
+2MiB generic read default. No scientific/native failure or tolerance change.
+F18.21 remains incomplete; F18.22 permits only a fresh bounded interpreter-pin
+software correction and the9blocked methods. Consumed0291evidence is immutable.
+
 [ADR0290](../docs/adr/0290-map-full-owner-controls.md) completes F18.20 source mapping: keep0268full-owner fixture/auditor/
 runner unchanged; connect it through a thin delegating adapter to0286outer controls.
 Completed single-forward profile/entry/admission/gate/operator bindings must change
