@@ -1,0 +1,209 @@
+{
+  "actual_tool_return": {
+    "exit_code": 0,
+    "output": "{\"schema\": \"ariadna-f18-source-closure-v1\", \"stage\": \"F18.20\", \"source_elapsed_before_receipt_s\": 595.6371399168856, \"source_limit_s\": 600, \"evidence_bytes_before_receipt\": 195366, \"evidence_limit_bytes\": 2097152, \"source_closed\": true, \"source_phase_passed\": true, \"independent_review_path\": \"reviewer.json\", \"runtime_tests_native_spice_integration_executed\": false, \"scope\": \"source/saved mapping only; documentary publication separate\", \"post_receipt_fsync_elapsed_s\": 595.6373072499409}\n",
+    "provenance": "Verbatim stdout of the source closure exec_command returned in this turn; no reconstructed clock"
+  },
+  "archive": {
+    "bytes": 72539,
+    "members": 21,
+    "name": "0290-full-owner-control-mapping-evidence.zip",
+    "sha256": "990df2d407887282a0e5e0d1d9d11487b0b8061f42e3d45f2f85c7c02fac13de"
+  },
+  "base_revision": "87e06262e8c21710923a31fa35677213ceba0ec5",
+  "closure": {
+    "evidence_bytes_before_receipt": 195366,
+    "evidence_limit_bytes": 2097152,
+    "independent_review_path": "reviewer.json",
+    "runtime_tests_native_spice_integration_executed": false,
+    "schema": "ariadna-f18-source-closure-v1",
+    "scope": "source/saved mapping only; documentary publication separate",
+    "source_closed": true,
+    "source_elapsed_before_receipt_s": 595.6371399168856,
+    "source_limit_s": 600,
+    "source_phase_passed": true,
+    "stage": "F18.20"
+  },
+  "fixed_contract": {
+    "aggregate_logs_bytes": 65536,
+    "aggregate_structured_bytes": 2097152,
+    "analytic_integration_attempts_max": 2,
+    "audit_bytes": 524288,
+    "audit_finish_s": 55,
+    "audit_s": 10,
+    "factory_attempts_max": 3,
+    "finalization_reserve_s": 5,
+    "general_export_or_physical_qualification": false,
+    "inner_inherited_logs_bytes": 63488,
+    "input_bytes": 65536,
+    "native_reported_function_counts": "separate telemetry, not the callback cap",
+    "ordered_outcomes": [
+      "never-run refusal",
+      "forward start",
+      "forward end",
+      "wrong-schema refusal",
+      "retained-bound equal terminal",
+      "cleared refusal",
+      "independent reverse end",
+      "reverse start"
+    ],
+    "outer_log_reservation_bytes": 2048,
+    "packet_s": 60,
+    "producer_bytes": 1048576,
+    "producer_finish_s": 45,
+    "receipt_bytes": 65536,
+    "uniform_acceleration_callback_entries_max": 100000,
+    "visitor_calls_max": 8
+  },
+  "mapping": [
+    {
+      "anchors": "fixture42-96,245-370; audit160-301; run25-31,118-162,172-253,323-395",
+      "classification": "UNCHANGED existing repository bytes",
+      "mapping": "Keep original producer schema ariadna-owner-fixture-v1, scope synthetic-owner-conformance-only, two-key input, strict own-literal oracle and8ordered outcomes. Existing run(raw,packetdir,started_s=original,inherited_group=True) already supervises separate produce/audit workers; use it rather than duplicating controllers or cloning completed-probe logic.0268pins match current bytes;194artificial checks need no default repeat.",
+      "piece": "Full fixture, independent auditor, worker/controller"
+    },
+    {
+      "anchors": "saved launch59,67-69,94-100,105-128; caller15,38-51",
+      "classification": "BYTE-IDENTICAL reuse candidate",
+      "mapping": "Both accept profile paths dynamically and validate passed/checked-after-fsync envelope rather than completed payload schema. Keep original cold external60s/group cleanup/fsync consumption behavior and unchanged launcher sandbox/private command. Qualified artificial executor substitution must remain honestly labelled; no claim that past native authority transfers.",
+      "piece": "call-once.py and launch-once.py"
+    },
+    {
+      "anchors": "saved run-once8-39,41-80; sandbox4; preservationfixedroot",
+      "classification": "NAMESPACE/LABEL-ONLY reuse candidate",
+      "mapping": "Change only fresh namespace and factual observation labels where required. Preserve already-qualified all-root aggregate2MiB/64KiB checks, bottom-up directory fsync before terminal original60s observation, known group cleanup and65s failure-only failsafe. Sandbox writes only fresh execution tree, operational prefix denied. No new byte or time allowance.",
+      "piece": "run-once.py, native.sandbox, check-preservation.py"
+    },
+    {
+      "anchors": "saved entry40-68,78-145",
+      "classification": "LOGIC-CHANGED exact-scope entry",
+      "mapping": "Replace completed-profile/scope/input identities with separately specified full-owner mapping and fresh fixed namespace; keep exact private interpreter, source hashes, isolated entry session/PGID, inherited original clock and single collector import. No second parent/supervisor recursion, arbitrary worker override or native artificial mode.",
+      "piece": "native-entry.py"
+    },
+    {
+      "anchors": "existing run172-253,338-395; saved completed adapter82-146,149-260",
+      "classification": "LOGIC-CHANGED minimal delegating seam",
+      "mapping": "Replace completed ten-marker/probe/audit transcript with thin exact-identity wrapper around unchanged original run and its two-key input. Enforce native producer_mode on actual path and existing full audit schema/8calls/2arcs; retain injected-only artificial labels. No ten-marker retagging:0267full fixture has no such trace contract. Preserve first failure/partials and do not infer actual internal counts from interrupted work.",
+      "piece": "supervisor-adapter.py"
+    },
+    {
+      "anchors": "saved admission201-210,258-317,341-369; dispatch135-181,196-226,248-273",
+      "classification": "LOGIC-CHANGED exact profile/contract/decision binding",
+      "mapping": "Completed ten-key probe input, completed contract/profile/schema/count assumptions cannot authorize full-owner scope. Bind original two-key fixture input, immutable source/control/native/resource/history pins and separately accepted fixed full-owner contract/decision. Preserve observed direct admission, pending disk versus post-fsync successful return, exclusive gate/once markers, fresh read-only11resource observation and original<600s clock. External gate stays separately pinned outside8activecontrols.",
+      "piece": "admission.py and external dispatch-once.py"
+    },
+    {
+      "anchors": "saved0286profile schema/scope/probe_input/control_pins/environment; three retained operator sources",
+      "classification": "NEW fixed profile/decision bytes; changed outer operator bindings",
+      "mapping": "Do not relabel or reuse consumed0285decision/profile. Future preparation must bind intended exact decision/profile bytes, qualification records, all53source/10native/25oldledger/11retainedresource pins and preserved history, with source-count changes only if explicitly justified. Retain operational baseline/image read-only/detach, independent actual review, no new data/copies/build, strict original preflight<600 before namespace/mount and packet60s45/10/5. This mapping adopts no such bytes.",
+      "piece": "profile and prepare/review/invoke operators"
+    }
+  ],
+  "member_pins": {
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!episode/admission.py": {
+      "bytes": 20072,
+      "sha256": "2f2cdca6a6ad162930519287b60ce226a183824102b8e9f7699fddccd4722059"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!episode/call-once.py": {
+      "bytes": 3846,
+      "sha256": "b984a4c427f144dea536e707f75aa3bbdde942d3d9ee43fb00d8c4b49d8dbf11"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!episode/check-preservation.py": {
+      "bytes": 1409,
+      "sha256": "42ef977fee330d5f4e344ea16c40c2a5e7b7f5c278c8bbb9d098f7eceddce3ae"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!episode/dispatch-once.py": {
+      "bytes": 15242,
+      "sha256": "e844c96aa8a2c44e811814167eb2b19859e4343c62cee54d1e83db71d2e2334f"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!episode/launch-once.py": {
+      "bytes": 6821,
+      "sha256": "57e95d12f572c23e8e39c644998f0490818555d3862a8595c8049977974dde01"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!episode/native-entry.py": {
+      "bytes": 7293,
+      "sha256": "520db5666c7cea133dd666da58848c819d56660074011e43271470e847418953"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!episode/native.sandbox": {
+      "bytes": 256,
+      "sha256": "47e3302e3dc9e4ddd170d5bdb6b4c9feabc598e2a9ff9620ecd1d536074be68d"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!episode/profile.json": {
+      "bytes": 32075,
+      "sha256": "98a11204ae2280b8320894e697eb0b3570b6579928bbf3e7059443a6b4652b78"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!episode/run-once.py": {
+      "bytes": 5142,
+      "sha256": "1d011124b276b5f9a938c5a8cb931962cabda3b8477a147f310e48dc78988270"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!episode/supervisor-adapter.py": {
+      "bytes": 14170,
+      "sha256": "b32d9f1e3eed3bf52d8c765f830ca69a6751b2859c8a69a5273423df33de214e"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!stage/operator/invoke-once.py": {
+      "bytes": 14710,
+      "sha256": "93fb2ebdf543833ac0813cdeb4cb1e1003c653eb14774faf4f61e562909f9cab"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!stage/operator/prepare-actual.py": {
+      "bytes": 17418,
+      "sha256": "abae14aaf732c0d2d75296360bfcb7e70a74de624829874fffafc15b204c8861"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip!stage/operator/review-actual.py": {
+      "bytes": 24252,
+      "sha256": "b2e562ced3ffe6a160a00bc4e22756bede2a10b8eec142a0c2d32bead004e271"
+    }
+  },
+  "new_native_or_adapter_authority": false,
+  "new_scientific_native_work": false,
+  "next_contract": {
+    "accepted_in": "0290-map-full-owner-controls.md#accepted-next-artificial-slice--f1821",
+    "focused_harness_limit_s": 120,
+    "native_authority": false,
+    "scope": "Two temporary controls and a small injected harness only; source seam freeze before first test; no native profile/admission/gate/operator rollout",
+    "source_freeze_limit_s": 600
+  },
+  "next_prerequisite": "A separately accepted minimal changed-control artificial contract and exact mapping/profile/admission bindings must precede implementation/qualification. Only after that passes could a distinct explicit user choice and fresh independent actual admission authorize one native episode. Current source mapping supplies none of those authorities.",
+  "physical_qualification": "OPEN",
+  "runtime_tests_repeated": false,
+  "schema": "ariadna.f18.full-owner-control-mapping-result.v1",
+  "source_pins": {
+    "AGENTS.md": {
+      "bytes": 11562,
+      "sha256": "aa83966e395f3fdeb8078dec17ad950abec199886a8e6184a5c3863cef7c18ed"
+    },
+    "CURRENT_STATE.md": {
+      "bytes": 2293,
+      "sha256": "8c89845fedd5d51f11de998048dff1644ba173f59a51fa1242b910293a09498a"
+    },
+    "docs/adr/0267-design-actual-owner-endpoint-qualification.md": {
+      "bytes": 11549,
+      "sha256": "af5082b97ba5f16957ec0f3f1f9eaa968fb1fd078d1b1864319fdc207ecc98d5"
+    },
+    "docs/adr/0268-qualify-artificial-owner-runner.md": {
+      "bytes": 8245,
+      "sha256": "4a27493b53841a4be7061ef335336b98b456c991b024758ffc2a5676a54545f8"
+    },
+    "docs/adr/experiments/0268-qualification.json": {
+      "bytes": 13093,
+      "sha256": "97eb60e13cb56c74ec8e79908a7f5e655963a09dd7bbcaad8a5b414ff64da4a7"
+    },
+    "docs/adr/experiments/0286-single-completed-owner-evidence.zip": {
+      "bytes": 256711,
+      "sha256": "0cac57aa4d42e5a8dcb0cb461d0713894b2aba7f7c39d940eb3012410d9008f1"
+    },
+    "src/space_nav/_owner_endpoint_audit.py": {
+      "bytes": 14638,
+      "sha256": "409c629c27efabccd96a6f0da85942b51f0a8bd79d2c943f5da09d9138f94eba"
+    },
+    "src/space_nav/_owner_endpoint_fixture.py": {
+      "bytes": 17390,
+      "sha256": "48c33d3388d9d780312da25666fae9726c53576d46eefd285ef97d20232c5ee0"
+    },
+    "src/space_nav/_owner_endpoint_run.py": {
+      "bytes": 17901,
+      "sha256": "ba41c64e880b369ffc83844a3185fce40f2020d4a55e671b768cfd32f96988d4"
+    }
+  },
+  "stage": "F18.20",
+  "status": "SOURCE_MAPPING_COMPLETE"
+}

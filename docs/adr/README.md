@@ -1,5 +1,7 @@
 # Architecture Decision Records (ADRs)
 
+- [0290 — Map full-owner controls](0290-map-full-owner-controls.md) — source mapping complete; minimal unchanged-runner delegation, changed outer bindings need qualification.
+
 - [0289 — Check original conversion premises](0289-check-original-conversion-premises.md) — retained source/build ledger complete; next fixed-fixture control mapping only.
 
 - [0288 — Map the original endpoint into the existing handoff](0288-map-original-endpoint-handoff.md) — source mapping complete; conversion/domain and physical qualification remain open.

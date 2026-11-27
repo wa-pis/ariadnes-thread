@@ -1,3 +1,11 @@
+[ADR0290](../docs/adr/0290-map-full-owner-controls.md) completes F18.20 source mapping: keep0268full-owner fixture/auditor/
+runner unchanged; connect it through a thin delegating adapter to0286outer controls.
+Completed single-forward profile/entry/admission/gate/operator bindings must change
+honestly; its ten-marker contract/consumed authority do not transfer. No execution
+or profile adoption now. Accepted next F18.21 is only the temporary adapter/entry
+artificial slice with a pinned existing injection seam, not full native control
+rollout. Full0267actual lifecycle/physicalF0/M3 remain open.
+
 [ADR0289](../docs/adr/0289-check-original-conversion-premises.md) completes F18.19 retained premise lookup: selected strict compiler
 flags, build/artifact identity and0286context are linked; relevant DOUBLE-export/
 Python-storage bodies are not in the named receipts, so general conversion basis

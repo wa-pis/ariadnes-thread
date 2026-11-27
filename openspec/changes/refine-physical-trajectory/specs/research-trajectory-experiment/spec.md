@@ -92,6 +92,14 @@ qualification of the installed exporter, actual event carry and physical gates.
 Actual-owner preparation SHALL follow ADR0267 and retain every existing F0 gate.
 Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 
+#### Scenario: Map full-owner payload onto changed outer controls without transferring authority
+
+- **WHEN** F18.20 completes its pinned source/saved map of0268full-owner runner and0286outer controls within600s including independent review and2MiB evidence
+- **THEN** original payload, two-key input, independent literals/eight ordered outcomes/metadata/oracles/gates and3factory/2analytic-attempt/8visitor/100000callback ceilings SHALL remain unchanged; inherited-group delegation SHALL require the isolated entry to lead its session/group, without another controller
+- **AND** byte-identical reuse candidates SHALL remain distinct from namespace-only and logic-changed profile/entry/adapter/admission/external-gate/operator bindings; completed ten-marker schema or consumed native authority SHALL NOT be retagged, and original45/10/5 inclusive60s, aggregate bytes and directory-fsync obligations SHALL remain
+- **AND** F18.21 MAY execute only ADR0290's separately accepted temporary adapter/entry artificial slice after pinning the existing injected-worker seam with unchanged original independent auditor within600s/2MiB; its one focused invocation SHALL finish<=120s under unchanged packet caps, exercise the named changed-seam positive/refusal/clock/bytes/partial/consumption/fsync/cleanup cases, retain independent review and required checks, and SHALL NOT roll out admission/gate/operator/profile bindings or repeat194unchanged payload cases by default
+- **AND** this F18.20 source mapping SHALL run zero tests/native/SPICE/integration/mount/acquisition/build/scientific evaluations and adopt no implementation/profile; F18.21 artificial success SHALL NOT confer actual native authority, which still requires distinct user choice and fresh independent admission
+
 #### Scenario: Separate retained conversion premises from fixed-fixture preparation
 
 - **WHEN** F18.19 checks selected retained compiler/build/artifact/context evidence against0257premises
