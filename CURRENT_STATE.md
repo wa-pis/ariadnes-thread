@@ -3,26 +3,28 @@
 Updated: 2026-11-27 (Europe/Samara). Keep under60lines.
 
 ## Current result
-[ADR0292](docs/adr/0292-correct-artificial-interpreter-pin.md): F18.22 PASS.
-One corrected artificial invocation:9previously blocked methods+1pin-refusal,
-10passes/0failures/0errors; actual post-external-fsync0.674844667s<120.
-Known interpreter streamed under existing16MiB identity-input bound; generic2MiB
-reader and scientific gates unchanged. Independent code/saved-evidence review PASS.
-Positive injected packet reaches unchanged audit:8outcomes/2arcs,3/2/8counts.
-Root pre-final360843Bstructured/1586Blogs; all observed clocks/caps pass.
-[Result](docs/adr/experiments/0292-correct-artificial-interpreter-pin.json).
-Corrected artificial slice complete;3helper passes retained separately from0291.
-Original0291run remains FAILED/immutable, not an all-green12method run.
+[ADR0293](docs/adr/0293-full-owner-binding-design.md): F18.23 design complete.
+Frozen concrete8control/separategate/3operator field/argv contract and NOT_ADMITTED
+profile/decision templates; independent SOURCE/SAVED review PASS.
+Actual sourceclosure552.120347s<600;528904B pre-receipt/no logs; zero tests/native/
+SPICE/integration/mount. Four documentary findings resolved before finalfreeze.
+Original fixture/run/audit already in retained53cohort; no cohort enlargement.
+[Result](docs/adr/experiments/0293-full-owner-binding-design.json).
+0292corrected artificial slice remains PASS10methods;0291failedrun immutable,
+its3helperpasses retained separately. No actual full-owner qualification yet.
 
 ## Next authorized action and scheduler
-ariadna-m3 ACTIVE every5minutes. F18.23 per ADR0292: specify minimal remaining
-native control/profile/admission binding and focused artificial qualification
-contract using existing0290map/corrected0292slice, within600s/2MiB including review.
-Concrete change/reuse list, unchanged clock/cleanup/resource/preservation gates,
-focused refusals, completion criteria and implementation/test budgets; design only.
-No tests/source campaign/native/SPICE/integration/mount/acquisition/build/profile
-adoption in that unit. Verify docs/protectedhistory/strict, ADR, commit/push.
-Actual native episode still requires distinct user choice/fresh actual admission.
+ariadna-m3 ACTIVE every5minutes. F18.24 per ADR0293: minimal temporary binding
+implementation/static review<=1800s; exactcandidate/template/argv freeze+review,
+then one focused<=120s cold/durable artificial qualification and independent audit.
+Reuse originalrunner/auditor/controller/helpers; original2keyinput/8outcomes2arcs,
+clock/byte/oracle/counter/preservation/cleanup gates unchanged. Fresh artificial
+namespace only; no unchanged194case/3helper repeat or generalframework.
+No nativeimport/SPICE/integration/mount/resourcepayload/acquisition/build/profile
+adoption/actualauthority. Required repo-runtimechecks only if correspondingdiff.
+Update evidence/ADR/OpenSpec, protectedhistory/docs/strict, commit/push.
+Actual native episode still needs distinct userchoice and fresh actual admission;
+original strict<600s preflight starts before namespace/mount and includes all prep.
 
 ## Preserved results and physical limits
 0286oneforward nativeowner only;0285authority consumed/image detached. Preserve all

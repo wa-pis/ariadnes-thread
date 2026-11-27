@@ -92,6 +92,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 Actual-owner preparation SHALL follow ADR0267 and retain every existing F0 gate.
 Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 
+#### Scenario: Bind the full-owner controls without adopting a native profile
+
+- **WHEN** F18.23 closes its concrete retained-source binding contract within600s/2MiB including independent review and durable observation
+- **THEN** exact eight active controls, separate gate/operators, original two-key input/eight outcomes/two arcs/argv and unchanged53-source/native/resource/history identities SHALL be bound explicitly; NOT_ADMITTED templates SHALL NOT be accepted as runtime proof
+- **AND** F18.24 MAY implement only this minimal binding set within1800s static preparation and one reviewed/frozen<=120s cold/durable artificial qualification with the contract-listed positive/refusal/partial/clock/once/pin/group/byte/finalization checks, independent saved review and required repository checks; original scientific/time/byte gates SHALL remain unchanged
+- **AND** no native root/resource access, native runtime import, SPICE/integration/mount/build, profile adoption or actual authority SHALL follow from design/artificial success; future actual preflight SHALL start before first namespace write/mount and include preparation/read-only observation/review/admission/consumption in strict<600s, after distinct explicit native choice
+
 #### Scenario: Qualify the corrected artificial slice without transferring native authority
 
 - **WHEN** one frozen/reviewed F18.22 invocation passes the nine blocked methods and focused interpreter refusals within120s including cold start and durable external observation

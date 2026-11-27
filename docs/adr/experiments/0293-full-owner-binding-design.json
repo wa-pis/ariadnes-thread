@@ -1,0 +1,89 @@
+{
+  "active_controls": 8,
+  "archive": {
+    "bytes": 179256,
+    "expanded_bytes": 531773,
+    "members": 42,
+    "name": "0293-full-owner-binding-design-evidence.zip",
+    "sha256": "17b0575d4eea7fce80559092b09aa906a8d9cfc9caa731769a6c7568df12e9eb"
+  },
+  "base_revision": "5c746e459c0f2029c5cfc13689fac72017091c86",
+  "closure": {
+    "actual_native_namespace_created": false,
+    "base_revision": "5c746e459c0f2029c5cfc13689fac72017091c86",
+    "contract_pins": {
+      "binding-contract.json": {
+        "bytes": 17600,
+        "sha256": "1e075e4f50152fde5c627948c13e1140e0f19f9d0d25765482142e06af84f58b"
+      },
+      "decision-template.json": {
+        "bytes": 1584,
+        "sha256": "62e545979e7c086ecb3eb33e1606506d921061d3e0db09158cd793cbcbbc1cea"
+      },
+      "field-bindings-admission.json": {
+        "bytes": 62256,
+        "sha256": "a15cbfb5775df0c6cc8aacf8bfe2808cd69a5aacbb64f9864f85b97b4ecd1e3f"
+      },
+      "profile-template.json": {
+        "bytes": 37240,
+        "sha256": "4da1f72ae22e578a90affb3e9e7b237be003467f591cc78b02b89b7d067e353e"
+      }
+    },
+    "documentary_publication": "Separate after source phase",
+    "elapsed_after_source_fsync_s": 552.1201403327286,
+    "evidence_bytes_before_receipt": 528904,
+    "evidence_limit_bytes": 2097152,
+    "independent_review_pin": {
+      "bytes": 12982,
+      "sha256": "1b1fdeac60a057504bcf1db3d42d3cd963477e5dacd3bc43aa5d67515c5e68ff"
+    },
+    "log_bytes": 0,
+    "new_native_authority": false,
+    "schema": "ariadna.f18.native-binding-design-closure.v1",
+    "source_limit_s": 600,
+    "source_phase_passed": true,
+    "stage": "F18.23",
+    "started_s": 3880406.15812175,
+    "status": "DESIGN_ONLY_NOT_ADMITTED",
+    "tests_native_spice_integration_or_mount_executed": false
+  },
+  "contract_pins": {
+    "binding-contract.json": {
+      "bytes": 17600,
+      "sha256": "1e075e4f50152fde5c627948c13e1140e0f19f9d0d25765482142e06af84f58b"
+    },
+    "decision-template.json": {
+      "bytes": 1584,
+      "sha256": "62e545979e7c086ecb3eb33e1606506d921061d3e0db09158cd793cbcbbc1cea"
+    },
+    "field-bindings-admission.json": {
+      "bytes": 62256,
+      "sha256": "a15cbfb5775df0c6cc8aacf8bfe2808cd69a5aacbb64f9864f85b97b4ecd1e3f"
+    },
+    "profile-template.json": {
+      "bytes": 37240,
+      "sha256": "4da1f72ae22e578a90affb3e9e7b237be003467f591cc78b02b89b7d067e353e"
+    }
+  },
+  "external_gate_separate": true,
+  "implementation_adopted": false,
+  "independent_source_review": "PASS;four documentary findings resolved before closure",
+  "new_native_authority": false,
+  "next_contract": "F18.24 minimal temporary binding implementation and one focused artificial qualification, per frozen0293contract; actual native episode requires distinct future explicit choice and fresh actual admission",
+  "operators_separate": 3,
+  "profile_and_decision_templates": "NOT_ADMITTED; future stage/explicit choice/base/candidate pins/original clock/admission are not supplied",
+  "retained_selected_members": 15,
+  "runtime_tests_ci_dependencies_changed": false,
+  "schema": "ariadna.f18.full-owner-binding-design-result.v1",
+  "source_actual_tool_return": {
+    "chunk_id": "9a687b",
+    "exit_code": 0,
+    "original_token_count": 323,
+    "output": "{\"closure\": {\"schema\": \"ariadna.f18.native-binding-design-closure.v1\", \"stage\": \"F18.23\", \"base_revision\": \"5c746e459c0f2029c5cfc13689fac72017091c86\", \"status\": \"DESIGN_ONLY_NOT_ADMITTED\", \"source_phase_passed\": true, \"started_s\": 3880406.15812175, \"source_limit_s\": 600, \"elapsed_after_source_fsync_s\": 552.1201403327286, \"evidence_bytes_before_receipt\": 528904, \"log_bytes\": 0, \"evidence_limit_bytes\": 2097152, \"contract_pins\": {\"binding-contract.json\": {\"bytes\": 17600, \"sha256\": \"1e075e4f50152fde5c627948c13e1140e0f19f9d0d25765482142e06af84f58b\"}, \"field-bindings-admission.json\": {\"bytes\": 62256, \"sha256\": \"a15cbfb5775df0c6cc8aacf8bfe2808cd69a5aacbb64f9864f85b97b4ecd1e3f\"}, \"profile-template.json\": {\"bytes\": 37240, \"sha256\": \"4da1f72ae22e578a90affb3e9e7b237be003467f591cc78b02b89b7d067e353e\"}, \"decision-template.json\": {\"bytes\": 1584, \"sha256\": \"62e545979e7c086ecb3eb33e1606506d921061d3e0db09158cd793cbcbbc1cea\"}}, \"independent_review_pin\": {\"bytes\": 12982, \"sha256\": \"1b1fdeac60a057504bcf1db3d42d3cd963477e5dacd3bc43aa5d67515c5e68ff\"}, \"tests_native_spice_integration_or_mount_executed\": false, \"actual_native_namespace_created\": false, \"new_native_authority\": false, \"documentary_publication\": \"Separate after source phase\"}, \"observed_after_closure_fsync_s\": 552.1203474998474}\n",
+    "wall_time_seconds": 9.333e-06
+  },
+  "source_cohort": "Original full fixture/run/audit already belong to retained53; no enlargement",
+  "stage": "F18.23",
+  "status": "DESIGN_COMPLETE_NOT_ADMITTED",
+  "tests_scientific_native_or_mount_executed": false
+}

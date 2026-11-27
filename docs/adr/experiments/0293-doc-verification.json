@@ -1,0 +1,158 @@
+{
+  "base_revision": "5c746e459c0f2029c5cfc13689fac72017091c86",
+  "checker": {
+    "pin": {
+      "bytes": 8159,
+      "sha256": "90b24d0f420598441f31025344312114bec7b46bbe0c25aa2a072ea405b4209f"
+    },
+    "source": "from pathlib import Path\nfrom urllib.parse import unquote\nimport hashlib, json, os, re, subprocess, zipfile\n\nr = Path('/Users/agrudin/dev/my/ariadna')\np = Path('/private/tmp/ariadna-f18-0293')\nbase = '5c746e459c0f2029c5cfc13689fac72017091c86'\nchanged = {'CURRENT_STATE.md', 'docs/adr/README.md', 'openspec/ROADMAP.md',\n           'openspec/changes/refine-physical-trajectory/design.md',\n           'openspec/changes/refine-physical-trajectory/tasks.md',\n           'openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md'}\nnew = {'docs/adr/0293-full-owner-binding-design.md',\n       'docs/adr/experiments/0293-full-owner-binding-design.json',\n       'docs/adr/experiments/0293-full-owner-binding-design-evidence.zip'}\nproof = 'docs/adr/experiments/0293-doc-verification.json'\ndef git(*args): return subprocess.check_output(['git', *args], cwd=r, text=True).strip()\ndef pin(raw): return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}\nassert git('rev-parse', 'HEAD') == base and git('branch', '--show-current') == 'dev'\nassert not git('diff', '--cached', '--name-only')\nassert set(git('diff', '--name-only').splitlines()) == changed\nassert set(git('ls-files', '--others', '--exclude-standard').splitlines()) == new\nprotected = 0\nfor row in subprocess.check_output(['git', 'ls-tree', '-rz', '--full-tree', base], cwd=r).split(b'\\0'):\n    if not row: continue\n    metadata, name = row.split(b'\\t', 1); name = name.decode()\n    if name in changed: continue\n    raw = (r / name).read_bytes()\n    assert hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\\0' + raw).hexdigest() == metadata.decode().split()[2], name\n    protected += 1\nx = json.loads((r / 'docs/adr/experiments/0293-full-owner-binding-design.json').read_bytes())\na = r / 'docs/adr/experiments' / x['archive']['name']\nassert pin(a.read_bytes()) == {k: x['archive'][k] for k in ('bytes', 'sha256')}\nwith zipfile.ZipFile(a) as z:\n    assert len(z.namelist()) == len(set(z.namelist())) == x['archive']['members'] == 42 and z.testzip() is None\n    assert all(not Path(n).is_absolute() and '..' not in Path(n).parts for n in z.namelist())\n    expanded = sum(i.file_size for i in z.infolist()); assert expanded == x['archive']['expanded_bytes'] == 531773 < 2097152\n    d = {n: json.loads(z.read(n)) for n in z.namelist() if n.endswith('.json')}\n    scope, review, closure = (d[n] for n in ('scope.json', 'reviewer.json', 'source-closure.json'))\n    assert scope['stage'] == 'F18.23' and scope['base_revision'] == base and scope['scientific_free_variables'] == []\n    assert review['status'] == 'PASS' and not review['findings'] and len(review['resolved_initial_findings']) == 4\n    assert closure == x['closure'] and closure['source_phase_passed'] is True and closure['new_native_authority'] is False\n    assert closure['elapsed_after_source_fsync_s'] == 552.1201403327286 < 600 and closure['evidence_bytes_before_receipt'] == 528904 and closure['log_bytes'] == 0\n    actual = d['source-actual-tool-return.json']; observed = json.loads(actual['output'])\n    assert actual == x['source_actual_tool_return'] and actual['exit_code'] == 0 and observed['closure'] == closure\n    assert observed['observed_after_closure_fsync_s'] == 552.1203474998474 < 600\n    assert closure['independent_review_pin'] == pin(z.read('reviewer.json'))\n    for name, expected in closure['contract_pins'].items(): assert pin(z.read(name)) == expected == review['reviewed_files'][name], name\n    assert d['contract-pins.json']['files'] == closure['contract_pins']\n    for name, expected in d['input-pins.json']['files'].items(): assert pin(z.read(name)) == expected, name\n    for name, expected in d['supplemental-input-pins.json']['files'].items(): assert pin(z.read(name)) == expected, name\n    oldpins = d['retained-control-pins.json']; assert len(oldpins) == 15\n    previous = r / 'docs/adr/experiments/0290-full-owner-control-mapping-evidence.zip'\n    with zipfile.ZipFile(previous) as prior:\n        assert z.read('retained-control-pins.json') == prior.read('retained-control-pins.json')\n        for name, expected in oldpins.items():\n            member = 'retained-0286/' + name\n            assert pin(z.read(member)) == expected and z.read(member) == prior.read(member), member\n    for name in ('_owner_endpoint_fixture.py', '_owner_endpoint_run.py', '_owner_endpoint_audit.py'):\n        assert z.read('original-source/' + name) == subprocess.check_output(['git', 'show', base + ':src/space_nav/' + name], cwd=r)\n    c = d['binding-contract.json']; mapping = d['field-bindings-admission.json']\n    assert c['status'] == mapping['status'] == 'DESIGN_ONLY_NOT_ADMITTED'\n    assert len(c['active_controls']) == len(set(c['active_controls'])) == 8 and len(c['control_changes']) == 5\n    assert d['profile-template.json'] == mapping['profile_template'] and d['decision-template.json'] == mapping['decision_template']\n    for n in ('profile-template.json', 'decision-template.json'):\n        t = d[n]; assert t['status'] == 'NOT_ADMITTED' and t['execution_stage'] is None and t['explicit_user_authorization'] is None and t['native_namespace_created'] is False\n    profile = d['profile-template.json']['payload']; oldprofile = json.loads(z.read('retained-0286/episode/profile.json'))\n    assert set(profile) == (set(oldprofile) - {'probe_input'}) | {'fixture_input'}\n    assert profile['fixture_input'] == {'schema':'ariadna-owner-fixture-input-v1','scope':'synthetic-owner-conformance-only'}\n    for name, count in (('source_pins',53),('native_pins',10),('resource_pins',11),('ledger_pins',25),('history_member_pins',86)):\n        assert profile[name] == oldprofile[name] and len(profile[name]) == count, name\n    assert len(mapping['field_bindings']) == 20 and len(mapping['argv_bindings']) == 5\n    assert c['new_native_authority'] is False and c['tests_or_scientific_work_in_this_design'] is False\n    assert x['implementation_adopted'] is False and x['new_native_authority'] is False and x['tests_scientific_native_or_mount_executed'] is False\nlinks = anchors = 0\nfor name in sorted(changed | {n for n in new if n.endswith('.md')}):\n    for dest in re.findall(r'\\[[^\\]]*\\]\\(([^)]+)\\)', (r / name).read_text()):\n        dest = dest.strip('<>')\n        if '://' in dest or dest.startswith(('mailto:', 'data:')): continue\n        file, _, frag = dest.partition('#'); q = ((r / name).parent / unquote(file)).resolve() if file else r / name\n        if not q.exists(): assert q == r / proof, (name, dest)\n        links += 1\n        if frag and q.suffix == '.md':\n            titles = re.findall(r'^#{1,6}\\s+(.+?)\\s*$', q.read_text(), re.M)\n            slugs = {re.sub(r'[^\\w\\- ]', '', t.strip().lower().replace('`', '')).replace(' ', '-') for t in titles}\n            assert unquote(frag) in slugs, (name, dest); anchors += 1\nassert len((r / 'CURRENT_STATE.md').read_text().splitlines()) < 60\ntasks = (r / 'openspec/changes/refine-physical-trajectory/tasks.md').read_text()\nassert '- [x] F18.23 ' in tasks and '- [ ] F18.24 ' in tasks\nsubprocess.run(['git', 'diff', '--check'], cwd=r, check=True)\nv = subprocess.run(['openspec', 'validate', 'refine-physical-trajectory', '--strict'], cwd=r, capture_output=True, text=True, timeout=60)\nassert v.returncode == 0, v.stdout + v.stderr\nout = {'schema':'ariadna.f18.binding-design-documentary-check.v1', 'status':'PASS', 'base_revision':base,\n       'protected_prior_blobs':protected, 'local_links':links, 'anchors':anchors,\n       'archive_members':x['archive']['members'], 'archive_expanded_bytes':expanded,\n       'archive_compressed_bytes':a.stat().st_size, 'strict_openspec':{'exit_code':v.returncode,'stdout':v.stdout,'stderr':v.stderr},\n       'checked_files':{n:pin((r / n).read_bytes()) for n in sorted(changed | new)},\n       'unchanged_full_suite_repeated':False, 'new_scientific_native_work':False,\n       'scope':'Bounded binding design and documentary accuracy only; no implementation or native admission'}\nwith (p / 'doc-checks-final.json').open('x') as f:\n    json.dump(out, f, indent=2, sort_keys=True); f.write('\\n'); f.flush(); os.fsync(f.fileno())\nprint(json.dumps({k:v for k,v in out.items() if k != 'checked_files'}))\n"
+  },
+  "design_complete": true,
+  "implementation_adopted": false,
+  "independent_final_documentary_review": {
+    "base_revision": "5c746e459c0f2029c5cfc13689fac72017091c86",
+    "checked_utc": "2026-11-27T09:22:30.861451+00:00",
+    "checks": {
+      "0292_ten_artificial_passes_not_full_native_qualification_0291_helpers_separate": true,
+      "F18_23_design_only_not_implemented_or_admitted": true,
+      "F18_24_only_minimal_temporary_bindings_static1800s_one_frozen_artificial120s": true,
+      "actual_native_choice_profile_adoption_and_fresh_admission_remain_deferred": true,
+      "all_12_reviewed_and_22_input_member_pins_match_saved_review": true,
+      "archive_compressed_bytes": 179256,
+      "archive_expanded_bytes": 531773,
+      "archive_members": 42,
+      "contract_fieldmap_and_NOT_ADMITTED_template_pins_match_archive_and_closure": true,
+      "current_lines": 35,
+      "exact_eight_controls_separate_gate_three_operators_and_15_retained_members": true,
+      "independent_source_review_PASS_and_four_initial_findings_resolved": true,
+      "no_new_scientific_free_variable_or_physical_M3_99percent_safety_claim": true,
+      "original_fixture_run_audit_archive_bytes_match_current_repository_sources": true,
+      "original_packet_oracle_counter_byte_clock_cleanup_preservation_gates_unchanged": true,
+      "resolved_final_doc_wording_native_runtime_import_avoids_banning_pure_artificial_runner_imports": true,
+      "retained53_source_cohort_no_enlargement_10native_11resources_25ledgers_86history_preserved": true,
+      "source_closure_actual_post_fsync_s": 552.1203474998474,
+      "source_evidence_bytes_before_receipt": 528904,
+      "source_log_bytes": 0,
+      "source_phase_limit_s": 600
+    },
+    "deferred_to_root_documentary_checker": {
+      "expected_documentary_proof_link": [
+        "docs/adr/experiments/0293-doc-verification.json"
+      ],
+      "strict_validation_links_diff_and_protected_history_full_checks": "Not run by this independent accuracy review; parent performs and retains separately."
+    },
+    "findings": [],
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2224,
+        "sha256": "8e743289d41f89b0f45e0b0193b96df8146048a6a8aafb14bdc2dd1f0710b67b"
+      },
+      "docs/adr/0293-full-owner-binding-design.md": {
+        "bytes": 7800,
+        "sha256": "f16502e28441c953333ce708516c93ef16382bb65d7c4a84a76af365c38b1a6f"
+      },
+      "docs/adr/README.md": {
+        "bytes": 52814,
+        "sha256": "c7bcea3e5f0f3e89532467bae67c854f87bb06ec0f49dc6048552dd005879de8"
+      },
+      "docs/adr/experiments/0293-full-owner-binding-design-evidence.zip": {
+        "bytes": 179256,
+        "sha256": "17b0575d4eea7fce80559092b09aa906a8d9cfc9caa731769a6c7568df12e9eb"
+      },
+      "docs/adr/experiments/0293-full-owner-binding-design.json": {
+        "bytes": 4880,
+        "sha256": "632540f25b2c5f1f679e21b86016dcb0d65c20039525c7f615c0dd751a479922"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 98825,
+        "sha256": "bba775c68c21f5fe3ea6f59e8379abbf2a6fea488b17ddccb7c8dff15a51da14"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 640938,
+        "sha256": "21c1b984a21f0a4b15df4e59256c84a90724e0aa6e0c8aa7a118ed1415b3faa0"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 193056,
+        "sha256": "31f60399ed7f2f8ff7252822491883261479bdf4febbee07c4ab778a95c7aca6"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 530760,
+        "sha256": "540a59e2131693a755a438d6686ee99aecedaccb55c8f081c76e73e32625c001"
+      }
+    },
+    "schema": "ariadna.f18.full-owner-binding-final-doc-review.v1",
+    "scope": "Read-only independent accuracy review of exactly nine published F18.23 documentation/result/archive files against the retained fixed contract, templates, source review and durable source-closure observation. No repository edit, project/control import or execution, tests, fixture evaluation, scientific/native/SPICE/integration/mount/resource-payload/acquisition/build work. Only this separate temporary review record is written.",
+    "status": "PASS",
+    "supporting_saved_review": {
+      "bytes": 12982,
+      "path": "/private/tmp/ariadna-f18-0293/reviewer.json",
+      "sha256": "1b1fdeac60a057504bcf1db3d42d3cd963477e5dacd3bc43aa5d67515c5e68ff",
+      "status": "PASS"
+    }
+  },
+  "native_admission": "unavailable; NOT_ADMITTED design only",
+  "new_native_authority": false,
+  "new_scientific_native_work": false,
+  "next_contract": "ADR0293 F18.24 minimal temporary binding implementation and focused artificial qualification only; no actual native authority",
+  "root_checks": {
+    "anchors": 4,
+    "archive_compressed_bytes": 179256,
+    "archive_expanded_bytes": 531773,
+    "archive_members": 42,
+    "base_revision": "5c746e459c0f2029c5cfc13689fac72017091c86",
+    "checked_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2224,
+        "sha256": "8e743289d41f89b0f45e0b0193b96df8146048a6a8aafb14bdc2dd1f0710b67b"
+      },
+      "docs/adr/0293-full-owner-binding-design.md": {
+        "bytes": 7800,
+        "sha256": "f16502e28441c953333ce708516c93ef16382bb65d7c4a84a76af365c38b1a6f"
+      },
+      "docs/adr/README.md": {
+        "bytes": 52814,
+        "sha256": "c7bcea3e5f0f3e89532467bae67c854f87bb06ec0f49dc6048552dd005879de8"
+      },
+      "docs/adr/experiments/0293-full-owner-binding-design-evidence.zip": {
+        "bytes": 179256,
+        "sha256": "17b0575d4eea7fce80559092b09aa906a8d9cfc9caa731769a6c7568df12e9eb"
+      },
+      "docs/adr/experiments/0293-full-owner-binding-design.json": {
+        "bytes": 4880,
+        "sha256": "632540f25b2c5f1f679e21b86016dcb0d65c20039525c7f615c0dd751a479922"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 98825,
+        "sha256": "bba775c68c21f5fe3ea6f59e8379abbf2a6fea488b17ddccb7c8dff15a51da14"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 640938,
+        "sha256": "21c1b984a21f0a4b15df4e59256c84a90724e0aa6e0c8aa7a118ed1415b3faa0"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 193056,
+        "sha256": "31f60399ed7f2f8ff7252822491883261479bdf4febbee07c4ab778a95c7aca6"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 530760,
+        "sha256": "540a59e2131693a755a438d6686ee99aecedaccb55c8f081c76e73e32625c001"
+      }
+    },
+    "local_links": 665,
+    "new_scientific_native_work": false,
+    "protected_prior_blobs": 1629,
+    "schema": "ariadna.f18.binding-design-documentary-check.v1",
+    "scope": "Bounded binding design and documentary accuracy only; no implementation or native admission",
+    "status": "PASS",
+    "strict_openspec": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "Change 'refine-physical-trajectory' is valid\n"
+    },
+    "unchanged_full_suite_repeated": false
+  },
+  "schema": "ariadna.f18.binding-design-documentary-verification.v1",
+  "stage": "F18.23",
+  "status": "PASS",
+  "unchanged_full_suite_repeated": false
+}

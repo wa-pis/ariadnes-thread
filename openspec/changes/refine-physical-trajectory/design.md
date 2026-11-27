@@ -1,3 +1,11 @@
+[ADR0293](../../../docs/adr/0293-full-owner-binding-design.md) completes F18.23 design only: exact eight-control/separate-gate/operator
+field/argv contract, NOT_ADMITTED templates and focused artificial qualification.
+Review/source closure530.642307/552.120347s<600;528904B pre-receipt, no logs/tests/
+native/SPICE/integration/mount. Original3modules already belong to53sourcecohort.
+Next F18.24 implements only frozen minimalbindings within1800s static preparation
+and one<=120s artificial qualification, unchanged gates and independent review.
+Actual native choice/admission and physicalF0/M3 remain open.
+
 [ADR0292](../../../docs/adr/0292-correct-artificial-interpreter-pin.md) records F18.22 PASS: nine formerly blocked artificial methods plus one
 pin-refusal method, zero failures/errors, actual post-external-fsync 0.674845s<120.
 The generic2MiB reader and all gates are unchanged; known interpreter pin streams
