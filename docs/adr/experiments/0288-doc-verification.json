@@ -1,0 +1,123 @@
+{
+  "independent_doc_review": {
+    "archive": {
+      "compressed_bytes": 40897,
+      "expanded_bytes": 119271,
+      "members": 9
+    },
+    "checked_utc": "2026-11-27T07:05:59.957898+00:00",
+    "factual_checks": [
+      "Seven-row source mapping preserves original-key/same-row association while explicit pre-narrow static_cast route remains conditional; old generic-caster gap is not transferred mechanically.",
+      "Exact artificial F5 and existing bounded physical realized-clock route remain distinct; unknown comparison/roundtrip is not converted to false or zero, and no new native interface/build necessity is inferred.",
+      "Source closure tool observation 433.6940196673386s<600 and 109308 evidence bytes<2MiB agree with saved records; publication is a separate documentary phase.",
+      "F18.18 alone is checked; F18.19 permits one pinned retained selected-extension source/build-receipt premise lookup, 600s inclusive independent review/2MiB/zero execution, stopping at precise absent premise.",
+      "Original0267/0247 inputs remain fixed. No adapter adoption, implementation/build/native grant, new numerical result, physical qualification, safety/M3 or99-percent claim. No runtime source changes are present in reviewed diff."
+    ],
+    "findings": [],
+    "pending_publication_record": "docs/adr/experiments/0288-doc-verification.json is intentionally created by parent after this review.",
+    "reviewed_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2214,
+        "sha256": "6b34d0b741a6442c1ce7cda37abd5f5d09ecb2280129ae0359e39eff3464178f"
+      },
+      "docs/adr/0288-map-original-endpoint-handoff.md": {
+        "bytes": 7695,
+        "sha256": "dbcaef1d3d1f1e1f5e11fa560045d804ccb2a55f220685a009cbf9020a9de6a7"
+      },
+      "docs/adr/README.md": {
+        "bytes": 51903,
+        "sha256": "aa7b541a1af73781ed09292837e3e1a669c16f7d7de2611c95b8ff3f42872f5c"
+      },
+      "docs/adr/experiments/0288-original-endpoint-handoff-evidence.zip": {
+        "bytes": 40897,
+        "sha256": "ec33fc28e680241e03a520a5c8b714dd0f290888873386268f01bfef1922a990"
+      },
+      "docs/adr/experiments/0288-original-endpoint-handoff-map.json": {
+        "bytes": 1929,
+        "sha256": "fd3690d2059e42fdfdc28e63cb1cacee4b369af4cb00eb3ba2e1a688990ca092"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 95875,
+        "sha256": "2e1984d4f7a12fe34644996d29842a51c71caa08fc913a8daea6ba9dfd460af2"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 636138,
+        "sha256": "d970e719cf07e3cb1c794f3a3907327b233d3bc5702cf8d7daed887b9d79a877"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 186551,
+        "sha256": "9facb09ab00a0254cf6bfdb04f7155fdb005611cb92133a896b244505da32599"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 523843,
+        "sha256": "89930c94f41ffc24eb587450d5ddc485f084a7b77fd65ece436c5a25349cfa36"
+      }
+    },
+    "schema": "ariadna.f18.original-endpoint-final-documentary-review.v1",
+    "scope": "Separate final documentary review of current six-file diff, new ADR0288/result and nine-member evidence metadata. Compared source-map/reviewer/table/closure bytes with immutable reviewed records. No runtime, scientific evaluation, new source sweep, native/resource operation or repository edit. Parent protected-history/link/strict verification remains separately recorded.",
+    "status": "PASS"
+  },
+  "retained_root_checker": "from pathlib import Path\nfrom urllib.parse import unquote\nimport hashlib,json,re,subprocess,zipfile,os\nr=Path('/Users/agrudin/dev/my/ariadna');p=Path('/private/tmp/ariadna-f18-0288');base='03798360a5a217231bce507dda56a6d5cdf1e27e'\nchanged={'CURRENT_STATE.md','docs/adr/README.md','openspec/ROADMAP.md','openspec/changes/refine-physical-trajectory/design.md','openspec/changes/refine-physical-trajectory/tasks.md','openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md'}\nnew={'docs/adr/0288-map-original-endpoint-handoff.md','docs/adr/experiments/0288-original-endpoint-handoff-map.json','docs/adr/experiments/0288-original-endpoint-handoff-evidence.zip'}\ndef git(*args):return subprocess.check_output(['git',*args],cwd=r,text=True).strip()\ndef pin(raw):return {'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}\nassert git('rev-parse','HEAD')==base and git('branch','--show-current')=='dev'\nassert not git('diff','--cached','--name-only')\nassert set(git('diff','--name-only').splitlines())==changed\nassert set(git('ls-files','--others','--exclude-standard').splitlines())==new\nprotected=0\nfor row in subprocess.check_output(['git','ls-tree','-rz','--full-tree',base],cwd=r).split(b'\\0'):\n if not row:continue\n metadata,name=row.split(b'\\t',1);name=name.decode()\n if name in changed:continue\n raw=(r/name).read_bytes();obj=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\\0'+raw).hexdigest()\n assert obj==metadata.decode().split()[2],name\n protected+=1\nx=json.loads((r/'docs/adr/experiments/0288-original-endpoint-handoff-map.json').read_text())\na=r/'docs/adr/experiments'/x['archive']['name'];raw=a.read_bytes()\nassert pin(raw)=={k:x['archive'][k]for k in('bytes','sha256')}\nwith zipfile.ZipFile(a)as z:\n assert len(z.namelist())==9 and len(set(z.namelist()))==9 and z.testzip()is None\n expanded=sum(i.file_size for i in z.infolist());assert expanded<2097152\n data={n:json.loads(z.read(n))for n in z.namelist()if n.endswith('.json')}\n note=data['root-interface-map.json'];review=data['reviewer.json'];scope=data['scope.json'];closure=data['source-closure.json'];table=data['table-review.json']\n assert scope['base_revision']==base and scope['free_scientific_variables']==[]\n assert review['status']==table['status']=='PASS'and not review['findings']and not table['findings']\n assert closure==x['closure']and closure['observed_after_source_files_directory_fsync_s']<600 and closure['source_evidence_bytes']<2097152\n observed=json.loads(data['source-actual-tool-return.json']['output'])\n assert observed['closure']==closure and observed['observed_after_closure_receipt_directory_fsync_s']<600\n assert x['actual_tool_return']==data['source-actual-tool-return.json']\n for name,record in note['source_pins'].items():\n  content=(r/name).read_bytes();assert pin(content)=={k:record[k]for k in('bytes','sha256')},name\n  lines=content.decode().splitlines()\n  for v in record['anchors']:assert '\\n'.join(lines[v['first']-1:v['last']])==v['text'],name\n for name,record in review['reviewed_files'].items():\n  content=subprocess.check_output(['git','show',base+':'+name],cwd=r);assert pin(content)==record,name\n n=note['retained_native_source'];old=r/n['archive'];assert pin(old.read_bytes())=={'bytes':n['archive_bytes'],'sha256':n['archive_sha256']}\n with zipfile.ZipFile(old)as prior:\n  member=prior.read(n['member']);assert member==z.read('0267-owner-source-excerpts.txt')and pin(member)=={'bytes':n['member_bytes'],'sha256':n['member_sha256']}\n assert len(note['table'])==7 and len(note['source_pins'])==13 and note['new_adapter_implementation_or_native_authority']is False\n assert x['status']=='SOURCE_MAPPING_COMPLETE'and x['native_authority']is False and x['runtime_tests_repeated']is False and x['physical_qualification']=='OPEN'\nlinks=anchors=0\nfor name in sorted(changed|{n for n in new if n.endswith('.md')}):\n for dest in re.findall(r'\\[[^\\]]*\\]\\(([^)]+)\\)',(r/name).read_text()):\n  dest=dest.strip('<>')\n  if '://'in dest or dest.startswith(('mailto:','data:')):continue\n  file,_,frag=dest.partition('#');q=((r/name).parent/unquote(file)).resolve()if file else r/name\n  if not q.exists():assert q==r/'docs/adr/experiments/0288-doc-verification.json',(name,dest)\n  links+=1\n  if frag and q.suffix=='.md':\n   titles=re.findall(r'^#{1,6}\\s+(.+?)\\s*$',q.read_text(),re.M)\n   slugs={re.sub(r'[^\\w\\- ]','',t.strip().lower().replace('`','')).replace(' ','-')for t in titles}\n   assert unquote(frag)in slugs,(name,dest);anchors+=1\nassert len((r/'CURRENT_STATE.md').read_text().splitlines())<60\nassert '- [x] F18.18 'in(r/'openspec/changes/refine-physical-trajectory/tasks.md').read_text()\nassert '- [ ] F18.19 'in(r/'openspec/changes/refine-physical-trajectory/tasks.md').read_text()\nsubprocess.run(['git','diff','--check'],cwd=r,check=True)\nv=subprocess.run(['openspec','validate','refine-physical-trajectory','--strict'],cwd=r,capture_output=True,text=True,timeout=60)\nassert v.returncode==0,v.stdout+v.stderr\nout={'schema':'ariadna.f18.original-handoff-map-doc-check.v1','status':'PASS','base_revision':base,'protected_prior_blobs':protected,'local_links':links,'anchors':anchors,'archive_members':9,'archive_expanded_bytes':expanded,'archive_compressed_bytes':len(raw),'strict_openspec':{'exit_code':v.returncode,'stdout':v.stdout,'stderr':v.stderr},'checked_files':{n:pin((r/n).read_bytes())for n in sorted(changed|new)},'runtime_tests_rerun':False,'native_scientific_work':False,'scope':'Documentary/source-pin verification only; source phase previously closed; no oracle/scientific/native evaluation'}\nwith(p/'doc-checks.json').open('x')as f:json.dump(out,f,indent=2,sort_keys=True);f.write('\\n');f.flush();os.fsync(f.fileno())\nprint(json.dumps({k:v for k,v in out.items()if k!='checked_files'}))\n",
+  "root_checks": {
+    "anchors": 4,
+    "archive_compressed_bytes": 40897,
+    "archive_expanded_bytes": 119271,
+    "archive_members": 9,
+    "base_revision": "03798360a5a217231bce507dda56a6d5cdf1e27e",
+    "checked_files": {
+      "CURRENT_STATE.md": {
+        "bytes": 2214,
+        "sha256": "6b34d0b741a6442c1ce7cda37abd5f5d09ecb2280129ae0359e39eff3464178f"
+      },
+      "docs/adr/0288-map-original-endpoint-handoff.md": {
+        "bytes": 7695,
+        "sha256": "dbcaef1d3d1f1e1f5e11fa560045d804ccb2a55f220685a009cbf9020a9de6a7"
+      },
+      "docs/adr/README.md": {
+        "bytes": 51903,
+        "sha256": "aa7b541a1af73781ed09292837e3e1a669c16f7d7de2611c95b8ff3f42872f5c"
+      },
+      "docs/adr/experiments/0288-original-endpoint-handoff-evidence.zip": {
+        "bytes": 40897,
+        "sha256": "ec33fc28e680241e03a520a5c8b714dd0f290888873386268f01bfef1922a990"
+      },
+      "docs/adr/experiments/0288-original-endpoint-handoff-map.json": {
+        "bytes": 1929,
+        "sha256": "fd3690d2059e42fdfdc28e63cb1cacee4b369af4cb00eb3ba2e1a688990ca092"
+      },
+      "openspec/ROADMAP.md": {
+        "bytes": 95875,
+        "sha256": "2e1984d4f7a12fe34644996d29842a51c71caa08fc913a8daea6ba9dfd460af2"
+      },
+      "openspec/changes/refine-physical-trajectory/design.md": {
+        "bytes": 636138,
+        "sha256": "d970e719cf07e3cb1c794f3a3907327b233d3bc5702cf8d7daed887b9d79a877"
+      },
+      "openspec/changes/refine-physical-trajectory/specs/research-trajectory-experiment/spec.md": {
+        "bytes": 186551,
+        "sha256": "9facb09ab00a0254cf6bfdb04f7155fdb005611cb92133a896b244505da32599"
+      },
+      "openspec/changes/refine-physical-trajectory/tasks.md": {
+        "bytes": 523843,
+        "sha256": "89930c94f41ffc24eb587450d5ddc485f084a7b77fd65ece436c5a25349cfa36"
+      }
+    },
+    "local_links": 652,
+    "native_scientific_work": false,
+    "protected_prior_blobs": 1609,
+    "runtime_tests_rerun": false,
+    "schema": "ariadna.f18.original-handoff-map-doc-check.v1",
+    "scope": "Documentary/source-pin verification only; source phase previously closed; no oracle/scientific/native evaluation",
+    "status": "PASS",
+    "strict_openspec": {
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "Change 'refine-physical-trajectory' is valid\n"
+    }
+  },
+  "runtime_tests_repeated": false,
+  "schema": "ariadna.f18.original-handoff-map-documentary-verification.v1",
+  "scientific_native_episode_or_oracle_repeated": false,
+  "scope": "Documentary/source-pin/evidence checks only; prior source phase/episodes immutable. No new scientific or physical qualification.",
+  "status": "PASS"
+}

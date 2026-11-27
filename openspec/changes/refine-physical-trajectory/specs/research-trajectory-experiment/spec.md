@@ -92,6 +92,13 @@ qualification of the installed exporter, actual event carry and physical gates.
 Actual-owner preparation SHALL follow ADR0267 and retain every existing F0 gate.
 Manufactured-helper qualification SHALL NOT be promoted to owner qualification.
 
+#### Scenario: Preserve conditional provenance of the original conversion route
+
+- **WHEN** F18.18 maps the retained original endpoint into existing callers and the realized-clock packet
+- **THEN** same-key seven-state association and explicit pre-narrow C++double conversion SHALL remain distinct from qualified native bounds, exact artificial events and physical realized-clock admission; unknown comparison/roundtrip values SHALL NOT become false/zero observations or fabricated certificates
+- **AND** F18.19 MAY inspect only retained selected-extension source/build receipts and saved observations within600s including independent review/2MiB to produce one pinned supported/unavailable conversion/domain ledger or precise missing prerequisite; no generic-caster gap SHALL be mechanically transferred to the explicit conversion route and no full core ABI/FP proof SHALL be inferred
+- **AND** original0267/0247inputs/gates SHALL remain unchanged, new acquisition/mount/tests/scientific imports/native/SPICE/integration/build/scientific-oracle-command-trajectory evaluation SHALL remain zero, and adapter implementation/new native authority/physical admission SHALL NOT follow
+
 #### Scenario: Distinguish independent readback arcs from production carry
 
 - **WHEN** F18.17 reviews0286single-forward success against0267and existing carry callers

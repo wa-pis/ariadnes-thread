@@ -1,0 +1,33 @@
+{
+  "actual_tool_return": {
+    "chunk_id": "93a854",
+    "exit_code": 0,
+    "original_token_count": 101,
+    "output": "{\"closure\": {\"schema\": \"ariadna.f18.handoff-map-source-closure.v1\", \"observed_after_source_files_directory_fsync_s\": 433.6937677501701, \"source_limit_s\": 600, \"source_evidence_bytes\": 109308, \"independent_source_and_table_review\": \"PASS\", \"scientific_native_execution\": false, \"documentary_publication_follows_separately\": true}, \"observed_after_closure_receipt_directory_fsync_s\": 433.6940196673386}\n",
+    "wall_time_seconds": 0.309927416
+  },
+  "archive": {
+    "bytes": 40897,
+    "name": "0288-original-endpoint-handoff-evidence.zip",
+    "sha256": "ec33fc28e680241e03a520a5c8b714dd0f290888873386268f01bfef1922a990"
+  },
+  "base_revision": "03798360a5a217231bce507dda56a6d5cdf1e27e",
+  "closure": {
+    "documentary_publication_follows_separately": true,
+    "independent_source_and_table_review": "PASS",
+    "observed_after_source_files_directory_fsync_s": 433.6937677501701,
+    "schema": "ariadna.f18.handoff-map-source-closure.v1",
+    "scientific_native_execution": false,
+    "source_evidence_bytes": 109308,
+    "source_limit_s": 600
+  },
+  "finding": "Source associates original key and same seven state words, but does not supply all qualified realized-clock provenance/bounds. Explicit pre-narrow-checked C++ double conversion is distinct from the older generic caster route. Exact artificial identity is not a physical F0 requirement.",
+  "native_authority": false,
+  "next_scope": "F18.19 retained-source/build-receipt conversion/domain premise check ONLY; no adapter implementation/native build/episode or physical admission.",
+  "physical_qualification": "OPEN",
+  "runtime_tests_repeated": false,
+  "schema": "ariadna.f18.original-endpoint-handoff-source-result.v1",
+  "scientific_native_work": false,
+  "stage": "F18.18",
+  "status": "SOURCE_MAPPING_COMPLETE"
+}

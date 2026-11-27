@@ -1,3 +1,20 @@
+### Original endpoint handoff map (2026-11-27)
+
+[ADR0288](../../../docs/adr/0288-map-original-endpoint-handoff.md) completes F18.18 source mapping only. Original iterator→same
+seven state words is source-supported; explicit pre-narrow-checked C++double
+conversion differs from the older generic caster route. Exact artificial events
+remain separate from the existing physical realized-clock allowance. Qualified
+native conversion/domain, actual chain/lifecycle and force/endpoint bounds remain
+unavailable; no interface change/build/adapter or native authority follows.
+Next F18.19 is one bounded retained-source/build-receipt premise lookup only.
+
+F18.19 preserves0267/0247inputs and allows only a supported/unavailable ledger of
+0257conversion/domain premises against retained selected-extension build receipts
+and saved observations. Source phase<=600s including independent review/2MiB;
+zero new acquisition/mount/tests/imports/native/SPICE/integration/build/scientific
+or oracle/command/trajectory evaluation. No adapter adoption or complete core
+ABI/FP proof; stop at the precise missing prerequisite before any new execution.
+
 ### Owner handoff source readiness (2026-11-27)
 
 [ADR0287](../../../docs/adr/0287-identify-owner-carry-prerequisite.md) completes F18.17 source readiness only:0267reverse is deliberately

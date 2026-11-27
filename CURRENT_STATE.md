@@ -3,31 +3,32 @@
 Updated: 2026-11-27 (Europe/Samara). Keep under60lines.
 
 ## Current result
-[ADR0287](docs/adr/0287-identify-owner-carry-prerequisite.md) completes F18.17
-source readiness on13f53fb663c7614b9d662beeddb7799d9d076ef3.
-Independent source review PASS; durable source closure281.532454s<600/2MiB.
-0267 deliberately uses independent forward/reverse literals: no missing carry
-between those arcs. Existing artificial replay already carries state/mass.
-Unqualified seam: original-key owner endpoint→existing production handoff,
-with explicit time/metadata/completion/safety/lifetime/state/mass association.
-No runtime tests/native/SPICE/integration/scientific evaluation or new authority.
-[Readiness result](docs/adr/experiments/0287-owner-handoff-readiness.json).
+[ADR0288](docs/adr/0288-map-original-endpoint-handoff.md) completes F18.18
+source mapping on03798360a5a217231bce507dda56a6d5cdf1e27e; independent review PASS.
+Original iterator→same7finite state words is supported by retained source.
+Original remainder precheck then explicit C++double cast is a distinct route;
+do not transfer the old generic-caster gap mechanically. No numerical calculation.
+Exact artificialF5events remain separate from accepted physical realized-clock
+allowance. Raw triplet lacks qualified conversion/domain and complete realized
+observations/chain; unknown comparison/roundtrip is not false/zero. No new native
+interface/build is shown necessary. Full physical bounds remain unavailable.
+[Mapping evidence](docs/adr/experiments/0288-original-endpoint-handoff-map.json).
 
 ## Next authorized action and scheduler
-ariadna-m3 ACTIVE every5minutes. F18.18 SOURCE/SAVED interface mapping ONLY:
-follow ADR0287/task, fixed0267/0247inputs, one table or exact missing prerequisite,
-600s including independent review/2MiB, no execution/tests/imports/mount/acquisition.
-No adapter implementation or new native episode until its own accepted contract
-and, for native, distinct choice/fresh admission. Do not duplicate existing fake
-carry/full-owner tests or connect0267reverse to forward output. Pause only for
-actual user participation. Record immutable evidence, strict checks, commit/push.
+ariadna-m3 ACTIVE every5minutes. F18.19 SOURCE/SAVED retained-source/build-receipt
+premise lookup ONLY per ADR0288/task: same0267/0247inputs, one supported/unavailable
+0257conversion/domain ledger,600s including independent review/2MiB, no complete
+coreABI/FP proof, tests/imports/native/SPICE/integration/mount/acquisition/builds
+or scientific/oracle/command/trajectory evaluation. Stop at precise missing premise.
+No adapter implementation/newnative authority; pause only for actual user choice.
+Immutable evidence, independent review, strict/docs checks and commit/push.
 
 ## Preserved verified result and physical limits
-ADR0286 completes only one single-forward synthetic owner: packet3.524682s<60,
-consumption49.032074s<600, independent canonical audit PASS, original SI gates.
-0285authority consumed; forward-completed-v1 namespace preserved/image detached.
-Preserve0280/0275consumed namespaces and0269cause/countsUNKNOWN.
-Full0267/nativecarry/arbitraryTime/lifetime/concurrency/ABI-FP/arithmetic/fullforce
-seed/derivatives/guards/independent bounds remain open; no admissiblepair/99percent,
-physicalF0/safety/strictM3/task3.9 orM4–M6/ML/UI. Prior0282required8688passes/Ruff
-unchanged, not repeated. Preserve moon_to_mars.py/main/remotes/history; devonly.
+ADR0286: one synthetic forward owner, packet3.524682s<60/consumption49.032074s<600,
+canonical independent audit PASS;0285once-only authority consumed/image detached.
+Preserve forward-completed-v1 and0280/0275namespaces;0269cause/countsUNKNOWN.
+0267reverse independent by design, not a missing carry test. Existing fake carry
+already qualified; do not duplicate it. Full0267/lifecycle/nativecarry/arbitraryTime/
+ABI-FP/priorarithmetic/force/derivatives/guards/independent bounds remain open.
+No admissiblepair/99percent/safety/physicalF0/strictM3 orM4–M6/ML/UI. Prior0282
+8688required passes/Ruff unchanged, not repeated. Preserve legacy/main/remotes/history.

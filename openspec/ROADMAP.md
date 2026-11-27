@@ -1,3 +1,11 @@
+[ADR0288](../docs/adr/0288-map-original-endpoint-handoff.md) completes F18.18 source mapping only. Original iterator→same
+seven state words is source-supported; explicit pre-narrow-checked C++double
+conversion differs from the older generic caster route. Exact artificial events
+remain separate from the existing physical realized-clock allowance. Qualified
+native conversion/domain, actual chain/lifecycle and force/endpoint bounds remain
+unavailable; no interface change/build/adapter or native authority follows.
+Next F18.19 is one bounded retained-source/build-receipt premise lookup only.
+
 [ADR0287](../docs/adr/0287-identify-owner-carry-prerequisite.md) completes F18.17 source readiness only:0267reverse is deliberately
 independent, not an interarc carry test. Existing artificial replay already carries
 state/mass; original-key endpoint-to-production-handoff association remains open.

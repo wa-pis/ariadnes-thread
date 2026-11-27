@@ -1,5 +1,7 @@
 # Architecture Decision Records (ADRs)
 
+- [0288 — Map the original endpoint into the existing handoff](0288-map-original-endpoint-handoff.md) — source mapping complete; conversion/domain and physical qualification remain open.
+
 - [0287 — Identify the next owner handoff prerequisite](0287-identify-owner-carry-prerequisite.md) — source readiness complete; next interface mapping only, no new native authority.
 
 - [0286 — Verify one synthetic completed owner](0286-verify-single-completed-owner.md) — accepted fixed-scope result; physical/full0267 qualification open.
